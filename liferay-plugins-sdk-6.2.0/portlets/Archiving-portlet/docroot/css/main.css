@@ -1,0 +1,37 @@
+<style type="text/css">
+	#usersTable td{
+		width:150px;
+		font-size: 12px;
+		font-weight: bold;
+	}
+	td{	text-align:left; }
+
+	.swHide {display: none}
+	.swMain{display: block}
+
+	.dBorder{ outline-style:solid; outline-color:rgb(200,200,200); outline-width:thin; padding-top:5px; padding-bottom:5px; padding-left:2px; padding-right:2px}
+
+	.row{width:100%; padding-left: 30px ;padding-bottom:10px}
+	.rowLato{clear:left;float:left;	width:22%}
+	.rowLava{float:left;width:34%}
+	.rowField{float:left;width:34% }
+	.rowInput{float:left;width:34% }
+	
+	
+	input[type=text].widthL{width:92%}
+	input[type=button].widthM{width:20%}
+	input[type=button].widthL{width:50%}
+	
+	
+	.navigator {   border-bottom:1px solid #c8c8c8;height:32px}
+	.navigator .tabs ul {list-style:none}
+	.navigator .tabs li {list-style:none; display:inline}
+	.navigator .tabs a {text-decoration:none;floar:left;margin-rigth:5px;border:1px solid #c8c8c8;border-bottom: none;padding:2px 5px;width:150px;text-align:center;display:inline-block;}
+	.navigator .tabs a.active {	color:#000;	border-bottom: 1px solid #ffffff}
+	
+	div .section {display: 'none'}
+	div .section .active {display: 'block'}
+	
+
+
+</style>

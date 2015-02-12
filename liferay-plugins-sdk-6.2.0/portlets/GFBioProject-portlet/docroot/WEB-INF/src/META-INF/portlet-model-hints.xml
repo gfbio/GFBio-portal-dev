@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="org.gfbio.model.Project">
+		<field name="projectID" type="long" />
+		<field name="name" type="String" />
+		<field name="description" type="String" />
+	</model>
+</model-hints>

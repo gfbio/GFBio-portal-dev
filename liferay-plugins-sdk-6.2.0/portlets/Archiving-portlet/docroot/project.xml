@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_6.2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd"
+>
+<name>GFBio_Archiving</name>
+<description>Its a Workflow to construct a profile of an user project.</description>
+<version>0</version>
+
+<state>
+    <name>created</name>
+	
+    <metadata>
+       <![CDATA[{"xy":[36,51]}]]>
+    </metadata>
+    
+	<initial>true</initial>
+	
+	<transitions>
+        <transition>
+            <name>profile_choose</name>
+            <target>profile_choose</target>
+        </transition>
+    </transitions>
+</state>
+
+
+<task>
+    <name>profile_choose</name>
+	
+    <metadata>
+       <![CDATA[{"xy":[168,36]}]]>
+    </metadata>
+	
+    <actions>
+	
+       <notification>
+         <name>Archive Test Notification</name>
+         <template>Choose the state of your project.</template>
+         <template-language>freemarker</template-language>
+         <notification-type>email</notification-type>
+         <notification-type>user-notification</notification-type>
+         <execution-type>onAssignment</execution-type>
+       </notification>
+	   
+       <notification>
+         <name>Archive Test Completion Notification</name>
+         <template>And an other Test.</template>
+         <template-language>freemarker</template-language>
+         <notification-type>email</notification-type>
+         <recipients>
+          <user />
+         </recipients>
+         <execution-type>onExit</execution-type>
+       </notification>
+	   
+    </actions>
+	
+	<assignments>
+		
+		<roles>
+		
+			
+			<role>
+				<role-type>regular</role-type>
+				<name>data_manager</name>
+			</role>
+
+			
+			<role>
+				<role-type>regular</role-type>
+				<name>data_curator</name>
+			</role>
+			
+			<role>
+				<role-type>regular</role-type>
+				<name>Administrator</name>
+			</role>
+			
+		</roles>
+		
+	</assignments>
+	
+	<transitions>
+	
+       <transition>
+         <name>approve</name>
+         <target>approved</target>
+       </transition>
+	   
+       <transition>
+         <name>reject</name>
+         <target>update</target>
+         <default>false</default>
+       </transition>
+	   
+    </transitions>
+	
+</task>
+
+
+<state>
+    <name>approved</name>
+	
+    <metadata>
+       <![CDATA[
+         {"xy":[380,51]}
+       ]]>
+    </metadata>
+	
+    <actions>
+       <action>
+         <name>approve</name>
+         <script>
+          <![CDATA[
+              import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+              import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+              WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.toStatus("approved"), workflowContext);
+          ]]>
+         </script>
+         <script-language>groovy</script-language>
+         <execution-type>onEntry</execution-type>
+       </action>
+    </actions>
+	
+</state>
+
+
+
+<task>
+    <name>update</name>
+	
+    <metadata>
+        <![CDATA[{"transitions":{"resubmit":{"bendpoints":[[303,140]]}},"xy":[328,199]}]]>
+    </metadata>
+	
+    <actions>
+	
+       <action>
+         <name>reject</name>
+         <script>
+          <![CDATA[
+              Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(
+				Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.toStatus("denied"), workflowContext);
+              Packages.com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil.updateStatus(
+				Packages.com.liferay.portal.kernel.workflow.WorkflowConstants.toStatus("pending"), workflowContext);
+          ]]>
+         </script>
+         <script-language>javascript</script-language>
+         <execution-type>onAssignment</execution-type>
+       </action>
+	   
+       <notification>
+         <name>Creator Modification Notification</name>
+         <template>This is a Test</template>
+         <template-language>freemarker</template-language>
+         <notification-type>email</notification-type>
+         <notification-type>user-notification</notification-type>
+         <execution-type>onAssignment</execution-type>
+       </notification>
+	   
+    </actions>
+	
+	<assignments>
+		
+		<roles>
+		
+			
+			<role>
+				<role-type>regular</role-type>
+				<name>data_curator</name>
+			</role>
+
+			
+
+			<role>
+				<role-type>regular</role-type>
+				<name>Administrator</name>
+			</role>
+			
+		</roles>
+		
+	</assignments>
+	
+    <transitions>
+       <transition>
+         <name>resubmit</name>
+         <target>test</target>
+       </transition>
+    </transitions>
+
+</task>
+
+</workflow-definition>	
+	

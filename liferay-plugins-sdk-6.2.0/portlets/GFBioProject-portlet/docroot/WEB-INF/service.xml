@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+<service-builder package-path="org.gfbio">
+	<author>Felicitas Loeffler</author>
+	<namespace>gfbio</namespace>
+	
+<entity name="Project" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="projectID" type="long" primary="true" />
+
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+		<finder name="ProjectID" return-type="Project">
+			<finder-column name="projectID" />
+		</finder>
+	</entity>
+	
+</service-builder>

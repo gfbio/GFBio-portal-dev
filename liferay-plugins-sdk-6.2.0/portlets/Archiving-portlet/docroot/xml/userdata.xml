@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+	<projectID>zdxem097</projectID>
+	<molecularID>kxqz9cbc</molecularID>
+
+	<user id="muster">
+		<id>muster</id>
+	  	<name_portal />
+	  	<name />
+	  	<name_prae />
+	  	<institution />
+		<projects>
+		  	<project id="muster">
+				<id> muster </id>
+		      	<name />
+				<descripton />
+				<moleculardatas />
+			</project>
+		</projects>
+	</user>
+
+
+	
+	<user id="10201">
+		<id>10201</id>
+		<projects>
+			<project id="00000003">
+				<id>00000003</id>
+				<name>Eckentestenrffffer</name>
+				<descripton>Eckentestener Testeckentest</descripton>
+				<moleculardatas>
+					<moleculardata id="uspro_mol_0003"><id>uspro_mol_0003</id><stuff>wp666</stuff><DOI>22221</DOI></moleculardata>
+					<moleculardata id="43crr406"><id>43crr406</id><lat_lon_float_value_1>12</lat_lon_float_value_1><project_name>3</project_name><is_vip>true</is_vip><isol_growth_condt>7</isol_growth_condt><lat_lon_float_value_0>11</lat_lon_float_value_0><seq_meth>Sanger</seq_meth><env_package>air</env_package><submitted_to_insdc>false</submitted_to_insdc><investigation_type>eukaryote</investigation_type><depth>1</depth><geo_loc_name>sea</geo_loc_name><env_material>10</env_material><assembly_text_value_1>6</assembly_text_value_1><assembly_text_value_2>4</assembly_text_value_2><assembly_text_value_0>5</assembly_text_value_0><env_feature>2</env_feature><propagation>9</propagation><collection_date>12/01/2014 00:00</collection_date><env_biome>boreal</env_biome></moleculardata>
+					<moleculardata id="jop82h2c"><id>jop82h2c</id><lat_lon_float_value_1>12</lat_lon_float_value_1><project_name>3</project_name><is_vip>true</is_vip><isol_growth_condt>7</isol_growth_condt><lat_lon_float_value_0>11</lat_lon_float_value_0><seq_meth>Sanger</seq_meth><env_package>air</env_package><submitted_to_insdc>false</submitted_to_insdc><investigation_type>eukaryote</investigation_type><depth>1</depth><geo_loc_name>sea</geo_loc_name><env_material>10</env_material><assembly_text_value_1>6</assembly_text_value_1><assembly_text_value_2>4</assembly_text_value_2><assembly_text_value_0>5</assembly_text_value_0><env_feature>2</env_feature><propagation>9</propagation><collection_date>12/01/2014 00:00</collection_date><env_biome>boreal</env_biome></moleculardata>
+					<moleculardata id="3eifyauj"><id>3eifyauj</id><geo_loc_name>sea</geo_loc_name><lat_lon>{"float_value_0":12,"float_value_1":12}</lat_lon><env_material>10</env_material><project_name>3</project_name><isol_growth_condt>9</isol_growth_condt><assembly>{"text_value_1":"6","text_value_0":"5","text_value_2":"4"}</assembly><seq_meth>8</seq_meth><env_feature>2</env_feature><propagation>8</propagation><env_biome>boreal</env_biome><collection_date>12/01/2014 00:00</collection_date><env_package>built environment</env_package><investigation_type>bacteria_archaea</investigation_type><depth>1</depth></moleculardata>
+					<moleculardata id="q5t7351n"><id>q5t7351n</id><geo_loc_name>aaaaaa</geo_loc_name><lat_lon>a</lat_lon><env_material>a</env_material><project_name>built environment</project_name><isol_growth_condt>plasmid</isol_growth_condt><assembly>1</assembly><seq_meth>{</seq_meth><env_feature>a</env_feature><propagation>a</propagation><env_biome>a</env_biome><collection_date>{</collection_date><env_package>a</env_package><investigation_type>a</investigation_type><depth>a</depth></moleculardata>
+				</moleculardatas>
+			</project>
+			<project id="9eaeoii0"><id>9eaeoii0</id><name>projecttesttest</name><descripton>it is a test for new project</descripton>
+				<moleculardatas>
+					<moleculardata id="1d3ufb1s"><id>1d3ufb1s</id><lat_lon_float_value_1>12</lat_lon_float_value_1><project_name>31</project_name><is_vip>true</is_vip><isol_growth_condt>7</isol_growth_condt><lat_lon_float_value_0>11</lat_lon_float_value_0><seq_meth>Sanger</seq_meth><env_package>air</env_package><submitted_to_insdc>false</submitted_to_insdc><investigation_type>eukaryote</investigation_type><depth>1</depth><geo_loc_name>sea</geo_loc_name><env_material>10</env_material><assembly_text_value_1>6</assembly_text_value_1><assembly_text_value_2>4</assembly_text_value_2><assembly_text_value_0>5</assembly_text_value_0><env_feature>2</env_feature><propagation>10</propagation><collection_date>12/01/2014 00:00</collection_date><env_biome>boreal</env_biome></moleculardata>
+					<moleculardata id="sujzkkrr"><id>sujzkkrr</id><geo_loc_name>sea</geo_loc_name><lat_lon>{"float_value_0":11,"float_value_1":12}</lat_lon><env_material>10</env_material><project_name>3</project_name><isol_growth_condt>7</isol_growth_condt><assembly>{"text_value_1":"6","text_value_0":"5","text_value_2":"4"}</assembly><seq_meth>Sanger</seq_meth><env_feature>2</env_feature><propagation>9</propagation><env_biome>boreal</env_biome><collection_date>12/01/2014 00:00</collection_date><env_package>air</env_package><submitted_to_insdc>false</submitted_to_insdc><investigation_type>eukaryote</investigation_type><depth>1</depth></moleculardata>
+					<moleculardata id="rbpt88fh"><id>rbpt88fh</id><geo_loc_name>sea</geo_loc_name><lat_lon>{"float_value_0":11,"float_value_1":12}</lat_lon><env_material>11</env_material><project_name>3</project_name><isol_growth_condt>7</isol_growth_condt><assembly>{"text_value_1":"6","text_value_0":"5","text_value_2":"4"}</assembly><seq_meth>Sanger</seq_meth><env_feature>2</env_feature><propagation>9</propagation><env_biome>boreal</env_biome><collection_date>2015-01-06T10:00:20+01:00</collection_date><env_package>air</env_package><investigation_type>bacteria_archaea</investigation_type><depth>1</depth></moleculardata>
+				</moleculardatas>
+			</project>
+			<project id="0l5vv8nv"><id>0l5vv8nv</id><name>foooo</name><descripton>blaaa</descripton></project>
+			<project id="4o7x1bdm"><id>4o7x1bdm</id><name>foooo</name><descripton>blaaa</descripton></project>
+			<project id="bp5a19nw"><id>bp5a19nw</id><name>fooo</name><descripton>foooooooo</descripton><moleculardatas /></project>
+			<project id="k8dx4130"><id>k8dx4130</id><name>NewProject Tester</name><descripton>Es ist ein neuer Test</descripton><moleculardatas /></project>
+			<project id="7ilmec8j"><id>7ilmec8j</id><name>00</name><descripton>00</descripton><moleculardatas /></project>
+			<project id="k7yia56m"><id>k7yia56m</id><name>new project</name><descripton>fooo</descripton>
+				<moleculardatas /></project><project id="sgzkhmvx"><id>sgzkhmvx</id><name>neuer reload project test</name><descripton>test the page reload</descripton><moleculardatas /></project>
+			<project id="mkmoqh51"><id>mkmoqh51</id><name>444</name><descripton>444</descripton><moleculardatas /></project>
+			<project id="oca6cprm"><id>oca6cprm</id><name>foooooo</name><descripton>baaarrr</descripton><moleculardatas /></project>
+			<project id="vksh6hfu"><id>vksh6hfu</id><name>5555555</name><descripton>55555555555</descripton><moleculardatas /></project>
+			<project id="i5g8egh3"><id>i5g8egh3</id><name>tamtam</name><descripton>tum</descripton><moleculardatas /></project>
+			<project id="f7jnabif"><id>f7jnabif</id><name>99</name><descripton>99</descripton><moleculardatas /></project><project id="iazi4db3"><id>iazi4db3</id><name>555</name><descripton>555</descripton><moleculardatas /></project>
+		</projects>
+	</user>
+	
+	<user id="15926">
+		<id>15926</id>
+		<projects>
+			<project id="k7yia57m">
+				<id>k7yia57m</id>
+				<name>test</name>
+				<descripton>test</descripton>
+				<moleculardatas>
+					<moleculardata id="wlinrith"><id>wlinrith</id><geo_loc_name>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</geo_loc_name><lat_lon>{"float_value_0":1.111111111111111E29,"float_value_1":1.111111111111111E29}</lat_lon><env_material>111111111111111111111111111111</env_material><project_name>111111111111111111111111111111</project_name><isol_growth_condt>111111111111111111111111111111</isol_growth_condt><assembly>{"text_value_1":"111111111111111111111111111111","text_value_0":"111111111111111111111111111111","text_value_2":"111111111111111111111111111111"}</assembly><seq_meth>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq</seq_meth><env_feature>111111111111111111111111111111</env_feature><propagation>111111111111111111111111111111</propagation><env_biome>111111111111111111111111111111</env_biome><collection_date>a</collection_date><env_package>built environment</env_package><investigation_type>bacteria_archaea</investigation_type><depth>2222222222222222222222222222222222222</depth></moleculardata>
+					<moleculardata id="9w423wi7"><id>9w423wi7</id><geo_loc_name>a</geo_loc_name><lat_lon>{"float_value_0":11,"float_value_1":11}</lat_lon><env_material>a</env_material><project_name>a</project_name><isol_growth_condt>a</isol_growth_condt><assembly>{"text_value_1":"a","text_value_0":"a","text_value_2":"a"}</assembly><seq_meth>a</seq_meth><env_feature>a</env_feature><propagation>a</propagation><env_biome>a</env_biome><collection_date>a</collection_date><env_package>host-associated</env_package><investigation_type>plasmid</investigation_type><depth>1</depth></moleculardata>
+					<moleculardata id="t92s9r36"><id>t92s9r36</id><geo_loc_name>a</geo_loc_name><lat_lon>{"float_value_0":11,"float_value_1":11}</lat_lon><env_material>a</env_material><project_name>a</project_name><isol_growth_condt>a</isol_growth_condt><assembly>{"text_value_1":"a","text_value_0":"a","text_value_2":"a"}</assembly><seq_meth>a</seq_meth><env_feature>a</env_feature><propagation>a</propagation><env_biome>a</env_biome><collection_date>a</collection_date><env_package>host-associated</env_package><investigation_type>plasmid</investigation_type><depth>1</depth></moleculardata>
+								
+				</moleculardatas>
+			</project>
+		</projects>
+	</user>
+	
+
+<user id="10202"><id>10202</id><projects><project id="k737z434"><id>k737z434</id><name>555</name><descripton>5555</descripton><moleculardatas /></project><project id="a54m8ei6"><id>a54m8ei6</id><name>666</name><descripton>666</descripton><moleculardatas><moleculardata id="7efd0nu6"><id>7efd0nu6</id><geo_loc_name>111111111111111111111111111111</geo_loc_name><lat_lon>{"float_value_0":1.111111111111111E29,"float_value_1":1.111111111111111E29}</lat_lon><env_material>111111111111111111111111111111</env_material><project_name>111111111111111111111111111111</project_name><isol_growth_condt>111111111111111111111111111111</isol_growth_condt><assembly>{"text_value_1":"111111111111111111111111111111","text_value_0":"111111111111111111111111111111","text_value_2":"111111111111111111111111111111"}</assembly><seq_meth>111111111111111111111111111111</seq_meth><env_feature>111111111111111111111111111111</env_feature><propagation>111111111111111111111111111111</propagation><env_biome>111111111111111111111111111111</env_biome><collection_date>111111111111111111111111111111</collection_date><env_package>built environment</env_package><investigation_type>bacteria_archaea</investigation_type><depth>2222222222222222222222222222222222222</depth></moleculardata><moleculardata id="ah4aakme"><id>ah4aakme</id><geo_loc_name>12</geo_loc_name><lat_lon>{"float_value_0":14,"float_value_1":15}</lat_lon><env_material>13</env_material><project_name>3</project_name><isol_growth_condt>8</isol_growth_condt><assembly>{"text_value_1":"6","text_value_0":"5","text_value_2":"4"}</assembly><seq_meth>7</seq_meth><env_feature>2</env_feature><propagation>11</propagation><env_biome>10</env_biome><collection_date>9</collection_date><env_package>built environment</env_package><investigation_type>bacteria_archaea</investigation_type><depth>1</depth></moleculardata></moleculardatas></project><project id="du1u634b"><id>du1u634b</id><name>555</name><descripton>555</descripton><moleculardatas /></project></projects></user>
+<user id="11572"><id>11572</id><projects>
+	<project id="tvpu9ohk"><id>tvpu9ohk</id><name>testerererer</name><descripton>tesdtererer</descripton><moleculardatas /></project>
+	<project id="wwv9pmkj"><id>wwv9pmkj</id><name>55555</name><descripton>555555</descripton><moleculardatas /></project></projects></user><user id="11562"><id>11562</id><projects><project id="a30g4o5m"><id>a30g4o5m</id><name>77777</name><descripton>77777</descripton><moleculardatas /></project></projects></user></root>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+
+<entity name="XXWorkflow" local-service="true" remote-service="false">
+
+        <!-- PK fields -->
+    <column name="resourcePrimKey" type="long"></column>
+	<column name="title" type="String"></column>
+	<column name="status" type="int"></column>
+	<column name="statusByUserId" type="long"></column>
+	<column name="statusByUserName" type="String"></column>
+	<column name="statusDate" type="Date"></column>
+		
+	<!-- Finder methods -->
+		
+	<finder name="R_S" return-type="Collection">
+		<finder-column name="resourcePrimKey"></finder-column>
+		<finder-column name="status"></finder-column>
+	</finder>
+		
+	<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink"></reference>
+	<reference package-path="com.liferay.portlet.asset" entity="AssetEntry"></reference>
+	<reference package-path="com.liferay.portlet.social" entity="SocialActivity"></reference>
+
+</entity>
+

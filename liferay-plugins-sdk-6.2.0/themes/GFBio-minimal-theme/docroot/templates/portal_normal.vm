@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+#parse ($init)
+
+<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
+
+<head>
+	<title>$the_title - $company_name</title>
+
+	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
+
+	$theme.include($top_head_include)
+	
+</head>
+
+
+<body id="top" class="$css_class win firefox gecko fx27" >
+
+
+	
+##Contao##########################
+
+<img src="$images_folder/layout/gf_bio_body_bg.jpg" alt="Welcome to GFBio - Header image" style="width:100%; position:fixed; z-index:-1000">
+  	
+<div id="dock">				
+				#dockbar()
+</div>
+	
+<div id="header-bg"></div>
+
+
+
+<div id="OwnHeader">
+	<div id="Own-Header">
+			
+			
+			
+			<!-- indexer::stop -->
+
+			<div class="ce_pageimages header-page-images block" id="header-page-images">
+
+				<figure class="image_container">
+						<img src="$images_folder/layout/header-page-images/header-image-start-minimal.png" width="100%" height="320" alt="header-image-start-minimal">
+				</figure>
+			
+			</div>
+			<!-- indexer::continue -->
+
+			<div id="logo-gfbio">
+				<a id="logo-gfbio-link" href="/"><img id="logo-gfbio" src="$images_folder/layout/gfbiologo-transparent.png"></a>
+			</div>
+				
+			
+		
+			<div id="nav">	
+				#if ($has_navigation || $is_signed_in)
+						#parse ("$full_templates_path/navigation.vm")
+				#end	
+			</div>
+			
+			
+	</div>
+</div>
+##Contao Ende ##############################################
+
+
+
+##<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
+
+$theme.include($body_top_include)
+
+
+
+	<div id="content" style="background-color:#FFFFFF;max-width: 90%;margin: 0px auto;">
+		<div id="inner-content" style="max-width:90%; padding:10px 40px;">
+
+			#if ($selectable)
+				$theme.include($content_include)
+			#else
+				$portletDisplay.recycle()
+	
+				$portletDisplay.setTitle($the_title)
+	
+				$theme.wrapPortlet("portlet.vm", $content_include)
+			#end
+		</div>
+	</div>
+
+
+	<div id="SubMenueBoxes">
+	    
+		<div id="Submenue-Boxes" style="min-height:50px;">
+			
+		</div>
+	</div>
+	
+	<div id="OurPartners">
+	    
+		<div id="Our-Partners">
+	
+				<div id="our-partners-box">
+					<table><tbody><tr>
+					<td><h2 class="ce_headline">our partners</h2></td>
+					<td><div class="ce_text partners-list-link block" id="partners-list-link">
+		  				<h2><a title="Partner" href="$portal_url/partner">&gt;&gt; See the complete list</a></h2>    
+					</div></td>
+					</tr></tbody></table>
+					<div class="ce_text block">
+						<p align="center"><img src="$images_folder/public/Logos%20Member/GFBiologofooter.png" alt="" width="962" height="140"></p>  
+		  			</div>
+			   </div>
+		</div>
+	 </div>
+	
+	<div id="FullwidthFooter">
+	    
+		<div id="Fullwidth-Footer">
+	
+			<div id="footer-content">
+				<div class="ce_text footer-copyright block" id="footer-copyright" style="width:100%; text-align:center;">
+					<p>&copy; 2013-<span>2014 GFBio&nbsp;</span>- All Rights reserved.</p>  
+	  			</div>
+			</div>
+		</div>
+	</div>
+
+$theme.include($body_bottom_include)
+
+$theme.include($bottom_include)
+
+#js ("$javascript_folder/jquery-1.10.2.js")
+#js ("$javascript_folder/jquery-1.10.2-ui.js")
+<script>
+(function($) {
+    $(document).ready(function() {
+      $(document).accordion({
+        // Put custom options here
+        heightStyle: 'content',
+        header: 'div.toggler',
+        collapsible: true
+      });
+      var activate = function(tog) {
+        var tgs = $('div.toggler');
+        tgs.removeClass('active');
+        tog.addClass('active');
+        tgs.next('div.accordion').attr('aria-hidden', 'true');
+        tog.next('div.accordion').attr('aria-hidden', 'false');
+      };
+      $('div.toggler').focus(function(e) {
+        $('div.toggler').attr('tabindex', 0);
+        $(this).attr('tabindex', -1);
+      }).blur(function() {
+        $(this).attr('tabindex', 0);
+      }).click(function() {
+        activate($(this));
+      }).keypress(function(event) {
+        if (event.keyCode == 13) activate($(this));
+      });
+    });
+  })(jQuery);
+</script>
+
+
+</body>
+
+</html>
