@@ -5,7 +5,6 @@
 @import url(color_schemes/common.css);
 @import url(color_schemes/dark.css);
 @import url(color_schemes/light.css);
-@import url(http://fonts.googleapis.com/css?family=Roboto);
 
 $dockbarGradientEnd: #1273C7;
 $dockbarGradientStart: #118ADE;
@@ -923,11 +922,3 @@ $dockbarOpenGradientStart: #0EA6F9;
 		
 } */
 
-
-.robotofont,ui-dialog
-{
-	background-color: transparent;
-	color: #333;
-	font-family: 'Roboto' !important;
-	font-size: 13px ;
-}
