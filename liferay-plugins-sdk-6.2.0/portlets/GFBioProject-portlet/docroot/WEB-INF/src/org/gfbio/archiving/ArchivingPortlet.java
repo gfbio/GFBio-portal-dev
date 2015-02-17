@@ -8,6 +8,11 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.gfbio.model.Project;
+import org.gfbio.service.ProjectLocalServiceUtil;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -24,6 +29,33 @@ public class ArchivingPortlet extends GenericPortlet {
             RenderRequest renderRequest, RenderResponse renderResponse)
         throws IOException, PortletException {
 
+    	//get a project
+    	try {
+			Project project = ProjectLocalServiceUtil.getProject(1);
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	//add or update a project
+    	try {
+			long projectID = ProjectLocalServiceUtil.updateProject(0, "MyProject", "my first project");
+			
+			if(projectID > 0)
+				System.out.println("Project "+projectID+ " created");
+			else{
+				System.out.println("Project "+projectID+ " updated");
+			}
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	
         include(viewTemplate, renderRequest, renderResponse);
     }
 
