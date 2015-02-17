@@ -3,6 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="org.gfbio.model.Project" />
+	<import class="org.gfbio.model.tab_ResearchObject" />
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
 		<cache usage="read-write" />
 		<id name="projectID" type="long">
@@ -10,5 +11,13 @@
 		</id>
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.tab_ResearchObjectImpl" table="gfbio_tab_ResearchObject">
+		<cache usage="read-write" />
+		<id name="ro_ID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="ro_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ro_meta" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

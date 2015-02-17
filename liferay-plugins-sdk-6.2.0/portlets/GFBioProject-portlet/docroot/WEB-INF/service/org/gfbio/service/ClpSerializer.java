@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import org.gfbio.model.ProjectClp;
+import org.gfbio.model.tab_ResearchObjectClp;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -106,6 +107,10 @@ public class ClpSerializer {
 			return translateInputProject(oldModel);
 		}
 
+		if (oldModelClassName.equals(tab_ResearchObjectClp.class.getName())) {
+			return translateInputtab_ResearchObject(oldModel);
+		}
+
 		return oldModel;
 	}
 
@@ -131,6 +136,16 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateInputtab_ResearchObject(BaseModel<?> oldModel) {
+		tab_ResearchObjectClp oldClpModel = (tab_ResearchObjectClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.gettab_ResearchObjectRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInput(Object obj) {
 		if (obj instanceof BaseModel<?>) {
 			return translateInput((BaseModel<?>)obj);
@@ -150,6 +165,75 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("org.gfbio.model.impl.ProjectImpl")) {
 			return translateOutputProject(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"org.gfbio.model.impl.tab_ResearchObjectImpl")) {
+			return translateOutputtab_ResearchObject(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
 		}
 
 		return oldModel;
@@ -236,6 +320,10 @@ public class ClpSerializer {
 			return new org.gfbio.NoSuchProjectException();
 		}
 
+		if (className.equals("org.gfbio.NoSuchtab_ResearchObjectException")) {
+			return new org.gfbio.NoSuchtab_ResearchObjectException();
+		}
+
 		return throwable;
 	}
 
@@ -245,6 +333,17 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setProjectRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputtab_ResearchObject(
+		BaseModel<?> oldModel) {
+		tab_ResearchObjectClp newModel = new tab_ResearchObjectClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.settab_ResearchObjectRemoteModel(oldModel);
 
 		return newModel;
 	}

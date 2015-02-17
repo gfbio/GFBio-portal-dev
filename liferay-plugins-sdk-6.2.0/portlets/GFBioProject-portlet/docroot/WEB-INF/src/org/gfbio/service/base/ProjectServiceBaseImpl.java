@@ -26,6 +26,7 @@ import org.gfbio.model.Project;
 
 import org.gfbio.service.ProjectService;
 import org.gfbio.service.persistence.ProjectPersistence;
+import org.gfbio.service.persistence.tab_ResearchObjectPersistence;
 
 import javax.sql.DataSource;
 
@@ -103,6 +104,63 @@ public abstract class ProjectServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setProjectPersistence(ProjectPersistence projectPersistence) {
 		this.projectPersistence = projectPersistence;
+	}
+
+	/**
+	 * Returns the tab_ research object local service.
+	 *
+	 * @return the tab_ research object local service
+	 */
+	public org.gfbio.service.tab_ResearchObjectLocalService gettab_ResearchObjectLocalService() {
+		return tab_ResearchObjectLocalService;
+	}
+
+	/**
+	 * Sets the tab_ research object local service.
+	 *
+	 * @param tab_ResearchObjectLocalService the tab_ research object local service
+	 */
+	public void settab_ResearchObjectLocalService(
+		org.gfbio.service.tab_ResearchObjectLocalService tab_ResearchObjectLocalService) {
+		this.tab_ResearchObjectLocalService = tab_ResearchObjectLocalService;
+	}
+
+	/**
+	 * Returns the tab_ research object remote service.
+	 *
+	 * @return the tab_ research object remote service
+	 */
+	public org.gfbio.service.tab_ResearchObjectService gettab_ResearchObjectService() {
+		return tab_ResearchObjectService;
+	}
+
+	/**
+	 * Sets the tab_ research object remote service.
+	 *
+	 * @param tab_ResearchObjectService the tab_ research object remote service
+	 */
+	public void settab_ResearchObjectService(
+		org.gfbio.service.tab_ResearchObjectService tab_ResearchObjectService) {
+		this.tab_ResearchObjectService = tab_ResearchObjectService;
+	}
+
+	/**
+	 * Returns the tab_ research object persistence.
+	 *
+	 * @return the tab_ research object persistence
+	 */
+	public tab_ResearchObjectPersistence gettab_ResearchObjectPersistence() {
+		return tab_ResearchObjectPersistence;
+	}
+
+	/**
+	 * Sets the tab_ research object persistence.
+	 *
+	 * @param tab_ResearchObjectPersistence the tab_ research object persistence
+	 */
+	public void settab_ResearchObjectPersistence(
+		tab_ResearchObjectPersistence tab_ResearchObjectPersistence) {
+		this.tab_ResearchObjectPersistence = tab_ResearchObjectPersistence;
 	}
 
 	/**
@@ -282,6 +340,12 @@ public abstract class ProjectServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.ProjectService projectService;
 	@BeanReference(type = ProjectPersistence.class)
 	protected ProjectPersistence projectPersistence;
+	@BeanReference(type = org.gfbio.service.tab_ResearchObjectLocalService.class)
+	protected org.gfbio.service.tab_ResearchObjectLocalService tab_ResearchObjectLocalService;
+	@BeanReference(type = org.gfbio.service.tab_ResearchObjectService.class)
+	protected org.gfbio.service.tab_ResearchObjectService tab_ResearchObjectService;
+	@BeanReference(type = tab_ResearchObjectPersistence.class)
+	protected tab_ResearchObjectPersistence tab_ResearchObjectPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

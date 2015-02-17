@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.messaging.Message;
 import org.gfbio.service.ClpSerializer;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ProjectServiceUtil;
+import org.gfbio.service.tab_ResearchObjectLocalServiceUtil;
+import org.gfbio.service.tab_ResearchObjectServiceUtil;
 
 /**
  * @author Felicitas Loeffler
@@ -39,6 +41,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			ProjectLocalServiceUtil.clearService();
 
 			ProjectServiceUtil.clearService();
+			tab_ResearchObjectLocalServiceUtil.clearService();
+
+			tab_ResearchObjectServiceUtil.clearService();
 		}
 	}
 }

@@ -6,4 +6,9 @@
 		<field name="name" type="String" />
 		<field name="description" type="String" />
 	</model>
+	<model name="org.gfbio.model.tab_ResearchObject">
+		<field name="ro_ID" type="long" />
+		<field name="ro_name" type="String" />
+		<field name="ro_meta" type="String" />
+	</model>
 </model-hints>

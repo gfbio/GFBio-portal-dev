@@ -17,8 +17,22 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.tab_ResearchObjectModelImpl">
+		<attributes>
+			<id name="ro_ID" />
+			<basic name="ro_name" />
+			<basic name="ro_meta" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="org.gfbio.model.impl.ProjectImpl" name="Project">
 		<table name="gfbio_Project" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.tab_ResearchObjectImpl" name="tab_ResearchObject">
+		<table name="gfbio_tab_ResearchObject" />
 		<attributes />
 	</entity>
 </entity-mappings>

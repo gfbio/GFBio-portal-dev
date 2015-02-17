@@ -4,4 +4,7 @@
 	<bean id="org.gfbio.service.ProjectLocalService" class="org.gfbio.service.impl.ProjectLocalServiceImpl" />
 	<bean id="org.gfbio.service.ProjectService" class="org.gfbio.service.impl.ProjectServiceImpl" />
 	<bean id="org.gfbio.service.persistence.ProjectPersistence" class="org.gfbio.service.persistence.ProjectPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gfbio.service.tab_ResearchObjectLocalService" class="org.gfbio.service.impl.tab_ResearchObjectLocalServiceImpl" />
+	<bean id="org.gfbio.service.tab_ResearchObjectService" class="org.gfbio.service.impl.tab_ResearchObjectServiceImpl" />
+	<bean id="org.gfbio.service.persistence.tab_ResearchObjectPersistence" class="org.gfbio.service.persistence.tab_ResearchObjectPersistenceImpl" parent="basePersistence" />
 </beans>

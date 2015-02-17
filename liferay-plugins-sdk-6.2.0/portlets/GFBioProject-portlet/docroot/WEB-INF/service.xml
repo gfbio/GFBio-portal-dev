@@ -32,4 +32,25 @@
 		</finder>
 	</entity>
 	
+	<entity name="tab_ResearchObject" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		<column name="ro_ID" type="long" primary="true" />
+
+
+		<!-- Other fields -->
+		<column name="ro_name" type="String" />
+		<column name="ro_meta" type="String" />
+		
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="ro_name" />
+		</order>
+
+		<!-- Finder methods -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="ro_name" />
+		</finder>
+	</entity>
+	
 </service-builder>
