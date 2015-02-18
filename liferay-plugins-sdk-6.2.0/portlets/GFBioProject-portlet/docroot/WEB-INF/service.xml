@@ -4,7 +4,7 @@
 	<author>Felicitas Loeffler</author>
 	<namespace>gfbio</namespace>
 	
-<entity name="Project" local-service="true" remote-service="true">
+<entity name="Project" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 
 		<!-- PK fields -->
 

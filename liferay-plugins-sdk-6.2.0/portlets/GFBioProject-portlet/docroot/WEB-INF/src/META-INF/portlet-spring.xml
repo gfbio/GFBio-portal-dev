@@ -3,5 +3,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="org.gfbio.service.ProjectLocalService" class="org.gfbio.service.impl.ProjectLocalServiceImpl" />
 	<bean id="org.gfbio.service.ProjectService" class="org.gfbio.service.impl.ProjectServiceImpl" />
-	<bean id="org.gfbio.service.persistence.ProjectPersistence" class="org.gfbio.service.persistence.ProjectPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gfbio.service.persistence.ProjectPersistence" class="org.gfbio.service.persistence.ProjectPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 </beans>

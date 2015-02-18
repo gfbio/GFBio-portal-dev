@@ -4,7 +4,6 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="org.gfbio.model.Project" />
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
-		<cache usage="read-write" />
 		<id name="projectID" type="long">
 			<generator class="assigned" />
 		</id>
