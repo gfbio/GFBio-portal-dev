@@ -8,7 +8,6 @@
 	<import class="org.gfbio.model.Project_User_Worker" />
 	<import class="org.gfbio.model.ResearchObject" />
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
-		<cache usage="read-write" />
 		<id name="projectID" type="long">
 			<generator class="assigned" />
 		</id>

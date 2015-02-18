@@ -51,7 +51,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Project project=null;
 		try {
 			project = projectPersistence.findByPrimaryKey(projectID);
-			Long foo = Project_User_WorkerLocalServiceUtil.updateProjectUserWorker(projectID, userID);
+			//Long foo = Project_User_WorkerLocalServiceUtil.updateProjectUserWorker(projectID, userID);
 		} catch (NoSuchProjectException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
