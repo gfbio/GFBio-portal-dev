@@ -118,7 +118,7 @@ $theme.include($body_top_include)
 	
 			<div id="footer-content">
 				<div class="ce_text footer-copyright block" id="footer-copyright" style="width:100%; text-align:center;">
-					<p>&copy; 2013-<span>2014 GFBio&nbsp;</span>- All Rights reserved.</p>  
+					<p>&copy; 2013-2015 GFBio&nbsp;&mdash; All rights reserved.</p>  
 	  			</div>
 			</div>
 		</div>
@@ -128,8 +128,8 @@ $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
 
-#js ("$javascript_folder/jquery-1.10.2.js")
-#js ("$javascript_folder/jquery-1.10.2-ui.js")
+#js ("$javascript_folder/jquery-1.11.2.min.js")
+#js ("$javascript_folder/jquery-1.11.2-ui.min.js")
 <script>
 (function($) {
     $(document).ready(function() {
