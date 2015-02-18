@@ -20,11 +20,17 @@ import com.liferay.portal.kernel.messaging.Message;
 import org.gfbio.service.ClpSerializer;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ProjectServiceUtil;
-import org.gfbio.service.tab_ResearchObjectLocalServiceUtil;
-import org.gfbio.service.tab_ResearchObjectServiceUtil;
+import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
+import org.gfbio.service.Project_ResearchObjectServiceUtil;
+import org.gfbio.service.Project_User_PILocalServiceUtil;
+import org.gfbio.service.Project_User_PIServiceUtil;
+import org.gfbio.service.Project_User_WorkerLocalServiceUtil;
+import org.gfbio.service.Project_User_WorkerServiceUtil;
+import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.ResearchObjectServiceUtil;
 
 /**
- * @author Felicitas Loeffler
+ * @author froemm
  */
 public class ClpMessageListener extends BaseMessageListener {
 	public static String getServletContextName() {
@@ -41,9 +47,18 @@ public class ClpMessageListener extends BaseMessageListener {
 			ProjectLocalServiceUtil.clearService();
 
 			ProjectServiceUtil.clearService();
-			tab_ResearchObjectLocalServiceUtil.clearService();
+			Project_ResearchObjectLocalServiceUtil.clearService();
 
-			tab_ResearchObjectServiceUtil.clearService();
+			Project_ResearchObjectServiceUtil.clearService();
+			Project_User_PILocalServiceUtil.clearService();
+
+			Project_User_PIServiceUtil.clearService();
+			Project_User_WorkerLocalServiceUtil.clearService();
+
+			Project_User_WorkerServiceUtil.clearService();
+			ResearchObjectLocalServiceUtil.clearService();
+
+			ResearchObjectServiceUtil.clearService();
 		}
 	}
 }

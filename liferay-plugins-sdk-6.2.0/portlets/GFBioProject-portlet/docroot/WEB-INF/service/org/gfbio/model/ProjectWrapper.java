@@ -17,6 +17,7 @@ package org.gfbio.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link Project}.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author froemm
  * @see Project
  * @generated
  */
@@ -51,6 +52,9 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 		attributes.put("projectID", getProjectID());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("begin", getBegin());
+		attributes.put("end", getEnd());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -73,6 +77,24 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date begin = (Date)attributes.get("begin");
+
+		if (begin != null) {
+			setBegin(begin);
+		}
+
+		Date end = (Date)attributes.get("end");
+
+		if (end != null) {
+			setEnd(end);
+		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -154,6 +176,66 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 	@Override
 	public void setDescription(java.lang.String description) {
 		_project.setDescription(description);
+	}
+
+	/**
+	* Returns the begin of this project.
+	*
+	* @return the begin of this project
+	*/
+	@Override
+	public java.util.Date getBegin() {
+		return _project.getBegin();
+	}
+
+	/**
+	* Sets the begin of this project.
+	*
+	* @param begin the begin of this project
+	*/
+	@Override
+	public void setBegin(java.util.Date begin) {
+		_project.setBegin(begin);
+	}
+
+	/**
+	* Returns the end of this project.
+	*
+	* @return the end of this project
+	*/
+	@Override
+	public java.util.Date getEnd() {
+		return _project.getEnd();
+	}
+
+	/**
+	* Sets the end of this project.
+	*
+	* @param end the end of this project
+	*/
+	@Override
+	public void setEnd(java.util.Date end) {
+		_project.setEnd(end);
+	}
+
+	/**
+	* Returns the status of this project.
+	*
+	* @return the status of this project
+	*/
+	@Override
+	public java.lang.String getStatus() {
+		return _project.getStatus();
+	}
+
+	/**
+	* Sets the status of this project.
+	*
+	* @param status the status of this project
+	*/
+	@Override
+	public void setStatus(java.lang.String status) {
+		_project.setStatus(status);
 	}
 
 	@Override

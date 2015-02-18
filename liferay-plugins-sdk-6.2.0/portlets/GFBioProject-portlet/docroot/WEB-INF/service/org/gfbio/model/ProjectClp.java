@@ -28,11 +28,12 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Felicitas Loeffler
+ * @author froemm
  */
 public class ProjectClp extends BaseModelImpl<Project> implements Project {
 	public ProjectClp() {
@@ -75,6 +76,9 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		attributes.put("projectID", getProjectID());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("begin", getBegin());
+		attributes.put("end", getEnd());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -97,6 +101,24 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date begin = (Date)attributes.get("begin");
+
+		if (begin != null) {
+			setBegin(begin);
+		}
+
+		Date end = (Date)attributes.get("end");
+
+		if (end != null) {
+			setEnd(end);
+		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -162,6 +184,75 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 				Method method = clazz.getMethod("setDescription", String.class);
 
 				method.invoke(_projectRemoteModel, description);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getBegin() {
+		return _begin;
+	}
+
+	@Override
+	public void setBegin(Date begin) {
+		_begin = begin;
+
+		if (_projectRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setBegin", Date.class);
+
+				method.invoke(_projectRemoteModel, begin);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getEnd() {
+		return _end;
+	}
+
+	@Override
+	public void setEnd(Date end) {
+		_end = end;
+
+		if (_projectRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEnd", Date.class);
+
+				method.invoke(_projectRemoteModel, end);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(String status) {
+		_status = status;
+
+		if (_projectRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStatus", String.class);
+
+				method.invoke(_projectRemoteModel, status);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -241,6 +332,9 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		clone.setProjectID(getProjectID());
 		clone.setName(getName());
 		clone.setDescription(getDescription());
+		clone.setBegin(getBegin());
+		clone.setEnd(getEnd());
+		clone.setStatus(getStatus());
 
 		return clone;
 	}
@@ -291,7 +385,7 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
@@ -299,6 +393,12 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", begin=");
+		sb.append(getBegin());
+		sb.append(", end=");
+		sb.append(getEnd());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -306,7 +406,7 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project");
@@ -324,6 +424,18 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>begin</column-name><column-value><![CDATA[");
+		sb.append(getBegin());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>end</column-name><column-value><![CDATA[");
+		sb.append(getEnd());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -333,6 +445,9 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 	private long _projectID;
 	private String _name;
 	private String _description;
+	private Date _begin;
+	private Date _end;
+	private String _status;
 	private BaseModel<?> _projectRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

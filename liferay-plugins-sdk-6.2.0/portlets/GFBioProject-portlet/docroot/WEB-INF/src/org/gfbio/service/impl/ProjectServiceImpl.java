@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.base.ProjectServiceBaseImpl
  * @see org.gfbio.service.ProjectServiceUtil
  */
+
 public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:

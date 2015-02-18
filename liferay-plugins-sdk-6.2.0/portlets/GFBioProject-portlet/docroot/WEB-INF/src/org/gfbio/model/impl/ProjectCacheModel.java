@@ -25,17 +25,19 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Project in entity cache.
  *
- * @author Felicitas Loeffler
+ * @author froemm
  * @see Project
  * @generated
  */
 public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{projectID=");
 		sb.append(projectID);
@@ -43,6 +45,12 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", begin=");
+		sb.append(begin);
+		sb.append(", end=");
+		sb.append(end);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -68,6 +76,27 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 			projectImpl.setDescription(description);
 		}
 
+		if (begin == Long.MIN_VALUE) {
+			projectImpl.setBegin(null);
+		}
+		else {
+			projectImpl.setBegin(new Date(begin));
+		}
+
+		if (end == Long.MIN_VALUE) {
+			projectImpl.setEnd(null);
+		}
+		else {
+			projectImpl.setEnd(new Date(end));
+		}
+
+		if (status == null) {
+			projectImpl.setStatus(StringPool.BLANK);
+		}
+		else {
+			projectImpl.setStatus(status);
+		}
+
 		projectImpl.resetOriginalValues();
 
 		return projectImpl;
@@ -78,6 +107,9 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		projectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		begin = objectInput.readLong();
+		end = objectInput.readLong();
+		status = objectInput.readUTF();
 	}
 
 	@Override
@@ -98,9 +130,22 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(begin);
+		objectOutput.writeLong(end);
+
+		if (status == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(status);
+		}
 	}
 
 	public long projectID;
 	public String name;
 	public String description;
+	public long begin;
+	public long end;
+	public String status;
 }

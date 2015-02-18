@@ -30,7 +30,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * credentials because this service can only be accessed from within the same
  * VM.
  *
- * @author Felicitas Loeffler
+ * @author froemm
  * @see ProjectLocalServiceUtil
  * @see org.gfbio.service.base.ProjectLocalServiceBaseImpl
  * @see org.gfbio.service.impl.ProjectLocalServiceImpl

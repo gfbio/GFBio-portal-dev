@@ -12,16 +12,68 @@
 			<id name="projectID" />
 			<basic name="name" />
 			<basic name="description" />
+			<basic name="begin">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="end">
+				<column name="END_" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.tab_ResearchObjectModelImpl">
+	<mapped-superclass class="org.gfbio.model.impl.Project_ResearchObjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.Project_ResearchObjectPK" />
 		<attributes>
-			<id name="ro_ID" />
-			<basic name="ro_name" />
-			<basic name="ro_meta" />
+			<id name="projectID" />
+			<id name="researchobjectID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Project_User_PIModelImpl">
+		<id-class class="org.gfbio.service.persistence.Project_User_PIPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="userID" />
+			<basic name="begin">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="end">
+				<column name="END_" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Project_User_WorkerModelImpl">
+		<id-class class="org.gfbio.service.persistence.Project_User_WorkerPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="userID" />
+			<basic name="begin">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="end">
+				<column name="END_" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.ResearchObjectModelImpl">
+		<attributes>
+			<id name="researchobjectID" />
+			<basic name="name" />
+			<basic name="metadata" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -31,8 +83,20 @@
 		<table name="gfbio_Project" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.tab_ResearchObjectImpl" name="tab_ResearchObject">
-		<table name="gfbio_tab_ResearchObject" />
+	<entity class="org.gfbio.model.impl.Project_ResearchObjectImpl" name="Project_ResearchObject">
+		<table name="gfbio_Project_ResearchObject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Project_User_PIImpl" name="Project_User_PI">
+		<table name="gfbio_Project_User_PI" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Project_User_WorkerImpl" name="Project_User_Worker">
+		<table name="gfbio_Project_User_Worker" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.ResearchObjectImpl" name="ResearchObject">
+		<table name="gfbio_ResearchObject" />
 		<attributes />
 	</entity>
 </entity-mappings>

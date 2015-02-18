@@ -30,6 +30,8 @@ public class ArchivingPortlet extends GenericPortlet {
         throws IOException, PortletException {
 
     	//get a project
+    	
+    	
     	try {
 			Project project = ProjectLocalServiceUtil.getProject(1);
 		} catch (PortalException e) {

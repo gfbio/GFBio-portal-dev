@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ProjectLocalService}.
  *
- * @author Felicitas Loeffler
+ * @author froemm
  * @see ProjectLocalService
  * @generated
  */

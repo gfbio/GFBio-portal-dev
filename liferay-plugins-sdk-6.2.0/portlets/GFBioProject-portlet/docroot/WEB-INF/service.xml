@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 <service-builder package-path="org.gfbio">
-	<author>Felicitas Loeffler</author>
+	<author>froemm</author>
 	<namespace>gfbio</namespace>
 	
-<entity name="Project" local-service="true" remote-service="true">
+
+	<!-- Project -->
+	
+	<entity name="Project" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-
 		<column name="projectID" type="long" primary="true" />
 
-
 		<!-- Other fields -->
-
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="begin" type="Date" />
+		<column name="end" type="Date" />
+		<column name="status" type="String" />
+		
 		
 		<!-- Order -->
-
 		<order by="asc">
 			<order-column name="name" />
 		</order>
 
 		<!-- Finder methods -->
-
 		<finder name="Name" return-type="Collection">
 			<finder-column name="name" />
 		</finder>
@@ -31,26 +33,104 @@
 			<finder-column name="projectID" />
 		</finder>
 	</entity>
+
+	<!-- Relationship between Project and ResearchObject  -->
 	
-	<entity name="tab_ResearchObject" local-service="true" remote-service="true">
+	<entity name="Project_ResearchObject" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
-		<column name="ro_ID" type="long" primary="true" />
+		<column name="projectID" type="long" primary="true" />
+		<column name="researchobjectID" type="long" primary="true" />		
 
+		
+		<!-- Finder methods -->
+		<finder name="ProjectID" return-type="Collection">
+			<finder-column name="projectID" />
+		</finder>
+		<finder name="ResearchObjectID" return-type="Collection">
+			<finder-column name="researchobjectID" />
+		</finder>
+	</entity>
+	
+	<!-- Relationship between Project and User as "PI of"    -->
+	
+	<entity name="Project_User_PI" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		<column name="projectID" type="long" primary="true" />
+		<column name="userID" type="long" primary="true" />
+		
 
 		<!-- Other fields -->
-		<column name="ro_name" type="String" />
-		<column name="ro_meta" type="String" />
+		<column name="begin" type="Date" />
+		<column name="end" type="Date" />
+
+		
+		<!-- Finder methods -->
+		<finder name="ProjectID" return-type="Collection">
+			<finder-column name="projectID" />
+		</finder>
+		<finder name="UserID" return-type="Collection">
+			<finder-column name="userID" />
+		</finder>
+	</entity>
+	
+	
+	<!-- Relationship between Project and User as "works in"   -->
+	
+	
+	<entity name="Project_User" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		<column name="projectID" type="long" primary="true" />
+		<column name="userID" 	 type="long" primary="true" />
+		
+
+		<!-- Other fields -->
+		<column name="begin" type="Date" />
+		<column name="end" type="Date" />
+
+		
+		<!-- Finder methods -->
+		<finder name="ProjectID" return-type="Collection">
+			<finder-column name="projectID" />
+		</finder>
+		<finder name="UserID" return-type="Collection">
+			<finder-column name="userID" />
+		</finder>
+
+		<finder name="findByPrimaryKey" return-type="Project_User_Worker">
+			<finder-column	name="projectID" />		
+			<finder-column	name="userID" />
+		</finder>
+		
+	</entity>
+	
+
+	<!-- Research Object  -->
+	
+	
+	<entity name="ResearchObject" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+		<column name="researchobjectID" type="long" primary="true" />
+
+		<!-- Other fields -->
+		<column name="name" type="String" />
+		<column name="metadata" type="String" />
 		
 		<!-- Order -->
 		<order by="asc">
-			<order-column name="ro_name" />
+			<order-column name="name" />
 		</order>
 
 		<!-- Finder methods -->
 		<finder name="Name" return-type="Collection">
-			<finder-column name="ro_name" />
+			<finder-column name="name" />
 		</finder>
 	</entity>
+
+	
+	
 	
 </service-builder>

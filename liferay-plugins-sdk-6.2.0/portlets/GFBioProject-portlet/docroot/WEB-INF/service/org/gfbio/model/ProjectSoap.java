@@ -17,12 +17,13 @@ package org.gfbio.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * This class is used by SOAP remote services, specifically {@link org.gfbio.service.http.ProjectServiceSoap}.
  *
- * @author Felicitas Loeffler
+ * @author froemm
  * @see org.gfbio.service.http.ProjectServiceSoap
  * @generated
  */
@@ -33,6 +34,9 @@ public class ProjectSoap implements Serializable {
 		soapModel.setProjectID(model.getProjectID());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setBegin(model.getBegin());
+		soapModel.setEnd(model.getEnd());
+		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
 	}
@@ -109,7 +113,34 @@ public class ProjectSoap implements Serializable {
 		_description = description;
 	}
 
+	public Date getBegin() {
+		return _begin;
+	}
+
+	public void setBegin(Date begin) {
+		_begin = begin;
+	}
+
+	public Date getEnd() {
+		return _end;
+	}
+
+	public void setEnd(Date end) {
+		_end = end;
+	}
+
+	public String getStatus() {
+		return _status;
+	}
+
+	public void setStatus(String status) {
+		_status = status;
+	}
+
 	private long _projectID;
 	private String _name;
 	private String _description;
+	private Date _begin;
+	private Date _end;
+	private String _status;
 }

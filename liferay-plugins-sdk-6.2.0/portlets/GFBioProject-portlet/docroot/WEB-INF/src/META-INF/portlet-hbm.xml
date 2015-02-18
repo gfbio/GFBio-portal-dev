@@ -3,7 +3,10 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="org.gfbio.model.Project" />
-	<import class="org.gfbio.model.tab_ResearchObject" />
+	<import class="org.gfbio.model.Project_ResearchObject" />
+	<import class="org.gfbio.model.Project_User_PI" />
+	<import class="org.gfbio.model.Project_User_Worker" />
+	<import class="org.gfbio.model.ResearchObject" />
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
 		<cache usage="read-write" />
 		<id name="projectID" type="long">
@@ -11,13 +14,41 @@
 		</id>
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="begin" type="org.hibernate.type.TimestampType" />
+		<property name="end" type="org.hibernate.type.TimestampType" column="end_" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="org.gfbio.model.impl.tab_ResearchObjectImpl" table="gfbio_tab_ResearchObject">
+	<class name="org.gfbio.model.impl.Project_ResearchObjectImpl" table="gfbio_Project_ResearchObject">
 		<cache usage="read-write" />
-		<id name="ro_ID" type="long">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_ResearchObjectPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchobjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+	</class>
+	<class name="org.gfbio.model.impl.Project_User_PIImpl" table="gfbio_Project_User_PI">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_User_PIPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="begin" type="org.hibernate.type.TimestampType" />
+		<property name="end" type="org.hibernate.type.TimestampType" column="end_" />
+	</class>
+	<class name="org.gfbio.model.impl.Project_User_WorkerImpl" table="gfbio_Project_User_Worker">
+		<cache usage="read-write" />
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_User_WorkerPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="begin" type="org.hibernate.type.TimestampType" />
+		<property name="end" type="org.hibernate.type.TimestampType" column="end_" />
+	</class>
+	<class name="org.gfbio.model.impl.ResearchObjectImpl" table="gfbio_ResearchObject">
+		<cache usage="read-write" />
+		<id name="researchobjectID" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="ro_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="ro_meta" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="metadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>
