@@ -1,6 +1,8 @@
 package org.gfbio.archiving;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -29,22 +31,11 @@ public class ArchivingPortlet extends GenericPortlet {
             RenderRequest renderRequest, RenderResponse renderResponse)
         throws IOException, PortletException {
 
-    	//get a project
-    	
-    	
-    	try {
-			Project project = ProjectLocalServiceUtil.getProject(1);
-		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
     	
     	//add or update a project
     	try {
-			long projectID = ProjectLocalServiceUtil.updateProject(0, "MyProject", "my first project");
+			long projectID = ProjectLocalServiceUtil.updateProject(0, 0, "DoctorToWarp", "it is a test", new Date(23/11/1963), new Date(05/04/2063), "fictive");
 			
 			if(projectID > 0)
 				System.out.println("Project "+projectID+ " created");

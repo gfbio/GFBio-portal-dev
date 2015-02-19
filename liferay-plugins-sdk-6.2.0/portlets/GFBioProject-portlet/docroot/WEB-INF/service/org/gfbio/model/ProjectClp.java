@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author froemm
+ * @author Felicitas Loeffler
  */
 public class ProjectClp extends BaseModelImpl<Project> implements Project {
 	public ProjectClp() {
@@ -76,8 +76,8 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		attributes.put("projectID", getProjectID());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("begin", getBegin());
-		attributes.put("end", getEnd());
+		attributes.put("startDate", getStartDate());
+		attributes.put("endDate", getEndDate());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -103,16 +103,16 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 			setDescription(description);
 		}
 
-		Date begin = (Date)attributes.get("begin");
+		Date startDate = (Date)attributes.get("startDate");
 
-		if (begin != null) {
-			setBegin(begin);
+		if (startDate != null) {
+			setStartDate(startDate);
 		}
 
-		Date end = (Date)attributes.get("end");
+		Date endDate = (Date)attributes.get("endDate");
 
-		if (end != null) {
-			setEnd(end);
+		if (endDate != null) {
+			setEndDate(endDate);
 		}
 
 		String status = (String)attributes.get("status");
@@ -192,21 +192,21 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 	}
 
 	@Override
-	public Date getBegin() {
-		return _begin;
+	public Date getStartDate() {
+		return _startDate;
 	}
 
 	@Override
-	public void setBegin(Date begin) {
-		_begin = begin;
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
 
 		if (_projectRemoteModel != null) {
 			try {
 				Class<?> clazz = _projectRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setBegin", Date.class);
+				Method method = clazz.getMethod("setStartDate", Date.class);
 
-				method.invoke(_projectRemoteModel, begin);
+				method.invoke(_projectRemoteModel, startDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -215,21 +215,21 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 	}
 
 	@Override
-	public Date getEnd() {
-		return _end;
+	public Date getEndDate() {
+		return _endDate;
 	}
 
 	@Override
-	public void setEnd(Date end) {
-		_end = end;
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
 
 		if (_projectRemoteModel != null) {
 			try {
 				Class<?> clazz = _projectRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setEnd", Date.class);
+				Method method = clazz.getMethod("setEndDate", Date.class);
 
-				method.invoke(_projectRemoteModel, end);
+				method.invoke(_projectRemoteModel, endDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -332,8 +332,8 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		clone.setProjectID(getProjectID());
 		clone.setName(getName());
 		clone.setDescription(getDescription());
-		clone.setBegin(getBegin());
-		clone.setEnd(getEnd());
+		clone.setStartDate(getStartDate());
+		clone.setEndDate(getEndDate());
 		clone.setStatus(getStatus());
 
 		return clone;
@@ -393,10 +393,10 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
-		sb.append(", begin=");
-		sb.append(getBegin());
-		sb.append(", end=");
-		sb.append(getEnd());
+		sb.append(", startDate=");
+		sb.append(getStartDate());
+		sb.append(", endDate=");
+		sb.append(getEndDate());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -425,12 +425,12 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>begin</column-name><column-value><![CDATA[");
-		sb.append(getBegin());
+			"<column><column-name>startDate</column-name><column-value><![CDATA[");
+		sb.append(getStartDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>end</column-name><column-value><![CDATA[");
-		sb.append(getEnd());
+			"<column><column-name>endDate</column-name><column-value><![CDATA[");
+		sb.append(getEndDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -445,8 +445,8 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 	private long _projectID;
 	private String _name;
 	private String _description;
-	private Date _begin;
-	private Date _end;
+	private Date _startDate;
+	private Date _endDate;
 	private String _status;
 	private BaseModel<?> _projectRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;

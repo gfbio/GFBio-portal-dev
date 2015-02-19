@@ -32,7 +32,7 @@ import java.util.List;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see ProjectPersistence
  * @see ProjectPersistenceImpl
  * @generated

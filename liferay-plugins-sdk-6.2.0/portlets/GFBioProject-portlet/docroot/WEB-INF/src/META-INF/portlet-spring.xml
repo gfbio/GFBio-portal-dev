@@ -9,14 +9,26 @@
 	</bean>
 	<bean id="org.gfbio.service.Project_ResearchObjectLocalService" class="org.gfbio.service.impl.Project_ResearchObjectLocalServiceImpl" />
 	<bean id="org.gfbio.service.Project_ResearchObjectService" class="org.gfbio.service.impl.Project_ResearchObjectServiceImpl" />
-	<bean id="org.gfbio.service.persistence.Project_ResearchObjectPersistence" class="org.gfbio.service.persistence.Project_ResearchObjectPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gfbio.service.persistence.Project_ResearchObjectPersistence" class="org.gfbio.service.persistence.Project_ResearchObjectPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.Project_UserLocalService" class="org.gfbio.service.impl.Project_UserLocalServiceImpl" />
+	<bean id="org.gfbio.service.Project_UserService" class="org.gfbio.service.impl.Project_UserServiceImpl" />
+	<bean id="org.gfbio.service.persistence.Project_UserPersistence" class="org.gfbio.service.persistence.Project_UserPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.Project_User_PILocalService" class="org.gfbio.service.impl.Project_User_PILocalServiceImpl" />
 	<bean id="org.gfbio.service.Project_User_PIService" class="org.gfbio.service.impl.Project_User_PIServiceImpl" />
-	<bean id="org.gfbio.service.persistence.Project_User_PIPersistence" class="org.gfbio.service.persistence.Project_User_PIPersistenceImpl" parent="basePersistence" />
-	<bean id="org.gfbio.service.Project_User_WorkerLocalService" class="org.gfbio.service.impl.Project_User_WorkerLocalServiceImpl" />
-	<bean id="org.gfbio.service.Project_User_WorkerService" class="org.gfbio.service.impl.Project_User_WorkerServiceImpl" />
-	<bean id="org.gfbio.service.persistence.Project_User_WorkerPersistence" class="org.gfbio.service.persistence.Project_User_WorkerPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gfbio.service.persistence.Project_User_PIPersistence" class="org.gfbio.service.persistence.Project_User_PIPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.ResearchObjectLocalService" class="org.gfbio.service.impl.ResearchObjectLocalServiceImpl" />
 	<bean id="org.gfbio.service.ResearchObjectService" class="org.gfbio.service.impl.ResearchObjectServiceImpl" />
-	<bean id="org.gfbio.service.persistence.ResearchObjectPersistence" class="org.gfbio.service.persistence.ResearchObjectPersistenceImpl" parent="basePersistence" />
+	<bean id="org.gfbio.service.persistence.ResearchObjectPersistence" class="org.gfbio.service.persistence.ResearchObjectPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 </beans>

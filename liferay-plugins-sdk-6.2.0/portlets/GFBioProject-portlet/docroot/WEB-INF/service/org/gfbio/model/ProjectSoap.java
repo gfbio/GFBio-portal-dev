@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link org.gfbio.service.http.ProjectServiceSoap}.
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see org.gfbio.service.http.ProjectServiceSoap
  * @generated
  */
@@ -34,8 +34,8 @@ public class ProjectSoap implements Serializable {
 		soapModel.setProjectID(model.getProjectID());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
-		soapModel.setBegin(model.getBegin());
-		soapModel.setEnd(model.getEnd());
+		soapModel.setStartDate(model.getStartDate());
+		soapModel.setEndDate(model.getEndDate());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
@@ -113,20 +113,20 @@ public class ProjectSoap implements Serializable {
 		_description = description;
 	}
 
-	public Date getBegin() {
-		return _begin;
+	public Date getStartDate() {
+		return _startDate;
 	}
 
-	public void setBegin(Date begin) {
-		_begin = begin;
+	public void setStartDate(Date startDate) {
+		_startDate = startDate;
 	}
 
-	public Date getEnd() {
-		return _end;
+	public Date getEndDate() {
+		return _endDate;
 	}
 
-	public void setEnd(Date end) {
-		_end = end;
+	public void setEndDate(Date endDate) {
+		_endDate = endDate;
 	}
 
 	public String getStatus() {
@@ -140,7 +140,7 @@ public class ProjectSoap implements Serializable {
 	private long _projectID;
 	private String _name;
 	private String _description;
-	private Date _begin;
-	private Date _end;
+	private Date _startDate;
+	private Date _endDate;
 	private String _status;
 }

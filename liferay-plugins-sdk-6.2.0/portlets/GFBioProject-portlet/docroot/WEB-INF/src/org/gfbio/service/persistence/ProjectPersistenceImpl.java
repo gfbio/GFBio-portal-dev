@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +50,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the project service.
@@ -60,7 +58,7 @@ import java.util.Set;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see ProjectPersistence
  * @see ProjectUtil
  * @generated
@@ -1140,8 +1138,8 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 		projectImpl.setProjectID(project.getProjectID());
 		projectImpl.setName(project.getName());
 		projectImpl.setDescription(project.getDescription());
-		projectImpl.setBegin(project.getBegin());
-		projectImpl.setEnd(project.getEnd());
+		projectImpl.setStartDate(project.getStartDate());
+		projectImpl.setEndDate(project.getEndDate());
 		projectImpl.setStatus(project.getStatus());
 
 		return projectImpl;
@@ -1417,11 +1415,6 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 		return count.intValue();
 	}
 
-	@Override
-	protected Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
 	/**
 	 * Initializes the project persistence.
 	 */
@@ -1464,9 +1457,6 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(ProjectPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"end"
-			});
 	private static Project _nullProject = new ProjectImpl() {
 			@Override
 			public Object clone() {

@@ -22,7 +22,7 @@ import org.gfbio.model.Project;
 import org.gfbio.service.ProjectLocalServiceUtil;
 
 /**
- * @author froemm
+ * @author Felicitas Loeffler
  * @generated
  */
 public abstract class ProjectActionableDynamicQuery

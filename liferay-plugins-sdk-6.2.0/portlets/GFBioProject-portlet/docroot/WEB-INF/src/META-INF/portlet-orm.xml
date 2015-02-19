@@ -12,11 +12,10 @@
 			<id name="projectID" />
 			<basic name="name" />
 			<basic name="description" />
-			<basic name="begin">
+			<basic name="startDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="end">
-				<column name="END_" />
+			<basic name="endDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="status" />
@@ -35,16 +34,15 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.Project_User_PIModelImpl">
-		<id-class class="org.gfbio.service.persistence.Project_User_PIPK" />
+	<mapped-superclass class="org.gfbio.model.impl.Project_UserModelImpl">
+		<id-class class="org.gfbio.service.persistence.Project_UserPK" />
 		<attributes>
 			<id name="projectID" />
 			<id name="userID" />
-			<basic name="begin">
+			<basic name="startDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="end">
-				<column name="END_" />
+			<basic name="endDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<transient name="modelAttributes" />
@@ -52,16 +50,15 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.Project_User_WorkerModelImpl">
-		<id-class class="org.gfbio.service.persistence.Project_User_WorkerPK" />
+	<mapped-superclass class="org.gfbio.model.impl.Project_User_PIModelImpl">
+		<id-class class="org.gfbio.service.persistence.Project_User_PIPK" />
 		<attributes>
 			<id name="projectID" />
 			<id name="userID" />
-			<basic name="begin">
+			<basic name="startDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="end">
-				<column name="END_" />
+			<basic name="endDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<transient name="modelAttributes" />
@@ -87,12 +84,12 @@
 		<table name="gfbio_Project_ResearchObject" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.Project_User_PIImpl" name="Project_User_PI">
-		<table name="gfbio_Project_User_PI" />
+	<entity class="org.gfbio.model.impl.Project_UserImpl" name="Project_User">
+		<table name="gfbio_Project_User" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.Project_User_WorkerImpl" name="Project_User_Worker">
-		<table name="gfbio_Project_User_Worker" />
+	<entity class="org.gfbio.model.impl.Project_User_PIImpl" name="Project_User_PI">
+		<table name="gfbio_Project_User_PI" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.ResearchObjectImpl" name="ResearchObject">

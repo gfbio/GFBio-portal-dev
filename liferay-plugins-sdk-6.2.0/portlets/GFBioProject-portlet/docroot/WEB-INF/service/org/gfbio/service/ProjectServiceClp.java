@@ -17,7 +17,7 @@ package org.gfbio.service;
 import com.liferay.portal.service.InvokableService;
 
 /**
- * @author froemm
+ * @author Felicitas Loeffler
  * @generated
  */
 public class ProjectServiceClp implements ProjectService {

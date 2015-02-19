@@ -17,8 +17,11 @@ package org.gfbio.service.impl;
 import java.util.Date;
 
 import org.gfbio.NoSuchProjectException;
+import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.model.Project;
+import org.gfbio.model.Project_User;
 import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.Project_User_WorkerLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 
@@ -47,11 +50,10 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.ProjectLocalServiceUtil} to access the project local service.
 	 */
 	
-	public long updateProject(long userID, long projectID, String name, String description, Date begin, Date end, String status) throws SystemException{
+	public long updateProject(long userID, long projectID, String name, String description, Date startDate, Date endDate, String status) throws SystemException{
 		Project project=null;
 		try {
 			project = projectPersistence.findByPrimaryKey(projectID);
-			//Long foo = Project_User_WorkerLocalServiceUtil.updateProjectUserWorker(projectID, userID);
 		} catch (NoSuchProjectException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,25 +61,30 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		
 		//create new project
 		if(project==null){
-			
 			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			project.setName(name);
 			project.setDescription(description);
-			project.setBegin(begin);
-			project.setEnd(end);
+			project.setStartDate(startDate);
+			project.setEndDate(endDate);
 			project.setStatus(status);
+			super.updateProject(project);
+			try {
+				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
+			} catch (NoSuchProject_UserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		//update project
 		else{
 			project.setName(name);
 			project.setDescription(description);
-			project.setBegin(begin);
-			project.setEnd(end);
+			project.setStartDate(startDate);
+			project.setEndDate(endDate);
 			project.setStatus(status);
+			super.updateProject(project);
 		}
-		
-		super.updateProject(project);
-		
+				
 		return project.getProjectID();
 	}
 

@@ -1,4 +1,4 @@
-﻿
+﻿DROP TABLE gfbio_project, gfbio_researchobject, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi ;
 
 -- Table: gfbio_project
 
@@ -7,6 +7,9 @@ CREATE TABLE gfbio_project
   projectID bigint NOT NULL,
   name varchar(50),
   description text,
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  status varchar(50),
   CONSTRAINT project_pkey PRIMARY KEY (projectID)
 )
 WITH (
@@ -22,7 +25,7 @@ CREATE TABLE gfbio_researchobject
 (
   researchobjectid bigint NOT NULL,
   name character varying(75),
-  metadata character varying(75),
+  metadata character varying(2000),
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid)
 )
 WITH (
@@ -44,7 +47,13 @@ CREATE TABLE gfbio_project_researchobject
 (
   projectid bigint NOT NULL,
   researchobjectid bigint NOT NULL,
-  CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectid, researchobjectid)
+  CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectid, researchobjectid),
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
+      REFERENCES gfbio_project (projectid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT gfbio_researchobject_fkey FOREIGN KEY (researchobjectid)
+      REFERENCES gfbio_researchobject (researchobjectid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
@@ -59,9 +68,12 @@ CREATE TABLE gfbio_project_user
 (
   projectid bigint NOT NULL,
   userid bigint NOT NULL,
-  begin_ timestamp without time zone,
-  end_ timestamp without time zone,
-  CONSTRAINT gfbio_project_user_pkey PRIMARY KEY (projectid, userid)
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  CONSTRAINT gfbio_project_user_pkey PRIMARY KEY (projectid, userid),
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
+      REFERENCES gfbio_project (projectid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
@@ -76,9 +88,12 @@ CREATE TABLE gfbio_project_user_pi
 (
   projectid bigint NOT NULL,
   userid bigint NOT NULL,
-  begin_ timestamp without time zone,
-  end_ timestamp without time zone,
-  CONSTRAINT gfbio_project_user_pi_pkey PRIMARY KEY (projectid, userid)
+  startdate timestamp without time zone,
+  enddate timestamp without time zone,
+  CONSTRAINT gfbio_project_user_pi_pkey PRIMARY KEY (projectid, userid),
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
+      REFERENCES gfbio_project (projectid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE

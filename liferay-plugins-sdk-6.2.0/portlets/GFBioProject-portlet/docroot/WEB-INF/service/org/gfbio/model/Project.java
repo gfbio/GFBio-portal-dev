@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the Project service. Represents a row in the &quot;gfbio_Project&quot; database table, with each column mapped to a property of this class.
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see ProjectModel
  * @see org.gfbio.model.impl.ProjectImpl
  * @see org.gfbio.model.impl.ProjectModelImpl

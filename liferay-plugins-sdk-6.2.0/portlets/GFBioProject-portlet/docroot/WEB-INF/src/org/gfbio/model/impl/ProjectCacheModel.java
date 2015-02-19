@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing Project in entity cache.
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see Project
  * @generated
  */
@@ -45,10 +45,10 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", begin=");
-		sb.append(begin);
-		sb.append(", end=");
-		sb.append(end);
+		sb.append(", startDate=");
+		sb.append(startDate);
+		sb.append(", endDate=");
+		sb.append(endDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -76,18 +76,18 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 			projectImpl.setDescription(description);
 		}
 
-		if (begin == Long.MIN_VALUE) {
-			projectImpl.setBegin(null);
+		if (startDate == Long.MIN_VALUE) {
+			projectImpl.setStartDate(null);
 		}
 		else {
-			projectImpl.setBegin(new Date(begin));
+			projectImpl.setStartDate(new Date(startDate));
 		}
 
-		if (end == Long.MIN_VALUE) {
-			projectImpl.setEnd(null);
+		if (endDate == Long.MIN_VALUE) {
+			projectImpl.setEndDate(null);
 		}
 		else {
-			projectImpl.setEnd(new Date(end));
+			projectImpl.setEndDate(new Date(endDate));
 		}
 
 		if (status == null) {
@@ -107,8 +107,8 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		projectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
-		begin = objectInput.readLong();
-		end = objectInput.readLong();
+		startDate = objectInput.readLong();
+		endDate = objectInput.readLong();
 		status = objectInput.readUTF();
 	}
 
@@ -131,8 +131,8 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeLong(begin);
-		objectOutput.writeLong(end);
+		objectOutput.writeLong(startDate);
+		objectOutput.writeLong(endDate);
 
 		if (status == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -145,7 +145,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	public long projectID;
 	public String name;
 	public String description;
-	public long begin;
-	public long end;
+	public long startDate;
+	public long endDate;
 	public String status;
 }

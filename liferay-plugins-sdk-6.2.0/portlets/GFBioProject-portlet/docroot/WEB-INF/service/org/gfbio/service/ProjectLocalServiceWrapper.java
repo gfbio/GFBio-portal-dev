@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ProjectLocalService}.
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see ProjectLocalService
  * @generated
  */
@@ -276,6 +276,16 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return _projectLocalService.invokeMethod(name, parameterTypes, arguments);
+	}
+
+	@Override
+	public long updateProject(long userID, long projectID,
+		java.lang.String name, java.lang.String description,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _projectLocalService.updateProject(userID, projectID, name,
+			description, startDate, endDate, status);
 	}
 
 	@Override

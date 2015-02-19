@@ -19,7 +19,7 @@ import org.gfbio.service.ProjectLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author froemm
+ * @author Felicitas Loeffler
  * @generated
  */
 public class ProjectLocalServiceClpInvoker {
@@ -111,6 +111,13 @@ public class ProjectLocalServiceClpInvoker {
 		_methodName64 = "updateProject";
 
 		_methodParameterTypes64 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.util.Date", "java.util.Date", "java.lang.String"
+			};
+
+		_methodName65 = "updateProject";
+
+		_methodParameterTypes65 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 	}
@@ -219,6 +226,15 @@ public class ProjectLocalServiceClpInvoker {
 		if (_methodName64.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.util.Date)arguments[4], (java.util.Date)arguments[5],
+				(java.lang.String)arguments[6]);
+		}
+
+		if (_methodName65.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
@@ -263,4 +279,6 @@ public class ProjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes59;
 	private String _methodName64;
 	private String[] _methodParameterTypes64;
+	private String _methodName65;
+	private String[] _methodParameterTypes65;
 }

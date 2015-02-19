@@ -26,7 +26,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see ProjectLocalService
  * @see org.gfbio.service.base.ProjectLocalServiceBaseImpl
  * @see org.gfbio.service.impl.ProjectLocalServiceImpl
@@ -269,6 +269,16 @@ public class ProjectLocalServiceUtil {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return getService().invokeMethod(name, parameterTypes, arguments);
+	}
+
+	public static long updateProject(long userID, long projectID,
+		java.lang.String name, java.lang.String description,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateProject(userID, projectID, name, description,
+			startDate, endDate, status);
 	}
 
 	public static long updateProject(long projectID, java.lang.String name,

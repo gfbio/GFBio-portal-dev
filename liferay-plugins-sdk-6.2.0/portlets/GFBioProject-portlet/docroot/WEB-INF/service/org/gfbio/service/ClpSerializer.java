@@ -27,8 +27,8 @@ import com.liferay.portal.model.BaseModel;
 
 import org.gfbio.model.ProjectClp;
 import org.gfbio.model.Project_ResearchObjectClp;
+import org.gfbio.model.Project_UserClp;
 import org.gfbio.model.Project_User_PIClp;
-import org.gfbio.model.Project_User_WorkerClp;
 import org.gfbio.model.ResearchObjectClp;
 
 import java.io.ObjectInputStream;
@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author froemm
+ * @author Felicitas Loeffler
  */
 public class ClpSerializer {
 	public static String getServletContextName() {
@@ -114,12 +114,12 @@ public class ClpSerializer {
 			return translateInputProject_ResearchObject(oldModel);
 		}
 
-		if (oldModelClassName.equals(Project_User_PIClp.class.getName())) {
-			return translateInputProject_User_PI(oldModel);
+		if (oldModelClassName.equals(Project_UserClp.class.getName())) {
+			return translateInputProject_User(oldModel);
 		}
 
-		if (oldModelClassName.equals(Project_User_WorkerClp.class.getName())) {
-			return translateInputProject_User_Worker(oldModel);
+		if (oldModelClassName.equals(Project_User_PIClp.class.getName())) {
+			return translateInputProject_User_PI(oldModel);
 		}
 
 		if (oldModelClassName.equals(ResearchObjectClp.class.getName())) {
@@ -162,21 +162,20 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputProject_User_PI(BaseModel<?> oldModel) {
-		Project_User_PIClp oldClpModel = (Project_User_PIClp)oldModel;
+	public static Object translateInputProject_User(BaseModel<?> oldModel) {
+		Project_UserClp oldClpModel = (Project_UserClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getProject_User_PIRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getProject_UserRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
 		return newModel;
 	}
 
-	public static Object translateInputProject_User_Worker(
-		BaseModel<?> oldModel) {
-		Project_User_WorkerClp oldClpModel = (Project_User_WorkerClp)oldModel;
+	public static Object translateInputProject_User_PI(BaseModel<?> oldModel) {
+		Project_User_PIClp oldClpModel = (Project_User_PIClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getProject_User_WorkerRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getProject_User_PIRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -283,8 +282,8 @@ public class ClpSerializer {
 			}
 		}
 
-		if (oldModelClassName.equals("org.gfbio.model.impl.Project_User_PIImpl")) {
-			return translateOutputProject_User_PI(oldModel);
+		if (oldModelClassName.equals("org.gfbio.model.impl.Project_UserImpl")) {
+			return translateOutputProject_User(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -319,9 +318,8 @@ public class ClpSerializer {
 			}
 		}
 
-		if (oldModelClassName.equals(
-					"org.gfbio.model.impl.Project_User_WorkerImpl")) {
-			return translateOutputProject_User_Worker(oldModel);
+		if (oldModelClassName.equals("org.gfbio.model.impl.Project_User_PIImpl")) {
+			return translateOutputProject_User_PI(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -480,12 +478,12 @@ public class ClpSerializer {
 			return new org.gfbio.NoSuchProject_ResearchObjectException();
 		}
 
-		if (className.equals("org.gfbio.NoSuchProject_User_PIException")) {
-			return new org.gfbio.NoSuchProject_User_PIException();
+		if (className.equals("org.gfbio.NoSuchProject_UserException")) {
+			return new org.gfbio.NoSuchProject_UserException();
 		}
 
-		if (className.equals("org.gfbio.NoSuchProject_User_WorkerException")) {
-			return new org.gfbio.NoSuchProject_User_WorkerException();
+		if (className.equals("org.gfbio.NoSuchProject_User_PIException")) {
+			return new org.gfbio.NoSuchProject_User_PIException();
 		}
 
 		if (className.equals("org.gfbio.NoSuchResearchObjectException")) {
@@ -516,23 +514,22 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateOutputProject_User(BaseModel<?> oldModel) {
+		Project_UserClp newModel = new Project_UserClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setProject_UserRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Object translateOutputProject_User_PI(BaseModel<?> oldModel) {
 		Project_User_PIClp newModel = new Project_User_PIClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setProject_User_PIRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputProject_User_Worker(
-		BaseModel<?> oldModel) {
-		Project_User_WorkerClp newModel = new Project_User_WorkerClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setProject_User_WorkerRemoteModel(oldModel);
 
 		return newModel;
 	}

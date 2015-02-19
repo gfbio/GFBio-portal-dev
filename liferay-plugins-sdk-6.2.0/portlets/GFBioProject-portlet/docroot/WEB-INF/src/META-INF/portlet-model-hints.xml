@@ -5,25 +5,25 @@
 		<field name="projectID" type="long" />
 		<field name="name" type="String" />
 		<field name="description" type="String" />
-		<field name="begin" type="Date" />
-		<field name="end" type="Date" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
 		<field name="status" type="String" />
 	</model>
 	<model name="org.gfbio.model.Project_ResearchObject">
 		<field name="projectID" type="long" />
 		<field name="researchobjectID" type="long" />
 	</model>
+	<model name="org.gfbio.model.Project_User">
+		<field name="projectID" type="long" />
+		<field name="userID" type="long" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+	</model>
 	<model name="org.gfbio.model.Project_User_PI">
 		<field name="projectID" type="long" />
 		<field name="userID" type="long" />
-		<field name="begin" type="Date" />
-		<field name="end" type="Date" />
-	</model>
-	<model name="org.gfbio.model.Project_User_Worker">
-		<field name="projectID" type="long" />
-		<field name="userID" type="long" />
-		<field name="begin" type="Date" />
-		<field name="end" type="Date" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.ResearchObject">
 		<field name="researchobjectID" type="long" />

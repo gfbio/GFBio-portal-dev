@@ -17,7 +17,7 @@ package org.gfbio.service;
 import com.liferay.portal.service.InvokableLocalService;
 
 /**
- * @author froemm
+ * @author Felicitas Loeffler
  * @generated
  */
 public class ProjectLocalServiceClp implements ProjectLocalService {
@@ -111,6 +111,13 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		_methodName19 = "updateProject";
 
 		_methodParameterTypes19 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.util.Date", "java.util.Date", "java.lang.String"
+			};
+
+		_methodName20 = "updateProject";
+
+		_methodParameterTypes20 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 	}
@@ -660,14 +667,60 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
-	public long updateProject(long projectID, java.lang.String name,
-		java.lang.String description)
+	public long updateProject(long userID, long projectID,
+		java.lang.String name, java.lang.String description,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
+					new Object[] {
+						userID,
+						
+					projectID,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(description),
+						
+					ClpSerializer.translateInput(startDate),
+						
+					ClpSerializer.translateInput(endDate),
+						
+					ClpSerializer.translateInput(status)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
+	public long updateProject(long projectID, java.lang.String name,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
 					new Object[] {
 						projectID,
 						
@@ -734,4 +787,6 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	private String[] _methodParameterTypes17;
 	private String _methodName19;
 	private String[] _methodParameterTypes19;
+	private String _methodName20;
+	private String[] _methodParameterTypes20;
 }

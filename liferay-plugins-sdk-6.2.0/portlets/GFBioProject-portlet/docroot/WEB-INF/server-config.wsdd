@@ -46,6 +46,42 @@
 		<parameter name="wsdlServicePort" value="Plugin_gfbio_ProjectService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
+	<service name="Plugin_gfbio_Project_ResearchObjectService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Project_ResearchObjectServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Project_ResearchObjectServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Project_ResearchObjectServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Project_ResearchObjectService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Project_UserService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Project_UserServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Project_UserServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Project_UserServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Project_UserService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Project_User_PIService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Project_User_PIServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Project_User_PIServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Project_User_PIServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Project_User_PIService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_ResearchObjectService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.ResearchObjectServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ResearchObjectServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ResearchObjectServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_ResearchObjectService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
 	<service name="Plugin_gfbio_tab_ResearchObjectService" provider="java:RPC" style="rpc" use="encoded">
 		<parameter name="allowedMethods" value="*" />
 		<parameter name="className" value="org.gfbio.service.http.tab_ResearchObjectServiceSoap" />

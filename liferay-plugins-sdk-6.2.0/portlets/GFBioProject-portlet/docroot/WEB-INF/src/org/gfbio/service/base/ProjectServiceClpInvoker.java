@@ -19,7 +19,7 @@ import org.gfbio.service.ProjectServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author froemm
+ * @author Felicitas Loeffler
  * @generated
  */
 public class ProjectServiceClpInvoker {

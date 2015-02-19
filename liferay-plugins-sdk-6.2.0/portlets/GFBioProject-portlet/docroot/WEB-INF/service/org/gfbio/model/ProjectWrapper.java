@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link Project}.
  * </p>
  *
- * @author froemm
+ * @author Felicitas Loeffler
  * @see Project
  * @generated
  */
@@ -52,8 +52,8 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 		attributes.put("projectID", getProjectID());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("begin", getBegin());
-		attributes.put("end", getEnd());
+		attributes.put("startDate", getStartDate());
+		attributes.put("endDate", getEndDate());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -79,16 +79,16 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 			setDescription(description);
 		}
 
-		Date begin = (Date)attributes.get("begin");
+		Date startDate = (Date)attributes.get("startDate");
 
-		if (begin != null) {
-			setBegin(begin);
+		if (startDate != null) {
+			setStartDate(startDate);
 		}
 
-		Date end = (Date)attributes.get("end");
+		Date endDate = (Date)attributes.get("endDate");
 
-		if (end != null) {
-			setEnd(end);
+		if (endDate != null) {
+			setEndDate(endDate);
 		}
 
 		String status = (String)attributes.get("status");
@@ -179,43 +179,43 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 	}
 
 	/**
-	* Returns the begin of this project.
+	* Returns the start date of this project.
 	*
-	* @return the begin of this project
+	* @return the start date of this project
 	*/
 	@Override
-	public java.util.Date getBegin() {
-		return _project.getBegin();
+	public java.util.Date getStartDate() {
+		return _project.getStartDate();
 	}
 
 	/**
-	* Sets the begin of this project.
+	* Sets the start date of this project.
 	*
-	* @param begin the begin of this project
+	* @param startDate the start date of this project
 	*/
 	@Override
-	public void setBegin(java.util.Date begin) {
-		_project.setBegin(begin);
+	public void setStartDate(java.util.Date startDate) {
+		_project.setStartDate(startDate);
 	}
 
 	/**
-	* Returns the end of this project.
+	* Returns the end date of this project.
 	*
-	* @return the end of this project
+	* @return the end date of this project
 	*/
 	@Override
-	public java.util.Date getEnd() {
-		return _project.getEnd();
+	public java.util.Date getEndDate() {
+		return _project.getEndDate();
 	}
 
 	/**
-	* Sets the end of this project.
+	* Sets the end date of this project.
 	*
-	* @param end the end of this project
+	* @param endDate the end date of this project
 	*/
 	@Override
-	public void setEnd(java.util.Date end) {
-		_project.setEnd(end);
+	public void setEndDate(java.util.Date endDate) {
+		_project.setEndDate(endDate);
 	}
 
 	/**
