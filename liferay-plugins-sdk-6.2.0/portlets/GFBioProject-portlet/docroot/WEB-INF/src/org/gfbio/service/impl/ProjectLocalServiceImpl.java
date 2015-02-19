@@ -19,10 +19,7 @@ import java.util.Date;
 import org.gfbio.NoSuchProjectException;
 import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.model.Project;
-import org.gfbio.model.Project_User;
-import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
-import org.gfbio.service.Project_User_WorkerLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -50,7 +47,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.ProjectLocalServiceUtil} to access the project local service.
 	 */
 	
-	public long updateProject(long userID, long projectID, String name, String description, Date startDate, Date endDate, String status) throws SystemException{
+	public long updateProject(long projectID, long userID, String name, String description, Date startDate, Date endDate, String status) throws SystemException{
 		Project project=null;
 		try {
 			project = projectPersistence.findByPrimaryKey(projectID);
@@ -94,4 +91,11 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+//	public int getProjectSize(long projectID){
+//		int size = 0;
+//		Project project = null;
+//		size = project.
+//		return size;
+//	}
 }

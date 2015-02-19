@@ -279,12 +279,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
-	public long updateProject(long userID, long projectID,
+	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String description,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _projectLocalService.updateProject(userID, projectID, name,
+		return _projectLocalService.updateProject(projectID, userID, name,
 			description, startDate, endDate, status);
 	}
 

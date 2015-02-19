@@ -20,7 +20,7 @@
 	<class name="org.gfbio.model.impl.Project_ResearchObjectImpl" table="gfbio_Project_ResearchObject">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_ResearchObjectPK">
 			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="researchobjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
 	</class>
 	<class name="org.gfbio.model.impl.Project_UserImpl" table="gfbio_Project_User">
@@ -40,7 +40,7 @@
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="org.gfbio.model.impl.ResearchObjectImpl" table="gfbio_ResearchObject">
-		<id name="researchobjectID" type="long">
+		<id name="researchObjectID" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />

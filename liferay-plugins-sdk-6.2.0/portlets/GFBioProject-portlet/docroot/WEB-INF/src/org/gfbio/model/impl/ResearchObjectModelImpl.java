@@ -63,11 +63,11 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	 */
 	public static final String TABLE_NAME = "gfbio_ResearchObject";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "researchobjectID", Types.BIGINT },
+			{ "researchObjectID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "metadata", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchobjectID LONG not null primary key,name VARCHAR(75) null,metadata VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null primary key,name VARCHAR(75) null,metadata VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_ResearchObject";
 	public static final String ORDER_BY_JPQL = " ORDER BY researchObject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_ResearchObject.name ASC";
@@ -84,6 +84,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 				"value.object.column.bitmask.enabled.org.gfbio.model.ResearchObject"),
 			true);
 	public static long NAME_COLUMN_BITMASK = 1L;
+	public static long RESEARCHOBJECTID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -98,7 +99,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		ResearchObject model = new ResearchObjectImpl();
 
-		model.setResearchobjectID(soapModel.getResearchobjectID());
+		model.setResearchObjectID(soapModel.getResearchObjectID());
 		model.setName(soapModel.getName());
 		model.setMetadata(soapModel.getMetadata());
 
@@ -133,17 +134,17 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public long getPrimaryKey() {
-		return _researchobjectID;
+		return _researchObjectID;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setResearchobjectID(primaryKey);
+		setResearchObjectID(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _researchobjectID;
+		return _researchObjectID;
 	}
 
 	@Override
@@ -165,7 +166,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("researchobjectID", getResearchobjectID());
+		attributes.put("researchObjectID", getResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("metadata", getMetadata());
 
@@ -174,10 +175,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long researchobjectID = (Long)attributes.get("researchobjectID");
+		Long researchObjectID = (Long)attributes.get("researchObjectID");
 
-		if (researchobjectID != null) {
-			setResearchobjectID(researchobjectID);
+		if (researchObjectID != null) {
+			setResearchObjectID(researchObjectID);
 		}
 
 		String name = (String)attributes.get("name");
@@ -195,13 +196,25 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@JSON
 	@Override
-	public long getResearchobjectID() {
-		return _researchobjectID;
+	public long getResearchObjectID() {
+		return _researchObjectID;
 	}
 
 	@Override
-	public void setResearchobjectID(long researchobjectID) {
-		_researchobjectID = researchobjectID;
+	public void setResearchObjectID(long researchObjectID) {
+		_columnBitmask |= RESEARCHOBJECTID_COLUMN_BITMASK;
+
+		if (!_setOriginalResearchObjectID) {
+			_setOriginalResearchObjectID = true;
+
+			_originalResearchObjectID = _researchObjectID;
+		}
+
+		_researchObjectID = researchObjectID;
+	}
+
+	public long getOriginalResearchObjectID() {
+		return _originalResearchObjectID;
 	}
 
 	@JSON
@@ -277,7 +290,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public Object clone() {
 		ResearchObjectImpl researchObjectImpl = new ResearchObjectImpl();
 
-		researchObjectImpl.setResearchobjectID(getResearchobjectID());
+		researchObjectImpl.setResearchObjectID(getResearchObjectID());
 		researchObjectImpl.setName(getName());
 		researchObjectImpl.setMetadata(getMetadata());
 
@@ -330,6 +343,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public void resetOriginalValues() {
 		ResearchObjectModelImpl researchObjectModelImpl = this;
 
+		researchObjectModelImpl._originalResearchObjectID = researchObjectModelImpl._researchObjectID;
+
+		researchObjectModelImpl._setOriginalResearchObjectID = false;
+
 		researchObjectModelImpl._originalName = researchObjectModelImpl._name;
 
 		researchObjectModelImpl._columnBitmask = 0;
@@ -339,7 +356,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public CacheModel<ResearchObject> toCacheModel() {
 		ResearchObjectCacheModel researchObjectCacheModel = new ResearchObjectCacheModel();
 
-		researchObjectCacheModel.researchobjectID = getResearchobjectID();
+		researchObjectCacheModel.researchObjectID = getResearchObjectID();
 
 		researchObjectCacheModel.name = getName();
 
@@ -364,8 +381,8 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{researchobjectID=");
-		sb.append(getResearchobjectID());
+		sb.append("{researchObjectID=");
+		sb.append(getResearchObjectID());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", metadata=");
@@ -384,8 +401,8 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>researchobjectID</column-name><column-value><![CDATA[");
-		sb.append(getResearchobjectID());
+			"<column><column-name>researchObjectID</column-name><column-value><![CDATA[");
+		sb.append(getResearchObjectID());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -405,7 +422,9 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			ResearchObject.class
 		};
-	private long _researchobjectID;
+	private long _researchObjectID;
+	private long _originalResearchObjectID;
+	private boolean _setOriginalResearchObjectID;
 	private String _name;
 	private String _originalName;
 	private String _metadata;

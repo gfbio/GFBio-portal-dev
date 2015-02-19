@@ -28,7 +28,7 @@
 		<id-class class="org.gfbio.service.persistence.Project_ResearchObjectPK" />
 		<attributes>
 			<id name="projectID" />
-			<id name="researchobjectID" />
+			<id name="researchObjectID" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -68,7 +68,7 @@
 	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.ResearchObjectModelImpl">
 		<attributes>
-			<id name="researchobjectID" />
+			<id name="researchObjectID" />
 			<basic name="name" />
 			<basic name="metadata" />
 			<transient name="modelAttributes" />

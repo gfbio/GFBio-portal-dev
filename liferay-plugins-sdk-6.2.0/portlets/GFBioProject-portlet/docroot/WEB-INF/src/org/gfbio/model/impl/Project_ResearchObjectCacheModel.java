@@ -39,8 +39,8 @@ public class Project_ResearchObjectCacheModel implements CacheModel<Project_Rese
 
 		sb.append("{projectID=");
 		sb.append(projectID);
-		sb.append(", researchobjectID=");
-		sb.append(researchobjectID);
+		sb.append(", researchObjectID=");
+		sb.append(researchObjectID);
 		sb.append("}");
 
 		return sb.toString();
@@ -51,7 +51,7 @@ public class Project_ResearchObjectCacheModel implements CacheModel<Project_Rese
 		Project_ResearchObjectImpl project_ResearchObjectImpl = new Project_ResearchObjectImpl();
 
 		project_ResearchObjectImpl.setProjectID(projectID);
-		project_ResearchObjectImpl.setResearchobjectID(researchobjectID);
+		project_ResearchObjectImpl.setResearchObjectID(researchObjectID);
 
 		project_ResearchObjectImpl.resetOriginalValues();
 
@@ -61,16 +61,16 @@ public class Project_ResearchObjectCacheModel implements CacheModel<Project_Rese
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		projectID = objectInput.readLong();
-		researchobjectID = objectInput.readLong();
+		researchObjectID = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(projectID);
-		objectOutput.writeLong(researchobjectID);
+		objectOutput.writeLong(researchObjectID);
 	}
 
 	public long projectID;
-	public long researchobjectID;
+	public long researchObjectID;
 }

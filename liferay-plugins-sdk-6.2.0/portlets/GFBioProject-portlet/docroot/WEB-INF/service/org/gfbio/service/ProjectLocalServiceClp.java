@@ -667,7 +667,7 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
-	public long updateProject(long userID, long projectID,
+	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String description,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String status)
@@ -678,9 +678,9 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						userID,
+						projectID,
 						
-					projectID,
+					userID,
 						
 					ClpSerializer.translateInput(name),
 						

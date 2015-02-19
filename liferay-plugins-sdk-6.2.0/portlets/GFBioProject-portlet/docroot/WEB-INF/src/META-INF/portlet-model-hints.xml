@@ -11,7 +11,7 @@
 	</model>
 	<model name="org.gfbio.model.Project_ResearchObject">
 		<field name="projectID" type="long" />
-		<field name="researchobjectID" type="long" />
+		<field name="researchObjectID" type="long" />
 	</model>
 	<model name="org.gfbio.model.Project_User">
 		<field name="projectID" type="long" />
@@ -26,7 +26,7 @@
 		<field name="endDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.ResearchObject">
-		<field name="researchobjectID" type="long" />
+		<field name="researchObjectID" type="long" />
 		<field name="name" type="String" />
 		<field name="metadata" type="String" />
 	</model>

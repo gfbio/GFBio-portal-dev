@@ -61,12 +61,12 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 	public static final String TABLE_NAME = "gfbio_Project_ResearchObject";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "projectID", Types.BIGINT },
-			{ "researchobjectID", Types.BIGINT }
+			{ "researchObjectID", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_ResearchObject (projectID LONG not null,researchobjectID LONG not null,primary key (projectID, researchobjectID))";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_ResearchObject (projectID LONG not null,researchObjectID LONG not null,primary key (projectID, researchObjectID))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Project_ResearchObject";
-	public static final String ORDER_BY_JPQL = " ORDER BY project_ResearchObject.id.projectID ASC, project_ResearchObject.id.researchobjectID ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project_ResearchObject.projectID ASC, gfbio_Project_ResearchObject.researchobjectID ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY project_ResearchObject.id.projectID ASC, project_ResearchObject.id.researchObjectID ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project_ResearchObject.projectID ASC, gfbio_Project_ResearchObject.researchObjectID ASC";
 	public static final String DATA_SOURCE = "gfbioDataSource";
 	public static final String SESSION_FACTORY = "gfbioSessionFactory";
 	public static final String TX_MANAGER = "gfbioTransactionManager";
@@ -97,7 +97,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 		Project_ResearchObject model = new Project_ResearchObjectImpl();
 
 		model.setProjectID(soapModel.getProjectID());
-		model.setResearchobjectID(soapModel.getResearchobjectID());
+		model.setResearchObjectID(soapModel.getResearchObjectID());
 
 		return model;
 	}
@@ -131,18 +131,18 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 	@Override
 	public Project_ResearchObjectPK getPrimaryKey() {
-		return new Project_ResearchObjectPK(_projectID, _researchobjectID);
+		return new Project_ResearchObjectPK(_projectID, _researchObjectID);
 	}
 
 	@Override
 	public void setPrimaryKey(Project_ResearchObjectPK primaryKey) {
 		setProjectID(primaryKey.projectID);
-		setResearchobjectID(primaryKey.researchobjectID);
+		setResearchObjectID(primaryKey.researchObjectID);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return new Project_ResearchObjectPK(_projectID, _researchobjectID);
+		return new Project_ResearchObjectPK(_projectID, _researchObjectID);
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("projectID", getProjectID());
-		attributes.put("researchobjectID", getResearchobjectID());
+		attributes.put("researchObjectID", getResearchObjectID());
 
 		return attributes;
 	}
@@ -178,10 +178,10 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 			setProjectID(projectID);
 		}
 
-		Long researchobjectID = (Long)attributes.get("researchobjectID");
+		Long researchObjectID = (Long)attributes.get("researchObjectID");
 
-		if (researchobjectID != null) {
-			setResearchobjectID(researchobjectID);
+		if (researchObjectID != null) {
+			setResearchObjectID(researchObjectID);
 		}
 	}
 
@@ -210,25 +210,25 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 	@JSON
 	@Override
-	public long getResearchobjectID() {
-		return _researchobjectID;
+	public long getResearchObjectID() {
+		return _researchObjectID;
 	}
 
 	@Override
-	public void setResearchobjectID(long researchobjectID) {
+	public void setResearchObjectID(long researchObjectID) {
 		_columnBitmask |= RESEARCHOBJECTID_COLUMN_BITMASK;
 
-		if (!_setOriginalResearchobjectID) {
-			_setOriginalResearchobjectID = true;
+		if (!_setOriginalResearchObjectID) {
+			_setOriginalResearchObjectID = true;
 
-			_originalResearchobjectID = _researchobjectID;
+			_originalResearchObjectID = _researchObjectID;
 		}
 
-		_researchobjectID = researchobjectID;
+		_researchObjectID = researchObjectID;
 	}
 
-	public long getOriginalResearchobjectID() {
-		return _originalResearchobjectID;
+	public long getOriginalResearchObjectID() {
+		return _originalResearchObjectID;
 	}
 
 	public long getColumnBitmask() {
@@ -250,7 +250,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 		Project_ResearchObjectImpl project_ResearchObjectImpl = new Project_ResearchObjectImpl();
 
 		project_ResearchObjectImpl.setProjectID(getProjectID());
-		project_ResearchObjectImpl.setResearchobjectID(getResearchobjectID());
+		project_ResearchObjectImpl.setResearchObjectID(getResearchObjectID());
 
 		project_ResearchObjectImpl.resetOriginalValues();
 
@@ -299,9 +299,9 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		project_ResearchObjectModelImpl._setOriginalProjectID = false;
 
-		project_ResearchObjectModelImpl._originalResearchobjectID = project_ResearchObjectModelImpl._researchobjectID;
+		project_ResearchObjectModelImpl._originalResearchObjectID = project_ResearchObjectModelImpl._researchObjectID;
 
-		project_ResearchObjectModelImpl._setOriginalResearchobjectID = false;
+		project_ResearchObjectModelImpl._setOriginalResearchObjectID = false;
 
 		project_ResearchObjectModelImpl._columnBitmask = 0;
 	}
@@ -312,7 +312,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		project_ResearchObjectCacheModel.projectID = getProjectID();
 
-		project_ResearchObjectCacheModel.researchobjectID = getResearchobjectID();
+		project_ResearchObjectCacheModel.researchObjectID = getResearchObjectID();
 
 		return project_ResearchObjectCacheModel;
 	}
@@ -323,8 +323,8 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
-		sb.append(", researchobjectID=");
-		sb.append(getResearchobjectID());
+		sb.append(", researchObjectID=");
+		sb.append(getResearchObjectID());
 		sb.append("}");
 
 		return sb.toString();
@@ -343,8 +343,8 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 		sb.append(getProjectID());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>researchobjectID</column-name><column-value><![CDATA[");
-		sb.append(getResearchobjectID());
+			"<column><column-name>researchObjectID</column-name><column-value><![CDATA[");
+		sb.append(getResearchObjectID());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -359,9 +359,9 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 	private long _projectID;
 	private long _originalProjectID;
 	private boolean _setOriginalProjectID;
-	private long _researchobjectID;
-	private long _originalResearchobjectID;
-	private boolean _setOriginalResearchobjectID;
+	private long _researchObjectID;
+	private long _originalResearchObjectID;
+	private boolean _setOriginalResearchObjectID;
 	private long _columnBitmask;
 	private Project_ResearchObject _escapedModel;
 }

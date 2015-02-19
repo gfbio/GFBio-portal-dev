@@ -38,8 +38,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{researchobjectID=");
-		sb.append(researchobjectID);
+		sb.append("{researchObjectID=");
+		sb.append(researchObjectID);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", metadata=");
@@ -53,7 +53,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	public ResearchObject toEntityModel() {
 		ResearchObjectImpl researchObjectImpl = new ResearchObjectImpl();
 
-		researchObjectImpl.setResearchobjectID(researchobjectID);
+		researchObjectImpl.setResearchObjectID(researchObjectID);
 
 		if (name == null) {
 			researchObjectImpl.setName(StringPool.BLANK);
@@ -76,7 +76,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		researchobjectID = objectInput.readLong();
+		researchObjectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		metadata = objectInput.readUTF();
 	}
@@ -84,7 +84,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(researchobjectID);
+		objectOutput.writeLong(researchObjectID);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -101,7 +101,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		}
 	}
 
-	public long researchobjectID;
+	public long researchObjectID;
 	public String name;
 	public String metadata;
 }

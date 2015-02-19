@@ -31,13 +31,14 @@
 	<!-- Research Object  -->
 	
 	<entity name="ResearchObject" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="researchobjectID" 	type="long" 		primary="true" />
+		<column name="researchObjectID" 	type="long" 		primary="true" />
 		<column name="name" 				type="String" />
 		<column name="metadata"				type="String" />
 		
 		<order by="asc">		<order-column name="name" />		</order>
 
 		<finder name="Name" 			return-type="Collection">		<finder-column name="name" />					</finder>
+		<finder name="ResearchObjectID"	return-type="ResearchObject">	<finder-column name="researchObjectID" />		</finder>
 	</entity>
 	
 	
@@ -48,10 +49,10 @@
 	
 	<entity name="Project_ResearchObject" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="projectID" 			type="long" 	primary="true" />
-		<column name="researchobjectID" 	type="long" 	primary="true" />		
+		<column name="researchObjectID" 	type="long" 	primary="true" />		
 		
 		<finder name="ProjectID" 		return-type="Collection">			<finder-column name="projectID" />			</finder>
-		<finder name="ResearchObjectID" return-type="Collection">			<finder-column name="researchobjectID" />	</finder>
+		<finder name="ResearchObjectID" return-type="Collection">			<finder-column name="researchObjectID" />	</finder>
 	</entity>
 	
 	
