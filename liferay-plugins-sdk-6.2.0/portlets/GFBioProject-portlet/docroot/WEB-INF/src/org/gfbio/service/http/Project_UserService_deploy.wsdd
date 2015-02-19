@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_gfbio_Project_UserService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Project_UserServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Project_UserServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Project_UserServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Project_UserService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+</deployment>
