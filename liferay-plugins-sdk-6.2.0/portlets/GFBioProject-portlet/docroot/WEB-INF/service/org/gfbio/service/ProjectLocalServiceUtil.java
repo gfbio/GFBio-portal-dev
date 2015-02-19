@@ -271,6 +271,20 @@ public class ProjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<org.gfbio.model.Project> getProjectList(
+		long userID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getProjectList(userID);
+	}
+
+	public static java.util.List<org.gfbio.model.ResearchObject> getResearchObjectList(
+		long projectID, long userID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getResearchObjectList(projectID, userID);
+	}
+
 	public static long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String description,
 		java.util.Date startDate, java.util.Date endDate,

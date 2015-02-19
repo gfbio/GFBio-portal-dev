@@ -14,15 +14,21 @@
 
 package org.gfbio.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.gfbio.NoSuchProjectException;
 import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.model.Project;
+import org.gfbio.model.Project_ResearchObject;
+import org.gfbio.model.Project_User;
+import org.gfbio.model.ResearchObject;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 
@@ -41,13 +47,32 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.ProjectLocalServiceUtil
  */
 public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link org.gfbio.service.ProjectLocalServiceUtil} to access the project local service.
-	 */
 	
+	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
+	public List <Project> getProjectList(long userID) throws SystemException, NoSuchModelException{
+
+		List <Project_User> idList =  Project_UserLocalServiceUtil.getProjectIDList(userID);
+		List <Project> projectList = new ArrayList<Project>();
+		for (int i=0;i<idList.size();i++)
+			projectList.add(projectPersistence.findByPrimaryKey(idList.get(i).getProjectID()));
+		return projectList;
+	}
+
+	
+	// get list of all Research Objects of a specific project
+	public List <ResearchObject> getResearchObjectList(long projectID, long userID) throws SystemException, NoSuchModelException{
+	
+		List <Project_ResearchObject> idList =  project_ResearchObjectPersistence.findByProjectID(projectID);
+		List <ResearchObject> researchObjectList = new ArrayList<ResearchObject>();
+		for (int i=0;i<idList.size();i++)
+			researchObjectList.add(researchObjectPersistence.findByPrimaryKey(idList.get(i).getResearchObjectID()));
+		return researchObjectList;
+	}
+	
+	
+	// update or create a new project
 	public long updateProject(long projectID, long userID, String name, String description, Date startDate, Date endDate, String status) throws SystemException{
+
 		Project project=null;
 		try {
 			project = projectPersistence.findByPrimaryKey(projectID);
@@ -72,6 +97,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 				e.printStackTrace();
 			}
 		}
+		
 		//update project
 		else{
 			project.setName(name);

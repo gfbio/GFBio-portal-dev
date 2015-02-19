@@ -14,8 +14,6 @@ import javax.portlet.RenderResponse;
 import org.gfbio.model.Project;
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ProjectLocalServiceUtil;
-import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
-import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 
 import com.liferay.portal.NoSuchModelException;
@@ -72,7 +70,7 @@ public class ArchivingPortlet extends GenericPortlet {
 		List <Project> projectList = new ArrayList<Project>();
 		projectList = null;
 		try {
-			 projectList = Project_UserLocalServiceUtil.getProjectList(userID);
+			 projectList = ProjectLocalServiceUtil.getProjectList(userID);
 		} catch (NoSuchModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +91,7 @@ public class ArchivingPortlet extends GenericPortlet {
 		List<ResearchObject> researchObjectList = new ArrayList<ResearchObject>();
 		projectList = null;
 		try {
-			researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectList(projectID, userID);
+			researchObjectList = ProjectLocalServiceUtil.getResearchObjectList(projectID, userID);
 		} catch (NoSuchModelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
