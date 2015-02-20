@@ -6,6 +6,7 @@ CREATE TABLE gfbio_project
 (
   projectID bigint NOT NULL,
   name varchar(50),
+  label varchar(50),
   description text,
   startdate timestamp without time zone,
   enddate timestamp without time zone,
@@ -25,7 +26,8 @@ CREATE TABLE gfbio_researchobject
 (
   researchobjectid bigint NOT NULL,
   name character varying(75),
-  metadata character varying(2000),
+  label character varying(50),
+  metadata character varying(5000),
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid)
 )
 WITH (

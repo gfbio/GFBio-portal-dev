@@ -71,7 +71,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	// update or create a new project
-	public long updateProject(long projectID, long userID, String name, String description, Date startDate, Date endDate, String status) throws SystemException{
+	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException{
 
 		Project project=null;
 		try {
@@ -85,6 +85,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		if(project==null){
 			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			project.setName(name);
+			project.setLabel(label);
 			project.setDescription(description);
 			project.setStartDate(startDate);
 			project.setEndDate(endDate);
@@ -101,6 +102,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		//update project
 		else{
 			project.setName(name);
+			project.setLabel(label);
 			project.setDescription(description);
 			project.setStartDate(startDate);
 			project.setEndDate(endDate);

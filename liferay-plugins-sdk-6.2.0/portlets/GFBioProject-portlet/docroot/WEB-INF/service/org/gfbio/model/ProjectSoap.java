@@ -33,6 +33,7 @@ public class ProjectSoap implements Serializable {
 
 		soapModel.setProjectID(model.getProjectID());
 		soapModel.setName(model.getName());
+		soapModel.setLabel(model.getLabel());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
@@ -105,6 +106,14 @@ public class ProjectSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public String getDescription() {
 		return _description;
 	}
@@ -139,6 +148,7 @@ public class ProjectSoap implements Serializable {
 
 	private long _projectID;
 	private String _name;
+	private String _label;
 	private String _description;
 	private Date _startDate;
 	private Date _endDate;

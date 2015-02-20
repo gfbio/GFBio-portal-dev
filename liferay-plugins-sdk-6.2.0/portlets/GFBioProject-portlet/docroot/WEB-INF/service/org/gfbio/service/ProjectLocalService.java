@@ -260,9 +260,9 @@ public interface ProjectLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String description,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String status)
+		java.lang.String name, java.lang.String label,
+		java.lang.String description, java.util.Date startDate,
+		java.util.Date endDate, java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public long updateProject(long projectID, java.lang.String name,

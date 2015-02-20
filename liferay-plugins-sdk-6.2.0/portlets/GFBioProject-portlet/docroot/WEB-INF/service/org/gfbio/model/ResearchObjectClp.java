@@ -75,6 +75,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 		attributes.put("researchObjectID", getResearchObjectID());
 		attributes.put("name", getName());
+		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
 
 		return attributes;
@@ -92,6 +93,12 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
 		}
 
 		String metadata = (String)attributes.get("metadata");
@@ -141,6 +148,29 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 				Method method = clazz.getMethod("setName", String.class);
 
 				method.invoke(_researchObjectRemoteModel, name);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getLabel() {
+		return _label;
+	}
+
+	@Override
+	public void setLabel(String label) {
+		_label = label;
+
+		if (_researchObjectRemoteModel != null) {
+			try {
+				Class<?> clazz = _researchObjectRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLabel", String.class);
+
+				method.invoke(_researchObjectRemoteModel, label);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -244,6 +274,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 		clone.setResearchObjectID(getResearchObjectID());
 		clone.setName(getName());
+		clone.setLabel(getLabel());
 		clone.setMetadata(getMetadata());
 
 		return clone;
@@ -295,12 +326,14 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", label=");
+		sb.append(getLabel());
 		sb.append(", metadata=");
 		sb.append(getMetadata());
 		sb.append("}");
@@ -310,7 +343,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.ResearchObject");
@@ -325,6 +358,10 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>label</column-name><column-value><![CDATA[");
+		sb.append(getLabel());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>metadata</column-name><column-value><![CDATA[");
 		sb.append(getMetadata());
 		sb.append("]]></column-value></column>");
@@ -336,6 +373,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	private long _researchObjectID;
 	private String _name;
+	private String _label;
 	private String _metadata;
 	private BaseModel<?> _researchObjectRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;

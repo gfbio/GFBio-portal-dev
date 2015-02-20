@@ -66,12 +66,13 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "projectID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
+			{ "label", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP },
 			{ "status", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Project (projectID LONG not null primary key,name VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,status VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Project (projectID LONG not null primary key,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,status VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Project";
 	public static final String ORDER_BY_JPQL = " ORDER BY project.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project.name ASC";
@@ -87,8 +88,9 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.org.gfbio.model.Project"),
 			true);
-	public static long NAME_COLUMN_BITMASK = 1L;
-	public static long PROJECTID_COLUMN_BITMASK = 2L;
+	public static long LABEL_COLUMN_BITMASK = 1L;
+	public static long NAME_COLUMN_BITMASK = 2L;
+	public static long PROJECTID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -105,6 +107,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		model.setProjectID(soapModel.getProjectID());
 		model.setName(soapModel.getName());
+		model.setLabel(soapModel.getLabel());
 		model.setDescription(soapModel.getDescription());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
@@ -175,6 +178,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("name", getName());
+		attributes.put("label", getLabel());
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
@@ -195,6 +199,12 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
 		}
 
 		String description = (String)attributes.get("description");
@@ -269,6 +279,32 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	public String getOriginalName() {
 		return GetterUtil.getString(_originalName);
+	}
+
+	@JSON
+	@Override
+	public String getLabel() {
+		if (_label == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _label;
+		}
+	}
+
+	@Override
+	public void setLabel(String label) {
+		_columnBitmask |= LABEL_COLUMN_BITMASK;
+
+		if (_originalLabel == null) {
+			_originalLabel = _label;
+		}
+
+		_label = label;
+	}
+
+	public String getOriginalLabel() {
+		return GetterUtil.getString(_originalLabel);
 	}
 
 	@JSON
@@ -358,6 +394,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		projectImpl.setProjectID(getProjectID());
 		projectImpl.setName(getName());
+		projectImpl.setLabel(getLabel());
 		projectImpl.setDescription(getDescription());
 		projectImpl.setStartDate(getStartDate());
 		projectImpl.setEndDate(getEndDate());
@@ -418,6 +455,8 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		projectModelImpl._originalName = projectModelImpl._name;
 
+		projectModelImpl._originalLabel = projectModelImpl._label;
+
 		projectModelImpl._columnBitmask = 0;
 	}
 
@@ -433,6 +472,14 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		if ((name != null) && (name.length() == 0)) {
 			projectCacheModel.name = null;
+		}
+
+		projectCacheModel.label = getLabel();
+
+		String label = projectCacheModel.label;
+
+		if ((label != null) && (label.length() == 0)) {
+			projectCacheModel.label = null;
 		}
 
 		projectCacheModel.description = getDescription();
@@ -474,12 +521,14 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", label=");
+		sb.append(getLabel());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", startDate=");
@@ -495,7 +544,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project");
@@ -508,6 +557,10 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>label</column-name><column-value><![CDATA[");
+		sb.append(getLabel());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
@@ -540,6 +593,8 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 	private boolean _setOriginalProjectID;
 	private String _name;
 	private String _originalName;
+	private String _label;
+	private String _originalLabel;
 	private String _description;
 	private Date _startDate;
 	private Date _endDate;

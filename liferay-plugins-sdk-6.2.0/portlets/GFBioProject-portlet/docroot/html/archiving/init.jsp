@@ -7,13 +7,18 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui"    prefix="liferay-ui" %>
 
+
+<%@ page import="com.liferay.portal.kernel.exception.SystemException" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="com.liferay.portal.model.User" %>
+<%@ page import="com.liferay.portal.NoSuchModelException" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <%@ page import="com.liferay.taglib.util.IncludeTag" %>
 
+<%@ page import="org.gfbio.model.Project" %>
+<%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
 
 <%@ page import="javax.portlet.*" %>
 <%@ page import="javax.portlet.PortletPreferences" %>
@@ -27,13 +32,13 @@
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" 	prefix="portlet" %>
+<%@ taglib uri="http://alloy.liferay.com/tld/aui" 	prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/portlet" 	prefix="liferay-portlet" %>
+<%@ taglib uri="http://liferay.com/tld/security" 	prefix="liferay-security" %>
+<%@ taglib uri="http://liferay.com/tld/theme" 		prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/ui" 			prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/util" 		prefix="liferay-util" %>
  
 
 
@@ -57,7 +62,7 @@
 
 
 
-<script src="${pageContext.request.contextPath}/js/jquery-1.11.0.min.js" 	type="text/javascript"></script> 	<!--   jqery.js  imports -->
+
 
 <script type="text/javascript">
 

@@ -120,7 +120,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 
 		_methodParameterTypes21 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
-				"java.util.Date", "java.util.Date", "java.lang.String"
+				"java.lang.String", "java.util.Date", "java.util.Date",
+				"java.lang.String"
 			};
 
 		_methodName22 = "updateProject";
@@ -743,9 +744,9 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 
 	@Override
 	public long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String description,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String status)
+		java.lang.String name, java.lang.String label,
+		java.lang.String description, java.util.Date startDate,
+		java.util.Date endDate, java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -758,6 +759,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 					userID,
 						
 					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(label),
 						
 					ClpSerializer.translateInput(description),
 						

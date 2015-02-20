@@ -276,11 +276,12 @@ public class ResearchObjectLocalServiceUtil {
 	}
 
 	public static long updateResearchObject(long projectID,
-		long researchObjectID, java.lang.String name, java.lang.String metadata)
+		long researchObjectID, java.lang.String name, java.lang.String label,
+		java.lang.String metadata)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateResearchObject(projectID, researchObjectID, name,
-			metadata);
+			label, metadata);
 	}
 
 	public static void clearService() {

@@ -36,12 +36,14 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{researchObjectID=");
 		sb.append(researchObjectID);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", metadata=");
 		sb.append(metadata);
 		sb.append("}");
@@ -62,6 +64,13 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			researchObjectImpl.setName(name);
 		}
 
+		if (label == null) {
+			researchObjectImpl.setLabel(StringPool.BLANK);
+		}
+		else {
+			researchObjectImpl.setLabel(label);
+		}
+
 		if (metadata == null) {
 			researchObjectImpl.setMetadata(StringPool.BLANK);
 		}
@@ -78,6 +87,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		researchObjectID = objectInput.readLong();
 		name = objectInput.readUTF();
+		label = objectInput.readUTF();
 		metadata = objectInput.readUTF();
 	}
 
@@ -93,6 +103,13 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			objectOutput.writeUTF(name);
 		}
 
+		if (label == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
 		if (metadata == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -103,5 +120,6 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 
 	public long researchObjectID;
 	public String name;
+	public String label;
 	public String metadata;
 }

@@ -89,6 +89,21 @@ public interface ProjectModel extends BaseModel<Project> {
 	public void setName(String name);
 
 	/**
+	 * Returns the label of this project.
+	 *
+	 * @return the label of this project
+	 */
+	@AutoEscape
+	public String getLabel();
+
+	/**
+	 * Sets the label of this project.
+	 *
+	 * @param label the label of this project
+	 */
+	public void setLabel(String label);
+
+	/**
 	 * Returns the description of this project.
 	 *
 	 * @return the description of this project

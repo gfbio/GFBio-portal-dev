@@ -11,6 +11,7 @@
 		<attributes>
 			<id name="projectID" />
 			<basic name="name" />
+			<basic name="label" />
 			<basic name="description" />
 			<basic name="startDate">
 				<temporal>TIMESTAMP</temporal>
@@ -70,6 +71,7 @@
 		<attributes>
 			<id name="researchObjectID" />
 			<basic name="name" />
+			<basic name="label" />
 			<basic name="metadata" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

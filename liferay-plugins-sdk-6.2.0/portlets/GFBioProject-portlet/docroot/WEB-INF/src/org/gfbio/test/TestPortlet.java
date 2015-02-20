@@ -43,7 +43,7 @@ public class TestPortlet extends GenericPortlet {
 		
     	try {
     		
-    		projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, "DoctorToWarp", "it is a test", new Date(23, 11, 1963), new Date(05/04/2063), "fictive");
+    		projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, "DoctorToWarp", "BlueBox 13","it is a test", new Date(23, 11, 1963), new Date(05/04/2063), "fictive");
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class TestPortlet extends GenericPortlet {
 		//add or update Research Object
 		
 		try {
-			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, "tester", "from the time to stars");
+			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, "tester", "tester 0.1", "from the time to stars");
 		} catch (SystemException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -82,7 +82,7 @@ public class TestPortlet extends GenericPortlet {
 		for(int i = 0;i <projectList.size();i++)
 			System.out.println(projectList.get(i).getPrimaryKey());
 
-
+		projectList.get(0).getName();
 			
 		//get all Research Objects of a specific Project in a List
 		

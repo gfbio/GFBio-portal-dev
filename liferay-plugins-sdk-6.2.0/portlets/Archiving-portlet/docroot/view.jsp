@@ -35,7 +35,7 @@
 
 <body onload="buildHelper('<%=request.getContextPath()%>', '<%=themeDisplay.getUser().getDefaultUser()%>','<%=archivingURL%>',  '<portlet:namespace/>', '<%=new Long(PortalUtil.getUser(request).getUserId()).toString() %>')">
 
-
+<div style="display:none">
 
 
 	<div class='navigator'>
@@ -50,7 +50,7 @@
   	</div>
  
  <div id="sections">
- 	<%if (themeDisplay.getUser().getDefaultUser()==true){ %>
+ 	<%if (PortalUtil.getUser(request)==null){ %>
  		<div class="section" id='tabNoSubmission'>
  	    	<!--   load NoSubmission.jsp via JQuery -->
 	  	</div>
@@ -397,6 +397,7 @@ Please start a new Project.
 
 </div>
 
+</div>
 </body>
 
 

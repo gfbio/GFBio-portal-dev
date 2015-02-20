@@ -111,7 +111,8 @@ public class ResearchObjectLocalServiceClpInvoker {
 		_methodName64 = "updateResearchObject";
 
 		_methodParameterTypes64 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String"
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String"
 			};
 	}
 
@@ -220,7 +221,8 @@ public class ResearchObjectLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.lang.String)arguments[4]);
 		}
 
 		throw new UnsupportedOperationException();

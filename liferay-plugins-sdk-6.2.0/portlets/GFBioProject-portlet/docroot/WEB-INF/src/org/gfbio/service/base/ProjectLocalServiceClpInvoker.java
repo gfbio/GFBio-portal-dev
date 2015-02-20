@@ -120,7 +120,8 @@ public class ProjectLocalServiceClpInvoker {
 
 		_methodParameterTypes66 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
-				"java.util.Date", "java.util.Date", "java.lang.String"
+				"java.lang.String", "java.util.Date", "java.util.Date",
+				"java.lang.String"
 			};
 
 		_methodName67 = "updateProject";
@@ -247,8 +248,8 @@ public class ProjectLocalServiceClpInvoker {
 			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.util.Date)arguments[4], (java.util.Date)arguments[5],
-				(java.lang.String)arguments[6]);
+				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
+				(java.util.Date)arguments[6], (java.lang.String)arguments[7]);
 		}
 
 		if (_methodName67.equals(name) &&

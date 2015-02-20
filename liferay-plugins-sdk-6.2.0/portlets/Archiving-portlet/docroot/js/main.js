@@ -207,7 +207,7 @@ function buildHelper(path,checker, archivingURL, namespace, userID){
 }
 
 function buildTabs(path,checker){
-	if (checker=="true"){
+	if (checker=="null"){
 		$( "#tabNoSubmission" ).load( path.concat("/html/nosubmission.jsp"));
 	}else{
 		

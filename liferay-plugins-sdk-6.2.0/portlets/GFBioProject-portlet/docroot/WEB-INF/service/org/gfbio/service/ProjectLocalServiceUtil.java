@@ -286,12 +286,12 @@ public class ProjectLocalServiceUtil {
 	}
 
 	public static long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String description,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String status)
+		java.lang.String name, java.lang.String label,
+		java.lang.String description, java.util.Date startDate,
+		java.util.Date endDate, java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateProject(projectID, userID, name, description,
+				   .updateProject(projectID, userID, name, label, description,
 			startDate, endDate, status);
 	}
 

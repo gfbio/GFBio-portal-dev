@@ -65,9 +65,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "researchObjectID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
+			{ "label", Types.VARCHAR },
 			{ "metadata", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null primary key,name VARCHAR(75) null,metadata VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null primary key,name VARCHAR(75) null,label VARCHAR(75) null,metadata VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_ResearchObject";
 	public static final String ORDER_BY_JPQL = " ORDER BY researchObject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_ResearchObject.name ASC";
@@ -83,8 +84,9 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.org.gfbio.model.ResearchObject"),
 			true);
-	public static long NAME_COLUMN_BITMASK = 1L;
-	public static long RESEARCHOBJECTID_COLUMN_BITMASK = 2L;
+	public static long LABEL_COLUMN_BITMASK = 1L;
+	public static long NAME_COLUMN_BITMASK = 2L;
+	public static long RESEARCHOBJECTID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -101,6 +103,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		model.setResearchObjectID(soapModel.getResearchObjectID());
 		model.setName(soapModel.getName());
+		model.setLabel(soapModel.getLabel());
 		model.setMetadata(soapModel.getMetadata());
 
 		return model;
@@ -168,6 +171,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		attributes.put("researchObjectID", getResearchObjectID());
 		attributes.put("name", getName());
+		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
 
 		return attributes;
@@ -185,6 +189,12 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
 		}
 
 		String metadata = (String)attributes.get("metadata");
@@ -245,6 +255,32 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@JSON
 	@Override
+	public String getLabel() {
+		if (_label == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _label;
+		}
+	}
+
+	@Override
+	public void setLabel(String label) {
+		_columnBitmask |= LABEL_COLUMN_BITMASK;
+
+		if (_originalLabel == null) {
+			_originalLabel = _label;
+		}
+
+		_label = label;
+	}
+
+	public String getOriginalLabel() {
+		return GetterUtil.getString(_originalLabel);
+	}
+
+	@JSON
+	@Override
 	public String getMetadata() {
 		if (_metadata == null) {
 			return StringPool.BLANK;
@@ -292,6 +328,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		researchObjectImpl.setResearchObjectID(getResearchObjectID());
 		researchObjectImpl.setName(getName());
+		researchObjectImpl.setLabel(getLabel());
 		researchObjectImpl.setMetadata(getMetadata());
 
 		researchObjectImpl.resetOriginalValues();
@@ -349,6 +386,8 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		researchObjectModelImpl._originalName = researchObjectModelImpl._name;
 
+		researchObjectModelImpl._originalLabel = researchObjectModelImpl._label;
+
 		researchObjectModelImpl._columnBitmask = 0;
 	}
 
@@ -366,6 +405,14 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			researchObjectCacheModel.name = null;
 		}
 
+		researchObjectCacheModel.label = getLabel();
+
+		String label = researchObjectCacheModel.label;
+
+		if ((label != null) && (label.length() == 0)) {
+			researchObjectCacheModel.label = null;
+		}
+
 		researchObjectCacheModel.metadata = getMetadata();
 
 		String metadata = researchObjectCacheModel.metadata;
@@ -379,12 +426,14 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", label=");
+		sb.append(getLabel());
 		sb.append(", metadata=");
 		sb.append(getMetadata());
 		sb.append("}");
@@ -394,7 +443,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.ResearchObject");
@@ -407,6 +456,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>label</column-name><column-value><![CDATA[");
+		sb.append(getLabel());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>metadata</column-name><column-value><![CDATA[");
@@ -427,6 +480,8 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	private boolean _setOriginalResearchObjectID;
 	private String _name;
 	private String _originalName;
+	private String _label;
+	private String _originalLabel;
 	private String _metadata;
 	private long _columnBitmask;
 	private ResearchObject _escapedModel;

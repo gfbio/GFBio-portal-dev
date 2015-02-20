@@ -51,6 +51,7 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("name", getName());
+		attributes.put("label", getLabel());
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
@@ -71,6 +72,12 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String label = (String)attributes.get("label");
+
+		if (label != null) {
+			setLabel(label);
 		}
 
 		String description = (String)attributes.get("description");
@@ -156,6 +163,26 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 	@Override
 	public void setName(java.lang.String name) {
 		_project.setName(name);
+	}
+
+	/**
+	* Returns the label of this project.
+	*
+	* @return the label of this project
+	*/
+	@Override
+	public java.lang.String getLabel() {
+		return _project.getLabel();
+	}
+
+	/**
+	* Sets the label of this project.
+	*
+	* @param label the label of this project
+	*/
+	@Override
+	public void setLabel(java.lang.String label) {
+		_project.setLabel(label);
 	}
 
 	/**

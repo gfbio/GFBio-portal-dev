@@ -32,6 +32,7 @@ public class ResearchObjectSoap implements Serializable {
 
 		soapModel.setResearchObjectID(model.getResearchObjectID());
 		soapModel.setName(model.getName());
+		soapModel.setLabel(model.getLabel());
 		soapModel.setMetadata(model.getMetadata());
 
 		return soapModel;
@@ -101,6 +102,14 @@ public class ResearchObjectSoap implements Serializable {
 		_name = name;
 	}
 
+	public String getLabel() {
+		return _label;
+	}
+
+	public void setLabel(String label) {
+		_label = label;
+	}
+
 	public String getMetadata() {
 		return _metadata;
 	}
@@ -111,5 +120,6 @@ public class ResearchObjectSoap implements Serializable {
 
 	private long _researchObjectID;
 	private String _name;
+	private String _label;
 	private String _metadata;
 }

@@ -37,12 +37,14 @@ import java.util.Date;
 public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{projectID=");
 		sb.append(projectID);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", startDate=");
@@ -67,6 +69,13 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		}
 		else {
 			projectImpl.setName(name);
+		}
+
+		if (label == null) {
+			projectImpl.setLabel(StringPool.BLANK);
+		}
+		else {
+			projectImpl.setLabel(label);
 		}
 
 		if (description == null) {
@@ -106,6 +115,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		projectID = objectInput.readLong();
 		name = objectInput.readUTF();
+		label = objectInput.readUTF();
 		description = objectInput.readUTF();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
@@ -122,6 +132,13 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		}
 		else {
 			objectOutput.writeUTF(name);
+		}
+
+		if (label == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(label);
 		}
 
 		if (description == null) {
@@ -144,6 +161,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 
 	public long projectID;
 	public String name;
+	public String label;
 	public String description;
 	public long startDate;
 	public long endDate;
