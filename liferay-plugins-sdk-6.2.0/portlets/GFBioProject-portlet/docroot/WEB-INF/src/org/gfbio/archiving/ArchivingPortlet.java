@@ -43,7 +43,7 @@ public class ArchivingPortlet extends GenericPortlet {
 		
     	try {
     		
-    		projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, "DoctorToWarp", "it is a test", new Date(23/11/1963), new Date(05/04/2063), "fictive");
+    		projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, "DoctorToWarp", "it is a test", new Date(23, 11, 1963), new Date(05/04/2063), "fictive");
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class ArchivingPortlet extends GenericPortlet {
 
 
 			
-		//get all Projects of a specific user in a List
+		//get all Research Objects of a specific Project in a List
 		
 		projectID = 1501;
 		
