@@ -193,41 +193,41 @@
 				<form action="select.htm">
 					<select  style="width:50%" name="<portlet:namespace/>chooPro" id="chooPro" size="1" onchange="checkContent(this.form.chooPro.options[this.form.chooPro.selectedIndex].value)">
 						<option selected value="none"		>None	 </option>
-						<%if (projectList!=null){ for(int i = 0; i < projectList.size(); i++) {
-								Content content = (Content) proList.get(i);
-								List<Element> projdata = ContactToDMS.getProject(doc, content.getValue()).getChildren();%>
-								<option selected value="<%=content.getValue()  %>"		><%=projdata.get(1).getText() %>	 </option>
+						<%if (projectList!=null){ for(int i = 0; i < projectList.size(); i++) {%>
+								<option selected value="<%=projectList.get(i).getProjectID()  %>"		><%=projectList.get(i).getLabel() %>	 </option>
 						<%}	}%>
 					</select>
 				</form>
 		
 			</div>
 	
-	<!-- -------------------------------------------------------------    Rest ------------------------------------------------------->
-	<div id="hide_-10" class="swHide">
-		
-		<div class="portlet-msg-alert" >
-			This function is still not available. Please select ENA (molecular sequence data).
-		</div>
-	</div>
-	<!-- ------------------------------------------------------------- complete Submission ----------------------------------------------->
-	<div id="hide_-20" class="swHide">
-		<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
-			Thank you for your submission! The data submission has been successful. You can view your data in the <a href="<portlet:renderURL><portlet:param name="jspPage" value="view.jsp#tab-3" /></portlet:renderURL>">project profile</a>. 
-		</div>
-	</div>
+			<!-- -------------------------------------------------------------    Rest ------------------------------------------------------->
+			<div id="hide_-10" class="swHide">
+				
+				<div class="portlet-msg-alert" >
+					This function is still not available. Please select ENA (molecular sequence data).
+				</div>
+			</div>
+			
+			<!-- ------------------------------------------------------------- complete Submission ----------------------------------------------->
+			<div id="hide_-20" class="swHide">
+				<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
+					Thank you for your submission! The data submission has been successful. You can view your data in the <a href="<portlet:renderURL><portlet:param name="jspPage" value="view.jsp#tab-3" /></portlet:renderURL>">project profile</a>. 
+				</div>
+			</div>
+			
 	  	</div>
-
-
-	  		</div>
+	</div>
 	  		
-	  		<!-- Project Profile -->
+	  		
+	<!-- Project Profile -->
 
-		  	<div class="section" id='tabProjProfile'>
-		  		<!--   load tabProjProfile via JQuery -->
-		  		tabProjectProfile
-		  	</div>
-		</div>
+
+	<div class="section" id='tabProjProfile'>
+		<!--   load tabProjProfile via JQuery -->
+		tabProjectProfile
+	</div>
+
 	<%} %>	  	
 
 </body>

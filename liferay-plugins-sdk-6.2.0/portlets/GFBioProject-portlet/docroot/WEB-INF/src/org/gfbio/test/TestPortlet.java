@@ -1,7 +1,9 @@
 package org.gfbio.test;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,9 +19,11 @@ import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PortalUtil;
 
 /**
  * Portlet implementation class TestPortlet
@@ -37,13 +41,34 @@ public class TestPortlet extends GenericPortlet {
 	
    		long projectID = 0;
 		long userID = 0;
+		try {
+			if (PortalUtil.getUser(renderRequest)!=null)
+				userID = PortalUtil.getUserId(renderRequest);
+		} catch (PortalException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (SystemException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		long researchObjectID =0;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(1963,10,23);
+		long ms = cal.getTimeInMillis();
+		Date startDate = new Date(ms);
+		cal.set(2063,4,4);
+		ms = cal.getTimeInMillis();
+		Date endDate = new Date(ms);
+	    
+		
     	
     	//add or update a project
 		
+
     	try {
     		
-    		projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, "DoctorToWarp", "BlueBox 13","it is a test", new Date(23, 11, 1963), new Date(05/04/2063), "fictive");
+    		projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, "DoctorToWarp", "BlueBox 13","it is a test", startDate, endDate, "fictive");
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,11 +107,12 @@ public class TestPortlet extends GenericPortlet {
 		for(int i = 0;i <projectList.size();i++)
 			System.out.println(projectList.get(i).getPrimaryKey());
 
-		projectList.get(0).getName();
+
 			
 		//get all Research Objects of a specific Project in a List
 		
-		projectID = 1501;
+		//projectID = 1501;
+		System.out.println();
 		
 		List<ResearchObject> researchObjectList = new ArrayList<ResearchObject>();
 		projectList = null;
@@ -104,10 +130,7 @@ public class TestPortlet extends GenericPortlet {
 			System.out.println(researchObjectList.get(i).getPrimaryKey());
     	
     	
-    	
-    	
-    	
-    	
+
     	
         include(viewTemplate, renderRequest, renderResponse);
     }
@@ -127,8 +150,12 @@ public class TestPortlet extends GenericPortlet {
             portletRequestDispatcher.include(renderRequest, renderResponse);
         }
     }
+    
+    
  
     protected String viewTemplate;
+    
+    
 
     private static Log _log = LogFactoryUtil.getLog(TestPortlet.class);
 
