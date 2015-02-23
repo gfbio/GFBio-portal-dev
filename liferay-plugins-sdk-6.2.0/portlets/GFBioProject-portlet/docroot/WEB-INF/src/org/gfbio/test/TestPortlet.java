@@ -1,11 +1,11 @@
 package org.gfbio.test;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -130,8 +130,26 @@ public class TestPortlet extends GenericPortlet {
 			System.out.println(researchObjectList.get(i).getPrimaryKey());
     	
     	
-
-    	
+		Project project = null;
+		try {
+			project = ProjectLocalServiceUtil.getProject(projectID);
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		// Test dynamic access to the table values
+		Map <String, Object> projectMap = project.getModelAttributes();
+		List <String> projectKey = new ArrayList<String> (projectMap.keySet());
+		
+		List <String> attributList = new ArrayList<String>();
+		System.out.println(projectKey.get(1));
+    	System.out.println(projectMap.get(projectKey.get(1)));
+		
         include(viewTemplate, renderRequest, renderResponse);
     }
 

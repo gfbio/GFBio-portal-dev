@@ -1,11 +1,14 @@
 
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
 
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui"    prefix="liferay-ui" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" 	prefix="portlet" %>
+<%@ taglib uri="http://alloy.liferay.com/tld/aui" 	prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/portlet" 	prefix="liferay-portlet" %>
+<%@ taglib uri="http://liferay.com/tld/security" 	prefix="liferay-security" %>
+<%@ taglib uri="http://liferay.com/tld/theme" 		prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/ui" 			prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/util" 		prefix="liferay-util" %>
 
 
 <%@ page import="com.liferay.portal.kernel.exception.SystemException" %>
@@ -17,46 +20,31 @@
 
 <%@ page import="com.liferay.taglib.util.IncludeTag" %>
 
-<%@ page import="org.gfbio.model.Project" %>
-<%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
+<%@ page import="java.util.*" %>
 
 <%@ page import="javax.portlet.*" %>
 <%@ page import="javax.portlet.PortletPreferences" %>
 <%@ page import="javax.portlet.PortletURL"%>
 <%@ page import="javax.portlet.RenderResponse"%>
-<%@ page import="java.util.*" %>
 
+<%@ page import="org.gfbio.model.Project" %>
+<%@ page import="org.gfbio.model.ResearchObject" %>
+<%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
 
-
-
-<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
-
-
-<%@ taglib uri="http://java.sun.com/portlet_2_0" 	prefix="portlet" %>
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" 	prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" 	prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/security" 	prefix="liferay-security" %>
-<%@ taglib uri="http://liferay.com/tld/theme" 		prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" 			prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" 		prefix="liferay-util" %>
+<%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="org.json.simple.parser.JSONParser" %>
+<%@ page import="org.json.simple.parser.ParseException" %>
  
-
-
-
-
-
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects />
 <portlet:resourceURL id="archivingURL" var="archivingURL" escapeXml="false" />
 
-
-
-
-
 <portlet:renderURL var="jspProjectProfile">
 	<portlet:param name="jspPage" value="/projectprofile.jsp" />
 </portlet:renderURL>
+
+
 
 
 
@@ -70,22 +58,26 @@
 
 	//hide GCDJ Widget
 	function hideSubmission(hidecode) {
+		console.log("hideSubmission "+ hidecode);
 		var toHide = { "hidecode" : hidecode };
 		Liferay.fire('gadget:gfbio.archiving.submit', toHide);
 	}
 	
 	//GCDJ Widget Publish
 	function SubmitGCDJ(hidecode, showhide) {
+		console.log("SubmitGCDJ "+ hidecode+" "+showhide);
 		var toSubmit = { 
 			     "hidecode" : hidecode,
 			     "showhide" : showhide,
 			     "projId" : document.getElementById("chooPro").value
 			   };
+		console.log("SubmitGCDJ "+ hidecode+" "+showhide+ " "+document.getElementById("chooPro").value);
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
 	
 	//GCDJ Submit Answer
 	$(document).ready(function() {
+		console.log("ready");
 		Liferay.on('gadget:gfbio.archiving.submit', function(topic, data, subscriberData){
 			if (data == undefined){}
 			else
@@ -94,6 +86,7 @@
 	});
 	
 	function submitAnswer(data){
+		console.log("submitAnswer" + JSON.stringify(data));
 		$.ajax({
 			"type" : "POST",
 			"url": document.getElementById("archivingURL").value.concat("/GFBioArchiving"),
@@ -103,6 +96,7 @@
 				"<portlet:namespace />responseTarget" : "GCDJWidget"
 			},
 			success : function(data) {
+				console.log("success" + JSON.stringify(data));
 			}
 		});
 		visibleShow("-20");

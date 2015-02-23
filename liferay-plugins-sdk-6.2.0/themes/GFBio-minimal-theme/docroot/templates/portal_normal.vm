@@ -64,6 +64,8 @@
 ##Contao Ende ##############################################
 
 
+#js ("$javascript_folder/jquery-1.11.2.min.js")
+#js ("$javascript_folder/jquery-1.11.2-ui.min.js")
 
 ##<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
 
