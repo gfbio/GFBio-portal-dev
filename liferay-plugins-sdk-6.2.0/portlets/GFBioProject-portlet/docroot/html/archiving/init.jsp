@@ -22,6 +22,7 @@
 
 <%@ page import="java.util.*" %>
 
+
 <%@ page import="javax.portlet.*" %>
 <%@ page import="javax.portlet.PortletPreferences" %>
 <%@ page import="javax.portlet.PortletURL"%>
@@ -86,7 +87,6 @@
 	});
 	
 	function submitAnswer(data){
-		console.log("submitAnswer" + JSON.stringify(data));
 		$.ajax({
 			"type" : "POST",
 			"url": document.getElementById("archivingURL").value.concat("/GFBioArchiving"),
@@ -96,7 +96,6 @@
 				"<portlet:namespace />responseTarget" : "GCDJWidget"
 			},
 			success : function(data) {
-				console.log("success" + JSON.stringify(data));
 			}
 		});
 		visibleShow("-20");

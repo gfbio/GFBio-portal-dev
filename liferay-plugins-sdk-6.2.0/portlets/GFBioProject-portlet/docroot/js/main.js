@@ -84,12 +84,14 @@ function resourceMethod(archivingURL, method, data){
 }
 
 function resourceMethod_I(archivingURL, method, name, size, relationID){
+	console.log("relationID: " +relationID);
 	var str ;
 	var data = new Object();
 	data["relationID"] = relationID;
 	for (var i = 0; i < size; i++){
 		str = name.concat("_").concat(i);
 		var topic = document.getElementById('lato'.concat(str)).textContent;
+		console.log(topic + " | "+document.getElementById(str).value);
 		data[topic] = document.getElementById(str).value;
 	}
 	ajaxRequest(archivingURL, method, data);

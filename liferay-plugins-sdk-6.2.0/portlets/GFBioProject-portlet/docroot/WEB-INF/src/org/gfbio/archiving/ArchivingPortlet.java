@@ -70,6 +70,10 @@ public class ArchivingPortlet extends GenericPortlet {
 			//new ResearchObject / sequence meta data over GCDJ Widget	
 			if ("GCDJWidget".toString().equals(request.getParameter("responseTarget").toString()))
 				newResearchObject(request, response);
+			
+			//update Project
+			if ("updateProject".toString().equals(request.getParameter("responseTarget").toString()))
+				updateProject(request, response);
 
 		}
 	}
@@ -150,7 +154,16 @@ public class ArchivingPortlet extends GenericPortlet {
 		try {
 			long researchObjectID = 0;
 			long projectID = Long.valueOf(request.getParameter("projId")).longValue();
-			String data = request.getParameter("data");
+			
+			JSONParser parser = new JSONParser();
+			JSONObject json = new JSONObject();
+			try {
+				json = (JSONObject) parser.parse(request.getParameter("data"));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String data = json.toString();
 			System.out.println(researchObjectID);
 			System.out.println(projectID);
 			System.out.println(data);
@@ -158,6 +171,37 @@ public class ArchivingPortlet extends GenericPortlet {
 		} catch (SystemException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+	}
+	
+	//update Project data
+	public  void updateProject(ResourceRequest request, ResourceResponse response) throws IOException, PortletException{
+		JSONParser parser = new JSONParser();
+		JSONObject json = new JSONObject();
+		try {
+			json = (JSONObject) parser.parse(request.getParameter("data"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		System.out.println(json.toString());
+		long projectID = Long.valueOf((String) json.get("projectID")).longValue();
+		long userID =    Long.valueOf((String) json.get("relationID")).longValue();
+
+		String name = (String) json.get("name");
+		String label = (String) json.get("label");
+		String description = (String) json.get("description");
+		Date startDate = (Date) json.get("startDate");
+		Date endDate = (Date) json.get("endDate");
+		String status = (String) json.get("status");
+		
+		try {
+			projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, name, label,description, startDate, endDate, status);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

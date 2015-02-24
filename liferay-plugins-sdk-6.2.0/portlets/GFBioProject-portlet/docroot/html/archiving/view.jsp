@@ -385,18 +385,18 @@
 						<div class="row" >
 							<div class="rowLato" >&nbsp;</div>
 							<div class="rowLava" >&nbsp;</div>
-							<div class="rowField"><input type="button" class="widthL" value="Change"  onclick="resourceMethod_I('<%=archivingURL %>', 'updateProject','project', '<%=attributList.size()-1%>')" /></div>
+							<div class="rowField"><input type="button" class="widthL" value="Change"  onclick="resourceMethod_I('<%=archivingURL %>', 'updateProject','project', '<%=attributList.size()%>','<%=userID %>')" /></div>
 						</div>
-						
+						<%=userID %>
 							
 						<p/>
 						
-						<!-- ------------------------------------------Molecular data ----------------------------------------------------------- -->
+						<!-- ------------------------------------------Sequence data ----------------------------------------------------------- -->
 				
 					
 						
 						<div>
-							<h4> Molecular data</h4>
+							<h4> Sequence data</h4>
 						</div>
 						<input  style="width:22%" type="button" name="hide_mol" id="hide_but_0" value="show molecular data" onclick="showhide(0)">
 						<div id="hide_0" class="swHide" >
@@ -415,26 +415,44 @@
 											// TODO Auto-generated catch block
 											e1.printStackTrace();
 										}
-										//List <String> keyset = metadata.keySet();
+										Set <String> keySet = metadata.keySet();
+										String[] keyArray = keySet.toArray(new String[0]);
 									%>
-								
-						
+									<p>
+									<input type="button" class="widthM" name="hide_but" id=<%="hide_but_"+h%> value="<%= "show ".concat(researchObject.getLabel()) %>" onclick="<%="showhide("%><%=h%><%=")"%>">
+									<div id=<%= "hide_"+h %> class="swHide">
+									<div class="row"><%
+										if (metadata.size() !=0){ %>
+											<%String stSeqI = "mole_".concat(new Integer(j).toString()).concat("_0")  ; %>
+											<div class="row">
+												<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[0] %></label></div>
+												<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[0]) %></label></div>
+												<div class="rowField"><input type="hidden"	 class="widthL" id="<%= stSeqI %>"	name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[0]) %>"    /></div>
+											</div>
+											<%if (keyArray.length>1){for(int i = 1; i < keyArray.length; i++) {%>
+													<% stSeqI = "mole_".concat(new Integer(j).toString()).concat("_").concat(new Integer(i).toString()); %>
+													<div class="row">
+														<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[i]  %></label></div>
+														<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[i]) %></label></div>
+														<div class="rowField"><input type="text"  class="widthL"	id="<%= stSeqI %>" name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[i]) %>"    /></div>
+													</div>
+												<%}
+											}%>
+											<div class="row">
+												<div class="rowLato" >&nbsp;</div>
+												<div class="rowLava" >&nbsp;</div>
+												<div class="rowField"><input type="button" class="widthL"	value="Change" onclick="resourceMethod_JI('<%=archivingURL %>', 'changeMolecular','mole','<%= j %>','<%=metadata.size() %>')" /></div>
+											</div>
+										<%} %>
+									</div>
 								<%}
 							} %>
 						</div>	
-						</div>	
-						<%} %>
-				
-				
-				
-				
-			
+					</div>	
+				<%} %>
 			<%} %>
 		</div>
-		
-
 	<%} %>	  	
-
 </body>
 
 
