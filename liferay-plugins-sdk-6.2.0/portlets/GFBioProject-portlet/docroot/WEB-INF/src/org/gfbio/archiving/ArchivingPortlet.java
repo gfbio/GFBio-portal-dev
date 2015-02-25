@@ -111,12 +111,12 @@ public class ArchivingPortlet extends GenericPortlet {
 		String preDate = (String) json.get("startDate");
 		int yeahr = Integer.parseInt(preDate.substring(0,4));
 		int month;
-		if (preDate.substring(6,7).equals("."))
+		if (preDate.substring(6,7).equals("-"))
 			month = Integer.parseInt(preDate.substring(5,6))-1;
 		else
 			month = Integer.parseInt(preDate.substring(5,7))-1;
 		int day;
-		if (preDate.substring(preDate.length()-2,preDate.length()-1).equals("."))
+		if (preDate.substring(preDate.length()-2,preDate.length()-1).equals("-"))
 			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
 		else
 			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
@@ -127,11 +127,11 @@ public class ArchivingPortlet extends GenericPortlet {
 		
 		preDate = (String) json.get("endDate");
 		yeahr = Integer.parseInt(preDate.substring(0,4));
-		if (preDate.substring(6,7).equals("."))
+		if (preDate.substring(6,7).equals("-"))
 			month = Integer.parseInt(preDate.substring(5,6))-1;
 		else
 			month = Integer.parseInt(preDate.substring(5,7))-1;
-		if (preDate.substring(preDate.length()-2,preDate.length()-1).equals("."))
+		if (preDate.substring(preDate.length()-2,preDate.length()-1).equals("-"))
 			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
 		else
 			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
@@ -193,8 +193,40 @@ public class ArchivingPortlet extends GenericPortlet {
 		String name = (String) json.get("name");
 		String label = (String) json.get("label");
 		String description = (String) json.get("description");
-		Date startDate = (Date) json.get("startDate");
-		Date endDate = (Date) json.get("endDate");
+		String preDate = (String) json.get("startDate");
+		System.out.println(preDate);
+		
+
+		int yeahr = Integer.parseInt(preDate.substring(0,4));
+		int month;
+		if (preDate.substring(6,7).equals("-"))
+			month = Integer.parseInt(preDate.substring(5,6))-1;
+		else
+			month = Integer.parseInt(preDate.substring(5,7))-1;
+		int day;
+		if (preDate.substring(preDate.length()-2,preDate.length()-1).equals("-"))
+			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
+		else
+			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
+		Calendar cal = Calendar.getInstance();
+		cal.set(yeahr,month,day);
+		long ms = cal.getTimeInMillis();
+		Date startDate = new Date(ms);
+		
+		preDate = (String) json.get("endDate");
+		yeahr = Integer.parseInt(preDate.substring(0,4));
+		if (preDate.substring(6,7).equals("-"))
+			month = Integer.parseInt(preDate.substring(5,6))-1;
+		else
+			month = Integer.parseInt(preDate.substring(5,7))-1;
+		if (preDate.substring(preDate.length()-2,preDate.length()-1).equals("-"))
+			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
+		else
+			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
+		cal = Calendar.getInstance();
+		cal.set(yeahr,month,day);
+		ms = cal.getTimeInMillis();
+		Date endDate = new Date(ms);
 		String status = (String) json.get("status");
 		
 		try {

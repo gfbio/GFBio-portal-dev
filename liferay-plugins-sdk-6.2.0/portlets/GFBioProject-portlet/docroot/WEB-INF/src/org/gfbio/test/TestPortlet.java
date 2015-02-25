@@ -142,15 +142,7 @@ public class TestPortlet extends GenericPortlet {
 		} 
 		
 		
-		// Test dynamic access to the table values
-		Map <String, Object> projectMap = project.getModelAttributes();
-		List <String> projectKey = new ArrayList<String> (projectMap.keySet());
 		
-		List <String> attributList = new ArrayList<String>();
-		System.out.println(projectKey.get(1));
-    	System.out.println(projectMap.get(projectKey.get(1)));
-		
-        include(viewTemplate, renderRequest, renderResponse);
     }
 
     protected void include(
