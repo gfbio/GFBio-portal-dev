@@ -254,6 +254,10 @@
 			All data that we store for the user, have an user or a project reference. Here you can see all of the stored data to a selected project.<br>
 			<br>
 			
+			<div class="portlet-msg-alert" >
+					Please use the form yyyy-mm-dd for all Dates in the project profile.
+			</div>
+			
 			<%if (projectList==null){ %>
 		
 				<%
@@ -273,6 +277,7 @@
 				<div class="rowLato" >&nbsp;</div>
 				<div class="rowLava" >&nbsp;</div>
 				<div class="rowField"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%=archivingURL %>', 'newProject','newprous', '<%=attributList.size()%>', '102', <%=userID %>)" /></div>
+			
 			
 			
 				<div id="hide_102" class="swHide">
@@ -303,21 +308,18 @@
 					</div>
 				</div>
 					
-				<input  class="widthL" type="button" id="hide_but_-2" name="hide_but_-2" value="show the form to build a new Project"    onclick="showhide(-2)">
-			
-				<br>
-				<br>
-			
+				
+				<div id="hide_but_newpro" onclick="pseudoaccordion('newpro')" style="cursor:pointer;">
+					<h4 > <span id="h_newpro">+</span> new project </h4>
+				</div>
+		
 				
 				<%String projectID =(String)prefs.getValue("choPro", "none");	%>
 				
 				
 				<!-- -----------------------------------------------       New Project           -------------------------------------------------------- -->
 			
-				<div id="hide_-2" class="swHide">
-				
-					<br>
-					<h3> New Project</h3><br>
+				<div id="hide_newpro" class="swHide">
 				
 					<%
 						String stProjI;
@@ -356,7 +358,7 @@
 					
 
 					<div id="updateProject">
-						<h3> General Project Data</h3>
+						<h3> general project data</h3>
 					
 						<div class="row">
 							<%  Project project =  ProjectLocalServiceUtil.getProject(Long.valueOf(projectID).longValue()); 
@@ -390,12 +392,12 @@
 						
 						<!-- ------------------------------------------Sequence data ----------------------------------------------------------- -->
 						
-						<h3>Research Object</h3>
+						<h3>research object</h3>
 						
 						<%List <ResearchObject> researchObjectList = ProjectLocalServiceUtil.getResearchObjectList(Long.valueOf(projectID).longValue(), userID);%>
 						
 						<div id="hide_but_roseq" onclick="pseudoaccordion('roseq')" style="cursor:pointer;">
-							<h4 > <span id="h_roseq">+</span> Sequence data (<%=researchObjectList.size() %>)</h4>
+							<h4 > <span id="h_roseq">+</span> sequence data (<%=researchObjectList.size() %>)</h4>
 						</div>
 
 						<div id= "hide_roseq" class="swHide">
