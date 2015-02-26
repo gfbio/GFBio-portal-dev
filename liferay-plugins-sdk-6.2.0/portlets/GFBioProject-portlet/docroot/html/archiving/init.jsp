@@ -59,26 +59,22 @@
 
 	//hide GCDJ Widget
 	function hideSubmission(hidecode) {
-		console.log("hideSubmission "+ hidecode);
 		var toHide = { "hidecode" : hidecode };
 		Liferay.fire('gadget:gfbio.archiving.submit', toHide);
 	}
 	
 	//GCDJ Widget Publish
 	function SubmitGCDJ(hidecode, showhide) {
-		console.log("SubmitGCDJ "+ hidecode+" "+showhide);
 		var toSubmit = { 
 			     "hidecode" : hidecode,
 			     "showhide" : showhide,
 			     "projId" : document.getElementById("chooPro").value
 			   };
-		console.log("SubmitGCDJ "+ hidecode+" "+showhide+ " "+document.getElementById("chooPro").value);
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
 	
 	//GCDJ Submit Answer
 	$(document).ready(function() {
-		console.log("ready");
 		Liferay.on('gadget:gfbio.archiving.submit', function(topic, data, subscriberData){
 			if (data == undefined){}
 			else

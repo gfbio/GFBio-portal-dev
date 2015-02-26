@@ -3,10 +3,31 @@ success = "x";
 
 
 
+function pseudoaccordion(j){
+	showhide2(j);
+	changePlusMinus("h_".concat(j));
+}
+
+function changePlusMinus(j){
+	(document.getElementById(j).innerHTML== "-") ? changeToPlus(j) : changeToMinus(j);
+}
+
+function changeToPlus(j){
+	document.getElementById(j).innerHTML= "+";
+}
+
+function changeToMinus(j){
+	document.getElementById(j).innerHTML= "-";
+}
+
 
 
 /////////////////////////////////////////   hide/show scripts  //////////////////////////////////////////////	
-	
+
+function showhide2(j){
+	visibleStateChoose(j);
+}
+
 function showhide(j) {
 	visibleStateChoose(j);
 	visibleValueChoose(j);
@@ -84,14 +105,12 @@ function resourceMethod(archivingURL, method, data){
 }
 
 function resourceMethod_I(archivingURL, method, name, size, relationID){
-	console.log("relationID: " +relationID);
 	var str ;
 	var data = new Object();
 	data["relationID"] = relationID;
 	for (var i = 0; i < size; i++){
 		str = name.concat("_").concat(i);
 		var topic = document.getElementById('lato'.concat(str)).textContent;
-		console.log(topic + " | "+document.getElementById(str).value);
 		data[topic] = document.getElementById(str).value;
 	}
 	ajaxRequest(archivingURL, method, data);
@@ -236,7 +255,6 @@ function buildNewProject(archivingURL, namespace, userID, target, projna, na, cs
 
 
 function rowLoop100 (archivingURL, namespace, target,  projna, na, cssLato, cssLava, cssInput, cssField){
-	//console.log("mittelbereich: " +loopSize(archivingURL, "getProjectSize",projna));
 	for (var i = loopSize(archivingURL, "getProjectSize",projna)-2; i >0;i--){
 	//for (var i = 4-2; i >0;i--){
 		var valLato  = labelValue(archivingURL, "getProjectTopic", projna,  i);
@@ -309,7 +327,6 @@ function labelValue(archivingURL, method, projna, i){
 function loopSize(archivingURL, method, projna){
 	var data = new Object();
 	ajaxValueResponse(archivingURL, method, data["projna"]=projna);	//success will be change by callbackSuccess in ajaxValueResponse
-	//console.log("loopSite: "+JSON.stringify(data));
 	return success;
 }
 

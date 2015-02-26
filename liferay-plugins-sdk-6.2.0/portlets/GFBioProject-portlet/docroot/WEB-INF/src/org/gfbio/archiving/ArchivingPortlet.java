@@ -7,8 +7,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -120,10 +123,17 @@ public class ArchivingPortlet extends GenericPortlet {
 			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
 		else
 			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
-		Calendar cal = Calendar.getInstance();
-		cal.set(yeahr,month,day);
-		long ms = cal.getTimeInMillis();
-		Date startDate = new Date(ms);
+		//Calendar cal = Calendar.getInstance();
+		//cal.set(yeahr,month,day);
+		//long ms = cal.getTimeInMillis();
+		//Date startDate = new Date(ms);
+		DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = new Date();
+		try {
+			startDate = dfm.parse(yeahr+"-"+month+"-"+day);
+		} catch (java.text.ParseException e1) {
+			e1.printStackTrace();
+		}
 		
 		preDate = (String) json.get("endDate");
 		yeahr = Integer.parseInt(preDate.substring(0,4));
@@ -135,10 +145,16 @@ public class ArchivingPortlet extends GenericPortlet {
 			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
 		else
 			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
-		cal = Calendar.getInstance();
-		cal.set(yeahr,month,day);
-		ms = cal.getTimeInMillis();
-		Date endDate = new Date(ms);
+		//cal = Calendar.getInstance();
+		//cal.set(yeahr,month,day);
+		//ms = cal.getTimeInMillis();
+		//Date endDate = new Date(ms);
+		Date endDate = new Date();
+		try {
+			endDate = dfm.parse(yeahr+"-"+month+"-"+day);
+		} catch (java.text.ParseException e1) {
+			e1.printStackTrace();
+		}
 		
 		String status = (String) json.get("status");
 		
@@ -194,9 +210,11 @@ public class ArchivingPortlet extends GenericPortlet {
 		String label = (String) json.get("label");
 		String description = (String) json.get("description");
 		String preDate = (String) json.get("startDate");
-		System.out.println(preDate);
-		
-
+		for (int i =0; i <preDate.length();i++)
+			if (preDate.subSequence(i, i+1).equals(" ")){
+				preDate = preDate.substring(0,i);
+				break;
+			}
 		int yeahr = Integer.parseInt(preDate.substring(0,4));
 		int month;
 		if (preDate.substring(6,7).equals("-"))
@@ -208,12 +226,25 @@ public class ArchivingPortlet extends GenericPortlet {
 			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
 		else
 			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
-		Calendar cal = Calendar.getInstance();
-		cal.set(yeahr,month,day);
-		long ms = cal.getTimeInMillis();
-		Date startDate = new Date(ms);
+		//Calendar cal = Calendar.getInstance();
+		//cal.set(yeahr,month,day);
+		//long ms = cal.getTimeInMillis();
+		//Date startDate = new Date(ms);
+		DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = new Date();
+		try {
+			startDate = dfm.parse(yeahr+"-"+month+"-"+day);
+		} catch (java.text.ParseException e1) {
+			e1.printStackTrace();
+		}
+		
 		
 		preDate = (String) json.get("endDate");
+		for (int i =0; i <preDate.length();i++)
+			if (preDate.subSequence(i, i+1).equals(" ")){
+				preDate = preDate.substring(0,i);
+				break;
+			}
 		yeahr = Integer.parseInt(preDate.substring(0,4));
 		if (preDate.substring(6,7).equals("-"))
 			month = Integer.parseInt(preDate.substring(5,6))-1;
@@ -223,11 +254,19 @@ public class ArchivingPortlet extends GenericPortlet {
 			day = Integer.parseInt(preDate.substring(preDate.length()-1,preDate.length()));
 		else
 			day = Integer.parseInt(preDate.substring(preDate.length()-2,preDate.length()));
-		cal = Calendar.getInstance();
-		cal.set(yeahr,month,day);
-		ms = cal.getTimeInMillis();
-		Date endDate = new Date(ms);
+		//cal = Calendar.getInstance();
+		//cal.set(yeahr,month,day);
+		//ms = cal.getTimeInMillis();
+		Date endDate = new Date();
+		try {
+			endDate = dfm.parse(yeahr+"-"+month+"-"+day);
+		} catch (java.text.ParseException e1) {
+			e1.printStackTrace();
+		}
 		String status = (String) json.get("status");
+		
+
+
 		
 		try {
 			projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, name, label,description, startDate, endDate, status);

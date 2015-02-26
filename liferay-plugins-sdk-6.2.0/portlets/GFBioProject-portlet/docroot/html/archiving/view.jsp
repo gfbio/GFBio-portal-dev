@@ -45,7 +45,7 @@
 	 		<div class="section" id='tabNoSubmission'>
 				<div id="noSignSubmission">
 					<p>
-					<h3>Data Submission</h3>
+					<h2>Data Submission</h2>
 					<p>
 					Please select a data center in order to start an archiving workflow.
 					<br>
@@ -71,7 +71,7 @@
 					
 					<!--------------------------------------------------------------GCDJ-Widget ---------------------------------------------------->
 					<div id="hide_-1011" class="swHide">
-						<h4>ENA / PANGAEA (Molecular Sequence Data)</h4>
+						<h3>ENA / PANGAEA (Molecular Sequence Data)</h3>
 						<br>
 						Welcome to the molecular data submission workflow!
 						The workflow consists of five major parts:
@@ -124,7 +124,7 @@
   			<div class="section" id='tabSubmission'>
 
 				<p>
-				<h3>Data Submission</h3>
+				<h2>Data Submission</h2>
 				<p>
 				Please select a data center in order to start an archiving workflow.
 				<br>
@@ -150,7 +150,7 @@
 				<!--------------------------------------------------------------GCDJ-Widget ---------------------------------------------------->
 				<div id="hide_-11" class="swHide">
 				
-					<h4>ENA / PANGAEA (Molecular Sequence Data)</h4>
+					<h3>ENA / PANGAEA (Molecular Sequence Data)</h3>
 					<br>
 					Welcome to the molecular data submission workflow!
 					The workflow consists of five major parts:
@@ -179,10 +179,8 @@
 						try {
 							 projectList = ProjectLocalServiceUtil.getProjectList(userID);
 						} catch (NoSuchModelException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (SystemException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					%>
@@ -241,17 +239,15 @@
 				try {
 					 projectList = ProjectLocalServiceUtil.getProjectList(userID);
 				} catch (NoSuchModelException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (SystemException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						e.printStackTrace();
 				}
 			%>
 	
 			<p/>
 	
-			<h3>Project Profile</h3>
+			<h2>Project Profile</h2>
 			<br>
 
 			<br>
@@ -321,7 +317,7 @@
 				<div id="hide_-2" class="swHide">
 				
 					<br>
-					<h4> New Project</h4><br>
+					<h3> New Project</h3><br>
 				
 					<%
 						String stProjI;
@@ -360,12 +356,15 @@
 					
 
 					<div id="updateProject">
-						<h4> General Project Data</h4>
+						<h3> General Project Data</h3>
 					
 						<div class="row">
 							<%  Project project =  ProjectLocalServiceUtil.getProject(Long.valueOf(projectID).longValue()); 
 								Map <String, Object> projectMap = project.getModelAttributes();
 								stProjI = "project_".concat(new Integer(0).toString());
+								
+								
+								
 							%>
 							<div class="swHide">
 								<div class="rowLato" ><label id="<%= "lato".concat(stProjI) %>"><%= attributList.get(0) %></label></div>
@@ -387,21 +386,22 @@
 							<div class="rowLava" >&nbsp;</div>
 							<div class="rowField"><input type="button" class="widthL" value="Change"  onclick="resourceMethod_I('<%=archivingURL %>', 'updateProject','project', '<%=attributList.size()%>','<%=userID %>')" /></div>
 						</div>
-						<%=userID %>
-							
 						<p/>
 						
 						<!-- ------------------------------------------Sequence data ----------------------------------------------------------- -->
-				
-					
 						
-						<div>
-							<h4> Sequence data</h4>
+						<h3>Research Object</h3>
+						
+						<%List <ResearchObject> researchObjectList = ProjectLocalServiceUtil.getResearchObjectList(Long.valueOf(projectID).longValue(), userID);%>
+						
+						<div id="hide_but_roseq" onclick="pseudoaccordion('roseq')" style="cursor:pointer;">
+							<h4 > <span id="h_roseq">+</span> Sequence data (<%=researchObjectList.size() %>)</h4>
 						</div>
-						<input  style="width:22%" type="button" name="hide_mol" id="hide_but_0" value="show molecular data" onclick="showhide(0)">
-						<div id="hide_0" class="swHide" >
+
+						<div id= "hide_roseq" class="swHide">
+
 							<p>
-							<%List <ResearchObject> researchObjectList = ProjectLocalServiceUtil.getResearchObjectList(Long.valueOf(projectID).longValue(), userID);%>
+							
 							<%if(researchObjectList.size() != 0){for(int j = 0; j < researchObjectList.size(); j++) {%>
 									<%
 										int h = j+1;
@@ -412,45 +412,58 @@
 										try {
 											metadata = (JSONObject) parser.parse(researchObject.getMetadata());
 										} catch (ParseException e1) {
-											// TODO Auto-generated catch block
 											e1.printStackTrace();
 										}
 										Set <String> keySet = metadata.keySet();
 										String[] keyArray = keySet.toArray(new String[0]);
 									%>
 									<p>
-									<input type="button" class="widthM" name="hide_but" id=<%="hide_but_"+h%> value="<%= "show ".concat(researchObject.getLabel()) %>" onclick="<%="showhide("%><%=h%><%=")"%>">
-									<div id=<%= "hide_"+h %> class="swHide">
-									<div class="row"><%
-										if (metadata.size() !=0){ %>
-											<%String stSeqI = "mole_".concat(new Integer(j).toString()).concat("_0")  ; %>
-											<div class="row">
-												<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[0] %></label></div>
-												<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[0]) %></label></div>
-												<div class="rowField"><input type="hidden"	 class="widthL" id="<%= stSeqI %>"	name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[0]) %>"    /></div>
-											</div>
-											<%if (keyArray.length>1){for(int i = 1; i < keyArray.length; i++) {%>
-													<% stSeqI = "mole_".concat(new Integer(j).toString()).concat("_").concat(new Integer(i).toString()); %>
-													<div class="row">
-														<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[i]  %></label></div>
-														<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[i]) %></label></div>
-														<div class="rowField"><input type="text"  class="widthL"	id="<%= stSeqI %>" name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[i]) %>"    /></div>
-													</div>
-												<%}
-											}%>
-											<div class="row">
-												<div class="rowLato" >&nbsp;</div>
-												<div class="rowLava" >&nbsp;</div>
-												<div class="rowField"><input type="button" class="widthL"	value="Change" onclick="resourceMethod_JI('<%=archivingURL %>', 'changeMolecular','mole','<%= j %>','<%=metadata.size() %>')" /></div>
-											</div>
-										<%} %>
+									
+									
+									<div id=<%="accordion_seq_header_"+h%> class="toggler ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" aria-controls=<%="accordion_seq_panel_"+h%> aria-selected="false"  tabindex="0"    >
+										<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
+										<%= "Descriptive data of sequence ".concat(researchObject.getLabel()) %>
 									</div>
-								<%}
-							} %>
+									
+									<div id=<%="accordion_seq_panel_"+h%> class="accordion ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" aria-labelledby=<%="accordion_seq_header_"+h%>   role="tabpanel" aria-expanded="false" aria-hidden="true"   >
+										<div class="row"><%
+											if (metadata.size() !=0){ %>
+												<%String stSeqI = "mole_".concat(new Integer(j).toString()).concat("_0")  ; %>
+												<div class="row">
+													<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[0] %></label></div>
+													<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[0]) %></label></div>
+													<div class="swHide"><input type="hidden"	 class="widthL" id="<%= stSeqI %>"	name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[0]) %>"    /></div>
+												</div>
+												<%if (keyArray.length>1){for(int i = 1; i < keyArray.length; i++) {%>
+														<% stSeqI = "mole_".concat(new Integer(j).toString()).concat("_").concat(new Integer(i).toString()); %>
+														<div class="row">
+															<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[i]  %></label></div>
+															<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[i]) %></label></div>
+															<div class="swHide"><input type="text"  class="widthL"	id="<%= stSeqI %>" name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[i]) %>"    /></div>
+														</div>
+													<%}
+												}%>
+												<div class="swHide">
+													<div class="rowLato" >&nbsp;</div>
+													<div class="rowLava" >&nbsp;</div>
+													<div class="rowField"><input type="button" class="widthL"	value="Change" onclick="resourceMethod_JI('<%=archivingURL %>', 'changeMolecular','mole','<%= j %>','<%=metadata.size() %>')" /></div>
+												</div>
+											<%} %>
+										</div>
+									</div>
+							<%}	} %>
 						</div>	
+						
+
+						
 					</div>	
 				<%} %>
 			<%} %>
+			
+
+			
+
+			
 		</div>
 	<%} %>	  	
 </body>
