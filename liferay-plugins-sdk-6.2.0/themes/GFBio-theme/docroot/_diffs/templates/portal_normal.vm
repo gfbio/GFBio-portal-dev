@@ -132,7 +132,7 @@ $theme.include($body_top_include)
 	
 			<div id="footer-content">
 				<div class="ce_text footer-copyright block" id="footer-copyright">
-					<p>&copy; 2013-<span>2014 GFBio&nbsp;</span>- All Rights reserved.</p>  
+					<p>&copy; 2013-<span>2015 GFBio&nbsp;</span>- All Rights reserved.</p>  
 	  			</div>
 			</div>
 		</div>
