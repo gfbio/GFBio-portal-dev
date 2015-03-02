@@ -97,7 +97,13 @@ function newProject(archivingURL, method, name, size, hide,  userID){
 	visibleShow(hide);
 	reload();
 }	
-	
+
+// Method to update a Project
+function updateProject (archivingURL, method, name, size, hide, userID){
+	resourceMethod_I(archivingURL, method, name, size, userID);
+	visibleShow(hide);
+	window.setTimeout('visibleHide('+hide+')',1500);
+}
 
 //generally Methods
 function resourceMethod(archivingURL, method, data){

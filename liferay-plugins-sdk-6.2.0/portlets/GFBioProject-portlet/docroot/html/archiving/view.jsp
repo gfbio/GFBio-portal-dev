@@ -327,21 +327,21 @@
 				
 					<div class="swHide"><div class="row" >
 						<div class="rowLato" > <label id="<%= "lato".concat(stProjI)%>" ><%=attributList.get(0) %></label></div>
-						<div class="rowLava" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
+						<div class="hidden" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
 						<div class="rowField"> <input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>"  value="0" /></div>
 					</div></div>
 					<%for(int i = 1; i < attributList.size(); i++) {%>
 						<% stProjI = "newpro_".concat(new Integer(i).toString()); %>
 						<div class="row" >
 						<div class="rowLato" > <label id="<%= "lato".concat(stProjI) %>"><%=attributList.get(i) %></label></div>
-						<div class="rowLava" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
+						<div class="hidden" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
 						<div class="rowField"> <input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>"  value="" /></div>
 						</div>
 					<% } %>
 					<div class="row" >
 					<div class="rowLato" >&nbsp;</div>
 					<div class="rowLava" >&nbsp;</div>
-					<div class="rowField"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%=archivingURL %>', 'newProject','newpro', '<%=attributList.size()%>', '100001', <%=userID %>)" /></div>
+					<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%=archivingURL %>', 'newProject','newpro', '<%=attributList.size()%>', '100001', <%=userID %>)" /></div>
 					</div>				
 					<div id="hide_100001" class="swHide">
 						<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
@@ -364,13 +364,10 @@
 							<%  Project project =  ProjectLocalServiceUtil.getProject(Long.valueOf(projectID).longValue()); 
 								Map <String, Object> projectMap = project.getModelAttributes();
 								stProjI = "project_".concat(new Integer(0).toString());
-								
-								
-								
 							%>
 							<div class="swHide">
 								<div class="rowLato" ><label id="<%= "lato".concat(stProjI) %>"><%= attributList.get(0) %></label></div>
-								<div class="rowLava" ><label id="<%= "lava".concat(stProjI) %>"><%= projectMap.get(attributList.get(0))  %></label></div>
+								<div class="hidden" ><label id="<%= "lava".concat(stProjI) %>"><%= projectMap.get(attributList.get(0))  %></label></div>
 								<div class="rowField"><input type="hidden" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>" value="<%= project.getProjectID() %>"    /></div>
 							</div>
 						</div>
@@ -379,16 +376,22 @@
 								<% stProjI = "project_".concat(new Integer(i).toString());
 								Map <String, Object> foo = project.getModelAttributes(); %>
 								<div class="rowLato" ><label id="<%= "lato".concat(stProjI) %>"><%= attributList.get(i) %></label></div>
-								<div class="rowLava" ><label id="<%= "lava".concat(stProjI) %>"><%= projectMap.get(attributList.get(i)) %></label></div>
+								<div class="hidden" ><label id="<%= "lava".concat(stProjI) %>"><%= projectMap.get(attributList.get(i)) %></label></div>
 								<div class="rowField"><input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>" value="<%= projectMap.get(attributList.get(i)) %>"    /></div>
 							</div>
 						<% 	} %>
 						<div class="row" >
 							<div class="rowLato" >&nbsp;</div>
 							<div class="rowLava" >&nbsp;</div>
-							<div class="rowField"><input type="button" class="widthL" value="Change"  onclick="resourceMethod_I('<%=archivingURL %>', 'updateProject','project', '<%=attributList.size()%>','<%=userID %>')" /></div>
+							<div class="rowFieldB"><input type="button" class="widthL" value="Change"  onclick=" updateProject('<%=archivingURL %>', 'updateProject', 'project', '<%=attributList.size()%>', '104', '<%=userID %>')" /></div>
 						</div>
 						<p/>
+						
+						<div id="hide_104" class="swHide">
+							<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
+								Data set  is updated.
+							</div>
+						</div>
 						
 						<!-- ------------------------------------------Sequence data ----------------------------------------------------------- -->
 						
@@ -428,30 +431,28 @@
 									</div>
 									
 									<div id=<%="accordion_seq_panel_"+h%> class="accordion ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" aria-labelledby=<%="accordion_seq_header_"+h%>   role="tabpanel" aria-expanded="false" aria-hidden="true"   >
-										<div class="row"><%
-											if (metadata.size() !=0){ %>
-												<%String stSeqI = "mole_".concat(new Integer(j).toString()).concat("_0")  ; %>
-												<div class="row">
-													<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[0] %></label></div>
-													<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[0]) %></label></div>
-													<div class="swHide"><input type="hidden"	 class="widthL" id="<%= stSeqI %>"	name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[0]) %>"    /></div>
-												</div>
-												<%if (keyArray.length>1){for(int i = 1; i < keyArray.length; i++) {%>
-														<% stSeqI = "mole_".concat(new Integer(j).toString()).concat("_").concat(new Integer(i).toString()); %>
-														<div class="row">
-															<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[i]  %></label></div>
-															<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[i]) %></label></div>
-															<div class="swHide"><input type="text"  class="widthL"	id="<%= stSeqI %>" name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[i]) %>"    /></div>
-														</div>
-													<%}
-												}%>
-												<div class="swHide">
-													<div class="rowLato" >&nbsp;</div>
-													<div class="rowLava" >&nbsp;</div>
-													<div class="rowField"><input type="button" class="widthL"	value="Change" onclick="resourceMethod_JI('<%=archivingURL %>', 'changeMolecular','mole','<%= j %>','<%=metadata.size() %>')" /></div>
-												</div>
-											<%} %>
-										</div>
+										<%	if (metadata.size() !=0){ %>
+											<%String stSeqI = "mole_".concat(new Integer(j).toString()).concat("_0")  ; %>
+											<div class="row">
+												<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[0] %></label></div>
+												<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[0]) %></label></div>
+												<div class="swHide"><input type="hidden"	 class="widthL" id="<%= stSeqI %>"	name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[0]) %>"    /></div>
+											</div>
+											<%if (keyArray.length>1){for(int i = 1; i < keyArray.length; i++) {%>
+													<% stSeqI = "mole_".concat(new Integer(j).toString()).concat("_").concat(new Integer(i).toString()); %>
+													<div class="row">
+														<div class="rowLato" ><label id="<%= "lato".concat(stSeqI) %>"><%= keyArray[i]  %></label></div>
+														<div class="rowLava" ><label id="<%= "lava".concat(stSeqI) %>"><%= metadata.get(keyArray[i]) %></label></div>
+														<div class="swHide"><input type="text"  class="widthL"	id="<%= stSeqI %>" name="<portlet:namespace/><%= stSeqI %>"	value="<%= metadata.get(keyArray[i]) %>"    /></div>
+													</div>
+												<%}
+											}%>
+											<div class="swHide">
+												<div class="rowLato" >&nbsp;</div>
+												<div class="rowLava" >&nbsp;</div>
+												<div class="rowField"><input type="button" class="widthL"	value="Change" onclick="resourceMethod_JI('<%=archivingURL %>', 'changeMolecular','mole','<%= j %>','<%=metadata.size() %>')" /></div>
+											</div>
+										<%} %>
 									</div>
 							<%}	} %>
 						</div>	
