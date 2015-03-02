@@ -173,7 +173,6 @@
 	
 					<%
 						Long userID  = PortalUtil.getUserId(request);
-						
 						List <Project> projectList = new ArrayList<Project>();
 						projectList = null;
 						try {
@@ -184,6 +183,8 @@
 							e.printStackTrace();
 						}
 					%>
+					
+
 					
 					Please select a project to which the data should be assigned. <br>
 					If no project is available, please create a <a href="#" onclick="showSection('#tabProjProfile')">new project</a>.<br> 
@@ -224,8 +225,6 @@
 		<div class="section" id='tabProjProfile'>
 			
 			<%	
-				PortletPreferences prefs = renderRequest.getPreferences();
-			
 				userID  = PortalUtil.getUserId(request);
 				List <String> attributList = new ArrayList<String>();
 				attributList.add("projectID");
@@ -258,26 +257,31 @@
 					Please use the form yyyy-mm-dd for all Dates in the project profile.
 			</div>
 			
-			<%if (projectList==null){ %>
+			<!------------------------------------------------    First New Project    -------------------------------------------------------------------->
+			
+			<%if (projectList.size()==0){ %>
 		
 				<%
 					String stProjI;
 					stProjI = "newprous_".concat(new Integer(0).toString()); %>
 				<div class="swHide">
 					<div class="rowLato" > <label id="<%= "lato".concat(stProjI)%>" ><%=attributList.get(0) %></label></div>
-					<div class="rowLava" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
+					<div class="hidden" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
 					<div class="rowField"> <input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>"  value="0" /></div>
 				</div>
 				<%for(int i = 1; i < attributList.size(); i++) {%>
 					<% stProjI = "newprous_".concat(new Integer(i).toString()); %>
-					<div class="rowLato" > <label id="<%= "lato".concat(stProjI) %>"><%=attributList.get(i) %></label></div>
-					<div class="rowLava" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
-					<div class="rowField"> <input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>"  value="" /></div>
+					<div class="row" >
+						<div class="rowLato" > <label id="<%= "lato".concat(stProjI) %>"><%=attributList.get(i) %></label></div>
+						<div class="hidden" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
+						<div class="rowField"> <input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>"  value="" /></div>
+					</div>
 				<% } %>
-				<div class="rowLato" >&nbsp;</div>
-				<div class="rowLava" >&nbsp;</div>
-				<div class="rowField"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%=archivingURL %>', 'newProject','newprous', '<%=attributList.size()%>', '102', <%=userID %>)" /></div>
-			
+				<div class="row" >
+					<div class="rowLato" >&nbsp;</div>
+					<div class="rowLava" >&nbsp;</div>
+					<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%=archivingURL %>', 'newProject','newprous', '<%=attributList.size()%>', '102', <%=userID %>)" /></div>
+				</div>
 			
 			
 				<div id="hide_102" class="swHide">
@@ -285,10 +289,25 @@
 						Create new Project is complete.
 					</div>
 				</div>
+				
+
+				
+				
 					
 			<%}else{%>
 			
 				<!------------------------------------------------    Choose Project    -------------------------------------------------------------------->
+
+				<%
+					projectList = null;
+					try {
+						 projectList = ProjectLocalServiceUtil.getProjectList(userID);
+					} catch (NoSuchModelException e) {
+						e.printStackTrace();
+					} catch (SystemException e) {
+							e.printStackTrace();
+					}
+				%>
 
 				Please select one of your projects or start a new one.<br>
 				<br>
@@ -296,7 +315,7 @@
 				<form action="select.html">
 					<select  style="width:50%" name="<portlet:namespace/>choPro" id="choPro" size="1" onchange="chooseProject('<%=archivingURL %>','choosePro',this.form.choPro.options[this.form.choPro.selectedIndex].value, '103')">
 						<option selected value="none">None	 </option>
-						<%if (projectList!=null){for(int i = 0; i < projectList.size(); i++) {%>
+						<%if (projectList.size()>0){for(int i = 0; i < projectList.size(); i++) {%>
 								<option value="<%=projectList.get(i).getProjectID()  %>">	<%=projectList.get(i).getLabel()%> </option> 
 						<%}	}%>
 					</select>
@@ -314,7 +333,10 @@
 				</div>
 		
 				
-				<%String projectID =(String)prefs.getValue("choPro", "none");	%>
+				<%
+					PortletPreferences prefs = renderRequest.getPreferences();
+					String projectID =(String)prefs.getValue("choPro", "none");
+				%>
 				
 				
 				<!-- -----------------------------------------------       New Project           -------------------------------------------------------- -->
@@ -333,15 +355,15 @@
 					<%for(int i = 1; i < attributList.size(); i++) {%>
 						<% stProjI = "newpro_".concat(new Integer(i).toString()); %>
 						<div class="row" >
-						<div class="rowLato" > <label id="<%= "lato".concat(stProjI) %>"><%=attributList.get(i) %></label></div>
-						<div class="hidden" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
-						<div class="rowField"> <input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>"  value="" /></div>
+							<div class="rowLato" > <label id="<%= "lato".concat(stProjI) %>"><%=attributList.get(i) %></label></div>
+							<div class="hidden" > <label id="<%= "lava".concat(stProjI) %>"></label>&nbsp;</div>
+							<div class="rowField"> <input type="text" class="widthL" id="<%= stProjI %>" name="<portlet:namespace/><%= stProjI %>"  value="" /></div>
 						</div>
 					<% } %>
 					<div class="row" >
-					<div class="rowLato" >&nbsp;</div>
-					<div class="rowLava" >&nbsp;</div>
-					<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%=archivingURL %>', 'newProject','newpro', '<%=attributList.size()%>', '100001', <%=userID %>)" /></div>
+						<div class="rowLato" >&nbsp;</div>
+						<div class="rowLava" >&nbsp;</div>
+						<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%=archivingURL %>', 'newProject','newpro', '<%=attributList.size()%>', '100001', <%=userID %>)" /></div>
 					</div>				
 					<div id="hide_100001" class="swHide">
 						<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
@@ -350,8 +372,26 @@
 					</div>
 				</div>
 				
-				
-				<%if ( projectID!="none") {%>
+
+				<%
+					String checkID = "None";
+					Boolean checker = false; 
+					for (int i = 0; i < projectList.size();i++)
+						if (projectList.get(i).getProjectID() == Long.valueOf(projectID).longValue())
+							checker = true;
+
+					
+					if (checker == false)
+						checkID = "None";
+					else
+						checkID = projectID.toString();
+					
+
+					if (checkID.equals("None")){}
+					else{
+						
+				%>
+
 
 		
 					<!-- --------------------------------------------  Change Project data ---------------------------------------------------------------->
@@ -365,6 +405,7 @@
 								Map <String, Object> projectMap = project.getModelAttributes();
 								stProjI = "project_".concat(new Integer(0).toString());
 							%>
+							<%=projectID %>
 							<div class="swHide">
 								<div class="rowLato" ><label id="<%= "lato".concat(stProjI) %>"><%= attributList.get(0) %></label></div>
 								<div class="hidden" ><label id="<%= "lava".concat(stProjI) %>"><%= projectMap.get(attributList.get(0))  %></label></div>

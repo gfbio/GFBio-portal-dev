@@ -53,8 +53,9 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 		List <Project_User> idList =  Project_UserLocalServiceUtil.getProjectIDList(userID);
 		List <Project> projectList = new ArrayList<Project>();
-		for (int i=0;i<idList.size();i++)
+		for (int i=0;i<idList.size();i++){
 			projectList.add(projectPersistence.findByPrimaryKey(idList.get(i).getProjectID()));
+		}
 		return projectList;
 	}
 

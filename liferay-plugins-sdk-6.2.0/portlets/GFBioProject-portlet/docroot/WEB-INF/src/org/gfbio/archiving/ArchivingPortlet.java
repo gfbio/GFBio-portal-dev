@@ -2,9 +2,12 @@ package org.gfbio.archiving;
 
 
 
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -41,7 +44,12 @@ public class ArchivingPortlet extends GenericPortlet {
     }
 
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse)  throws IOException, PortletException {
+
+        CacheRegistryUtil.clear();
+        MultiVMPoolUtil.clear();
+        WebCachePoolUtil.clear(); 
         include(viewTemplate, renderRequest, renderResponse);
+        
     }
 
     protected void include(String path, RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
@@ -194,18 +202,25 @@ public class ArchivingPortlet extends GenericPortlet {
 	
 	
 	public String checkJSON(String text){
-		List <String> returnText = checkJSONrek(text);
+		int k =0;
+		List <String> returnText = checkJSONrek(text, k);
 		return "";
 	}
 	
-	public List <String> checkJSONrek(String text){
+	public List <String> checkJSONrek(String text, int k){
 		List <String> returnText = new ArrayList<String>();
-		int k =0;
-		for (int i=0;i<text.length();i++){
+		k = k++;
+		for (int i=k;i<text.length();i++){
 			char open = '{';
 			char close = '}';
 			if (text.charAt(i)==open){
-				
+				returnText = checkJSONrek(text.substring(i), i);
+			}
+			else {
+				if (text.charAt(i)==close){
+					
+					break;
+				}
 			}
 		}
 		return returnText;
