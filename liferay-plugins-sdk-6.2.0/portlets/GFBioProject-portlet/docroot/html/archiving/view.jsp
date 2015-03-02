@@ -379,33 +379,26 @@
 					for (int i = 0; i < projectList.size();i++)
 						if (projectList.get(i).getProjectID() == Long.valueOf(projectID).longValue())
 							checker = true;
-
-					
 					if (checker == false)
 						checkID = "None";
 					else
 						checkID = projectID.toString();
-					
-
 					if (checkID.equals("None")){}
 					else{
-						
 				%>
-
-
 		
 					<!-- --------------------------------------------  Change Project data ---------------------------------------------------------------->
 					
 
 					<div id="updateProject">
 						<h3> general project data</h3>
-					
+
+
+						<%  Project project =  ProjectLocalServiceUtil.getProject(Long.valueOf(projectID).longValue()); 
+							Map <String, Object> projectMap = project.getModelAttributes();
+							stProjI = "project_".concat(new Integer(0).toString());
+						%>					
 						<div class="row">
-							<%  Project project =  ProjectLocalServiceUtil.getProject(Long.valueOf(projectID).longValue()); 
-								Map <String, Object> projectMap = project.getModelAttributes();
-								stProjI = "project_".concat(new Integer(0).toString());
-							%>
-							<%=projectID %>
 							<div class="swHide">
 								<div class="rowLato" ><label id="<%= "lato".concat(stProjI) %>"><%= attributList.get(0) %></label></div>
 								<div class="hidden" ><label id="<%= "lava".concat(stProjI) %>"><%= projectMap.get(attributList.get(0))  %></label></div>
