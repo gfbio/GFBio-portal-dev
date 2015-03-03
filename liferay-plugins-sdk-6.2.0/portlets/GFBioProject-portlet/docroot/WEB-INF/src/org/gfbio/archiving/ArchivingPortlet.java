@@ -2,16 +2,21 @@ package org.gfbio.archiving;
 
 
 
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -22,6 +27,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.model.Project;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.json.simple.JSONObject;
@@ -38,7 +44,12 @@ public class ArchivingPortlet extends GenericPortlet {
     }
 
     public void doView(RenderRequest renderRequest, RenderResponse renderResponse)  throws IOException, PortletException {
+
+        CacheRegistryUtil.clear();
+        MultiVMPoolUtil.clear();
+        WebCachePoolUtil.clear(); 
         include(viewTemplate, renderRequest, renderResponse);
+        
     }
 
     protected void include(String path, RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
@@ -100,7 +111,6 @@ public class ArchivingPortlet extends GenericPortlet {
 		try {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -161,7 +171,6 @@ public class ArchivingPortlet extends GenericPortlet {
 		try {
 			projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, name, label,description, startDate, endDate, status);
 		} catch (SystemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -176,18 +185,45 @@ public class ArchivingPortlet extends GenericPortlet {
 			try {
 				json = (JSONObject) parser.parse(request.getParameter("data"));
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			String data = json.toString();
-			System.out.println(researchObjectID);
-			System.out.println(projectID);
-			System.out.println(data);
-			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, "GCDJtester", "GCDJtester 0.1", request.getParameter("data"));
+			String name = (String) json.get("project_name");
+			String label = (String) json.get("project_name");
+			
+			String test = data;
+			//String testend = checkJSON(test);
+			
+			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, name, label, data);
 		} catch (SystemException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+	
+	
+	public String checkJSON(String text){
+		int k =0;
+		List <String> returnText = checkJSONrek(text, k);
+		return "";
+	}
+	
+	public List <String> checkJSONrek(String text, int k){
+		List <String> returnText = new ArrayList<String>();
+		k = k++;
+		for (int i=k;i<text.length();i++){
+			char open = '{';
+			char close = '}';
+			if (text.charAt(i)==open){
+				returnText = checkJSONrek(text.substring(i), i);
+			}
+			else {
+				if (text.charAt(i)==close){
+					
+					break;
+				}
+			}
+		}
+		return returnText;
 	}
 	
 	//update Project data
@@ -197,12 +233,9 @@ public class ArchivingPortlet extends GenericPortlet {
 		try {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		
-		System.out.println(json.toString());
 		long projectID = Long.valueOf((String) json.get("projectID")).longValue();
 		long userID =    Long.valueOf((String) json.get("relationID")).longValue();
 
