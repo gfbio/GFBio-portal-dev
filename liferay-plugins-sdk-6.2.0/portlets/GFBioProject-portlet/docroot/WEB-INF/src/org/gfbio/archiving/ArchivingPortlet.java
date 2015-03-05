@@ -201,29 +201,51 @@ public class ArchivingPortlet extends GenericPortlet {
 	}
 	
 	
-	public String checkJSON(String text){
-		int k =0;
-		List <String> returnText = checkJSONrek(text, k);
-		return "";
+	public static String unpackJSON(String json){
+		
+		JSONUnpackString jsonUnpack = new JSONUnpackString (json, "", 1);
+		
+		jsonUnpack = unpackJSONrek(jsonUnpack);
+		json = "{".concat(jsonUnpack.getText()).concat("}");
+		return json;
 	}
 	
-	public List <String> checkJSONrek(String text, int k){
-		List <String> returnText = new ArrayList<String>();
-		k = k++;
-		for (int i=k;i<text.length();i++){
-			char open = '{';
-			char close = '}';
-			if (text.charAt(i)==open){
-				returnText = checkJSONrek(text.substring(i), i);
-			}
-			else {
-				if (text.charAt(i)==close){
-					
-					break;
+	public static JSONUnpackString unpackJSONrek(JSONUnpackString jsonUnpack){
+		String origntext = jsonUnpack.getOrigntext();
+		String text = jsonUnpack.getText();
+		int k = jsonUnpack.getIndex();
+		char open = '{';
+		char close = '}';
+		char comma = ',';
+		
+		//pr¸ft Zeichen f¸r Zeichen den Text
+		for (int i=k;i<origntext.length();i++){
+			
+			//wenn neues JSON gefunden wird
+			if (origntext.charAt(i)==open){
+				int j = i;
+				//key des neuen JSON ausschlieﬂen
+				while (origntext.charAt(j)!=comma && j>=k){
+					j--;
 				}
+				if (k!=j){
+					jsonUnpack.addText(origntext.substring(k,j+1));
+				}
+				jsonUnpack.setIndex(i+1);
+				//und neue rekurssion starten
+				jsonUnpack = unpackJSONrek(jsonUnpack);
+				k = jsonUnpack.getIndex();
+				i = jsonUnpack.getIndex();
+			}
+			//JSON abschlieﬂen
+			if (origntext.charAt(i)==close){
+				jsonUnpack.addText(origntext.substring(k,i));
+				jsonUnpack.setIndex(i+1);
+				return jsonUnpack;
 			}
 		}
-		return returnText;
+		jsonUnpack.addText(origntext.substring(k,origntext.length()));
+		return jsonUnpack;
 	}
 	
 	//update Project data
