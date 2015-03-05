@@ -36,7 +36,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{researchObjectID=");
 		sb.append(researchObjectID);
@@ -46,6 +46,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		sb.append(label);
 		sb.append(", metadata=");
 		sb.append(metadata);
+		sb.append(", formatmetadata=");
+		sb.append(formatmetadata);
 		sb.append("}");
 
 		return sb.toString();
@@ -78,6 +80,13 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			researchObjectImpl.setMetadata(metadata);
 		}
 
+		if (formatmetadata == null) {
+			researchObjectImpl.setFormatmetadata(StringPool.BLANK);
+		}
+		else {
+			researchObjectImpl.setFormatmetadata(formatmetadata);
+		}
+
 		researchObjectImpl.resetOriginalValues();
 
 		return researchObjectImpl;
@@ -89,6 +98,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		name = objectInput.readUTF();
 		label = objectInput.readUTF();
 		metadata = objectInput.readUTF();
+		formatmetadata = objectInput.readUTF();
 	}
 
 	@Override
@@ -116,10 +126,18 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		else {
 			objectOutput.writeUTF(metadata);
 		}
+
+		if (formatmetadata == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(formatmetadata);
+		}
 	}
 
 	public long researchObjectID;
 	public String name;
 	public String label;
 	public String metadata;
+	public String formatmetadata;
 }

@@ -13,10 +13,12 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.gfbio.archiving.JSONUnpackString;
 import org.gfbio.model.Project;
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.json.simple.JSONObject;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,8 +84,20 @@ public class TestPortlet extends GenericPortlet {
 		
 		//add or update Research Object
 		
+		JSONObject metadata = new JSONObject();
+	    JSONObject sub = new JSONObject();
+
+	    metadata.put("key_1", "value_1");
+	    metadata.put("key_2", "value_2");
+	    sub.put("key_3_1", "value_2_1");
+	    sub.put("key_3_2", "value_2_2");
+	    metadata.put("key_3", sub);
+		
+	      
+	    String formatmetadata = unpackJSON(metadata.toString());
+		
 		try {
-			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, "tester", "tester 0.1", "from the time to stars");
+			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, "tester", "tester 0.1", metadata.toString(),formatmetadata);
 		} catch (SystemException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -140,11 +154,55 @@ public class TestPortlet extends GenericPortlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
-		
-		
     }
 
+    public static String unpackJSON(String json){
+		
+		JSONUnpackString jsonUnpack = new JSONUnpackString (json, "", 1);
+		
+		jsonUnpack = unpackJSONrek(jsonUnpack);
+		json = "{".concat(jsonUnpack.getText()).concat("}");
+		return json;
+	}
+	
+	public static JSONUnpackString unpackJSONrek(JSONUnpackString jsonUnpack){
+		String origntext = jsonUnpack.getOrigntext();
+		String text = jsonUnpack.getText();
+		int k = jsonUnpack.getIndex();
+		char open = '{';
+		char close = '}';
+		char comma = ',';
+		
+		//prüft Zeichen für Zeichen den Text
+		for (int i=k;i<origntext.length();i++){
+			
+			//wenn neues JSON gefunden wird
+			if (origntext.charAt(i)==open){
+				int j = i;
+				//key des neuen JSON ausschließen
+				while (origntext.charAt(j)!=comma && j>=k){
+					j--;
+				}
+				if (k!=j){
+					jsonUnpack.addText(origntext.substring(k,j+1));
+				}
+				jsonUnpack.setIndex(i+1);
+				//und neue rekurssion starten
+				jsonUnpack = unpackJSONrek(jsonUnpack);
+				k = jsonUnpack.getIndex();
+				i = jsonUnpack.getIndex();
+			}
+			//JSON abschließen
+			if (origntext.charAt(i)==close){
+				jsonUnpack.addText(origntext.substring(k,i));
+				jsonUnpack.setIndex(i+1);
+				return jsonUnpack;
+			}
+		}
+		jsonUnpack.addText(origntext.substring(k,origntext.length()));
+		return jsonUnpack;
+	}
+    
     protected void include(
             String path, RenderRequest renderRequest,
             RenderResponse renderResponse)

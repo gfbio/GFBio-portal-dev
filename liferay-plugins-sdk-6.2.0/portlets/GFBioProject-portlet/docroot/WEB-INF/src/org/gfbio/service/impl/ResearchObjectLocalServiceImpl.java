@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class ResearchObjectLocalServiceImpl	extends ResearchObjectLocalServiceBaseImpl {
 	
-	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata) throws SystemException{
+	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException{
 
 		ResearchObject researchObject=null;
 		try {
@@ -57,6 +57,7 @@ public class ResearchObjectLocalServiceImpl	extends ResearchObjectLocalServiceBa
 			researchObject.setName(name);
 			researchObject.setLabel(label);
 			researchObject.setMetadata(metadata);
+			researchObject.setFormatmetadata(formatmetadata);
 			super.updateResearchObject(researchObject);
 			
 			try {
@@ -71,6 +72,7 @@ public class ResearchObjectLocalServiceImpl	extends ResearchObjectLocalServiceBa
 			researchObject.setName(name);
 			researchObject.setLabel(label);
 			researchObject.setMetadata(metadata);
+			researchObject.setFormatmetadata(formatmetadata);
 			super.updateResearchObject(researchObject);
 		}
 				

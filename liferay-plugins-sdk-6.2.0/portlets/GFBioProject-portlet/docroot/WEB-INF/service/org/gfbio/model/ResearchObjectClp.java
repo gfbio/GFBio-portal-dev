@@ -77,6 +77,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
+		attributes.put("formatmetadata", getFormatmetadata());
 
 		return attributes;
 	}
@@ -105,6 +106,12 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 		if (metadata != null) {
 			setMetadata(metadata);
+		}
+
+		String formatmetadata = (String)attributes.get("formatmetadata");
+
+		if (formatmetadata != null) {
+			setFormatmetadata(formatmetadata);
 		}
 	}
 
@@ -201,6 +208,30 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		}
 	}
 
+	@Override
+	public String getFormatmetadata() {
+		return _formatmetadata;
+	}
+
+	@Override
+	public void setFormatmetadata(String formatmetadata) {
+		_formatmetadata = formatmetadata;
+
+		if (_researchObjectRemoteModel != null) {
+			try {
+				Class<?> clazz = _researchObjectRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setFormatmetadata",
+						String.class);
+
+				method.invoke(_researchObjectRemoteModel, formatmetadata);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getResearchObjectRemoteModel() {
 		return _researchObjectRemoteModel;
 	}
@@ -276,6 +307,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		clone.setName(getName());
 		clone.setLabel(getLabel());
 		clone.setMetadata(getMetadata());
+		clone.setFormatmetadata(getFormatmetadata());
 
 		return clone;
 	}
@@ -326,7 +358,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
@@ -336,6 +368,8 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		sb.append(getLabel());
 		sb.append(", metadata=");
 		sb.append(getMetadata());
+		sb.append(", formatmetadata=");
+		sb.append(getFormatmetadata());
 		sb.append("}");
 
 		return sb.toString();
@@ -343,7 +377,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.ResearchObject");
@@ -365,6 +399,10 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 			"<column><column-name>metadata</column-name><column-value><![CDATA[");
 		sb.append(getMetadata());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>formatmetadata</column-name><column-value><![CDATA[");
+		sb.append(getFormatmetadata());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -375,6 +413,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	private String _name;
 	private String _label;
 	private String _metadata;
+	private String _formatmetadata;
 	private BaseModel<?> _researchObjectRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

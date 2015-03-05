@@ -28,6 +28,7 @@ CREATE TABLE gfbio_researchobject
   name character varying(75),
   label character varying(50),
   metadata character varying(5000),
+  formatmetadata character varying(5000),
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid)
 )
 WITH (

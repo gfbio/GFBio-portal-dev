@@ -1715,6 +1715,7 @@ public class ResearchObjectPersistenceImpl extends BasePersistenceImpl<ResearchO
 		researchObjectImpl.setName(researchObject.getName());
 		researchObjectImpl.setLabel(researchObject.getLabel());
 		researchObjectImpl.setMetadata(researchObject.getMetadata());
+		researchObjectImpl.setFormatmetadata(researchObject.getFormatmetadata());
 
 		return researchObjectImpl;
 	}

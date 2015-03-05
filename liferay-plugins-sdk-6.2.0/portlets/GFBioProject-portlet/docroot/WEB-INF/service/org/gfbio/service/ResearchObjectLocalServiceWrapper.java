@@ -290,10 +290,11 @@ public class ResearchObjectLocalServiceWrapper
 
 	@Override
 	public long updateResearchObject(long projectID, long researchObjectID,
-		java.lang.String name, java.lang.String label, java.lang.String metadata)
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _researchObjectLocalService.updateResearchObject(projectID,
-			researchObjectID, name, label, metadata);
+			researchObjectID, name, label, metadata, formatmetadata);
 	}
 
 	/**

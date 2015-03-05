@@ -31,5 +31,6 @@
 		<field name="name" type="String" />
 		<field name="label" type="String" />
 		<field name="metadata" type="String" />
+		<field name="formatmetadata" type="String" />
 	</model>
 </model-hints>

@@ -255,6 +255,7 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public long updateResearchObject(long projectID, long researchObjectID,
-		java.lang.String name, java.lang.String label, java.lang.String metadata)
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

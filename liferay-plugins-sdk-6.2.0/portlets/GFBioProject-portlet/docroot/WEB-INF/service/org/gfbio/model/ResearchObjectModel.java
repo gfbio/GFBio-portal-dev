@@ -116,6 +116,21 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	 */
 	public void setMetadata(String metadata);
 
+	/**
+	 * Returns the formatmetadata of this research object.
+	 *
+	 * @return the formatmetadata of this research object
+	 */
+	@AutoEscape
+	public String getFormatmetadata();
+
+	/**
+	 * Sets the formatmetadata of this research object.
+	 *
+	 * @param formatmetadata the formatmetadata of this research object
+	 */
+	public void setFormatmetadata(String formatmetadata);
+
 	@Override
 	public boolean isNew();
 

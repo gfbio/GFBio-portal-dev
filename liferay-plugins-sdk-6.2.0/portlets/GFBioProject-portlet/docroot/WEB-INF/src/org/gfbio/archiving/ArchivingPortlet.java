@@ -12,11 +12,7 @@ import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -27,7 +23,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.gfbio.model.Project;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.json.simple.JSONObject;
@@ -187,14 +182,12 @@ public class ArchivingPortlet extends GenericPortlet {
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
-			String data = json.toString();
 			String name = (String) json.get("project_name");
 			String label = (String) json.get("project_name");
+			String data = json.toString();
+			String formatdata = unpackJSON(data);
 			
-			String test = data;
-			//String testend = checkJSON(test);
-			
-			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, name, label, data);
+			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, name, label, data,formatdata);
 		} catch (SystemException e1) {
 			e1.printStackTrace();
 		}
@@ -212,7 +205,6 @@ public class ArchivingPortlet extends GenericPortlet {
 	
 	public static JSONUnpackString unpackJSONrek(JSONUnpackString jsonUnpack){
 		String origntext = jsonUnpack.getOrigntext();
-		String text = jsonUnpack.getText();
 		int k = jsonUnpack.getIndex();
 		char open = '{';
 		char close = '}';

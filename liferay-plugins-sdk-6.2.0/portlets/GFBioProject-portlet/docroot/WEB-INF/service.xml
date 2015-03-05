@@ -37,11 +37,12 @@
 		<column name="name" 				type="String" />
 		<column name="label" 				type="String" />
 		<column name="metadata"				type="String" />
+		<column name="formatmetadata"		type="String" />
 		
 		<order by="asc">		<order-column name="name" />		</order>
 
 		<finder name="Name" 			return-type="Collection">		<finder-column name="name" />					</finder>
-		<finder name="Label" 		return-type="Collection">					<finder-column name="label" />				</finder>
+		<finder name="Label" 			return-type="Collection">			<finder-column name="label" />				</finder>
 		<finder name="ResearchObjectID"	return-type="ResearchObject">	<finder-column name="researchObjectID" />		</finder>
 	</entity>
 	

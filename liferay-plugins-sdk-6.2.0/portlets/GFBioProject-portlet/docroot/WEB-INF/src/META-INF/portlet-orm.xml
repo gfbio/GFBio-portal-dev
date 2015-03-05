@@ -73,6 +73,7 @@
 			<basic name="name" />
 			<basic name="label" />
 			<basic name="metadata" />
+			<basic name="formatmetadata" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

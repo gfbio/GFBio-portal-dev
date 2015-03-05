@@ -53,6 +53,7 @@ public class ResearchObjectWrapper implements ResearchObject,
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
+		attributes.put("formatmetadata", getFormatmetadata());
 
 		return attributes;
 	}
@@ -81,6 +82,12 @@ public class ResearchObjectWrapper implements ResearchObject,
 
 		if (metadata != null) {
 			setMetadata(metadata);
+		}
+
+		String formatmetadata = (String)attributes.get("formatmetadata");
+
+		if (formatmetadata != null) {
+			setFormatmetadata(formatmetadata);
 		}
 	}
 
@@ -182,6 +189,26 @@ public class ResearchObjectWrapper implements ResearchObject,
 	@Override
 	public void setMetadata(java.lang.String metadata) {
 		_researchObject.setMetadata(metadata);
+	}
+
+	/**
+	* Returns the formatmetadata of this research object.
+	*
+	* @return the formatmetadata of this research object
+	*/
+	@Override
+	public java.lang.String getFormatmetadata() {
+		return _researchObject.getFormatmetadata();
+	}
+
+	/**
+	* Sets the formatmetadata of this research object.
+	*
+	* @param formatmetadata the formatmetadata of this research object
+	*/
+	@Override
+	public void setFormatmetadata(java.lang.String formatmetadata) {
+		_researchObject.setFormatmetadata(formatmetadata);
 	}
 
 	@Override

@@ -47,5 +47,6 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="formatmetadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>
