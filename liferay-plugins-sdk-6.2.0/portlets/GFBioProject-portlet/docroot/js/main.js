@@ -89,20 +89,76 @@ function chooseProject(archivingURL, method, data, j){
 
 	
 // Method for build a new Project
-			
+	
+function checkDate(name, size){
+	
+	var check = true;
+	var numbers =['0','1','2','3','4','5','6','7','8','9' ];
+	var sign = ['-'];
+	var str ;
+	var data = new Object();
+	for (var i = 0; i < size; i++){
+		str = name.concat("_").concat(i);
+		var topic = document.getElementById('lato'.concat(str)).textContent;
+		data[topic] = document.getElementById(str).value;
+	}
+	var checkList = ["startDate", "endDate"];
+	for (i =0;i<=1;i++){
+		checkDate = checkList[i];
+		if(data[checkDate].length-1 >=7){
+			if (numbers.indexOf(data[checkDate].charAt(0))<0){check=false;}
+			if (numbers.indexOf(data[checkDate].charAt(1))<0){check=false;}
+			if (numbers.indexOf(data[checkDate].charAt(2))<0){check=false;}
+			if (numbers.indexOf(data[checkDate].charAt(3))<0){check=false;}
+			if (sign.indexOf(data[checkDate].charAt(4))<0){check=false;}
+			if (numbers.indexOf(data[checkDate].charAt(5))<0){check=false;}
+			if (numbers.indexOf(data[checkDate].charAt(6))<0){if (sign.indexOf(data[checkDate].charAt(6))<0){check=false;}}
+			if (numbers.indexOf(data[checkDate].charAt(7))<0){if (sign.indexOf(data[checkDate].charAt(7))<0){check=false;}}
+			if (data[checkDate].length-1 >=8){if (numbers.indexOf(data[checkDate].charAt(8))<0){if (sign.indexOf(data[checkDate].charAt(8))<0){check=false;}}}
+			if (data[checkDate].length-1 >=9){if (numbers.indexOf(data[checkDate].charAt(9))<0){if (sign.indexOf(data[checkDate].charAt(9))<0){check=false;}}}
+		}else{
+			check=false;
+		}
+	}
+	return check
+}
+
+
+
 function newProject(archivingURL, method, name, size, hide,  userID){
-	resourceMethod_I(archivingURL, method, name, size,  userID);
-	cleanTextSet(name, size);
-	updateLaVaSet_I(name, size);
-	visibleShow(hide);
-	reload();
+	
+	var check = checkDate(name, size);
+	if (check == true){
+		resourceMethod_I(archivingURL, method, name, size,  userID);
+		cleanTextSet(name, size);
+		updateLaVaSet_I(name, size);
+		visibleShow(hide);
+		reload();
+	}
+	else
+	{
+		visibleShow('2'+hide.substring(1));
+		window.setTimeout('visibleHide('+'2'+hide.substring(1)+')',1500);
+	}
+
+	
 }	
 
 // Method to update a Project
 function updateProject (archivingURL, method, name, size, hide, userID){
-	resourceMethod_I(archivingURL, method, name, size, userID);
-	visibleShow(hide);
-	window.setTimeout('visibleHide('+hide+')',1500);
+
+	var check = checkDate(name, size);
+	
+	if (check == true){
+		resourceMethod_I(archivingURL, method, name, size, userID);
+		visibleShow(hide);
+		window.setTimeout('visibleHide('+hide+')',1500);
+	}
+	else
+	{
+		visibleShow('2'+hide.substring(1));
+		window.setTimeout('visibleHide('+'2'+hide.substring(1)+')',1500);
+	}
 }
 
 //generally Methods
