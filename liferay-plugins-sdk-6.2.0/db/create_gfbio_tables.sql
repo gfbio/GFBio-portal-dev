@@ -1,4 +1,4 @@
-﻿DROP TABLE gfbio_project, gfbio_researchobject, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi ;
+﻿DROP TABLE gfbio_project, gfbio_researchobject, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi, gfbio_basket_user ;
 
 -- Table: gfbio_project
 
@@ -104,6 +104,22 @@ WITH (
 ALTER TABLE gfbio_project_user_pi
   OWNER TO liferay_gfbio;
 
+  
+-- Table: gfbio_basket
+
+CREATE TABLE gfbio_basket_user
+(
+  basketid bigint NOT NULL,
+  userid bigint NOT NULL,
+  name character varying(75),
+  basketJSON text,
+  CONSTRAINT gfbio_basket_user_pkey PRIMARY KEY (basketid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_basket_user
+  OWNER TO liferay_gfbio;
 
 
   

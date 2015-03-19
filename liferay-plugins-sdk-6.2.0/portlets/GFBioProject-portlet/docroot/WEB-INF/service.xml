@@ -89,6 +89,21 @@
 			<finder-column	name="userID" />
 		</finder>
 	</entity>
+	
+	<!-- Relationship between Basket and User as "has"   -->
+	
+	<entity name="Basket_User" data-source="gfbioDataSource" local-service="true" remote-service="true">
+		<column name="basketID" 			type="long" 	primary="true" />
+		<column name="userID" 				type="long" />
+		<column name="name" 				type="String" />
+		<column name="basketJSON" 			type="String" />
 
+		<finder name="UserID" return-type="Collection">
+			<finder-column name="userID" />
+		</finder>
+		<finder name="BasketID" return-type="Basket_User">
+			<finder-column name="basketID" />
+		</finder>
+	</entity>
 	
 </service-builder>

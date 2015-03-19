@@ -32,6 +32,36 @@
 			<handler type="LocalResponder" />
 		</responseFlow>
 	</transport>
+	<service name="Plugin_gfbio_BasketService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.BasketServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="BasketServiceSoap" />
+		<parameter name="wsdlServiceElement" value="BasketServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_BasketService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Basket_UserService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_Basket_UserSoap" type="java:org.gfbio.model.Basket_UserSoap[]" innerType="cmp-ns:Basket_UserSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:Basket_UserSoap" type="java:org.gfbio.model.Basket_UserSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getBasket_UserList" qname="operNS:getBasket_UserList" returnQName="getBasket_UserListReturn" returnType="rtns:ArrayOf_tns2_Basket_UserSoap" returnItemType="tns2:Basket_UserSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateBasket" qname="operNS:updateBasket" returnQName="updateBasketReturn" returnType="rtns:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketJSON" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getBasket_UserList updateBasket" />
+		<parameter name="className" value="org.gfbio.service.http.Basket_UserServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.gfbio.org,urn:http.service.gfbio.org" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Basket_UserServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Basket_UserServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Basket_UserService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
 	<service name="Plugin_gfbio_ProjectService" provider="java:RPC" style="rpc" use="encoded">
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateProject" qname="operNS:updateProject" returnQName="updateProjectReturn" returnType="rtns:long" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectID" type="tns:long"></parameter>

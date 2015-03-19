@@ -34,6 +34,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import org.gfbio.model.Project;
 
 import org.gfbio.service.ProjectLocalService;
+import org.gfbio.service.persistence.Basket_UserPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
@@ -276,6 +277,63 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public Project updateProject(Project project) throws SystemException {
 		return projectPersistence.update(project);
+	}
+
+	/**
+	 * Returns the basket_ user local service.
+	 *
+	 * @return the basket_ user local service
+	 */
+	public org.gfbio.service.Basket_UserLocalService getBasket_UserLocalService() {
+		return basket_UserLocalService;
+	}
+
+	/**
+	 * Sets the basket_ user local service.
+	 *
+	 * @param basket_UserLocalService the basket_ user local service
+	 */
+	public void setBasket_UserLocalService(
+		org.gfbio.service.Basket_UserLocalService basket_UserLocalService) {
+		this.basket_UserLocalService = basket_UserLocalService;
+	}
+
+	/**
+	 * Returns the basket_ user remote service.
+	 *
+	 * @return the basket_ user remote service
+	 */
+	public org.gfbio.service.Basket_UserService getBasket_UserService() {
+		return basket_UserService;
+	}
+
+	/**
+	 * Sets the basket_ user remote service.
+	 *
+	 * @param basket_UserService the basket_ user remote service
+	 */
+	public void setBasket_UserService(
+		org.gfbio.service.Basket_UserService basket_UserService) {
+		this.basket_UserService = basket_UserService;
+	}
+
+	/**
+	 * Returns the basket_ user persistence.
+	 *
+	 * @return the basket_ user persistence
+	 */
+	public Basket_UserPersistence getBasket_UserPersistence() {
+		return basket_UserPersistence;
+	}
+
+	/**
+	 * Sets the basket_ user persistence.
+	 *
+	 * @param basket_UserPersistence the basket_ user persistence
+	 */
+	public void setBasket_UserPersistence(
+		Basket_UserPersistence basket_UserPersistence) {
+		this.basket_UserPersistence = basket_UserPersistence;
 	}
 
 	/**
@@ -738,6 +796,12 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
+	@BeanReference(type = org.gfbio.service.Basket_UserLocalService.class)
+	protected org.gfbio.service.Basket_UserLocalService basket_UserLocalService;
+	@BeanReference(type = org.gfbio.service.Basket_UserService.class)
+	protected org.gfbio.service.Basket_UserService basket_UserService;
+	@BeanReference(type = Basket_UserPersistence.class)
+	protected Basket_UserPersistence basket_UserPersistence;
 	@BeanReference(type = org.gfbio.service.ProjectLocalService.class)
 	protected org.gfbio.service.ProjectLocalService projectLocalService;
 	@BeanReference(type = org.gfbio.service.ProjectService.class)

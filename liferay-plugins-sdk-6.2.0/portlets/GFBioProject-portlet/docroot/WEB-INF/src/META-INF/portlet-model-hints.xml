@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="org.gfbio.model.Basket_User">
+		<field name="basketID" type="long" />
+		<field name="userID" type="long" />
+		<field name="name" type="String" />
+		<field name="basketJSON" type="String" />
+	</model>
 	<model name="org.gfbio.model.Project">
 		<field name="projectID" type="long" />
 		<field name="name" type="String" />

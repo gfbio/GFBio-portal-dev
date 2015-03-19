@@ -111,7 +111,7 @@ public class ArchivingPortlet extends GenericPortlet {
 		
 		
 		long projectID = Long.valueOf((String) json.get("projectID")).longValue();
-		long userID =    (long) json.get("relationID");
+		long userID =    Long.valueOf((String) json.get("relationID"));
 
 		String name = (String) json.get("name");
 		String label = (String) json.get("label");
