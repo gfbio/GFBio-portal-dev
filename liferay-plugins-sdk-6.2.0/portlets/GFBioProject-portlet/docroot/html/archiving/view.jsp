@@ -290,6 +290,12 @@
 					</div>
 				</div>
 				
+				<div id="hide_202" class="swHide">
+					<div class="portlet-msg-error">
+						Create new Project failed. Please check the form of your Dates
+					</div>
+				</div>
+				
 
 				
 				
@@ -370,20 +376,33 @@
 							Create new Project is complete.
 						</div>
 					</div>
+					<div id="hide_200001" class="swHide">
+					<div class="portlet-msg-error">
+						Create new Project failed. Please check the form of your Dates
+					</div>
 				</div>
+					
+				</div>
+				
 				
 
 				<%
-					String checkID = "None";
+					String checkID = "none";
 					Boolean checker = false; 
-					for (int i = 0; i < projectList.size();i++)
-						if (projectList.get(i).getProjectID() == Long.valueOf(projectID).longValue())
-							checker = true;
-					if (checker == false)
-						checkID = "None";
-					else
-						checkID = projectID.toString();
-					if (checkID.equals("None")){}
+					
+					if (projectID.equals("none")){}
+					else{
+						for (int i = 0; i < projectList.size();i++)
+							if (projectList.get(i).getProjectID() == Long.valueOf(projectID).longValue())
+								checker = true;
+						if (checker == false)
+							checkID = "none";
+						else
+							checkID = projectID.toString();
+					}
+
+					
+					if (checkID.equals("none")){}
 					else{
 				%>
 		
@@ -426,6 +445,12 @@
 								Data set  is updated.
 							</div>
 						</div>
+						<div id="hide_204" class="swHide">
+							<div class="portlet-msg-error">
+								Update Project failed. Please check the form of your Dates
+							</div>
+						</div>
+						
 						
 						<!-- ------------------------------------------Sequence data ----------------------------------------------------------- -->
 						
@@ -461,7 +486,7 @@
 									
 									<div id=<%="accordion_seq_header_"+h%> class="toggler ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" aria-controls=<%="accordion_seq_panel_"+h%> aria-selected="false"  tabindex="0"    >
 										<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
-										<%= "Descriptive data of sequence ".concat(researchObject.getLabel()) %>
+										<%= "MIxS-compliant Genomic Contextual Data of ".concat(researchObject.getLabel()) %>
 									</div>
 									
 									<div id=<%="accordion_seq_panel_"+h%> class="accordion ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" aria-labelledby=<%="accordion_seq_header_"+h%>   role="tabpanel" aria-expanded="false" aria-hidden="true"   >
