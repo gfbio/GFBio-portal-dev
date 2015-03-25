@@ -63,13 +63,29 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
 	<service name="Plugin_gfbio_ProjectService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_ProjectSoap" type="java:org.gfbio.model.ProjectSoap[]" innerType="cmp-ns:ProjectSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:ProjectSoap" type="java:org.gfbio.model.ProjectSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getProjectList" qname="operNS:getProjectList" returnQName="getProjectListReturn" returnType="rtns:ArrayOf_tns2_ProjectSoap" returnItemType="tns2:ProjectSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateProject" qname="operNS:updateProject" returnQName="updateProjectReturn" returnType="rtns:long" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="label" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="startDate" type="tns:dateTime"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="endDate" type="tns:dateTime"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="updateProject" />
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateProject" qname="operNS:updateProject" returnQName="updateProjectReturn" returnType="rtns:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="arg0" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="arg1" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="arg2" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getProjectList updateProject" />
 		<parameter name="className" value="org.gfbio.service.http.ProjectServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.gfbio.org,urn:http.service.gfbio.org" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ProjectServiceSoap" />
 		<parameter name="wsdlServiceElement" value="ProjectServiceSoapService" />

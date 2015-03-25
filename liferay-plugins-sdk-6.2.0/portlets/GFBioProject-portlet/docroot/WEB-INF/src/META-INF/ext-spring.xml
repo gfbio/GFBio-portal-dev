@@ -20,6 +20,9 @@
     </bean>
 
     <bean id="gfbioSessionFactory" class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" lazy-init="true">
+	    <property name="sessionFactoryClassLoader">
+			<bean class="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil" factory-method="getClassLoader" />
+		</property>
         <property name="sessionFactoryImplementor" ref="gfbioHibernateSessionFactory" />
     </bean>
 

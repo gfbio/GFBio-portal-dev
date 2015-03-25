@@ -5,6 +5,7 @@
 	<bean id="org.gfbio.service.Basket_UserService" class="org.gfbio.service.impl.Basket_UserServiceImpl" />
 	<bean id="org.gfbio.service.persistence.Basket_UserPersistence" class="org.gfbio.service.persistence.Basket_UserPersistenceImpl" parent="basePersistence">
 		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
 	<bean id="org.gfbio.service.ProjectLocalService" class="org.gfbio.service.impl.ProjectLocalServiceImpl" />
 	<bean id="org.gfbio.service.ProjectService" class="org.gfbio.service.impl.ProjectServiceImpl" />

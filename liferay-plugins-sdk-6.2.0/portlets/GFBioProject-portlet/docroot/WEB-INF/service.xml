@@ -92,7 +92,7 @@
 	
 	<!-- Relationship between Basket and User as "has"   -->
 	
-	<entity name="Basket_User" data-source="gfbioDataSource" local-service="true" remote-service="true">
+	<entity name="Basket_User" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="basketID" 			type="long" 	primary="true" />
 		<column name="userID" 				type="long" />
 		<column name="name" 				type="String" />
