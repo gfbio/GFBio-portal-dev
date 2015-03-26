@@ -64,10 +64,10 @@ public class Basket_UserServiceWrapper implements Basket_UserService,
 
 	@Override
 	public long updateBasket(long basketID, long userID, java.lang.String name,
-		java.lang.String basketJSON)
+		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _basket_UserService.updateBasket(basketID, userID, name,
-			basketJSON);
+			basketJSON, queryJSON);
 	}
 
 	@Override

@@ -39,7 +39,8 @@ public class Basket_UserServiceClpInvoker {
 		_methodName55 = "updateBasket";
 
 		_methodParameterTypes55 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String"
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String"
 			};
 
 		_methodName56 = "removeBasket";
@@ -70,7 +71,8 @@ public class Basket_UserServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
 			return Basket_UserServiceUtil.updateBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.lang.String)arguments[4]);
 		}
 
 		if (_methodName56.equals(name) &&

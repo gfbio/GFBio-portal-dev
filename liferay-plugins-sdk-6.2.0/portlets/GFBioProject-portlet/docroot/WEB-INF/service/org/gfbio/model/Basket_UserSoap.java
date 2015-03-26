@@ -34,6 +34,7 @@ public class Basket_UserSoap implements Serializable {
 		soapModel.setUserID(model.getUserID());
 		soapModel.setName(model.getName());
 		soapModel.setBasketJSON(model.getBasketJSON());
+		soapModel.setQueryJSON(model.getQueryJSON());
 
 		return soapModel;
 	}
@@ -118,8 +119,17 @@ public class Basket_UserSoap implements Serializable {
 		_basketJSON = basketJSON;
 	}
 
+	public String getQueryJSON() {
+		return _queryJSON;
+	}
+
+	public void setQueryJSON(String queryJSON) {
+		_queryJSON = queryJSON;
+	}
+
 	private long _basketID;
 	private long _userID;
 	private String _name;
 	private String _basketJSON;
+	private String _queryJSON;
 }

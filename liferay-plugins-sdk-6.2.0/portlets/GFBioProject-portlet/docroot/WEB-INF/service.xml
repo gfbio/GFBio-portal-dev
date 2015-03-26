@@ -97,6 +97,7 @@
 		<column name="userID" 				type="long" />
 		<column name="name" 				type="String" />
 		<column name="basketJSON" 			type="String" />
+		<column name="queryJSON" 			type="String" />
 
 		<finder name="UserID" return-type="Collection">
 			<finder-column name="userID" />

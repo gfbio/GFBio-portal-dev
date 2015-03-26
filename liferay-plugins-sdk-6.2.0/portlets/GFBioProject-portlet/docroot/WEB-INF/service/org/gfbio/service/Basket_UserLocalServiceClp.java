@@ -116,7 +116,8 @@ public class Basket_UserLocalServiceClp implements Basket_UserLocalService {
 		_methodName20 = "updateBasket";
 
 		_methodParameterTypes20 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String"
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String"
 			};
 
 		_methodName21 = "removeBasket_User";
@@ -706,7 +707,7 @@ public class Basket_UserLocalServiceClp implements Basket_UserLocalService {
 
 	@Override
 	public long updateBasket(long basketID, long userID, java.lang.String name,
-		java.lang.String basketJSON)
+		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -720,7 +721,9 @@ public class Basket_UserLocalServiceClp implements Basket_UserLocalService {
 						
 					ClpSerializer.translateInput(name),
 						
-					ClpSerializer.translateInput(basketJSON)
+					ClpSerializer.translateInput(basketJSON),
+						
+					ClpSerializer.translateInput(queryJSON)
 					});
 		}
 		catch (Throwable t) {

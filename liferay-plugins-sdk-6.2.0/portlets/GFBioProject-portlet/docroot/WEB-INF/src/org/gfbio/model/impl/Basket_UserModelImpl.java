@@ -66,9 +66,10 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 			{ "basketID", Types.BIGINT },
 			{ "userID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "basketJSON", Types.VARCHAR }
+			{ "basketJSON", Types.VARCHAR },
+			{ "queryJSON", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Basket_User (basketID LONG not null primary key,userID LONG,name VARCHAR(75) null,basketJSON VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Basket_User (basketID LONG not null primary key,userID LONG,name VARCHAR(75) null,basketJSON VARCHAR(75) null,queryJSON VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Basket_User";
 	public static final String ORDER_BY_JPQL = " ORDER BY basket_User.basketID ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Basket_User.basketID ASC";
@@ -104,6 +105,7 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 		model.setUserID(soapModel.getUserID());
 		model.setName(soapModel.getName());
 		model.setBasketJSON(soapModel.getBasketJSON());
+		model.setQueryJSON(soapModel.getQueryJSON());
 
 		return model;
 	}
@@ -172,6 +174,7 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
 		attributes.put("basketJSON", getBasketJSON());
+		attributes.put("queryJSON", getQueryJSON());
 
 		return attributes;
 	}
@@ -200,6 +203,12 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 
 		if (basketJSON != null) {
 			setBasketJSON(basketJSON);
+		}
+
+		String queryJSON = (String)attributes.get("queryJSON");
+
+		if (queryJSON != null) {
+			setQueryJSON(queryJSON);
 		}
 	}
 
@@ -281,6 +290,22 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 		_basketJSON = basketJSON;
 	}
 
+	@JSON
+	@Override
+	public String getQueryJSON() {
+		if (_queryJSON == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _queryJSON;
+		}
+	}
+
+	@Override
+	public void setQueryJSON(String queryJSON) {
+		_queryJSON = queryJSON;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -316,6 +341,7 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 		basket_UserImpl.setUserID(getUserID());
 		basket_UserImpl.setName(getName());
 		basket_UserImpl.setBasketJSON(getBasketJSON());
+		basket_UserImpl.setQueryJSON(getQueryJSON());
 
 		basket_UserImpl.resetOriginalValues();
 
@@ -403,12 +429,20 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 			basket_UserCacheModel.basketJSON = null;
 		}
 
+		basket_UserCacheModel.queryJSON = getQueryJSON();
+
+		String queryJSON = basket_UserCacheModel.queryJSON;
+
+		if ((queryJSON != null) && (queryJSON.length() == 0)) {
+			basket_UserCacheModel.queryJSON = null;
+		}
+
 		return basket_UserCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{basketID=");
 		sb.append(getBasketID());
@@ -418,6 +452,8 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 		sb.append(getName());
 		sb.append(", basketJSON=");
 		sb.append(getBasketJSON());
+		sb.append(", queryJSON=");
+		sb.append(getQueryJSON());
 		sb.append("}");
 
 		return sb.toString();
@@ -425,7 +461,7 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Basket_User");
@@ -447,6 +483,10 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 			"<column><column-name>basketJSON</column-name><column-value><![CDATA[");
 		sb.append(getBasketJSON());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>queryJSON</column-name><column-value><![CDATA[");
+		sb.append(getQueryJSON());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -465,6 +505,7 @@ public class Basket_UserModelImpl extends BaseModelImpl<Basket_User>
 	private boolean _setOriginalUserID;
 	private String _name;
 	private String _basketJSON;
+	private String _queryJSON;
 	private long _columnBitmask;
 	private Basket_User _escapedModel;
 }

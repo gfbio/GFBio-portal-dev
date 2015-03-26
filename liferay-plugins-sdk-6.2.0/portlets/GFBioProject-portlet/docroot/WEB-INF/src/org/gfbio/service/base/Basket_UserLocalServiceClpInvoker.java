@@ -115,7 +115,8 @@ public class Basket_UserLocalServiceClpInvoker {
 		_methodName71 = "updateBasket";
 
 		_methodParameterTypes71 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String"
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String"
 			};
 
 		_methodName72 = "removeBasket_User";
@@ -233,7 +234,8 @@ public class Basket_UserLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
 			return Basket_UserLocalServiceUtil.updateBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.lang.String)arguments[4]);
 		}
 
 		if (_methodName72.equals(name) &&

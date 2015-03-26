@@ -115,6 +115,21 @@ public interface Basket_UserModel extends BaseModel<Basket_User> {
 	 */
 	public void setBasketJSON(String basketJSON);
 
+	/**
+	 * Returns the query j s o n of this basket_ user.
+	 *
+	 * @return the query j s o n of this basket_ user
+	 */
+	@AutoEscape
+	public String getQueryJSON();
+
+	/**
+	 * Sets the query j s o n of this basket_ user.
+	 *
+	 * @param queryJSON the query j s o n of this basket_ user
+	 */
+	public void setQueryJSON(String queryJSON);
+
 	@Override
 	public boolean isNew();
 

@@ -15,6 +15,7 @@
 		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="basketJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="queryJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
 		<id name="projectID" type="long">

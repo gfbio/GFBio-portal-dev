@@ -69,9 +69,11 @@ public class Basket_UserServiceUtil {
 	}
 
 	public static long updateBasket(long basketID, long userID,
-		java.lang.String name, java.lang.String basketJSON)
+		java.lang.String name, java.lang.String basketJSON,
+		java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateBasket(basketID, userID, name, basketJSON);
+		return getService()
+				   .updateBasket(basketID, userID, name, basketJSON, queryJSON);
 	}
 
 	public static org.gfbio.model.Basket_User removeBasket(long basketID)

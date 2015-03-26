@@ -77,6 +77,7 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
 		attributes.put("basketJSON", getBasketJSON());
+		attributes.put("queryJSON", getQueryJSON());
 
 		return attributes;
 	}
@@ -105,6 +106,12 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 
 		if (basketJSON != null) {
 			setBasketJSON(basketJSON);
+		}
+
+		String queryJSON = (String)attributes.get("queryJSON");
+
+		if (queryJSON != null) {
+			setQueryJSON(queryJSON);
 		}
 	}
 
@@ -200,6 +207,29 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 		}
 	}
 
+	@Override
+	public String getQueryJSON() {
+		return _queryJSON;
+	}
+
+	@Override
+	public void setQueryJSON(String queryJSON) {
+		_queryJSON = queryJSON;
+
+		if (_basket_UserRemoteModel != null) {
+			try {
+				Class<?> clazz = _basket_UserRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setQueryJSON", String.class);
+
+				method.invoke(_basket_UserRemoteModel, queryJSON);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getBasket_UserRemoteModel() {
 		return _basket_UserRemoteModel;
 	}
@@ -273,6 +303,7 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 		clone.setUserID(getUserID());
 		clone.setName(getName());
 		clone.setBasketJSON(getBasketJSON());
+		clone.setQueryJSON(getQueryJSON());
 
 		return clone;
 	}
@@ -321,7 +352,7 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{basketID=");
 		sb.append(getBasketID());
@@ -331,6 +362,8 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 		sb.append(getName());
 		sb.append(", basketJSON=");
 		sb.append(getBasketJSON());
+		sb.append(", queryJSON=");
+		sb.append(getQueryJSON());
 		sb.append("}");
 
 		return sb.toString();
@@ -338,7 +371,7 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Basket_User");
@@ -360,6 +393,10 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 			"<column><column-name>basketJSON</column-name><column-value><![CDATA[");
 		sb.append(getBasketJSON());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>queryJSON</column-name><column-value><![CDATA[");
+		sb.append(getQueryJSON());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -370,5 +407,6 @@ public class Basket_UserClp extends BaseModelImpl<Basket_User>
 	private long _userID;
 	private String _name;
 	private String _basketJSON;
+	private String _queryJSON;
 	private BaseModel<?> _basket_UserRemoteModel;
 }

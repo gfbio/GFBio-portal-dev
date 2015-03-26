@@ -70,7 +70,7 @@ public interface Basket_UserService extends BaseService, InvokableService {
 		long userID) throws com.liferay.portal.kernel.exception.SystemException;
 
 	public long updateBasket(long basketID, long userID, java.lang.String name,
-		java.lang.String basketJSON)
+		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public org.gfbio.model.Basket_User removeBasket(long basketID)

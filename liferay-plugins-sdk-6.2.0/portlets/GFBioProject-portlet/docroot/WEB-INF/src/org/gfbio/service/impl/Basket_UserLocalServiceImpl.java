@@ -62,7 +62,7 @@ public class Basket_UserLocalServiceImpl extends
 
 	// update or create a new project
 	public long updateBasket(long basketID, long userID, String name,
-			String basketJSON) throws SystemException {
+			String basketJSON, String queryJSON) throws SystemException {
 
 		Basket_User basket = null;
 		try {
@@ -71,6 +71,7 @@ public class Basket_UserLocalServiceImpl extends
 			basket.setUserID(userID);
 			basket.setName(name);
 			basket.setBasketJSON(basketJSON);
+			basket.setQueryJSON(queryJSON);
 			super.updateBasket_User(basket);
 		} catch (NoSuchBasket_UserException e) {
 			// create new basket
@@ -79,6 +80,7 @@ public class Basket_UserLocalServiceImpl extends
 			basket.setUserID(userID);
 			basket.setName(name);
 			basket.setBasketJSON(basketJSON);
+			basket.setQueryJSON(queryJSON);
 			super.updateBasket_User(basket);
 			e.printStackTrace();
 		}

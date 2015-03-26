@@ -53,6 +53,7 @@ public class Basket_UserWrapper implements Basket_User,
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
 		attributes.put("basketJSON", getBasketJSON());
+		attributes.put("queryJSON", getQueryJSON());
 
 		return attributes;
 	}
@@ -81,6 +82,12 @@ public class Basket_UserWrapper implements Basket_User,
 
 		if (basketJSON != null) {
 			setBasketJSON(basketJSON);
+		}
+
+		String queryJSON = (String)attributes.get("queryJSON");
+
+		if (queryJSON != null) {
+			setQueryJSON(queryJSON);
 		}
 	}
 
@@ -182,6 +189,26 @@ public class Basket_UserWrapper implements Basket_User,
 	@Override
 	public void setBasketJSON(java.lang.String basketJSON) {
 		_basket_User.setBasketJSON(basketJSON);
+	}
+
+	/**
+	* Returns the query j s o n of this basket_ user.
+	*
+	* @return the query j s o n of this basket_ user
+	*/
+	@Override
+	public java.lang.String getQueryJSON() {
+		return _basket_User.getQueryJSON();
+	}
+
+	/**
+	* Sets the query j s o n of this basket_ user.
+	*
+	* @param queryJSON the query j s o n of this basket_ user
+	*/
+	@Override
+	public void setQueryJSON(java.lang.String queryJSON) {
+		_basket_User.setQueryJSON(queryJSON);
 	}
 
 	@Override

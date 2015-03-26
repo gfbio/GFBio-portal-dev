@@ -15,6 +15,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketJSON" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryJSON" type="tns:string"></parameter>
 		</operation>
 		<parameter name="allowedMethods" value="getBasketList removeBasket updateBasket" />
 		<parameter name="className" value="org.gfbio.service.http.Basket_UserServiceSoap" />

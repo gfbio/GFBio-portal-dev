@@ -36,7 +36,7 @@ public class Basket_UserCacheModel implements CacheModel<Basket_User>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{basketID=");
 		sb.append(basketID);
@@ -46,6 +46,8 @@ public class Basket_UserCacheModel implements CacheModel<Basket_User>,
 		sb.append(name);
 		sb.append(", basketJSON=");
 		sb.append(basketJSON);
+		sb.append(", queryJSON=");
+		sb.append(queryJSON);
 		sb.append("}");
 
 		return sb.toString();
@@ -72,6 +74,13 @@ public class Basket_UserCacheModel implements CacheModel<Basket_User>,
 			basket_UserImpl.setBasketJSON(basketJSON);
 		}
 
+		if (queryJSON == null) {
+			basket_UserImpl.setQueryJSON(StringPool.BLANK);
+		}
+		else {
+			basket_UserImpl.setQueryJSON(queryJSON);
+		}
+
 		basket_UserImpl.resetOriginalValues();
 
 		return basket_UserImpl;
@@ -83,6 +92,7 @@ public class Basket_UserCacheModel implements CacheModel<Basket_User>,
 		userID = objectInput.readLong();
 		name = objectInput.readUTF();
 		basketJSON = objectInput.readUTF();
+		queryJSON = objectInput.readUTF();
 	}
 
 	@Override
@@ -104,10 +114,18 @@ public class Basket_UserCacheModel implements CacheModel<Basket_User>,
 		else {
 			objectOutput.writeUTF(basketJSON);
 		}
+
+		if (queryJSON == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(queryJSON);
+		}
 	}
 
 	public long basketID;
 	public long userID;
 	public String name;
 	public String basketJSON;
+	public String queryJSON;
 }

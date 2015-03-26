@@ -13,6 +13,7 @@
 			<basic name="userID" />
 			<basic name="name" />
 			<basic name="basketJSON" />
+			<basic name="queryJSON" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

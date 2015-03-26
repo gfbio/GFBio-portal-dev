@@ -1101,6 +1101,7 @@ public class Basket_UserPersistenceImpl extends BasePersistenceImpl<Basket_User>
 		basket_UserImpl.setUserID(basket_User.getUserID());
 		basket_UserImpl.setName(basket_User.getName());
 		basket_UserImpl.setBasketJSON(basket_User.getBasketJSON());
+		basket_UserImpl.setQueryJSON(basket_User.getQueryJSON());
 
 		return basket_UserImpl;
 	}
