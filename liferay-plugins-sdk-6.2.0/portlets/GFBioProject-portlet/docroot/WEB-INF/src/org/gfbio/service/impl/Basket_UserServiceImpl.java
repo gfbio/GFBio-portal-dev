@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.Basket_UserServiceUtil
  */
 public class Basket_UserServiceImpl extends Basket_UserServiceBaseImpl {
-	public List<Basket_User> getBasket_UserList(long userID) throws SystemException{
+	public List<Basket_User> getBasketList(long userID) throws SystemException{
 		try {
 			return Basket_UserLocalServiceUtil.getBasket_UserList(userID);
 		} catch (NoSuchModelException e) {
@@ -51,5 +51,10 @@ public class Basket_UserServiceImpl extends Basket_UserServiceBaseImpl {
 	
 	public long updateBasket(long basketID, long userID, String name, String basketJSON) throws SystemException{
 		return Basket_UserLocalServiceUtil.updateBasket(basketID, userID, name, basketJSON);
+	}
+
+	public Basket_User removeBasket(long basketID)
+			throws SystemException, NoSuchModelException {
+		return Basket_UserLocalServiceUtil.removeBasket_User(basketID);
 	}
 }

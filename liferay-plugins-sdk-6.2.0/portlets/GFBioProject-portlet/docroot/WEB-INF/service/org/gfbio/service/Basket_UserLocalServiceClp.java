@@ -118,6 +118,10 @@ public class Basket_UserLocalServiceClp implements Basket_UserLocalService {
 		_methodParameterTypes20 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String"
 			};
+
+		_methodName21 = "removeBasket_User";
+
+		_methodParameterTypes21 = new String[] { "long" };
 	}
 
 	@Override
@@ -738,6 +742,39 @@ public class Basket_UserLocalServiceClp implements Basket_UserLocalService {
 		return ((Long)returnObj).longValue();
 	}
 
+	@Override
+	public org.gfbio.model.Basket_User removeBasket_User(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { basketID });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.Basket_User)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -779,4 +816,6 @@ public class Basket_UserLocalServiceClp implements Basket_UserLocalService {
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

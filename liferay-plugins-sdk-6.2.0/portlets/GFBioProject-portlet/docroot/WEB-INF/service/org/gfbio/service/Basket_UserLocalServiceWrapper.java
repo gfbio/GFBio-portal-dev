@@ -299,6 +299,13 @@ public class Basket_UserLocalServiceWrapper implements Basket_UserLocalService,
 			basketJSON);
 	}
 
+	@Override
+	public org.gfbio.model.Basket_User removeBasket_User(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basket_UserLocalService.removeBasket_User(basketID);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

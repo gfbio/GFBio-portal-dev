@@ -32,7 +32,7 @@ public class Basket_UserServiceClp implements Basket_UserService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getBasket_UserList";
+		_methodName3 = "getBasketList";
 
 		_methodParameterTypes3 = new String[] { "long" };
 
@@ -41,6 +41,10 @@ public class Basket_UserServiceClp implements Basket_UserService {
 		_methodParameterTypes4 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String"
 			};
+
+		_methodName5 = "removeBasket";
+
+		_methodParameterTypes5 = new String[] { "long" };
 	}
 
 	@Override
@@ -94,7 +98,7 @@ public class Basket_UserServiceClp implements Basket_UserService {
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket_User> getBasket_UserList(
+	public java.util.List<org.gfbio.model.Basket_User> getBasketList(
 		long userID) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -159,6 +163,39 @@ public class Basket_UserServiceClp implements Basket_UserService {
 		return ((Long)returnObj).longValue();
 	}
 
+	@Override
+	public org.gfbio.model.Basket_User removeBasket(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { basketID });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.Basket_User)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -168,4 +205,6 @@ public class Basket_UserServiceClp implements Basket_UserService {
 	private String[] _methodParameterTypes3;
 	private String _methodName4;
 	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
 }

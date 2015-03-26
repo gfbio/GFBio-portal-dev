@@ -254,4 +254,8 @@ public interface Basket_UserLocalService extends BaseLocalService,
 	public long updateBasket(long basketID, long userID, java.lang.String name,
 		java.lang.String basketJSON)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public org.gfbio.model.Basket_User removeBasket_User(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

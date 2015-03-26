@@ -284,6 +284,12 @@ public class Basket_UserLocalServiceUtil {
 		return getService().updateBasket(basketID, userID, name, basketJSON);
 	}
 
+	public static org.gfbio.model.Basket_User removeBasket_User(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().removeBasket_User(basketID);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

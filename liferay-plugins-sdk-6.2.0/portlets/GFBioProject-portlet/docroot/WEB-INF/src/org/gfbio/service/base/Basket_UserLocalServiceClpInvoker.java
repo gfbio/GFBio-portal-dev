@@ -117,6 +117,10 @@ public class Basket_UserLocalServiceClpInvoker {
 		_methodParameterTypes71 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String"
 			};
+
+		_methodName72 = "removeBasket_User";
+
+		_methodParameterTypes72 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -232,6 +236,11 @@ public class Basket_UserLocalServiceClpInvoker {
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
 		}
 
+		if (_methodName72.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
+			return Basket_UserLocalServiceUtil.removeBasket_User(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -275,4 +284,6 @@ public class Basket_UserLocalServiceClpInvoker {
 	private String[] _methodParameterTypes70;
 	private String _methodName71;
 	private String[] _methodParameterTypes71;
+	private String _methodName72;
+	private String[] _methodParameterTypes72;
 }

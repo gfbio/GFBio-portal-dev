@@ -46,19 +46,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class Basket_UserLocalServiceImpl extends
 		Basket_UserLocalServiceBaseImpl {
 
-	// get list of all projects of a specific user - if we have a access to the
-	// user table, than this method goes to the UserLocalServiceImpl
+	// get list of all baskets of a specific user 
 	public List<Basket_User> getBasket_UserList(long userID)
 			throws SystemException, NoSuchModelException {
 
 		List<Basket_User> basketList = null;
 		try {
-			System.out.println('1');
 			basketList = basket_UserPersistence.findByUserID(userID);
-//			Session session = null;
-//			basketList = session.createSQLQuery("SELECT * FROM org.gfbio.model.Basket_User WHERE userid="+userID).list();
-			System.out.println('2');
-			System.out.println(basketList.toString());
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
@@ -90,5 +84,17 @@ public class Basket_UserLocalServiceImpl extends
 		}
 
 		return basket.getBasketID();
+	}
+	
+	public Basket_User removeBasket_User(long basketID)
+			throws SystemException, NoSuchModelException {
+		Basket_User basket = null;
+		try {
+			basket = basket_UserPersistence.remove(basketID);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return basket;
 	}
 }

@@ -62,10 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class Basket_UserServiceSoap {
-	public static org.gfbio.model.Basket_UserSoap[] getBasket_UserList(
-		long userID) throws RemoteException {
+	public static org.gfbio.model.Basket_UserSoap[] getBasketList(long userID)
+		throws RemoteException {
 		try {
-			java.util.List<org.gfbio.model.Basket_User> returnValue = Basket_UserServiceUtil.getBasket_UserList(userID);
+			java.util.List<org.gfbio.model.Basket_User> returnValue = Basket_UserServiceUtil.getBasketList(userID);
 
 			return org.gfbio.model.Basket_UserSoap.toSoapModels(returnValue);
 		}
@@ -84,6 +84,20 @@ public class Basket_UserServiceSoap {
 					userID, name, basketJSON);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.gfbio.model.Basket_UserSoap removeBasket(long basketID)
+		throws RemoteException {
+		try {
+			org.gfbio.model.Basket_User returnValue = Basket_UserServiceUtil.removeBasket(basketID);
+
+			return org.gfbio.model.Basket_UserSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

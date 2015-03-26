@@ -63,15 +63,21 @@ public class Basket_UserServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<org.gfbio.model.Basket_User> getBasket_UserList(
+	public static java.util.List<org.gfbio.model.Basket_User> getBasketList(
 		long userID) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getBasket_UserList(userID);
+		return getService().getBasketList(userID);
 	}
 
 	public static long updateBasket(long basketID, long userID,
 		java.lang.String name, java.lang.String basketJSON)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().updateBasket(basketID, userID, name, basketJSON);
+	}
+
+	public static org.gfbio.model.Basket_User removeBasket(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().removeBasket(basketID);
 	}
 
 	public static void clearService() {

@@ -57,9 +57,9 @@ public class Basket_UserServiceWrapper implements Basket_UserService,
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket_User> getBasket_UserList(
+	public java.util.List<org.gfbio.model.Basket_User> getBasketList(
 		long userID) throws com.liferay.portal.kernel.exception.SystemException {
-		return _basket_UserService.getBasket_UserList(userID);
+		return _basket_UserService.getBasketList(userID);
 	}
 
 	@Override
@@ -68,6 +68,13 @@ public class Basket_UserServiceWrapper implements Basket_UserService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _basket_UserService.updateBasket(basketID, userID, name,
 			basketJSON);
+	}
+
+	@Override
+	public org.gfbio.model.Basket_User removeBasket(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basket_UserService.removeBasket(basketID);
 	}
 
 	/**

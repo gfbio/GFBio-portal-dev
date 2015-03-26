@@ -32,10 +32,16 @@ public class ProjectServiceClpInvoker {
 
 		_methodParameterTypes49 = new String[] { "java.lang.String" };
 
-		_methodName54 = "updateProject";
+		_methodName54 = "getProjectList";
 
-		_methodParameterTypes54 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
+		_methodParameterTypes54 = new String[] { "long" };
+
+		_methodName55 = "updateProject";
+
+		_methodParameterTypes55 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.util.Date", "java.util.Date",
+				"java.lang.String"
 			};
 	}
 
@@ -55,8 +61,16 @@ public class ProjectServiceClpInvoker {
 
 		if (_methodName54.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+			return ProjectServiceUtil.getProjectList(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName55.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
 			return ProjectServiceUtil.updateProject(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
+				(java.util.Date)arguments[6], (java.lang.String)arguments[7]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -68,4 +82,6 @@ public class ProjectServiceClpInvoker {
 	private String[] _methodParameterTypes49;
 	private String _methodName54;
 	private String[] _methodParameterTypes54;
+	private String _methodName55;
+	private String[] _methodParameterTypes55;
 }

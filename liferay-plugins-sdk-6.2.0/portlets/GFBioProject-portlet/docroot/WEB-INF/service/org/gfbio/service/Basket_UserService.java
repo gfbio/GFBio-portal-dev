@@ -66,10 +66,14 @@ public interface Basket_UserService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Basket_User> getBasket_UserList(
+	public java.util.List<org.gfbio.model.Basket_User> getBasketList(
 		long userID) throws com.liferay.portal.kernel.exception.SystemException;
 
 	public long updateBasket(long basketID, long userID, java.lang.String name,
 		java.lang.String basketJSON)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public org.gfbio.model.Basket_User removeBasket(long basketID)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

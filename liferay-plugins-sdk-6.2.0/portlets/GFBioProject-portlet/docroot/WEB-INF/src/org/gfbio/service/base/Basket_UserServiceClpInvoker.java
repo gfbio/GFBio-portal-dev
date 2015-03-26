@@ -32,7 +32,7 @@ public class Basket_UserServiceClpInvoker {
 
 		_methodParameterTypes49 = new String[] { "java.lang.String" };
 
-		_methodName54 = "getBasket_UserList";
+		_methodName54 = "getBasketList";
 
 		_methodParameterTypes54 = new String[] { "long" };
 
@@ -41,6 +41,10 @@ public class Basket_UserServiceClpInvoker {
 		_methodParameterTypes55 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String"
 			};
+
+		_methodName56 = "removeBasket";
+
+		_methodParameterTypes56 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -59,7 +63,7 @@ public class Basket_UserServiceClpInvoker {
 
 		if (_methodName54.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
-			return Basket_UserServiceUtil.getBasket_UserList(((Long)arguments[0]).longValue());
+			return Basket_UserServiceUtil.getBasketList(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName55.equals(name) &&
@@ -67,6 +71,11 @@ public class Basket_UserServiceClpInvoker {
 			return Basket_UserServiceUtil.updateBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
+		}
+
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+			return Basket_UserServiceUtil.removeBasket(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -80,4 +89,6 @@ public class Basket_UserServiceClpInvoker {
 	private String[] _methodParameterTypes54;
 	private String _methodName55;
 	private String[] _methodParameterTypes55;
+	private String _methodName56;
+	private String[] _methodParameterTypes56;
 }
