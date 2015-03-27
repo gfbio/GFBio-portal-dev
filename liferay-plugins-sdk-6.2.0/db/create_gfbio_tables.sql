@@ -1,4 +1,4 @@
-﻿DROP TABLE gfbio_project, gfbio_researchobject, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi, gfbio_basket_user ;
+﻿DROP TABLE gfbio_project, gfbio_researchobject, gfbio_basket, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi;
 
 -- Table: gfbio_project
 
@@ -52,7 +52,7 @@ CREATE TABLE gfbio_basket
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE gfbio_basket_user
+ALTER TABLE gfbio_basket
   OWNER TO liferay_gfbio;
 
 
