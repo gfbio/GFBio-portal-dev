@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="org.gfbio.model.impl.Basket_UserModelImpl">
+	<mapped-superclass class="org.gfbio.model.impl.BasketModelImpl">
 		<attributes>
 			<id name="basketID" />
 			<basic name="userID" />
@@ -91,8 +91,8 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="org.gfbio.model.impl.Basket_UserImpl" name="Basket_User">
-		<table name="gfbio_Basket_User" />
+	<entity class="org.gfbio.model.impl.BasketImpl" name="Basket">
+		<table name="gfbio_Basket" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.ProjectImpl" name="Project">

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean id="org.gfbio.service.Basket_UserLocalService" class="org.gfbio.service.impl.Basket_UserLocalServiceImpl" />
-	<bean id="org.gfbio.service.Basket_UserService" class="org.gfbio.service.impl.Basket_UserServiceImpl" />
-	<bean id="org.gfbio.service.persistence.Basket_UserPersistence" class="org.gfbio.service.persistence.Basket_UserPersistenceImpl" parent="basePersistence">
+	<bean id="org.gfbio.service.BasketLocalService" class="org.gfbio.service.impl.BasketLocalServiceImpl" />
+	<bean id="org.gfbio.service.BasketService" class="org.gfbio.service.impl.BasketServiceImpl" />
+	<bean id="org.gfbio.service.persistence.BasketPersistence" class="org.gfbio.service.persistence.BasketPersistenceImpl" parent="basePersistence">
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>

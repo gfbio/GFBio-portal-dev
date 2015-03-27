@@ -2,13 +2,13 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="org.gfbio.model.Basket_User" />
+	<import class="org.gfbio.model.Basket" />
 	<import class="org.gfbio.model.Project" />
 	<import class="org.gfbio.model.Project_ResearchObject" />
 	<import class="org.gfbio.model.Project_User" />
 	<import class="org.gfbio.model.Project_User_PI" />
 	<import class="org.gfbio.model.ResearchObject" />
-	<class name="org.gfbio.model.impl.Basket_UserImpl" table="gfbio_Basket_User">
+	<class name="org.gfbio.model.impl.BasketImpl" table="gfbio_Basket">
 		<id name="basketID" type="long">
 			<generator class="assigned" />
 		</id>

@@ -25,7 +25,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import org.gfbio.model.Project_ResearchObject;
 
 import org.gfbio.service.Project_ResearchObjectService;
-import org.gfbio.service.persistence.Basket_UserPersistence;
+import org.gfbio.service.persistence.BasketPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
@@ -56,60 +56,58 @@ public abstract class Project_ResearchObjectServiceBaseImpl
 	 */
 
 	/**
-	 * Returns the basket_ user local service.
+	 * Returns the basket local service.
 	 *
-	 * @return the basket_ user local service
+	 * @return the basket local service
 	 */
-	public org.gfbio.service.Basket_UserLocalService getBasket_UserLocalService() {
-		return basket_UserLocalService;
+	public org.gfbio.service.BasketLocalService getBasketLocalService() {
+		return basketLocalService;
 	}
 
 	/**
-	 * Sets the basket_ user local service.
+	 * Sets the basket local service.
 	 *
-	 * @param basket_UserLocalService the basket_ user local service
+	 * @param basketLocalService the basket local service
 	 */
-	public void setBasket_UserLocalService(
-		org.gfbio.service.Basket_UserLocalService basket_UserLocalService) {
-		this.basket_UserLocalService = basket_UserLocalService;
+	public void setBasketLocalService(
+		org.gfbio.service.BasketLocalService basketLocalService) {
+		this.basketLocalService = basketLocalService;
 	}
 
 	/**
-	 * Returns the basket_ user remote service.
+	 * Returns the basket remote service.
 	 *
-	 * @return the basket_ user remote service
+	 * @return the basket remote service
 	 */
-	public org.gfbio.service.Basket_UserService getBasket_UserService() {
-		return basket_UserService;
+	public org.gfbio.service.BasketService getBasketService() {
+		return basketService;
 	}
 
 	/**
-	 * Sets the basket_ user remote service.
+	 * Sets the basket remote service.
 	 *
-	 * @param basket_UserService the basket_ user remote service
+	 * @param basketService the basket remote service
 	 */
-	public void setBasket_UserService(
-		org.gfbio.service.Basket_UserService basket_UserService) {
-		this.basket_UserService = basket_UserService;
+	public void setBasketService(org.gfbio.service.BasketService basketService) {
+		this.basketService = basketService;
 	}
 
 	/**
-	 * Returns the basket_ user persistence.
+	 * Returns the basket persistence.
 	 *
-	 * @return the basket_ user persistence
+	 * @return the basket persistence
 	 */
-	public Basket_UserPersistence getBasket_UserPersistence() {
-		return basket_UserPersistence;
+	public BasketPersistence getBasketPersistence() {
+		return basketPersistence;
 	}
 
 	/**
-	 * Sets the basket_ user persistence.
+	 * Sets the basket persistence.
 	 *
-	 * @param basket_UserPersistence the basket_ user persistence
+	 * @param basketPersistence the basket persistence
 	 */
-	public void setBasket_UserPersistence(
-		Basket_UserPersistence basket_UserPersistence) {
-		this.basket_UserPersistence = basket_UserPersistence;
+	public void setBasketPersistence(BasketPersistence basketPersistence) {
+		this.basketPersistence = basketPersistence;
 	}
 
 	/**
@@ -567,12 +565,12 @@ public abstract class Project_ResearchObjectServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = org.gfbio.service.Basket_UserLocalService.class)
-	protected org.gfbio.service.Basket_UserLocalService basket_UserLocalService;
-	@BeanReference(type = org.gfbio.service.Basket_UserService.class)
-	protected org.gfbio.service.Basket_UserService basket_UserService;
-	@BeanReference(type = Basket_UserPersistence.class)
-	protected Basket_UserPersistence basket_UserPersistence;
+	@BeanReference(type = org.gfbio.service.BasketLocalService.class)
+	protected org.gfbio.service.BasketLocalService basketLocalService;
+	@BeanReference(type = org.gfbio.service.BasketService.class)
+	protected org.gfbio.service.BasketService basketService;
+	@BeanReference(type = BasketPersistence.class)
+	protected BasketPersistence basketPersistence;
 	@BeanReference(type = org.gfbio.service.ProjectLocalService.class)
 	protected org.gfbio.service.ProjectLocalService projectLocalService;
 	@BeanReference(type = org.gfbio.service.ProjectService.class)

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
-import org.gfbio.model.Basket_UserClp;
+import org.gfbio.model.BasketClp;
 import org.gfbio.model.ProjectClp;
 import org.gfbio.model.Project_ResearchObjectClp;
 import org.gfbio.model.Project_UserClp;
@@ -107,8 +107,8 @@ public class ClpSerializer {
 
 		String oldModelClassName = oldModelClass.getName();
 
-		if (oldModelClassName.equals(Basket_UserClp.class.getName())) {
-			return translateInputBasket_User(oldModel);
+		if (oldModelClassName.equals(BasketClp.class.getName())) {
+			return translateInputBasket(oldModel);
 		}
 
 		if (oldModelClassName.equals(ProjectClp.class.getName())) {
@@ -146,10 +146,10 @@ public class ClpSerializer {
 		return newList;
 	}
 
-	public static Object translateInputBasket_User(BaseModel<?> oldModel) {
-		Basket_UserClp oldClpModel = (Basket_UserClp)oldModel;
+	public static Object translateInputBasket(BaseModel<?> oldModel) {
+		BasketClp oldClpModel = (BasketClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getBasket_UserRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getBasketRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -224,8 +224,8 @@ public class ClpSerializer {
 
 		String oldModelClassName = oldModelClass.getName();
 
-		if (oldModelClassName.equals("org.gfbio.model.impl.Basket_UserImpl")) {
-			return translateOutputBasket_User(oldModel);
+		if (oldModelClassName.equals("org.gfbio.model.impl.BasketImpl")) {
+			return translateOutputBasket(oldModel);
 		}
 
 		if (oldModelClassName.equals("org.gfbio.model.impl.ProjectImpl")) {
@@ -329,8 +329,8 @@ public class ClpSerializer {
 			return new SystemException();
 		}
 
-		if (className.equals("org.gfbio.NoSuchBasket_UserException")) {
-			return new org.gfbio.NoSuchBasket_UserException();
+		if (className.equals("org.gfbio.NoSuchBasketException")) {
+			return new org.gfbio.NoSuchBasketException();
 		}
 
 		if (className.equals("org.gfbio.NoSuchProjectException")) {
@@ -356,12 +356,12 @@ public class ClpSerializer {
 		return throwable;
 	}
 
-	public static Object translateOutputBasket_User(BaseModel<?> oldModel) {
-		Basket_UserClp newModel = new Basket_UserClp();
+	public static Object translateOutputBasket(BaseModel<?> oldModel) {
+		BasketClp newModel = new BasketClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setBasket_UserRemoteModel(oldModel);
+		newModel.setBasketRemoteModel(oldModel);
 
 		return newModel;
 	}

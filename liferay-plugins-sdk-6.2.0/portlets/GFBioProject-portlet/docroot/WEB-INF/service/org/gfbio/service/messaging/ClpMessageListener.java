@@ -17,8 +17,8 @@ package org.gfbio.service.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
-import org.gfbio.service.Basket_UserLocalServiceUtil;
-import org.gfbio.service.Basket_UserServiceUtil;
+import org.gfbio.service.BasketLocalServiceUtil;
+import org.gfbio.service.BasketServiceUtil;
 import org.gfbio.service.ClpSerializer;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ProjectServiceUtil;
@@ -46,9 +46,9 @@ public class ClpMessageListener extends BaseMessageListener {
 
 		if (command.equals("undeploy") &&
 				servletContextName.equals(getServletContextName())) {
-			Basket_UserLocalServiceUtil.clearService();
+			BasketLocalServiceUtil.clearService();
 
-			Basket_UserServiceUtil.clearService();
+			BasketServiceUtil.clearService();
 			ProjectLocalServiceUtil.clearService();
 
 			ProjectServiceUtil.clearService();
