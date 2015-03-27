@@ -37,7 +37,24 @@ WITH (
 ALTER TABLE gfbio_researchobject
   OWNER TO liferay_gfbio;
   
-  
+    
+-- Table: gfbio_basket
+
+CREATE TABLE gfbio_basket
+(
+  basketid bigint NOT NULL,
+  userid bigint NOT NULL,
+  name character varying(75),
+  basketJSON text,
+  queryJSON text,
+  CONSTRAINT gfbio_basket_pkey PRIMARY KEY (basketid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_basket_user
+  OWNER TO liferay_gfbio;
+
 
 -----------------------------------------------------------------------------------------
 ------------------------------------- m to n tables -------------------------------------
@@ -102,23 +119,6 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE gfbio_project_user_pi
-  OWNER TO liferay_gfbio;
-
-  
--- Table: gfbio_basket
-
-CREATE TABLE gfbio_basket_user
-(
-  basketid bigint NOT NULL,
-  userid bigint NOT NULL,
-  name character varying(75),
-  basketJSON text,
-  CONSTRAINT gfbio_basket_user_pkey PRIMARY KEY (basketid)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE gfbio_basket_user
   OWNER TO liferay_gfbio;
 
 
