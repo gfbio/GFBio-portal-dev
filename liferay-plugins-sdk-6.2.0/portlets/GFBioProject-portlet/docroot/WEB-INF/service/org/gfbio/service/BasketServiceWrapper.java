@@ -57,24 +57,57 @@ public class BasketServiceWrapper implements BasketService,
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketList(long userID)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _basketService.getBasketList(userID);
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		return _basketService.getBasketsByUserId(userId);
 	}
 
 	@Override
-	public long updateBasket(long basketID, long userID, java.lang.String name,
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _basketService.getBasketsByUserAndPeriod(userId, period);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _basketService.getBasketsIdByUserId(userId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _basketService.getBasketsIdByUserAndPeriod(userId, period);
+	}
+
+	@Override
+	public org.gfbio.model.Basket getBasketById(long basketId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _basketService.getBasketById(basketId);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+		long[] basketIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _basketService.getBasketsByIds(basketIds);
+	}
+
+	@Override
+	public long updateBasket(long basketId, long userId, java.lang.String name,
 		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _basketService.updateBasket(basketID, userID, name, basketJSON,
+		return _basketService.updateBasket(basketId, userId, name, basketJSON,
 			queryJSON);
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket(long basketID)
+	public org.gfbio.model.Basket removeBasket(long basketId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _basketService.removeBasket(basketID);
+		return _basketService.removeBasket(basketId);
 	}
 
 	/**

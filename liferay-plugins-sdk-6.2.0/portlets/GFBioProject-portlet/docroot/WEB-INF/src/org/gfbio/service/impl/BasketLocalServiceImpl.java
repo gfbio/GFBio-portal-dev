@@ -14,10 +14,14 @@
 
 package org.gfbio.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchBasketException;
 import org.gfbio.model.Basket;
+import org.gfbio.model.Project;
 import org.gfbio.service.base.BasketLocalServiceBaseImpl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -26,26 +30,117 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the basket local service.
- *
+ * 
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gfbio.service.BasketLocalService} interface.
- *
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link org.gfbio.service.BasketLocalService} interface.
+ * 
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
- *
+ * 
  * @author Felicitas Loeffler
  * @see org.gfbio.service.base.BasketLocalServiceBaseImpl
  * @see org.gfbio.service.BasketLocalServiceUtil
  */
 public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
-	// get list of all baskets of a specific user 
-	public List<Basket> getBasket_UserList(long userID)
-			throws SystemException, NoSuchModelException {
+	// get list of all baskets of a specific user
+	public List<Basket> getBasketsByUserId(long userId) throws SystemException,
+			NoSuchModelException {
 
 		List<Basket> basketList = null;
 		try {
-			basketList = basketPersistence.findByUserID(userID);
+			basketList = basketPersistence.findByUserId(userId);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return basketList;
+	}
+
+	// get list of all baskets of a specific user updated within a specific period
+	public List<Basket> getBasketsByUserAndPeriod(long userId, int period)
+			throws SystemException, NoSuchModelException {
+		List<Basket> basketList = null;
+		try {
+			if (period == 0)
+				basketList = basketPersistence.findByUserId(userId);
+			else {
+				Date startDate = getStartDateFromPeriod(period);
+				basketList = basketPersistence.findByUserIdSince(userId,
+						startDate);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return basketList;
+	}
+
+	// get list of all baskets' Id of a specific user
+	public List<Long> getBasketsIdByUserId(long userId) throws SystemException,
+			NoSuchModelException {
+
+		List<Long> basketIdList = new ArrayList<Long>();
+		try {
+			List<Basket> basketList = basketPersistence.findByUserId(userId);
+			for (int i = 0; i < basketList.size(); i++) {
+				basketIdList.add(basketList.get(i).getBasketID());
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return basketIdList;
+	}
+
+	// get list of all baskets' Ids of a specific user updated 
+	// within a specific period
+	public List<Long> getBasketsIdByUserAndPeriod(long userId, int period)
+			throws SystemException, NoSuchModelException {
+		List<Basket> basketList = new ArrayList<Basket>();
+		List<Long> basketIdList = new ArrayList<Long>();
+		try {
+			if (period == 0)
+				basketList = basketPersistence.findByUserId(userId);
+			else {
+				Date startDate = getStartDateFromPeriod(period);
+				basketList = basketPersistence.findByUserIdSince(userId,
+						startDate);
+			}
+
+			for (int i = 0; i < basketList.size(); i++) {
+				basketIdList.add(basketList.get(i).getBasketID());
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return basketIdList;
+	}
+
+	// get a basket from basket's Id
+	public Basket getBasketById(long basketId) throws SystemException,
+			NoSuchModelException {
+		Basket basket = null;
+		try {
+			basket = basketPersistence.findByBasketId(basketId);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return basket;
+	}
+
+	// get baskets from baskets' Ids
+	public List<Basket> getBasketsByIds(long[] basketIds)
+			throws SystemException, NoSuchModelException {
+		List<Basket> basketList = null;
+		try {
+			basketList = basketPersistence.findByBasketIds(basketIds);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
@@ -54,15 +149,17 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	}
 
 	// update or create a new project
-	public long updateBasket(long basketID, long userID, String name,
+	public long updateBasket(long basketId, long userId, String name,
 			String basketJSON, String queryJSON) throws SystemException {
 
 		Basket basket = null;
 		try {
 			// update basket
-			basket = basketPersistence.findByPrimaryKey(basketID);
-			basket.setUserID(userID);
+			basket = basketPersistence.findByPrimaryKey(basketId);
+			basket.setUserID(userId);
 			basket.setName(name);
+			Date now = new java.util.Date();
+			basket.setLastModifiedDate(now);
 			basket.setBasketJSON(basketJSON);
 			basket.setQueryJSON(queryJSON);
 			super.updateBasket(basket);
@@ -70,8 +167,10 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			// create new basket
 			basket = basketPersistence.create(CounterLocalServiceUtil
 					.increment(getModelClassName()));
-			basket.setUserID(userID);
+			basket.setUserID(userId);
 			basket.setName(name);
+			Date now = new java.util.Date();
+			basket.setLastModifiedDate(now);
 			basket.setBasketJSON(basketJSON);
 			basket.setQueryJSON(queryJSON);
 			super.updateBasket(basket);
@@ -80,16 +179,76 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 		return basket.getBasketID();
 	}
-	
-	public Basket removeBasket_User(long basketID)
-			throws SystemException, NoSuchModelException {
+
+	public Basket removeBasket(long basketId) throws SystemException,
+			NoSuchModelException {
 		Basket basket = null;
 		try {
-			basket = basketPersistence.remove(basketID);
+			basket = basketPersistence.remove(basketId);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 		return basket;
+	}
+
+	//////////////////////////////////////////////////////////////////////////////
+	// period = 0 : all time
+	// period = 1 : 1 day
+	// period = 2 : 2 days
+	// period = 10 : 1 week
+	// period = 20 : 2 weeks
+	// period = 100 : 1 month
+	// period = 200 : 2 months
+	// period = 300 : 3 months
+	// period = 600 : 6 months
+	// period = 1000 : 1 year
+	// period = 2000 : 2 years
+	// period = 3000 : 3 years
+	//////////////////////////////////////////////////////////////////////////////
+	public Date getStartDateFromPeriod(int period){
+		Date date = new java.util.Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		switch (period) {
+		case 1:
+			cal.add(Calendar.DATE, -1);
+			break;
+		case 2:
+			cal.add(Calendar.DATE, -2);
+			break;
+		case 10:
+			cal.add(Calendar.DATE, -7);
+			break;
+		case 20:
+			cal.add(Calendar.DATE, -14);
+			break;
+		case 100:
+			cal.add(Calendar.MONTH, -1);
+			break;
+		case 200:
+			cal.add(Calendar.MONTH, -2);
+			break;
+		case 300:
+			cal.add(Calendar.MONTH, -3);
+			break;
+		case 600:
+			cal.add(Calendar.MONTH, -6);
+			break;
+		case 1000:
+			cal.add(Calendar.YEAR, -1);
+			break;
+		case 2000:
+			cal.add(Calendar.YEAR, -2);
+			break;
+		case 3000:
+			cal.add(Calendar.YEAR, -3);
+			break;
+		default:
+			cal.add(Calendar.YEAR, -1000);
+			break;
+		}
+		Date startDate = cal.getTime();
+		return startDate;
 	}
 }

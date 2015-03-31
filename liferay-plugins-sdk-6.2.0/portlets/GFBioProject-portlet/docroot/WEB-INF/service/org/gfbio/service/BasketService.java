@@ -66,14 +66,37 @@ public interface BasketService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Basket> getBasketList(long userID)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+		long userId, int period)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public long updateBasket(long basketID, long userID, java.lang.String name,
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.Basket getBasketById(long basketId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+		long[] basketIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public long updateBasket(long basketId, long userId, java.lang.String name,
 		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public org.gfbio.model.Basket removeBasket(long basketID)
+	public org.gfbio.model.Basket removeBasket(long basketId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,6 +50,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,7 +88,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
 			BasketModelImpl.FINDER_CACHE_ENABLED, BasketImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserID",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -95,12 +98,13 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID =
 		new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
 			BasketModelImpl.FINDER_CACHE_ENABLED, BasketImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserID",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] { Long.class.getName() },
-			BasketModelImpl.USERID_COLUMN_BITMASK);
+			BasketModelImpl.USERID_COLUMN_BITMASK |
+			BasketModelImpl.LASTMODIFIEDDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
 			BasketModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserID",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] { Long.class.getName() });
 
 	/**
@@ -111,8 +115,8 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Basket> findByUserID(long userID) throws SystemException {
-		return findByUserID(userID, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<Basket> findByUserId(long userID) throws SystemException {
+		return findByUserId(userID, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -129,9 +133,9 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Basket> findByUserID(long userID, int start, int end)
+	public List<Basket> findByUserId(long userID, int start, int end)
 		throws SystemException {
-		return findByUserID(userID, start, end, null);
+		return findByUserId(userID, start, end, null);
 	}
 
 	/**
@@ -149,7 +153,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Basket> findByUserID(long userID, int start, int end,
+	public List<Basket> findByUserId(long userID, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -256,10 +260,10 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket findByUserID_First(long userID,
+	public Basket findByUserId_First(long userID,
 		OrderByComparator orderByComparator)
 		throws NoSuchBasketException, SystemException {
-		Basket basket = fetchByUserID_First(userID, orderByComparator);
+		Basket basket = fetchByUserId_First(userID, orderByComparator);
 
 		if (basket != null) {
 			return basket;
@@ -286,9 +290,9 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket fetchByUserID_First(long userID,
+	public Basket fetchByUserId_First(long userID,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<Basket> list = findByUserID(userID, 0, 1, orderByComparator);
+		List<Basket> list = findByUserId(userID, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -307,10 +311,10 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket findByUserID_Last(long userID,
+	public Basket findByUserId_Last(long userID,
 		OrderByComparator orderByComparator)
 		throws NoSuchBasketException, SystemException {
-		Basket basket = fetchByUserID_Last(userID, orderByComparator);
+		Basket basket = fetchByUserId_Last(userID, orderByComparator);
 
 		if (basket != null) {
 			return basket;
@@ -337,15 +341,15 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket fetchByUserID_Last(long userID,
+	public Basket fetchByUserId_Last(long userID,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByUserID(userID);
+		int count = countByUserId(userID);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Basket> list = findByUserID(userID, count - 1, count,
+		List<Basket> list = findByUserId(userID, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -366,7 +370,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket[] findByUserID_PrevAndNext(long basketID, long userID,
+	public Basket[] findByUserId_PrevAndNext(long basketID, long userID,
 		OrderByComparator orderByComparator)
 		throws NoSuchBasketException, SystemException {
 		Basket basket = findByPrimaryKey(basketID);
@@ -378,12 +382,12 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 
 			Basket[] array = new BasketImpl[3];
 
-			array[0] = getByUserID_PrevAndNext(session, basket, userID,
+			array[0] = getByUserId_PrevAndNext(session, basket, userID,
 					orderByComparator, true);
 
 			array[1] = basket;
 
-			array[2] = getByUserID_PrevAndNext(session, basket, userID,
+			array[2] = getByUserId_PrevAndNext(session, basket, userID,
 					orderByComparator, false);
 
 			return array;
@@ -396,7 +400,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 		}
 	}
 
-	protected Basket getByUserID_PrevAndNext(Session session, Basket basket,
+	protected Basket getByUserId_PrevAndNext(Session session, Basket basket,
 		long userID, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -507,8 +511,8 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserID(long userID) throws SystemException {
-		for (Basket basket : findByUserID(userID, QueryUtil.ALL_POS,
+	public void removeByUserId(long userID) throws SystemException {
+		for (Basket basket : findByUserId(userID, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(basket);
 		}
@@ -522,7 +526,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserID(long userID) throws SystemException {
+	public int countByUserId(long userID) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
 		Object[] finderArgs = new Object[] { userID };
@@ -568,14 +572,565 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "basket.userID = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERIDSINCE =
+		new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
+			BasketModelImpl.FINDER_CACHE_ENABLED, BasketImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserIdSince",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_USERIDSINCE =
+		new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
+			BasketModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByUserIdSince",
+			new String[] { Long.class.getName(), Date.class.getName() });
+
+	/**
+	 * Returns all the baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @return the matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByUserIdSince(long userID, Date lastModifiedDate)
+		throws SystemException {
+		return findByUserIdSince(userID, lastModifiedDate, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @param start the lower bound of the range of baskets
+	 * @param end the upper bound of the range of baskets (not inclusive)
+	 * @return the range of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByUserIdSince(long userID, Date lastModifiedDate,
+		int start, int end) throws SystemException {
+		return findByUserIdSince(userID, lastModifiedDate, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @param start the lower bound of the range of baskets
+	 * @param end the upper bound of the range of baskets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByUserIdSince(long userID, Date lastModifiedDate,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USERIDSINCE;
+		finderArgs = new Object[] {
+				userID, lastModifiedDate,
+				
+				start, end, orderByComparator
+			};
+
+		List<Basket> list = (List<Basket>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Basket basket : list) {
+				if ((userID != basket.getUserID()) ||
+						(lastModifiedDate.getTime() >= basket.getLastModifiedDate()
+																 .getTime())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_BASKET_WHERE);
+
+			query.append(_FINDER_COLUMN_USERIDSINCE_USERID_2);
+
+			boolean bindLastModifiedDate = false;
+
+			if (lastModifiedDate == null) {
+				query.append(_FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_1);
+			}
+			else {
+				bindLastModifiedDate = true;
+
+				query.append(_FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(BasketModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userID);
+
+				if (bindLastModifiedDate) {
+					qPos.add(CalendarUtil.getTimestamp(lastModifiedDate));
+				}
+
+				if (!pagination) {
+					list = (List<Basket>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Basket>(list);
+				}
+				else {
+					list = (List<Basket>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching basket
+	 * @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket findByUserIdSince_First(long userID, Date lastModifiedDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchBasketException, SystemException {
+		Basket basket = fetchByUserIdSince_First(userID, lastModifiedDate,
+				orderByComparator);
+
+		if (basket != null) {
+			return basket;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userID=");
+		msg.append(userID);
+
+		msg.append(", lastModifiedDate=");
+		msg.append(lastModifiedDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchBasketException(msg.toString());
+	}
+
+	/**
+	 * Returns the first basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching basket, or <code>null</code> if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket fetchByUserIdSince_First(long userID, Date lastModifiedDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Basket> list = findByUserIdSince(userID, lastModifiedDate, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching basket
+	 * @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket findByUserIdSince_Last(long userID, Date lastModifiedDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchBasketException, SystemException {
+		Basket basket = fetchByUserIdSince_Last(userID, lastModifiedDate,
+				orderByComparator);
+
+		if (basket != null) {
+			return basket;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userID=");
+		msg.append(userID);
+
+		msg.append(", lastModifiedDate=");
+		msg.append(lastModifiedDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchBasketException(msg.toString());
+	}
+
+	/**
+	 * Returns the last basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching basket, or <code>null</code> if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket fetchByUserIdSince_Last(long userID, Date lastModifiedDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByUserIdSince(userID, lastModifiedDate);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Basket> list = findByUserIdSince(userID, lastModifiedDate,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the baskets before and after the current basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * @param basketID the primary key of the current basket
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next basket
+	 * @throws org.gfbio.NoSuchBasketException if a basket with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket[] findByUserIdSince_PrevAndNext(long basketID, long userID,
+		Date lastModifiedDate, OrderByComparator orderByComparator)
+		throws NoSuchBasketException, SystemException {
+		Basket basket = findByPrimaryKey(basketID);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Basket[] array = new BasketImpl[3];
+
+			array[0] = getByUserIdSince_PrevAndNext(session, basket, userID,
+					lastModifiedDate, orderByComparator, true);
+
+			array[1] = basket;
+
+			array[2] = getByUserIdSince_PrevAndNext(session, basket, userID,
+					lastModifiedDate, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Basket getByUserIdSince_PrevAndNext(Session session,
+		Basket basket, long userID, Date lastModifiedDate,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_BASKET_WHERE);
+
+		query.append(_FINDER_COLUMN_USERIDSINCE_USERID_2);
+
+		boolean bindLastModifiedDate = false;
+
+		if (lastModifiedDate == null) {
+			query.append(_FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_1);
+		}
+		else {
+			bindLastModifiedDate = true;
+
+			query.append(_FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(BasketModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(userID);
+
+		if (bindLastModifiedDate) {
+			qPos.add(CalendarUtil.getTimestamp(lastModifiedDate));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(basket);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Basket> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the baskets where userID = &#63; and lastModifiedDate &gt; &#63; from the database.
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByUserIdSince(long userID, Date lastModifiedDate)
+		throws SystemException {
+		for (Basket basket : findByUserIdSince(userID, lastModifiedDate,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(basket);
+		}
+	}
+
+	/**
+	 * Returns the number of baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	 *
+	 * @param userID the user i d
+	 * @param lastModifiedDate the last modified date
+	 * @return the number of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByUserIdSince(long userID, Date lastModifiedDate)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_USERIDSINCE;
+
+		Object[] finderArgs = new Object[] { userID, lastModifiedDate };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_BASKET_WHERE);
+
+			query.append(_FINDER_COLUMN_USERIDSINCE_USERID_2);
+
+			boolean bindLastModifiedDate = false;
+
+			if (lastModifiedDate == null) {
+				query.append(_FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_1);
+			}
+			else {
+				bindLastModifiedDate = true;
+
+				query.append(_FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userID);
+
+				if (bindLastModifiedDate) {
+					qPos.add(CalendarUtil.getTimestamp(lastModifiedDate));
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_USERIDSINCE_USERID_2 = "basket.userID = ? AND ";
+	private static final String _FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_1 = "basket.lastModifiedDate > NULL";
+	private static final String _FINDER_COLUMN_USERIDSINCE_LASTMODIFIEDDATE_2 = "basket.lastModifiedDate > ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_BASKETID = new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
 			BasketModelImpl.FINDER_CACHE_ENABLED, BasketImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByBasketID",
+			FINDER_CLASS_NAME_ENTITY, "fetchByBasketId",
 			new String[] { Long.class.getName() },
 			BasketModelImpl.BASKETID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_BASKETID = new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
 			BasketModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBasketID",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBasketId",
 			new String[] { Long.class.getName() });
 
 	/**
@@ -587,9 +1142,9 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket findByBasketID(long basketID)
+	public Basket findByBasketId(long basketID)
 		throws NoSuchBasketException, SystemException {
-		Basket basket = fetchByBasketID(basketID);
+		Basket basket = fetchByBasketId(basketID);
 
 		if (basket == null) {
 			StringBundler msg = new StringBundler(4);
@@ -619,8 +1174,8 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket fetchByBasketID(long basketID) throws SystemException {
-		return fetchByBasketID(basketID, true);
+	public Basket fetchByBasketId(long basketID) throws SystemException {
+		return fetchByBasketId(basketID, true);
 	}
 
 	/**
@@ -632,7 +1187,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket fetchByBasketID(long basketID, boolean retrieveFromCache)
+	public Basket fetchByBasketId(long basketID, boolean retrieveFromCache)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { basketID };
 
@@ -680,7 +1235,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"BasketPersistenceImpl.fetchByBasketID(long, boolean) with parameters (" +
+							"BasketPersistenceImpl.fetchByBasketId(long, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -724,9 +1279,9 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Basket removeByBasketID(long basketID)
+	public Basket removeByBasketId(long basketID)
 		throws NoSuchBasketException, SystemException {
-		Basket basket = findByBasketID(basketID);
+		Basket basket = findByBasketId(basketID);
 
 		return remove(basket);
 	}
@@ -739,7 +1294,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByBasketID(long basketID) throws SystemException {
+	public int countByBasketId(long basketID) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_BASKETID;
 
 		Object[] finderArgs = new Object[] { basketID };
@@ -785,6 +1340,602 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 	}
 
 	private static final String _FINDER_COLUMN_BASKETID_BASKETID_2 = "basket.basketID = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_BASKETIDS =
+		new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
+			BasketModelImpl.FINDER_CACHE_ENABLED, BasketImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBasketIds",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BASKETIDS =
+		new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
+			BasketModelImpl.FINDER_CACHE_ENABLED, BasketImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBasketIds",
+			new String[] { Long.class.getName() },
+			BasketModelImpl.BASKETID_COLUMN_BITMASK |
+			BasketModelImpl.LASTMODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_BASKETIDS = new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
+			BasketModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBasketIds",
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_BASKETIDS =
+		new FinderPath(BasketModelImpl.ENTITY_CACHE_ENABLED,
+			BasketModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByBasketIds",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the baskets where basketID = &#63;.
+	 *
+	 * @param basketID the basket i d
+	 * @return the matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByBasketIds(long basketID)
+		throws SystemException {
+		return findByBasketIds(basketID, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the baskets where basketID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param basketID the basket i d
+	 * @param start the lower bound of the range of baskets
+	 * @param end the upper bound of the range of baskets (not inclusive)
+	 * @return the range of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByBasketIds(long basketID, int start, int end)
+		throws SystemException {
+		return findByBasketIds(basketID, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the baskets where basketID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param basketID the basket i d
+	 * @param start the lower bound of the range of baskets
+	 * @param end the upper bound of the range of baskets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByBasketIds(long basketID, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BASKETIDS;
+			finderArgs = new Object[] { basketID };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_BASKETIDS;
+			finderArgs = new Object[] { basketID, start, end, orderByComparator };
+		}
+
+		List<Basket> list = (List<Basket>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Basket basket : list) {
+				if ((basketID != basket.getBasketID())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_BASKET_WHERE);
+
+			query.append(_FINDER_COLUMN_BASKETIDS_BASKETID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(BasketModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(basketID);
+
+				if (!pagination) {
+					list = (List<Basket>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Basket>(list);
+				}
+				else {
+					list = (List<Basket>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first basket in the ordered set where basketID = &#63;.
+	 *
+	 * @param basketID the basket i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching basket
+	 * @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket findByBasketIds_First(long basketID,
+		OrderByComparator orderByComparator)
+		throws NoSuchBasketException, SystemException {
+		Basket basket = fetchByBasketIds_First(basketID, orderByComparator);
+
+		if (basket != null) {
+			return basket;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("basketID=");
+		msg.append(basketID);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchBasketException(msg.toString());
+	}
+
+	/**
+	 * Returns the first basket in the ordered set where basketID = &#63;.
+	 *
+	 * @param basketID the basket i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching basket, or <code>null</code> if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket fetchByBasketIds_First(long basketID,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Basket> list = findByBasketIds(basketID, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last basket in the ordered set where basketID = &#63;.
+	 *
+	 * @param basketID the basket i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching basket
+	 * @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket findByBasketIds_Last(long basketID,
+		OrderByComparator orderByComparator)
+		throws NoSuchBasketException, SystemException {
+		Basket basket = fetchByBasketIds_Last(basketID, orderByComparator);
+
+		if (basket != null) {
+			return basket;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("basketID=");
+		msg.append(basketID);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchBasketException(msg.toString());
+	}
+
+	/**
+	 * Returns the last basket in the ordered set where basketID = &#63;.
+	 *
+	 * @param basketID the basket i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching basket, or <code>null</code> if a matching basket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Basket fetchByBasketIds_Last(long basketID,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByBasketIds(basketID);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Basket> list = findByBasketIds(basketID, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns all the baskets where basketID = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param basketIDs the basket i ds
+	 * @return the matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByBasketIds(long[] basketIDs)
+		throws SystemException {
+		return findByBasketIds(basketIDs, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the baskets where basketID = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param basketIDs the basket i ds
+	 * @param start the lower bound of the range of baskets
+	 * @param end the upper bound of the range of baskets (not inclusive)
+	 * @return the range of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByBasketIds(long[] basketIDs, int start, int end)
+		throws SystemException {
+		return findByBasketIds(basketIDs, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the baskets where basketID = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param basketIDs the basket i ds
+	 * @param start the lower bound of the range of baskets
+	 * @param end the upper bound of the range of baskets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Basket> findByBasketIds(long[] basketIDs, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		if ((basketIDs != null) && (basketIDs.length == 1)) {
+			return findByBasketIds(basketIDs[0], start, end, orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderArgs = new Object[] { StringUtil.merge(basketIDs) };
+		}
+		else {
+			finderArgs = new Object[] {
+					StringUtil.merge(basketIDs),
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Basket> list = (List<Basket>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_BASKETIDS,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Basket basket : list) {
+				if (!ArrayUtil.contains(basketIDs, basket.getBasketID())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_BASKET_WHERE);
+
+			boolean conjunctionable = false;
+
+			if ((basketIDs == null) || (basketIDs.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < basketIDs.length; i++) {
+					query.append(_FINDER_COLUMN_BASKETIDS_BASKETID_5);
+
+					if ((i + 1) < basketIDs.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(BasketModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (basketIDs != null) {
+					qPos.add(basketIDs);
+				}
+
+				if (!pagination) {
+					list = (List<Basket>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Basket>(list);
+				}
+				else {
+					list = (List<Basket>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_BASKETIDS,
+					finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_BASKETIDS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the baskets where basketID = &#63; from the database.
+	 *
+	 * @param basketID the basket i d
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByBasketIds(long basketID) throws SystemException {
+		for (Basket basket : findByBasketIds(basketID, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(basket);
+		}
+	}
+
+	/**
+	 * Returns the number of baskets where basketID = &#63;.
+	 *
+	 * @param basketID the basket i d
+	 * @return the number of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByBasketIds(long basketID) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_BASKETIDS;
+
+		Object[] finderArgs = new Object[] { basketID };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_BASKET_WHERE);
+
+			query.append(_FINDER_COLUMN_BASKETIDS_BASKETID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(basketID);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of baskets where basketID = any &#63;.
+	 *
+	 * @param basketIDs the basket i ds
+	 * @return the number of matching baskets
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByBasketIds(long[] basketIDs) throws SystemException {
+		Object[] finderArgs = new Object[] { StringUtil.merge(basketIDs) };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_BASKETIDS,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_BASKET_WHERE);
+
+			boolean conjunctionable = false;
+
+			if ((basketIDs == null) || (basketIDs.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < basketIDs.length; i++) {
+					query.append(_FINDER_COLUMN_BASKETIDS_BASKETID_5);
+
+					if ((i + 1) < basketIDs.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (basketIDs != null) {
+					qPos.add(basketIDs);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_BASKETIDS,
+					finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_BASKETIDS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_BASKETIDS_BASKETID_2 = "basket.basketID = ?";
+	private static final String _FINDER_COLUMN_BASKETIDS_BASKETID_5 = "(" +
+		removeConjunction(_FINDER_COLUMN_BASKETIDS_BASKETID_2) + ")";
 
 	public BasketPersistenceImpl() {
 		setModelClass(Basket.class);
@@ -1070,6 +2221,25 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
+
+			if ((basketModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BASKETIDS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						basketModelImpl.getOriginalBasketID()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BASKETIDS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BASKETIDS,
+					args);
+
+				args = new Object[] { basketModelImpl.getBasketID() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BASKETIDS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BASKETIDS,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(BasketModelImpl.ENTITY_CACHE_ENABLED,
@@ -1094,6 +2264,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 		basketImpl.setBasketID(basket.getBasketID());
 		basketImpl.setUserID(basket.getUserID());
 		basketImpl.setName(basket.getName());
+		basketImpl.setLastModifiedDate(basket.getLastModifiedDate());
 		basketImpl.setBasketJSON(basket.getBasketJSON());
 		basketImpl.setQueryJSON(basket.getQueryJSON());
 

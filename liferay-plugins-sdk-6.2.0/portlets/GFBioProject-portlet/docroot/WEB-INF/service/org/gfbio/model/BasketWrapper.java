@@ -17,6 +17,7 @@ package org.gfbio.model;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +52,7 @@ public class BasketWrapper implements Basket, ModelWrapper<Basket> {
 		attributes.put("basketID", getBasketID());
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
+		attributes.put("lastModifiedDate", getLastModifiedDate());
 		attributes.put("basketJSON", getBasketJSON());
 		attributes.put("queryJSON", getQueryJSON());
 
@@ -75,6 +77,12 @@ public class BasketWrapper implements Basket, ModelWrapper<Basket> {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Date lastModifiedDate = (Date)attributes.get("lastModifiedDate");
+
+		if (lastModifiedDate != null) {
+			setLastModifiedDate(lastModifiedDate);
 		}
 
 		String basketJSON = (String)attributes.get("basketJSON");
@@ -168,6 +176,26 @@ public class BasketWrapper implements Basket, ModelWrapper<Basket> {
 	@Override
 	public void setName(java.lang.String name) {
 		_basket.setName(name);
+	}
+
+	/**
+	* Returns the last modified date of this basket.
+	*
+	* @return the last modified date of this basket
+	*/
+	@Override
+	public java.util.Date getLastModifiedDate() {
+		return _basket.getLastModifiedDate();
+	}
+
+	/**
+	* Sets the last modified date of this basket.
+	*
+	* @param lastModifiedDate the last modified date of this basket
+	*/
+	@Override
+	public void setLastModifiedDate(java.util.Date lastModifiedDate) {
+		_basket.setLastModifiedDate(lastModifiedDate);
 	}
 
 	/**

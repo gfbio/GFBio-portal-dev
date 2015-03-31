@@ -23,6 +23,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * The base model interface for the Basket service. Represents a row in the &quot;gfbio_Basket&quot; database table, with each column mapped to a property of this class.
  *
@@ -99,6 +101,20 @@ public interface BasketModel extends BaseModel<Basket> {
 	 * @param name the name of this basket
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the last modified date of this basket.
+	 *
+	 * @return the last modified date of this basket
+	 */
+	public Date getLastModifiedDate();
+
+	/**
+	 * Sets the last modified date of this basket.
+	 *
+	 * @param lastModifiedDate the last modified date of this basket
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate);
 
 	/**
 	 * Returns the basket j s o n of this basket.

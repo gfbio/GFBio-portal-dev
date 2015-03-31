@@ -32,20 +32,40 @@ public class BasketServiceClp implements BasketService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getBasketList";
+		_methodName3 = "getBasketsByUserId";
 
 		_methodParameterTypes3 = new String[] { "long" };
 
-		_methodName4 = "updateBasket";
+		_methodName4 = "getBasketsByUserAndPeriod";
 
-		_methodParameterTypes4 = new String[] {
+		_methodParameterTypes4 = new String[] { "long", "int" };
+
+		_methodName5 = "getBasketsIdByUserId";
+
+		_methodParameterTypes5 = new String[] { "long" };
+
+		_methodName6 = "getBasketsIdByUserAndPeriod";
+
+		_methodParameterTypes6 = new String[] { "long", "int" };
+
+		_methodName7 = "getBasketById";
+
+		_methodParameterTypes7 = new String[] { "long" };
+
+		_methodName8 = "getBasketsByIds";
+
+		_methodParameterTypes8 = new String[] { "long[][]" };
+
+		_methodName9 = "updateBasket";
+
+		_methodParameterTypes9 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName5 = "removeBasket";
+		_methodName10 = "removeBasket";
 
-		_methodParameterTypes5 = new String[] { "long" };
+		_methodParameterTypes10 = new String[] { "long" };
 	}
 
 	@Override
@@ -99,13 +119,13 @@ public class BasketServiceClp implements BasketService {
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketList(long userID)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3, new Object[] { userID });
+					_methodParameterTypes3, new Object[] { userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -127,18 +147,162 @@ public class BasketServiceClp implements BasketService {
 	}
 
 	@Override
-	public long updateBasket(long basketID, long userID, java.lang.String name,
-		java.lang.String basketJSON, java.lang.String queryJSON)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+		long userId, int period)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
+					_methodParameterTypes4, new Object[] { userId, period });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.Basket>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6, new Object[] { userId, period });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.gfbio.model.Basket getBasketById(long basketId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7, new Object[] { basketId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.Basket)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+		long[] basketIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8,
+					new Object[] { ClpSerializer.translateInput(basketIds) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.Basket>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long updateBasket(long basketId, long userId, java.lang.String name,
+		java.lang.String basketJSON, java.lang.String queryJSON)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName9,
+					_methodParameterTypes9,
 					new Object[] {
-						basketID,
+						basketId,
 						
-					userID,
+					userId,
 						
 					ClpSerializer.translateInput(name),
 						
@@ -167,14 +331,14 @@ public class BasketServiceClp implements BasketService {
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket(long basketID)
+	public org.gfbio.model.Basket removeBasket(long basketId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5, new Object[] { basketID });
+			returnObj = _invokableService.invokeMethod(_methodName10,
+					_methodParameterTypes10, new Object[] { basketId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -210,4 +374,14 @@ public class BasketServiceClp implements BasketService {
 	private String[] _methodParameterTypes4;
 	private String _methodName5;
 	private String[] _methodParameterTypes5;
+	private String _methodName6;
+	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
+	private String _methodName8;
+	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
+	private String _methodName10;
+	private String[] _methodParameterTypes10;
 }

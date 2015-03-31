@@ -53,7 +53,7 @@
 					<input type="hidden" id="submissionCheck" value="true">
 					
 					<form action="select.htm">
-						<select  style="width:50%" name="choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+						<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 							<option selected value="none"	>None	 </option>
 							<option  		 value="-1010"	>BGBM 	 </option>
 							<option  		 value="-1010"	>DSMZ  </option>
@@ -132,7 +132,7 @@
 				<input type="hidden" id="submissionCheck" value="true">
 				
 				<form action="select.htm">
-					<select  style="width:50%" name="choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+					<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 						<option selected value="none"	>None	 </option>
 						<option  		 value="-10"	>BGBM 	 </option>
 						<option  		 value="-10"	>DSMZ  </option>

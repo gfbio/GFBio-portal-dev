@@ -16,6 +16,7 @@ package org.gfbio.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -36,6 +37,7 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,13 +68,14 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 			{ "basketID", Types.BIGINT },
 			{ "userID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
+			{ "lastModifiedDate", Types.TIMESTAMP },
 			{ "basketJSON", Types.VARCHAR },
 			{ "queryJSON", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Basket (basketID LONG not null primary key,userID LONG,name VARCHAR(75) null,basketJSON VARCHAR(75) null,queryJSON VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Basket (basketID LONG not null primary key,userID LONG,name VARCHAR(75) null,lastModifiedDate DATE null,basketJSON VARCHAR(75) null,queryJSON VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Basket";
-	public static final String ORDER_BY_JPQL = " ORDER BY basket.basketID ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Basket.basketID ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY basket.lastModifiedDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Basket.lastModifiedDate DESC";
 	public static final String DATA_SOURCE = "gfbioDataSource";
 	public static final String SESSION_FACTORY = "gfbioSessionFactory";
 	public static final String TX_MANAGER = "gfbioTransactionManager";
@@ -86,7 +89,8 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 				"value.object.column.bitmask.enabled.org.gfbio.model.Basket"),
 			true);
 	public static long BASKETID_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
+	public static long LASTMODIFIEDDATE_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -104,6 +108,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		model.setBasketID(soapModel.getBasketID());
 		model.setUserID(soapModel.getUserID());
 		model.setName(soapModel.getName());
+		model.setLastModifiedDate(soapModel.getLastModifiedDate());
 		model.setBasketJSON(soapModel.getBasketJSON());
 		model.setQueryJSON(soapModel.getQueryJSON());
 
@@ -173,6 +178,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		attributes.put("basketID", getBasketID());
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
+		attributes.put("lastModifiedDate", getLastModifiedDate());
 		attributes.put("basketJSON", getBasketJSON());
 		attributes.put("queryJSON", getQueryJSON());
 
@@ -197,6 +203,12 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Date lastModifiedDate = (Date)attributes.get("lastModifiedDate");
+
+		if (lastModifiedDate != null) {
+			setLastModifiedDate(lastModifiedDate);
 		}
 
 		String basketJSON = (String)attributes.get("basketJSON");
@@ -276,6 +288,27 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 	@JSON
 	@Override
+	public Date getLastModifiedDate() {
+		return _lastModifiedDate;
+	}
+
+	@Override
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		_columnBitmask = -1L;
+
+		if (_originalLastModifiedDate == null) {
+			_originalLastModifiedDate = _lastModifiedDate;
+		}
+
+		_lastModifiedDate = lastModifiedDate;
+	}
+
+	public Date getOriginalLastModifiedDate() {
+		return _originalLastModifiedDate;
+	}
+
+	@JSON
+	@Override
 	public String getBasketJSON() {
 		if (_basketJSON == null) {
 			return StringPool.BLANK;
@@ -340,6 +373,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		basketImpl.setBasketID(getBasketID());
 		basketImpl.setUserID(getUserID());
 		basketImpl.setName(getName());
+		basketImpl.setLastModifiedDate(getLastModifiedDate());
 		basketImpl.setBasketJSON(getBasketJSON());
 		basketImpl.setQueryJSON(getQueryJSON());
 
@@ -350,17 +384,18 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 	@Override
 	public int compareTo(Basket basket) {
-		long primaryKey = basket.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(getLastModifiedDate(),
+				basket.getLastModifiedDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -402,6 +437,8 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 		basketModelImpl._setOriginalUserID = false;
 
+		basketModelImpl._originalLastModifiedDate = basketModelImpl._lastModifiedDate;
+
 		basketModelImpl._columnBitmask = 0;
 	}
 
@@ -419,6 +456,15 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 		if ((name != null) && (name.length() == 0)) {
 			basketCacheModel.name = null;
+		}
+
+		Date lastModifiedDate = getLastModifiedDate();
+
+		if (lastModifiedDate != null) {
+			basketCacheModel.lastModifiedDate = lastModifiedDate.getTime();
+		}
+		else {
+			basketCacheModel.lastModifiedDate = Long.MIN_VALUE;
 		}
 
 		basketCacheModel.basketJSON = getBasketJSON();
@@ -442,7 +488,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{basketID=");
 		sb.append(getBasketID());
@@ -450,6 +496,8 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		sb.append(getUserID());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", lastModifiedDate=");
+		sb.append(getLastModifiedDate());
 		sb.append(", basketJSON=");
 		sb.append(getBasketJSON());
 		sb.append(", queryJSON=");
@@ -461,7 +509,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Basket");
@@ -478,6 +526,10 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastModifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getLastModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>basketJSON</column-name><column-value><![CDATA[");
@@ -502,6 +554,8 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 	private long _originalUserID;
 	private boolean _setOriginalUserID;
 	private String _name;
+	private Date _lastModifiedDate;
+	private Date _originalLastModifiedDate;
 	private String _basketJSON;
 	private String _queryJSON;
 	private long _columnBitmask;

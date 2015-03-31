@@ -108,20 +108,44 @@ public class BasketLocalServiceClp implements BasketLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getBasket_UserList";
+		_methodName19 = "getBasketsByUserId";
 
 		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "updateBasket";
+		_methodName20 = "getBasketsByUserAndPeriod";
 
-		_methodParameterTypes20 = new String[] {
+		_methodParameterTypes20 = new String[] { "long", "int" };
+
+		_methodName21 = "getBasketsIdByUserId";
+
+		_methodParameterTypes21 = new String[] { "long" };
+
+		_methodName22 = "getBasketsIdByUserAndPeriod";
+
+		_methodParameterTypes22 = new String[] { "long", "int" };
+
+		_methodName23 = "getBasketById";
+
+		_methodParameterTypes23 = new String[] { "long" };
+
+		_methodName24 = "getBasketsByIds";
+
+		_methodParameterTypes24 = new String[] { "long[][]" };
+
+		_methodName25 = "updateBasket";
+
+		_methodParameterTypes25 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName21 = "removeBasket_User";
+		_methodName26 = "removeBasket";
 
-		_methodParameterTypes21 = new String[] { "long" };
+		_methodParameterTypes26 = new String[] { "long" };
+
+		_methodName27 = "getStartDateFromPeriod";
+
+		_methodParameterTypes27 = new String[] { "int" };
 	}
 
 	@Override
@@ -667,15 +691,15 @@ public class BasketLocalServiceClp implements BasketLocalService {
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasket_UserList(
-		long userID)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { userID });
+					_methodParameterTypes19, new Object[] { userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -701,18 +725,187 @@ public class BasketLocalServiceClp implements BasketLocalService {
 	}
 
 	@Override
-	public long updateBasket(long basketID, long userID, java.lang.String name,
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { userId, period });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.Basket>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { userId, period });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.gfbio.model.Basket getBasketById(long basketId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { basketId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.Basket)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+		long[] basketIds)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(basketIds) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.Basket>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long updateBasket(long basketId, long userId, java.lang.String name,
 		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
-						basketID,
+						basketId,
 						
-					userID,
+					userId,
 						
 					ClpSerializer.translateInput(name),
 						
@@ -741,14 +934,14 @@ public class BasketLocalServiceClp implements BasketLocalService {
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket_User(long basketID)
+	public org.gfbio.model.Basket removeBasket(long basketId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { basketID });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { basketId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -771,6 +964,29 @@ public class BasketLocalServiceClp implements BasketLocalService {
 		}
 
 		return (org.gfbio.model.Basket)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.Date getStartDateFromPeriod(int period) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { period });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.Date)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -816,4 +1032,16 @@ public class BasketLocalServiceClp implements BasketLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
 }

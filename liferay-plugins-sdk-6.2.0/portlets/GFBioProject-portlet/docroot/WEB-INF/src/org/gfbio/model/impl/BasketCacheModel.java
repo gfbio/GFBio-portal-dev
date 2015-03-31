@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Basket in entity cache.
  *
@@ -35,7 +37,7 @@ import java.io.ObjectOutput;
 public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{basketID=");
 		sb.append(basketID);
@@ -43,6 +45,8 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 		sb.append(userID);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", lastModifiedDate=");
+		sb.append(lastModifiedDate);
 		sb.append(", basketJSON=");
 		sb.append(basketJSON);
 		sb.append(", queryJSON=");
@@ -64,6 +68,13 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 		}
 		else {
 			basketImpl.setName(name);
+		}
+
+		if (lastModifiedDate == Long.MIN_VALUE) {
+			basketImpl.setLastModifiedDate(null);
+		}
+		else {
+			basketImpl.setLastModifiedDate(new Date(lastModifiedDate));
 		}
 
 		if (basketJSON == null) {
@@ -90,6 +101,7 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 		basketID = objectInput.readLong();
 		userID = objectInput.readLong();
 		name = objectInput.readUTF();
+		lastModifiedDate = objectInput.readLong();
 		basketJSON = objectInput.readUTF();
 		queryJSON = objectInput.readUTF();
 	}
@@ -106,6 +118,8 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeLong(lastModifiedDate);
 
 		if (basketJSON == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -125,6 +139,7 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 	public long basketID;
 	public long userID;
 	public String name;
+	public long lastModifiedDate;
 	public String basketJSON;
 	public String queryJSON;
 }

@@ -16,6 +16,7 @@ package org.gfbio.model;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BaseModel;
@@ -28,6 +29,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,6 +77,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		attributes.put("basketID", getBasketID());
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
+		attributes.put("lastModifiedDate", getLastModifiedDate());
 		attributes.put("basketJSON", getBasketJSON());
 		attributes.put("queryJSON", getQueryJSON());
 
@@ -99,6 +102,12 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Date lastModifiedDate = (Date)attributes.get("lastModifiedDate");
+
+		if (lastModifiedDate != null) {
+			setLastModifiedDate(lastModifiedDate);
 		}
 
 		String basketJSON = (String)attributes.get("basketJSON");
@@ -176,6 +185,30 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 				Method method = clazz.getMethod("setName", String.class);
 
 				method.invoke(_basketRemoteModel, name);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public Date getLastModifiedDate() {
+		return _lastModifiedDate;
+	}
+
+	@Override
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		_lastModifiedDate = lastModifiedDate;
+
+		if (_basketRemoteModel != null) {
+			try {
+				Class<?> clazz = _basketRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setLastModifiedDate",
+						Date.class);
+
+				method.invoke(_basketRemoteModel, lastModifiedDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -301,6 +334,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		clone.setBasketID(getBasketID());
 		clone.setUserID(getUserID());
 		clone.setName(getName());
+		clone.setLastModifiedDate(getLastModifiedDate());
 		clone.setBasketJSON(getBasketJSON());
 		clone.setQueryJSON(getQueryJSON());
 
@@ -309,17 +343,18 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 
 	@Override
 	public int compareTo(Basket basket) {
-		long primaryKey = basket.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(getLastModifiedDate(),
+				basket.getLastModifiedDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -351,7 +386,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{basketID=");
 		sb.append(getBasketID());
@@ -359,6 +394,8 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		sb.append(getUserID());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", lastModifiedDate=");
+		sb.append(getLastModifiedDate());
 		sb.append(", basketJSON=");
 		sb.append(getBasketJSON());
 		sb.append(", queryJSON=");
@@ -370,7 +407,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Basket");
@@ -389,6 +426,10 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lastModifiedDate</column-name><column-value><![CDATA[");
+		sb.append(getLastModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>basketJSON</column-name><column-value><![CDATA[");
 		sb.append(getBasketJSON());
 		sb.append("]]></column-value></column>");
@@ -405,6 +446,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 	private long _basketID;
 	private long _userID;
 	private String _name;
+	private Date _lastModifiedDate;
 	private String _basketJSON;
 	private String _queryJSON;
 	private BaseModel<?> _basketRemoteModel;

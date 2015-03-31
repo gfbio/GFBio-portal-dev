@@ -17,6 +17,7 @@ package org.gfbio.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class BasketSoap implements Serializable {
 		soapModel.setBasketID(model.getBasketID());
 		soapModel.setUserID(model.getUserID());
 		soapModel.setName(model.getName());
+		soapModel.setLastModifiedDate(model.getLastModifiedDate());
 		soapModel.setBasketJSON(model.getBasketJSON());
 		soapModel.setQueryJSON(model.getQueryJSON());
 
@@ -111,6 +113,14 @@ public class BasketSoap implements Serializable {
 		_name = name;
 	}
 
+	public Date getLastModifiedDate() {
+		return _lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		_lastModifiedDate = lastModifiedDate;
+	}
+
 	public String getBasketJSON() {
 		return _basketJSON;
 	}
@@ -130,6 +140,7 @@ public class BasketSoap implements Serializable {
 	private long _basketID;
 	private long _userID;
 	private String _name;
+	private Date _lastModifiedDate;
 	private String _basketJSON;
 	private String _queryJSON;
 }

@@ -45,6 +45,7 @@ CREATE TABLE gfbio_basket
   basketid bigint NOT NULL,
   userid bigint NOT NULL,
   name character varying(75),
+  lastmodifieddate timestamp without time zone,
   basketJSON text,
   queryJSON text,
   CONSTRAINT gfbio_basket_pkey PRIMARY KEY (basketid)

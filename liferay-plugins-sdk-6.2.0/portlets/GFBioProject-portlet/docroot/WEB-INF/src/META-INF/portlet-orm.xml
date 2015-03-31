@@ -12,6 +12,9 @@
 			<id name="basketID" />
 			<basic name="userID" />
 			<basic name="name" />
+			<basic name="lastModifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="basketJSON" />
 			<basic name="queryJSON" />
 			<transient name="modelAttributes" />

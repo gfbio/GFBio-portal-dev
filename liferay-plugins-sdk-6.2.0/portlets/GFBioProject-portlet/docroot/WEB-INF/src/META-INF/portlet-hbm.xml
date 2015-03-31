@@ -14,6 +14,7 @@
 		</id>
 		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="basketJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="queryJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

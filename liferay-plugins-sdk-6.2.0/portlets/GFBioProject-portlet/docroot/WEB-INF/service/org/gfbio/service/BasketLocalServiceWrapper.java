@@ -277,26 +277,69 @@ public class BasketLocalServiceWrapper implements BasketLocalService,
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasket_UserList(
-		long userID)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.getBasket_UserList(userID);
+		return _basketLocalService.getBasketsByUserId(userId);
 	}
 
 	@Override
-	public long updateBasket(long basketID, long userID, java.lang.String name,
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsByUserAndPeriod(userId, period);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsIdByUserId(userId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsIdByUserAndPeriod(userId, period);
+	}
+
+	@Override
+	public org.gfbio.model.Basket getBasketById(long basketId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketById(basketId);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+		long[] basketIds)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsByIds(basketIds);
+	}
+
+	@Override
+	public long updateBasket(long basketId, long userId, java.lang.String name,
 		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.updateBasket(basketID, userID, name,
+		return _basketLocalService.updateBasket(basketId, userId, name,
 			basketJSON, queryJSON);
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket_User(long basketID)
+	public org.gfbio.model.Basket removeBasket(long basketId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.removeBasket_User(basketID);
+		return _basketLocalService.removeBasket(basketId);
+	}
+
+	@Override
+	public java.util.Date getStartDateFromPeriod(int period) {
+		return _basketLocalService.getStartDateFromPeriod(period);
 	}
 
 	/**

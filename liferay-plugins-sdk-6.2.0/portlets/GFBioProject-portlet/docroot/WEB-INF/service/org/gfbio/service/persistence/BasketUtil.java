@@ -115,9 +115,9 @@ public class BasketUtil {
 	* @return the matching baskets
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<org.gfbio.model.Basket> findByUserID(
+	public static java.util.List<org.gfbio.model.Basket> findByUserId(
 		long userID) throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserID(userID);
+		return getPersistence().findByUserId(userID);
 	}
 
 	/**
@@ -133,10 +133,10 @@ public class BasketUtil {
 	* @return the range of matching baskets
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<org.gfbio.model.Basket> findByUserID(
+	public static java.util.List<org.gfbio.model.Basket> findByUserId(
 		long userID, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByUserID(userID, start, end);
+		return getPersistence().findByUserId(userID, start, end);
 	}
 
 	/**
@@ -153,12 +153,12 @@ public class BasketUtil {
 	* @return the ordered range of matching baskets
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<org.gfbio.model.Basket> findByUserID(
+	public static java.util.List<org.gfbio.model.Basket> findByUserId(
 		long userID, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUserID(userID, start, end, orderByComparator);
+				   .findByUserId(userID, start, end, orderByComparator);
 	}
 
 	/**
@@ -170,11 +170,11 @@ public class BasketUtil {
 	* @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket findByUserID_First(long userID,
+	public static org.gfbio.model.Basket findByUserId_First(long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchBasketException {
-		return getPersistence().findByUserID_First(userID, orderByComparator);
+		return getPersistence().findByUserId_First(userID, orderByComparator);
 	}
 
 	/**
@@ -185,10 +185,10 @@ public class BasketUtil {
 	* @return the first matching basket, or <code>null</code> if a matching basket could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket fetchByUserID_First(long userID,
+	public static org.gfbio.model.Basket fetchByUserId_First(long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUserID_First(userID, orderByComparator);
+		return getPersistence().fetchByUserId_First(userID, orderByComparator);
 	}
 
 	/**
@@ -200,11 +200,11 @@ public class BasketUtil {
 	* @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket findByUserID_Last(long userID,
+	public static org.gfbio.model.Basket findByUserId_Last(long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchBasketException {
-		return getPersistence().findByUserID_Last(userID, orderByComparator);
+		return getPersistence().findByUserId_Last(userID, orderByComparator);
 	}
 
 	/**
@@ -215,10 +215,10 @@ public class BasketUtil {
 	* @return the last matching basket, or <code>null</code> if a matching basket could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket fetchByUserID_Last(long userID,
+	public static org.gfbio.model.Basket fetchByUserId_Last(long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByUserID_Last(userID, orderByComparator);
+		return getPersistence().fetchByUserId_Last(userID, orderByComparator);
 	}
 
 	/**
@@ -231,13 +231,13 @@ public class BasketUtil {
 	* @throws org.gfbio.NoSuchBasketException if a basket with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket[] findByUserID_PrevAndNext(
+	public static org.gfbio.model.Basket[] findByUserId_PrevAndNext(
 		long basketID, long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchBasketException {
 		return getPersistence()
-				   .findByUserID_PrevAndNext(basketID, userID, orderByComparator);
+				   .findByUserId_PrevAndNext(basketID, userID, orderByComparator);
 	}
 
 	/**
@@ -246,9 +246,9 @@ public class BasketUtil {
 	* @param userID the user i d
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUserID(long userID)
+	public static void removeByUserId(long userID)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByUserID(userID);
+		getPersistence().removeByUserId(userID);
 	}
 
 	/**
@@ -258,9 +258,192 @@ public class BasketUtil {
 	* @return the number of matching baskets
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUserID(long userID)
+	public static int countByUserId(long userID)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByUserID(userID);
+		return getPersistence().countByUserId(userID);
+	}
+
+	/**
+	* Returns all the baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @return the matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByUserIdSince(
+		long userID, java.util.Date lastModifiedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByUserIdSince(userID, lastModifiedDate);
+	}
+
+	/**
+	* Returns a range of all the baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @param start the lower bound of the range of baskets
+	* @param end the upper bound of the range of baskets (not inclusive)
+	* @return the range of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByUserIdSince(
+		long userID, java.util.Date lastModifiedDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUserIdSince(userID, lastModifiedDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @param start the lower bound of the range of baskets
+	* @param end the upper bound of the range of baskets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByUserIdSince(
+		long userID, java.util.Date lastModifiedDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByUserIdSince(userID, lastModifiedDate, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching basket
+	* @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket findByUserIdSince_First(long userID,
+		java.util.Date lastModifiedDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchBasketException {
+		return getPersistence()
+				   .findByUserIdSince_First(userID, lastModifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching basket, or <code>null</code> if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket fetchByUserIdSince_First(long userID,
+		java.util.Date lastModifiedDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUserIdSince_First(userID, lastModifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching basket
+	* @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket findByUserIdSince_Last(long userID,
+		java.util.Date lastModifiedDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchBasketException {
+		return getPersistence()
+				   .findByUserIdSince_Last(userID, lastModifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching basket, or <code>null</code> if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket fetchByUserIdSince_Last(long userID,
+		java.util.Date lastModifiedDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUserIdSince_Last(userID, lastModifiedDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the baskets before and after the current basket in the ordered set where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* @param basketID the primary key of the current basket
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next basket
+	* @throws org.gfbio.NoSuchBasketException if a basket with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket[] findByUserIdSince_PrevAndNext(
+		long basketID, long userID, java.util.Date lastModifiedDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchBasketException {
+		return getPersistence()
+				   .findByUserIdSince_PrevAndNext(basketID, userID,
+			lastModifiedDate, orderByComparator);
+	}
+
+	/**
+	* Removes all the baskets where userID = &#63; and lastModifiedDate &gt; &#63; from the database.
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByUserIdSince(long userID,
+		java.util.Date lastModifiedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByUserIdSince(userID, lastModifiedDate);
+	}
+
+	/**
+	* Returns the number of baskets where userID = &#63; and lastModifiedDate &gt; &#63;.
+	*
+	* @param userID the user i d
+	* @param lastModifiedDate the last modified date
+	* @return the number of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByUserIdSince(long userID,
+		java.util.Date lastModifiedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByUserIdSince(userID, lastModifiedDate);
 	}
 
 	/**
@@ -271,10 +454,10 @@ public class BasketUtil {
 	* @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket findByBasketID(long basketID)
+	public static org.gfbio.model.Basket findByBasketId(long basketID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchBasketException {
-		return getPersistence().findByBasketID(basketID);
+		return getPersistence().findByBasketId(basketID);
 	}
 
 	/**
@@ -284,9 +467,9 @@ public class BasketUtil {
 	* @return the matching basket, or <code>null</code> if a matching basket could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket fetchByBasketID(long basketID)
+	public static org.gfbio.model.Basket fetchByBasketId(long basketID)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByBasketID(basketID);
+		return getPersistence().fetchByBasketId(basketID);
 	}
 
 	/**
@@ -297,10 +480,10 @@ public class BasketUtil {
 	* @return the matching basket, or <code>null</code> if a matching basket could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket fetchByBasketID(long basketID,
+	public static org.gfbio.model.Basket fetchByBasketId(long basketID,
 		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByBasketID(basketID, retrieveFromCache);
+		return getPersistence().fetchByBasketId(basketID, retrieveFromCache);
 	}
 
 	/**
@@ -310,10 +493,10 @@ public class BasketUtil {
 	* @return the basket that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.Basket removeByBasketID(long basketID)
+	public static org.gfbio.model.Basket removeByBasketId(long basketID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchBasketException {
-		return getPersistence().removeByBasketID(basketID);
+		return getPersistence().removeByBasketId(basketID);
 	}
 
 	/**
@@ -323,9 +506,219 @@ public class BasketUtil {
 	* @return the number of matching baskets
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByBasketID(long basketID)
+	public static int countByBasketId(long basketID)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByBasketID(basketID);
+		return getPersistence().countByBasketId(basketID);
+	}
+
+	/**
+	* Returns all the baskets where basketID = &#63;.
+	*
+	* @param basketID the basket i d
+	* @return the matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByBasketIds(
+		long basketID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByBasketIds(basketID);
+	}
+
+	/**
+	* Returns a range of all the baskets where basketID = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param basketID the basket i d
+	* @param start the lower bound of the range of baskets
+	* @param end the upper bound of the range of baskets (not inclusive)
+	* @return the range of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByBasketIds(
+		long basketID, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByBasketIds(basketID, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the baskets where basketID = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param basketID the basket i d
+	* @param start the lower bound of the range of baskets
+	* @param end the upper bound of the range of baskets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByBasketIds(
+		long basketID, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByBasketIds(basketID, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first basket in the ordered set where basketID = &#63;.
+	*
+	* @param basketID the basket i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching basket
+	* @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket findByBasketIds_First(long basketID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchBasketException {
+		return getPersistence()
+				   .findByBasketIds_First(basketID, orderByComparator);
+	}
+
+	/**
+	* Returns the first basket in the ordered set where basketID = &#63;.
+	*
+	* @param basketID the basket i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching basket, or <code>null</code> if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket fetchByBasketIds_First(long basketID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByBasketIds_First(basketID, orderByComparator);
+	}
+
+	/**
+	* Returns the last basket in the ordered set where basketID = &#63;.
+	*
+	* @param basketID the basket i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching basket
+	* @throws org.gfbio.NoSuchBasketException if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket findByBasketIds_Last(long basketID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchBasketException {
+		return getPersistence().findByBasketIds_Last(basketID, orderByComparator);
+	}
+
+	/**
+	* Returns the last basket in the ordered set where basketID = &#63;.
+	*
+	* @param basketID the basket i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching basket, or <code>null</code> if a matching basket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Basket fetchByBasketIds_Last(long basketID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByBasketIds_Last(basketID, orderByComparator);
+	}
+
+	/**
+	* Returns all the baskets where basketID = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param basketIDs the basket i ds
+	* @return the matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByBasketIds(
+		long[] basketIDs)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByBasketIds(basketIDs);
+	}
+
+	/**
+	* Returns a range of all the baskets where basketID = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param basketIDs the basket i ds
+	* @param start the lower bound of the range of baskets
+	* @param end the upper bound of the range of baskets (not inclusive)
+	* @return the range of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByBasketIds(
+		long[] basketIDs, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByBasketIds(basketIDs, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the baskets where basketID = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.BasketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param basketIDs the basket i ds
+	* @param start the lower bound of the range of baskets
+	* @param end the upper bound of the range of baskets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.Basket> findByBasketIds(
+		long[] basketIDs, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByBasketIds(basketIDs, start, end, orderByComparator);
+	}
+
+	/**
+	* Removes all the baskets where basketID = &#63; from the database.
+	*
+	* @param basketID the basket i d
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByBasketIds(long basketID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByBasketIds(basketID);
+	}
+
+	/**
+	* Returns the number of baskets where basketID = &#63;.
+	*
+	* @param basketID the basket i d
+	* @return the number of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByBasketIds(long basketID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByBasketIds(basketID);
+	}
+
+	/**
+	* Returns the number of baskets where basketID = any &#63;.
+	*
+	* @param basketIDs the basket i ds
+	* @return the number of matching baskets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByBasketIds(long[] basketIDs)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByBasketIds(basketIDs);
 	}
 
 	/**
