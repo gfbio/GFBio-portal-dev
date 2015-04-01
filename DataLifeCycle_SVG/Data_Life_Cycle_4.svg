@@ -1,0 +1,1987 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="Data_Life_Cycle_Scenario_Grundversion_v4.svg"
+   inkscape:version="0.91pre3 r13670"
+   version="1.1"
+   id="svg3047"
+   height="600"
+   width="500"
+   viewBox="0 0 740 780">
+  <!-- BEGIN: Internal CSS style for: 1. All cycle rectangles initialized with the dark blue color. and 2. get light green color during hover with the mouse pointer over them "pointer-events: none" for text avoid that text on top of the rectangles blocks the mouseover effect. So cursor ignore all text elements. -->
+  <style 
+	 type="text/css"
+     id="style3"> 
+	rect {
+	fill: rgb(14,86,164);
+	}
+	rect.border {
+	fill: none;
+	stroke:rgb(14,86,164);
+	opacity:0;	
+	}
+	rect:hover {
+	  fill:rgb(119,185,65);
+	}
+	text {
+	  pointer-events: none;
+	}
+	<!-- BEGIN: Embed font Roboto -->
+	@font-face {
+    font-family: 'robotothin';
+    src: url('fonts/roboto/roboto-thin-webfont.eot');
+    src: url('fonts/roboto/roboto-thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/roboto/roboto-thin-webfont.woff') format('woff'),
+         url('fonts/roboto/roboto-thin-webfont.ttf') format('truetype'),
+         url('fonts/roboto/roboto-thin-webfont.svg#robotothin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotothin_italic';
+		src: url('fonts/roboto/roboto-thinitalic-webfont.eot');
+		src: url('fonts/roboto/roboto-thinitalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-thinitalic-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-thinitalic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-thinitalic-webfont.svg#robotothin_italic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotolight';
+		src: url('fonts/roboto/roboto-light-webfont.eot');
+		src: url('fonts/roboto/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-light-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-light-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-light-webfont.svg#robotolight') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotolight_italic';
+		src: url('fonts/roboto/roboto-lightitalic-webfont.eot');
+		src: url('fonts/roboto/roboto-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-lightitalic-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-lightitalic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-lightitalic-webfont.svg#robotolight_italic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotoitalic';
+		src: url('fonts/roboto/roboto-italic-webfont.eot');
+		src: url('fonts/roboto/roboto-italic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-italic-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-italic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-italic-webfont.svg#robotoitalic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	  <!-- Only below font was used in this svg graphic -->
+	@font-face {
+		font-family: 'roboto';
+		src: url('fonts/roboto/roboto-regular-webfont.eot');
+		src: url('fonts/roboto/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-regular-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-regular-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-regular-webfont.svg#robotoregular') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotobold_italic';
+		src: url('fonts/roboto/roboto-bolditalic-webfont.eot');
+		src: url('fonts/roboto/roboto-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-bolditalic-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-bolditalic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-bolditalic-webfont.svg#robotobold_italic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotobold';
+		src: url('fonts/roboto/roboto-bold-webfont.eot');
+		src: url('fonts/roboto/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-bold-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-bold-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-bold-webfont.svg#robotobold') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotoblack_italic';
+		src: url('fonts/roboto/roboto-blackitalic-webfont.eot');
+		src: url('fonts/roboto/roboto-blackitalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-blackitalic-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-blackitalic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-blackitalic-webfont.svg#robotoblack_italic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotoblack';
+		src: url('fonts/roboto/roboto-black-webfont.eot');
+		src: url('fonts/roboto/roboto-black-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-black-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-black-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-black-webfont.svg#robotoblack') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'roboto_condensedbold_italic';
+		src: url('fonts/roboto/robotocondensed-bolditalic-webfont.eot');
+		src: url('fonts/roboto/robotocondensed-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/robotocondensed-bolditalic-webfont.woff') format('woff'),
+			 url('fonts/roboto/robotocondensed-bolditalic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/robotocondensed-bolditalic-webfont.svg#roboto_condensedbold_italic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'roboto_condensedbold';
+		src: url('fonts/roboto/robotocondensed-bold-webfont.eot');
+		src: url('fonts/roboto/robotocondensed-bold-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/robotocondensed-bold-webfont.woff') format('woff'),
+			 url('fonts/roboto/robotocondensed-bold-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/robotocondensed-bold-webfont.svg#roboto_condensedbold') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'roboto_condensedregular';
+		src: url('fonts/roboto/robotocondensed-regular-webfont.eot');
+		src: url('fonts/roboto/robotocondensed-regular-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/robotocondensed-regular-webfont.woff') format('woff'),
+			 url('fonts/roboto/robotocondensed-regular-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/robotocondensed-regular-webfont.svg#roboto_condensedregular') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'roboto_condenseditalic';
+		src: url('fonts/roboto/robotocondensed-italic-webfont.eot');
+		src: url('fonts/roboto/robotocondensed-italic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/robotocondensed-italic-webfont.woff') format('woff'),
+			 url('fonts/roboto/robotocondensed-italic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/robotocondensed-italic-webfont.svg#roboto_condenseditalic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'roboto_condensedlight';
+		src: url('fonts/roboto/robotocondensed-light-webfont.eot');
+		src: url('fonts/roboto/robotocondensed-light-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/robotocondensed-light-webfont.woff') format('woff'),
+			 url('fonts/roboto/robotocondensed-light-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/robotocondensed-light-webfont.svg#roboto_condensedlight') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'roboto_condensedlight_italic';
+		src: url('fonts/roboto/robotocondensed-lightitalic-webfont.eot');
+		src: url('fonts/roboto/robotocondensed-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/robotocondensed-lightitalic-webfont.woff') format('woff'),
+			 url('fonts/roboto/robotocondensed-lightitalic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/robotocondensed-lightitalic-webfont.svg#roboto_condensedlight_italic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotomedium_italic';
+		src: url('fonts/roboto/roboto-mediumitalic-webfont.eot');
+		src: url('fonts/roboto/roboto-mediumitalic-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-mediumitalic-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-mediumitalic-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-mediumitalic-webfont.svg#robotomedium_italic') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	@font-face {
+		font-family: 'robotomedium';
+		src: url('fonts/roboto/roboto-medium-webfont.eot');
+		src: url('fonts/roboto/roboto-medium-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('fonts/roboto/roboto-medium-webfont.woff') format('woff'),
+			 url('fonts/roboto/roboto-medium-webfont.ttf') format('truetype'),
+			 url('fonts/roboto/roboto-medium-webfont.svg#robotomedium') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+  <!-- END: Embed font Roboto -->
+  </style>
+ <!-- END: Internal CSS -->
+  <defs
+     id="defs3049">
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4401"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4383"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4797"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4799"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4710"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4407"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Send"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4389"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker4294"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         id="path4296"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5296"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path5298"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4285"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Send"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Send"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4297"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-0.3,0,0,-0.3,0.69,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4640"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4642"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4600"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4602"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4267"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4540"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4542"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Mend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4291"
+         style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3-0"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4-6"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3-0-3"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4-6-9"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3-0-3-9"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4-6-9-0"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3-0-3-9-1"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4-6-9-0-9"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3-0-3-9-1-0"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4-6-9-0-9-0"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3-0-3-9-1-0-0"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4-6-9-0-9-0-2"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6029-7-3-0-3-9-1-0-0-4"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4401-9-4-6-9-0-9-0-2-7"
+         style="fill:#1054a4;fill-opacity:1;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     inkscape:document-units="mm"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.8683168"
+     inkscape:cx="322.78788"
+     inkscape:cy="368.3554"
+     inkscape:current-layer="svg3047"
+     id="namedview3051"
+     showgrid="true"
+     units="mm"
+     gridtolerance="1"
+     inkscape:window-width="1280"
+     inkscape:window-height="962"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     fit-margin-top="2"
+     fit-margin-left="2.5"
+     fit-margin-right="2"
+     fit-margin-bottom="2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3056"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="0.5px"
+       spacingy="0.5px"
+       originx="-1.7799101px"
+       originy="-26.193587px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3053">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <!-- BEGIN: Caption/Heading -->
+  <!-- <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"> -->
+  <text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#0e56a4;fill-opacity:1;stroke:none"
+     x="370.24539"
+     y="23.81144"
+     id="textcaption"
+     sodipodi:linespacing="125%">
+    <tspan
+       sodipodi:role="line"
+       x="370.24539"
+       y="23.81144"
+       id="tspancaptionnumber">Data Life Cycle (DLC)</tspan>
+    <tspan
+       style="font-size:27px;font-weight:bold"
+	   sodipodi:role="line"
+       x="370.24539"
+       y="55.06144"
+       id="tspancaption2">'Data Producer &amp; Reuser'</tspan>
+  </text>
+  <!-- END: Caption/Heading -->
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 71.629918,285.18928 c 8.929134,-19.063 19.665354,-37.13386 31.996062,-53.92914"
+     id="path3064" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 88.49606,239.62235 17.4685,-11.58662 -5.81102,20.12599 c -1.594488,-5.06693 -6.307086,-8.50394 -11.65748,-8.53937 z"
+     id="path3066" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 207.05512,139.94911 c 21.29527,-11.83464 44.07874,-21.36614 67.99606,-28.16929"
+     id="path3068" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 257.97244,109.08691 20.90551,1.55905 -16.93701,12.36614 c 1.84252,-4.96063 0.24804,-10.59448 -3.9685,-13.92519 z"
+     id="path3070" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#0e56a4;stroke-width:2.97600007;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 456.43307,112.94911 c 22.2874,6.69685 43.58268,15.69685 63.56693,26.75197"
+     id="path3072" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09800005;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 509.79528,125.77589 13.7126,15.83858 -20.72835,-3.18898 c 4.8189,-2.23228 7.65354,-7.33464 7.01575,-12.6496 z"
+     id="path3074" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 628.9567,238.02786 c 9.88582,14.17323 18.67322,29.23228 26.22047,44.96457"
+     id="path3076" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 654.92914,265.70109 1.98425,20.83464 -15.02362,-14.59842 c 5.20866,0.99212 10.48819,-1.55906 13.03937,-6.23622 z"
+     id="path3078" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 684.51575,384.50818 c 1.41733,12.36614 2.16142,24.90945 2.16142,37.66535 0,11.87008 -0.6378,23.59843 -1.87795,35.11418"
+     id="path3080" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 693.69292,442.47668 -9.3189,18.77953 -5.06693,-20.33858 c 3.93307,3.57874 9.7441,4.1811 14.38583,1.55905 z"
+     id="path3082" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 654.78741,562.13417 c -7.08662,14.70472 -15.27166,28.80709 -24.44882,42.20079"
+     id="path3084" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 645.18504,595.51212 -17.07874,12.11811 5.17323,-20.30315 c 1.73622,4.99607 6.55512,8.29134 11.90551,8.18504 z"
+     id="path3086" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 525.70473,701.38614 c -22.28741,12.96851 -46.27559,23.31496 -71.53937,30.64961"
+     id="path3088" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 471.2441,734.62236 -20.90552,-1.45275 16.86615,-12.43701 c -1.80709,4.99606 -0.17717,10.59449 4.03937,13.88976 z"
+     id="path3090" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 274.27165,732.31921 c -27.67323,-7.93701 -53.7874,-19.48819 -77.81102,-34.12205"
+     id="path3092" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 206.09842,712.58299 -13.03937,-16.40551 20.55118,4.03937 c -4.92519,2.01968 -7.937,7.01575 -7.51181,12.36614 z"
+     id="path3094" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 96.858265,603.52 C 88.177162,590.69322 80.381886,577.22866 73.543304,563.19716"
+     id="path3096" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 73.862201,580.4885 -2.090551,-20.87008 15.094489,14.52756 c -5.208662,-0.95669 -10.452757,1.62992 -13.003938,6.34252 z"
+     id="path3098" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:none;stroke:#0e56a4;stroke-width:2.97637796px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 43.283461,458.3507 c -1.311024,-11.87008 -2.019685,-23.95276 -2.019685,-36.17717 0,-13.0748 0.779527,-25.93701 2.303149,-38.58661"
+     id="path3100" />
+  <path
+     inkscape:connector-curvature="0"
+     style="opacity:1;fill:#0e56a4;fill-opacity:1;fill-rule:evenodd;stroke:#0e56a4;stroke-width:1.09842527px;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     d="m 34.496059,398.29164 9.496063,-18.67323 4.854331,20.40945 c -3.862205,-3.6496 -9.673228,-4.32283 -14.350394,-1.73622 z"
+     id="path3102" />
+  <!-- BEGIN: Rectangles from Cycle -->
+  <!-- <g id="propose"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     y="81.385437"
+     x="298.27991"
+     height="59.885983"
+     width="140.50172"
+     id="rectpropose"
+     onmouseover="evt.target.parentNode.getElementById('texttooltippropose').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltippropose').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltippropose').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltippropose').setAttribute('style', 'opacity:0')" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textpropose"
+     y="117.98381"
+     x="370"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       y="117.98381"
+       x="370"
+       id="tspanpropose"
+       sodipodi:role="line">Propose</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="assure"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="598.27991"
+     y="305.74658"
+     height="59.885983"
+     width="140.50172"
+     id="rectassure"
+     onmouseover="evt.target.parentNode.getElementById('texttooltipassure').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipassure').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltipassure').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipassure').setAttribute('style', 'opacity:0')" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textassure"
+     x="670"
+     y="342.34494"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="670"
+       y="342.34494"
+       id="tspanassure"
+       sodipodi:role="line">Assure</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="collect"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="506.46756"
+     y="162.1731"
+     height="59.885983"
+     width="140.50172"
+     id="rectcollect"
+     onmouseover="evt.target.parentNode.getElementById('texttooltipcollect').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipcollect').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltipcollect').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipcollect').setAttribute('style', 'opacity:0')" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textcollect"
+     x="578.18762"
+     y="198.77147"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="578.18762"
+       y="198.77147"
+       id="tspan3135-0"
+       sodipodi:role="line">Collect</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="analyse""> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="4.2799101"
+     y="303.70328"
+     height="59.885983"
+     width="140.50172"
+     id="rectanalyse"
+     onmouseover="evt.target.parentNode.getElementById('texttooltipanalyse').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipanalyse').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltipanalyse').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipanalyse').setAttribute('style', 'opacity:0')" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textanalyse"
+     x="76"
+     y="340.30164"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="76"
+       y="340.30164"
+       id="tspananalyse"
+       sodipodi:role="line">Analyse</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="describe"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="600.27991"
+     y="482.00659"
+     height="59.885983"
+     width="140.50172"
+     id="rectdescribe"
+	 onmouseover="evt.target.parentNode.getElementById('texttooltipdescribe').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipdescribe').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltipdescribe').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipdescribe').setAttribute('style', 'opacity:0')" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textdescribe"
+     x="672"
+     y="518.60504"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="672"
+       y="518.60504"
+       id="tspandescribe"
+       sodipodi:role="line">Describe</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="submit"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="506.72754"
+     y="621.62134"
+     height="59.885983"
+     width="140.50172"
+     id="rectsubmit" 
+	 onmouseover="evt.target.parentNode.getElementById('texttooltipsubmit').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipsubmit').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltipsubmit').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipsubmit').setAttribute('style', 'opacity:0')" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textsubmit"
+     x="578.44763"
+     y="658.21973"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="578.44763"
+       y="658.21973"
+       id="tspansubmit"
+       sodipodi:role="line">Submit</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="preserve"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="298.27991"
+     y="701.62134"
+     height="59.885983"
+     width="140.50172"
+     id="rectpreserve"
+	 onmouseover="evt.target.parentNode.getElementById('texttooltippreserve').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltippreserve').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltippreserve').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltippreserve').setAttribute('style', 'opacity:0')"  />
+  <text
+     sodipodi:linespacing="125%"
+     id="textpreserve"
+     x="370"
+     y="738.21973"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="370"
+       y="738.21973"
+       id="tspanpreserve"
+       sodipodi:role="line">Preserve</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="discover"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="66.424232"
+     y="620.40808"
+     height="59.885983"
+     width="140.50172"
+     id="rectdiscover"
+     onmouseover="evt.target.parentNode.getElementById('texttooltipdiscover').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipdiscover').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltipdiscover').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipdiscover').setAttribute('style', 'opacity:0');" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textdiscover"
+     x="138.14432"
+     y="657.00647"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="138.14432"
+       y="657.00647"
+       id="tspandiscover"
+       sodipodi:role="line">Discover</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="publish"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="66.424232"
+     y="154.95309"
+     height="59.885983"
+     width="140.50172"
+     id="rectpublish"
+     onmouseover="evt.target.parentNode.getElementById('texttooltippublish').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltippublish').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltippublish').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltippublish').setAttribute('style', 'opacity:0')" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textpublish"
+     x="138.14432"
+     y="191.55147"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="138.14432"
+       y="191.55147"
+       id="tspanpublish"
+       sodipodi:role="line">Publish</tspan>
+  </text>
+  <!-- </g> -->
+  <!-- <g id="integrate"> -->
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="4.2799101"
+     y="481.90625"
+     height="59.885983"
+     width="140.50172"
+     id="rectintegrate"
+     onmouseover="evt.target.parentNode.getElementById('texttooltipintegrate').setAttribute('style', 'opacity:1;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipintegrate').setAttribute('style', 'opacity:1')"
+     onmouseout="evt.target.parentNode.getElementById('texttooltipintegrate').setAttribute('style', 'opacity:0;font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#0e56a4;fill-opacity:1;font-family:Roboto;-inkscape-font-specification:Roboto'), evt.target.parentNode.getElementById('recttooltipintegrate').setAttribute('style', 'opacity:0');" />
+  <text
+     sodipodi:linespacing="125%"
+     id="textintegrate"
+     x="76"
+     y="518.50476"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none">
+    <tspan
+       x="76"
+       y="518.50476"
+       id="tspanintegrate"
+       sodipodi:role="line">Integrate</tspan>
+  </text>
+  <!-- </g> -->
+<!-- END: Rectangles from Cycle -->
+<!-- BEGIN: "More information" link and text -->
+<!-- "More information" text for propose and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Propose.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Propose.pdf"
+     xlink:show="new"
+     id="apropose"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-252.73501,18.221681)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="363.54282"
+       y="143.16466"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectproposemoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textmoreinfopropose"
+     x="321.84146"
+     y="153.47005"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspanmoreinfopropose"
+       x="321.84146"
+       y="153.47005"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029)"
+     d="m 308.22009,142.44933 0,5.85086 12.5,0"
+     id="path6027"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for collect and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Collect.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Collect.pdf"
+     xlink:show="new"
+     id="acollect"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-404.73501,99.00016)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="593.54285"
+       y="143.16466"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectcollectmoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textcollectmoreinfo"
+     x="531.43427"
+     y="234.24854"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspancollectmoreinfo"
+       x="531.43427"
+       y="234.24854"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7)"
+     d="m 517.3741,223.55031 0,5.85086 12.5,0"
+     id="path6027-7"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for assure and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Assure.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Assure.pdf"
+     xlink:show="new"
+     id="aassure"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-314.87841,190.25752)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="593.54285"
+       y="203.16466"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectassuremoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textassuremoreinfo"
+     x="622.47662"
+     y="377.50583"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspanassuremoreinfo"
+       x="622.47662"
+       y="377.50583"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3)"
+     d="m 608.42963,367.20752 0,5.85086 12.5,0"
+     id="path6027-7-4"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for describe and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Describe.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Describe.pdf"
+     xlink:show="new"
+     id="adescribe"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-316.50709,105.37148)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="593.54285"
+       y="503.16467"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectdescribemoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textdescribemoreinfo"
+     x="622.47662"
+     y="553.84143"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspandescribemoreinfo"
+       x="622.47662"
+       y="553.84143"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3-0)"
+     d="m 608.16588,543.20752 0,5.85086 12.5,0"
+     id="path6027-7-4-6"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for submit and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Submit.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Submit.pdf"
+     xlink:show="new"
+     id="asubmit"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-408.13577,71.000172)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="593.54285"
+       y="703.16467"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectsubmitmoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textsubmitmoreinfo"
+     x="530.84796"
+     y="693.36261"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspansubmitmoreinfo"
+       x="530.84796"
+       y="693.36261"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3-0-3)"
+     d="m 516.5372,682.80088 0,5.85086 12.5,0"
+     id="path6027-7-4-6-3"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for preserve and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Preserve.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Preserve.pdf"
+     xlink:show="new"
+     id="apreserve"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-456.19732,151.00016)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="493.54285"
+       y="703.16467"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectpreservemoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textpreservemoreinfo"
+     x="322.78647"
+     y="773.36261"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspanpreservemoreinfo"
+       x="322.78647"
+       y="773.36261"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3-0-3-9)"
+     d="m 308.32086,763.03836 0,5.85086 12.49999,0"
+     id="path6027-7-4-6-3-8"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for discover and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Discover.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Discover.pdf"
+     xlink:show="new"
+     id="adiscover"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-689.28736,157.18024)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="493.54285"
+       y="603.16467"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectdiscovermoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textdiscovermoreinfo"
+     x="90.848068"
+     y="692.211"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspandiscovermoreinfo"
+       x="90.848068"
+       y="692.211"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3-0-3-9-1)"
+     d="m 76.220897,681.49249 0,5.85086 12.49999,0"
+     id="path6027-7-4-6-3-8-1"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for integrate and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Integrate.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Integrate.pdf"
+     xlink:show="new"
+     id="aintegrate"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-751.28736,104.90773)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="493.54285"
+       y="503.16467"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rectintegratemoreinfo" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textintegratemoreinfo"
+     x="28.848068"
+     y="553.36261"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspanintegratemoreinfo"
+       x="28.848068"
+       y="553.36261"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3-0-3-9-1-0)"
+     d="m 14.03161,542.71823 0,5.85086 12.499989,0"
+     id="path6027-7-4-6-3-8-1-4"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for analyse and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Analyse.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Analyse.pdf"
+     xlink:show="new"
+     id="aanalyse"
+     style="display:inline"
+     transform="matrix(1.5839559,0,0,0.87059169,-751.28736,14.938523)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="493.54285"
+       y="403.16467"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect155" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textanalysemoreinfo"
+     x="28.848068"
+     y="376.24179"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspananalysemoreinfo"
+       x="28.848068"
+       y="376.24179"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3-0-3-9-1-0-0)"
+     d="m 14.03161,365.02158 0,5.85086 12.499989,0"
+     id="path6027-7-4-6-3-8-1-4-2"
+     inkscape:connector-curvature="0" />
+  <!-- "More information" text for publish and arrow -->
+  <a
+     xlink:href="./FactSheets/GFBio DLC FactSheet Publish.pdf"
+     xlink:title="Verweis zu GFBio_DLC_FactSheet_Publish.pdf"
+     xlink:show="new"
+     id="apublish"
+     style="display:inline"
+     transform="matrix(1.5862187,0,0,0.66935667,-692.47983,14.09022)">
+    <rect
+       width="66.890053"
+       height="13.951444"
+       x="493.54285"
+       y="303.16467"
+       rx="33.445026"
+       ry="0"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.056476;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.16942806, 3.16942806;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect161" />
+  </a>
+  <text
+     sodipodi:linespacing="125%"
+     id="textpublishmoreinfo"
+     x="88.848068"
+     y="226.51433"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspanpublishmoreinfo"
+       x="88.848068"
+       y="226.51433"
+       sodipodi:role="line"
+       style="font-size:13.75px">More information</tspan>
+  </text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#1054a4;stroke-width:0.88582677;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.77165353, 0.88582677;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6029-7-3-0-3-9-1-0-0-4)"
+     d="m 74.03161,216.22452 0,5.85086 12.499989,0"
+     id="path6027-7-4-6-3-8-1-4-2-3"
+     inkscape:connector-curvature="0" />
+<!-- END: "More information" link and text -->
+<!-- BEGIN: Tooltips with borders for all rectangles  -->
+  <!-- Tooltip with border to propose rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltippropose"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltippropose1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Think about data management, sharing and reuse.</tspan>
+    <tspan
+       id="tspantooltippropose2"
+       x="158"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Discover other author’s data within the GFBio-Portal to </tspan>
+    <tspan
+       id="tspantooltippropose3"
+       x="168"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">validate your research, to initiate an innovative study or </tspan>
+    <tspan
+       id="tspantooltippropose4"
+       x="168"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">to get new ideas.</tspan>
+    <tspan
+       id="tspantooltippropose5"
+       x="158"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Are data fit for reuse/ suited for your research? </tspan>
+    <tspan
+       id="tspantooltippropose6"
+       x="168"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">(Data exploration via GFBio-provided tools, soon available)</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="130"
+     width="435"
+     id="recttooltippropose"
+	 class="border"	 />
+  <!-- Tooltip with border to collect rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltipcollect"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltipcollect1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Collect data through observations, interviews, simulation </tspan>
+    <tspan
+       id="tspantooltipcollect2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">by algorithms etc.</tspan>
+    <tspan
+       id="tspantooltipcollect3"
+       x="158"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Means to collect data comprise different technologies, </tspan>
+    <tspan
+       id="tspantooltipcollect4"
+       x="168"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">instruments, (data) sheets, images.</tspan>
+    <tspan
+       id="tspantooltipcollect5"
+       x="158"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Before, during and after collection the 5 W’s (What, </tspan>
+    <tspan
+       id="tspantooltipcollect6"
+       x="168"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">where, when, who, how) should be taken into account.</tspan>
+    <tspan
+       id="tspantooltipcollect7"
+       x="158"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Capture and create compatible and structured Metadata.</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="150"
+     width="435"
+     id="recttooltipcollect"
+	 class="border"	 />
+  <!-- Tooltip with border to assure rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltipassure"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltipassure1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Prevent discrepancies before data collection (e.g. through </tspan>
+    <tspan
+       id="tspantooltipassure2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">Data Management Plan, GFBio tools and workbenches </tspan>
+    <tspan
+       id="tspantooltipassure3"
+       x="168"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">‘Diversity Workbench’ and ‘BExIS 2’).</tspan>
+    <tspan
+       id="tspantooltipassure4"
+       x="158"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Detect errors through statistical/graphical analysis </tspan>
+    <tspan
+       id="tspantooltipassure5"
+       x="168"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">(GFBio tools soon provided).</tspan>
+    <tspan
+       id="tspantooltipassure6"
+       x="158"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Document data cleaning and data quality by flags, </tspan>
+    <tspan
+       id="tspantooltipassure7"
+       x="168"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">metadata, coding.</tspan>
+    <tspan
+       id="tspantooltipassure8"
+       x="158"
+       y="460"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Version your data sets.</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="168"
+     width="435"
+     id="recttooltipassure"
+	 class="border"	 />
+  <!-- Tooltip with border to describe rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltipdescribe"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltipdescribe1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Generate structured information (metadata) that answer </tspan>
+    <tspan
+       id="tspantooltipdescribe2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">what data were collected and why, where, when and how.</tspan>
+    <tspan
+       id="tspantooltipdescribe3"
+       x="158"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Enable visibility and replicability for other users who want </tspan>
+    <tspan
+       id="tspantooltipdescribe4"
+       x="168"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">to reuse and cite your data. </tspan>
+    <tspan
+       id="tspantooltipdescribe5"
+       x="168"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">so-called metadata, that answer what data were collected </tspan>
+    <tspan
+       id="tspantooltipdescribe6"
+       x="158"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Create metadata early in the research process.</tspan>
+    <tspan
+       id="tspantooltipdescribe7"
+       x="158"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Use a common standard recommended by one of the </tspan>
+    <tspan
+       id="tspantooltipdescribe8"
+       x="168"
+       y="460"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">GFBio data centers and archives (e.g. EML, ABCD).</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="168"
+     width="435"
+     id="recttooltipdescribe"
+	 class="border"	 />
+  <!-- Tooltip with border to submit rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltipsubmit"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltipsubmit1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Transfer your data from a private to a shared research </tspan>
+    <tspan
+       id="tspantooltipsubmit2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">domain (GFBio-Portal).</tspan>
+    <tspan
+       id="tspantooltipsubmit3"
+       x="158"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Prefer long-term storage (like in GFBio) so that your data </tspan>
+    <tspan
+       id="tspantooltipsubmit4"
+       x="158"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">are save and available for discovery.</tspan>
+    <tspan
+       id="tspantooltipsubmit5"
+       x="158"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Follow submission guidelines about metadata standards, </tspan>
+    <tspan
+       id="tspantooltipsubmit6"
+       x="168"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">reuse and citation.</tspan>
+    <tspan
+       id="tspantooltipsubmit7"
+       x="158"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Choose the status of availability of your data: preserved  </tspan>
+    <tspan
+       id="tspantooltipsubmit8"
+       x="168"
+       y="460"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">and curated; available, but with restriction or immediately </tspan>
+    <tspan
+       id="tspantooltipsubmit9"
+       x="168"
+       y="480"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">available for reuse.</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="188"
+     width="435"
+     id="recttooltipsubmit"
+	 class="border"	 />
+  <!-- Tooltip with border to preserve rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltippreserve"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltippreserve1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Preservation is more than a backup.</tspan>
+	<tspan
+       id="tspantooltippreserve2"
+       x="158"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Data centers and archives are in charge of data </tspan>
+    <tspan
+       id="tspantooltippreserve3"
+       x="168"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1"> preservation.</tspan>
+    <tspan
+       id="tspantooltippreserve4"
+       x="158"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Data preservation ensures the integrity of data.</tspan>
+    <tspan
+       id="tspantooltippreserve5"
+       x="158"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Data should be accessible, authentic and lasting.</tspan>
+    <tspan
+       id="tspantooltippreserve6"
+       x="158"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Good data management practices facilitate the data </tspan>
+    <tspan
+       id="tspantooltippreserve7"
+       x="168"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">preservation process.</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="150"
+     width="435"
+     id="recttooltippreserve"
+	 class="border"	 />
+  <!-- Tooltip with border to discover rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltipdiscover"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltipdiscover1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	To discover data and metadata, they must be visible and </tspan>
+    <tspan
+       id="tspantooltipdiscover2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">accessible.</tspan>
+    <tspan
+       id="tspantooltipdiscover3"
+       x="158"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Discoverable data are published at a data infrastructure </tspan>
+    <tspan
+       id="tspantooltipdiscover4"
+       x="168"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">(GFBio-Portal) and assigned with a persistent identifier </tspan>
+    <tspan
+       id="tspantooltipdiscover5"
+       x="168"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">(PID).</tspan>
+    <tspan
+       id="tspantooltipdiscover6"
+       x="158"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Discover available data from other researchers by using </tspan>
+    <tspan
+       id="tspantooltipdiscover7"
+       x="168"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">the GFBio-Search-Function and explore them by using </tspan>
+    <tspan
+       id="tspantooltipdiscover8"
+       x="168"
+       y="460"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">our workbenches and tools (‘BExIS 2’, ‘Diversity </tspan>
+    <tspan
+       id="tspantooltipdiscover9"
+       x="168"
+       y="480"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">Workbench’ (DWB)).</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="190"
+     width="435"
+     id="recttooltipdiscover"
+	 class="border"	 />
+  <!-- Tooltip with border to integrate rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltipintegrate"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltipintegrate1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Integrate data to create a new, larger data set based on </tspan>
+    <tspan
+       id="tspantooltipintegrate2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">multiple data sets, or to verify your results, or to start an </tspan>
+    <tspan
+       id="tspantooltipintegrate3"
+       x="168"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">integrative study, or to test a new hypothesis for a </tspan>
+    <tspan
+       id="tspantooltipintegrate4"
+       x="168"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">follow-up study.</tspan>
+    <tspan
+       id="tspantooltipintegrate5"
+       x="158"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Data should be compatible: common syntax and </tspan>
+    <tspan
+       id="tspantooltipintegrate6"
+       x="168"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">terminology right from the start.</tspan>
+    <tspan
+       id="tspantooltipintegrate7"
+       x="158"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Document the integration process through a script or </tspan>
+    <tspan
+       id="tspantooltipintegrate8"
+       x="168"
+       y="460"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">workflow (metadata).</tspan>
+    <tspan
+       id="tspantooltipintegrate9"
+       x="158"
+       y="480"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Cite the reused data properly.</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="190"
+     width="435"
+     id="recttooltipintegrate"
+	 class="border" />
+  <!-- Tooltip with border to analyse rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltipanalyse"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltipanalyse1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	To analyse data, gather from a single or an integrated </tspan>
+	<tspan
+       id="tspantooltipanalyse2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">data set.</tspan>
+    <tspan
+       id="tspantooltipanalyse3"
+       x="158"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Document your data analysis through workflows to ensure </tspan>
+    <tspan
+       id="tspantooltipanalyse4"
+       x="168"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">reproducibility.</tspan>
+    <tspan
+       id="tspantooltipanalyse5"
+       x="158"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• To explore your data use descriptive statistics, plots and </tspan>
+    <tspan
+       id="tspantooltipanalyse6"
+       x="168"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">data mining. (GFBio-Tools can help with that.)</tspan>
+    <tspan
+       id="tspantooltipanalyse7"
+       x="158"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">• Find a model that fits your data the best.</tspan>
+    <tspan
+       id="tspantooltipanalyse8"
+       x="158"
+       y="460"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Use open source software if possible.</tspan>
+  </text>
+ <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="170"
+     width="435"
+     id="recttooltipanalyse"
+	 class="border" />
+  <!-- Tooltip with border to publish rectangle -->
+  <text
+     sodipodi:linespacing="125%"
+     id="texttooltippublish"
+     x="158"
+     y="320"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;opacity:0;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+    <tspan
+       id="tspantooltippublish1"
+       x="158"
+       y="320"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Published data are visible, citable and uniquely identifiable </tspan>
+    <tspan
+       id="tspantooltippublish2"
+       x="168"
+       y="340"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">via a persistent identifier (e.g. DOI).</tspan>
+    <tspan
+       id="tspantooltippublish3"
+       x="158"
+       y="360"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Published data increase visibility and paper citation rates.</tspan>
+    <tspan
+       id="tspantooltippublish4"
+       x="158"
+       y="380"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	Data publishing is often required by journals in order </tspan>
+    <tspan
+       id="tspantooltippublish5"
+       x="168"
+       y="400"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">to support your findings.</tspan>
+    <tspan
+       id="tspantooltippublish6"
+       x="158"
+       y="420"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">•	You can choose an embargo time, in which only </tspan>
+    <tspan
+       id="tspantooltippublish7"
+       x="168"
+       y="440"
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#0e56a4;fill-opacity:1">discoverable metadata are available.</tspan>
+  </text>
+  <rect
+     rx="11.516536"
+     ry="12.668189"
+     x="155"
+     y="300"
+     height="150"
+     width="435"
+     id="recttooltippublish"
+	 class="border" />
+<!-- END: Tooltips with border for all rectangles  -->  
+</svg>
