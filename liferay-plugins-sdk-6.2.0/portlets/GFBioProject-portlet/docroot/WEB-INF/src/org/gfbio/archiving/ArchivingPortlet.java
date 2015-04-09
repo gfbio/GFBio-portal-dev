@@ -34,6 +34,9 @@ import org.json.simple.parser.ParseException;
  */
 public class ArchivingPortlet extends GenericPortlet {
 
+    protected String viewTemplate;
+    private static Log _log = LogFactoryUtil.getLog(ArchivingPortlet.class);
+	
     public void init() {
         viewTemplate = getInitParameter("view-template");
     }
@@ -59,9 +62,7 @@ public class ArchivingPortlet extends GenericPortlet {
         }
     }
  
-    protected String viewTemplate;
-    private static Log _log = LogFactoryUtil.getLog(ArchivingPortlet.class);
-    
+   
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws PortletException, IOException {
 
 		response.setContentType("text/html");
