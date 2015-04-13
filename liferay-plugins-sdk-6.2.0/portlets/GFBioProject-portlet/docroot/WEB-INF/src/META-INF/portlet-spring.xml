@@ -7,6 +7,18 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.HeadLocalService" class="org.gfbio.service.impl.HeadLocalServiceImpl" />
+	<bean id="org.gfbio.service.HeadService" class="org.gfbio.service.impl.HeadServiceImpl" />
+	<bean id="org.gfbio.service.persistence.HeadPersistence" class="org.gfbio.service.persistence.HeadPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.PositionLocalService" class="org.gfbio.service.impl.PositionLocalServiceImpl" />
+	<bean id="org.gfbio.service.PositionService" class="org.gfbio.service.impl.PositionServiceImpl" />
+	<bean id="org.gfbio.service.persistence.PositionPersistence" class="org.gfbio.service.persistence.PositionPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.ProjectLocalService" class="org.gfbio.service.impl.ProjectLocalServiceImpl" />
 	<bean id="org.gfbio.service.ProjectService" class="org.gfbio.service.impl.ProjectServiceImpl" />
 	<bean id="org.gfbio.service.persistence.ProjectPersistence" class="org.gfbio.service.persistence.ProjectPersistenceImpl" parent="basePersistence">

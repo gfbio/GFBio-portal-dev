@@ -100,6 +100,24 @@
 		<parameter name="wsdlServicePort" value="Plugin_gfbio_Basket_UserService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
+	<service name="Plugin_gfbio_HeadService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.HeadServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="HeadServiceSoap" />
+		<parameter name="wsdlServiceElement" value="HeadServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_HeadService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_PositionService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.PositionServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="PositionServiceSoap" />
+		<parameter name="wsdlServiceElement" value="PositionServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_PositionService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
 	<service name="Plugin_gfbio_ProjectService" provider="java:RPC" style="rpc" use="encoded">
 		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_ProjectSoap" type="java:org.gfbio.model.ProjectSoap[]" innerType="cmp-ns:ProjectSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:ProjectSoap" type="java:org.gfbio.model.ProjectSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>

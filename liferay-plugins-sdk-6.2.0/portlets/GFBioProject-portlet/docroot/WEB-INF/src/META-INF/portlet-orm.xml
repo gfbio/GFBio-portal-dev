@@ -22,6 +22,64 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.HeadModelImpl">
+		<attributes>
+			<id name="headID" />
+			<basic name="name" />
+			<basic name="column01" />
+			<basic name="column02" />
+			<basic name="column03" />
+			<basic name="column04" />
+			<basic name="column05" />
+			<basic name="column06" />
+			<basic name="column07" />
+			<basic name="column08" />
+			<basic name="column09" />
+			<basic name="column10" />
+			<basic name="column11" />
+			<basic name="column12" />
+			<basic name="column13" />
+			<basic name="column14" />
+			<basic name="column15" />
+			<basic name="column16" />
+			<basic name="column17" />
+			<basic name="column18" />
+			<basic name="column19" />
+			<basic name="column20" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.PositionModelImpl">
+		<attributes>
+			<id name="positionID" />
+			<basic name="headID" />
+			<basic name="column01" />
+			<basic name="column02" />
+			<basic name="column03" />
+			<basic name="column04" />
+			<basic name="column05" />
+			<basic name="column06" />
+			<basic name="column07" />
+			<basic name="column08" />
+			<basic name="column09" />
+			<basic name="column10" />
+			<basic name="column11" />
+			<basic name="column12" />
+			<basic name="column13" />
+			<basic name="column14" />
+			<basic name="column15" />
+			<basic name="column16" />
+			<basic name="column17" />
+			<basic name="column18" />
+			<basic name="column19" />
+			<basic name="column20" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.ProjectModelImpl">
 		<attributes>
 			<id name="projectID" />
@@ -96,6 +154,14 @@
 	</mapped-superclass>
 	<entity class="org.gfbio.model.impl.BasketImpl" name="Basket">
 		<table name="gfbio_Basket" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.HeadImpl" name="Head">
+		<table name="gfbio_Head" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.PositionImpl" name="Position">
+		<table name="gfbio_Position" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.ProjectImpl" name="Project">

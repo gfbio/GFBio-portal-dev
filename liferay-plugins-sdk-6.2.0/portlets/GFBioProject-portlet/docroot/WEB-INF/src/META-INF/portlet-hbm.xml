@@ -3,6 +3,8 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="org.gfbio.model.Basket" />
+	<import class="org.gfbio.model.Head" />
+	<import class="org.gfbio.model.Position" />
 	<import class="org.gfbio.model.Project" />
 	<import class="org.gfbio.model.Project_ResearchObject" />
 	<import class="org.gfbio.model.Project_User" />
@@ -17,6 +19,58 @@
 		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="basketJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="queryJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.HeadImpl" table="gfbio_Head">
+		<id name="headID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column01" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column02" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column03" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column04" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column05" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column06" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column07" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column08" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column09" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column10" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column11" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column12" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column13" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column14" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column15" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column16" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column17" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column18" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column19" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column20" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.PositionImpl" table="gfbio_Position">
+		<id name="positionID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column01" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column02" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column03" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column04" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column05" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column06" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column07" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column08" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column09" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column10" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column11" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column12" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column13" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column14" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column15" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column16" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column17" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column18" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column19" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="column20" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
 		<id name="projectID" type="long">

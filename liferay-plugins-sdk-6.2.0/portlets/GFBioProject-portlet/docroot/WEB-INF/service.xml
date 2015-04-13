@@ -5,6 +5,37 @@
 	<namespace>gfbio</namespace>
 	
 	
+	<!-- Basket   -->
+	
+	<entity name="Basket" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="basketID" 			type="long" 	primary="true" />
+		<column name="userID" 				type="long" />
+		<column name="name" 				type="String" />
+		<column name="lastModifiedDate" 	type="Date" />
+		<column name="basketJSON" 			type="String" />
+		<column name="queryJSON" 			type="String" />
+
+		<!-- Order -->
+		<order by="desc">
+		<order-column name="lastModifiedDate" />
+		</order>
+		
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userID" />
+		</finder>
+		<finder name="UserIdSince" return-type="Collection">
+			<finder-column name="userID" />
+			<finder-column name="lastModifiedDate"  comparator="&gt;"/>
+		</finder>
+		<finder name="BasketId" return-type="Basket">
+			<finder-column name="basketID" />
+		</finder>
+		<finder name="BasketIds" return-type="Collection">
+			<finder-column name="basketID"  arrayable-operator="OR" />
+		</finder>
+	</entity>
+	
+	
 	<!-- Project -->
 	
 	<entity name="Project" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
@@ -46,35 +77,9 @@
 		<finder name="ResearchObjectID"	return-type="ResearchObject">	<finder-column name="researchObjectID" />		</finder>
 	</entity>
 	
-	<!-- Basket   -->
 	
-	<entity name="Basket" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="basketID" 			type="long" 	primary="true" />
-		<column name="userID" 				type="long" />
-		<column name="name" 				type="String" />
-		<column name="lastModifiedDate" 	type="Date" />
-		<column name="basketJSON" 			type="String" />
-		<column name="queryJSON" 			type="String" />
+	
 
-		<!-- Order -->
-		<order by="desc">
-		<order-column name="lastModifiedDate" />
-		</order>
-		
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userID" />
-		</finder>
-		<finder name="UserIdSince" return-type="Collection">
-			<finder-column name="userID" />
-			<finder-column name="lastModifiedDate"  comparator="&gt;"/>
-		</finder>
-		<finder name="BasketId" return-type="Basket">
-			<finder-column name="basketID" />
-		</finder>
-		<finder name="BasketIds" return-type="Collection">
-			<finder-column name="basketID"  arrayable-operator="OR" />
-		</finder>
-	</entity>
 	
 	<!-- n to m tables -->
 	
@@ -118,6 +123,94 @@
 			<finder-column	name="userID" />
 		</finder>
 	</entity>
+	
+	
+	
+	<!-- Head & Position Tables -->
+	
+	
+	<!-- Head -->
+	
+	<entity name="Head" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+
+		<!-- PK fields -->
+		<column name="headID" 			type="long" 		primary="true" />
+
+		<!-- Other fields -->
+		<column name="name" 			type="String" />
+		<column name="column01"			type="String" />
+		<column name="column02" 		type="String" />
+		<column name="column03" 		type="String" />
+		<column name="column04" 		type="String" />
+		<column name="column05" 		type="String" />
+		<column name="column06" 		type="String" />
+		<column name="column07" 		type="String" />
+		<column name="column08" 		type="String" />
+		<column name="column09" 		type="String" />
+		<column name="column10" 		type="String" />
+		<column name="column11" 		type="String" />
+		<column name="column12" 		type="String" />
+		<column name="column13" 		type="String" />
+		<column name="column14" 		type="String" />
+		<column name="column15" 		type="String" />
+		<column name="column16" 		type="String" />
+		<column name="column17" 		type="String" />
+		<column name="column18" 		type="String" />
+		<column name="column19" 		type="String" />
+		<column name="column20" 		type="String" />
+	
+		<!-- Order -->
+		<order by="asc">	<order-column name="name" />	</order>
+
+		<!-- Finder methods -->
+		<finder name="HeadID" 		return-type="head">					<finder-column name="headID" />				</finder>
+		<finder name="Name" 		return-type="head">					<finder-column name="name" />				</finder>
+
+	</entity>
+	
+	
+	<!-- Position -->
+	
+	<entity name="Position" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+
+		<!-- PK fields -->
+		<column name="positionID" 			type="long" 		primary="true" />
+
+		<!-- Other fields -->
+		<column name="headID" 			type="String" />
+		<column name="column01"			type="String" />
+		<column name="column02" 		type="String" />
+		<column name="column03" 		type="String" />
+		<column name="column04" 		type="String" />
+		<column name="column05" 		type="String" />
+		<column name="column06" 		type="String" />
+		<column name="column07" 		type="String" />
+		<column name="column08" 		type="String" />
+		<column name="column09" 		type="String" />
+		<column name="column10" 		type="String" />
+		<column name="column11" 		type="String" />
+		<column name="column12" 		type="String" />
+		<column name="column13" 		type="String" />
+		<column name="column14" 		type="String" />
+		<column name="column15" 		type="String" />
+		<column name="column16" 		type="String" />
+		<column name="column17" 		type="String" />
+		<column name="column18" 		type="String" />
+		<column name="column19" 		type="String" />
+		<column name="column20" 		type="String" />
+	
+		<!-- Order -->
+		<order by="asc">	<order-column name="positionID" />	</order>
+
+		<!-- Finder methods -->
+		<finder name="PositionID" 	return-type="Position">					<finder-column name="positionID" />			</finder>
+		<finder name="HeadID" 		return-type="Collection">				<finder-column name="headID" />				</finder>
+
+	</entity>
+
+
+
+	
 	
 	
 </service-builder>
