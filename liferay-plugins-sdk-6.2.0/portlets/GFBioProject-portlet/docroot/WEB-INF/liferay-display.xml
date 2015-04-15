@@ -7,5 +7,6 @@
 		<portlet id="archiving"></portlet>
 		<portlet id="project-profile"></portlet>
 		<portlet id="test"></portlet>
+		<portlet id="table-builder"></portlet>
 	</category>
 </display>

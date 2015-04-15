@@ -177,7 +177,7 @@
 		<column name="positionID" 			type="long" 		primary="true" />
 
 		<!-- Other fields -->
-		<column name="headID" 			type="String" />
+		<column name="headID" 			type="long" />
 		<column name="column01"			type="String" />
 		<column name="column02" 		type="String" />
 		<column name="column03" 		type="String" />

@@ -35,7 +35,7 @@
 	</model>
 	<model name="org.gfbio.model.Position">
 		<field name="positionID" type="long" />
-		<field name="headID" type="String" />
+		<field name="headID" type="long" />
 		<field name="column01" type="String" />
 		<field name="column02" type="String" />
 		<field name="column03" type="String" />

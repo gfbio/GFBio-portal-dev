@@ -1,4 +1,4 @@
-﻿DROP TABLE gfbio_project, gfbio_researchobject, gfbio_basket, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi;
+﻿DROP TABLE gfbio_position, gfbio_head, gfbio_project, gfbio_researchobject, gfbio_basket, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi;
 
 -- Table: gfbio_basket
 

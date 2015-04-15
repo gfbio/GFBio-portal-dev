@@ -50,7 +50,7 @@
 		<id name="positionID" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="column01" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="column02" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="column03" type="com.liferay.portal.dao.orm.hibernate.StringType" />

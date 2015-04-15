@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -16,7 +16,7 @@ import javax.portlet.RenderResponse;
 import org.gfbio.archiving.JSONUnpackString;
 import org.gfbio.model.Project;
 import org.gfbio.model.ResearchObject;
-import org.gfbio.service.HeadLocalServiceUtil;
+
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.json.simple.JSONObject;
@@ -42,7 +42,7 @@ public class TestPortlet extends GenericPortlet {
         throws IOException, PortletException {
 
 	
-/*   		long projectID = 0;
+   		long projectID = 0;
 		long userID = 0;
 		try {
 			if (PortalUtil.getUser(renderRequest)!=null)
@@ -154,33 +154,10 @@ public class TestPortlet extends GenericPortlet {
 		} catch (SystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} */
+		} 
 		
 		
-		//tests for head
-
-    	String[] column = new String[20];
-    	for(int i = 0;i<column.length;i++)
-    		column[i]= new Integer (i).toString();
-    	
-    	
-    	for (int i=0; i <20;i++){
-        	long headID = i;
-        	String name = "test_".concat(new Long (i).toString());
-        	column[i] = "test";
-        	
-        	try {
-				Boolean check = HeadLocalServiceUtil.updateHead(headID, name, column[0], column[1], column[2], column[3], column[4], column[5], column[6], column[7], column[8], column[9], column[10], column[11], column[12], column[13], column[14], column[15], column[16], column[17], column[18], column[19] );
-				System.out.println(check);
-        	} catch (SystemException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
-    	String[] names = HeadLocalServiceUtil.getNameArray();
-    	for (int i = 0; i < names.length;i++)
-    		System.out.println(names[i]);
-    	
+			
     }
     
     
@@ -198,7 +175,6 @@ public class TestPortlet extends GenericPortlet {
 	
 	public static JSONUnpackString unpackJSONrek(JSONUnpackString jsonUnpack){
 		String origntext = jsonUnpack.getOrigntext();
-		String text = jsonUnpack.getText();
 		int k = jsonUnpack.getIndex();
 		char open = '{';
 		char close = '}';

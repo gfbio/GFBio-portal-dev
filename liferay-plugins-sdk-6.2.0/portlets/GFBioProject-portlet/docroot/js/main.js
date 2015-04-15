@@ -140,9 +140,19 @@ function newProject(archivingURL, method, name, size, hide,  userID){
 		visibleShow('2'+hide.substring(1));
 		window.setTimeout('visibleHide('+'2'+hide.substring(1)+')',1500);
 	}
+}
 
+function newTable(archivingURL, method, name, size, hide){
 	
-}	
+	console.log(archivingURL + ' '+ method + ' '+ name + ' '+ size);
+	resourceMethod_I(archivingURL, method, name, size,  0);
+	cleanTextSet(name, size);
+	updateLaVaSet_I(name, size);
+	visibleShow(hide.concat("_true"));
+	reload();
+
+}
+
 
 // Method to update a Project
 function updateProject (archivingURL, method, name, size, hide, userID){
@@ -161,6 +171,15 @@ function updateProject (archivingURL, method, name, size, hide, userID){
 	}
 }
 
+//Method to update a Project
+function updateTable (archivingURL, method, name, size, hide){
+
+	resourceMethod_I(archivingURL, method, name, size, 0);
+	visibleShow(hide);
+	window.setTimeout('visibleHide('+hide+')',1500);
+	
+}
+
 //generally Methods
 function resourceMethod(archivingURL, method, data){
 	ajaxRequest(archivingURL, method, data);
@@ -172,7 +191,9 @@ function resourceMethod_I(archivingURL, method, name, size, relationID){
 	data["relationID"] = relationID;
 	for (var i = 0; i < size; i++){
 		str = name.concat("_").concat(i);
+		console.log('lato'.concat(str));
 		var topic = document.getElementById('lato'.concat(str)).textContent;
+		
 		data[topic] = document.getElementById(str).value;
 	}
 	ajaxRequest(archivingURL, method, data);
