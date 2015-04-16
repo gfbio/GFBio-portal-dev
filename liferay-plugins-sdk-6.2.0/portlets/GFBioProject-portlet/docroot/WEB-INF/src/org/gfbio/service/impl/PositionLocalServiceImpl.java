@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.NoSuchPositionException;
+import org.gfbio.model.Head;
 import org.gfbio.model.Position;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.PositionLocalServiceBaseImpl;
@@ -109,11 +110,14 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return table;
 	}
 	
+
+	
 	
 	public Boolean updatePosition(long positionID, long headID, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException{
 		
 		Boolean check = true;
 		Position position = null;
+		Head head = null;
 
 		try {
 			position = positionPersistence.findByPositionID(positionID);
@@ -121,34 +125,56 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		//create new position
-		if (position == null)
-			position = positionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-		//update position
-		position.setHeadID(headID);
-		position.setColumn01(column01);
-		position.setColumn02(column02);
-		position.setColumn03(column03);
-		position.setColumn04(column04);
-		position.setColumn05(column05);
-		position.setColumn06(column06);
-		position.setColumn07(column07);
-		position.setColumn08(column08);
-		position.setColumn09(column09);
-		position.setColumn10(column10);
-		position.setColumn11(column11);
-		position.setColumn12(column12);
-		position.setColumn13(column13);
-		position.setColumn14(column14);
-		position.setColumn15(column15);
-		position.setColumn16(column16);
-		position.setColumn17(column17);
-		position.setColumn18(column18);
-		position.setColumn19(column19);
-		position.setColumn20(column20);
-		super.updatePosition(position);
 		
+		try {
+			head = headPersistence.findByHeadID(headID);
+		} catch (NoSuchHeadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		if (head != null){
+			
+			int columncount = 0;
+			try {
+				columncount = HeadLocalServiceUtil.getColumnCount(headID);
+			} catch (NoSuchHeadException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//create new position
+			if (position == null)
+				position = positionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
+			//update position
+			position.setHeadID(headID);
+			
+			position.setColumn01(column01);
+			position.setColumn02(column02);
+			position.setColumn03(column03);
+			position.setColumn04(column04);
+			position.setColumn05(column05);
+			position.setColumn06(column06);
+			position.setColumn07(column07);
+			position.setColumn08(column08);
+			position.setColumn09(column09);
+			position.setColumn10(column10);
+			position.setColumn11(column11);
+			position.setColumn12(column12);
+			position.setColumn13(column13);
+			position.setColumn14(column14);
+			position.setColumn15(column15);
+			position.setColumn16(column16);
+			position.setColumn17(column17);
+			position.setColumn18(column18);
+			position.setColumn19(column19);
+			position.setColumn20(column20);
+			super.updatePosition(position);
+		}
+		else
+			check = false;
+		
+
 		return check;
 	}
 

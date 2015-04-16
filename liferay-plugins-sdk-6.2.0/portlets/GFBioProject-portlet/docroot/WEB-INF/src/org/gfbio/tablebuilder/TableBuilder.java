@@ -63,7 +63,7 @@ public class TableBuilder extends GenericPortlet {
 		}
 		 */
 		 
-/*		 String[] column = new String[20];
+		/* String[] column = new String[20];
 			for(int i = 0;i<column.length;i++)
 				column[i]= new Integer (i).toString();
 				
@@ -91,7 +91,7 @@ public class TableBuilder extends GenericPortlet {
 		   	}
   		}*/
 		 
-		 long headID = 1401;
+		/* long headID = 1514;
 
 		 try {
 			String[][] foobar = PositionLocalServiceUtil.getTable(headID);
@@ -105,6 +105,20 @@ public class TableBuilder extends GenericPortlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 */
+		 
+		 
+		 
+		 
+/*		 try {
+			Boolean check = HeadLocalServiceUtil.setStandard();
+			 System.out.println(check);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+
+		 
 
 		
 			

@@ -137,7 +137,30 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	}
 	
 
+	public Boolean setStandard () throws SystemException{
+		Boolean check = true;
+		//check = updateHead(0, "gfbio_", "","","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_category"				, "posistionid","name","label","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware"	, "name","label","version","local_usible","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_fileformat", "liceseid","name","labe","version","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_metadata", "name","label","version","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_persistentidentifier", "ruleid","name","label","has_fee_on_id_registration","kind_of_id_organisation","change_on_id_possible","resolves_data_types","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_researchfield", "name","","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_type", "name","","","","","","","","","","","","","","","","","","","");
+		
+
+		check = updateHead(0, "gfbio_category_researchfield", "categoryid","researchfieldid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware_dataprovider", "datamanagmentsoftwareid","dataproviderid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware_fileformat", "datamanagmentsoftwareid","fileformatid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware_metadata", "datamanagmentsoftwareid","metadataid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_dataprovider_metadata", "dataproviderid","metadataid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_dataprovider_persistentidentifier", "dataproviderid","persistentidentifierid","","","","","","","","","","","","","","","","","","");
+		
+		
+		return check;
+	}
 	
+
 
 
 	public Boolean updateHead(long headID, String name, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException{

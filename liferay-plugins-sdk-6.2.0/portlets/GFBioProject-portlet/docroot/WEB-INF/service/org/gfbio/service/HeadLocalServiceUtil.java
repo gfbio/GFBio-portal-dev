@@ -312,6 +312,11 @@ public class HeadLocalServiceUtil {
 		return getService().getRow(headID);
 	}
 
+	public static java.lang.Boolean setStandard()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().setStandard();
+	}
+
 	public static java.lang.Boolean updateHead(long headID,
 		java.lang.String name, java.lang.String column01,
 		java.lang.String column02, java.lang.String column03,

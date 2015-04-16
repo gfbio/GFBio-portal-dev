@@ -330,6 +330,12 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public java.lang.Boolean setStandard()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _headLocalService.setStandard();
+	}
+
+	@Override
 	public java.lang.Boolean updateHead(long headID, java.lang.String name,
 		java.lang.String column01, java.lang.String column02,
 		java.lang.String column03, java.lang.String column04,

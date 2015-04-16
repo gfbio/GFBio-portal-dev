@@ -140,9 +140,13 @@ public class HeadLocalServiceClpInvoker {
 
 		_methodParameterTypes89 = new String[] { "long" };
 
-		_methodName90 = "updateHead";
+		_methodName90 = "setStandard";
 
-		_methodParameterTypes90 = new String[] {
+		_methodParameterTypes90 = new String[] {  };
+
+		_methodName91 = "updateHead";
+
+		_methodParameterTypes91 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -298,6 +302,11 @@ public class HeadLocalServiceClpInvoker {
 
 		if (_methodName90.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
+			return HeadLocalServiceUtil.setStandard();
+		}
+
+		if (_methodName91.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
 			return HeadLocalServiceUtil.updateHead(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -374,4 +383,6 @@ public class HeadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes89;
 	private String _methodName90;
 	private String[] _methodParameterTypes90;
+	private String _methodName91;
+	private String[] _methodParameterTypes91;
 }
