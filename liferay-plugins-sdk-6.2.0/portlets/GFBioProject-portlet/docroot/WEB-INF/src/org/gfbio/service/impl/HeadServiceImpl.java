@@ -31,7 +31,7 @@ import org.gfbio.service.base.HeadServiceBaseImpl;
  * @see org.gfbio.service.HeadServiceUtil
  */
 public class HeadServiceImpl extends HeadServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.HeadServiceUtil} to access the head remote service.

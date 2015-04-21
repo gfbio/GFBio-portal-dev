@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author froemm
  */
 public class Project_User_WorkerImpl extends Project_User_WorkerBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a project_ user_ worker model instance should use the {@link org.gfbio.model.Project_User_Worker} interface instead.

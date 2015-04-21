@@ -116,15 +116,15 @@ public class Project_UserLocalServiceClpInvoker {
 
 		_methodParameterTypes77 = new String[] { "java.lang.String" };
 
-		_methodName82 = "updateProjectUser";
+		_methodName82 = "getProjectIDList";
 
-		_methodParameterTypes82 = new String[] {
+		_methodParameterTypes82 = new String[] { "long" };
+
+		_methodName83 = "updateProjectUser";
+
+		_methodParameterTypes83 = new String[] {
 				"long", "long", "java.util.Date", "java.util.Date"
 			};
-
-		_methodName83 = "getProjectIDList";
-
-		_methodParameterTypes83 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -230,14 +230,14 @@ public class Project_UserLocalServiceClpInvoker {
 
 		if (_methodName82.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
-			return Project_UserLocalServiceUtil.updateProjectUser(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(), (java.util.Date)arguments[2],
-				(java.util.Date)arguments[3]);
+			return Project_UserLocalServiceUtil.getProjectIDList(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName83.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return Project_UserLocalServiceUtil.getProjectIDList(((Long)arguments[0]).longValue());
+			return Project_UserLocalServiceUtil.updateProjectUser(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(), (java.util.Date)arguments[2],
+				(java.util.Date)arguments[3]);
 		}
 
 		throw new UnsupportedOperationException();

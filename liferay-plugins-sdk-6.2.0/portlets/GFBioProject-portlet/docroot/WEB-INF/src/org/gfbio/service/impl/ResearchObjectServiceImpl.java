@@ -31,7 +31,7 @@ import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
  * @see org.gfbio.service.ResearchObjectServiceUtil
  */
 public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.ResearchObjectServiceUtil} to access the research object remote service.

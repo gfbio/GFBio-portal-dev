@@ -62,6 +62,11 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ProjectServiceSoap {
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this interface directly. Always use {@link com.liferay.sample.service.ProjectServiceUtil} to access the project remote service.
+	*/
 	public static org.gfbio.model.ProjectSoap[] getProjectList(long userID)
 		throws RemoteException {
 		try {

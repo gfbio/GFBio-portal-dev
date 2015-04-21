@@ -32,7 +32,7 @@ import org.gfbio.service.base.Project_User_WorkerServiceBaseImpl;
  */
 public class Project_User_WorkerServiceImpl
 	extends Project_User_WorkerServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.Project_User_WorkerServiceUtil} to access the project_ user_ worker remote service.

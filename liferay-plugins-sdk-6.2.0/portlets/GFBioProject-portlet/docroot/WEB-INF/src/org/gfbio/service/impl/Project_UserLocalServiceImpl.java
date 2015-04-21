@@ -14,18 +14,15 @@
 
 package org.gfbio.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchProject_UserException;
-
 import org.gfbio.model.Project_User;
 import org.gfbio.service.base.Project_UserLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_UserPK;
-
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the project_ user local service.
@@ -41,47 +38,52 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.base.Project_UserLocalServiceBaseImpl
  * @see org.gfbio.service.Project_UserLocalServiceUtil
  */
-public class Project_UserLocalServiceImpl	extends Project_UserLocalServiceBaseImpl {
+public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseImpl {
 
+	//get a ID-List (Project_User-Object) of all project of a specific user
+	public List<Project_User> getProjectIDList(long userID) {
+		List<Project_User> idList = null;
+		try {
+			idList = project_UserPersistence.findByUserID(userID);
+		} catch (SystemException e) {
+
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		}
+
+		return idList;
+	}
 	//update or create a Project and set the relationship to User
-	public long updateProjectUser(long projectID, long userID, Date startDate, Date endDate) throws SystemException, NoSuchProject_UserException{
-			
-		Project_User relation=null;
+	public long updateProjectUser(long projectID, long userID, Date startDate, Date endDate) throws NoSuchProject_UserException, SystemException {
+
+		Project_User relation = null;
 		Project_UserPK pk = new Project_UserPK(projectID, userID);
-		
+
 		try {
 			relation = project_UserPersistence.findByPrimaryKey(pk);
 		} catch (NoSuchProject_UserException e) {
+
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-	
+
 		//create new relationship between project and user
-		if(relation==null){
+
+		if (relation == null) {
 			relation = project_UserPersistence.create(pk);
 			relation.setStartDate(startDate);
 			relation.setEndDate(endDate);
 		}
 		//update the relationship between project and user
-		else{
+		else {
 			relation.setStartDate(startDate);
 			relation.setEndDate(endDate);
 		}
-			
+
 		super.updateProject_User(relation);
 		return relation.getUserID() + relation.getProjectID();
 	}
-	
-	//get a ID-List (Project_User-Object) of all project of a specific user
-	public List<Project_User> getProjectIDList(long userID){
-		List<Project_User> idList=null;
-		try {
-			idList = project_UserPersistence.findByUserID(userID);
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return idList;
-	}
-	
+
 }

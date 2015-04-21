@@ -267,17 +267,6 @@ public class HeadLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.lang.Long getHeadID(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return getService().getHeadID(name);
-	}
-
-	public static java.util.List<org.gfbio.model.Head> getHeadList()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getHeadList();
-	}
-
 	public static int getColumnCount(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
@@ -290,6 +279,17 @@ public class HeadLocalServiceUtil {
 		return getService().getColumnName(headID, i);
 	}
 
+	public static java.lang.Long getHeadID(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return getService().getHeadID(name);
+	}
+
+	public static java.util.List<org.gfbio.model.Head> getHeadList()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getHeadList();
+	}
+
 	public static java.lang.String getName(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
@@ -300,16 +300,16 @@ public class HeadLocalServiceUtil {
 		return getService().getNameArray();
 	}
 
-	public static org.gfbio.model.Head getRow(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return getService().getRow(name);
-	}
-
 	public static org.gfbio.model.Head getRow(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		return getService().getRow(headID);
+	}
+
+	public static org.gfbio.model.Head getRow(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return getService().getRow(name);
 	}
 
 	public static java.lang.Boolean setStandard()

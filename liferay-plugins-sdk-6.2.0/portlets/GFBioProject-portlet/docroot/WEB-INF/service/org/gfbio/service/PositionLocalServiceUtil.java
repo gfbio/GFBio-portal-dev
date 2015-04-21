@@ -276,6 +276,11 @@ public class PositionLocalServiceUtil {
 		return getService().getColumnContent(positionID, i);
 	}
 
+	public static java.lang.String[] getNameArray(long headID)
+		throws org.gfbio.NoSuchHeadException {
+		return getService().getNameArray(headID);
+	}
+
 	public static org.gfbio.model.Position getRow(long positionID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException {
@@ -291,6 +296,13 @@ public class PositionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		return getService().getTable(headID);
+	}
+
+	public static java.lang.Boolean updateRelationTable(long positionID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
+		return getService().updateRelationTable(positionID, mtable, ntable);
 	}
 
 	public static java.lang.Boolean updatePosition(long positionID,

@@ -254,6 +254,10 @@ public interface PositionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getNameArray(long headID)
+		throws org.gfbio.NoSuchHeadException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.Position getRow(long positionID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException;
@@ -266,6 +270,11 @@ public interface PositionLocalService extends BaseLocalService,
 	public java.lang.String[][] getTable(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
+
+	public java.lang.Boolean updateRelationTable(long positionID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException;
 
 	public java.lang.Boolean updatePosition(long positionID, long headID,
 		java.lang.String column01, java.lang.String column02,

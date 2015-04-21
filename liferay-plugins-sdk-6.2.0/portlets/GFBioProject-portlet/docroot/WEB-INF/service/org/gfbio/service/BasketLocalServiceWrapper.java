@@ -277,37 +277,6 @@ public class BasketLocalServiceWrapper implements BasketLocalService,
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
-		long userId)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.getBasketsByUserId(userId);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
-		long userId, int period)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.getBasketsByUserAndPeriod(userId, period);
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.getBasketsIdByUserId(userId);
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
-		long userId, int period)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.getBasketsIdByUserAndPeriod(userId, period);
-	}
-
-	@Override
 	public org.gfbio.model.Basket getBasketById(long basketId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -320,6 +289,37 @@ public class BasketLocalServiceWrapper implements BasketLocalService,
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _basketLocalService.getBasketsByIds(basketIds);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsByUserAndPeriod(userId, period);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsByUserId(userId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+		long userId, int period)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsIdByUserAndPeriod(userId, period);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _basketLocalService.getBasketsIdByUserId(userId);
 	}
 
 	@Override

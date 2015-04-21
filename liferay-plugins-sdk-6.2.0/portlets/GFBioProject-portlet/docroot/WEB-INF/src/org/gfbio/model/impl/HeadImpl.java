@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author Felicitas Loeffler
  */
 public class HeadImpl extends HeadBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a head model instance should use the {@link org.gfbio.model.Head} interface instead.

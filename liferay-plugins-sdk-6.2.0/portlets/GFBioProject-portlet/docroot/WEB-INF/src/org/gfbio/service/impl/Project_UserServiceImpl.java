@@ -31,7 +31,7 @@ import org.gfbio.service.base.Project_UserServiceBaseImpl;
  * @see org.gfbio.service.Project_UserServiceUtil
  */
 public class Project_UserServiceImpl extends Project_UserServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.Project_UserServiceUtil} to access the project_ user remote service.

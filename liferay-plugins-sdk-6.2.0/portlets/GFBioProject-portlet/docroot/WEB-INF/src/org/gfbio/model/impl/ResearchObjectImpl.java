@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author froemm
  */
 public class ResearchObjectImpl extends ResearchObjectBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a research object model instance should use the {@link org.gfbio.model.ResearchObject} interface instead.

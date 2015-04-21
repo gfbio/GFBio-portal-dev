@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author Felicitas Loeffler
  */
 public class PositionImpl extends PositionBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a position model instance should use the {@link org.gfbio.model.Position} interface instead.

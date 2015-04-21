@@ -32,29 +32,29 @@ public class BasketServiceClpInvoker {
 
 		_methodParameterTypes61 = new String[] { "java.lang.String" };
 
-		_methodName66 = "getBasketsByUserId";
+		_methodName66 = "getBasketById";
 
 		_methodParameterTypes66 = new String[] { "long" };
 
-		_methodName67 = "getBasketsByUserAndPeriod";
+		_methodName67 = "getBasketsByIds";
 
-		_methodParameterTypes67 = new String[] { "long", "int" };
+		_methodParameterTypes67 = new String[] { "long[][]" };
 
-		_methodName68 = "getBasketsIdByUserId";
+		_methodName68 = "getBasketsByUserAndPeriod";
 
-		_methodParameterTypes68 = new String[] { "long" };
+		_methodParameterTypes68 = new String[] { "long", "int" };
 
-		_methodName69 = "getBasketsIdByUserAndPeriod";
+		_methodName69 = "getBasketsByUserId";
 
-		_methodParameterTypes69 = new String[] { "long", "int" };
+		_methodParameterTypes69 = new String[] { "long" };
 
-		_methodName70 = "getBasketById";
+		_methodName70 = "getBasketsIdByUserAndPeriod";
 
-		_methodParameterTypes70 = new String[] { "long" };
+		_methodParameterTypes70 = new String[] { "long", "int" };
 
-		_methodName71 = "getBasketsByIds";
+		_methodName71 = "getBasketsIdByUserId";
 
-		_methodParameterTypes71 = new String[] { "long[][]" };
+		_methodParameterTypes71 = new String[] { "long" };
 
 		_methodName72 = "updateBasket";
 
@@ -84,34 +84,34 @@ public class BasketServiceClpInvoker {
 
 		if (_methodName66.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
-			return BasketServiceUtil.getBasketsByUserId(((Long)arguments[0]).longValue());
+			return BasketServiceUtil.getBasketById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName67.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
-			return BasketServiceUtil.getBasketsByUserAndPeriod(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue());
+			return BasketServiceUtil.getBasketsByIds((long[])arguments[0]);
 		}
 
 		if (_methodName68.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
-			return BasketServiceUtil.getBasketsIdByUserId(((Long)arguments[0]).longValue());
+			return BasketServiceUtil.getBasketsByUserAndPeriod(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName69.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
-			return BasketServiceUtil.getBasketsIdByUserAndPeriod(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue());
+			return BasketServiceUtil.getBasketsByUserId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName70.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
-			return BasketServiceUtil.getBasketById(((Long)arguments[0]).longValue());
+			return BasketServiceUtil.getBasketsIdByUserAndPeriod(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName71.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
-			return BasketServiceUtil.getBasketsByIds((long[])arguments[0]);
+			return BasketServiceUtil.getBasketsIdByUserId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName72.equals(name) &&

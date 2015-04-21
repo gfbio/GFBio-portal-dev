@@ -14,16 +14,14 @@
 
 package org.gfbio.service.impl;
 
-
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 
 import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.NoSuchResearchObjectException;
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
-
-import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the research object local service.
@@ -39,43 +37,48 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl
  * @see org.gfbio.service.ResearchObjectLocalServiceUtil
  */
-public class ResearchObjectLocalServiceImpl	extends ResearchObjectLocalServiceBaseImpl {
-	
-	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException{
+public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBaseImpl {
 
-		ResearchObject researchObject=null;
+	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException {
+
+		ResearchObject researchObject = null;
 		try {
 			researchObject = researchObjectPersistence.findByPrimaryKey(researchObjectID);
 		} catch (NoSuchResearchObjectException e) {
+
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 		//create new ResearchObject
-		if(researchObject==null){
+
+		if (researchObject == null) {
 			researchObject = researchObjectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			researchObject.setName(name);
 			researchObject.setLabel(label);
 			researchObject.setMetadata(metadata);
 			researchObject.setFormatmetadata(formatmetadata);
 			super.updateResearchObject(researchObject);
-			
+
 			try {
 				Long foobar = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(projectID, researchObject.getResearchObjectID());
 			} catch (NoSuchProject_UserException e) {
+
 				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
 		//update ResearchObject
-		else{
+		else {
 			researchObject.setName(name);
 			researchObject.setLabel(label);
 			researchObject.setMetadata(metadata);
 			researchObject.setFormatmetadata(formatmetadata);
 			super.updateResearchObject(researchObject);
 		}
-				
+
 		return researchObject.getResearchObjectID();
 	}
 

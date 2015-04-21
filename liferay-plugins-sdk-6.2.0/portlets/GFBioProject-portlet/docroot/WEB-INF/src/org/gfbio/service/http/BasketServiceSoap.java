@@ -62,10 +62,24 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class BasketServiceSoap {
-	public static org.gfbio.model.BasketSoap[] getBasketsByUserId(long userId)
+	public static org.gfbio.model.BasketSoap getBasketById(long basketId)
 		throws RemoteException {
 		try {
-			java.util.List<org.gfbio.model.Basket> returnValue = BasketServiceUtil.getBasketsByUserId(userId);
+			org.gfbio.model.Basket returnValue = BasketServiceUtil.getBasketById(basketId);
+
+			return org.gfbio.model.BasketSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.gfbio.model.BasketSoap[] getBasketsByIds(long[] basketIds)
+		throws RemoteException {
+		try {
+			java.util.List<org.gfbio.model.Basket> returnValue = BasketServiceUtil.getBasketsByIds(basketIds);
 
 			return org.gfbio.model.BasketSoap.toSoapModels(returnValue);
 		}
@@ -91,12 +105,12 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getBasketsIdByUserId(long userId)
+	public static org.gfbio.model.BasketSoap[] getBasketsByUserId(long userId)
 		throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = BasketServiceUtil.getBasketsIdByUserId(userId);
+			java.util.List<org.gfbio.model.Basket> returnValue = BasketServiceUtil.getBasketsByUserId(userId);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return org.gfbio.model.BasketSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -120,26 +134,12 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static org.gfbio.model.BasketSoap getBasketById(long basketId)
+	public static java.lang.Long[] getBasketsIdByUserId(long userId)
 		throws RemoteException {
 		try {
-			org.gfbio.model.Basket returnValue = BasketServiceUtil.getBasketById(basketId);
+			java.util.List<java.lang.Long> returnValue = BasketServiceUtil.getBasketsIdByUserId(userId);
 
-			return org.gfbio.model.BasketSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.gfbio.model.BasketSoap[] getBasketsByIds(long[] basketIds)
-		throws RemoteException {
-		try {
-			java.util.List<org.gfbio.model.Basket> returnValue = BasketServiceUtil.getBasketsByIds(basketIds);
-
-			return org.gfbio.model.BasketSoap.toSoapModels(returnValue);
+			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

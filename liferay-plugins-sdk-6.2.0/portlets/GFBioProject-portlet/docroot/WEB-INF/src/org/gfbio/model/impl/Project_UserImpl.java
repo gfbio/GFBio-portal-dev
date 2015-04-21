@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author Felicitas Loeffler
  */
 public class Project_UserImpl extends Project_UserBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a project_ user model instance should use the {@link org.gfbio.model.Project_User} interface instead.

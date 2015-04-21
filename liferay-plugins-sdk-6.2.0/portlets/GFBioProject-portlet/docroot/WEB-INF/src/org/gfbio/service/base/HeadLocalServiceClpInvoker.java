@@ -108,21 +108,21 @@ public class HeadLocalServiceClpInvoker {
 
 		_methodParameterTypes77 = new String[] { "java.lang.String" };
 
-		_methodName82 = "getHeadID";
+		_methodName82 = "getColumnCount";
 
-		_methodParameterTypes82 = new String[] { "java.lang.String" };
+		_methodParameterTypes82 = new String[] { "long" };
 
-		_methodName83 = "getHeadList";
+		_methodName83 = "getColumnName";
 
-		_methodParameterTypes83 = new String[] {  };
+		_methodParameterTypes83 = new String[] { "long", "int" };
 
-		_methodName84 = "getColumnCount";
+		_methodName84 = "getHeadID";
 
-		_methodParameterTypes84 = new String[] { "long" };
+		_methodParameterTypes84 = new String[] { "java.lang.String" };
 
-		_methodName85 = "getColumnName";
+		_methodName85 = "getHeadList";
 
-		_methodParameterTypes85 = new String[] { "long", "int" };
+		_methodParameterTypes85 = new String[] {  };
 
 		_methodName86 = "getName";
 
@@ -134,11 +134,11 @@ public class HeadLocalServiceClpInvoker {
 
 		_methodName88 = "getRow";
 
-		_methodParameterTypes88 = new String[] { "java.lang.String" };
+		_methodParameterTypes88 = new String[] { "long" };
 
 		_methodName89 = "getRow";
 
-		_methodParameterTypes89 = new String[] { "long" };
+		_methodParameterTypes89 = new String[] { "java.lang.String" };
 
 		_methodName90 = "setStandard";
 
@@ -261,23 +261,23 @@ public class HeadLocalServiceClpInvoker {
 
 		if (_methodName82.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadID((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getColumnCount(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName83.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadList();
+			return HeadLocalServiceUtil.getColumnName(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName84.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return HeadLocalServiceUtil.getColumnCount(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getHeadID((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName85.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
-			return HeadLocalServiceUtil.getColumnName(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue());
+			return HeadLocalServiceUtil.getHeadList();
 		}
 
 		if (_methodName86.equals(name) &&
@@ -292,12 +292,12 @@ public class HeadLocalServiceClpInvoker {
 
 		if (_methodName88.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
-			return HeadLocalServiceUtil.getRow((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getRow(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName89.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-			return HeadLocalServiceUtil.getRow(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getRow((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName90.equals(name) &&

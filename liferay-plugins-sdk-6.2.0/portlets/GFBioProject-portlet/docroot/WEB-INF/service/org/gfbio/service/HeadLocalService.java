@@ -247,15 +247,6 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.Long getHeadID(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Head> getHeadList()
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnCount(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
@@ -266,6 +257,15 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 			org.gfbio.NoSuchHeadException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.Long getHeadID(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Head> getHeadList()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getName(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
@@ -274,12 +274,12 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 	public java.lang.String[] getNameArray();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Head getRow(java.lang.String name)
+	public org.gfbio.model.Head getRow(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Head getRow(long headID)
+	public org.gfbio.model.Head getRow(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 

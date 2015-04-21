@@ -31,7 +31,7 @@ import org.gfbio.service.base.PositionServiceBaseImpl;
  * @see org.gfbio.service.PositionServiceUtil
  */
 public class PositionServiceImpl extends PositionServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.PositionServiceUtil} to access the position remote service.

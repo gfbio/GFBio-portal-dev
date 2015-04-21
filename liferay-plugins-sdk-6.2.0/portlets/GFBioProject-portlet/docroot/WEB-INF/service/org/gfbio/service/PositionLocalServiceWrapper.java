@@ -288,6 +288,12 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
+	public java.lang.String[] getNameArray(long headID)
+		throws org.gfbio.NoSuchHeadException {
+		return _positionLocalService.getNameArray(headID);
+	}
+
+	@Override
 	public org.gfbio.model.Position getRow(long positionID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException {
@@ -305,6 +311,15 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		return _positionLocalService.getTable(headID);
+	}
+
+	@Override
+	public java.lang.Boolean updateRelationTable(long positionID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
+		return _positionLocalService.updateRelationTable(positionID, mtable,
+			ntable);
 	}
 
 	@Override

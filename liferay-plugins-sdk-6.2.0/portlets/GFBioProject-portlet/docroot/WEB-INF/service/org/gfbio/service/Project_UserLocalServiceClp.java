@@ -117,15 +117,15 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "updateProjectUser";
+		_methodName19 = "getProjectIDList";
 
-		_methodParameterTypes19 = new String[] {
+		_methodParameterTypes19 = new String[] { "long" };
+
+		_methodName20 = "updateProjectUser";
+
+		_methodParameterTypes20 = new String[] {
 				"long", "long", "java.util.Date", "java.util.Date"
 			};
-
-		_methodName20 = "getProjectIDList";
-
-		_methodParameterTypes20 = new String[] { "long" };
 	}
 
 	@Override
@@ -683,6 +683,30 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
+		long userID) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19, new Object[] { userID });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.Project_User>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long updateProjectUser(long projectID, long userID,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -690,8 +714,8 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19,
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
 					new Object[] {
 						projectID,
 						
@@ -723,30 +747,6 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 		}
 
 		return ((Long)returnObj).longValue();
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
-		long userID) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20, new Object[] { userID });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.Project_User>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;

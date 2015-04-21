@@ -112,21 +112,31 @@ public class PositionLocalServiceClp implements PositionLocalService {
 
 		_methodParameterTypes19 = new String[] { "long", "int" };
 
-		_methodName20 = "getRow";
+		_methodName20 = "getNameArray";
 
 		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "getRowList";
+		_methodName21 = "getRow";
 
 		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName22 = "getTable";
+		_methodName22 = "getRowList";
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "updatePosition";
+		_methodName23 = "getTable";
 
-		_methodParameterTypes23 = new String[] {
+		_methodParameterTypes23 = new String[] { "long" };
+
+		_methodName24 = "updateRelationTable";
+
+		_methodParameterTypes24 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName25 = "updatePosition";
+
+		_methodParameterTypes25 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -711,14 +721,42 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
+	public java.lang.String[] getNameArray(long headID)
+		throws org.gfbio.NoSuchHeadException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { headID });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.gfbio.NoSuchHeadException) {
+				throw (org.gfbio.NoSuchHeadException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String[])ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public org.gfbio.model.Position getRow(long positionID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20, new Object[] { positionID });
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { positionID });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -749,8 +787,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { headID });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { headID });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -778,8 +816,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { headID });
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { headID });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -805,6 +843,51 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
+	public java.lang.Boolean updateRelationTable(long positionID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] {
+						positionID,
+						
+					ClpSerializer.translateInput(mtable),
+						
+					ClpSerializer.translateInput(ntable)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchHeadException) {
+				throw (org.gfbio.NoSuchHeadException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchPositionException) {
+				throw (org.gfbio.NoSuchPositionException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.lang.Boolean updatePosition(long positionID, long headID,
 		java.lang.String column01, java.lang.String column02,
 		java.lang.String column03, java.lang.String column04,
@@ -820,8 +903,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						positionID,
 						
@@ -934,4 +1017,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	private String[] _methodParameterTypes22;
 	private String _methodName23;
 	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

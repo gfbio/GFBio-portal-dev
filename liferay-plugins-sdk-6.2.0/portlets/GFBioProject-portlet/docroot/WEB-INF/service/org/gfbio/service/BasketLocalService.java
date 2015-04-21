@@ -247,8 +247,13 @@ public interface BasketLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
-		long userId)
+	public org.gfbio.model.Basket getBasketById(long basketId)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+		long[] basketIds)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -259,7 +264,8 @@ public interface BasketLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -270,13 +276,7 @@ public interface BasketLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Basket getBasketById(long basketId)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
-		long[] basketIds)
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 

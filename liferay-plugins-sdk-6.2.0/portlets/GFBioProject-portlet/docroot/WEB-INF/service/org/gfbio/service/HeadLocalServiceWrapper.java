@@ -277,19 +277,6 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public java.lang.Long getHeadID(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getHeadID(name);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Head> getHeadList()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.getHeadList();
-	}
-
-	@Override
 	public int getColumnCount(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
@@ -301,6 +288,19 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		return _headLocalService.getColumnName(headID, i);
+	}
+
+	@Override
+	public java.lang.Long getHeadID(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return _headLocalService.getHeadID(name);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Head> getHeadList()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _headLocalService.getHeadList();
 	}
 
 	@Override
@@ -316,17 +316,17 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public org.gfbio.model.Head getRow(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getRow(name);
-	}
-
-	@Override
 	public org.gfbio.model.Head getRow(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		return _headLocalService.getRow(headID);
+	}
+
+	@Override
+	public org.gfbio.model.Head getRow(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return _headLocalService.getRow(name);
 	}
 
 	@Override

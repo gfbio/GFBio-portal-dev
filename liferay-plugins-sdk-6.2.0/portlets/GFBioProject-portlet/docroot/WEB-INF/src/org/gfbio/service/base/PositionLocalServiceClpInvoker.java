@@ -112,21 +112,31 @@ public class PositionLocalServiceClpInvoker {
 
 		_methodParameterTypes82 = new String[] { "long", "int" };
 
-		_methodName83 = "getRow";
+		_methodName83 = "getNameArray";
 
 		_methodParameterTypes83 = new String[] { "long" };
 
-		_methodName84 = "getRowList";
+		_methodName84 = "getRow";
 
 		_methodParameterTypes84 = new String[] { "long" };
 
-		_methodName85 = "getTable";
+		_methodName85 = "getRowList";
 
 		_methodParameterTypes85 = new String[] { "long" };
 
-		_methodName86 = "updatePosition";
+		_methodName86 = "getTable";
 
-		_methodParameterTypes86 = new String[] {
+		_methodParameterTypes86 = new String[] { "long" };
+
+		_methodName87 = "updateRelationTable";
+
+		_methodParameterTypes87 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName88 = "updatePosition";
+
+		_methodParameterTypes88 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -246,21 +256,32 @@ public class PositionLocalServiceClpInvoker {
 
 		if (_methodName83.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return PositionLocalServiceUtil.getRow(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getNameArray(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName84.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return PositionLocalServiceUtil.getRowList(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getRow(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName85.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
-			return PositionLocalServiceUtil.getTable(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getRowList(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName86.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
+			return PositionLocalServiceUtil.getTable(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName87.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
+			return PositionLocalServiceUtil.updateRelationTable(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+		}
+
+		if (_methodName88.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
 			return PositionLocalServiceUtil.updatePosition(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -329,4 +350,8 @@ public class PositionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes85;
 	private String _methodName86;
 	private String[] _methodParameterTypes86;
+	private String _methodName87;
+	private String[] _methodParameterTypes87;
+	private String _methodName88;
+	private String[] _methodParameterTypes88;
 }

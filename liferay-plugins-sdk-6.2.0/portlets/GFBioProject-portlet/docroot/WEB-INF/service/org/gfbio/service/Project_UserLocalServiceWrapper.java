@@ -288,18 +288,18 @@ public class Project_UserLocalServiceWrapper implements Project_UserLocalService
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
+		long userID) {
+		return _project_UserLocalService.getProjectIDList(userID);
+	}
+
+	@Override
 	public long updateProjectUser(long projectID, long userID,
 		java.util.Date startDate, java.util.Date endDate)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
 		return _project_UserLocalService.updateProjectUser(projectID, userID,
 			startDate, endDate);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
-		long userID) {
-		return _project_UserLocalService.getProjectIDList(userID);
 	}
 
 	/**

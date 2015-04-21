@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author Felicitas Loeffler
  */
 public class ProjectImpl extends ProjectBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a project model instance should use the {@link org.gfbio.model.Project} interface instead.
