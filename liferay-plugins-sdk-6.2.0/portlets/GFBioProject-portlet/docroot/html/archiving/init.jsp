@@ -33,11 +33,11 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <portlet:defineObjects />
 <liferay-theme:defineObjects />
 <portlet:resourceURL escapeXml="false" id="archivingURL" var="archivingURL" />
-
+<!--
 <portlet:renderURL var="jspProjectProfile">
 	<portlet:param name="jspPage" value="/projectprofile.jsp" />
 </portlet:renderURL>
-
+-->
 
 
 
