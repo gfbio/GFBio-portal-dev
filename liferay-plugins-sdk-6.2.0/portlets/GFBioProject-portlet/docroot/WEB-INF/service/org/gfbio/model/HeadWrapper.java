@@ -50,6 +50,7 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 
 		attributes.put("headID", getHeadID());
 		attributes.put("name", getName());
+		attributes.put("type", getType());
 		attributes.put("column01", getColumn01());
 		attributes.put("column02", getColumn02());
 		attributes.put("column03", getColumn03());
@@ -86,6 +87,12 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		String column01 = (String)attributes.get("column01");
@@ -267,6 +274,26 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 	@Override
 	public void setName(java.lang.String name) {
 		_head.setName(name);
+	}
+
+	/**
+	* Returns the type of this head.
+	*
+	* @return the type of this head
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _head.getType();
+	}
+
+	/**
+	* Sets the type of this head.
+	*
+	* @param type the type of this head
+	*/
+	@Override
+	public void setType(java.lang.String type) {
+		_head.setType(type);
 	}
 
 	/**

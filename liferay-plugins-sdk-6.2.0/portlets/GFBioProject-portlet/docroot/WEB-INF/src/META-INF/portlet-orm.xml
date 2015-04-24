@@ -26,6 +26,9 @@
 		<attributes>
 			<id name="headID" />
 			<basic name="name" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
 			<basic name="column01" />
 			<basic name="column02" />
 			<basic name="column03" />

@@ -87,6 +87,21 @@ public interface HeadModel extends BaseModel<Head> {
 	public void setName(String name);
 
 	/**
+	 * Returns the type of this head.
+	 *
+	 * @return the type of this head
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this head.
+	 *
+	 * @param type the type of this head
+	 */
+	public void setType(String type);
+
+	/**
 	 * Returns the column01 of this head.
 	 *
 	 * @return the column01 of this head

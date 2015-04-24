@@ -74,6 +74,7 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 		attributes.put("headID", getHeadID());
 		attributes.put("name", getName());
+		attributes.put("type", getType());
 		attributes.put("column01", getColumn01());
 		attributes.put("column02", getColumn02());
 		attributes.put("column03", getColumn03());
@@ -110,6 +111,12 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		String column01 = (String)attributes.get("column01");
@@ -272,6 +279,29 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 				Method method = clazz.getMethod("setName", String.class);
 
 				method.invoke(_headRemoteModel, name);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(String type) {
+		_type = type;
+
+		if (_headRemoteModel != null) {
+			try {
+				Class<?> clazz = _headRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setType", String.class);
+
+				method.invoke(_headRemoteModel, type);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -810,6 +840,7 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 		clone.setHeadID(getHeadID());
 		clone.setName(getName());
+		clone.setType(getType());
 		clone.setColumn01(getColumn01());
 		clone.setColumn02(getColumn02());
 		clone.setColumn03(getColumn03());
@@ -880,12 +911,14 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{headID=");
 		sb.append(getHeadID());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", type=");
+		sb.append(getType());
 		sb.append(", column01=");
 		sb.append(getColumn01());
 		sb.append(", column02=");
@@ -933,7 +966,7 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Head");
@@ -946,6 +979,10 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>column01</column-name><column-value><![CDATA[");
@@ -1035,6 +1072,7 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 	private long _headID;
 	private String _name;
+	private String _type;
 	private String _column01;
 	private String _column02;
 	private String _column03;

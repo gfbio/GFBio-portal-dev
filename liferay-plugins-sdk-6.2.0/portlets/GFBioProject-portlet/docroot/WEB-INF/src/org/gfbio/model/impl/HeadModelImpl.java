@@ -64,6 +64,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "headID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
+			{ "type_", Types.VARCHAR },
 			{ "column01", Types.VARCHAR },
 			{ "column02", Types.VARCHAR },
 			{ "column03", Types.VARCHAR },
@@ -85,7 +86,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 			{ "column19", Types.VARCHAR },
 			{ "column20", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Head (headID LONG not null primary key,name VARCHAR(75) null,column01 VARCHAR(75) null,column02 VARCHAR(75) null,column03 VARCHAR(75) null,column04 VARCHAR(75) null,column05 VARCHAR(75) null,column06 VARCHAR(75) null,column07 VARCHAR(75) null,column08 VARCHAR(75) null,column09 VARCHAR(75) null,column10 VARCHAR(75) null,column11 VARCHAR(75) null,column12 VARCHAR(75) null,column13 VARCHAR(75) null,column14 VARCHAR(75) null,column15 VARCHAR(75) null,column16 VARCHAR(75) null,column17 VARCHAR(75) null,column18 VARCHAR(75) null,column19 VARCHAR(75) null,column20 VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Head (headID LONG not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null,column01 VARCHAR(75) null,column02 VARCHAR(75) null,column03 VARCHAR(75) null,column04 VARCHAR(75) null,column05 VARCHAR(75) null,column06 VARCHAR(75) null,column07 VARCHAR(75) null,column08 VARCHAR(75) null,column09 VARCHAR(75) null,column10 VARCHAR(75) null,column11 VARCHAR(75) null,column12 VARCHAR(75) null,column13 VARCHAR(75) null,column14 VARCHAR(75) null,column15 VARCHAR(75) null,column16 VARCHAR(75) null,column17 VARCHAR(75) null,column18 VARCHAR(75) null,column19 VARCHAR(75) null,column20 VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Head";
 	public static final String ORDER_BY_JPQL = " ORDER BY head.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Head.name ASC";
@@ -101,6 +102,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 			true);
 	public static long HEADID_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
+	public static long TYPE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -117,6 +119,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		model.setHeadID(soapModel.getHeadID());
 		model.setName(soapModel.getName());
+		model.setType(soapModel.getType());
 		model.setColumn01(soapModel.getColumn01());
 		model.setColumn02(soapModel.getColumn02());
 		model.setColumn03(soapModel.getColumn03());
@@ -203,6 +206,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		attributes.put("headID", getHeadID());
 		attributes.put("name", getName());
+		attributes.put("type", getType());
 		attributes.put("column01", getColumn01());
 		attributes.put("column02", getColumn02());
 		attributes.put("column03", getColumn03());
@@ -239,6 +243,12 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		String column01 = (String)attributes.get("column01");
@@ -409,6 +419,32 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	public String getOriginalName() {
 		return GetterUtil.getString(_originalName);
+	}
+
+	@JSON
+	@Override
+	public String getType() {
+		if (_type == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
+		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@JSON
@@ -764,6 +800,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		headImpl.setHeadID(getHeadID());
 		headImpl.setName(getName());
+		headImpl.setType(getType());
 		headImpl.setColumn01(getColumn01());
 		headImpl.setColumn02(getColumn02());
 		headImpl.setColumn03(getColumn03());
@@ -840,6 +877,8 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		headModelImpl._originalName = headModelImpl._name;
 
+		headModelImpl._originalType = headModelImpl._type;
+
 		headModelImpl._columnBitmask = 0;
 	}
 
@@ -855,6 +894,14 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		if ((name != null) && (name.length() == 0)) {
 			headCacheModel.name = null;
+		}
+
+		headCacheModel.type = getType();
+
+		String type = headCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			headCacheModel.type = null;
 		}
 
 		headCacheModel.column01 = getColumn01();
@@ -1022,12 +1069,14 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{headID=");
 		sb.append(getHeadID());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", type=");
+		sb.append(getType());
 		sb.append(", column01=");
 		sb.append(getColumn01());
 		sb.append(", column02=");
@@ -1075,7 +1124,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Head");
@@ -1088,6 +1137,10 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>column01</column-name><column-value><![CDATA[");
@@ -1182,6 +1235,8 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	private boolean _setOriginalHeadID;
 	private String _name;
 	private String _originalName;
+	private String _type;
+	private String _originalType;
 	private String _column01;
 	private String _column02;
 	private String _column03;
