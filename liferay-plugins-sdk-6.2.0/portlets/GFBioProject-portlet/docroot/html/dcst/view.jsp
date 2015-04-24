@@ -11,5 +11,22 @@ Das ist unser tolles Portlet
 
 <%
 long userid = PortalUtil.getUserId(request);
-ProjectLocalServiceUtil.getProjectList(userid);
+List <Project> projectList = new ArrayList<Project>();
+projectList = null;
+try {
+	 projectList = ProjectLocalServiceUtil.getProjectList(userid);
+} catch (NoSuchModelException e) {
+	e.printStackTrace();
+} catch (SystemException e) {
+	e.printStackTrace();
+}
 %>
+<form action="select.htm">
+	<table> 
+		<%if (projectList!=null){ for (int i = 0; i < projectList.size(); i++) { %>
+		<tr> 
+			<td><%= projectList.get(i).getLabel() %></td> 
+		</tr> 
+		<%} } %>
+	</table>
+</form>
