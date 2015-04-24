@@ -145,6 +145,7 @@
 		<!-- Other fields -->
 
 		<column name="name" 			type="String" />
+		<column name="type" 			type="String" />
 		<column name="column01"			type="String" />
 		<column name="column02" 		type="String" />
 		<column name="column03" 		type="String" />
@@ -171,9 +172,9 @@
 		<order by="asc">	<order-column name="name" />	</order>
 
 		<!-- Finder methods -->
-
 		<finder name="HeadID" 		return-type="head">					<finder-column name="headID" />				</finder>
 		<finder name="Name" 		return-type="head">					<finder-column name="name" />				</finder>
+		<finder name="Type"			return-type="Collection">			<finder-column name="type" />				</finder>
 
 	</entity>
 

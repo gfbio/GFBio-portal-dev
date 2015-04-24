@@ -137,6 +137,7 @@ CREATE TABLE gfbio_head
 (
   headid bigint NOT NULL,
   name character(50) NOT NULL,
+  name character(50) NOT NULL,
   column01 character(50),
   column02 character(50),
   column03 character(50),
