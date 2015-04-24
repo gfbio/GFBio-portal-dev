@@ -35,7 +35,7 @@
 	<portlet>
 		<portlet-name>dcst</portlet-name>
 		<display-name>DataCenterSelectionTool</display-name>
-		<portlet-class>org.gfbio.idmg.dcst.dcst</portlet-class>
+		<portlet-class>org.gfbio.idmg.dcst.Dcst </portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/projectprofile/view.jsp</value>
