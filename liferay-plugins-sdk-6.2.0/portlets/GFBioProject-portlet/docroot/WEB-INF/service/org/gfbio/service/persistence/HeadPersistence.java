@@ -148,6 +148,7 @@ public interface HeadPersistence extends BasePersistence<Head> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+<<<<<<< HEAD
 	* Returns all the heads where task = &#63;.
 	*
 	* @param task the task
@@ -160,109 +161,198 @@ public interface HeadPersistence extends BasePersistence<Head> {
 
 	/**
 	* Returns a range of all the heads where task = &#63;.
+=======
+	* Returns all the heads where type = &#63;.
+	*
+	* @param type the type
+	* @return the matching heads
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gfbio.model.Head> findByType(
+		java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the heads where type = &#63;.
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.HeadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
+<<<<<<< HEAD
 	* @param task the task
+=======
+	* @param type the type
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	* @param start the lower bound of the range of heads
 	* @param end the upper bound of the range of heads (not inclusive)
 	* @return the range of matching heads
 	* @throws SystemException if a system exception occurred
 	*/
+<<<<<<< HEAD
 	public java.util.List<org.gfbio.model.Head> findByTask(
 		java.lang.String task, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns an ordered range of all the heads where task = &#63;.
+=======
+	public java.util.List<org.gfbio.model.Head> findByType(
+		java.lang.String type, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the heads where type = &#63;.
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.HeadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
+<<<<<<< HEAD
 	* @param task the task
+=======
+	* @param type the type
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	* @param start the lower bound of the range of heads
 	* @param end the upper bound of the range of heads (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching heads
 	* @throws SystemException if a system exception occurred
 	*/
+<<<<<<< HEAD
 	public java.util.List<org.gfbio.model.Head> findByTask(
 		java.lang.String task, int start, int end,
+=======
+	public java.util.List<org.gfbio.model.Head> findByType(
+		java.lang.String type, int start, int end,
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+<<<<<<< HEAD
 	* Returns the first head in the ordered set where task = &#63;.
 	*
 	* @param task the task
+=======
+	* Returns the first head in the ordered set where type = &#63;.
+	*
+	* @param type the type
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching head
 	* @throws org.gfbio.NoSuchHeadException if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+<<<<<<< HEAD
 	public org.gfbio.model.Head findByTask_First(java.lang.String task,
+=======
+	public org.gfbio.model.Head findByType_First(java.lang.String type,
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
+<<<<<<< HEAD
 	* Returns the first head in the ordered set where task = &#63;.
 	*
 	* @param task the task
+=======
+	* Returns the first head in the ordered set where type = &#63;.
+	*
+	* @param type the type
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching head, or <code>null</code> if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+<<<<<<< HEAD
 	public org.gfbio.model.Head fetchByTask_First(java.lang.String task,
+=======
+	public org.gfbio.model.Head fetchByType_First(java.lang.String type,
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+<<<<<<< HEAD
 	* Returns the last head in the ordered set where task = &#63;.
 	*
 	* @param task the task
+=======
+	* Returns the last head in the ordered set where type = &#63;.
+	*
+	* @param type the type
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching head
 	* @throws org.gfbio.NoSuchHeadException if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+<<<<<<< HEAD
 	public org.gfbio.model.Head findByTask_Last(java.lang.String task,
+=======
+	public org.gfbio.model.Head findByType_Last(java.lang.String type,
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
+<<<<<<< HEAD
 	* Returns the last head in the ordered set where task = &#63;.
 	*
 	* @param task the task
+=======
+	* Returns the last head in the ordered set where type = &#63;.
+	*
+	* @param type the type
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching head, or <code>null</code> if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+<<<<<<< HEAD
 	public org.gfbio.model.Head fetchByTask_Last(java.lang.String task,
+=======
+	public org.gfbio.model.Head fetchByType_Last(java.lang.String type,
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+<<<<<<< HEAD
 	* Returns the heads before and after the current head in the ordered set where task = &#63;.
 	*
 	* @param headID the primary key of the current head
 	* @param task the task
+=======
+	* Returns the heads before and after the current head in the ordered set where type = &#63;.
+	*
+	* @param headID the primary key of the current head
+	* @param type the type
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next head
 	* @throws org.gfbio.NoSuchHeadException if a head with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+<<<<<<< HEAD
 	public org.gfbio.model.Head[] findByTask_PrevAndNext(long headID,
 		java.lang.String task,
+=======
+	public org.gfbio.model.Head[] findByType_PrevAndNext(long headID,
+		java.lang.String type,
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
+<<<<<<< HEAD
 	* Removes all the heads where task = &#63; from the database.
 	*
 	* @param task the task
@@ -279,6 +369,24 @@ public interface HeadPersistence extends BasePersistence<Head> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByTask(java.lang.String task)
+=======
+	* Removes all the heads where type = &#63; from the database.
+	*
+	* @param type the type
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByType(java.lang.String type)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of heads where type = &#63;.
+	*
+	* @param type the type
+	* @return the number of matching heads
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByType(java.lang.String type)
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

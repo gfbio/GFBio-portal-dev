@@ -74,7 +74,11 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 		attributes.put("headID", getHeadID());
 		attributes.put("name", getName());
+<<<<<<< HEAD
 		attributes.put("task", getTask());
+=======
+		attributes.put("type", getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		attributes.put("column01", getColumn01());
 		attributes.put("column02", getColumn02());
 		attributes.put("column03", getColumn03());
@@ -113,10 +117,17 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 			setName(name);
 		}
 
+<<<<<<< HEAD
 		String task = (String)attributes.get("task");
 
 		if (task != null) {
 			setTask(task);
+=======
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		String column01 = (String)attributes.get("column01");
@@ -287,6 +298,7 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public String getTask() {
 		return _task;
 	}
@@ -294,14 +306,29 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 	@Override
 	public void setTask(String task) {
 		_task = task;
+=======
+	public String getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(String type) {
+		_type = type;
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		if (_headRemoteModel != null) {
 			try {
 				Class<?> clazz = _headRemoteModel.getClass();
 
+<<<<<<< HEAD
 				Method method = clazz.getMethod("setTask", String.class);
 
 				method.invoke(_headRemoteModel, task);
+=======
+				Method method = clazz.getMethod("setType", String.class);
+
+				method.invoke(_headRemoteModel, type);
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -840,7 +867,11 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 		clone.setHeadID(getHeadID());
 		clone.setName(getName());
+<<<<<<< HEAD
 		clone.setTask(getTask());
+=======
+		clone.setType(getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		clone.setColumn01(getColumn01());
 		clone.setColumn02(getColumn02());
 		clone.setColumn03(getColumn03());
@@ -917,8 +948,13 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 		sb.append(getHeadID());
 		sb.append(", name=");
 		sb.append(getName());
+<<<<<<< HEAD
 		sb.append(", task=");
 		sb.append(getTask());
+=======
+		sb.append(", type=");
+		sb.append(getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		sb.append(", column01=");
 		sb.append(getColumn01());
 		sb.append(", column02=");
@@ -981,8 +1017,13 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+<<<<<<< HEAD
 			"<column><column-name>task</column-name><column-value><![CDATA[");
 		sb.append(getTask());
+=======
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>column01</column-name><column-value><![CDATA[");
@@ -1072,7 +1113,11 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 	private long _headID;
 	private String _name;
+<<<<<<< HEAD
 	private String _task;
+=======
+	private String _type;
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	private String _column01;
 	private String _column02;
 	private String _column03;

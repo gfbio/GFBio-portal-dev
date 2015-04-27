@@ -12,7 +12,11 @@
 	<model name="org.gfbio.model.Head">
 		<field name="headID" type="long" />
 		<field name="name" type="String" />
+<<<<<<< HEAD
 		<field name="task" type="String" />
+=======
+		<field name="type" type="String" />
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		<field name="column01" type="String" />
 		<field name="column02" type="String" />
 		<field name="column03" type="String" />

@@ -64,7 +64,11 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "headID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
+<<<<<<< HEAD
 			{ "task", Types.VARCHAR },
+=======
+			{ "type_", Types.VARCHAR },
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 			{ "column01", Types.VARCHAR },
 			{ "column02", Types.VARCHAR },
 			{ "column03", Types.VARCHAR },
@@ -86,7 +90,11 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 			{ "column19", Types.VARCHAR },
 			{ "column20", Types.VARCHAR }
 		};
+<<<<<<< HEAD
 	public static final String TABLE_SQL_CREATE = "create table gfbio_Head (headID LONG not null primary key,name VARCHAR(75) null,task VARCHAR(75) null,column01 VARCHAR(75) null,column02 VARCHAR(75) null,column03 VARCHAR(75) null,column04 VARCHAR(75) null,column05 VARCHAR(75) null,column06 VARCHAR(75) null,column07 VARCHAR(75) null,column08 VARCHAR(75) null,column09 VARCHAR(75) null,column10 VARCHAR(75) null,column11 VARCHAR(75) null,column12 VARCHAR(75) null,column13 VARCHAR(75) null,column14 VARCHAR(75) null,column15 VARCHAR(75) null,column16 VARCHAR(75) null,column17 VARCHAR(75) null,column18 VARCHAR(75) null,column19 VARCHAR(75) null,column20 VARCHAR(75) null)";
+=======
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Head (headID LONG not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null,column01 VARCHAR(75) null,column02 VARCHAR(75) null,column03 VARCHAR(75) null,column04 VARCHAR(75) null,column05 VARCHAR(75) null,column06 VARCHAR(75) null,column07 VARCHAR(75) null,column08 VARCHAR(75) null,column09 VARCHAR(75) null,column10 VARCHAR(75) null,column11 VARCHAR(75) null,column12 VARCHAR(75) null,column13 VARCHAR(75) null,column14 VARCHAR(75) null,column15 VARCHAR(75) null,column16 VARCHAR(75) null,column17 VARCHAR(75) null,column18 VARCHAR(75) null,column19 VARCHAR(75) null,column20 VARCHAR(75) null)";
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Head";
 	public static final String ORDER_BY_JPQL = " ORDER BY head.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Head.name ASC";
@@ -102,7 +110,11 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 			true);
 	public static long HEADID_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
+<<<<<<< HEAD
 	public static long TASK_COLUMN_BITMASK = 4L;
+=======
+	public static long TYPE_COLUMN_BITMASK = 4L;
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -119,7 +131,11 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		model.setHeadID(soapModel.getHeadID());
 		model.setName(soapModel.getName());
+<<<<<<< HEAD
 		model.setTask(soapModel.getTask());
+=======
+		model.setType(soapModel.getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		model.setColumn01(soapModel.getColumn01());
 		model.setColumn02(soapModel.getColumn02());
 		model.setColumn03(soapModel.getColumn03());
@@ -206,7 +222,11 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		attributes.put("headID", getHeadID());
 		attributes.put("name", getName());
+<<<<<<< HEAD
 		attributes.put("task", getTask());
+=======
+		attributes.put("type", getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		attributes.put("column01", getColumn01());
 		attributes.put("column02", getColumn02());
 		attributes.put("column03", getColumn03());
@@ -245,10 +265,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 			setName(name);
 		}
 
+<<<<<<< HEAD
 		String task = (String)attributes.get("task");
 
 		if (task != null) {
 			setTask(task);
+=======
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		String column01 = (String)attributes.get("column01");
@@ -423,16 +450,26 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@JSON
 	@Override
+<<<<<<< HEAD
 	public String getTask() {
 		if (_task == null) {
 			return StringPool.BLANK;
 		}
 		else {
 			return _task;
+=======
+	public String getType() {
+		if (_type == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _type;
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void setTask(String task) {
 		_columnBitmask |= TASK_COLUMN_BITMASK;
 
@@ -445,6 +482,20 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	public String getOriginalTask() {
 		return GetterUtil.getString(_originalTask);
+=======
+	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
+		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	}
 
 	@JSON
@@ -800,7 +851,11 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		headImpl.setHeadID(getHeadID());
 		headImpl.setName(getName());
+<<<<<<< HEAD
 		headImpl.setTask(getTask());
+=======
+		headImpl.setType(getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		headImpl.setColumn01(getColumn01());
 		headImpl.setColumn02(getColumn02());
 		headImpl.setColumn03(getColumn03());
@@ -877,7 +932,11 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		headModelImpl._originalName = headModelImpl._name;
 
+<<<<<<< HEAD
 		headModelImpl._originalTask = headModelImpl._task;
+=======
+		headModelImpl._originalType = headModelImpl._type;
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		headModelImpl._columnBitmask = 0;
 	}
@@ -896,12 +955,21 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 			headCacheModel.name = null;
 		}
 
+<<<<<<< HEAD
 		headCacheModel.task = getTask();
 
 		String task = headCacheModel.task;
 
 		if ((task != null) && (task.length() == 0)) {
 			headCacheModel.task = null;
+=======
+		headCacheModel.type = getType();
+
+		String type = headCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			headCacheModel.type = null;
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		headCacheModel.column01 = getColumn01();
@@ -1075,8 +1143,13 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		sb.append(getHeadID());
 		sb.append(", name=");
 		sb.append(getName());
+<<<<<<< HEAD
 		sb.append(", task=");
 		sb.append(getTask());
+=======
+		sb.append(", type=");
+		sb.append(getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		sb.append(", column01=");
 		sb.append(getColumn01());
 		sb.append(", column02=");
@@ -1139,8 +1212,13 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+<<<<<<< HEAD
 			"<column><column-name>task</column-name><column-value><![CDATA[");
 		sb.append(getTask());
+=======
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>column01</column-name><column-value><![CDATA[");
@@ -1235,8 +1313,13 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	private boolean _setOriginalHeadID;
 	private String _name;
 	private String _originalName;
+<<<<<<< HEAD
 	private String _task;
 	private String _originalTask;
+=======
+	private String _type;
+	private String _originalType;
+>>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	private String _column01;
 	private String _column02;
 	private String _column03;
