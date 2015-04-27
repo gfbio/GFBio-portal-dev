@@ -266,12 +266,23 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Head> getHeadList(
+		java.lang.String task)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getName(long headID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getNameArray();
+	public java.lang.String[] getNameArray(java.lang.String task)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getNameArray(
+		java.util.List<org.gfbio.model.Head> headList)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.Head getRow(long headID)
@@ -287,15 +298,16 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.Boolean updateHead(long headID, java.lang.String name,
-		java.lang.String column01, java.lang.String column02,
-		java.lang.String column03, java.lang.String column04,
-		java.lang.String column05, java.lang.String column06,
-		java.lang.String column07, java.lang.String column08,
-		java.lang.String column09, java.lang.String column10,
-		java.lang.String column11, java.lang.String column12,
-		java.lang.String column13, java.lang.String column14,
-		java.lang.String column15, java.lang.String column16,
-		java.lang.String column17, java.lang.String column18,
-		java.lang.String column19, java.lang.String column20)
+		java.lang.String task, java.lang.String column01,
+		java.lang.String column02, java.lang.String column03,
+		java.lang.String column04, java.lang.String column05,
+		java.lang.String column06, java.lang.String column07,
+		java.lang.String column08, java.lang.String column09,
+		java.lang.String column10, java.lang.String column11,
+		java.lang.String column12, java.lang.String column13,
+		java.lang.String column14, java.lang.String column15,
+		java.lang.String column16, java.lang.String column17,
+		java.lang.String column18, java.lang.String column19,
+		java.lang.String column20)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

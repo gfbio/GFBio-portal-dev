@@ -20,6 +20,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="javax.portlet.RenderResponse" %>
 
 <%@ page import="org.gfbio.model.Head" %>
+<%@ page import="org.gfbio.model.Position" %>
 <%@ page import="org.gfbio.model.Project" %>
 <%@ page import="org.gfbio.model.ResearchObject" %>
 <%@ page import="org.gfbio.service.HeadLocalServiceUtil" %>

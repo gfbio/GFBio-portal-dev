@@ -21,8 +21,6 @@ import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.model.Head;
-import org.gfbio.service.HeadLocalServiceUtil;
-import org.gfbio.service.PositionLocalServiceUtil;
 import org.gfbio.service.base.HeadLocalServiceBaseImpl;
 
 /**
@@ -104,7 +102,12 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 
 	public List<Head> getHeadList() throws SystemException {
+		System.out.println(headPersistence.findAll().toString());
 		return headPersistence.findAll();
+	}
+	
+	public List<Head> getHeadList(String task) throws SystemException {
+		return headPersistence.findByTask(task);
 	}
 	
 
@@ -113,8 +116,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	}
 	
 
-	public String[] getNameArray() {
-
+/*	public String[] getNameArray() {
 		List<Head> headList;
 		String[] names = null;
 		try {
@@ -125,6 +127,30 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				for (int i = 0; i<headList.size(); i++)
 					names[i] = headList.get(i).getName();
 		} catch (SystemException e1) {e1.printStackTrace();}
+		return names;
+	}*/
+	
+	public String[] getNameArray(String task) throws SystemException  {
+
+		List<Head> headList;
+		if (task.equals(""))
+			headList = null;
+		else
+			headList = getHeadList(task);
+		return getNameArray(headList);
+	}
+	
+	public String[] getNameArray(List<Head> headList) throws SystemException {
+
+		String[] names = null;
+		if (headList == null)
+			headList = headPersistence.findAll();
+
+		names = new String[headList.size()];
+		if (headList!= null)
+			for (int i = 0; i<headList.size(); i++)
+				names[i] = headList.get(i).getName();
+
 		return names;
 	}
 
@@ -141,38 +167,38 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 	public Boolean setStandard() throws SystemException {
 		Boolean check = true;
-		//check = updateHead(0, "gfbio_", "","","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_category"    ,"name","label","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware" , "name","label","version","local_usible","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_fileformat"   , "name","labe","version","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_metadata"    , "name","label","version","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_persistentidentifier" , "name","label","has_fee_on_id_registration","kind_of_id_organisation","change_on_id_possible","resolves_data_types","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_researchfield"   , "name","","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_type"     , "name","","","","","","","","","","","","","","","","","","","");
+		//check = updateHead(0, "gfbio_", "", "","","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_category"    			, "table","name","label","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware" , "table","name","label","version","local_usible","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_fileformat"   			, "table","name","labe","version","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_metadata"    			, "table","name","label","version","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_persistentidentifier" 	, "table","name","label","has_fee_on_id_registration","kind_of_id_organisation","change_on_id_possible","resolves_data_types","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_researchfield"   		, "table","name","","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_type"     				, "table","name","","","","","","","","","","","","","","","","","","","");
 
-		check = updateHead(0, "gfbio_category_researchfield"   , "categoryid","researchfieldid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_category_type", "categoryid","typeid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware_dataprovider", "datamanagmentsoftwareid","dataproviderid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware_fileformat" , "datamanagmentsoftwareid","fileformatid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware_metadata" , "datamanagmentsoftwareid","metadataid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_dataprovider_metadata"    , "dataproviderid","metadataid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_dataprovider_persistentidentifier" , "dataproviderid","persistentidentifierid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_gfbio_fileformat_license", "fileformatid", "licenseid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_gfbio_persistentidentifier_rule", "persistentidentifierid","ruleid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_category_researchfield"   			, "relation","categoryid","researchfieldid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_category_type"						, "relation","categoryid","typeid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware_dataprovider", "relation","datamanagmentsoftwareid","dataproviderid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware_fileformat" 	, "relation","datamanagmentsoftwareid","fileformatid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_datamanagmentsoftware_metadata" 	, "relation","datamanagmentsoftwareid","metadataid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_dataprovider_metadata"    			, "relation","dataproviderid","metadataid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_dataprovider_persistentidentifier" , "relation","dataproviderid","persistentidentifierid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_gfbio_fileformat_license"			, "relation","fileformatid", "licenseid","","","","","","","","","","","","","","","","","","");
+		check = updateHead(0, "gfbio_gfbio_persistentidentifier_rule"	, "relation","persistentidentifierid","ruleid","","","","","","","","","","","","","","","","","","");
 
-		try {
-			check  = updateHead(0, "gfbio_keytable", "tablelocation","name","function","","","","","","","","","","","","","","","","","");
+/*		try {
+			check  = updateHead(0, "gfbio_keytable", "tablelocation","system","name","function","","","","","","","","","","","","","","","","","");
 			long headID = getHeadID("gfbio_keytable");
 			check = PositionLocalServiceUtil.updatePosition(0, headID, String.valueOf(HeadLocalServiceUtil.getHeadID("gfbio_metadata")), "gfbio_metadata", "table", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
 			check = PositionLocalServiceUtil.updatePosition(0, headID, String.valueOf(HeadLocalServiceUtil.getHeadID("gfbio_datamanagmentsoftware")), "gfbio_datamanagmentsoftware", "table", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
 		} catch (SystemException | NoSuchHeadException e) {e.printStackTrace();}
 		
-		check  = updateHead(0, "gfbio_relationtable", "m_table","n_table","","","","","","","","","","","","","","","","","","");
-	
+		check  = updateHead(0, "gfbio_relationtable", "system","m_table","n_table","","","","","","","","","","","","","","","","","","");
+	*/
 		return check;
 	}
 
-	public Boolean updateHead(long headID, String name, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
+	public Boolean updateHead(long headID, String name, String task, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
 
 		Boolean check = true;
 		Head head = null;
@@ -192,6 +218,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 			else
 				head = headPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 				head.setName(name);
+				head.setTask(task);
 				head.setColumn01(column01);
 				head.setColumn02(column02);
 				head.setColumn03(column03);
@@ -216,6 +243,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		}else {
 			//update head
 			head.setName(name);
+			head.setTask(task);
 			head.setColumn01(column01);
 			head.setColumn02(column02);
 			head.setColumn03(column03);

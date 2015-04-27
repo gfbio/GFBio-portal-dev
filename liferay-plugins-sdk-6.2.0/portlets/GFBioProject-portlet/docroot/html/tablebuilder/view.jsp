@@ -1,6 +1,7 @@
 <input name="csrfmiddlewaretoken" type="hidden" value="HSujo2ODIdggzYB7imfBM4Nh17ZcEp2C" />
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%!RenderResponse renderResponse; %>
 
 <jsp:useBean class="java.lang.String" id="keyWords" scope="request" />
 
@@ -15,6 +16,7 @@
 
 <% List <String> headAttributList = new ArrayList<String>();
 	headAttributList.add("headID");
+	headAttributList.add("type");
 	headAttributList.add("name");
 	headAttributList.add("column01");
 	headAttributList.add("column02");
@@ -59,17 +61,23 @@
 
 <div id=<%= "accordion_seq_panel_newTable" %> class="accordion ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" aria-labelledby="accordion_seq_header_newTable"   role="tabpanel" aria-expanded="false" aria-hidden="true"   >
 
-	<% String stTabI = "newtab_".concat(new Integer(0).toString()); %>
-
 	<div class="swHide"><div class="row">
+			<% String stTabI = "newtab_".concat(new Integer(0).toString()); %>
 			<div class="rowLato"> <label id="<%= "lato".concat(stTabI) %>"><%=headAttributList.get(0) %></label></div>
 			<div class="hidden"> <label id="<%= "lava".concat(stTabI) %>"></label>&nbsp;</div>
 			<div class="rowField"> <input type="text" class="widthL" id="<%= stTabI %>" name="<portlet:namespace/><%= stTabI %>"  value="0" /></div>
 	</div></div>
+	
+	<div class="swHide"><div class="row">
+			<%  stTabI = "newtab_".concat(new Integer(1).toString()); %>
+			<div class="rowLato"> <label id="<%= "lato".concat(stTabI) %>"><%=headAttributList.get(1) %></label></div>
+			<div class="hidden"> <label id="<%= "lava".concat(stTabI) %>"></label>&nbsp;</div>
+			<div class="rowField"> <input type="text" class="widthL" id="<%= stTabI %>" name="<portlet:namespace/><%= stTabI %>"  value="table" /></div>
+	</div></div>
 
-	<%for (int i = 1; i < headAttributList.size(); i++) { %>
-		<% stTabI = "newtab_".concat(new Integer(i).toString()); %>
+	<%for (int i = 2; i < headAttributList.size(); i++) { %>
 		<div class="row">
+			<% stTabI = "newtab_".concat(new Integer(i).toString()); %>
 			<div class="rowLato"> <label id="<%= "lato".concat(stTabI) %>"><%=headAttributList.get(i) %></label></div>
 			<div class="hidden"> <label id="<%= "lava".concat(stTabI) %>"></label>&nbsp;</div>
 			<div class="rowField"> <input type="text" class="widthL" id="<%= stTabI %>" name="<portlet:namespace/><%= stTabI %>"  value="" /></div>
@@ -96,7 +104,7 @@
 
 </div>
 
-<!-- -------------------------------------------- Choose Table ---------------------------------------------------------------->
+<!-- -------------------------------------------- Choose Table to change  table data---------------------------------------------------------------->
 
 <div id=<%= "accordion_seq_header_updateTable" %> class="toggler ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" aria-controls="accordion_seq_panel_updateTable" aria-selected="false"  tabindex="0"    >
 	<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
@@ -105,7 +113,8 @@
 
 <div id=<%= "accordion_seq_panel_updateTable" %> class="accordion ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" aria-labelledby="accordion_seq_header_updateTable"   role="tabpanel" aria-expanded="false" aria-hidden="true"   >
 
-	<% String[] names = HeadLocalServiceUtil.getNameArray(); %>
+
+	<% String[] names = HeadLocalServiceUtil.getNameArray("table"); %>
 
 	Please select one of the tables.<br>
 	<br>
@@ -208,7 +217,7 @@
 
 <div id=<%= "accordion_seq_panel_relation" %> class="accordion ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" aria-labelledby="accordion_seq_header_relation"   role="tabpanel" aria-expanded="false" aria-hidden="true"   >
 
-		<% String[] names3 = HeadLocalServiceUtil.getNameArray(); %>
+		<% String[] names3 = HeadLocalServiceUtil.getNameArray("table"); %>
 
 	Please select one of the tables.<br>
 	<br>
@@ -250,7 +259,7 @@
 	<%	if (checkID3.equals("none")){}
 		else { %>
 		
-			<% 	String[] names4 = PositionLocalServiceUtil.getNameArray(HeadLocalServiceUtil.getHeadID("gfbio_keytable"));%>
+			<% 	String[] names4 = HeadLocalServiceUtil.getNameArray("table");%>
 
 			Please select the table, that will be conect with <%=HeadLocalServiceUtil.getName(Long.valueOf(headID3).longValue()) %>.<br>
 			<br>
@@ -287,7 +296,7 @@
 
 
 
-	<% String[] names2 = HeadLocalServiceUtil.getNameArray(); %>
+	<% String[] names2 = HeadLocalServiceUtil.getNameArray("table"); %>
 
 	Please select one of the tables.<br>
 	<br>
@@ -370,7 +379,7 @@
 		<div class="row">
 			<div class="rowLato">&nbsp;</div>
 			<div class="rowLava">&nbsp;</div>
-			<div class="rowFieldB"> <input  type="button" class="widthL" value="new Content"  onclick="updateTable('<%= tablebuilderURL %>', 'newContent','newcont', '<%= positionAttributList.size() %>', 'newcont')" /></div>
+			<div class="rowFieldB"> <input  type="button" class="widthL" value="new Content"  onclick="updateTable('<%= tablebuilderURL %>', 'updateContent','newcont', '<%= positionAttributList.size() %>', 'newcont')" /></div>
 		</div>
 
 		<div class="swHide" id="hide_newcont">
@@ -381,5 +390,156 @@
 
 
 	<%} %>
+
+</div>
+
+
+<!-- -------------------------------------------- Choose Table to change  table content ---------------------------------------------------------------->
+
+<div id=<%= "accordion_seq_header_updateTable" %> class="toggler ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" aria-controls="accordion_seq_panel_updateTable" aria-selected="false"  tabindex="0"    >
+	<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
+	Change Table Content
+</div>
+
+<div id=<%= "accordion_seq_panel_updateTable" %> class="accordion ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none;" aria-labelledby="accordion_seq_header_updateTable"   role="tabpanel" aria-expanded="false" aria-hidden="true"   >
+
+
+	<% String[] names5 = HeadLocalServiceUtil.getNameArray("table"); %>
+
+	Please select one of the tables.<br>
+	<br>
+
+	<form action="select.html">
+		<select id="choTab5" name="<portlet:namespace/>choTab5" onchange="chooseProject('<%= tablebuilderURL %>','chooseTable',this.form.choTab5.options[this.form.choTab5.selectedIndex].value, 'tab_1035')" size="1" style="width:50%">
+			<option selected value="none">None </option>
+			<%if (names5.length>0){for (int i = 0; i < names5.length; i++) { %>
+					<option value="<%= names5[i] %>"> <%= names5[i]%> </option>
+			<%} } %>
+		</select>
+	</form>
+
+	<div class="swHide" id="hide_tab_1035">
+		<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
+			Switch to selected table.
+		</div>
+	</div>
+
+	<%  prefs = renderRequest.getPreferences();
+		String headID5 =(String)prefs.getValue("choTab", "none");
+		String checkID5 = "none";
+		Boolean checker5 = false;
+
+		if (headID5.equals("none")){}
+		else {
+			for (int i = 0; i < names5.length;i++)
+				if (names5[i].equals(HeadLocalServiceUtil.getName(Long.valueOf(headID5).longValue())))
+					checker5 = true;
+
+			if (checker5 == false)
+				checkID5 = "none";
+			else
+				checkID5 = headID5.toString();
+		}
+
+		if (checkID5.equals("none")){}
+		else {
+	%>
+
+	<!-- -------------------------------------------- Choose Row to change ---------------------------------------------------------------->
+
+		<div id="choseTableRow">
+			
+			<% String[] names6 = PositionLocalServiceUtil.getNameArray(Long.valueOf(headID5).longValue()); %>
+	
+			Please select one of the Rows.<br>
+			<br>
+		
+			<form action="select.html">
+				<select id="choTab6" name="<portlet:namespace/>choTab6" onchange="chooseProject2('<%= tablebuilderURL %>','chooseRow',<%=headID5 %>, this.form.choTab6.options[this.form.choTab6.selectedIndex].value, 'tab_1036')" size="1" style="width:50%">
+					<option selected value="none">None </option>
+					<%if (names6.length>0){for (int i = 0; i < names6.length; i++) { %>
+							<option value="<%= names6[i] %>"> <%= names6[i]%> </option>
+					<%} } %>
+				</select>
+			</form>
+			
+			<div class="swHide" id="hide_tab_1036">
+				<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
+					Switch to selected table.
+				</div>
+			</div>
+				
+			<%	prefs = renderRequest.getPreferences();
+				String positionID =(String)prefs.getValue("choRow", "none");			
+				String checkID6 = "none";
+				Boolean checker6 = false;
+		
+				if (positionID.equals("none")){}
+				else {
+					for (int i = 0; i < names6.length;i++)
+						if (names6[i].equals(PositionLocalServiceUtil.getColumnContent(Long.valueOf(positionID).longValue(), 1)))
+							checker6 = true;
+					if (checker6 == false)
+						checkID6 = "none";
+					else
+						checkID6 = positionID.toString();
+				}
+
+				if (checkID6.equals("none")){}
+				else { 
+			%>
+			
+				<!-- --------------------------------------- new content of a table -------------------------->
+				
+				<%	String stContI = "newcont_".concat(new Integer(0).toString());
+					int columncount = HeadLocalServiceUtil.getColumnCount(Long.valueOf(headID5).longValue()); 
+							
+					List <String> positionAttributList = new ArrayList<String>();
+					positionAttributList.add("positionID");
+					positionAttributList.add("headID");
+					for (int i =1; i <= columncount;i++) 
+						positionAttributList.add(HeadLocalServiceUtil.getColumnName(Long.valueOf(headID).longValue(),i).trim());
+				%>
+
+				
+				<div class="swHide"><div class="row">
+						<% stContI = "rowcont_".concat(new Integer(0).toString()); %>
+						<div class="rowLato"> <label id="<%= "lato".concat(stContI) %>"><%=positionAttributList.get(0) %></label></div>
+						<div class="hidden"> <label id="<%= "lava".concat(stContI) %>"></label>&nbsp;</div>
+						<div class="rowField"> <input type="text" class="widthL" id="<%= stContI %>" name="<portlet:namespace/><%= stContI %>"  value="<%=positionID %>" /></div>
+				</div></div>
+				
+				<div class="swHide"><div class="row">
+						<% stContI = "rowcont_".concat(new Integer(1).toString()); %>
+						<div class="rowLato"> <label id="<%= "lato".concat(stContI) %>"><%=positionAttributList.get(1) %></label></div>
+						<div class="hidden"> <label id="<%= "lava".concat(stContI) %>"></label>&nbsp;</div>
+						<div class="rowField"> <input type="text" class="widthL" id="<%= stContI %>" name="<portlet:namespace/><%= stContI %>"  value="<%=headID5 %>" /></div>
+				</div></div>
+				
+				<%for (int i = 2; i < positionAttributList.size(); i++) { %>
+					<% stContI = "rowcont_".concat(new Integer(i).toString()); %>
+					<div class="row">
+						<div class="rowLato"> <label id="<%= "lato".concat(stContI) %>"><%=positionAttributList.get(i) %></label></div>
+						<div class="hidden"> <label id="<%= "lava".concat(stContI) %>"></label>&nbsp;</div>
+						<div class="rowField"> <input type="text" class="widthL" id="<%= stContI %>" name="<portlet:namespace/><%= stContI %>"  value="<%= PositionLocalServiceUtil.getColumnContent(Long.valueOf(positionID).longValue(), i-1) %>" /></div>
+					</div>
+				<% } %>
+				
+				<div class="row">
+					<div class="rowLato">&nbsp;</div>
+					<div class="rowLava">&nbsp;</div>
+					<div class="rowFieldB"> <input  type="button" class="widthL" value="change Content"  onclick="updateTable('<%= tablebuilderURL %>', 'updateContent','rowcont', '<%= positionAttributList.size() %>', 'newcont')" /></div>
+				</div>
+				
+				<div class="swHide" id="hide_newcont">
+					<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
+						Create new content of Table <%= HeadLocalServiceUtil.getName(Long.valueOf(headID2).longValue()) %> is complete.
+					</div>
+				</div>
+			<%	} %>
+		</div>
+
+	<% }; %>
+			
 
 </div>

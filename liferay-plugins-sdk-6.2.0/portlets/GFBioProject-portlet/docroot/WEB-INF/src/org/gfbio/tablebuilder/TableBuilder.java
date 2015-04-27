@@ -19,6 +19,7 @@ import javax.portlet.ValidatorException;
 
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.NoSuchPositionException;
+import org.gfbio.model.Position;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PositionLocalServiceUtil;
 import org.json.simple.JSONObject;
@@ -53,6 +54,19 @@ public class TableBuilder extends GenericPortlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
+		
+/*		try {
+			Boolean check = HeadLocalServiceUtil.setStandard();
+		} catch (SystemException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		
+		
+		
+		
+
+		
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 
@@ -67,12 +81,16 @@ public class TableBuilder extends GenericPortlet {
 
 		if (request.getParameter("responseTarget") != null) {
 
+			//choose Row
+			if ("chooseRow".toString().equals(request.getParameter("responseTarget").toString()))
+				chooseRow(request, response);
+			
 			//choose Table
 			if ("chooseTable".toString().equals(request.getParameter("responseTarget").toString()))
 				chooseTable(request, response);
 
 			//new Content of a Table
-			if ("newContent".toString().equals(request.getParameter("responseTarget").toString())) {
+			if ("updateContent".toString().equals(request.getParameter("responseTarget").toString())) {
 				try {
 					updateContent(request, response);
 				} catch (NoSuchHeadException | NumberFormatException| SystemException e) {e.printStackTrace();	}
@@ -94,7 +112,33 @@ public class TableBuilder extends GenericPortlet {
 	}
 	
 	
-	// choose Dataset
+	// choose Row in Position
+	public void chooseRow(ResourceRequest request, ResourceResponse response) throws ValidatorException, IOException  {
+
+		JSONParser parser = new JSONParser();
+		JSONObject json = new JSONObject();
+
+		try {
+			json = (JSONObject) parser.parse(request.getParameter("data"));
+		} catch (ParseException e1) {e1.printStackTrace();}
+		
+		String name = (String) json.get("name");
+		long headID =(Long) json.get("id");
+		
+		Position position=null;
+		try {
+			position = PositionLocalServiceUtil.getRow(headID, name);
+		} catch (SystemException e1) {e1.printStackTrace();}
+		PortletPreferences prefs = request.getPreferences();
+		if (name != null) {
+		try {
+			prefs.setValue("choRow", Long.toString(position.getPositionID()));
+		} catch (ReadOnlyException e) {e.printStackTrace();	}
+		prefs.store();
+		}
+	}
+	
+	// choose Row in Head
 	public void chooseTable(ResourceRequest request, ResourceResponse response) throws IOException, ValidatorException {
 
 		String name = request.getParameter("data").substring(1, request.getParameter("data").length()-1);
@@ -117,6 +161,7 @@ public class TableBuilder extends GenericPortlet {
 		try {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
+		
 		
 		try {
 			Boolean check = PositionLocalServiceUtil.updatePosition(Long.valueOf(
@@ -174,7 +219,7 @@ public class TableBuilder extends GenericPortlet {
 		} catch (ParseException e1) {e1.printStackTrace();}
 
 		try {
-			Boolean check = HeadLocalServiceUtil.updateHead(Long.valueOf((String) json.get("headID")).longValue(), ((String) json.get("name")).trim(), ((String) json.get("column01")).trim(), ((String) json.get("column02")).trim(), ((String) json.get("column03")).trim(), ((String) json.get("column04")).trim(), ((String) json.get("column05")).trim(), ((String) json.get("column06")).trim(), ((String) json.get("column07")).trim(), ((String) json.get("column08")).trim(), ((String) json.get("column09")).trim(), ((String) json.get("column10")).trim(), ((String) json.get("column11")).trim(), ((String) json.get("column12")).trim(), ((String) json.get("column13")).trim(), ((String) json.get("column14")).trim(), ((String) json.get("column15")).trim(), ((String) json.get("column16")).trim(), ((String) json.get("column17")).trim(), ((String) json.get("column18")).trim(), ((String) json.get("column19")).trim(), ((String) json.get("column20")).trim());
+			Boolean check = HeadLocalServiceUtil.updateHead(Long.valueOf((String) json.get("headID")).longValue(), ((String) json.get("name")).trim(), ((String) json.get("task")).trim(), ((String) json.get("column01")).trim(), ((String) json.get("column02")).trim(), ((String) json.get("column03")).trim(), ((String) json.get("column04")).trim(), ((String) json.get("column05")).trim(), ((String) json.get("column06")).trim(), ((String) json.get("column07")).trim(), ((String) json.get("column08")).trim(), ((String) json.get("column09")).trim(), ((String) json.get("column10")).trim(), ((String) json.get("column11")).trim(), ((String) json.get("column12")).trim(), ((String) json.get("column13")).trim(), ((String) json.get("column14")).trim(), ((String) json.get("column15")).trim(), ((String) json.get("column16")).trim(), ((String) json.get("column17")).trim(), ((String) json.get("column18")).trim(), ((String) json.get("column19")).trim(), ((String) json.get("column20")).trim());
 			System.out.println("new Table: "+check);
 		} catch (SystemException e) {e.printStackTrace();}
 	}

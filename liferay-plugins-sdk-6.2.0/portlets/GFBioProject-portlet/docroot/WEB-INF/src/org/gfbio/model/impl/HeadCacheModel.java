@@ -35,12 +35,14 @@ import java.io.ObjectOutput;
 public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{headID=");
 		sb.append(headID);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", task=");
+		sb.append(task);
 		sb.append(", column01=");
 		sb.append(column01);
 		sb.append(", column02=");
@@ -97,6 +99,13 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 		}
 		else {
 			headImpl.setName(name);
+		}
+
+		if (task == null) {
+			headImpl.setTask(StringPool.BLANK);
+		}
+		else {
+			headImpl.setTask(task);
 		}
 
 		if (column01 == null) {
@@ -248,6 +257,7 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		headID = objectInput.readLong();
 		name = objectInput.readUTF();
+		task = objectInput.readUTF();
 		column01 = objectInput.readUTF();
 		column02 = objectInput.readUTF();
 		column03 = objectInput.readUTF();
@@ -280,6 +290,13 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 		}
 		else {
 			objectOutput.writeUTF(name);
+		}
+
+		if (task == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(task);
 		}
 
 		if (column01 == null) {
@@ -425,6 +442,7 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 
 	public long headID;
 	public String name;
+	public String task;
 	public String column01;
 	public String column02;
 	public String column03;

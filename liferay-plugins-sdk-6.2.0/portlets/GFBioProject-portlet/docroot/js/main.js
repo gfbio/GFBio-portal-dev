@@ -86,6 +86,17 @@ function chooseProject(archivingURL, method, data, j) {
 	window.setTimeout('reload()',5);
 }
 
+//Method to choose a Proejct
+function chooseProject2(archivingURL, method, id, name, j) {
+	var data = {};
+	console.log(id + " ||" + name);
+	data["id"] = id;
+	data["name"] = name;
+	resourceMethod(archivingURL, method, data);
+	visibleShow(j);
+	window.setTimeout('reload()',5);
+}
+
 
 
 // Method for build a new Project

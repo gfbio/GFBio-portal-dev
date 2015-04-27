@@ -87,6 +87,21 @@ public interface HeadModel extends BaseModel<Head> {
 	public void setName(String name);
 
 	/**
+	 * Returns the task of this head.
+	 *
+	 * @return the task of this head
+	 */
+	@AutoEscape
+	public String getTask();
+
+	/**
+	 * Sets the task of this head.
+	 *
+	 * @param task the task of this head
+	 */
+	public void setTask(String task);
+
+	/**
 	 * Returns the column01 of this head.
 	 *
 	 * @return the column01 of this head

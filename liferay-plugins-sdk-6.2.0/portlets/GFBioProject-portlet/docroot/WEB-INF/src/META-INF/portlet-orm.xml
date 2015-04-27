@@ -26,6 +26,7 @@
 		<attributes>
 			<id name="headID" />
 			<basic name="name" />
+			<basic name="task" />
 			<basic name="column01" />
 			<basic name="column02" />
 			<basic name="column03" />

@@ -50,6 +50,7 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 
 		attributes.put("headID", getHeadID());
 		attributes.put("name", getName());
+		attributes.put("task", getTask());
 		attributes.put("column01", getColumn01());
 		attributes.put("column02", getColumn02());
 		attributes.put("column03", getColumn03());
@@ -86,6 +87,12 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String task = (String)attributes.get("task");
+
+		if (task != null) {
+			setTask(task);
 		}
 
 		String column01 = (String)attributes.get("column01");
@@ -267,6 +274,26 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 	@Override
 	public void setName(java.lang.String name) {
 		_head.setName(name);
+	}
+
+	/**
+	* Returns the task of this head.
+	*
+	* @return the task of this head
+	*/
+	@Override
+	public java.lang.String getTask() {
+		return _head.getTask();
+	}
+
+	/**
+	* Sets the task of this head.
+	*
+	* @param task the task of this head
+	*/
+	@Override
+	public void setTask(java.lang.String task) {
+		_head.setTask(task);
 	}
 
 	/**

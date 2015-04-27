@@ -24,7 +24,7 @@ import org.gfbio.NoSuchPositionException;
 import org.gfbio.model.Head;
 import org.gfbio.model.Position;
 import org.gfbio.service.HeadLocalServiceUtil;
-import org.gfbio.service.PositionLocalServiceUtil;
+
 import org.gfbio.service.base.PositionLocalServiceBaseImpl;
 
 /**
@@ -94,6 +94,16 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
 	public Position getRow(long positionID) throws NoSuchPositionException, SystemException {
 		return positionPersistence.findByPositionID(positionID);
+	}
+	
+	public Position getRow(long headID, String name) throws SystemException {
+		List<Position> positionList;
+		Position position = null;
+		positionList = getRowList(headID);
+		for (int i =0; i < positionList.size();i++)
+			if (name.equals(positionList.get(i).getColumn01()))
+				position = positionList.get(i);
+		return position;
 	}
 
 	public List<Position> getRowList(long headID) throws SystemException {

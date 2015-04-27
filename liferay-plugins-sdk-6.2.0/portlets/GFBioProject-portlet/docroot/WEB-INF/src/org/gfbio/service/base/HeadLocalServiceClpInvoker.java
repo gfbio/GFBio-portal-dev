@@ -124,29 +124,37 @@ public class HeadLocalServiceClpInvoker {
 
 		_methodParameterTypes85 = new String[] {  };
 
-		_methodName86 = "getName";
+		_methodName86 = "getHeadList";
 
-		_methodParameterTypes86 = new String[] { "long" };
+		_methodParameterTypes86 = new String[] { "java.lang.String" };
 
-		_methodName87 = "getNameArray";
+		_methodName87 = "getName";
 
-		_methodParameterTypes87 = new String[] {  };
+		_methodParameterTypes87 = new String[] { "long" };
 
-		_methodName88 = "getRow";
+		_methodName88 = "getNameArray";
 
-		_methodParameterTypes88 = new String[] { "long" };
+		_methodParameterTypes88 = new String[] { "java.lang.String" };
 
-		_methodName89 = "getRow";
+		_methodName89 = "getNameArray";
 
-		_methodParameterTypes89 = new String[] { "java.lang.String" };
+		_methodParameterTypes89 = new String[] { "java.util.List" };
 
-		_methodName90 = "setStandard";
+		_methodName90 = "getRow";
 
-		_methodParameterTypes90 = new String[] {  };
+		_methodParameterTypes90 = new String[] { "long" };
 
-		_methodName91 = "updateHead";
+		_methodName91 = "getRow";
 
-		_methodParameterTypes91 = new String[] {
+		_methodParameterTypes91 = new String[] { "java.lang.String" };
+
+		_methodName92 = "setStandard";
+
+		_methodParameterTypes92 = new String[] {  };
+
+		_methodName93 = "updateHead";
+
+		_methodParameterTypes93 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -154,7 +162,7 @@ public class HeadLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String"
+				"java.lang.String", "java.lang.String"
 			};
 	}
 
@@ -282,31 +290,41 @@ public class HeadLocalServiceClpInvoker {
 
 		if (_methodName86.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
-			return HeadLocalServiceUtil.getName(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getHeadList((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName87.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
-			return HeadLocalServiceUtil.getNameArray();
+			return HeadLocalServiceUtil.getName(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName88.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
-			return HeadLocalServiceUtil.getRow(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getNameArray((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName89.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-			return HeadLocalServiceUtil.getRow((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getNameArray((java.util.List<org.gfbio.model.Head>)arguments[0]);
 		}
 
 		if (_methodName90.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
-			return HeadLocalServiceUtil.setStandard();
+			return HeadLocalServiceUtil.getRow(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName91.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
+			return HeadLocalServiceUtil.getRow((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName92.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
+			return HeadLocalServiceUtil.setStandard();
+		}
+
+		if (_methodName93.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
 			return HeadLocalServiceUtil.updateHead(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -323,7 +341,8 @@ public class HeadLocalServiceClpInvoker {
 				(java.lang.String)arguments[17],
 				(java.lang.String)arguments[18],
 				(java.lang.String)arguments[19],
-				(java.lang.String)arguments[20], (java.lang.String)arguments[21]);
+				(java.lang.String)arguments[20],
+				(java.lang.String)arguments[21], (java.lang.String)arguments[22]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -385,4 +404,8 @@ public class HeadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes90;
 	private String _methodName91;
 	private String[] _methodParameterTypes91;
+	private String _methodName92;
+	private String[] _methodParameterTypes92;
+	private String _methodName93;
+	private String[] _methodParameterTypes93;
 }
