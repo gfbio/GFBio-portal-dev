@@ -32,11 +32,7 @@ public class HeadSoap implements Serializable {
 
 		soapModel.setHeadID(model.getHeadID());
 		soapModel.setName(model.getName());
-<<<<<<< HEAD
 		soapModel.setTask(model.getTask());
-=======
-		soapModel.setType(model.getType());
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		soapModel.setColumn01(model.getColumn01());
 		soapModel.setColumn02(model.getColumn02());
 		soapModel.setColumn03(model.getColumn03());
@@ -125,21 +121,12 @@ public class HeadSoap implements Serializable {
 		_name = name;
 	}
 
-<<<<<<< HEAD
 	public String getTask() {
 		return _task;
 	}
 
 	public void setTask(String task) {
 		_task = task;
-=======
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String type) {
-		_type = type;
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	}
 
 	public String getColumn01() {
@@ -304,11 +291,7 @@ public class HeadSoap implements Serializable {
 
 	private long _headID;
 	private String _name;
-<<<<<<< HEAD
 	private String _task;
-=======
-	private String _type;
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	private String _column01;
 	private String _column02;
 	private String _column03;

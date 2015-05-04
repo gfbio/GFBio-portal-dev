@@ -50,11 +50,7 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 
 		attributes.put("headID", getHeadID());
 		attributes.put("name", getName());
-<<<<<<< HEAD
 		attributes.put("task", getTask());
-=======
-		attributes.put("type", getType());
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		attributes.put("column01", getColumn01());
 		attributes.put("column02", getColumn02());
 		attributes.put("column03", getColumn03());
@@ -93,17 +89,10 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 			setName(name);
 		}
 
-<<<<<<< HEAD
 		String task = (String)attributes.get("task");
 
 		if (task != null) {
 			setTask(task);
-=======
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		String column01 = (String)attributes.get("column01");
@@ -288,7 +277,6 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 	}
 
 	/**
-<<<<<<< HEAD
 	* Returns the task of this head.
 	*
 	* @return the task of this head
@@ -306,25 +294,6 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 	@Override
 	public void setTask(java.lang.String task) {
 		_head.setTask(task);
-=======
-	* Returns the type of this head.
-	*
-	* @return the type of this head
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _head.getType();
-	}
-
-	/**
-	* Sets the type of this head.
-	*
-	* @param type the type of this head
-	*/
-	@Override
-	public void setType(java.lang.String type) {
-		_head.setType(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	}
 
 	/**

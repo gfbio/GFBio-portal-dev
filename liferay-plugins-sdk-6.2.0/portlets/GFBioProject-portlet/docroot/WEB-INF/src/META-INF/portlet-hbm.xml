@@ -25,11 +25,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-<<<<<<< HEAD
 		<property name="task" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-=======
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		<property name="column01" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="column02" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="column03" type="com.liferay.portal.dao.orm.hibernate.StringType" />

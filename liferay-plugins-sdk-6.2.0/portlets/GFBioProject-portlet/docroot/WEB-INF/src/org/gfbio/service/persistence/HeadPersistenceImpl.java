@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +50,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the head service.
@@ -551,22 +549,15 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	private static final String _FINDER_COLUMN_NAME_NAME_1 = "head.name IS NULL";
 	private static final String _FINDER_COLUMN_NAME_NAME_2 = "head.name = ?";
 	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(head.name IS NULL OR head.name = '')";
-<<<<<<< HEAD
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TASK = new FinderPath(HeadModelImpl.ENTITY_CACHE_ENABLED,
 			HeadModelImpl.FINDER_CACHE_ENABLED, HeadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTask",
-=======
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE = new FinderPath(HeadModelImpl.ENTITY_CACHE_ENABLED,
-			HeadModelImpl.FINDER_CACHE_ENABLED, HeadImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 			new String[] {
 				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-<<<<<<< HEAD
 	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TASK = new FinderPath(HeadModelImpl.ENTITY_CACHE_ENABLED,
 			HeadModelImpl.FINDER_CACHE_ENABLED, HeadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTask",
@@ -582,59 +573,28 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	 * Returns all the heads where task = &#63;.
 	 *
 	 * @param task the task
-=======
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE = new FinderPath(HeadModelImpl.ENTITY_CACHE_ENABLED,
-			HeadModelImpl.FINDER_CACHE_ENABLED, HeadImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] { String.class.getName() },
-			HeadModelImpl.TYPE_COLUMN_BITMASK |
-			HeadModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_TYPE = new FinderPath(HeadModelImpl.ENTITY_CACHE_ENABLED,
-			HeadModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] { String.class.getName() });
-
-	/**
-	 * Returns all the heads where type = &#63;.
-	 *
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @return the matching heads
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public List<Head> findByTask(String task) throws SystemException {
 		return findByTask(task, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the heads where task = &#63;.
-=======
-	public List<Head> findByType(String type) throws SystemException {
-		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the heads where type = &#63;.
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.HeadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-<<<<<<< HEAD
 	 * @param task the task
-=======
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @param start the lower bound of the range of heads
 	 * @param end the upper bound of the range of heads (not inclusive)
 	 * @return the range of matching heads
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public List<Head> findByTask(String task, int start, int end)
 		throws SystemException {
 		return findByTask(task, start, end, null);
@@ -642,25 +602,12 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 	/**
 	 * Returns an ordered range of all the heads where task = &#63;.
-=======
-	public List<Head> findByType(String type, int start, int end)
-		throws SystemException {
-		return findByType(type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the heads where type = &#63;.
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.HeadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-<<<<<<< HEAD
 	 * @param task the task
-=======
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @param start the lower bound of the range of heads
 	 * @param end the upper bound of the range of heads (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -668,11 +615,7 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public List<Head> findByTask(String task, int start, int end,
-=======
-	public List<Head> findByType(String type, int start, int end,
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -681,21 +624,12 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-<<<<<<< HEAD
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TASK;
 			finderArgs = new Object[] { task };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TASK;
 			finderArgs = new Object[] { task, start, end, orderByComparator };
-=======
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE;
-			finderArgs = new Object[] { type };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE;
-			finderArgs = new Object[] { type, start, end, orderByComparator };
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		List<Head> list = (List<Head>)FinderCacheUtil.getResult(finderPath,
@@ -703,11 +637,7 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (Head head : list) {
-<<<<<<< HEAD
 				if (!Validator.equals(task, head.getTask())) {
-=======
-				if (!Validator.equals(type, head.getType())) {
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 					list = null;
 
 					break;
@@ -728,7 +658,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 			query.append(_SQL_SELECT_HEAD_WHERE);
 
-<<<<<<< HEAD
 			boolean bindTask = false;
 
 			if (task == null) {
@@ -741,20 +670,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 				bindTask = true;
 
 				query.append(_FINDER_COLUMN_TASK_TASK_2);
-=======
-			boolean bindType = false;
-
-			if (type == null) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_1);
-			}
-			else if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				query.append(_FINDER_COLUMN_TYPE_TYPE_2);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 			}
 
 			if (orderByComparator != null) {
@@ -777,13 +692,8 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-<<<<<<< HEAD
 				if (bindTask) {
 					qPos.add(task);
-=======
-				if (bindType) {
-					qPos.add(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 				}
 
 				if (!pagination) {
@@ -817,32 +727,19 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Returns the first head in the ordered set where task = &#63;.
 	 *
 	 * @param task the task
-=======
-	 * Returns the first head in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching head
 	 * @throws org.gfbio.NoSuchHeadException if a matching head could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public Head findByTask_First(String task,
 		OrderByComparator orderByComparator)
 		throws NoSuchHeadException, SystemException {
 		Head head = fetchByTask_First(task, orderByComparator);
-=======
-	public Head findByType_First(String type,
-		OrderByComparator orderByComparator)
-		throws NoSuchHeadException, SystemException {
-		Head head = fetchByType_First(type, orderByComparator);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		if (head != null) {
 			return head;
@@ -852,13 +749,8 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-<<<<<<< HEAD
 		msg.append("task=");
 		msg.append(task);
-=======
-		msg.append("type=");
-		msg.append(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -866,29 +758,17 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Returns the first head in the ordered set where task = &#63;.
 	 *
 	 * @param task the task
-=======
-	 * Returns the first head in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching head, or <code>null</code> if a matching head could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public Head fetchByTask_First(String task,
 		OrderByComparator orderByComparator) throws SystemException {
 		List<Head> list = findByTask(task, 0, 1, orderByComparator);
-=======
-	public Head fetchByType_First(String type,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<Head> list = findByType(type, 0, 1, orderByComparator);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -898,30 +778,18 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Returns the last head in the ordered set where task = &#63;.
 	 *
 	 * @param task the task
-=======
-	 * Returns the last head in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching head
 	 * @throws org.gfbio.NoSuchHeadException if a matching head could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public Head findByTask_Last(String task, OrderByComparator orderByComparator)
 		throws NoSuchHeadException, SystemException {
 		Head head = fetchByTask_Last(task, orderByComparator);
-=======
-	public Head findByType_Last(String type, OrderByComparator orderByComparator)
-		throws NoSuchHeadException, SystemException {
-		Head head = fetchByType_Last(type, orderByComparator);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		if (head != null) {
 			return head;
@@ -931,13 +799,8 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-<<<<<<< HEAD
 		msg.append("task=");
 		msg.append(task);
-=======
-		msg.append("type=");
-		msg.append(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -945,39 +808,23 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Returns the last head in the ordered set where task = &#63;.
 	 *
 	 * @param task the task
-=======
-	 * Returns the last head in the ordered set where type = &#63;.
-	 *
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching head, or <code>null</code> if a matching head could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public Head fetchByTask_Last(String task,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTask(task);
-=======
-	public Head fetchByType_Last(String type,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByType(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		if (count == 0) {
 			return null;
 		}
 
-<<<<<<< HEAD
 		List<Head> list = findByTask(task, count - 1, count, orderByComparator);
-=======
-		List<Head> list = findByType(type, count - 1, count, orderByComparator);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -987,28 +834,17 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Returns the heads before and after the current head in the ordered set where task = &#63;.
 	 *
 	 * @param headID the primary key of the current head
 	 * @param task the task
-=======
-	 * Returns the heads before and after the current head in the ordered set where type = &#63;.
-	 *
-	 * @param headID the primary key of the current head
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next head
 	 * @throws org.gfbio.NoSuchHeadException if a head with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public Head[] findByTask_PrevAndNext(long headID, String task,
-=======
-	public Head[] findByType_PrevAndNext(long headID, String type,
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		OrderByComparator orderByComparator)
 		throws NoSuchHeadException, SystemException {
 		Head head = findByPrimaryKey(headID);
@@ -1020,20 +856,12 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 			Head[] array = new HeadImpl[3];
 
-<<<<<<< HEAD
 			array[0] = getByTask_PrevAndNext(session, head, task,
-=======
-			array[0] = getByType_PrevAndNext(session, head, type,
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 					orderByComparator, true);
 
 			array[1] = head;
 
-<<<<<<< HEAD
 			array[2] = getByTask_PrevAndNext(session, head, task,
-=======
-			array[2] = getByType_PrevAndNext(session, head, type,
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 					orderByComparator, false);
 
 			return array;
@@ -1046,13 +874,8 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 		}
 	}
 
-<<<<<<< HEAD
 	protected Head getByTask_PrevAndNext(Session session, Head head,
 		String task, OrderByComparator orderByComparator, boolean previous) {
-=======
-	protected Head getByType_PrevAndNext(Session session, Head head,
-		String type, OrderByComparator orderByComparator, boolean previous) {
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1065,7 +888,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 		query.append(_SQL_SELECT_HEAD_WHERE);
 
-<<<<<<< HEAD
 		boolean bindTask = false;
 
 		if (task == null) {
@@ -1078,20 +900,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 			bindTask = true;
 
 			query.append(_FINDER_COLUMN_TASK_TASK_2);
-=======
-		boolean bindType = false;
-
-		if (type == null) {
-			query.append(_FINDER_COLUMN_TYPE_TYPE_1);
-		}
-		else if (type.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_TYPE_TYPE_3);
-		}
-		else {
-			bindType = true;
-
-			query.append(_FINDER_COLUMN_TYPE_TYPE_2);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		if (orderByComparator != null) {
@@ -1162,13 +970,8 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-<<<<<<< HEAD
 		if (bindTask) {
 			qPos.add(task);
-=======
-		if (bindType) {
-			qPos.add(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		if (orderByComparator != null) {
@@ -1190,7 +993,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Removes all the heads where task = &#63; from the database.
 	 *
 	 * @param task the task
@@ -1199,46 +1001,23 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	@Override
 	public void removeByTask(String task) throws SystemException {
 		for (Head head : findByTask(task, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-=======
-	 * Removes all the heads where type = &#63; from the database.
-	 *
-	 * @param type the type
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByType(String type) throws SystemException {
-		for (Head head : findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 				null)) {
 			remove(head);
 		}
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Returns the number of heads where task = &#63;.
 	 *
 	 * @param task the task
-=======
-	 * Returns the number of heads where type = &#63;.
-	 *
-	 * @param type the type
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	 * @return the number of matching heads
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-<<<<<<< HEAD
 	public int countByTask(String task) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_TASK;
 
 		Object[] finderArgs = new Object[] { task };
-=======
-	public int countByType(String type) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_TYPE;
-
-		Object[] finderArgs = new Object[] { type };
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1248,7 +1027,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 			query.append(_SQL_COUNT_HEAD_WHERE);
 
-<<<<<<< HEAD
 			boolean bindTask = false;
 
 			if (task == null) {
@@ -1261,20 +1039,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 				bindTask = true;
 
 				query.append(_FINDER_COLUMN_TASK_TASK_2);
-=======
-			boolean bindType = false;
-
-			if (type == null) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_1);
-			}
-			else if (type.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_TYPE_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				query.append(_FINDER_COLUMN_TYPE_TYPE_2);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 			}
 
 			String sql = query.toString();
@@ -1288,13 +1052,8 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-<<<<<<< HEAD
 				if (bindTask) {
 					qPos.add(task);
-=======
-				if (bindType) {
-					qPos.add(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 				}
 
 				count = (Long)q.uniqueResult();
@@ -1314,15 +1073,9 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 		return count.intValue();
 	}
 
-<<<<<<< HEAD
 	private static final String _FINDER_COLUMN_TASK_TASK_1 = "head.task IS NULL";
 	private static final String _FINDER_COLUMN_TASK_TASK_2 = "head.task = ?";
 	private static final String _FINDER_COLUMN_TASK_TASK_3 = "(head.task IS NULL OR head.task = '')";
-=======
-	private static final String _FINDER_COLUMN_TYPE_TYPE_1 = "head.type IS NULL";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "head.type = ?";
-	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(head.type IS NULL OR head.type = '')";
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 	public HeadPersistenceImpl() {
 		setModelClass(Head.class);
@@ -1621,7 +1374,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 		else {
 			if ((headModelImpl.getColumnBitmask() &
-<<<<<<< HEAD
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TASK.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { headModelImpl.getOriginalTask() };
 
@@ -1633,19 +1385,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TASK, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TASK,
-=======
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { headModelImpl.getOriginalType() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
-					args);
-
-				args = new Object[] { headModelImpl.getType() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 					args);
 			}
 		}
@@ -1671,11 +1410,7 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 
 		headImpl.setHeadID(head.getHeadID());
 		headImpl.setName(head.getName());
-<<<<<<< HEAD
 		headImpl.setTask(head.getTask());
-=======
-		headImpl.setType(head.getType());
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		headImpl.setColumn01(head.getColumn01());
 		headImpl.setColumn02(head.getColumn02());
 		headImpl.setColumn03(head.getColumn03());
@@ -1970,11 +1705,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 		return count.intValue();
 	}
 
-	@Override
-	protected Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
 	/**
 	 * Initializes the head persistence.
 	 */
@@ -2017,9 +1747,6 @@ public class HeadPersistenceImpl extends BasePersistenceImpl<Head>
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(HeadPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type"
-			});
 	private static Head _nullHead = new HeadImpl() {
 			@Override
 			public Object clone() {

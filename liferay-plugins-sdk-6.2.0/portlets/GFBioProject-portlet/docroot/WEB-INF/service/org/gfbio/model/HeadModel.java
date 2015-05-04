@@ -87,7 +87,6 @@ public interface HeadModel extends BaseModel<Head> {
 	public void setName(String name);
 
 	/**
-<<<<<<< HEAD
 	 * Returns the task of this head.
 	 *
 	 * @return the task of this head
@@ -101,21 +100,6 @@ public interface HeadModel extends BaseModel<Head> {
 	 * @param task the task of this head
 	 */
 	public void setTask(String task);
-=======
-	 * Returns the type of this head.
-	 *
-	 * @return the type of this head
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this head.
-	 *
-	 * @param type the type of this head
-	 */
-	public void setType(String type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 
 	/**
 	 * Returns the column01 of this head.

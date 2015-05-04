@@ -22,6 +22,10 @@
 <body >
 
 	<%if (PortalUtil.getUser(request)==null){ %>
+	
+		<div class="portlet-msg-alert">
+			Please sign in to use the project profile.
+		</div>
 
 	<%}else { %>
 
@@ -51,11 +55,8 @@
 			projectList = null;
 			try {
 				 projectList = ProjectLocalServiceUtil.getProjectList(userID);
-			} catch (NoSuchModelException e) {
-				e.printStackTrace();
-			} catch (SystemException e) {
-					e.printStackTrace();
-			}
+			} catch (NoSuchModelException e)	{e.printStackTrace();
+			} catch (SystemException e) 		{e.printStackTrace();}
 		%>
 
 		<p/>
@@ -93,7 +94,7 @@
 			<div class="row">
 				<div class="rowLato">&nbsp;</div>
 				<div class="rowLava">&nbsp;</div>
-				<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%= archivingURL %>', 'newProject','newprous', '<%= attributList.size() %>', '102', <%= userID %>)" /></div>
+				<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%= projectprofileURL %>', 'newProject','newprous', '<%= attributList.size() %>', '102', <%= userID %>)" /></div>
 			</div>
 
 			<div class="swHide" id="hide_102">
@@ -126,7 +127,7 @@
 			<br>
 
 			<form action="select.html">
-				<select id="choPro" name="<portlet:namespace/>choPro" onchange="chooseProject('<%= archivingURL %>','choosePro',this.form.choPro.options[this.form.choPro.selectedIndex].value, '103')" size="1" style="width:50%">
+				<select id="choPro" name="<portlet:namespace/>choPro" onchange="chooseProject('<%= projectprofileURL %>','choosePro',this.form.choPro.options[this.form.choPro.selectedIndex].value, '103')" size="1" style="width:50%">
 					<option selected value="none">None </option>
 					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
 						<option value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
@@ -172,7 +173,7 @@
 				<div class="row">
 					<div class="rowLato">&nbsp;</div>
 					<div class="rowLava">&nbsp;</div>
-					<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%= archivingURL %>', 'newProject','newpro', '<%= attributList.size() %>', '100001', <%= userID %>)" /></div>
+					<div class="rowFieldB"> <input  type="button" class="widthL" value="new Project"  onclick="newProject('<%= projectprofileURL %>', 'newProject','newpro', '<%= attributList.size() %>', '100001', <%= userID %>)" /></div>
 				</div>
 
 				<div class="swHide" id="hide_100001">
@@ -188,9 +189,10 @@
 				</div>
 
 			</div>
+			
+			<!-- -------------------------------- choose project check ------------------------------------------------->
 
-
-			<% String checkID = "none";
+			<%	String checkID = "none";
 				Boolean checker = false;
 
 				if (projectID.equals("none")){}
@@ -203,9 +205,8 @@
 					else
 						checkID = projectID.toString();
 				}
-			%>
-
-			<% if (checkID.equals("none")){}
+				
+				if (checkID.equals("none")){}
 				else {
 			%>
 
@@ -240,7 +241,7 @@
 					<div class="row">
 						<div class="rowLato">&nbsp;</div>
 						<div class="rowLava">&nbsp;</div>
-						<div class="rowFieldB"><input type="button" class="widthL" value="Change"  onclick=" updateProject('<%= archivingURL %>', 'updateProject', 'project', '<%= attributList.size() %>', '104', '<%= userID %>')" /></div>
+						<div class="rowFieldB"><input type="button" class="widthL" value="Change"  onclick=" updateProject('<%= projectprofileURL %>', 'updateProject', 'project', '<%= attributList.size() %>', '104', '<%= userID %>')" /></div>
 					</div>
 					<p/>
 
@@ -314,7 +315,7 @@
 										<div class="swHide">
 											<div class="rowLato">&nbsp;</div>
 											<div class="rowLava">&nbsp;</div>
-											<div class="rowField"><input type="button" class="widthL" value="Change" onclick="resourceMethod_JI('<%=archivingURL %>', 'changeMolecular','mole','<%= j %>','<%=metadata.size() %>')" /></div>
+											<div class="rowField"><input type="button" class="widthL" value="Change" onclick="resourceMethod_JI('<%=projectprofileURL %>', 'changeMolecular','mole','<%= j %>','<%=metadata.size() %>')" /></div>
 										</div>
 									<%} %>
 								</div>

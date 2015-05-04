@@ -26,13 +26,7 @@
 		<attributes>
 			<id name="headID" />
 			<basic name="name" />
-<<<<<<< HEAD
 			<basic name="task" />
-=======
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 			<basic name="column01" />
 			<basic name="column02" />
 			<basic name="column03" />

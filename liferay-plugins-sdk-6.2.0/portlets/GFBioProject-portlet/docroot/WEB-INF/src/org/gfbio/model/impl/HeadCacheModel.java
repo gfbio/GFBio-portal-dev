@@ -41,13 +41,8 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 		sb.append(headID);
 		sb.append(", name=");
 		sb.append(name);
-<<<<<<< HEAD
 		sb.append(", task=");
 		sb.append(task);
-=======
-		sb.append(", type=");
-		sb.append(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		sb.append(", column01=");
 		sb.append(column01);
 		sb.append(", column02=");
@@ -106,19 +101,11 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 			headImpl.setName(name);
 		}
 
-<<<<<<< HEAD
 		if (task == null) {
 			headImpl.setTask(StringPool.BLANK);
 		}
 		else {
 			headImpl.setTask(task);
-=======
-		if (type == null) {
-			headImpl.setType(StringPool.BLANK);
-		}
-		else {
-			headImpl.setType(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		if (column01 == null) {
@@ -270,11 +257,7 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		headID = objectInput.readLong();
 		name = objectInput.readUTF();
-<<<<<<< HEAD
 		task = objectInput.readUTF();
-=======
-		type = objectInput.readUTF();
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		column01 = objectInput.readUTF();
 		column02 = objectInput.readUTF();
 		column03 = objectInput.readUTF();
@@ -309,19 +292,11 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 			objectOutput.writeUTF(name);
 		}
 
-<<<<<<< HEAD
 		if (task == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(task);
-=======
-		if (type == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(type);
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 		}
 
 		if (column01 == null) {
@@ -467,11 +442,7 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 
 	public long headID;
 	public String name;
-<<<<<<< HEAD
 	public String task;
-=======
-	public String type;
->>>>>>> d176538f54c6fe9eaf90e718ab7fcc3a5bdc8b96
 	public String column01;
 	public String column02;
 	public String column03;
