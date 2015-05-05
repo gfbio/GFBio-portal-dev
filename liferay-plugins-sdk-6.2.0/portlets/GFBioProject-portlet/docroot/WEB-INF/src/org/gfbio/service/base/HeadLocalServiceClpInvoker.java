@@ -164,6 +164,12 @@ public class HeadLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String"
 			};
+
+		_methodName94 = "updateRelationTable";
+
+		_methodParameterTypes94 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -345,6 +351,12 @@ public class HeadLocalServiceClpInvoker {
 				(java.lang.String)arguments[21], (java.lang.String)arguments[22]);
 		}
 
+		if (_methodName94.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
+			return HeadLocalServiceUtil.updateRelationTable(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -408,4 +420,6 @@ public class HeadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes92;
 	private String _methodName93;
 	private String[] _methodParameterTypes93;
+	private String _methodName94;
+	private String[] _methodParameterTypes94;
 }

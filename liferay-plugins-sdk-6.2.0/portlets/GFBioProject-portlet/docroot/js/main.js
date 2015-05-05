@@ -22,6 +22,17 @@ function changeToMinus(j) {
 
 
 
+/////////////////////////////////////////   content  //////////////////////////////////////////////
+
+
+//page
+//$( "#testerer" ).load( "/html/tablebuilder/explanation.jsp");
+//$( "#testerer" ).load( path.concat("/html/tablebuilder/explanation.jsp"));
+
+
+
+
+
 /////////////////////////////////////////   hide/show scripts  //////////////////////////////////////////////
 
 function showhide2(j) {
@@ -64,6 +75,8 @@ function visibleShow(j) {
 };
 
 function visibleHide(j) {
+	console.log(j);
+	console.log("hide_".concat(j));
 	document.getElementById("hide_".concat(j)).className = "swHide";
 };
 
@@ -152,8 +165,8 @@ function newProject(archivingURL, method, name, size, hide,  userID) {
 	}
 }
 
-function newTable(archivingURL, method, name, size, hide) {
-	resourceMethod_I(archivingURL, method, name, size,  0);
+function newTable(archivingURL, method, name, size, hide, task) {
+	resourceMethod_I(archivingURL, method, name, size,  task);
 	cleanTextSet(name, size);
 	updateLaVaSet_I(name, size);
 	visibleShow(hide.concat("_true"));
@@ -177,20 +190,20 @@ function updateProject (archivingURL, method, name, size, hide, userID) {
 
 //Method to update a RelationTable in Head
 function updateRelationTable (archivingURL, method, mtable, ntable, hide) {
-//	console.log(archivingURL+ " || "+ method+ " || "+  mtable+ " || "+ ntable+ " || "+ hide);
+	console.log(archivingURL+ " || "+ method+ " || "+  mtable+ " || "+ ntable+ " || "+ hide);
 	var data = {};
 	data["mtable"] = mtable;
 	data["ntable"] = ntable;
 	resourceMethod(archivingURL, method, data);
 	visibleShow(hide);
-	window.setTimeout("visibleHide('+hide+')",1500);
+	window.setTimeout('visibleHide('+hide+')',1500);
 }
 
 //Method to update a Table in Head
-function updateTable (archivingURL, method, name, size, hide) {
-	resourceMethod_I(archivingURL, method, name, size, 0);
+function updateTable (archivingURL, method, name, size, hide, task) {
+	resourceMethod_I(archivingURL, method, name, size, task);
 	visibleShow(hide);
-	window.setTimeout("visibleHide('+hide+')",1500);
+	window.setTimeout('visibleHide('+hide+')',1500);
 }
 
 //generally Methods
@@ -201,7 +214,6 @@ function resourceMethod(archivingURL, method, data) {
 function resourceMethod_I(archivingURL, method, name, size, relationID) {
 	var str ;
 	var data = {};
-	console.log("relationID: "+relationID);
 	data["relationID"] = relationID;
 	for (var i = 0; i < size; i++) {
 		str = name.concat("_").concat(i);

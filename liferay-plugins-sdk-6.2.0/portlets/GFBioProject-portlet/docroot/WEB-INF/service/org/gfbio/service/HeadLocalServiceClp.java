@@ -164,6 +164,12 @@ public class HeadLocalServiceClp implements HeadLocalService {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String"
 			};
+
+		_methodName31 = "updateRelationTable";
+
+		_methodParameterTypes31 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 	}
 
 	@Override
@@ -1139,6 +1145,51 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.lang.Boolean updateRelationTable(long headID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] {
+						headID,
+						
+					ClpSerializer.translateInput(mtable),
+						
+					ClpSerializer.translateInput(ntable)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchHeadException) {
+				throw (org.gfbio.NoSuchHeadException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchPositionException) {
+				throw (org.gfbio.NoSuchPositionException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1200,4 +1251,6 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	private String[] _methodParameterTypes29;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
 }

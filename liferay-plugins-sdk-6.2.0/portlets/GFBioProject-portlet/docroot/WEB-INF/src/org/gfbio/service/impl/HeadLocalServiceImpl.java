@@ -17,10 +17,14 @@ package org.gfbio.service.impl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
+import org.gfbio.NoSuchPositionException;
 import org.gfbio.model.Head;
+import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.HeadLocalServiceBaseImpl;
 
 /**
@@ -197,7 +201,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	*/
 		return check;
 	}
-
+	
 	public Boolean updateHead(long headID, String name, String task, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
 
 		Boolean check = true;
@@ -267,6 +271,49 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 			super.updateHead(head);
 		}
 
+		return check;
+	}
+	
+	public Boolean updateRelationTable(long headID, String mtable, String ntable)throws SystemException, NoSuchHeadException, NoSuchPositionException{
+
+		Boolean check = true;
+		mtable = mtable.trim();
+		ntable = ntable.trim();
+		//List<Position> rows = positionPersistence.findByHeadID(HeadLocalServiceUtil.getHeadID("gfbio_relationtable"));
+		
+
+		
+		List <Head> headList = HeadLocalServiceUtil.getHeadList("relation");
+		
+		
+		if (mtable.equals(ntable))
+			check = false;
+		else{
+			
+			//sort table names
+			List <String> names = new ArrayList<String>();
+			names.add(mtable);
+			names.add(ntable);
+			Collections.sort(names);
+			mtable = names.get(0);
+			ntable = names.get(1);
+			
+			//check, that relation table do not existing
+			for (int i =0;i < headList.size();i++){
+				System.out.println(i+" "+mtable+" "+headList.get(i).getColumn01());
+				if (mtable.equals(headList.get(i).getColumn01()))
+					if (ntable.equals(headList.get(i).getColumn01()))
+						check = false;
+				if (ntable.equals(headList.get(i).getColumn01()))
+					if (mtable.equals(headList.get(i).getColumn01()))
+						check = false;
+			}
+		}
+				
+		if (check == true)
+			check = updateHead(headID, "gfbio_".concat(mtable.substring(6)).concat("_").concat(ntable.substring(6)), "relation", mtable, ntable,"","","","","","","","","","","","","","","","","","");
+		
+		System.out.println(check);
 		return check;
 	}
 

@@ -132,15 +132,9 @@ public class PositionLocalServiceClp implements PositionLocalService {
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "updateRelationTable";
+		_methodName25 = "updatePosition";
 
 		_methodParameterTypes25 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
-			};
-
-		_methodName26 = "updatePosition";
-
-		_methodParameterTypes26 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -876,51 +870,6 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
-	public java.lang.Boolean updateRelationTable(long positionID,
-		java.lang.String mtable, java.lang.String ntable)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
-					new Object[] {
-						positionID,
-						
-					ClpSerializer.translateInput(mtable),
-						
-					ClpSerializer.translateInput(ntable)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof org.gfbio.NoSuchHeadException) {
-				throw (org.gfbio.NoSuchHeadException)t;
-			}
-
-			if (t instanceof org.gfbio.NoSuchPositionException) {
-				throw (org.gfbio.NoSuchPositionException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public java.lang.Boolean updatePosition(long positionID, long headID,
 		java.lang.String column01, java.lang.String column02,
 		java.lang.String column03, java.lang.String column04,
@@ -936,8 +885,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						positionID,
 						
@@ -1054,6 +1003,4 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
-	private String _methodName26;
-	private String[] _methodParameterTypes26;
 }

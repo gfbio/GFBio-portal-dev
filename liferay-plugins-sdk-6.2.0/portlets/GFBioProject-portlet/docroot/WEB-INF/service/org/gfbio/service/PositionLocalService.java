@@ -275,11 +275,6 @@ public interface PositionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
-	public java.lang.Boolean updateRelationTable(long positionID,
-		java.lang.String mtable, java.lang.String ntable)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException;
-
 	public java.lang.Boolean updatePosition(long positionID, long headID,
 		java.lang.String column01, java.lang.String column02,
 		java.lang.String column03, java.lang.String column04,

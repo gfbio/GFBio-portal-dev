@@ -132,32 +132,6 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return table;
 	}
 	
-	public Boolean updateRelationTable(long positionID, String mtable, String ntable)throws SystemException, NoSuchHeadException, NoSuchPositionException{
-
-		Boolean check = true;
-		mtable = mtable.trim();
-		ntable = ntable.trim();
-		List<Position> rows = positionPersistence.findByHeadID(HeadLocalServiceUtil.getHeadID("gfbio_relationtable"));
-		
-		if (mtable.equals(ntable))
-			check = false;
-		else
-			for (int i =0;i < rows.size();i++){
-				System.out.println(i+" "+mtable+" "+rows.get(i).getColumn01());
-				if (mtable.equals(rows.get(i).getColumn01()))
-					if (ntable.equals(rows.get(i).getColumn01()))
-						check = false;
-				if (ntable.equals(rows.get(i).getColumn01()))
-					if (mtable.equals(rows.get(i).getColumn01()))
-						check = false;
-			}
-		
-		if (check == true)
-			//check = updatePosition(positionID, HeadLocalServiceUtil.getHeadID("gfbio_relationtable"), mtable, ntable,"","","","","","","","","","","","","","","","","", "");
-		
-		System.out.println(check);
-		return check;
-	}
 
 	public Boolean updatePosition(long positionID, long headID, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
 

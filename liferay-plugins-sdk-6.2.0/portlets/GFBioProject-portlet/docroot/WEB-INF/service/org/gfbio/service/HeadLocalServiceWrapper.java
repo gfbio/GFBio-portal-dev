@@ -370,6 +370,14 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 			column14, column15, column16, column17, column18, column19, column20);
 	}
 
+	@Override
+	public java.lang.Boolean updateRelationTable(long headID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
+		return _headLocalService.updateRelationTable(headID, mtable, ntable);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -52,7 +52,9 @@
 	short how to of this functions
 </div>
 
+
 <!-- -------------------------------------------- New Table ---------------------------------------------------------------->
+
 
 <div id=<%= "accordion_seq_header_newTable" %> class="toggler ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" aria-controls="accordion_seq_panel_newTable" aria-selected="false"  tabindex="0"    >
 	<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>
@@ -87,7 +89,7 @@
 	<div class="row">
 		<div class="rowLato">&nbsp;</div>
 		<div class="rowLava">&nbsp;</div>
-		<div class="rowFieldB"> <input  type="button" class="widthL" value="new Table"  onclick="newTable('<%= tablebuilderURL %>', 'newTable','newtab', '<%= headAttributList.size() %>', 'newtab')" /></div>
+		<div class="rowFieldB"> <input  type="button" class="widthL" value="new Table"  onclick="newTable('<%= tablebuilderURL %>', 'newTable','newtab', '<%= headAttributList.size() %>', 'newtab', 'table')" /></div>
 	</div>
 
 	<div class="swHide" id="hide_newtab_true">
@@ -186,7 +188,7 @@
 			<div class="row">
 				<div class="rowLato">&nbsp;</div>
 				<div class="rowLava">&nbsp;</div>
-				<div class="rowFieldB"><input type="button" class="widthL" value="Change"  onclick=" updateTable('<%=tablebuilderURL %>', 'updateTable', 'head', '<%= headAttributList.size() %>', '104')" /></div>
+				<div class="rowFieldB"><input type="button" class="widthL" value="Change"  onclick=" updateTable('<%=tablebuilderURL %>', 'updateTable', 'head', '<%= headAttributList.size() %>', '104', 'table')" /></div>
 			</div>
 			<p/>
 

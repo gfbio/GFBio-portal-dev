@@ -310,4 +310,9 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		java.lang.String column18, java.lang.String column19,
 		java.lang.String column20)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.Boolean updateRelationTable(long headID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException;
 }

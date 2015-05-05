@@ -350,6 +350,13 @@ public class HeadLocalServiceUtil {
 			column15, column16, column17, column18, column19, column20);
 	}
 
+	public static java.lang.Boolean updateRelationTable(long headID,
+		java.lang.String mtable, java.lang.String ntable)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
+		return getService().updateRelationTable(headID, mtable, ntable);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
