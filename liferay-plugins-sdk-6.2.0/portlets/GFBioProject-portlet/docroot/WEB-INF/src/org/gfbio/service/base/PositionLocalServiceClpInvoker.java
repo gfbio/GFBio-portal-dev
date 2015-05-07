@@ -132,9 +132,13 @@ public class PositionLocalServiceClpInvoker {
 
 		_methodParameterTypes87 = new String[] { "long" };
 
-		_methodName88 = "updatePosition";
+		_methodName88 = "setStandard";
 
-		_methodParameterTypes88 = new String[] {
+		_methodParameterTypes88 = new String[] {  };
+
+		_methodName89 = "updatePosition";
+
+		_methodParameterTypes89 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -280,6 +284,11 @@ public class PositionLocalServiceClpInvoker {
 
 		if (_methodName88.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
+			return PositionLocalServiceUtil.setStandard();
+		}
+
+		if (_methodName89.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
 			return PositionLocalServiceUtil.updatePosition(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -352,4 +361,6 @@ public class PositionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes87;
 	private String _methodName88;
 	private String[] _methodParameterTypes88;
+	private String _methodName89;
+	private String[] _methodParameterTypes89;
 }

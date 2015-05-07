@@ -132,9 +132,13 @@ public class PositionLocalServiceClp implements PositionLocalService {
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "updatePosition";
+		_methodName25 = "setStandard";
 
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes25 = new String[] {  };
+
+		_methodName26 = "updatePosition";
+
+		_methodParameterTypes26 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -871,6 +875,29 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
+	public java.lang.Boolean setStandard() {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.lang.Boolean updatePosition(long positionID, long headID,
 		java.lang.String column01, java.lang.String column02,
 		java.lang.String column03, java.lang.String column04,
@@ -886,8 +913,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						positionID,
 						
@@ -1004,4 +1031,6 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

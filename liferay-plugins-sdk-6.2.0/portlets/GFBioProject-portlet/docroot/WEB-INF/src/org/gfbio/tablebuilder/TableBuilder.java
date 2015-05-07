@@ -45,7 +45,7 @@ public class TableBuilder extends GenericPortlet {
 	
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
-				
+		
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 

@@ -321,6 +321,11 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
+	public java.lang.Boolean setStandard() {
+		return _positionLocalService.setStandard();
+	}
+
+	@Override
 	public java.lang.Boolean updatePosition(long positionID, long headID,
 		java.lang.String column01, java.lang.String column02,
 		java.lang.String column03, java.lang.String column04,

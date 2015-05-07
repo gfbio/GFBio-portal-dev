@@ -304,6 +304,10 @@ public class PositionLocalServiceUtil {
 		return getService().getTable(headID);
 	}
 
+	public static java.lang.Boolean setStandard() {
+		return getService().setStandard();
+	}
+
 	public static java.lang.Boolean updatePosition(long positionID,
 		long headID, java.lang.String column01, java.lang.String column02,
 		java.lang.String column03, java.lang.String column04,
