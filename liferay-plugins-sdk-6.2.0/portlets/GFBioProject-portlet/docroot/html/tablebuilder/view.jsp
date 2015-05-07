@@ -162,7 +162,7 @@
 
 		<div id="updateTable">
 
-			<% Head head = HeadLocalServiceUtil.getRow(Long.valueOf(headID).longValue());
+			<% Head head = HeadLocalServiceUtil.getHead(Long.valueOf(headID).longValue());
 				Map <String, Object> headMap = head.getModelAttributes();
 				stTabI = "head_".concat(new Integer(0).toString());
 			%>
@@ -267,7 +267,7 @@
 			<br>
 			
 			<form action="select.html">	
-				<select id="choTab4" name="<portlet:namespace/>choTab4" onchange="updateRelationTable('<%= tablebuilderURL %>','relationTable', this.form.choTab4.options[this.form.choTab4.selectedIndex].value,'<%=HeadLocalServiceUtil.getName(Long.valueOf(headID3).longValue())%>','tab_1034')" size="1" style="width:50%">
+				<select id="choTab4" name="<portlet:namespace/>choTab4" onchange="updateRelationTable('<%= tablebuilderURL %>','relationTable', this.form.choTab4.options[this.form.choTab4.selectedIndex].value,'<%=HeadLocalServiceUtil.getName(Long.valueOf(headID3).longValue())%>','1034')" size="1" style="width:50%">
 					<option selected value="none">None </option>
 					<%if (names4.length>0){for (int i = 0; i < names4.length; i++) { %>
 							<option value="<%= names4[i] %>"> <%= names4[i]%> </option>
@@ -275,7 +275,7 @@
 				</select>
 			</form>
 			
-		<div class="swHide" id="hide_tab_1034">
+		<div class="swHide" id="hide_1034">
 			<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
 				Switch to selected project.
 			</div>
@@ -304,7 +304,7 @@
 	<br>
 
 	<form action="select.html">
-		<select id="choTab2" name="<portlet:namespace/>choTab2" onchange="chooseProject('<%= tablebuilderURL %>','chooseTable',this.form.choTab2.options[this.form.choTab2.selectedIndex].value, 'tab_1032')" size="1" style="width:50%">
+		<select id="choTab2" name="<portlet:namespace/>choTab2" onchange="chooseProject('<%= tablebuilderURL %>','chooseTable',this.form.choTab2.options[this.form.choTab2.selectedIndex].value, '1032')" size="1" style="width:50%">
 			<option selected value="none">None </option>
 			<%if (names2.length>0){for (int i = 0; i < names2.length; i++) { %>
 					<option value="<%= names2[i] %>"> <%= names2[i]%> </option>
@@ -312,7 +312,7 @@
 		</select>
 	</form>
 
-	<div class="swHide" id="hide_tab_1032">
+	<div class="swHide" id="hide_1032">
 		<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
 			Switch to selected project.
 		</div>
@@ -381,10 +381,10 @@
 		<div class="row">
 			<div class="rowLato">&nbsp;</div>
 			<div class="rowLava">&nbsp;</div>
-			<div class="rowFieldB"> <input  type="button" class="widthL" value="new Content"  onclick="updateTable('<%= tablebuilderURL %>', 'updateContent','newcont', '<%= positionAttributList.size() %>', 'newcont')" /></div>
+			<div class="rowFieldB"> <input  type="button" class="widthL" value="new Content"  onclick="updateTable('<%= tablebuilderURL %>', 'updateContent','newcont', '<%= positionAttributList.size() %>', '1038')" /></div>
 		</div>
 
-		<div class="swHide" id="hide_newcont">
+		<div class="swHide" id="hide_1038">
 			<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
 				Create new content of Table <%= HeadLocalServiceUtil.getName(Long.valueOf(headID2).longValue()) %> is complete.
 			</div>
@@ -412,7 +412,7 @@
 	<br>
 
 	<form action="select.html">
-		<select id="choTab5" name="<portlet:namespace/>choTab5" onchange="chooseProject('<%= tablebuilderURL %>','chooseTable',this.form.choTab5.options[this.form.choTab5.selectedIndex].value, 'tab_1035')" size="1" style="width:50%">
+		<select id="choTab5" name="<portlet:namespace/>choTab5" onchange="chooseProject('<%= tablebuilderURL %>','chooseTable',this.form.choTab5.options[this.form.choTab5.selectedIndex].value, '1035')" size="1" style="width:50%">
 			<option selected value="none">None </option>
 			<%if (names5.length>0){for (int i = 0; i < names5.length; i++) { %>
 					<option value="<%= names5[i] %>"> <%= names5[i]%> </option>
@@ -420,7 +420,7 @@
 		</select>
 	</form>
 
-	<div class="swHide" id="hide_tab_1035">
+	<div class="swHide" id="hide_1035">
 		<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
 			Switch to selected table.
 		</div>
@@ -457,7 +457,7 @@
 			<br>
 		
 			<form action="select.html">
-				<select id="choTab6" name="<portlet:namespace/>choTab6" onchange="chooseProject2('<%= tablebuilderURL %>','chooseRow',<%=headID5 %>, this.form.choTab6.options[this.form.choTab6.selectedIndex].value, 'tab_1036')" size="1" style="width:50%">
+				<select id="choTab6" name="<portlet:namespace/>choTab6" onchange="chooseProject2('<%= tablebuilderURL %>','chooseRow',<%=headID5 %>, this.form.choTab6.options[this.form.choTab6.selectedIndex].value, '1036')" size="1" style="width:50%">
 					<option selected value="none">None </option>
 					<%if (names6.length>0){for (int i = 0; i < names6.length; i++) { %>
 							<option value="<%= names6[i] %>"> <%= names6[i]%> </option>
@@ -465,7 +465,7 @@
 				</select>
 			</form>
 			
-			<div class="swHide" id="hide_tab_1036">
+			<div class="swHide" id="hide_1036">
 				<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
 					Switch to selected table.
 				</div>
@@ -491,7 +491,7 @@
 				else { 
 			%>
 			
-				<!-- --------------------------------------- new content of a table -------------------------->
+				<!-- --------------------------------------- change content of a row -------------------------->
 				
 				<%	String stContI = "newcont_".concat(new Integer(0).toString());
 					int columncount = HeadLocalServiceUtil.getColumnCount(Long.valueOf(headID5).longValue()); 
@@ -530,10 +530,10 @@
 				<div class="row">
 					<div class="rowLato">&nbsp;</div>
 					<div class="rowLava">&nbsp;</div>
-					<div class="rowFieldB"> <input  type="button" class="widthL" value="change Content"  onclick="updateTable('<%= tablebuilderURL %>', 'updateContent','rowcont', '<%= positionAttributList.size() %>', 'newcont')" /></div>
+					<div class="rowFieldB"> <input  type="button" class="widthL" value="change Content"  onclick="updateTable('<%= tablebuilderURL %>', 'updateContent','rowcont', '<%= positionAttributList.size() %>', '1037')" /></div>
 				</div>
 				
-				<div class="swHide" id="hide_newcont">
+				<div class="swHide" id="hide_1037">
 					<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
 						Create new content of Table <%= HeadLocalServiceUtil.getName(Long.valueOf(headID2).longValue()) %> is complete.
 					</div>

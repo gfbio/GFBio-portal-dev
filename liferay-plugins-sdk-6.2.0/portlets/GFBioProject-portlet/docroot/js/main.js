@@ -75,7 +75,7 @@ function visibleShow(j) {
 };
 
 function visibleHide(j) {
-	console.log(j);
+	//console.log(j);
 	console.log("hide_".concat(j));
 	document.getElementById("hide_".concat(j)).className = "swHide";
 };
@@ -190,7 +190,7 @@ function updateProject (archivingURL, method, name, size, hide, userID) {
 
 //Method to update a RelationTable in Head
 function updateRelationTable (archivingURL, method, mtable, ntable, hide) {
-	console.log(archivingURL+ " || "+ method+ " || "+  mtable+ " || "+ ntable+ " || "+ hide);
+	//console.log(archivingURL+ " || "+ method+ " || "+  mtable+ " || "+ ntable+ " || "+ hide);
 	var data = {};
 	data["mtable"] = mtable;
 	data["ntable"] = ntable;

@@ -104,7 +104,7 @@ public class TableBuilder extends GenericPortlet {
 		
 		Position position=null;
 		try {
-			position = PositionLocalServiceUtil.getRow(headID, name);
+			position = PositionLocalServiceUtil.getPositionByHeadIdAndName(headID, name);
 		} catch (SystemException e1) {e1.printStackTrace();}
 		PortletPreferences prefs = request.getPreferences();
 		if (name != null) {

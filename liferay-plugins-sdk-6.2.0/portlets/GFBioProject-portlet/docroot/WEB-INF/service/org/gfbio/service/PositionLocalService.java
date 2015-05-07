@@ -250,25 +250,26 @@ public interface PositionLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getColumnContent(long positionID, int i)
+	public java.lang.String getColumnContent(long positionId, int i)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getNameArray(long headID)
+	public java.lang.String[] getNameArray(long headId)
 		throws org.gfbio.NoSuchHeadException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Position getRow(long positionID)
+	public org.gfbio.model.Position getPositionbyId(long positionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Position getRow(long headID, java.lang.String name)
+	public org.gfbio.model.Position getPositionByHeadIdAndName(long headId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Position> getRowList(long headID)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<org.gfbio.model.Position> getPositionsbyHeadId(
+		long headId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[][] getTable(long headID)

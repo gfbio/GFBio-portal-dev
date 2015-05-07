@@ -277,17 +277,17 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public int getColumnCount(long headID)
+	public int getColumnCount(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getColumnCount(headID);
+		return _headLocalService.getColumnCount(headId);
 	}
 
 	@Override
-	public java.lang.String getColumnName(long headID, int i)
+	public java.lang.String getColumnName(long headId, int i)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getColumnName(headID, i);
+		return _headLocalService.getColumnName(headId, i);
 	}
 
 	@Override
@@ -298,23 +298,37 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Head> getHeadList()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.getHeadList();
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Head> getHeadList(
-		java.lang.String task)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.getHeadList(task);
-	}
-
-	@Override
-	public java.lang.String getName(long headID)
+	public org.gfbio.model.Head getHeadById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getName(headID);
+		return _headLocalService.getHeadById(headId);
+	}
+
+	@Override
+	public org.gfbio.model.Head getHeadbyName(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return _headLocalService.getHeadbyName(name);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Head> getHeads()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _headLocalService.getHeads();
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Head> getHeadsByTask(
+		java.lang.String task)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _headLocalService.getHeadsByTask(task);
+	}
+
+	@Override
+	public java.lang.String getName(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return _headLocalService.getName(headId);
 	}
 
 	@Override
@@ -331,27 +345,13 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public org.gfbio.model.Head getRow(long headID)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getRow(headID);
-	}
-
-	@Override
-	public org.gfbio.model.Head getRow(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getRow(name);
-	}
-
-	@Override
 	public java.lang.Boolean setStandard()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _headLocalService.setStandard();
 	}
 
 	@Override
-	public java.lang.Boolean updateHead(long headID, java.lang.String name,
+	public java.lang.Boolean updateHead(long headId, java.lang.String name,
 		java.lang.String task, java.lang.String column01,
 		java.lang.String column02, java.lang.String column03,
 		java.lang.String column04, java.lang.String column05,
@@ -364,18 +364,18 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 		java.lang.String column18, java.lang.String column19,
 		java.lang.String column20)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.updateHead(headID, name, task, column01,
+		return _headLocalService.updateHead(headId, name, task, column01,
 			column02, column03, column04, column05, column06, column07,
 			column08, column09, column10, column11, column12, column13,
 			column14, column15, column16, column17, column18, column19, column20);
 	}
 
 	@Override
-	public java.lang.Boolean updateRelationTable(long headID,
+	public java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException {
-		return _headLocalService.updateRelationTable(headID, mtable, ntable);
+		return _headLocalService.updateRelationTable(headId, mtable, ntable);
 	}
 
 	/**

@@ -116,15 +116,15 @@ public class PositionLocalServiceClpInvoker {
 
 		_methodParameterTypes83 = new String[] { "long" };
 
-		_methodName84 = "getRow";
+		_methodName84 = "getPositionbyId";
 
 		_methodParameterTypes84 = new String[] { "long" };
 
-		_methodName85 = "getRow";
+		_methodName85 = "getPositionByHeadIdAndName";
 
 		_methodParameterTypes85 = new String[] { "long", "java.lang.String" };
 
-		_methodName86 = "getRowList";
+		_methodName86 = "getPositionsbyHeadId";
 
 		_methodParameterTypes86 = new String[] { "long" };
 
@@ -259,18 +259,18 @@ public class PositionLocalServiceClpInvoker {
 
 		if (_methodName84.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return PositionLocalServiceUtil.getRow(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getPositionbyId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName85.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
-			return PositionLocalServiceUtil.getRow(((Long)arguments[0]).longValue(),
+			return PositionLocalServiceUtil.getPositionByHeadIdAndName(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName86.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
-			return PositionLocalServiceUtil.getRowList(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getPositionsbyHeadId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName87.equals(name) &&

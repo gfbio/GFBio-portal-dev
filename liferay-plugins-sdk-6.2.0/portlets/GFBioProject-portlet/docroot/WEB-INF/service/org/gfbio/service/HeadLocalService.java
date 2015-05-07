@@ -247,12 +247,12 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getColumnCount(long headID)
+	public int getColumnCount(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getColumnName(long headID, int i)
+	public java.lang.String getColumnName(long headId, int i)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
@@ -262,16 +262,26 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 			org.gfbio.NoSuchHeadException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Head> getHeadList()
+	public org.gfbio.model.Head getHeadById(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.Head getHeadbyName(java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Head> getHeads()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Head> getHeadList(
+	public java.util.List<org.gfbio.model.Head> getHeadsByTask(
 		java.lang.String task)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getName(long headID)
+	public java.lang.String getName(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
@@ -284,20 +294,10 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Head getRow(long headID)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Head getRow(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException;
-
 	public java.lang.Boolean setStandard()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.Boolean updateHead(long headID, java.lang.String name,
+	public java.lang.Boolean updateHead(long headId, java.lang.String name,
 		java.lang.String task, java.lang.String column01,
 		java.lang.String column02, java.lang.String column03,
 		java.lang.String column04, java.lang.String column05,
@@ -311,7 +311,7 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		java.lang.String column20)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.Boolean updateRelationTable(long headID,
+	public java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException, org.gfbio.NoSuchPositionException;

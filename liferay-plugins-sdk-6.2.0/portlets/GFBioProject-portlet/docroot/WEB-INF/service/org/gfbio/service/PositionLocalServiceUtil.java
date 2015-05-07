@@ -271,31 +271,31 @@ public class PositionLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.lang.String getColumnContent(long positionID, int i)
+	public static java.lang.String getColumnContent(long positionId, int i)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getColumnContent(positionID, i);
+		return getService().getColumnContent(positionId, i);
 	}
 
-	public static java.lang.String[] getNameArray(long headID)
+	public static java.lang.String[] getNameArray(long headId)
 		throws org.gfbio.NoSuchHeadException {
-		return getService().getNameArray(headID);
+		return getService().getNameArray(headId);
 	}
 
-	public static org.gfbio.model.Position getRow(long positionID)
+	public static org.gfbio.model.Position getPositionbyId(long positionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException {
-		return getService().getRow(positionID);
+		return getService().getPositionbyId(positionId);
 	}
 
-	public static org.gfbio.model.Position getRow(long headID,
-		java.lang.String name)
+	public static org.gfbio.model.Position getPositionByHeadIdAndName(
+		long headId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getRow(headID, name);
+		return getService().getPositionByHeadIdAndName(headId, name);
 	}
 
-	public static java.util.List<org.gfbio.model.Position> getRowList(
-		long headID) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getRowList(headID);
+	public static java.util.List<org.gfbio.model.Position> getPositionsbyHeadId(
+		long headId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPositionsbyHeadId(headId);
 	}
 
 	public static java.lang.String[][] getTable(long headID)

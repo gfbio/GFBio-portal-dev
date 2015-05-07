@@ -43,11 +43,11 @@ import org.gfbio.service.base.PositionLocalServiceBaseImpl;
  */
 public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
-	public String getColumnContent(long positionID, int i) throws SystemException {
+	public String getColumnContent(long positionId, int i) throws SystemException {
 		Position position = null;
 
 		try {
-			position = getRow(positionID);
+			position = getPositionbyId(positionId);
 		} catch (NoSuchPositionException e) {e.printStackTrace();}
 		String column = "";
 		if (i == 1)column = position.getColumn01(); else
@@ -73,17 +73,17 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return column;
 	}
 	
-	public String[] getNameArray(long headID) throws NoSuchHeadException {
+	public String[] getNameArray(long headId) throws NoSuchHeadException {
 
 		
 		List<Position> positionList;
 		String[] names = null;
 		try {
-			positionList = getRowList(headID);
+			positionList = getPositionsbyHeadId(headId);
 			names = new String[positionList.size()];
 			
 			for (int j =1;j<= 20;j++)
-				if (HeadLocalServiceUtil.getColumnName(headID, j).trim().equals("name"))
+				if (HeadLocalServiceUtil.getColumnName(headId, j).trim().equals("name"))
 					if (positionList!= null)
 						for (int i = 0; i<positionList.size(); i++)
 							names[i] = getColumnContent(positionList.get(i).getPositionID(),j);
@@ -92,22 +92,22 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return names;
 	}
 
-	public Position getRow(long positionID) throws NoSuchPositionException, SystemException {
-		return positionPersistence.findByPositionID(positionID);
+	public Position getPositionbyId(long positionId) throws NoSuchPositionException, SystemException {
+		return positionPersistence.findByPositionID(positionId);
 	}
 	
-	public Position getRow(long headID, String name) throws SystemException {
+	public Position getPositionByHeadIdAndName(long headId, String name) throws SystemException {
 		List<Position> positionList;
 		Position position = null;
-		positionList = getRowList(headID);
+		positionList = getPositionsbyHeadId(headId);
 		for (int i =0; i < positionList.size();i++)
 			if (name.equals(positionList.get(i).getColumn01()))
 				position = positionList.get(i);
 		return position;
 	}
 
-	public List<Position> getRowList(long headID) throws SystemException {
-		return positionPersistence.findByHeadID(headID);
+	public List<Position> getPositionsbyHeadId(long headId) throws SystemException {
+		return positionPersistence.findByHeadID(headId);
 	}
 
 	public String[][] getTable(long headID) throws NoSuchHeadException, SystemException {
@@ -141,33 +141,18 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
 		try {
 			position = positionPersistence.findByPositionID(positionID);
-		} catch (NoSuchPositionException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchPositionException e) {e.printStackTrace();}
 
 		try {
 			head = headPersistence.findByHeadID(headID);
-		} catch (NoSuchHeadException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchHeadException e) {e.printStackTrace();}
 
 		if (head != null) {
 
 			int columncount = 0;
 			try {
 				columncount = HeadLocalServiceUtil.getColumnCount(headID);
-			} catch (NoSuchHeadException e) {
-
-				// TODO Auto-generated catch block
-
-				e.printStackTrace();
-			}
+			} catch (NoSuchHeadException e) {e.printStackTrace();}
 			
 			//create new position
 			if (position == null)
