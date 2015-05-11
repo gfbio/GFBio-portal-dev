@@ -43,9 +43,9 @@ import org.gfbio.service.base.HeadLocalServiceBaseImpl;
  */
 public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 
-	public int getColumnCount(long headID) throws NoSuchHeadException, SystemException {
+	public int getColumnCount(long headId) throws NoSuchHeadException, SystemException {
 
-		Head head = getRow(headID);
+		Head head = getHeadById(headId);
 		int size = 0;
 
 		if (head.getColumn01().startsWith(" ")){}
@@ -73,8 +73,8 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return size;
 	}
 
-	public String getColumnName(long headID, int i) throws NoSuchHeadException, SystemException {
-		Head head = getRow(headID);
+	public String getColumnName(long headId, int i) throws NoSuchHeadException, SystemException {
+		Head head = getHeadById(headId);
 		String column = "";
 		if (i == 1)column = head.getColumn01(); else
 			if (i == 2)column = head.getColumn02(); else
@@ -104,19 +104,28 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return headPersistence.findByName(name).getHeadID();
 	}
 	
+	public Head getHeadById(long headId) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByHeadID(headId);
+	}
 
-	public List<Head> getHeadList() throws SystemException {
+	
+	public Head getHeadbyName(String name) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByName(name);
+	}
+
+	
+	public List<Head> getHeads() throws SystemException {
 		System.out.println(headPersistence.findAll().toString());
 		return headPersistence.findAll();
 	}
 	
-	public List<Head> getHeadList(String task) throws SystemException {
+	public List<Head> getHeadsByTask(String task) throws SystemException {
 		return headPersistence.findByTask(task);
 	}
 	
 
-	public String getName(long headID) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByHeadID(headID).getName();
+	public String getName(long headId) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByHeadID(headId).getName();
 	}
 	
 
@@ -140,7 +149,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		if (task.equals(""))
 			headList = null;
 		else
-			headList = getHeadList(task);
+			headList = getHeadsByTask(task);
 		return getNameArray(headList);
 	}
 	
@@ -156,16 +165,6 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				names[i] = headList.get(i).getName();
 
 		return names;
-	}
-
-	
-	public Head getRow(long headID) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByHeadID(headID);
-	}
-
-	
-	public Head getRow(String name) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByName(name);
 	}
 
 	
@@ -202,13 +201,13 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return check;
 	}
 	
-	public Boolean updateHead(long headID, String name, String task, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
+	public Boolean updateHead(long headId, String name, String task, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
 
 		Boolean check = true;
 		Head head = null;
 
 		try {
-			head = headPersistence.findByHeadID(headID);
+			head = headPersistence.findByHeadID(headId);
 		} catch (NoSuchHeadException e) {e.printStackTrace();}
 
 		//create new head
@@ -274,7 +273,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return check;
 	}
 	
-	public Boolean updateRelationTable(long headID, String mtable, String ntable)throws SystemException, NoSuchHeadException, NoSuchPositionException{
+	public Boolean updateRelationTable(long headId, String mtable, String ntable)throws SystemException, NoSuchHeadException, NoSuchPositionException{
 
 		Boolean check = true;
 		mtable = mtable.trim();
@@ -283,7 +282,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		
 
 		
-		List <Head> headList = HeadLocalServiceUtil.getHeadList("relation");
+		List <Head> headList = HeadLocalServiceUtil.getHeadsByTask("relation");
 		
 		
 		if (mtable.equals(ntable))
@@ -311,7 +310,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		}
 				
 		if (check == true)
-			check = updateHead(headID, "gfbio_".concat(mtable.substring(6)).concat("_").concat(ntable.substring(6)), "relation", mtable, ntable,"","","","","","","","","","","","","","","","","","");
+			check = updateHead(headId, "gfbio_".concat(mtable.substring(6)).concat("_").concat(ntable.substring(6)), "relation", mtable, ntable,"","","","","","","","","","","","","","","","","","");
 		
 		System.out.println(check);
 		return check;

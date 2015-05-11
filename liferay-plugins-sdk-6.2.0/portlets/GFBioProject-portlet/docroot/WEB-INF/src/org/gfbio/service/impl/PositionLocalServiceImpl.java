@@ -43,11 +43,11 @@ import org.gfbio.service.base.PositionLocalServiceBaseImpl;
  */
 public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
-	public String getColumnContent(long positionID, int i) throws SystemException {
+	public String getColumnContent(long positionId, int i) throws SystemException {
 		Position position = null;
 
 		try {
-			position = getRow(positionID);
+			position = getPositionbyId(positionId);
 		} catch (NoSuchPositionException e) {e.printStackTrace();}
 		String column = "";
 		if (i == 1)column = position.getColumn01(); else
@@ -73,17 +73,17 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return column;
 	}
 	
-	public String[] getNameArray(long headID) throws NoSuchHeadException {
+	public String[] getNameArray(long headId) throws NoSuchHeadException {
 
 		
 		List<Position> positionList;
 		String[] names = null;
 		try {
-			positionList = getRowList(headID);
+			positionList = getPositionsbyHeadId(headId);
 			names = new String[positionList.size()];
 			
 			for (int j =1;j<= 20;j++)
-				if (HeadLocalServiceUtil.getColumnName(headID, j).trim().equals("name"))
+				if (HeadLocalServiceUtil.getColumnName(headId, j).trim().equals("name"))
 					if (positionList!= null)
 						for (int i = 0; i<positionList.size(); i++)
 							names[i] = getColumnContent(positionList.get(i).getPositionID(),j);
@@ -92,22 +92,22 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return names;
 	}
 
-	public Position getRow(long positionID) throws NoSuchPositionException, SystemException {
-		return positionPersistence.findByPositionID(positionID);
+	public Position getPositionbyId(long positionId) throws NoSuchPositionException, SystemException {
+		return positionPersistence.findByPositionID(positionId);
 	}
 	
-	public Position getRow(long headID, String name) throws SystemException {
+	public Position getPositionByHeadIdAndName(long headId, String name) throws SystemException {
 		List<Position> positionList;
 		Position position = null;
-		positionList = getRowList(headID);
+		positionList = getPositionsbyHeadId(headId);
 		for (int i =0; i < positionList.size();i++)
 			if (name.equals(positionList.get(i).getColumn01()))
 				position = positionList.get(i);
 		return position;
 	}
 
-	public List<Position> getRowList(long headID) throws SystemException {
-		return positionPersistence.findByHeadID(headID);
+	public List<Position> getPositionsbyHeadId(long headId) throws SystemException {
+		return positionPersistence.findByHeadID(headId);
 	}
 
 	public String[][] getTable(long headID) throws NoSuchHeadException, SystemException {
@@ -132,6 +132,47 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return table;
 	}
 	
+	public Boolean setStandard (){
+		Boolean check = true;
+		try {
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "130", "106", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "107", "106", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "108", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "110", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "111", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "112", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "113", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "114", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "115", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "116", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "123", "124", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+
+			
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "117", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "117", "101", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "118", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "118", "101", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "119", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "119", "101", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "120", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "120", "132", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "122", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "122", "132", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "121", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "121", "132", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "121", "133", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "121", "134", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+
+
+			
+		} catch (SystemException | NoSuchHeadException e) {e.printStackTrace();}
+		return check;
+	}
 
 	public Boolean updatePosition(long positionID, long headID, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
 
@@ -141,33 +182,18 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
 		try {
 			position = positionPersistence.findByPositionID(positionID);
-		} catch (NoSuchPositionException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchPositionException e) {e.printStackTrace();}
 
 		try {
 			head = headPersistence.findByHeadID(headID);
-		} catch (NoSuchHeadException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchHeadException e) {e.printStackTrace();}
 
 		if (head != null) {
 
 			int columncount = 0;
 			try {
 				columncount = HeadLocalServiceUtil.getColumnCount(headID);
-			} catch (NoSuchHeadException e) {
-
-				// TODO Auto-generated catch block
-
-				e.printStackTrace();
-			}
+			} catch (NoSuchHeadException e) {e.printStackTrace();}
 			
 			//create new position
 			if (position == null)
