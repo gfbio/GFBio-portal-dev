@@ -19,21 +19,21 @@ import com.liferay.portal.NoSuchModelException;
 /**
  * @author Felicitas Loeffler
  */
-public class NoSuchBasket_UserException extends NoSuchModelException {
+public class NoSuchBasketException extends NoSuchModelException {
 
-	public NoSuchBasket_UserException() {
+	public NoSuchBasketException() {
 		super();
 	}
 
-	public NoSuchBasket_UserException(String msg) {
+	public NoSuchBasketException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchBasket_UserException(String msg, Throwable cause) {
+	public NoSuchBasketException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchBasket_UserException(Throwable cause) {
+	public NoSuchBasketException(Throwable cause) {
 		super(cause);
 	}
 
