@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author Felicitas Loeffler
  */
 public class BasketImpl extends BasketBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a basket model instance should use the {@link org.gfbio.model.Basket} interface instead.

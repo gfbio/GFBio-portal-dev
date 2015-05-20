@@ -31,7 +31,7 @@ import org.gfbio.service.base.Project_User_PIServiceBaseImpl;
  * @see org.gfbio.service.Project_User_PIServiceUtil
  */
 public class Project_User_PIServiceImpl extends Project_User_PIServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.Project_User_PIServiceUtil} to access the project_ user_ p i remote service.

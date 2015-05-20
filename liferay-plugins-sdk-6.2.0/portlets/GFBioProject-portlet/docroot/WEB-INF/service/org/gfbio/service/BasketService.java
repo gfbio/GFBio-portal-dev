@@ -66,8 +66,13 @@ public interface BasketService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+	public org.gfbio.model.Basket getBasketById(long basketId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+		long[] basketIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
@@ -75,8 +80,8 @@ public interface BasketService extends BaseService, InvokableService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
@@ -84,12 +89,7 @@ public interface BasketService extends BaseService, InvokableService {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Basket getBasketById(long basketId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
-		long[] basketIds)
+	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public long updateBasket(long basketId, long userId, java.lang.String name,

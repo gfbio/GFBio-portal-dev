@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Data Life Cycle</title>
+
+<script type="text/javascript" src="jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="jquery.cycle.all.js"></script>
+<script type="text/javascript">
+
+	$(function(){
+		
+		$('#play').click(function() { $('#slider').cycle('resume'); return false; });
+		
+		$('#pause').click(function() { $('#slider').cycle('pause'); return false; });
+
+	$('#slider').cycle({
+		
+		fx:			'scrollHorz',
+		next:		'#next',
+		prev:		'#prev',
+		pager:		'#pager',
+		timeout:	5000,
+		speed:		900,
+		speedIn:	2000,
+		speedOut:	2000,
+		//slideResize:	false
+		
+	});
+});
+</script>
+
+
+<style type="text/css">
+
+#hero {
+	width: 500px;
+	height: 600px;
+	display: block;
+	position: relative;
+	margin: auto;
+}
+
+#slider {	
+	width: 500px;
+	height: 600px;
+	display: block;
+	position: absolute;
+	top: 60px;
+	overflow: hidden;
+}
+
+#play {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 44px;
+	background: rgba(0,173,231,.5);
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#labelplay {
+	width: 30px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 38px;
+	right: 49px;
+	color: rgba(0,173,231,.5);
+	z-index: 999;
+}
+
+#pause {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 88px;
+	background: rgba(0,173,231,.5);
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#labelpause {
+	width: 37px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 38px;
+	right: 89px;
+	color: rgba(0,173,231,.5);
+	z-index: 999;
+}
+
+#next {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: rgba(0,173,231,.5);
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#labelnext {
+	width: 37px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 38px;
+	right: 1px;
+	color: rgba(0,173,231,.5);
+	z-index: 999;
+}
+
+#prev {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 133px;
+	background: rgba(0,173,231,.5);
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#labelprev {
+	width: 37px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 38px;
+	right: 135px;
+	color: rgba(0,173,231,.5);
+	z-index: 999;
+}
+
+#pager {
+	width: 100%;
+	text-align: center;
+	display: block;
+	position: absolute;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#pager a {
+	font-size: .0em;
+	color: transparent;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	position: relative;
+	border: 1px solid rgba(0,173,231,.5);
+	border-radius: 20px;
+	background: transparent;
+	margin: 10px;
+}
+
+#pager a.activeSlide { background: rgba(0,173,231,.5);}
+
+</style>
+</head>
+
+<body>
+<div id="hero">
+
+	<div id="pager"></div>
+    <div id="pause">&#10073;&#10073;</div>
+	<div id="labelpause">Pause</div>
+    <div id="play">&#9658;</div>
+	<div id="labelplay">Play</div>
+    <div id="next">&#62;</div>
+	<div id="labelnext">Next</div>
+    <div id="prev">&#60;</div>
+	<div id="labelprev">Prev</div>
+	
+	
+
+	<div id="slider">
+	
+		<div class="items" style="background-color:white">
+			<object type="image/svg+xml" width="500px" height="600px" data="Data_Life_Cycle_1.svg"></object>
+		</div>
+		
+		<div class="items" style="background-color:white">
+			<object type="image/svg+xml" width="500px" height="600px" data="Data_Life_Cycle_2.svg"></object>
+		</div>
+		
+		<div class="items" style="background-color:white">
+			<object type="image/svg+xml" width="500px" height="600px" data="Data_Life_Cycle_3.svg"></object>
+		</div>
+		<div class="items" style="background-color:white">
+			<object type="image/svg+xml" width="500px" height="600px" data="Data_Life_Cycle_4.svg"></object>
+		</div><!--End--Items-->
+		
+    </div><!--End--Slider-->
+
+</div><!--End--Hero-->
+</body>
+</html>

@@ -32,7 +32,7 @@ import org.gfbio.service.base.tab_ResearchObjectLocalServiceBaseImpl;
  */
 public class tab_ResearchObjectLocalServiceImpl
 	extends tab_ResearchObjectLocalServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.tab_ResearchObjectLocalServiceUtil} to access the tab_ research object local service.

@@ -14,14 +14,12 @@
 
 package org.gfbio.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
 
 import org.gfbio.NoSuchProject_User_WorkerException;
-
 import org.gfbio.model.Project_User_Worker;
 import org.gfbio.service.base.Project_User_WorkerLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_User_WorkerPK;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the project_ user_ worker local service.
@@ -38,23 +36,24 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.Project_User_WorkerLocalServiceUtil
  */
 public class Project_User_WorkerLocalServiceImpl extends Project_User_WorkerLocalServiceBaseImpl {
-	
-	public long updateProjectUserWorker(long projectID, long userID) throws SystemException, NoSuchProject_User_WorkerException{
-		
-		Project_User_Worker relation=null;
+
+	public long updateProjectUserWorker(long projectID, long userID) throws NoSuchProject_User_WorkerException, SystemException {
+
+		Project_User_Worker relation = null;
 		Project_User_WorkerPK pk = new Project_User_WorkerPK(projectID, userID);
-		
+
 		relation = project_User_WorkerPersistence.findByPrimaryKey(pk);
-		
+
 		//create new project
-		if(relation==null)
+
+		if (relation == null)
 			relation = project_User_WorkerPersistence.create(pk);
 
 		//update project
-		else{
+		else {
 			//exception?
 		}
-		
+
 		super.updateProject_User_Worker(relation);
 		return relation.getUserID() + relation.getProjectID();
 	}

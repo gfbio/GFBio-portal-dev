@@ -32,7 +32,7 @@ import org.gfbio.service.base.Project_User_PILocalServiceBaseImpl;
  */
 public class Project_User_PILocalServiceImpl
 	extends Project_User_PILocalServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.Project_User_PILocalServiceUtil} to access the project_ user_ p i local service.

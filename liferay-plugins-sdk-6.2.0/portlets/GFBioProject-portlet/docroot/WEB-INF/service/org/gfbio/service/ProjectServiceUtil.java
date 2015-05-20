@@ -63,6 +63,11 @@ public class ProjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this interface directly. Always use {@link com.liferay.sample.service.ProjectServiceUtil} to access the project remote service.
+	*/
 	public static java.util.List<org.gfbio.model.Project> getProjectList(
 		long userID)
 		throws com.liferay.portal.NoSuchModelException,

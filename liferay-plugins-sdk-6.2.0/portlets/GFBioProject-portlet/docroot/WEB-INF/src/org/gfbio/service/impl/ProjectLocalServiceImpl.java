@@ -14,6 +14,10 @@
 
 package org.gfbio.service.impl;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.SystemException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,11 +30,6 @@ import org.gfbio.model.Project_User;
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
-
-import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.exception.SystemException;
-
 
 /**
  * The implementation of the project local service.
@@ -47,43 +46,50 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.ProjectLocalServiceUtil
  */
 public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
-	
-	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
-	public List <Project> getProjectList(long userID) throws SystemException, NoSuchModelException{
 
-		List <Project_User> idList =  Project_UserLocalServiceUtil.getProjectIDList(userID);
-		List <Project> projectList = new ArrayList<Project>();
-		for (int i=0;i<idList.size();i++){
+	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
+
+	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
+
+		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIDList(userID);
+		List<Project> projectList = new ArrayList<Project>();
+
+		for (int i = 0; i<idList.size(); i++) {
 			projectList.add(projectPersistence.findByPrimaryKey(idList.get(i).getProjectID()));
 		}
+
 		return projectList;
 	}
 
-	
 	// get list of all Research Objects of a specific project
-	public List <ResearchObject> getResearchObjectList(long projectID, long userID) throws SystemException, NoSuchModelException{
-	
-		List <Project_ResearchObject> idList =  project_ResearchObjectPersistence.findByProjectID(projectID);
-		List <ResearchObject> researchObjectList = new ArrayList<ResearchObject>();
-		for (int i=0;i<idList.size();i++)
+
+	public List<ResearchObject> getResearchObjectList(long projectID, long userID) throws NoSuchModelException, SystemException {
+
+		List<Project_ResearchObject> idList = project_ResearchObjectPersistence.findByProjectID(projectID);
+		List<ResearchObject> researchObjectList = new ArrayList<ResearchObject>();
+
+		for (int i = 0; i<idList.size(); i++)
 			researchObjectList.add(researchObjectPersistence.findByPrimaryKey(idList.get(i).getResearchObjectID()));
 		return researchObjectList;
 	}
-	
-	
-	// update or create a new project
-	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException{
 
-		Project project=null;
+	// update or create a new project
+
+	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
+
+		Project project = null;
 		try {
 			project = projectPersistence.findByPrimaryKey(projectID);
 		} catch (NoSuchProjectException e) {
+
 			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
+
 		//create new project
-		if(project==null){
+
+		if (project == null) {
 			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			project.setName(name);
 			project.setLabel(label);
@@ -95,13 +101,15 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			try {
 				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
 			} catch (NoSuchProject_UserException e) {
+
 				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
-		
+
 		//update project
-		else{
+		else {
 			project.setName(name);
 			project.setLabel(label);
 			project.setDescription(description);
@@ -110,21 +118,22 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			project.setStatus(status);
 			super.updateProject(project);
 		}
-				
+
 		return project.getProjectID();
 	}
 
 	@Override
 	public long updateProject(long projectID, String name, String description)
 			throws SystemException {
+
 		// TODO Auto-generated method stub
+
 		return 0;
 	}
-	
-//	public int getProjectSize(long projectID){
+
+//	public int getProjectSize(long projectID) {
 //		int size = 0;
 //		Project project = null;
-//		size = project.
-//		return size;
+//		size = project. //		return size;
 //	}
 }

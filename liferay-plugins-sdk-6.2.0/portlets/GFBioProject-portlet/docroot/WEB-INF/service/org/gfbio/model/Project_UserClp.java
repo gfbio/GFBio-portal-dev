@@ -309,6 +309,10 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return getPrimaryKey().hashCode();
@@ -366,4 +370,5 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 	private Date _startDate;
 	private Date _endDate;
 	private BaseModel<?> _project_UserRemoteModel;
+	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

@@ -14,16 +14,15 @@
 
 package org.gfbio.service.impl;
 
+import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.SystemException;
+
 import java.util.Date;
 import java.util.List;
 
 import org.gfbio.model.Project;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
-
-import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.exception.SystemException;
-
 
 /**
  * The implementation of the project remote service.
@@ -41,24 +40,23 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 
 public class ProjectServiceImpl extends ProjectServiceBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.ProjectServiceUtil} to access the project remote service.
 	 */
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.sample.service.ProjectServiceUtil} to access the project remote service.
 	 */
-	public List <Project> getProjectList(long userID) throws SystemException, NoSuchModelException {
+	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 		return ProjectLocalServiceUtil.getProjectList(userID);
 	}
-	
+
 	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status)
 			throws SystemException {
-		return ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, startDate,  endDate, status);
-		
+		return ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, startDate, endDate, status);
 	}
 //
 //	@Override

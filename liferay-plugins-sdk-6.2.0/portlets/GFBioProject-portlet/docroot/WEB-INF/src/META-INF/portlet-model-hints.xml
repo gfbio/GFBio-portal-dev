@@ -9,6 +9,55 @@
 		<field name="basketJSON" type="String" />
 		<field name="queryJSON" type="String" />
 	</model>
+	<model name="org.gfbio.model.Head">
+		<field name="headID" type="long" />
+		<field name="name" type="String" />
+		<field name="task" type="String" />
+		<field name="column01" type="String" />
+		<field name="column02" type="String" />
+		<field name="column03" type="String" />
+		<field name="column04" type="String" />
+		<field name="column05" type="String" />
+		<field name="column06" type="String" />
+		<field name="column07" type="String" />
+		<field name="column08" type="String" />
+		<field name="column09" type="String" />
+		<field name="column10" type="String" />
+		<field name="column11" type="String" />
+		<field name="column12" type="String" />
+		<field name="column13" type="String" />
+		<field name="column14" type="String" />
+		<field name="column15" type="String" />
+		<field name="column16" type="String" />
+		<field name="column17" type="String" />
+		<field name="column18" type="String" />
+		<field name="column19" type="String" />
+		<field name="column20" type="String" />
+	</model>
+	<model name="org.gfbio.model.Position">
+		<field name="positionID" type="long" />
+		<field name="headID" type="long" />
+		<field name="column01" type="String" />
+		<field name="column02" type="String" />
+		<field name="column03" type="String" />
+		<field name="column04" type="String" />
+		<field name="column05" type="String" />
+		<field name="column06" type="String" />
+		<field name="column07" type="String" />
+		<field name="column08" type="String" />
+		<field name="column09" type="String" />
+		<field name="column10" type="String" />
+		<field name="column11" type="String" />
+		<field name="column12" type="String" />
+		<field name="column13" type="String" />
+		<field name="column14" type="String" />
+		<field name="column15" type="String" />
+		<field name="column16" type="String" />
+		<field name="column17" type="String" />
+		<field name="column18" type="String" />
+		<field name="column19" type="String" />
+		<field name="column20" type="String" />
+	</model>
 	<model name="org.gfbio.model.Project">
 		<field name="projectID" type="long" />
 		<field name="name" type="String" />

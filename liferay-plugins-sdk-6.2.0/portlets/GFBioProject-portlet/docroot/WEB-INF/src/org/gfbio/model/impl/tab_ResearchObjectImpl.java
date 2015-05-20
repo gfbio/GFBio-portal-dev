@@ -24,7 +24,7 @@ package org.gfbio.model.impl;
  * @author Felicitas Loeffler
  */
 public class tab_ResearchObjectImpl extends tab_ResearchObjectBaseImpl {
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a tab_ research object model instance should use the {@link org.gfbio.model.tab_ResearchObject} interface instead.
