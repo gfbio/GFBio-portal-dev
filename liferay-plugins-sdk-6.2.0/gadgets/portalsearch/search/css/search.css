@@ -1,0 +1,128 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css");
+
+input[type=search] {
+	width: 25%;
+	min-width: 200px;
+    vertical-align: bottom;
+}
+#gfbioSearchInput{
+	width: 40%;
+}
+
+label, input, button {
+    font-size: inherit;
+    padding: 0.3em 0.4em;
+    margin: 0.1em 0.2em;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    /*border: 1px solid #f90;
+    background-color: #fff;*/
+}
+
+#QueryButton{
+	background:url('../images/magnifier.png') no-repeat center center;
+    width:16px;
+	background-color: #eee;
+}
+
+select[name=tableId_length] {
+	width: 20%;
+	min-width: 80px;
+}
+
+#search_gadget,#search_facet{
+	background-color: transparent;
+	color: #333;
+	font-family: 'Roboto' !important;
+	font-size: 14px ;
+}
+
+.dataTables_length, .dataTables_info, .dataTables_paginate{
+	font-size:12px !important;
+}
+div.dataTables_info{
+  float:right !important;
+  padding-top: 16px !important;
+}
+div.dataTables_paginate{
+  float:left !important;
+}
+
+
+.jstree-node, .jstree-children, .jstree-container-ul  {
+	margin: 0px 0px 0px 5px !important;
+}
+
+.cart_unselected{
+	height: 36px;
+	width: 36px;
+	background: url('../images/cart_add.png') no-repeat center center;
+	cursor: pointer;
+}
+.cart_selected{
+	height: 36px;
+	width: 36px;
+	background: url('../images/cart_rem.png') no-repeat center center;
+	cursor: pointer;
+}
+td.color-control {
+	vertical-align: middle;
+	text-align: center;
+	display: block;
+	position: absolute;
+}
+.invisible{
+	display:none !important;
+}
+
+table.dataTable table.html-1 tr{
+	background-color:transparent !important;
+}
+.sp-replacer{
+	width:20px !important;
+}
+.tagit, .tagit-new{
+	background:transparent !important;
+}
+ul.tagit input[type="text"] {
+	background:transparent !important;
+}
+.ui-widget,#facetTags.ui-widget{
+	font-size:12px !important;
+}
+.dataTables_length, .dataTables_info, .dataTables_paginate{
+	text-align: right !important;
+}
+.ui-widget { font: inherit; }
+.ui-autocomplete li { overflow: hidden; white-space: nowrap; }
+.ui-autocomplete .ui-menu-item a { margin: 0; padding: 1px 3px; line-height: normal; }
+table.html-1 { margin-bottom: .7em; }
+table.html-1 .info { font-size: smaller; }
+table.html-1 .citation { font-size: larger; }
+table.html-1 .creator { font-weight: bold; }
+table.html-1 .date { font-weight: bold; }
+table.html-1 .desc { font: inherit; border-collapse: collapse; border: 0; margin: 0; padding: 0}
+table.html-1 .desc-left { font-style: italic; margin: 0; padding: 0; padding-right: .5em; vertical-align: top; text-align: left; white-space: nowrap; }
+table.html-1 .desc-right { margin: 0; padding: 0; vertical-align: top; text-align: left; }
+/*
+.acInput{
+  background: #fff url('../images/cross.png') no-repeat right -16px center;
+  border: 1px solid #ddd;
+  padding: 3px 18px 3px 4px;     /* Use the same right padding (18) in jQ! */
+  /*border-radius: 3px;
+  transition: background 0.4s;
+}*/
+/*
+.acInput.x  { background-position: right 5px center; } /* (jQ) Show icon */
+/*.acInput.onX{ cursor: pointer; }              /* (jQ) hover cursor style */
+
+.bonsai li{
+	margin: 0 0 5px 0;
+}
+table.dataTable thead th{
+	background-color: transparent;
+	padding:0px 0px 0px 40px!important;
+	margin:0px !important;
+}

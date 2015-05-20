@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>mockup unified search</title>
+        <!--FIXME Attention the "http" term is a problem if you want a https connection-->
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript">></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+       <!-- <script src="//ws.pangaea.de/jslibs/toolbox.js" ></script> -->
+
+		<script src="TMS.js" type="text/javascript"></script>
+		<script src="pangaea.js" type="text/javascript"></script>
+        <style type="text/css">
+		  #searchResult {float:top; clear:left}
+          #searchResult li { margin-bottom: .7em; }
+          #searchResult .info { font-size: smaller; }
+          #searchResult .citation { font-size: larger; }
+          #searchResult .creator { font-weight: bold; }
+          #searchResult .date { font-weight: bold; }
+          #searchResult .desc { font: inherit; border-collapse: collapse; border: 0; margin: 0; padding: 0}
+          #searchResult .desc-left { font-style: italic; margin: 0; padding: 0; padding-right: .5em; vertical-align: top; text-align: left; white-space: nowrap; }
+          #searchResult .desc-right { margin: 0; padding: 0; vertical-align: top; text-align: left; }
+        </style>
+<!--embedded js FIXme move to a own file-->
+        <script type="text/javascript">
+
+// //ws.pangaea.de/es/dataportal-gfbio/pansimple/_search
+// FIXME move to a central external class
+
+var INDEX = 'dataportal-gfbio';
+var TARGET = 'resultWindow';
+
+$(document).ready(function() {
+	TMS.init('tsearch');
+	PAN.init('searchResult','queryInput');
+	TMS.doubleClickTerm(function(term){
+		PAN.cleanUp();
+		PAN.performSearch(term);
+	});
+	$('#searchForm').submit(function() {
+		TMS.cleanUp();
+		PAN.cleanUp();
+		$('#queryInput').autocomplete('close');
+		var query = $('#queryInput').val();
+		
+		if (query.trim() == '') {
+		  return false;
+		}
+
+		TMS.performSearch(query);
+		TMS.searchDone(function(){
+			PAN.performSearch(query);
+		});
+    return false; // don't execute form on webserver
+  });
+});
+
+</script>
+</head>
+
+<body>
+<h1>the great unified search mockup</h1>
+
+<div id="essearch">
+  <form  id="searchForm" class="header-suchfeld">
+    <label for="queryInput">Find Data: </label><input type="search" id="queryInput" class="text" value="" autocomplete="off">
+    <input type="submit" value="Search">
+  </form>
+</div>
+
+<h2>Terminology</h2>
+<div id='tsearch'></div>
+
+<div>
+<p>
+<div id='searchResult'></div>
+</p>
+</body>
+</html>
+
