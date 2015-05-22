@@ -4,18 +4,18 @@
 	<info
 		organisation="com.liferay"
 		module="plugins"
-		revision="working@INF-PC"
+		revision="working@maria-Latitude-E6530"
 		conf="default"
 		confs="default"
-		date="20140411222521"/>
+		date="20150424171902"/>
 	<dependencies>
 		<module organisation="xerces" name="xercesImpl">
 			<revision name="2.10.0" status="release" pubdate="20110816003238" resolver="maven2" artresolver="default" homepage="https://xerces.apache.org/xerces2-j/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="27">
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-				<metadata-artifact status="no" details="" size="4492" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xerces\xercesImpl\ivy-2.10.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xerces/xercesImpl/2.10.0/xercesImpl-2.10.0.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="4449" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xerces/xercesImpl/ivy-2.10.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xerces/xercesImpl/2.10.0/xercesImpl-2.10.0.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="xercesImpl" type="jar" ext="jar" status="no" details="" size="1363159" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xerces\xercesImpl\jars\xercesImpl-2.10.0.jar">
+					<artifact name="xercesImpl" type="jar" ext="jar" status="no" details="" size="1363159" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xerces/xercesImpl/jars/xercesImpl-2.10.0.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/xerces/xercesImpl/2.10.0/xercesImpl-2.10.0.jar"/>
 					</artifact>
 				</artifacts>
@@ -26,10 +26,10 @@
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
 				<license name="The SAX License" url="http://www.saxproject.org/copying.html"/>
 				<license name="The W3C License" url="http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/java-binding.zip"/>
-				<metadata-artifact status="no" details="" size="3357" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xml-apis\xml-apis\ivy-1.4.01.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.4.01" rev-constraint-default="1.4.01" rev-constraint-dynamic="1.4.01" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="3317" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xml-apis/xml-apis/ivy-1.4.01.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.4.01" rev-constraint-default="1.4.01" rev-constraint-dynamic="1.4.01" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="xml-apis" type="jar" ext="jar" status="no" details="" size="220536" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xml-apis\xml-apis\jars\xml-apis-1.4.01.jar">
+					<artifact name="xml-apis" type="jar" ext="jar" status="no" details="" size="220536" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar"/>
 					</artifact>
 				</artifacts>
@@ -37,10 +37,10 @@
 		</module>
 		<module organisation="xalan" name="xalan">
 			<revision name="2.7.1" status="release" pubdate="20080930100254" resolver="maven2" artresolver="default" homepage="http://xml.apache.org/xalan-j/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="26">
-				<metadata-artifact status="no" details="" size="3051" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xalan\xalan\ivy-2.7.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xalan/xalan/2.7.1/xalan-2.7.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.7.1" rev-constraint-default="2.7.1" rev-constraint-dynamic="2.7.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="3014" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xalan/xalan/ivy-2.7.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xalan/xalan/2.7.1/xalan-2.7.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.7.1" rev-constraint-default="2.7.1" rev-constraint-dynamic="2.7.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="xalan" type="jar" ext="jar" status="no" details="" size="3176148" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xalan\xalan\jars\xalan-2.7.1.jar">
+					<artifact name="xalan" type="jar" ext="jar" status="no" details="" size="3176148" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xalan/xalan/jars/xalan-2.7.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/xalan/xalan/2.7.1/xalan-2.7.1.jar"/>
 					</artifact>
 				</artifacts>
@@ -48,10 +48,10 @@
 		</module>
 		<module organisation="org.springframework" name="spring-test">
 			<revision name="3.0.7.RELEASE" status="release" pubdate="20111224004026" resolver="maven2" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="25">
-				<metadata-artifact status="no" details="" size="8641" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.springframework\spring-test\ivy-3.0.7.RELEASE.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/springframework/spring-test/3.0.7.RELEASE/spring-test-3.0.7.RELEASE.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.0.7.RELEASE" rev-constraint-default="3.0.7.RELEASE" rev-constraint-dynamic="3.0.7.RELEASE" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="8560" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.springframework/spring-test/ivy-3.0.7.RELEASE.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/springframework/spring-test/3.0.7.RELEASE/spring-test-3.0.7.RELEASE.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.0.7.RELEASE" rev-constraint-default="3.0.7.RELEASE" rev-constraint-dynamic="3.0.7.RELEASE" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="spring-test" type="jar" ext="jar" status="no" details="" size="205357" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.springframework\spring-test\jars\spring-test-3.0.7.RELEASE.jar">
+					<artifact name="spring-test" type="jar" ext="jar" status="no" details="" size="205357" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.springframework/spring-test/jars/spring-test-3.0.7.RELEASE.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/springframework/spring-test/3.0.7.RELEASE/spring-test-3.0.7.RELEASE.jar"/>
 					</artifact>
 				</artifacts>
@@ -59,10 +59,10 @@
 		</module>
 		<module organisation="xalan" name="serializer">
 			<revision name="2.7.1" status="release" pubdate="20080930100254" resolver="maven2" artresolver="default" homepage="http://xml.apache.org/xalan-j/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="24">
-				<metadata-artifact status="no" details="" size="2769" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xalan\serializer\ivy-2.7.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xalan/serializer/2.7.1/serializer-2.7.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.7.1" rev-constraint-default="2.7.1" rev-constraint-dynamic="2.7.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2735" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xalan/serializer/ivy-2.7.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/xalan/serializer/2.7.1/serializer-2.7.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.7.1" rev-constraint-default="2.7.1" rev-constraint-dynamic="2.7.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="serializer" type="jar" ext="jar" status="no" details="" size="278281" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\xalan\serializer\jars\serializer-2.7.1.jar">
+					<artifact name="serializer" type="jar" ext="jar" status="no" details="" size="278281" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/xalan/serializer/jars/serializer-2.7.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/xalan/serializer/2.7.1/serializer-2.7.1.jar"/>
 					</artifact>
 				</artifacts>
@@ -71,10 +71,10 @@
 		<module organisation="org.scala-lang" name="scala-compiler">
 			<revision name="2.9.2" status="release" pubdate="20120413143159" resolver="maven2" artresolver="default" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="23">
 				<license name="BSD-like" url="http://www.scala-lang.org/downloads/license.html    "/>
-				<metadata-artifact status="no" details="" size="2898" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.scala-lang\scala-compiler\ivy-2.9.2.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.9.2/scala-compiler-2.9.2.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.9.2" rev-constraint-default="2.9.2" rev-constraint-dynamic="2.9.2" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2862" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.scala-lang/scala-compiler/ivy-2.9.2.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.9.2/scala-compiler-2.9.2.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.9.2" rev-constraint-default="2.9.2" rev-constraint-dynamic="2.9.2" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="scala-compiler" type="jar" ext="jar" status="no" details="" size="11449543" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.scala-lang\scala-compiler\jars\scala-compiler-2.9.2.jar">
+					<artifact name="scala-compiler" type="jar" ext="jar" status="no" details="" size="11449543" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.9.2.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.9.2/scala-compiler-2.9.2.jar"/>
 					</artifact>
 				</artifacts>
@@ -83,10 +83,10 @@
 		<module organisation="com.thoughtworks.qdox" name="qdox">
 			<revision name="1.12.1" status="release" pubdate="20121104181339" resolver="maven2" artresolver="default" homepage="http://qdox.codehaus.org" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="22">
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-				<metadata-artifact status="no" details="" size="4374" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\com.thoughtworks.qdox\qdox\ivy-1.12.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/thoughtworks/qdox/qdox/1.12.1/qdox-1.12.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.12.1" rev-constraint-default="1.12.1" rev-constraint-dynamic="1.12.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="4331" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/com.thoughtworks.qdox/qdox/ivy-1.12.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/com/thoughtworks/qdox/qdox/1.12.1/qdox-1.12.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.12.1" rev-constraint-default="1.12.1" rev-constraint-dynamic="1.12.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="qdox" type="jar" ext="jar" status="no" details="" size="179818" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\com.thoughtworks.qdox\qdox\jars\qdox-1.12.1.jar">
+					<artifact name="qdox" type="jar" ext="jar" status="no" details="" size="179818" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/com.thoughtworks.qdox/qdox/jars/qdox-1.12.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/com/thoughtworks/qdox/qdox/1.12.1/qdox-1.12.1.jar"/>
 					</artifact>
 				</artifacts>
@@ -94,10 +94,10 @@
 		</module>
 		<module organisation="org.powermock" name="powermock-module-junit4">
 			<revision name="1.5" status="release" pubdate="20121204110311" resolver="maven2" artresolver="default" homepage="http://www.powermock.org" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="19">
-				<metadata-artifact status="no" details="" size="5432" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-module-junit4\ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-module-junit4/1.5/powermock-module-junit4-1.5.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="5388" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-module-junit4/ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-module-junit4/1.5/powermock-module-junit4-1.5.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="powermock-module-junit4" type="jar" ext="jar" status="no" details="" size="25976" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-module-junit4\jars\powermock-module-junit4-1.5.jar">
+					<artifact name="powermock-module-junit4" type="jar" ext="jar" status="no" details="" size="25976" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-module-junit4/jars/powermock-module-junit4-1.5.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/powermock/powermock-module-junit4/1.5/powermock-module-junit4-1.5.jar"/>
 					</artifact>
 				</artifacts>
@@ -105,10 +105,10 @@
 		</module>
 		<module organisation="org.powermock" name="powermock-module-junit4-common">
 			<revision name="1.5" status="release" pubdate="20121204110300" resolver="maven2" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="20">
-				<metadata-artifact status="no" details="" size="5524" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-module-junit4-common\ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-module-junit4-common/1.5/powermock-module-junit4-common-1.5.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="5479" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-module-junit4-common/ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-module-junit4-common/1.5/powermock-module-junit4-common-1.5.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="powermock-module-junit4-common" type="jar" ext="jar" status="no" details="" size="13349" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-module-junit4-common\jars\powermock-module-junit4-common-1.5.jar">
+					<artifact name="powermock-module-junit4-common" type="jar" ext="jar" status="no" details="" size="13349" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-module-junit4-common/jars/powermock-module-junit4-common-1.5.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/powermock/powermock-module-junit4-common/1.5/powermock-module-junit4-common-1.5.jar"/>
 					</artifact>
 				</artifacts>
@@ -116,10 +116,10 @@
 		</module>
 		<module organisation="org.powermock" name="powermock-api-mockito">
 			<revision name="1.5" status="release" pubdate="20121204110247" resolver="maven2" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="16">
-				<metadata-artifact status="no" details="" size="5437" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-api-mockito\ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-api-mockito/1.5/powermock-api-mockito-1.5.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="5392" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-api-mockito/ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-api-mockito/1.5/powermock-api-mockito-1.5.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="powermock-api-mockito" type="jar" ext="jar" status="no" details="" size="67946" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-api-mockito\jars\powermock-api-mockito-1.5.jar">
+					<artifact name="powermock-api-mockito" type="jar" ext="jar" status="no" details="" size="67946" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-api-mockito/jars/powermock-api-mockito-1.5.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/powermock/powermock-api-mockito/1.5/powermock-api-mockito-1.5.jar"/>
 					</artifact>
 				</artifacts>
@@ -127,10 +127,10 @@
 		</module>
 		<module organisation="org.powermock" name="powermock-api-support">
 			<revision name="1.5" status="release" pubdate="20121204110218" resolver="maven2" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="17">
-				<metadata-artifact status="no" details="" size="5426" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-api-support\ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-api-support/1.5/powermock-api-support-1.5.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="5381" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-api-support/ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-api-support/1.5/powermock-api-support-1.5.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="powermock-api-support" type="jar" ext="jar" status="no" details="" size="18539" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-api-support\jars\powermock-api-support-1.5.jar">
+					<artifact name="powermock-api-support" type="jar" ext="jar" status="no" details="" size="18539" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-api-support/jars/powermock-api-support-1.5.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/powermock/powermock-api-support/1.5/powermock-api-support-1.5.jar"/>
 					</artifact>
 				</artifacts>
@@ -138,10 +138,10 @@
 		</module>
 		<module organisation="org.powermock" name="powermock-core">
 			<revision name="1.5" status="release" pubdate="20121204110205" resolver="maven2" artresolver="default" homepage="http://www.powermock.org" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="18">
-				<metadata-artifact status="no" details="" size="4743" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-core\ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-core/1.5/powermock-core-1.5.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="4698" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-core/ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-core/1.5/powermock-core-1.5.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="powermock-core" type="jar" ext="jar" status="no" details="" size="84351" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-core\jars\powermock-core-1.5.jar">
+					<artifact name="powermock-core" type="jar" ext="jar" status="no" details="" size="84351" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-core/jars/powermock-core-1.5.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/powermock/powermock-core/1.5/powermock-core-1.5.jar"/>
 					</artifact>
 				</artifacts>
@@ -149,10 +149,10 @@
 		</module>
 		<module organisation="org.powermock" name="powermock-reflect">
 			<revision name="1.5" status="release" pubdate="20121204110150" resolver="maven2" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="21">
-				<metadata-artifact status="no" details="" size="4558" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-reflect\ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-reflect/1.5/powermock-reflect-1.5.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="4514" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-reflect/ivy-1.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/powermock/powermock-reflect/1.5/powermock-reflect-1.5.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5" rev-constraint-default="1.5" rev-constraint-dynamic="1.5" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="powermock-reflect" type="jar" ext="jar" status="no" details="" size="43255" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.powermock\powermock-reflect\jars\powermock-reflect-1.5.jar">
+					<artifact name="powermock-reflect" type="jar" ext="jar" status="no" details="" size="43255" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.powermock/powermock-reflect/jars/powermock-reflect-1.5.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/powermock/powermock-reflect/1.5/powermock-reflect-1.5.jar"/>
 					</artifact>
 				</artifacts>
@@ -161,10 +161,10 @@
 		<module organisation="org.osgi" name="org.osgi.core">
 			<revision name="4.3.1" status="release" pubdate="20121030104430" resolver="maven2" artresolver="default" homepage="     http://www.osgi.org   " downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="15">
 				<license name="         Apache License, Version 2.0       " url="         http://opensource.org/licenses/apache2.0.php       "/>
-				<metadata-artifact status="no" details="" size="2712" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.osgi\org.osgi.core\ivy-4.3.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/osgi/org.osgi.core/4.3.1/org.osgi.core-4.3.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="4.3.1" rev-constraint-default="4.3.1" rev-constraint-dynamic="4.3.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2674" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.osgi/org.osgi.core/ivy-4.3.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/osgi/org.osgi.core/4.3.1/org.osgi.core-4.3.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="4.3.1" rev-constraint-default="4.3.1" rev-constraint-dynamic="4.3.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="org.osgi.core" type="jar" ext="jar" status="no" details="" size="349985" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.osgi\org.osgi.core\jars\org.osgi.core-4.3.1.jar">
+					<artifact name="org.osgi.core" type="jar" ext="jar" status="no" details="" size="349985" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.osgi/org.osgi.core/jars/org.osgi.core-4.3.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/osgi/org.osgi.core/4.3.1/org.osgi.core-4.3.1.jar"/>
 					</artifact>
 				</artifacts>
@@ -173,10 +173,10 @@
 		<module organisation="org.osgi" name="org.osgi.compendium">
 			<revision name="4.3.1" status="release" pubdate="20121030104539" resolver="maven2" artresolver="default" homepage="     http://www.osgi.org   " downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="14">
 				<license name="         Apache License, Version 2.0       " url="         http://opensource.org/licenses/apache2.0.php       "/>
-				<metadata-artifact status="no" details="" size="2742" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.osgi\org.osgi.compendium\ivy-4.3.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/osgi/org.osgi.compendium/4.3.1/org.osgi.compendium-4.3.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="4.3.1" rev-constraint-default="4.3.1" rev-constraint-dynamic="4.3.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2704" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.osgi/org.osgi.compendium/ivy-4.3.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/osgi/org.osgi.compendium/4.3.1/org.osgi.compendium-4.3.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="4.3.1" rev-constraint-default="4.3.1" rev-constraint-dynamic="4.3.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="org.osgi.compendium" type="jar" ext="jar" status="no" details="" size="767142" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.osgi\org.osgi.compendium\jars\org.osgi.compendium-4.3.1.jar">
+					<artifact name="org.osgi.compendium" type="jar" ext="jar" status="no" details="" size="767142" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-4.3.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/osgi/org.osgi.compendium/4.3.1/org.osgi.compendium-4.3.1.jar"/>
 					</artifact>
 				</artifacts>
@@ -185,10 +185,10 @@
 		<module organisation="org.mockito" name="mockito-all">
 			<revision name="1.9.5" status="release" pubdate="20121014121023" resolver="maven2" artresolver="default" homepage="http://www.mockito.org" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="13">
 				<license name="The MIT License" url="http://code.google.com/p/mockito/wiki/License"/>
-				<metadata-artifact status="no" details="" size="2574" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.mockito\mockito-all\ivy-1.9.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.9.5" rev-constraint-default="1.9.5" rev-constraint-dynamic="1.9.5" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2543" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.mockito/mockito-all/ivy-1.9.5.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.9.5" rev-constraint-default="1.9.5" rev-constraint-dynamic="1.9.5" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="mockito-all" type="jar" ext="jar" status="no" details="" size="1581066" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.mockito\mockito-all\jars\mockito-all-1.9.5.jar">
+					<artifact name="mockito-all" type="jar" ext="jar" status="no" details="" size="1581066" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.mockito/mockito-all/jars/mockito-all-1.9.5.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/mockito/mockito-all/1.9.5/mockito-all-1.9.5.jar"/>
 					</artifact>
 				</artifacts>
@@ -197,10 +197,10 @@
 		<module organisation="javax.mail" name="mail">
 			<revision name="1.4" status="release" pubdate="20060503015606" resolver="maven2" artresolver="default" homepage="https://glassfish.dev.java.net/javaee5/mail/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="12">
 				<license name="Common Development and Distribution License (CDDL) v1.0" url="https://glassfish.dev.java.net/public/CDDLv1.0.html"/>
-				<metadata-artifact status="no" details="" size="2790" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.mail\mail\ivy-1.4.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/mail/mail/1.4/mail-1.4.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.4" rev-constraint-default="1.4" rev-constraint-dynamic="1.4" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2757" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.mail/mail/ivy-1.4.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/mail/mail/1.4/mail-1.4.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.4" rev-constraint-default="1.4" rev-constraint-dynamic="1.4" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="mail" type="jar" ext="jar" status="no" details="" size="388864" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.mail\mail\jars\mail-1.4.jar">
+					<artifact name="mail" type="jar" ext="jar" status="no" details="" size="388864" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.mail/mail/jars/mail-1.4.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/javax/mail/mail/1.4/mail-1.4.jar"/>
 					</artifact>
 				</artifacts>
@@ -209,10 +209,10 @@
 		<module organisation="log4j" name="log4j">
 			<revision name="1.2.16" status="release" pubdate="20100331062544" resolver="maven2" artresolver="default" homepage="http://logging.apache.org/log4j/1.2/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="11">
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-				<metadata-artifact status="no" details="" size="3559" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\log4j\log4j\ivy-1.2.16.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/log4j/log4j/1.2.16/log4j-1.2.16.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.2.16" rev-constraint-default="1.2.16" rev-constraint-dynamic="1.2.16" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="3521" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/log4j/log4j/ivy-1.2.16.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/log4j/log4j/1.2.16/log4j-1.2.16.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.2.16" rev-constraint-default="1.2.16" rev-constraint-dynamic="1.2.16" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="log4j" type="bundle" ext="jar" status="no" details="" size="481535" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\log4j\log4j\bundles\log4j-1.2.16.jar">
+					<artifact name="log4j" type="bundle" ext="jar" status="no" details="" size="481535" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/log4j/log4j/bundles/log4j-1.2.16.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
 					</artifact>
 				</artifacts>
@@ -221,10 +221,10 @@
 		<module organisation="junit" name="junit">
 			<revision name="4.11" status="release" pubdate="20121114202147" resolver="maven2" artresolver="default" homepage="http://junit.org" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="10">
 				<license name="Common Public License Version 1.0" url="http://www.opensource.org/licenses/cpl1.0.txt"/>
-				<metadata-artifact status="no" details="" size="2981" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\junit\junit\ivy-4.11.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/junit/junit/4.11/junit-4.11.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="4.11" rev-constraint-default="4.11" rev-constraint-dynamic="4.11" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2944" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/junit/junit/ivy-4.11.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/junit/junit/4.11/junit-4.11.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="4.11" rev-constraint-default="4.11" rev-constraint-dynamic="4.11" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="junit" type="jar" ext="jar" status="no" details="" size="245039" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\junit\junit\jars\junit-4.11.jar">
+					<artifact name="junit" type="jar" ext="jar" status="no" details="" size="245039" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/junit/junit/jars/junit-4.11.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/junit/junit/4.11/junit-4.11.jar"/>
 					</artifact>
 				</artifacts>
@@ -232,10 +232,10 @@
 		</module>
 		<module organisation="javax.servlet.jsp" name="jsp-api">
 			<revision name="2.1" status="release" pubdate="20060717130956" resolver="maven2" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="9">
-				<metadata-artifact status="no" details="" size="2308" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.servlet.jsp\jsp-api\ivy-2.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/servlet/jsp/jsp-api/2.1/jsp-api-2.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.1" rev-constraint-default="2.1" rev-constraint-dynamic="2.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2281" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.servlet.jsp/jsp-api/ivy-2.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/servlet/jsp/jsp-api/2.1/jsp-api-2.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="2.1" rev-constraint-default="2.1" rev-constraint-dynamic="2.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="jsp-api" type="jar" ext="jar" status="no" details="" size="100636" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.servlet.jsp\jsp-api\jars\jsp-api-2.1.jar">
+					<artifact name="jsp-api" type="jar" ext="jar" status="no" details="" size="100636" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.servlet.jsp/jsp-api/jars/jsp-api-2.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/javax/servlet/jsp/jsp-api/2.1/jsp-api-2.1.jar"/>
 					</artifact>
 				</artifacts>
@@ -244,10 +244,10 @@
 		<module organisation="javax.servlet" name="javax.servlet-api">
 			<revision name="3.0.1" status="release" pubdate="20110712214053" resolver="maven2" artresolver="default" homepage="http://servlet-spec.java.net" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="8">
 				<license name="CDDL + GPLv2 with classpath exception" url="https://glassfish.dev.java.net/nonav/public/CDDL+GPL.html"/>
-				<metadata-artifact status="no" details="" size="3918" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.servlet\javax.servlet-api\ivy-3.0.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.0.1" rev-constraint-default="3.0.1" rev-constraint-dynamic="3.0.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="3879" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.servlet/javax.servlet-api/ivy-3.0.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.0.1" rev-constraint-default="3.0.1" rev-constraint-dynamic="3.0.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="javax.servlet-api" type="jar" ext="jar" status="no" details="" size="85353" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.servlet\javax.servlet-api\jars\javax.servlet-api-3.0.1.jar">
+					<artifact name="javax.servlet-api" type="jar" ext="jar" status="no" details="" size="85353" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.servlet/javax.servlet-api/jars/javax.servlet-api-3.0.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar"/>
 					</artifact>
 				</artifacts>
@@ -256,10 +256,10 @@
 		<module organisation="net.sf" name="jargs">
 			<revision name="1.0" status="release" pubdate="20091103183611" resolver="jboss-thirdparty" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="7">
 				<license name="jargs" url="http://jargs.cvs.sourceforge.net/jargs/jargs/LICENCE"/>
-				<metadata-artifact status="no" details="" size="2288" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\net.sf\jargs\ivy-1.0.xml" searched="false" origin-is-local="false" origin-location="https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/net/sf/jargs/1.0/jargs-1.0.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.0" rev-constraint-default="1.0" rev-constraint-dynamic="1.0" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2261" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/net.sf/jargs/ivy-1.0.xml" searched="false" origin-is-local="false" origin-location="https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/net/sf/jargs/1.0/jargs-1.0.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.0" rev-constraint-default="1.0" rev-constraint-dynamic="1.0" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="jargs" type="jar" ext="jar" status="no" details="" size="11406" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\net.sf\jargs\jars\jargs-1.0.jar">
+					<artifact name="jargs" type="jar" ext="jar" status="no" details="" size="11406" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/net.sf/jargs/jars/jargs-1.0.jar">
 						<origin-location is-local="false" location="https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/net/sf/jargs/1.0/jargs-1.0.jar"/>
 					</artifact>
 				</artifacts>
@@ -268,10 +268,10 @@
 		<module organisation="jalopy" name="jalopy">
 			<revision name="1.5rc3" status="release" pubdate="20060703132335" resolver="maven2" artresolver="default" homepage="http://jalopy.sf.net" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="6">
 				<license name="BSD license" url="http://www.opensource.org/licenses/bsd-license.php"/>
-				<metadata-artifact status="no" details="" size="2597" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\jalopy\jalopy\ivy-1.5rc3.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/jalopy/jalopy/1.5rc3/jalopy-1.5rc3.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5rc3" rev-constraint-default="1.5rc3" rev-constraint-dynamic="1.5rc3" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2565" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/jalopy/jalopy/ivy-1.5rc3.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/jalopy/jalopy/1.5rc3/jalopy-1.5rc3.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.5rc3" rev-constraint-default="1.5rc3" rev-constraint-dynamic="1.5rc3" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="jalopy" type="jar" ext="jar" status="no" details="" size="1335669" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\jalopy\jalopy\jars\jalopy-1.5rc3.jar">
+					<artifact name="jalopy" type="jar" ext="jar" status="no" details="" size="1335669" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/jalopy/jalopy/jars/jalopy-1.5rc3.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/jalopy/jalopy/1.5rc3/jalopy-1.5rc3.jar"/>
 					</artifact>
 				</artifacts>
@@ -280,10 +280,10 @@
 		<module organisation="org.eclipse.jdt.core.compiler" name="ecj">
 			<revision name="3.7.2" status="release" pubdate="20120421182539" resolver="maven2" artresolver="default" homepage="http://www.eclipse.org/jdt/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="5">
 				<license name="Eclipse Public License v1.0" url="http://www.eclipse.org/org/documents/epl-v10.php"/>
-				<metadata-artifact status="no" details="" size="2786" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.eclipse.jdt.core.compiler\ecj\ivy-3.7.2.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/eclipse/jdt/core/compiler/ecj/3.7.2/ecj-3.7.2.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.7.2" rev-constraint-default="3.7.2" rev-constraint-dynamic="3.7.2" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2753" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.eclipse.jdt.core.compiler/ecj/ivy-3.7.2.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/eclipse/jdt/core/compiler/ecj/3.7.2/ecj-3.7.2.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.7.2" rev-constraint-default="3.7.2" rev-constraint-dynamic="3.7.2" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="ecj" type="jar" ext="jar" status="no" details="" size="1749449" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.eclipse.jdt.core.compiler\ecj\jars\ecj-3.7.2.jar">
+					<artifact name="ecj" type="jar" ext="jar" status="no" details="" size="1749449" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.eclipse.jdt.core.compiler/ecj/jars/ecj-3.7.2.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/eclipse/jdt/core/compiler/ecj/3.7.2/ecj-3.7.2.jar"/>
 					</artifact>
 				</artifacts>
@@ -292,10 +292,10 @@
 		<module organisation="javax.ccpp" name="ccpp">
 			<revision name="1.0" status="release" pubdate="20070910231112" resolver="maven2" artresolver="default" homepage="http://www.jcp.org/en/jsr/detail?id=188" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="4">
 				<license name="Sun Microsystems, Inc. Binary Code License Agreement" url="http://java.sun.com/j2ee/ccpp"/>
-				<metadata-artifact status="no" details="" size="2601" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.ccpp\ccpp\ivy-1.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/ccpp/ccpp/1.0/ccpp-1.0.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.0" rev-constraint-default="1.0" rev-constraint-dynamic="1.0" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2570" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.ccpp/ccpp/ivy-1.0.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/ccpp/ccpp/1.0/ccpp-1.0.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.0" rev-constraint-default="1.0" rev-constraint-dynamic="1.0" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="ccpp" type="jar" ext="jar" status="no" details="" size="15048" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.ccpp\ccpp\jars\ccpp-1.0.jar">
+					<artifact name="ccpp" type="jar" ext="jar" status="no" details="" size="15048" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.ccpp/ccpp/jars/ccpp-1.0.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/javax/ccpp/ccpp/1.0/ccpp-1.0.jar"/>
 					</artifact>
 				</artifacts>
@@ -305,10 +305,10 @@
 			<revision name="1.46" status="release" pubdate="20110223051039" resolver="maven2" artresolver="default" homepage="http://www.bouncycastle.org/java.html" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="2">
 				<license name="Bouncy Castle Licence" url="http://www.bouncycastle.org/licence.html"/>
 				<license name="Apache Software License, Version 1.1" url="http://www.apache.org/licenses/LICENSE-1.1"/>
-				<metadata-artifact status="no" details="" size="3080" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.bouncycastle\bcpg-jdk16\ivy-1.46.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk16/1.46/bcpg-jdk16-1.46.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.46" rev-constraint-default="1.46" rev-constraint-dynamic="1.46" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="3045" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.bouncycastle/bcpg-jdk16/ivy-1.46.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk16/1.46/bcpg-jdk16-1.46.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.46" rev-constraint-default="1.46" rev-constraint-dynamic="1.46" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="bcpg-jdk16" type="jar" ext="jar" status="no" details="" size="174074" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.bouncycastle\bcpg-jdk16\jars\bcpg-jdk16-1.46.jar">
+					<artifact name="bcpg-jdk16" type="jar" ext="jar" status="no" details="" size="174074" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.bouncycastle/bcpg-jdk16/jars/bcpg-jdk16-1.46.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk16/1.46/bcpg-jdk16-1.46.jar"/>
 					</artifact>
 				</artifacts>
@@ -317,10 +317,10 @@
 		<module organisation="org.bouncycastle" name="bcprov-jdk16">
 			<revision name="1.46" status="release" pubdate="20110223050414" resolver="maven2" artresolver="default" homepage="http://www.bouncycastle.org/java.html" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="3">
 				<license name="Bouncy Castle Licence" url="http://www.bouncycastle.org/licence.html"/>
-				<metadata-artifact status="no" details="" size="2759" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.bouncycastle\bcprov-jdk16\ivy-1.46.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk16/1.46/bcprov-jdk16-1.46.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.46" rev-constraint-default="1.46" rev-constraint-dynamic="1.46" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2728" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.bouncycastle/bcprov-jdk16/ivy-1.46.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk16/1.46/bcprov-jdk16-1.46.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.46" rev-constraint-default="1.46" rev-constraint-dynamic="1.46" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="bcprov-jdk16" type="jar" ext="jar" status="no" details="" size="1876535" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.bouncycastle\bcprov-jdk16\jars\bcprov-jdk16-1.46.jar">
+					<artifact name="bcprov-jdk16" type="jar" ext="jar" status="no" details="" size="1876535" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.bouncycastle/bcprov-jdk16/jars/bcprov-jdk16-1.46.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk16/1.46/bcprov-jdk16-1.46.jar"/>
 					</artifact>
 				</artifacts>
@@ -328,10 +328,10 @@
 		</module>
 		<module organisation="org.tigris.antelope" name="antelopetasks">
 			<revision name="3.2.10" status="release" pubdate="20060126030341" resolver="maven2" artresolver="default" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="1">
-				<metadata-artifact status="no" details="" size="2233" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.tigris.antelope\antelopetasks\ivy-3.2.10.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/tigris/antelope/antelopetasks/3.2.10/antelopetasks-3.2.10.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.2.10" rev-constraint-default="3.2.10" rev-constraint-dynamic="3.2.10" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2207" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.tigris.antelope/antelopetasks/ivy-3.2.10.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/org/tigris/antelope/antelopetasks/3.2.10/antelopetasks-3.2.10.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="3.2.10" rev-constraint-default="3.2.10" rev-constraint-dynamic="3.2.10" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="antelopetasks" type="jar" ext="jar" status="no" details="" size="223711" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\org.tigris.antelope\antelopetasks\jars\antelopetasks-3.2.10.jar">
+					<artifact name="antelopetasks" type="jar" ext="jar" status="no" details="" size="223711" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/org.tigris.antelope/antelopetasks/jars/antelopetasks-3.2.10.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/org/tigris/antelope/antelopetasks/3.2.10/antelopetasks-3.2.10.jar"/>
 					</artifact>
 				</artifacts>
@@ -340,10 +340,10 @@
 		<module organisation="javax.activation" name="activation">
 			<revision name="1.1" status="release" pubdate="20060503014829" resolver="maven2" artresolver="default" homepage="http://java.sun.com/products/javabeans/jaf/index.jsp" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="0">
 				<license name="Common Development and Distribution License (CDDL) v1.0" url="https://glassfish.dev.java.net/public/CDDLv1.0.html"/>
-				<metadata-artifact status="no" details="" size="2842" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.activation\activation\ivy-1.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/activation/activation/1.1/activation-1.1.pom"/>
-				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="working@INF-PC"/>
+				<metadata-artifact status="no" details="" size="2812" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.activation/activation/ivy-1.1.xml" searched="false" origin-is-local="false" origin-location="http://repo1.maven.org/maven2/javax/activation/activation/1.1/activation-1.1.pom"/>
+				<caller organisation="com.liferay" name="plugins" conf="default" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="working@maria-Latitude-E6530"/>
 				<artifacts>
-					<artifact name="activation" type="jar" ext="jar" status="no" details="" size="62983" time="0" location="D:\GFBio_Git\GFBio_Jena_dev\liferay-plugins-sdk-6.2.0\.ivy\cache\javax.activation\activation\jars\activation-1.1.jar">
+					<artifact name="activation" type="jar" ext="jar" status="no" details="" size="62983" time="0" location="/home/maria/gfbio/gfbio-dev/GFBio-portal-dev/liferay-plugins-sdk-6.2.0/.ivy/cache/javax.activation/activation/jars/activation-1.1.jar">
 						<origin-location is-local="false" location="http://repo1.maven.org/maven2/javax/activation/activation/1.1/activation-1.1.jar"/>
 					</artifact>
 				</artifacts>
