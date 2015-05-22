@@ -4,7 +4,7 @@ success = "x";
 
 
 function pseudoaccordion(j) {
-	showhide2(j);
+	showhide(j);
 	changePlusMinus("h_".concat(j));
 }
 
@@ -22,61 +22,39 @@ function changeToMinus(j) {
 
 
 
-/////////////////////////////////////////   content  //////////////////////////////////////////////
-
-
-//page
-//$( "#testerer" ).load( "/html/tablebuilder/explanation.jsp");
-//$( "#testerer" ).load( path.concat("/html/tablebuilder/explanation.jsp"));
-
-
-
 
 
 /////////////////////////////////////////   hide/show scripts  //////////////////////////////////////////////
 
-function showhide2(j) {
-	visibleStateChoose(j);
+function iconshowhide(i,j, iconid){
+	
+	if(document.getElementById("hide_".concat(i)).className=="swHide" && document.getElementById("hide_".concat(j)).className=="swHide") visibleShow(i);
+	if(document.getElementById("hide_".concat(i)).className=="swMain" && document.getElementById("hide_".concat(j)).className=="swMain") visibleHide(i);
+	showhide(j);
+
+	(document.getElementById(iconid).className=="icon-plus") ?document.getElementById(iconid).className = "icon-minus" : document.getElementById(iconid).className = "icon-plus";
 }
+
+function hideswitch(i,j) {
+	visibleStateChoose(i);
+	visibleStateChoose(j);
+};
 
 function showhide(j) {
 	visibleStateChoose(j);
-	visibleValueChoose(j);
 };
 
-function visibleValueChoose(j) {
-	(document.getElementById("hide_but_".concat(j)).value.substring(0,4)=="hide") ? visibleValueChange("show", j) : visibleValueChange("hide", j);
-}
-
-function visibleValueChange(str, j) {
-	document.getElementById("hide_but_".concat(j)).value = str.concat(document.getElementById("hide_but_".concat(j)).value.substring(4));
-}
 
 function visibleStateChoose(j) {
 	(document.getElementById("hide_".concat(j)).className=="swHide") ? visibleShow(j) : visibleHide(j);
 }
 
-function radiohide(j) {
-	if (j != "none") {
-		if (j<=(-100)) {
-			for (var i=1010; i <= 1011; i++)
-				visibleHide("-".concat(i));
-			visibleShow(j);
-		}else {
-			for (var i=10; i <= 11; i++)
-				visibleHide("-".concat(i));
-			visibleShow(j);
-		}
-	}
-};
 
 function visibleShow(j) {
 	document.getElementById("hide_".concat(j)).className = "swMain";
 };
 
 function visibleHide(j) {
-	//console.log(j);
-	console.log("hide_".concat(j));
 	document.getElementById("hide_".concat(j)).className = "swHide";
 };
 
@@ -190,7 +168,6 @@ function updateProject (archivingURL, method, name, size, hide, userID) {
 
 //Method to update a RelationTable in Head
 function updateRelationTable (archivingURL, method, mtable, ntable, hide) {
-	//console.log(archivingURL+ " || "+ method+ " || "+  mtable+ " || "+ ntable+ " || "+ hide);
 	var data = {};
 	data["mtable"] = mtable;
 	data["ntable"] = ntable;
@@ -200,10 +177,9 @@ function updateRelationTable (archivingURL, method, mtable, ntable, hide) {
 }
 
 //Method to update a Table in Head
-function updateTable (archivingURL, method, name, size, hide, task) {
-	resourceMethod_I(archivingURL, method, name, size, task);
-	visibleShow(hide);
-	window.setTimeout('visibleHide('+hide+')',1500);
+function updateTable (method, name, size, task, hideI, hideJ) {
+	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task);
+	hideswitch(hideI, hideJ);
 }
 
 //generally Methods
@@ -211,15 +187,29 @@ function resourceMethod(archivingURL, method, data) {
 	ajaxRequest(archivingURL, method, data);
 }
 
-function resourceMethod_I(archivingURL, method, name, size, relationID) {
+function resourceMethod_I_to(archivingURL, method, name, size, relationID) {
+	
 	var str ;
 	var data = {};
 	data["relationID"] = relationID;
 	for (var i = 0; i < size; i++) {
 		str = name.concat("_").concat(i);
+		var topic = document.getElementById('top'.concat(str)).value;
+		data[topic] = document.getElementById(str).value;
+	}
+	ajaxRequest(archivingURL, method, data);
+	updateLaVaSet_I(name, size);
+};
+
+function resourceMethod_I(archivingURL, method, name, size, relationID) {
+	
+	var str ;
+	var data = {};
+	data["relationID"] = relationID;
+	for (var i = 1; i < size; i++) {
+		str = name.concat("_").concat(i);
 		var topic = document.getElementById('lato'.concat(str)).textContent;
 		data[topic] = document.getElementById(str).value;
-		//console.log(str+ " | "+ topic + " | "+document.getElementById(str).value);
 	}
 	ajaxRequest(archivingURL, method, data);
 	updateLaVaSet_I(name, size);
@@ -242,7 +232,7 @@ function resourceMethod_JI(archivingURL, method, name, j, size) {
 
 
 function updateLaVaSet_I (name, size) {
-	for (var i = 1; i < size; i++)
+	for (var i = 0; i < size; i++)
 		 updateLaVa_I(name, i);
 }
 
@@ -295,6 +285,32 @@ function reload() {
 	window.location.reload(true);
 }
 
+
+/////////////////////////////////////////////////// tabs ////////////////////////////////////////////////////
+
+
+
+
+
+$(document).ready(function(){
+	if ($('ul#verticalNav li a').length && $('div.section').length ) {
+		$('div.section').css( 'display', 'none' );
+		$('ul#verticalNav li a').click(function() {
+			showSection( $(this).attr('href') );
+		});
+		if(window.location.hash) 
+			showSection( window.location.hash);
+		else 
+			$('ul#verticalNav li:first-child a').click();
+	}
+});
+
+function showSection( sectionID ) {
+	$('div.section').css( 'display', 'none' );
+	$('div'+sectionID).css( 'display', 'block' );
+	$('ul#verticalNav li a').removeClass('active');
+	$('a#link'.concat(sectionID.substring(4))).addClass('active');
+}
 
 
 

@@ -100,13 +100,14 @@ page import="com.liferay.portal.util.PortalUtil" %>
 				"<portlet:namespace />data" : JSON.stringify(data),
 				"<portlet:namespace />responseTarget" : method
 			},
-			async: false,
+			async: true,
 			success : function() {
 			}
 		});
 	}
 
 	function ajaxValueResponse(archivingURL, method, data) {
+		
 		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
