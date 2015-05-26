@@ -32,6 +32,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	
 	<portlet>
 		<portlet-name>dcst</portlet-name>
 		<display-name>DataCenterSelectionTool</display-name>
@@ -62,9 +63,9 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
-	   </portlet> <!--End DCST Portlet  -->
+	</portlet> <!--End DCST Portlet  -->
 	
-		<portlet>
+	<portlet>
 		<portlet-name>project-profile</portlet-name>
 		<display-name>Project Profile</display-name>
 		<portlet-class>org.gfbio.projectprofile.ProjectProfile</portlet-class>
@@ -95,6 +96,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	
 	<portlet>
 		<portlet-name>test</portlet-name>
 		<display-name>Test</display-name>
@@ -126,6 +128,7 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	
 	<portlet>
 		<portlet-name>table-builder</portlet-name>
 		<display-name>Table Builder</display-name>
@@ -157,4 +160,5 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	
 </portlet-app>

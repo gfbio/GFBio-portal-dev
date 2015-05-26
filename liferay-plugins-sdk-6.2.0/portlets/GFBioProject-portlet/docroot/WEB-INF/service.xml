@@ -42,11 +42,9 @@
 	<entity name="Project" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 
 		<!-- PK fields -->
-
 		<column name="projectID" 			type="long" 		primary="true" />
 
 		<!-- Other fields -->
-
 		<column name="name" 				type="String" />
 		<column name="label" 				type="String" />
 		<column name="description" 			type="String" />
@@ -55,11 +53,9 @@
 		<column name="status" 				type="String" />
 
 		<!-- Order -->
-
 		<order by="asc">	<order-column name="name" />	</order>
 
 		<!-- Finder methods -->
-
 		<finder name="Name" 		return-type="Collection">					<finder-column name="name" />				</finder>
 		<finder name="Label" 		return-type="Collection">					<finder-column name="label" />				</finder>
 		<finder name="ProjectID" 	return-type="Project">						<finder-column name="projectID" />			</finder>
