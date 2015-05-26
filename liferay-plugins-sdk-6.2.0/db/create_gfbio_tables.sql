@@ -1,5 +1,5 @@
 ﻿DROP TABLE 
-gfbio_basket, gfbio_dataprovider, gfbio_head, gfbio_position,  gfbio_project, gfbio_researchobject,  
+gfbio_basket, gfbio_head, gfbio_position,  gfbio_project, gfbio_researchobject,  
 gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi;
 
 -- Table: gfbio_basket
@@ -20,30 +20,6 @@ WITH (
 ALTER TABLE gfbio_basket
   OWNER TO liferay_gfbio;
 
-
--- Table: gfbio_dataprovider
-
-
-CREATE TABLE gfbio_dataprovider
-(
-  dataproviderid bigint NOT NULL,
-  name character(50),
-  label character(50),
-  adress character(100),
-  website character(50),
-  task character(50),
-  training text,
-  curates_ecological_field_only boolean,
-  curates_geographical_region_only boolean,
-  curates_research_field_only boolean,
-  curates_taxonomic_field_only boolean,
-  CONSTRAINT gfbio_dataprovider_pkey PRIMARY KEY (dataproviderid)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE gfbio_dataprovider
-  OWNER TO liferay_gfbio;
 
   
 -- Table: gfbio_project
@@ -169,8 +145,8 @@ ALTER TABLE gfbio_position
 -----------------------------------------------------------------------------------------
 ------------------------------------- m to n tables -------------------------------------
 -----------------------------------------------------------------------------------------
-
-
+ 
+  
 -- Table: gfbio_project_researchobject
   
 CREATE TABLE gfbio_project_researchobject

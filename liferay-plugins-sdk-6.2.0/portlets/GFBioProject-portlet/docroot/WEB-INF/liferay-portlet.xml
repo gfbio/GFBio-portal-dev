@@ -13,19 +13,19 @@
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
 	</portlet>
 
-		<portlet>
-			<portlet-name>project-profile</portlet-name>
-			<icon>/icon.png</icon>
-			<header-portlet-css>/css/main.css</header-portlet-css>
-			<footer-portlet-javascript>
-				/js/main.js
-			</footer-portlet-javascript>
-			<css-class-wrapper>
-				project-profile-portlet
-			</css-class-wrapper>
-		</portlet>
+	<portlet>
+		<portlet-name>project-profile</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>
+			project-profile-portlet
+		</css-class-wrapper>
+	</portlet>
 
-		<portlet>
+	<portlet>
 		<portlet-name>dcst</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -33,9 +33,9 @@
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>dcst-portlet</css-class-wrapper>
-     	</portlet>
+     </portlet>
 
-		<portlet>
+	<portlet>
 		<portlet-name>test</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -44,29 +44,35 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>test-portlet</css-class-wrapper>
 	</portlet>
-		<portlet>
-			<portlet-name>table-builder</portlet-name>
-			<icon>/icon.png</icon>
-			<header-portlet-css>/css/main.css</header-portlet-css>
-			<footer-portlet-javascript>
-				/js/main.js
-			</footer-portlet-javascript>
-			<css-class-wrapper>table-builder-portlet</css-class-wrapper>
-		</portlet>
-		<role-mapper>
+
+	<portlet>
+		<portlet-name>table-builder</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>table-builder-portlet</css-class-wrapper>
+	</portlet>
+	
+	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
 	</role-mapper>
+	
 	<role-mapper>
 		<role-name>guest</role-name>
 		<role-link>Guest</role-link>
 	</role-mapper>
+	
 	<role-mapper>
 		<role-name>power-user</role-name>
 		<role-link>Power User</role-link>
 	</role-mapper>
+	
 	<role-mapper>
 		<role-name>user</role-name>
 		<role-link>User</role-link>
 	</role-mapper>
+	
 </liferay-portlet-app>

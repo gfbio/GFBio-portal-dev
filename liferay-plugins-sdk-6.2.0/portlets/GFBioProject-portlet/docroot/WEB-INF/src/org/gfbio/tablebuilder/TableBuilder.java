@@ -57,7 +57,7 @@ public class TableBuilder extends GenericPortlet {
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
 		response.setContentType("text/html");
-
+		
 		if (request.getParameter("responseTarget") != null) {
 
 			//choose Row
@@ -85,6 +85,7 @@ public class TableBuilder extends GenericPortlet {
 			//update Table
 			if ("updateTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateTable(request, response);
+			
 		}
 	}
 	
@@ -184,7 +185,6 @@ public class TableBuilder extends GenericPortlet {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
 		
-		System.out.println(json.toString());
 		Boolean check;
 		try {
 			check = HeadLocalServiceUtil.updateRelationTable(0, (String) json.get("mtable"), (String) json.get("ntable"));
@@ -198,12 +198,34 @@ public class TableBuilder extends GenericPortlet {
 		JSONParser parser = new JSONParser();
 		JSONObject json = new JSONObject();
 
+		
 		try {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
-		
 		try {
-			Boolean check = HeadLocalServiceUtil.updateHead(Long.valueOf((String) json.get("headID")).longValue(), ((String) json.get("name")).trim(), ((String) json.get("relationID")).trim(), ((String) json.get("column01")).trim(), ((String) json.get("column02")).trim(), ((String) json.get("column03")).trim(), ((String) json.get("column04")).trim(), ((String) json.get("column05")).trim(), ((String) json.get("column06")).trim(), ((String) json.get("column07")).trim(), ((String) json.get("column08")).trim(), ((String) json.get("column09")).trim(), ((String) json.get("column10")).trim(), ((String) json.get("column11")).trim(), ((String) json.get("column12")).trim(), ((String) json.get("column13")).trim(), ((String) json.get("column14")).trim(), ((String) json.get("column15")).trim(), ((String) json.get("column16")).trim(), ((String) json.get("column17")).trim(), ((String) json.get("column18")).trim(), ((String) json.get("column19")).trim(), ((String) json.get("column20")).trim());
+			String c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20;
+			if (json.containsKey("column01")) c1=((String) json.get("column01")).trim(); else c1="";
+			if (json.containsKey("column02")) c2=((String) json.get("column02")).trim(); else c2="";
+			if (json.containsKey("column03")) c3=((String) json.get("column03")).trim(); else c3="";
+			if (json.containsKey("column04")) c4=((String) json.get("column04")).trim(); else c4="";
+			if (json.containsKey("column05")) c5=((String) json.get("column05")).trim(); else c5="";
+			if (json.containsKey("column06")) c6=((String) json.get("column06")).trim(); else c6="";
+			if (json.containsKey("column07")) c7=((String) json.get("column07")).trim(); else c7="";
+			if (json.containsKey("column08")) c8=((String) json.get("column08")).trim(); else c8="";
+			if (json.containsKey("column09")) c9=((String) json.get("column09")).trim(); else c9="";
+			if (json.containsKey("column10")) c10=((String) json.get("column10")).trim(); else c10="";
+			if (json.containsKey("column11")) c11=((String) json.get("column11")).trim(); else c11="";
+			if (json.containsKey("column12")) c12=((String) json.get("column12")).trim(); else c12="";
+			if (json.containsKey("column13")) c13=((String) json.get("column13")).trim(); else c13="";
+			if (json.containsKey("column14")) c14=((String) json.get("column14")).trim(); else c14="";
+			if (json.containsKey("column15")) c15=((String) json.get("column15")).trim(); else c15="";
+			if (json.containsKey("column16")) c16=((String) json.get("column16")).trim(); else c16="";
+			if (json.containsKey("column17")) c17=((String) json.get("column17")).trim(); else c17="";
+			if (json.containsKey("column18")) c18=((String) json.get("column18")).trim(); else c18="";
+			if (json.containsKey("column19")) c19=((String) json.get("column19")).trim(); else c19="";
+			if (json.containsKey("column20")) c20=((String) json.get("column20")).trim(); else c20="";
+			
+			Boolean check = HeadLocalServiceUtil.updateHead(Long.valueOf((String) json.get("headID")).longValue(), ((String) json.get("name")).trim(), ((String) json.get("relationID")).trim(), c1, c2, c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20);
 			System.out.println("update Table: "+check);
 		} catch (SystemException e) {e.printStackTrace();}
 	}

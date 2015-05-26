@@ -40,3 +40,4 @@ create table gfbio_tab_ResearchObject (
 	ro_name VARCHAR(75) null,
 	ro_meta VARCHAR(75) null
 );
+shutdown;

@@ -4,7 +4,12 @@
 		font-size: 12px;
 		font-weight: bold;
 	}
+	#tabTableMenu{width:5400px;}
+	
+
+	
 	td{	text-align:left; }
+	label{cursor:default;}
 
 	.swHide {display: none}
 	.swMain{display: block}
@@ -17,8 +22,16 @@
 	.rowField{float:left;width:51% }
 	.rowFieldB{float:left;width:28% }
 	.rowInput{float:left;width:34% }
+	
+	.dynamicTable1st{ clear:left;	float:left;	width:50px;  font-weight:bold}
+	.dynamicHeadIst{				float:left;	width:250px; font-weight:bold}
+	.dynamicIcon{	 		 		float:left;	width:60px}
+	.dynamicTableIst{	 		 	float:left;	width:250px}
+
+	
 
 
+	input[type=text].widthM{width:85%}
 	input[type=text].widthL{width:92%}
 	input[type=button].widthM{width:20%}
 	input[type=button].widthL{width:50%}
