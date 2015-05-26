@@ -877,10 +877,6 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -1064,5 +1060,4 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 	private String _column19;
 	private String _column20;
 	private BaseModel<?> _positionRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

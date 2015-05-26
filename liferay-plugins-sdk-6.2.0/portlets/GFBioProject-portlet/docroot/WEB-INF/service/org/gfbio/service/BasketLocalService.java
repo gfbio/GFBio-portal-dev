@@ -16,7 +16,6 @@ package org.gfbio.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,7 +52,6 @@ public interface BasketLocalService extends BaseLocalService,
 	* @return the basket that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.Basket addBasket(org.gfbio.model.Basket basket)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -73,7 +71,6 @@ public interface BasketLocalService extends BaseLocalService,
 	* @throws PortalException if a basket with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.Basket deleteBasket(long basketID)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -85,7 +82,6 @@ public interface BasketLocalService extends BaseLocalService,
 	* @return the basket that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.Basket deleteBasket(org.gfbio.model.Basket basket)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -223,7 +219,6 @@ public interface BasketLocalService extends BaseLocalService,
 	* @return the basket that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.Basket updateBasket(org.gfbio.model.Basket basket)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

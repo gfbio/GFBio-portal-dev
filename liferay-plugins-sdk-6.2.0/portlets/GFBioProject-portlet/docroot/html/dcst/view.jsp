@@ -14,19 +14,18 @@ long userid = PortalUtil.getUserId(request);
 List <Project> projectList = new ArrayList<Project>();
 projectList = null;
 try {
-	 projectList = ProjectLocalServiceUtil.getProjectList(userid);
+	 projectList = ProjectLocalServiceUtil.getProjectList(1);
 } catch (NoSuchModelException e) {
 	e.printStackTrace();
 } catch (SystemException e) {
 	e.printStackTrace();
 }
 %>
-<form action="select.htm">
+Es gibt <%=projectList.size() %> Projekte. Ich bin User <%=userid %>>
 	<table> 
-		<%if (projectList!=null){ for (int i = 0; i < projectList.size(); i++) { %>
+		<% if (projectList!=null){ for (int i = 0; i < projectList.size(); i++) { %>
 		<tr> 
 			<td><%= projectList.get(i).getLabel() %></td> 
 		</tr> 
 		<%} } %>
 	</table>
-</form>
