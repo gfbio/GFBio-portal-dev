@@ -16,7 +16,6 @@ package org.gfbio.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,7 +52,6 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	* @return the research object that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.ResearchObject addResearchObject(
 		org.gfbio.model.ResearchObject researchObject)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,7 +73,6 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	* @throws PortalException if a research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.ResearchObject deleteResearchObject(
 		long researchObjectID)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -88,7 +85,6 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	* @return the research object that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.ResearchObject deleteResearchObject(
 		org.gfbio.model.ResearchObject researchObject)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -230,7 +226,6 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	* @return the research object that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.ResearchObject updateResearchObject(
 		org.gfbio.model.ResearchObject researchObject)
 		throws com.liferay.portal.kernel.exception.SystemException;

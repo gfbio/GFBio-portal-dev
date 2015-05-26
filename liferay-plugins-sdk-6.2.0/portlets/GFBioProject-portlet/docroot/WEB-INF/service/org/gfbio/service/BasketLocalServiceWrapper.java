@@ -331,15 +331,21 @@ public class BasketLocalServiceWrapper implements BasketLocalService,
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket(long basketId)
+	public org.gfbio.model.Basket removeBasket(long basketId, long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _basketLocalService.removeBasket(basketId);
+		return _basketLocalService.removeBasket(basketId, userId);
 	}
 
 	@Override
 	public java.util.Date getStartDateFromPeriod(int period) {
 		return _basketLocalService.getStartDateFromPeriod(period);
+	}
+
+	@Override
+	public java.util.Map<java.lang.Long, java.lang.String> getBasketUsersIds(
+		long userId) throws java.lang.Exception {
+		return _basketLocalService.getBasketUsersIds(userId);
 	}
 
 	/**

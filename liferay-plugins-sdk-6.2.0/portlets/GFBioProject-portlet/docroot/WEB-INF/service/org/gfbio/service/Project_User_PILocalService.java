@@ -16,7 +16,6 @@ package org.gfbio.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,7 +52,6 @@ public interface Project_User_PILocalService extends BaseLocalService,
 	* @return the project_ user_ p i that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.Project_User_PI addProject_User_PI(
 		org.gfbio.model.Project_User_PI project_User_PI)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,7 +73,6 @@ public interface Project_User_PILocalService extends BaseLocalService,
 	* @throws PortalException if a project_ user_ p i with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.Project_User_PI deleteProject_User_PI(
 		org.gfbio.service.persistence.Project_User_PIPK project_User_PIPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -88,7 +85,6 @@ public interface Project_User_PILocalService extends BaseLocalService,
 	* @return the project_ user_ p i that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.Project_User_PI deleteProject_User_PI(
 		org.gfbio.model.Project_User_PI project_User_PI)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -230,7 +226,6 @@ public interface Project_User_PILocalService extends BaseLocalService,
 	* @return the project_ user_ p i that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.Project_User_PI updateProject_User_PI(
 		org.gfbio.model.Project_User_PI project_User_PI)
 		throws com.liferay.portal.kernel.exception.SystemException;

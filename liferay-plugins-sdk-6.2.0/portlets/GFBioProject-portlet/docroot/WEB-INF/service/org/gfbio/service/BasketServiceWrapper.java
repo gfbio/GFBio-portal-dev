@@ -104,10 +104,16 @@ public class BasketServiceWrapper implements BasketService,
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket(long basketId)
+	public org.gfbio.model.Basket removeBasket(long basketId, long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _basketService.removeBasket(basketId);
+		return _basketService.removeBasket(basketId, userId);
+	}
+
+	@Override
+	public java.util.Map<java.lang.Long, java.lang.String> getBasketUsersIds(
+		long userId) throws java.lang.Exception {
+		return _basketService.getBasketUsersIds(userId);
 	}
 
 	/**

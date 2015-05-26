@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
+import java.util.Map;
 
 import org.gfbio.model.Basket;
 import org.gfbio.service.BasketLocalServiceUtil;
@@ -102,8 +103,12 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return BasketLocalServiceUtil.updateBasket(basketId, userId, name, basketJSON, queryJSON);
 	}
 
-	public Basket removeBasket(long basketId)
+	public Basket removeBasket(long basketId, long userId)
 			throws NoSuchModelException, SystemException {
-		return BasketLocalServiceUtil.removeBasket(basketId);
+		return BasketLocalServiceUtil.removeBasket(basketId,userId);
+	}
+	
+	public Map<Long,String> getBasketUsersIds(long userId) throws Exception{
+		return BasketLocalServiceUtil.getBasketUsersIds(userId);
 	}
 }

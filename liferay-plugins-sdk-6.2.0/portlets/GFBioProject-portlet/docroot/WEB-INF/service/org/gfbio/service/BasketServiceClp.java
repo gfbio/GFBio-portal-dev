@@ -65,7 +65,11 @@ public class BasketServiceClp implements BasketService {
 
 		_methodName10 = "removeBasket";
 
-		_methodParameterTypes10 = new String[] { "long" };
+		_methodParameterTypes10 = new String[] { "long", "long" };
+
+		_methodName11 = "getBasketUsersIds";
+
+		_methodParameterTypes11 = new String[] { "long" };
 	}
 
 	@Override
@@ -331,14 +335,14 @@ public class BasketServiceClp implements BasketService {
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket(long basketId)
+	public org.gfbio.model.Basket removeBasket(long basketId, long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { basketId });
+					_methodParameterTypes10, new Object[] { basketId, userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -363,6 +367,34 @@ public class BasketServiceClp implements BasketService {
 		return (org.gfbio.model.Basket)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.util.Map<java.lang.Long, java.lang.String> getBasketUsersIds(
+		long userId) throws java.lang.Exception {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName11,
+					_methodParameterTypes11, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof java.lang.Exception) {
+				throw (java.lang.Exception)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.Map<java.lang.Long, java.lang.String>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -384,4 +416,6 @@ public class BasketServiceClp implements BasketService {
 	private String[] _methodParameterTypes9;
 	private String _methodName10;
 	private String[] _methodParameterTypes10;
+	private String _methodName11;
+	private String[] _methodParameterTypes11;
 }

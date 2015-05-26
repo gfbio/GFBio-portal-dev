@@ -141,11 +141,15 @@ public class BasketLocalServiceClpInvoker {
 
 		_methodName89 = "removeBasket";
 
-		_methodParameterTypes89 = new String[] { "long" };
+		_methodParameterTypes89 = new String[] { "long", "long" };
 
 		_methodName90 = "getStartDateFromPeriod";
 
 		_methodParameterTypes90 = new String[] { "int" };
+
+		_methodName92 = "getBasketUsersIds";
+
+		_methodParameterTypes92 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -291,12 +295,18 @@ public class BasketLocalServiceClpInvoker {
 
 		if (_methodName89.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-			return BasketLocalServiceUtil.removeBasket(((Long)arguments[0]).longValue());
+			return BasketLocalServiceUtil.removeBasket(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName90.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
 			return BasketLocalServiceUtil.getStartDateFromPeriod(((Integer)arguments[0]).intValue());
+		}
+
+		if (_methodName92.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
+			return BasketLocalServiceUtil.getBasketUsersIds(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -356,4 +366,6 @@ public class BasketLocalServiceClpInvoker {
 	private String[] _methodParameterTypes89;
 	private String _methodName90;
 	private String[] _methodParameterTypes90;
+	private String _methodName92;
+	private String[] _methodParameterTypes92;
 }

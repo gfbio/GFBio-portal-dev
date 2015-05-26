@@ -16,12 +16,19 @@ package org.gfbio.service.impl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.gfbio.NoSuchBasketException;
 import org.gfbio.model.Basket;
@@ -29,18 +36,18 @@ import org.gfbio.service.base.BasketLocalServiceBaseImpl;
 
 /**
  * The implementation of the basket local service.
- *
+ * 
  * <p>
  * All custom service methods should be put in this class. Whenever methods are
  * added, rerun ServiceBuilder to copy their definitions into the
  * {@link org.gfbio.service.BasketLocalService} interface.
- *
+ * 
  * <p>
  * This is a local service. Methods of this service will not have security
  * checks based on the propagated JAAS credentials because this service can only
  * be accessed from within the same VM.
  * </p>
- *
+ * 
  * @author Felicitas Loeffler
  * @see org.gfbio.service.base.BasketLocalServiceBaseImpl
  * @see org.gfbio.service.BasketLocalServiceUtil
@@ -77,7 +84,8 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return basketList;
 	}
 
-	// get list of all baskets of a specific user updated within a specific period
+	// get list of all baskets of a specific user updated within a specific
+	// period
 
 	public List<Basket> getBasketsByUserAndPeriod(long userId, int period)
 			throws NoSuchModelException, SystemException {
@@ -172,13 +180,18 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			// update basket
 
 			basket = basketPersistence.findByPrimaryKey(basketId);
-			basket.setUserID(userId);
-			basket.setName(name);
-			Date now = new java.util.Date();
-			basket.setLastModifiedDate(now);
-			basket.setBasketJSON(basketJSON);
-			basket.setQueryJSON(queryJSON);
-			super.updateBasket(basket);
+			if (isUserAdmin(userId)) {
+				basket.setUserID(userId);
+				basket.setName(name);
+				Date now = new java.util.Date();
+				basket.setLastModifiedDate(now);
+				basket.setBasketJSON(basketJSON);
+				basket.setQueryJSON(queryJSON);
+				super.updateBasket(basket);
+			} else {
+				System.out.println("No admin rights. Operation aborted.");
+			}
+
 		} catch (NoSuchBasketException e) {
 
 			// create new basket
@@ -198,11 +211,16 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return basket.getBasketID();
 	}
 
-	public Basket removeBasket(long basketId) throws SystemException,
-			NoSuchModelException {
+	public Basket removeBasket(long basketId, long userId)
+			throws SystemException, NoSuchModelException {
 		Basket basket = null;
 		try {
-			basket = basketPersistence.remove(basketId);
+			if (isUserAdmin(userId)) {
+				basket = basketPersistence.remove(basketId);
+			} else {
+				System.out.println("No admin rights. Operation aborted.");
+			}
+
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
@@ -211,14 +229,14 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return basket;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////
 
 	// period = 0 : all time period = 1 : 1 day period = 2 : 2 days period = 10
 	// : 1 week period = 20 : 2 weeks period = 100 : 1 month period = 200 : 2
 	// months period = 300 : 3 months period = 600 : 6 months period = 1000 : 1
 	// year period = 2000 : 2 years period = 3000 : 3 years
 
-	//////////////////////////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////////////////////////
 	public Date getStartDateFromPeriod(int period) {
 		Date date = new java.util.Date();
 		Calendar cal = Calendar.getInstance();
@@ -264,5 +282,43 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 		Date startDate = cal.getTime();
 		return startDate;
+	}
+
+	private boolean isUserAdmin(long userId) {
+		boolean isAdmin = false;
+		try {
+			List<Role> roles;
+			roles = RoleLocalServiceUtil.getUserRoles(userId);
+			for (Role role : roles) {
+				// System.out.println(role.getName());
+				if (role.getName().indexOf("Administrator") > -1) {
+					isAdmin = true;
+					break;
+				}
+			}
+		} catch (SystemException e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return isAdmin;
+	}
+
+	public Map<Long,String> getBasketUsersIds(long userId) throws Exception {
+		Map<Long,String> users = new HashMap<Long,String>();
+		if (isUserAdmin(userId)) {
+			List<User> user_list = UserLocalServiceUtil.getUsers(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			for (User user : user_list) {
+				long uId = user.getUserId();
+				String uName = user.getFullName(); 
+				// check if this user has basket 
+				//if (getBasketsByUserId(uId).size() > 0) {
+				users.put(uId,uName);
+				//}
+			}
+		} else {
+			System.out.println("No admin rights. Operation aborted.");
+		}
+		return users;
 	}
 }
