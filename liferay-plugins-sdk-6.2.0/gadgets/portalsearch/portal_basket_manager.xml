@@ -24,11 +24,65 @@
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/basketmanager.css" />
 				<script>
 					$(function() {
-						$( "#tabs" ).tabs();
 						adjust();
-						var uid = parent.Liferay.ThemeDisplay.getUserId();
-						
+						getUserList();
 					});
+					function getUserList(){
+					
+						var currentUID = parent.Liferay.ThemeDisplay.getUserId();
+						var currentUName =	parent.Liferay.ThemeDisplay.getUserName();	
+						parent.Liferay.Service(
+						  '/GFBioProject-portlet.basket/get-basket-users-ids',
+						  {
+							userId: currentUID
+						  },
+						  function(obj) {
+							var i = 0;
+							var userSelect = document.getElementById('userSelect');
+							for(var key in obj){
+								var option = document.createElement("option");
+								option.value = key;
+								option.text = obj[key];
+								userSelect.add(option);
+								if (key == currentUID) {
+									console.log(key);
+									userSelect.value = key;
+									getBaskets();
+								}
+								i++;
+							}
+							if (i==0){
+								// the current user has no right to see other users
+								var option = document.createElement("option");
+								option.value = currentUID;
+								option.text = currentUName;
+								option.select = "selected";
+								userSelect.add(option);
+								userSelect.disabled = true;
+								getBaskets();
+							}else{
+								userSelect.disabled = false;
+							}
+						  }
+						);
+					}
+					
+					function getBaskets(){
+						var uId = document.getElementById('userSelect').value;
+						var period = document.getElementById('periodSelect').value;
+						parent.Liferay.Service(
+						'/GFBioProject-portlet.basket/get-baskets-by-user-and-period',
+						  {
+							userId: uId,
+							period: period
+						  },
+						  function(obj) {
+							for(var key in obj){
+								console.log(obj[key]);
+							}
+						  }
+						);
+					}
 					
 					function adjust() {
 					   //console.log('auto adjust height');
@@ -41,21 +95,33 @@
 				</script>
 			</head>
 			<body style="margin: 0px;"> 
-				<div id="tabs">
-				  <ul>
-					<li class="tab-content active"><a href="#tabs-myBasket">My Basket</a></li>
-					<li class="tab-content hide"><a href="#tabs-allBasket">All Basket</a></li>
-				  </ul>
-				  <div id="tabs-myBasket" class="tab-content active">
-					<p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
-				  </div>
-				  <div id="tabs-allBasket" class="tab-content hide">
-					<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-				  </div>
+				<div id="input">
+					<label for="userSelect">User:</label>
+					<select name="userSelect" id="userSelect" onchange="getBaskets();">
+					</select>
+				 
+					<label for="periodSelect">Baskets created since</label>
+					<select name="periodSelect" id="periodSelect" onchange="getBaskets();">
+						// period = 0 : all time period = 1 : 1 day period = 2 : 2 days period = 10
+						// : 1 week period = 20 : 2 weeks period = 100 : 1 month period = 200 : 2
+						// months period = 300 : 3 months period = 600 : 6 months period = 1000 : 1
+						// year period = 2000 : 2 years period = 3000 : 3 years
+						<option value="0" selected="selected">All</option>
+						<option value="1">1 day</option>
+						<option value="2">2 days</option>
+						<option value="10">1 week</option>
+						<option value="20">2 weeks</option>
+						<option value="100">1 month</option>
+						<option value="200">2 months</option>
+						<option value="300">3 months</option>
+						<option value="600">6 months</option>
+						<option value="1000">1 year</option>
+						<option value="2000">2 years</option>
+						<option value="3000">3 years</option>
+					</select>
 				</div>
 				 
-				 
-				</body>
+			</body>
 		</html>
 	]]>
 		</Content>
