@@ -738,4 +738,8 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	private String _beanIdentifier;
 	private ClassLoader _classLoader;
 	private ResearchObjectServiceClpInvoker _clpInvoker = new ResearchObjectServiceClpInvoker();
+	public void updateResearchObject(ResearchObject researchObject) {
+		// TODO Auto-generated method stub
+		
+	}
 }

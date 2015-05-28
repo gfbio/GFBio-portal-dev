@@ -80,15 +80,9 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Project project = null;
 		try {
 			project = projectPersistence.findByPrimaryKey(projectID);
-		} catch (NoSuchProjectException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchProjectException e) {e.printStackTrace();}
 
 		//create new project
-
 		if (project == null) {
 			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			project.setName(name);
@@ -100,14 +94,9 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			super.updateProject(project);
 			try {
 				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
-			} catch (NoSuchProject_UserException e) {
-
-				// TODO Auto-generated catch block
-
-				e.printStackTrace();
-			}
+				System.out.println(foobar);
+			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
 		}
-
 		//update project
 		else {
 			project.setName(name);
@@ -118,7 +107,6 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			project.setStatus(status);
 			super.updateProject(project);
 		}
-
 		return project.getProjectID();
 	}
 

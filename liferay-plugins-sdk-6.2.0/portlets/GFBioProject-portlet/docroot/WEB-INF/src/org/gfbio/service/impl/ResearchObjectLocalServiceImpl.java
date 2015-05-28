@@ -44,12 +44,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		try {
 			researchObject = researchObjectPersistence.findByPrimaryKey(researchObjectID);
-		} catch (NoSuchResearchObjectException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchResearchObjectException e) {e.printStackTrace();}
 
 		//create new ResearchObject
 
@@ -63,12 +58,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 			try {
 				Long foobar = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(projectID, researchObject.getResearchObjectID());
-			} catch (NoSuchProject_UserException e) {
-
-				// TODO Auto-generated catch block
-
-				e.printStackTrace();
-			}
+			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
 		}
 		//update ResearchObject
 		else {
@@ -78,7 +68,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			researchObject.setFormatmetadata(formatmetadata);
 			super.updateResearchObject(researchObject);
 		}
-
 		return researchObject.getResearchObjectID();
 	}
 

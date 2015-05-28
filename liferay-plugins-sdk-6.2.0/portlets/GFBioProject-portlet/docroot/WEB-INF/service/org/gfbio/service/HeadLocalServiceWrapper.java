@@ -277,6 +277,13 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public void deleteCompleteHead(long headId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_headLocalService.deleteCompleteHead(headId);
+	}
+
+	@Override
 	public int getColumnCount(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {

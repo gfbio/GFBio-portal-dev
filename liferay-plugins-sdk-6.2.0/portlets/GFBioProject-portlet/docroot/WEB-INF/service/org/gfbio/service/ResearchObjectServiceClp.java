@@ -31,6 +31,13 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 		_methodName1 = "setBeanIdentifier";
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
+
+		_methodName3 = "updateResearchObject";
+
+		_methodParameterTypes3 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String"
+			};
 	}
 
 	@Override
@@ -83,9 +90,54 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public long updateResearchObject(long projectID, long researchObjectID,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3,
+					new Object[] {
+						projectID,
+						
+					researchObjectID,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(label),
+						
+					ClpSerializer.translateInput(metadata),
+						
+					ClpSerializer.translateInput(formatmetadata)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
 	private String _methodName1;
 	private String[] _methodParameterTypes1;
+	private String _methodName3;
+	private String[] _methodParameterTypes3;
 }

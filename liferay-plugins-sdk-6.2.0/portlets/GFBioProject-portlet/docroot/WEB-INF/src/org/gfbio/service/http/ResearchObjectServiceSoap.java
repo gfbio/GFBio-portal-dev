@@ -14,6 +14,13 @@
 
 package org.gfbio.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import org.gfbio.service.ResearchObjectServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link org.gfbio.service.ResearchObjectServiceUtil} service utility. The
@@ -55,4 +62,22 @@ package org.gfbio.service.http;
  * @generated
  */
 public class ResearchObjectServiceSoap {
+	public static long updateResearchObject(long projectID,
+		long researchObjectID, java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata)
+		throws RemoteException {
+		try {
+			long returnValue = ResearchObjectServiceUtil.updateResearchObject(projectID,
+					researchObjectID, name, label, metadata, formatmetadata);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ResearchObjectServiceSoap.class);
 }
