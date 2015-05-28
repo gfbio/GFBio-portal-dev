@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="Basket Manager" author="gfbiodev"
+			author_email="dev@gfbio.org" >
+		<Require feature="pubsub-2">
+			<Param name="topics">
+				<![CDATA[
+        <Topic title="GFBio Basket Manager" name="gfbio.basket.selectedData" publish="true" subscribe="true"/>
+          ]]>
+			</Param>
+		</Require>
+		<Require feature="dynamic-height" />
+	</ModulePrefs>
+	<Content type="html">
+			<![CDATA[
+	<!DOCTYPE html>
+		<html style="min-height: 350px;">
+			<head  lang="en">
+				<meta charset="UTF-8">
+				<title>GFBio Basket Manager</title>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/jquery-1.10.2.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/jquery-ui.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/basketmanager.css" />
+				<script>
+					$(function() {
+						adjust();
+						getUserList();
+					});
+					function getUserList(){
+					
+						var currentUID = parent.Liferay.ThemeDisplay.getUserId();
+						var currentUName =	parent.Liferay.ThemeDisplay.getUserName();	
+						parent.Liferay.Service(
+						  '/GFBioProject-portlet.basket/get-basket-users-ids',
+						  {
+							userId: currentUID
+						  },
+						  function(obj) {
+							var i = 0;
+							var userSelect = document.getElementById('userSelect');
+							for(var key in obj){
+								var option = document.createElement("option");
+								option.value = key;
+								option.text = obj[key];
+								userSelect.add(option);
+								if (key == currentUID) {
+									console.log(key);
+									userSelect.value = key;
+									getBaskets();
+								}
+								i++;
+							}
+							if (i==0){
+								// the current user has no right to see other users
+								var option = document.createElement("option");
+								option.value = currentUID;
+								option.text = currentUName;
+								option.select = "selected";
+								userSelect.add(option);
+								userSelect.disabled = true;
+								getBaskets();
+							}else{
+								userSelect.disabled = false;
+							}
+						  }
+						);
+					}
+					
+					function getBaskets(){
+						var uId = document.getElementById('userSelect').value;
+						var period = document.getElementById('periodSelect').value;
+						parent.Liferay.Service(
+						'/GFBioProject-portlet.basket/get-baskets-by-user-and-period',
+						  {
+							userId: uId,
+							period: period
+						  },
+						  function(obj) {
+							for(var key in obj){
+								console.log(obj[key]);
+							}
+						  }
+						);
+					}
+					
+					function adjust() {
+					   //console.log('auto adjust height');
+					   var height = $('#tabs').height()+20;
+					   if (height < 350){ 
+							height = 350;
+					   }
+						gadgets.window.adjustHeight(height);
+					}
+				</script>
+			</head>
+			<body style="margin: 0px;"> 
+				<div id="input">
+					<label for="userSelect">User:</label>
+					<select name="userSelect" id="userSelect" onchange="getBaskets();">
+					</select>
+				 
+					<label for="periodSelect">Baskets created since</label>
+					<select name="periodSelect" id="periodSelect" onchange="getBaskets();">
+						// period = 0 : all time period = 1 : 1 day period = 2 : 2 days period = 10
+						// : 1 week period = 20 : 2 weeks period = 100 : 1 month period = 200 : 2
+						// months period = 300 : 3 months period = 600 : 6 months period = 1000 : 1
+						// year period = 2000 : 2 years period = 3000 : 3 years
+						<option value="0" selected="selected">All</option>
+						<option value="1">1 day</option>
+						<option value="2">2 days</option>
+						<option value="10">1 week</option>
+						<option value="20">2 weeks</option>
+						<option value="100">1 month</option>
+						<option value="200">2 months</option>
+						<option value="300">3 months</option>
+						<option value="600">6 months</option>
+						<option value="1000">1 year</option>
+						<option value="2000">2 years</option>
+						<option value="3000">3 years</option>
+					</select>
+				</div>
+				 
+			</body>
+		</html>
+	]]>
+		</Content>
+</Module>

@@ -164,10 +164,11 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static org.gfbio.model.BasketSoap removeBasket(long basketId)
-		throws RemoteException {
+	public static org.gfbio.model.BasketSoap removeBasket(long basketId,
+		long userId) throws RemoteException {
 		try {
-			org.gfbio.model.Basket returnValue = BasketServiceUtil.removeBasket(basketId);
+			org.gfbio.model.Basket returnValue = BasketServiceUtil.removeBasket(basketId,
+					userId);
 
 			return org.gfbio.model.BasketSoap.toSoapModel(returnValue);
 		}

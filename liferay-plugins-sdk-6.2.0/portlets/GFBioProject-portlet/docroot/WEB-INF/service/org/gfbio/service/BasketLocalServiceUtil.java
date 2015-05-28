@@ -319,14 +319,19 @@ public class BasketLocalServiceUtil {
 				   .updateBasket(basketId, userId, name, basketJSON, queryJSON);
 	}
 
-	public static org.gfbio.model.Basket removeBasket(long basketId)
+	public static org.gfbio.model.Basket removeBasket(long basketId, long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().removeBasket(basketId);
+		return getService().removeBasket(basketId, userId);
 	}
 
 	public static java.util.Date getStartDateFromPeriod(int period) {
 		return getService().getStartDateFromPeriod(period);
+	}
+
+	public static java.util.Map<java.lang.Long, java.lang.String> getBasketUsersIds(
+		long userId) throws java.lang.Exception {
+		return getService().getBasketUsersIds(userId);
 	}
 
 	public static void clearService() {

@@ -900,10 +900,6 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -1094,5 +1090,4 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 	private String _column19;
 	private String _column20;
 	private BaseModel<?> _headRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }
