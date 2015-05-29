@@ -15,6 +15,7 @@
 package org.gfbio.service.impl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.ArrayList;
@@ -24,7 +25,9 @@ import java.util.List;
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.NoSuchPositionException;
 import org.gfbio.model.Head;
+import org.gfbio.model.Position;
 import org.gfbio.service.HeadLocalServiceUtil;
+import org.gfbio.service.PositionLocalServiceUtil;
 import org.gfbio.service.base.HeadLocalServiceBaseImpl;
 
 /**
@@ -42,6 +45,40 @@ import org.gfbio.service.base.HeadLocalServiceBaseImpl;
  * @see org.gfbio.service.HeadLocalServiceUtil
  */
 public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
+	
+	public void deleteCompleteHead(long headId) throws SystemException, PortalException{
+		System.out.println(headId);
+		
+		
+		
+		// delete relations of table
+		List <Head> headListC1 = headPersistence.findByColumn01(HeadLocalServiceUtil.getName(headId));
+		if (headListC1.size()>0) 
+			for (int i=0; i < headListC1.size();i++){
+				List <Position> tempList = PositionLocalServiceUtil.getPositionsbyHeadId(headListC1.get(i).getHeadID());
+				for (int j=0; j < tempList.size();j++ )
+					PositionLocalServiceUtil.deletePosition(tempList.get(j).getPositionID());
+				HeadLocalServiceUtil.deleteHead(headListC1.get(i).getHeadID());
+			}
+		
+		List <Head> headListC2 = headPersistence.findByColumn02(HeadLocalServiceUtil.getName(headId));
+		if (headListC2.size()>0)
+			for (int i=0; i < headListC2.size();i++){
+				List <Position> tempList = PositionLocalServiceUtil.getPositionsbyHeadId(headListC2.get(i).getHeadID());
+				for (int j=0; j < tempList.size();j++ )
+					PositionLocalServiceUtil.deletePosition(tempList.get(j).getPositionID());
+				HeadLocalServiceUtil.deleteHead(headListC2.get(i).getHeadID());
+			}
+			
+		// delete Content of table
+		List <Position> positionList = PositionLocalServiceUtil.getPositionsbyHeadId(headId);
+		for (int i=0; i < positionList.size();i++)
+			PositionLocalServiceUtil.deletePosition(positionList.get(i));
+			
+		// delete table in head
+		HeadLocalServiceUtil.deleteHead(headId);
+	}
+	
 
 	public int getColumnCount(long headId) throws NoSuchHeadException, SystemException {
 
@@ -129,20 +166,6 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	}
 	
 
-/*	public String[] getNameArray() {
-		List<Head> headList;
-		String[] names = null;
-		try {
-			headList = getHeadList();
-			headList = headPersistence.findAll();
-			names = new String[headList.size()];
-			if (headList!= null)
-				for (int i = 0; i<headList.size(); i++)
-					names[i] = headList.get(i).getName();
-		} catch (SystemException e1) {e1.printStackTrace();}
-		return names;
-	}*/
-	
 	public String[] getNameArray(String task) throws SystemException  {
 
 		List<Head> headList;

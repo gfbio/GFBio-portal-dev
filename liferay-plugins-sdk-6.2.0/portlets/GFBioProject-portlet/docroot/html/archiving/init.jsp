@@ -63,6 +63,15 @@ page import="com.liferay.portal.util.PortalUtil" %>
 			   };
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
+	
+	//ENA Widget Publish
+	function SubmitENA(hidecode, showhide) {
+		var toSubmit = {
+			     "hidecode" : hidecode,
+			     "showhide" : showhide,
+			   };
+		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
+	}
 
 	//GCDJ Submit Answer
 	$(document).ready(function() {
@@ -92,7 +101,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 
 	/////////////////////////////////////////   ResourceRequest  //////////////////////////////////////////////
 
-	function ajaxRequest(archivingURL, method, data) {
+	function ajaxRequest(archivingURL, method, data, as) {
 		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
@@ -100,7 +109,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 				"<portlet:namespace />data" : JSON.stringify(data),
 				"<portlet:namespace />responseTarget" : method
 			},
-			async: true,
+			async: as,
 			success : function() {
 			}
 		});

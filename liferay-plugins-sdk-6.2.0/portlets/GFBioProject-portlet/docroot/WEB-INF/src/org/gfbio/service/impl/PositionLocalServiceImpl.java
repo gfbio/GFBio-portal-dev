@@ -132,50 +132,10 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return table;
 	}
 	
-	public Boolean setStandard (){
-		Boolean check = true;
-		try {
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "130", "106", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "107", "106", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "108", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "110", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "111", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "112", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "113", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "114", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "115", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "116", "109", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type"), "123", "124", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
 
-			
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "117", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "117", "101", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "118", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "118", "101", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "119", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "119", "101", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "120", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "120", "132", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "122", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "122", "132", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_type")			, "121", "104", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "121", "132", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "121", "133", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = updatePosition(0, HeadLocalServiceUtil.getHeadID("gfbio_category_researchfield"), "121", "134", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-
-
-			
-		} catch (SystemException | NoSuchHeadException e) {e.printStackTrace();}
-		return check;
-	}
 
 	public Boolean updatePosition(long positionID, long headID, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
-
+		
 		Boolean check = true;
 		Position position = null;
 		Head head = null;

@@ -171,6 +171,26 @@
 		<finder name="HeadID" 		return-type="head">					<finder-column name="headID" />				</finder>
 		<finder name="Name" 		return-type="head">					<finder-column name="name" />				</finder>
 		<finder name="Task"			return-type="Collection">			<finder-column name="task" />				</finder>
+		<finder name="Column01"		return-type="Collection">			<finder-column name="column01" />			</finder>
+		<finder name="Column02"		return-type="Collection">			<finder-column name="column02" />			</finder>
+		<finder name="Column03"		return-type="Collection">			<finder-column name="column03" />			</finder>
+		<finder name="Column04"		return-type="Collection">			<finder-column name="column04" />			</finder>
+		<finder name="Column05"		return-type="Collection">			<finder-column name="column05" />			</finder>
+		<finder name="Column06"		return-type="Collection">			<finder-column name="column06" />			</finder>
+		<finder name="Column07"		return-type="Collection">			<finder-column name="column07" />			</finder>
+		<finder name="Column08"		return-type="Collection">			<finder-column name="column08" />			</finder>
+		<finder name="Column09"		return-type="Collection">			<finder-column name="column09" />			</finder>
+		<finder name="Column10"		return-type="Collection">			<finder-column name="column10" />			</finder>
+		<finder name="Column11"		return-type="Collection">			<finder-column name="column11" />			</finder>
+		<finder name="Column12"		return-type="Collection">			<finder-column name="column12" />			</finder>
+		<finder name="Column13"		return-type="Collection">			<finder-column name="column13" />			</finder>
+		<finder name="Column14"		return-type="Collection">			<finder-column name="column14" />			</finder>
+		<finder name="Column15"		return-type="Collection">			<finder-column name="column15" />			</finder>
+		<finder name="Column16"		return-type="Collection">			<finder-column name="column16" />			</finder>
+		<finder name="Column17"		return-type="Collection">			<finder-column name="column17" />			</finder>
+		<finder name="Column18"		return-type="Collection">			<finder-column name="column18" />			</finder>
+		<finder name="Column19"		return-type="Collection">			<finder-column name="column19" />			</finder>
+		<finder name="Column20"		return-type="Collection">			<finder-column name="column20" />			</finder>
 
 	</entity>
 

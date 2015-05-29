@@ -38,7 +38,7 @@
 				<input id="submissionCheck" type="hidden" value="true">
 
 				<form action="select.htm">
-					<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+					<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 						<option selected value="none">None </option>
 						<option value="-1010">BGBM </option>
 						<option value="-1010">DSMZ </option>
@@ -74,14 +74,7 @@
 					<br />
 					5.) You will receive a confirmation about the data submission with DOI and ENA accession number.
 					<br /><br />
-					Both identifiers, DOI and ENA accession number ensure the connection between the submitted data.
-				    All your submitted data is accessible in the project profile to which the data has been assigned.<br>
-					<br>
-					<br>
 
-					<div class="portlet-msg-alert">
-						Please sign in to continue the submission process.
-					</div>
 				</div>
 
 				<div class="swHide" id="hide_-1010">
@@ -105,7 +98,7 @@
 			<input id="submissionCheck" type="hidden" value="true">
 
 			<form action="select.htm">
-				<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+				<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 					<option selected value="none">None </option>
 					<option value="-10">BGBM </option>
 					<option value="-10">DSMZ </option>
@@ -138,36 +131,6 @@
 				<br />
 				5.) You will receive a confirmation about the data submission with DOI and ENA accession number.
 				<br /><br />
-				Both identifiers, DOI and ENA accession number ensure the connection between the submitted data.
-			    All your submitted data is accessible in the<a href="#" onclick="showSection('#tabProjProfile')"> project profile to which the data has been assigned</a>.<br>
-				<br>
-				<br>
-
-				<%
-					Long userID = PortalUtil.getUserId(request);
-					List <Project> projectList = new ArrayList<Project>();
-					projectList = null;
-					try {
-						 projectList = ProjectLocalServiceUtil.getProjectList(userID);
-					} catch (NoSuchModelException e) {
-						e.printStackTrace();
-					} catch (SystemException e) {
-						e.printStackTrace();
-					}
-				%>
-
-
-				Please select a project to which the data should be assigned. <br>
-				If no project is available, please create a <a href="#" onclick="showSection('#tabProjProfile')">new project</a>.<br>
-				<br>
-				<form action="select.htm">
-					<select id="chooPro" name="<portlet:namespace/>chooPro" onchange="checkContent(this.form.chooPro.options[this.form.chooPro.selectedIndex].value)" size="1" style="width:50%">
-						<option selected value="none"  >None  </option>
-						<%if (projectList!=null){ for (int i = 0; i < projectList.size(); i++) { %>
-								<option selected value="<%= projectList.get(i).getProjectID()  %>"  ><%= projectList.get(i).getLabel() %>  </option>
-						<%} } %>
-					</select>
-				</form>
 
 			</div>
 
