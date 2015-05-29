@@ -24,8 +24,8 @@
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/basketmanager.css" />
 				<script>
 					$(function() {
-						adjust();
 						getUserList();
+						adjust();
 					});
 					function getUserList(){
 					
@@ -77,16 +77,55 @@
 							period: period
 						  },
 						  function(obj) {
+							var basketsHTML = "";
 							for(var key in obj){
-								console.log(obj[key]);
+								//console.log(obj[key]);
+								var basket = obj[key];
+								basketsHTML += writeBasketsHTML(basket);
 							}
+							var isAccordion = $("#baskets").hasClass("ui-accordion");
+							if (isAccordion) $( "#baskets" ).accordion("destroy");
+							document.getElementById('baskets').innerHTML = basketsHTML;
+							$( "#baskets" ).accordion({
+							    collapsible: true,
+								activate: function(event, ui) {
+									adjust();
+								},
+								create( event, ui ){
+									adjust();
+								}
+							});
 						  }
 						);
+						adjust();
+					}
+					
+					function writeBasketsHTML(basket){
+						var basketsHTML = "<h3>"+basket.name+" : "+basket.basketID+"</h3>";
+						basketsHTML += "<div>";
+						
+						basketsHTML += "ID: "+basket.basketID;
+						basketsHTML += "<br/>";
+						
+						basketsHTML += "JSON: "+basket.basketJSON;
+						basketsHTML += "<br/>";
+						
+						basketsHTML += "Last Modified: "+basket.lastModifiedDate;
+						basketsHTML += "<br/>";
+						
+						basketsHTML += "Query: "+basket.queryJSON;
+						basketsHTML += "<br/>";
+						
+						//basketsHTML += "User ID: "+basket.userID;
+						//basketsHTML += "<br/>";
+						
+						basketsHTML += "</div>";
+						return basketsHTML;
 					}
 					
 					function adjust() {
 					   //console.log('auto adjust height');
-					   var height = $('#tabs').height()+20;
+					   var height = $('#input').height()+$('#baskets').height()+50;
 					   if (height < 350){ 
 							height = 350;
 					   }
@@ -96,16 +135,14 @@
 			</head>
 			<body style="margin: 0px;"> 
 				<div id="input">
-					<label for="userSelect">User:</label>
+					<p>
+					<label for="userSelect">User:
 					<select name="userSelect" id="userSelect" onchange="getBaskets();">
-					</select>
-				 
-					<label for="periodSelect">Baskets created since</label>
+					</select></label>
+					</p>
+					<p>
+					<label for="periodSelect">Baskets created since
 					<select name="periodSelect" id="periodSelect" onchange="getBaskets();">
-						// period = 0 : all time period = 1 : 1 day period = 2 : 2 days period = 10
-						// : 1 week period = 20 : 2 weeks period = 100 : 1 month period = 200 : 2
-						// months period = 300 : 3 months period = 600 : 6 months period = 1000 : 1
-						// year period = 2000 : 2 years period = 3000 : 3 years
 						<option value="0" selected="selected">All</option>
 						<option value="1">1 day</option>
 						<option value="2">2 days</option>
@@ -118,9 +155,11 @@
 						<option value="1000">1 year</option>
 						<option value="2000">2 years</option>
 						<option value="3000">3 years</option>
-					</select>
+					</select></label>
+					</p>
 				</div>
-				 
+				 <div id="baskets">
+				</div>
 			</body>
 		</html>
 	]]>
