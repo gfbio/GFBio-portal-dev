@@ -13,10 +13,10 @@
    sodipodi:docname="Data_Life_Cycle_Scenario_2.svg"
    inkscape:version="0.91pre3 r13670"
    version="1.1"
-   id="svg3047"
-   height="600"
-   width="500"
-   viewBox="0 0 740 780">
+   id="svg3048"
+   viewBox="0 0 850 850"
+   style="background-color:#ffffff;"
+   preserveAspectRatio="yMidxMid meet">
   <!-- BEGIN: Internal CSS style for: 1. All cycle rectangles initialized with the dark blue color. and 2. get light green color during hover with the mouse pointer over them "pointer-events: none" for text avoid that text on top of the rectangles blocks the mouseover effect. So cursor ignore all text elements. -->
   <style 
 	 type="text/css"
