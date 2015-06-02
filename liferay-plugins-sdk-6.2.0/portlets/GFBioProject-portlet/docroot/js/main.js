@@ -104,17 +104,11 @@ function checkContent(check) {
 //Method to choose a Proejct
 function chooseTable(method, data) {
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
-	
-	
-	//resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
-	//$( "#testerer"   ).load( document.getElementById("path").value.concat("/html/tablebuilder/view.jsp #tester"));
-	//$( "#testerer"   ).load( document.getElementById("path").value.concat("/html/tablebuilder/view.jsp #tester"));
-	//window.setTimeout('reload()',5);
+
 }
 
 // Method to choose a Project
 function chooseProject(url, method, data, j) {
-	console.log(method +" | "+data+ " |" + j);
 	resourceMethod(url, method, data, false);
 	window.setTimeout('reload()',5);
 }
@@ -167,6 +161,11 @@ function checkDate(name, size) {
 	return check
 }
 
+
+function deleteContent(method, data, tab, path){
+	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
+	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
+}
 
 function deleteTable(method, data, tab1, path1,tab2,path2){
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
@@ -353,6 +352,15 @@ function showSection( sectionID ) {
 	$('div'+sectionID).css( 'display', 'block' );
 	$('ul#verticalNav li a').removeClass('active');
 	$('a#link'.concat(sectionID.substring(4))).addClass('active');
+}
+
+function showDiv( sectionID, divID ) {
+	$('div.section').css( 'display', 'none' );
+	$('div'+sectionID).css( 'display', 'block' );
+	$('ul#verticalNav li a').removeClass('active');
+	$('a#link'.concat(sectionID.substring(4))).addClass('active');
+	pseudoaccordion(divID);
+
 }
 
 

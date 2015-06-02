@@ -69,6 +69,10 @@ public class TableBuilder extends GenericPortlet {
 			if ("chooseTable".toString().equals(request.getParameter("responseTarget").toString()))
 				chooseTable(request, response);
 			
+			//delete Content
+			if ("deleteContent".toString().equals(request.getParameter("responseTarget").toString()))
+				deleteContent(request, response);
+			
 			//delete Table
 			if ("deleteTable".toString().equals(request.getParameter("responseTarget").toString()))
 				deleteTable(request, response);
@@ -144,17 +148,19 @@ public class TableBuilder extends GenericPortlet {
 		}*/
 	}
 	
+	public void deleteContent (ResourceRequest request, ResourceResponse response){
+		
+		try {
+			PositionLocalServiceUtil.deletePosition(Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue());
+		} catch (PortalException | SystemException e) {e.printStackTrace();}
+	}
+	
 	public void deleteTable (ResourceRequest request, ResourceResponse response){
 		
 		Long headId = Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue();
-
-		
 		try {
 			HeadLocalServiceUtil.deleteCompleteHead(headId);
-		} catch (PortalException | SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
 
@@ -195,10 +201,7 @@ public class TableBuilder extends GenericPortlet {
 					(String) json.get((HeadLocalServiceUtil.getColumnName(Long.valueOf((String) json.get("headID")).longValue(), 18)).trim())	,
 					(String) json.get((HeadLocalServiceUtil.getColumnName(Long.valueOf((String) json.get("headID")).longValue(), 19)).trim())	,
 					(String) json.get((HeadLocalServiceUtil.getColumnName(Long.valueOf((String) json.get("headID")).longValue(), 20)).trim())	);
-			} catch (NoSuchHeadException | NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			} catch (NoSuchHeadException | NumberFormatException e) {e.printStackTrace();}
 			System.out.println("new Content: "+check);
 		} catch (SystemException e) {e.printStackTrace();}
 	}

@@ -1,14 +1,8 @@
 <style type="text/css">
-	#usersTable td{
-		width:150px;
-		font-size: 12px;
-		font-weight: bold;
-	}
+	#usersTable td{width:150px;font-size: 12px;	font-weight: bold;}
 	#tabTableMenu{width:5400px;}
 	#tabContentMenu{width:5400px;}
-	
-
-	
+		
 	td{	text-align:left; }
 	label{cursor:default;}
 
@@ -26,11 +20,8 @@
 	
 	.dynamicTable1st{ clear:left;	float:left;	width:50px;  font-weight:bold}
 	.dynamicHeadIst{				float:left;	width:250px; font-weight:bold}
-	.dynamicIcon{	 		 		float:left;	width:60px}
+	.dynamicIcon{	 		 		float:left;	width:80px}
 	.dynamicTableIst{	 		 	float:left;	width:250px}
-
-	
-
 
 	input[type=text].widthM{width:85%}
 	input[type=text].widthL{width:92%}

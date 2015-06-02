@@ -94,9 +94,12 @@
 				<!-- manage icons -->
 				
 				<div class="dynamicIcon">
+					 
+					<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("link")%>" 				class="icon-file"  		  onclick="showDiv('#tabContentMenu','<%=headList.get(i).getName() %>')"></i>&nbsp;
 					<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("edit")%>" 				class="icon-edit"  		  onclick="hideswitch('<%="91".concat(new Integer(i).toString()) %>','<%="92".concat(new Integer(i).toString()) %>')"></i>&nbsp;
 					<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("icon-resize-small")%>" 	class="icon-resize-small" onclick="showhide('<%="93".concat(new Integer(i).toString()) %>')"></i>&nbsp;
 					<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("remove")%>" 				class="icon-remove"		  onclick="deleteTable('deleteTable', '<%= headList.get(i).getHeadID()%>', 'tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"></i>
+				
 				</div>
 				
 				
@@ -218,6 +221,7 @@
 			</div>
 		</div>
 		
+		
 	</div>
 	
 	
@@ -281,7 +285,7 @@
 						<div class="dynamicIcon">
 							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("edit")%>" 				class="icon-edit"  		  onclick="hideswitch('<%="97".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>','<%="98".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>')"></i>&nbsp;
 							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("icon-resize-small")%>" 	class="icon-resize-small" onclick="showhide('<%="93".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>')"></i>&nbsp;
-							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("remove")%>" 				class="icon-remove"></i>
+							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("remove")%>" 				class="icon-remove"		  onclick="deleteContent('deleteContent', '<%= contentTable[0][i]%>', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"></i>
 						</div>
 						
 						

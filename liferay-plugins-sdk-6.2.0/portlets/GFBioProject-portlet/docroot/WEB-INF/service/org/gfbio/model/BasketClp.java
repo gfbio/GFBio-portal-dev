@@ -379,6 +379,10 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -450,4 +454,5 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 	private String _basketJSON;
 	private String _queryJSON;
 	private BaseModel<?> _basketRemoteModel;
+	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }
