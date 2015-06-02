@@ -1031,21 +1031,21 @@ $.fn.cycle.defaults = {
     end:              null,     // callback invoked when the slideshow terminates (use with autostop or nowrap options): function(options)
     fastOnEvent:      0,        // force fast transitions when triggered manually (via pager or prev/next); value == time in ms
     fit:              0,        // force slides to fit container
-    fx:               'fade',   // name of transition effect (or comma separated names, ex: 'fade,scrollUp,shuffle')
+    fx:               'scrollHorz',   // name of transition effect (or comma separated names, ex: 'fade,scrollUp,shuffle')
     fxFn:             null,     // function used to control the transition: function(currSlideElement, nextSlideElement, options, afterCalback, forwardFlag)
     height:           'auto',   // container height (if the 'fit' option is true, the slides will be set to this height as well)
     manualTrump:      true,     // causes manual transition to stop an active transition instead of being ignored
     metaAttr:         'cycle',  // data- attribute that holds the option data for the slideshow
-    next:             null,     // element, jQuery object, or jQuery selector string for the element to use as event trigger for next slide
+    next:             '#next',     // element, jQuery object, or jQuery selector string for the element to use as event trigger for next slide
     nowrap:           0,        // true to prevent slideshow from wrapping
     onPagerEvent:     null,     // callback fn for pager events: function(zeroBasedSlideIndex, slideElement)
     onPrevNextEvent:  null,     // callback fn for prev/next events: function(isNext, zeroBasedSlideIndex, slideElement)
-    pager:            null,     // element, jQuery object, or jQuery selector string for the element to use as pager container
+    pager:            '#pager',     // element, jQuery object, or jQuery selector string for the element to use as pager container
     pagerAnchorBuilder: null,   // callback fn for building anchor links:  function(index, DOMelement)
     pagerEvent:       'click.cycle', // name of event which drives the pager navigation
     pause:            0,        // true to enable "pause on hover"
     pauseOnPagerHover: 0,       // true to pause when hovering over pager link
-    prev:             null,     // element, jQuery object, or jQuery selector string for the element to use as event trigger for previous slide
+    prev:             '#prev',     // element, jQuery object, or jQuery selector string for the element to use as event trigger for previous slide
     prevNextEvent:    'click.cycle',// event which drives the manual transition to the previous or next slide
     random:           0,        // true for random, false for sequence (not applicable to shuffle fx)
     randomizeEffects: 1,        // valid when multiple effects are used; true to make the effect sequence random
@@ -1055,13 +1055,13 @@ $.fn.cycle.defaults = {
     shuffle:          null,     // coords for shuffle animation, ex: { top:15, left: 200 }
     skipInitializationCallbacks: false, // set to true to disable the first before/after callback that occurs prior to any transition
     slideExpr:        null,     // expression for selecting slides (if something other than all children is required)
-    slideResize:      1,        // force slide width/height to fixed size before every transition
+    slideResize:      0,        // force slide width/height to fixed size before every transition
     speed:            1000,     // speed of the transition (any valid fx speed value)
     speedIn:          null,     // speed of the 'in' transition
     speedOut:         null,     // speed of the 'out' transition
     startingSlide:    undefined,// zero-based index of the first slide to be displayed
     sync:             1,        // true if in/out transitions should occur simultaneously
-    timeout:          4000,     // milliseconds between slide transitions (0 to disable auto advance)
+    timeout:          5000,     // milliseconds between slide transitions (0 to disable auto advance)
     timeoutFn:        null,     // callback for determining per-slide timeout value:  function(currSlideElement, nextSlideElement, options, forwardFlag)
     updateActivePagerLink: null,// callback fn invoked to update the active pager link (adds/removes activePagerClass style)
     width:            null      // container width (if the 'fit' option is true, the slides will be set to this width as well)

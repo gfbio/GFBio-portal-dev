@@ -14,9 +14,9 @@
    inkscape:version="0.91pre3 r13670"
    version="1.1"
    id="svg3047"
-   height="600"
-   width="500"
-   viewBox="0 0 740 780">
+   viewBox="0 0 850 850"
+   style="background-color:#ffffff;"
+   preserveAspectRatio="yMidxMid meet">
   <!-- BEGIN: Internal CSS style for: 1. All cycle rectangles initialized with the dark blue color. and 2. get light green color during hover with the mouse pointer over them "pointer-events: none" for text avoid that text on top of the rectangles blocks the mouseover effect. So cursor ignore all text elements. -->
   <style 
 	 type="text/css"
@@ -1028,7 +1028,7 @@
      id="textmoreinfopropose"
      x="321.84146"
      y="153.47005"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:125%;font-family:Roboto;-inkscape-font-specification:Roboto;letter-spacing:0px;word-spacing:0px;fill:#0e56a4;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1">
     <tspan
        id="tspanmoreinfopropose"
        x="321.84146"
