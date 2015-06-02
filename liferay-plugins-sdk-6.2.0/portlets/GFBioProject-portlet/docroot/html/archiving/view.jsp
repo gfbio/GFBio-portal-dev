@@ -17,22 +17,17 @@
 
 
 
-<!---------------------------------------------------------------------------------------------------------------------------------------->
-<!------------------------------------------------ Tabs -------------------------------------------------------------------->
-<!---------------------------------------------------------------------------------------------------------------------------------------->
-
-
-
 <body >
+
 
 	<%if (PortalUtil.getUser(request)==null){ %>
 
 		<div class="section" id="tabNoSubmission">
 			<div id="noSignSubmission">
 				<p>
-				<h2>Data Submission</h2>
+				<h2>Submission Workflows</h2>
 				<p>
-				Please select a data center in order to start an archiving workflow.
+				Please select a data center in order to start a submission workflow.
 				<br>
 				<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 				<input id="submissionCheck" type="hidden" value="true">
@@ -56,25 +51,6 @@
 
 				<!--------------------------------------------------------------GCDJ-Widget ---------------------------------------------------->
 				<div class="swHide" id="hide_-1011">
-					<h3>ENA / PANGAEA (Molecular Sequence Data)</h3>
-					<br>
-					Welcome to the molecular data submission workflow!
-					The workflow consists of five major parts:
-					<br>
-					Welcome to the molecular data submission workflow!
-					The workflow consists of five major parts:
-					<br /><br />
-					1.) At first, you enter describing information about the sequence (metadata) and upload the sequence files.
-					<br />
-					2.) The metadata and the sequence data will be transfered to the ENA data center. If the submission is successful, an ENA accession number will be delivered.
-					<br />
-					3.) The metadata and the ENA accession number will be send to PANGAEA. A data curator will review the submitted data and a DOI will be generated.
-					<br />
-					4.) The ENA will obtain a notification about the generated DOI.
-					<br />
-					5.) You will receive a confirmation about the data submission with DOI and ENA accession number.
-					<br /><br />
-
 				</div>
 
 				<div class="swHide" id="hide_-1010">
@@ -90,15 +66,15 @@
 		<div class="section" id="tabSubmission">
 
 			<p>
-			<h2>Data Submission</h2>
+			<h2>Submission Workflows</h2>
 			<p>
-			Please select a data center in order to start an archiving workflow.
+			Please select a data center in order to start a submission workflow.
 			<br>
 			<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 			<input id="submissionCheck" type="hidden" value="true">
 
 			<form action="select.htm">
-				<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+				<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 					<option selected value="none">None </option>
 					<option value="-10">BGBM </option>
 					<option value="-10">DSMZ </option>
@@ -115,23 +91,6 @@
 
 			<!--------------------------------------------------------------GCDJ-Widget ---------------------------------------------------->
 			<div class="swHide" id="hide_-11">
-
-				<h3>ENA / PANGAEA (Molecular Sequence Data)</h3>
-				<br>
-				Welcome to the molecular data submission workflow!
-				The workflow consists of five major parts:
-				<br /><br />
-				1.) At first, you enter describing information about the sequence (metadata) and upload the sequence files.
-				<br />
-				2.) The metadata and the sequence data will be transfered to the ENA data center. If the submission is successful, an ENA accession number will be delivered.
-				<br />
-				3.) The metadata and the ENA accession number will be send to PANGAEA. A data curator will review the submitted data and a DOI will be generated.
-				<br />
-				4.) The ENA will obtain a notification about the generated DOI.
-				<br />
-				5.) You will receive a confirmation about the data submission with DOI and ENA accession number.
-				<br /><br />
-
 			</div>
 
 			<!-- ------------------------------------------------------------- Rest ------------------------------------------------------->
