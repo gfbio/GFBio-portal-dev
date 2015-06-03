@@ -285,6 +285,12 @@ public class HeadLocalServiceUtil {
 		return getService().getColumnName(headId, i);
 	}
 
+	public static int getColumnByName(long headId, java.lang.String column)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return getService().getColumnByName(headId, column);
+	}
+
 	public static java.lang.Long getHeadID(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {

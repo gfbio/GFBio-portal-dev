@@ -298,6 +298,13 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public int getColumnByName(long headId, java.lang.String column)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return _headLocalService.getColumnByName(headId, column);
+	}
+
+	@Override
 	public java.lang.Long getHeadID(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {

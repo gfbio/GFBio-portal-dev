@@ -136,6 +136,32 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return column;
 	}
 	
+	public int getColumnByName(long headId, String column) throws NoSuchHeadException, SystemException {
+		Head head = getHeadById(headId);
+		int i =0;
+		if (column.equals(head.getColumn01().trim())) i=1;  else
+			if (column.equals(head.getColumn02().trim())) i=2; else
+				if (column.equals(head.getColumn03().trim())) i=3; else
+					if (column.equals(head.getColumn04().trim())) i=4; else
+						if (column.equals(head.getColumn05().trim())) i=5; else
+							if (column.equals(head.getColumn06().trim())) i=6; else
+								if (column.equals(head.getColumn07().trim())) i=7; else
+									if (column.equals(head.getColumn08().trim())) i=8; else
+										if (column.equals(head.getColumn09().trim())) i=9; else
+											if (column.equals(head.getColumn10().trim())) i=10; else
+												if (column.equals(head.getColumn11().trim())) i=11; else
+													if (column.equals(head.getColumn12().trim())) i=12; else
+														if (column.equals(head.getColumn13().trim())) i=13; else
+															if (column.equals(head.getColumn14().trim())) i=14; else
+																if (column.equals(head.getColumn15().trim())) i=15; else
+																	if (column.equals(head.getColumn16().trim())) i=16; else
+																		if (column.equals(head.getColumn17().trim())) i=17; else
+																			if (column.equals(head.getColumn18().trim())) i=18; else
+																				if (column.equals(head.getColumn19().trim())) i=19; else
+																					if (column.equals(head.getColumn20().trim())) i=20;
+			return i;
+	}
+	
 
 	public Long getHeadID(String name) throws NoSuchHeadException, SystemException {
 		return headPersistence.findByName(name).getHeadID();
