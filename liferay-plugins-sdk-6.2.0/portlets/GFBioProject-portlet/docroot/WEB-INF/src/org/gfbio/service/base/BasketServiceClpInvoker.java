@@ -65,7 +65,11 @@ public class BasketServiceClpInvoker {
 
 		_methodName73 = "removeBasket";
 
-		_methodParameterTypes73 = new String[] { "long" };
+		_methodParameterTypes73 = new String[] { "long", "long" };
+
+		_methodName74 = "getBasketUsersIds";
+
+		_methodParameterTypes74 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -124,7 +128,13 @@ public class BasketServiceClpInvoker {
 
 		if (_methodName73.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
-			return BasketServiceUtil.removeBasket(((Long)arguments[0]).longValue());
+			return BasketServiceUtil.removeBasket(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName74.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
+			return BasketServiceUtil.getBasketUsersIds(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -150,4 +160,6 @@ public class BasketServiceClpInvoker {
 	private String[] _methodParameterTypes72;
 	private String _methodName73;
 	private String[] _methodParameterTypes73;
+	private String _methodName74;
+	private String[] _methodParameterTypes74;
 }

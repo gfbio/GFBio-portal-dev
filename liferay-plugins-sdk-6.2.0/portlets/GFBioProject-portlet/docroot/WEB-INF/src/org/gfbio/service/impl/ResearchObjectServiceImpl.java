@@ -14,7 +14,14 @@
 
 package org.gfbio.service.impl;
 
+import org.gfbio.NoSuchProject_UserException;
+import org.gfbio.NoSuchResearchObjectException;
+import org.gfbio.model.ResearchObject;
+import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
+
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the research object remote service.
@@ -31,9 +38,35 @@ import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
  * @see org.gfbio.service.ResearchObjectServiceUtil
  */
 public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link org.gfbio.service.ResearchObjectServiceUtil} to access the research object remote service.
-	 */
+	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException {
+
+		ResearchObject researchObject = null;
+		try {
+			researchObject = researchObjectPersistence.findByPrimaryKey(researchObjectID);
+		} catch (NoSuchResearchObjectException e) {e.printStackTrace();}
+
+		//create new ResearchObject
+
+		if (researchObject == null) {
+			researchObject = researchObjectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
+			researchObject.setName(name);
+			researchObject.setLabel(label);
+			researchObject.setMetadata(metadata);
+			researchObject.setFormatmetadata(formatmetadata);
+			super.updateResearchObject(researchObject);
+
+			try {
+				Long foobar = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(projectID, researchObject.getResearchObjectID());
+			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
+		}
+		//update ResearchObject
+		else {
+			researchObject.setName(name);
+			researchObject.setLabel(label);
+			researchObject.setMetadata(metadata);
+			researchObject.setFormatmetadata(formatmetadata);
+			super.updateResearchObject(researchObject);
+		}
+		return researchObject.getResearchObjectID();
+	}
 }

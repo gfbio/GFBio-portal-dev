@@ -102,6 +102,8 @@ public class ProjectProfile extends GenericPortlet {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
 
+		System.out.println(json.toString());
+		
 		long projectID = Long.valueOf((String) json.get("projectID")).longValue();
 		long userID = 0;
 		if ("updateProject".toString().equals(request.getParameter("responseTarget").toString()))

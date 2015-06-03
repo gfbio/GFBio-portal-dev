@@ -96,7 +96,11 @@ public interface BasketService extends BaseService, InvokableService {
 		java.lang.String basketJSON, java.lang.String queryJSON)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public org.gfbio.model.Basket removeBasket(long basketId)
+	public org.gfbio.model.Basket removeBasket(long basketId, long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.Long, java.lang.String> getBasketUsersIds(
+		long userId) throws java.lang.Exception;
 }

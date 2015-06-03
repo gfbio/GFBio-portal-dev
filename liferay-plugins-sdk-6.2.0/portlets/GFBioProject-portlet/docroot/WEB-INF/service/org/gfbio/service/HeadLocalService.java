@@ -246,6 +246,10 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public void deleteCompleteHead(long headId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getColumnCount(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,

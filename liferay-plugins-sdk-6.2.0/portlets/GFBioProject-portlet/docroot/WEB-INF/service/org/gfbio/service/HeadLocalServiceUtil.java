@@ -267,6 +267,12 @@ public class HeadLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void deleteCompleteHead(long headId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCompleteHead(headId);
+	}
+
 	public static int getColumnCount(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {

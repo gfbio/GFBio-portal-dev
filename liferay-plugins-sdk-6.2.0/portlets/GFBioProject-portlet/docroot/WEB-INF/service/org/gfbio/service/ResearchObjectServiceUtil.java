@@ -63,6 +63,15 @@ public class ResearchObjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static long updateResearchObject(long projectID,
+		long researchObjectID, java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateResearchObject(projectID, researchObjectID, name,
+			label, metadata, formatmetadata);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

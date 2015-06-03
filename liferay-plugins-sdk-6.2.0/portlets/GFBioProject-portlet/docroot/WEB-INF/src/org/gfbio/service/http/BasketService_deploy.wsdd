@@ -27,6 +27,7 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="removeBasket" qname="operNS:removeBasket" returnQName="removeBasketReturn" returnType="rtns:BasketSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateBasket" qname="operNS:updateBasket" returnQName="updateBasketReturn" returnType="rtns:long" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>

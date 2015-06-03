@@ -14,14 +14,18 @@
 
 package org.gfbio.service.impl;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Date;
 import java.util.List;
 
+import org.gfbio.NoSuchProjectException;
+import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.model.Project;
 import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
 
 /**
@@ -54,10 +58,42 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 		return ProjectLocalServiceUtil.getProjectList(userID);
 	}
 
-	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status)
-			throws SystemException {
-		return ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, startDate, endDate, status);
+	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
+
+		Project project = null;
+		try {
+			project = projectPersistence.findByPrimaryKey(projectID);
+		} catch (NoSuchProjectException e) {e.printStackTrace();}
+
+		//create new project
+		if (project == null) {
+			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
+			project.setName(name);
+			project.setLabel(label);
+			project.setDescription(description);
+			project.setStartDate(startDate);
+			project.setEndDate(endDate);
+			project.setStatus(status);
+			super.updateProject(project);
+			try {
+				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
+				System.out.println(foobar);
+			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
+		}
+		//update project
+		else {
+			project.setName(name);
+			project.setLabel(label);
+			project.setDescription(description);
+			project.setStartDate(startDate);
+			project.setEndDate(endDate);
+			project.setStatus(status);
+			super.updateProject(project);
+		}
+		return project.getProjectID();
 	}
+	
+	
 //
 //	@Override
 //	public long updateProject(long arg0, String arg1, String arg2)

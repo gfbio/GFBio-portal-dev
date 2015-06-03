@@ -1,5 +1,6 @@
 package org.gfbio.tablebuilder;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,25 +68,32 @@ public class TableBuilder extends GenericPortlet {
 			//choose Table
 			if ("chooseTable".toString().equals(request.getParameter("responseTarget").toString()))
 				chooseTable(request, response);
+			
+			//delete Content
+			if ("deleteContent".toString().equals(request.getParameter("responseTarget").toString()))
+				deleteContent(request, response);
+			
+			//delete Table
+			if ("deleteTable".toString().equals(request.getParameter("responseTarget").toString()))
+				deleteTable(request, response);
+			
 
 			//new Content of a Table
 			if ("updateContent".toString().equals(request.getParameter("responseTarget").toString())) 
 				updateContent(request, response);
 
 			//new Relationship between tables
-			if ("relationTable".toString().equals(request.getParameter("responseTarget").toString())){
-				System.out.println("relation table");
+			if ("relationTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateRelationTable(request, response);
-			}			
+						
 			//new Table
 			if ("newTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateTable(request, response);
 			
-
 			//update Table
 			if ("updateTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateTable(request, response);
-			
+		
 		}
 	}
 	
@@ -120,14 +128,39 @@ public class TableBuilder extends GenericPortlet {
 	public void chooseTable(ResourceRequest request, ResourceResponse response) throws IOException, ValidatorException {
 
 		String name = request.getParameter("data").substring(1, request.getParameter("data").length()-1);
-		PortletPreferences prefs = request.getPreferences();
+		System.out.println(name);
+		
+		/*        PrintWriter writer = response.getWriter();
+        writer.print(name);
+        
+		response.setContentType("text/html");
+		response.getWriter().println(name);
+		response.setProperty("chooseTable", name);*/
+		
+		/*PortletPreferences prefs = request.getPreferences();
+		
 
 		if (name != null) {
 		try {
 			prefs.setValue("choTab", Long.toString(HeadLocalServiceUtil.getHeadID(name)));
 		} catch (NoSuchHeadException | ReadOnlyException | SystemException e) {e.printStackTrace();	}
 		prefs.store();
-		}
+		}*/
+	}
+	
+	public void deleteContent (ResourceRequest request, ResourceResponse response){
+		
+		try {
+			PositionLocalServiceUtil.deletePosition(Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue());
+		} catch (PortalException | SystemException e) {e.printStackTrace();}
+	}
+	
+	public void deleteTable (ResourceRequest request, ResourceResponse response){
+		
+		Long headId = Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue();
+		try {
+			HeadLocalServiceUtil.deleteCompleteHead(headId);
+		} catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
 
@@ -144,6 +177,7 @@ public class TableBuilder extends GenericPortlet {
 		try {
 			Boolean check = false;
 			try {
+				System.out.println(json);
 				check = PositionLocalServiceUtil.updatePosition(Long.valueOf(
 					(String) json.get("positionID")).longValue(), 
 					Long.valueOf((String) json.get("headID")).longValue(),
@@ -167,10 +201,7 @@ public class TableBuilder extends GenericPortlet {
 					(String) json.get((HeadLocalServiceUtil.getColumnName(Long.valueOf((String) json.get("headID")).longValue(), 18)).trim())	,
 					(String) json.get((HeadLocalServiceUtil.getColumnName(Long.valueOf((String) json.get("headID")).longValue(), 19)).trim())	,
 					(String) json.get((HeadLocalServiceUtil.getColumnName(Long.valueOf((String) json.get("headID")).longValue(), 20)).trim())	);
-			} catch (NoSuchHeadException | NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			} catch (NoSuchHeadException | NumberFormatException e) {e.printStackTrace();}
 			System.out.println("new Content: "+check);
 		} catch (SystemException e) {e.printStackTrace();}
 	}

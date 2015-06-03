@@ -100,9 +100,29 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.org.gfbio.model.Head"),
 			true);
-	public static long HEADID_COLUMN_BITMASK = 1L;
-	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long TASK_COLUMN_BITMASK = 4L;
+	public static long COLUMN01_COLUMN_BITMASK = 1L;
+	public static long COLUMN02_COLUMN_BITMASK = 2L;
+	public static long COLUMN03_COLUMN_BITMASK = 4L;
+	public static long COLUMN04_COLUMN_BITMASK = 8L;
+	public static long COLUMN05_COLUMN_BITMASK = 16L;
+	public static long COLUMN06_COLUMN_BITMASK = 32L;
+	public static long COLUMN07_COLUMN_BITMASK = 64L;
+	public static long COLUMN08_COLUMN_BITMASK = 128L;
+	public static long COLUMN09_COLUMN_BITMASK = 256L;
+	public static long COLUMN10_COLUMN_BITMASK = 512L;
+	public static long COLUMN11_COLUMN_BITMASK = 1024L;
+	public static long COLUMN12_COLUMN_BITMASK = 2048L;
+	public static long COLUMN13_COLUMN_BITMASK = 4096L;
+	public static long COLUMN14_COLUMN_BITMASK = 8192L;
+	public static long COLUMN15_COLUMN_BITMASK = 16384L;
+	public static long COLUMN16_COLUMN_BITMASK = 32768L;
+	public static long COLUMN17_COLUMN_BITMASK = 65536L;
+	public static long COLUMN18_COLUMN_BITMASK = 131072L;
+	public static long COLUMN19_COLUMN_BITMASK = 262144L;
+	public static long COLUMN20_COLUMN_BITMASK = 524288L;
+	public static long HEADID_COLUMN_BITMASK = 1048576L;
+	public static long NAME_COLUMN_BITMASK = 2097152L;
+	public static long TASK_COLUMN_BITMASK = 4194304L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -460,7 +480,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn01(String column01) {
+		_columnBitmask |= COLUMN01_COLUMN_BITMASK;
+
+		if (_originalColumn01 == null) {
+			_originalColumn01 = _column01;
+		}
+
 		_column01 = column01;
+	}
+
+	public String getOriginalColumn01() {
+		return GetterUtil.getString(_originalColumn01);
 	}
 
 	@JSON
@@ -476,7 +506,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn02(String column02) {
+		_columnBitmask |= COLUMN02_COLUMN_BITMASK;
+
+		if (_originalColumn02 == null) {
+			_originalColumn02 = _column02;
+		}
+
 		_column02 = column02;
+	}
+
+	public String getOriginalColumn02() {
+		return GetterUtil.getString(_originalColumn02);
 	}
 
 	@JSON
@@ -492,7 +532,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn03(String column03) {
+		_columnBitmask |= COLUMN03_COLUMN_BITMASK;
+
+		if (_originalColumn03 == null) {
+			_originalColumn03 = _column03;
+		}
+
 		_column03 = column03;
+	}
+
+	public String getOriginalColumn03() {
+		return GetterUtil.getString(_originalColumn03);
 	}
 
 	@JSON
@@ -508,7 +558,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn04(String column04) {
+		_columnBitmask |= COLUMN04_COLUMN_BITMASK;
+
+		if (_originalColumn04 == null) {
+			_originalColumn04 = _column04;
+		}
+
 		_column04 = column04;
+	}
+
+	public String getOriginalColumn04() {
+		return GetterUtil.getString(_originalColumn04);
 	}
 
 	@JSON
@@ -524,7 +584,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn05(String column05) {
+		_columnBitmask |= COLUMN05_COLUMN_BITMASK;
+
+		if (_originalColumn05 == null) {
+			_originalColumn05 = _column05;
+		}
+
 		_column05 = column05;
+	}
+
+	public String getOriginalColumn05() {
+		return GetterUtil.getString(_originalColumn05);
 	}
 
 	@JSON
@@ -540,7 +610,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn06(String column06) {
+		_columnBitmask |= COLUMN06_COLUMN_BITMASK;
+
+		if (_originalColumn06 == null) {
+			_originalColumn06 = _column06;
+		}
+
 		_column06 = column06;
+	}
+
+	public String getOriginalColumn06() {
+		return GetterUtil.getString(_originalColumn06);
 	}
 
 	@JSON
@@ -556,7 +636,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn07(String column07) {
+		_columnBitmask |= COLUMN07_COLUMN_BITMASK;
+
+		if (_originalColumn07 == null) {
+			_originalColumn07 = _column07;
+		}
+
 		_column07 = column07;
+	}
+
+	public String getOriginalColumn07() {
+		return GetterUtil.getString(_originalColumn07);
 	}
 
 	@JSON
@@ -572,7 +662,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn08(String column08) {
+		_columnBitmask |= COLUMN08_COLUMN_BITMASK;
+
+		if (_originalColumn08 == null) {
+			_originalColumn08 = _column08;
+		}
+
 		_column08 = column08;
+	}
+
+	public String getOriginalColumn08() {
+		return GetterUtil.getString(_originalColumn08);
 	}
 
 	@JSON
@@ -588,7 +688,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn09(String column09) {
+		_columnBitmask |= COLUMN09_COLUMN_BITMASK;
+
+		if (_originalColumn09 == null) {
+			_originalColumn09 = _column09;
+		}
+
 		_column09 = column09;
+	}
+
+	public String getOriginalColumn09() {
+		return GetterUtil.getString(_originalColumn09);
 	}
 
 	@JSON
@@ -604,7 +714,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn10(String column10) {
+		_columnBitmask |= COLUMN10_COLUMN_BITMASK;
+
+		if (_originalColumn10 == null) {
+			_originalColumn10 = _column10;
+		}
+
 		_column10 = column10;
+	}
+
+	public String getOriginalColumn10() {
+		return GetterUtil.getString(_originalColumn10);
 	}
 
 	@JSON
@@ -620,7 +740,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn11(String column11) {
+		_columnBitmask |= COLUMN11_COLUMN_BITMASK;
+
+		if (_originalColumn11 == null) {
+			_originalColumn11 = _column11;
+		}
+
 		_column11 = column11;
+	}
+
+	public String getOriginalColumn11() {
+		return GetterUtil.getString(_originalColumn11);
 	}
 
 	@JSON
@@ -636,7 +766,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn12(String column12) {
+		_columnBitmask |= COLUMN12_COLUMN_BITMASK;
+
+		if (_originalColumn12 == null) {
+			_originalColumn12 = _column12;
+		}
+
 		_column12 = column12;
+	}
+
+	public String getOriginalColumn12() {
+		return GetterUtil.getString(_originalColumn12);
 	}
 
 	@JSON
@@ -652,7 +792,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn13(String column13) {
+		_columnBitmask |= COLUMN13_COLUMN_BITMASK;
+
+		if (_originalColumn13 == null) {
+			_originalColumn13 = _column13;
+		}
+
 		_column13 = column13;
+	}
+
+	public String getOriginalColumn13() {
+		return GetterUtil.getString(_originalColumn13);
 	}
 
 	@JSON
@@ -668,7 +818,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn14(String column14) {
+		_columnBitmask |= COLUMN14_COLUMN_BITMASK;
+
+		if (_originalColumn14 == null) {
+			_originalColumn14 = _column14;
+		}
+
 		_column14 = column14;
+	}
+
+	public String getOriginalColumn14() {
+		return GetterUtil.getString(_originalColumn14);
 	}
 
 	@JSON
@@ -684,7 +844,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn15(String column15) {
+		_columnBitmask |= COLUMN15_COLUMN_BITMASK;
+
+		if (_originalColumn15 == null) {
+			_originalColumn15 = _column15;
+		}
+
 		_column15 = column15;
+	}
+
+	public String getOriginalColumn15() {
+		return GetterUtil.getString(_originalColumn15);
 	}
 
 	@JSON
@@ -700,7 +870,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn16(String column16) {
+		_columnBitmask |= COLUMN16_COLUMN_BITMASK;
+
+		if (_originalColumn16 == null) {
+			_originalColumn16 = _column16;
+		}
+
 		_column16 = column16;
+	}
+
+	public String getOriginalColumn16() {
+		return GetterUtil.getString(_originalColumn16);
 	}
 
 	@JSON
@@ -716,7 +896,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn17(String column17) {
+		_columnBitmask |= COLUMN17_COLUMN_BITMASK;
+
+		if (_originalColumn17 == null) {
+			_originalColumn17 = _column17;
+		}
+
 		_column17 = column17;
+	}
+
+	public String getOriginalColumn17() {
+		return GetterUtil.getString(_originalColumn17);
 	}
 
 	@JSON
@@ -732,7 +922,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn18(String column18) {
+		_columnBitmask |= COLUMN18_COLUMN_BITMASK;
+
+		if (_originalColumn18 == null) {
+			_originalColumn18 = _column18;
+		}
+
 		_column18 = column18;
+	}
+
+	public String getOriginalColumn18() {
+		return GetterUtil.getString(_originalColumn18);
 	}
 
 	@JSON
@@ -748,7 +948,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn19(String column19) {
+		_columnBitmask |= COLUMN19_COLUMN_BITMASK;
+
+		if (_originalColumn19 == null) {
+			_originalColumn19 = _column19;
+		}
+
 		_column19 = column19;
+	}
+
+	public String getOriginalColumn19() {
+		return GetterUtil.getString(_originalColumn19);
 	}
 
 	@JSON
@@ -764,7 +974,17 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@Override
 	public void setColumn20(String column20) {
+		_columnBitmask |= COLUMN20_COLUMN_BITMASK;
+
+		if (_originalColumn20 == null) {
+			_originalColumn20 = _column20;
+		}
+
 		_column20 = column20;
+	}
+
+	public String getOriginalColumn20() {
+		return GetterUtil.getString(_originalColumn20);
 	}
 
 	public long getColumnBitmask() {
@@ -878,6 +1098,46 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		headModelImpl._originalName = headModelImpl._name;
 
 		headModelImpl._originalTask = headModelImpl._task;
+
+		headModelImpl._originalColumn01 = headModelImpl._column01;
+
+		headModelImpl._originalColumn02 = headModelImpl._column02;
+
+		headModelImpl._originalColumn03 = headModelImpl._column03;
+
+		headModelImpl._originalColumn04 = headModelImpl._column04;
+
+		headModelImpl._originalColumn05 = headModelImpl._column05;
+
+		headModelImpl._originalColumn06 = headModelImpl._column06;
+
+		headModelImpl._originalColumn07 = headModelImpl._column07;
+
+		headModelImpl._originalColumn08 = headModelImpl._column08;
+
+		headModelImpl._originalColumn09 = headModelImpl._column09;
+
+		headModelImpl._originalColumn10 = headModelImpl._column10;
+
+		headModelImpl._originalColumn11 = headModelImpl._column11;
+
+		headModelImpl._originalColumn12 = headModelImpl._column12;
+
+		headModelImpl._originalColumn13 = headModelImpl._column13;
+
+		headModelImpl._originalColumn14 = headModelImpl._column14;
+
+		headModelImpl._originalColumn15 = headModelImpl._column15;
+
+		headModelImpl._originalColumn16 = headModelImpl._column16;
+
+		headModelImpl._originalColumn17 = headModelImpl._column17;
+
+		headModelImpl._originalColumn18 = headModelImpl._column18;
+
+		headModelImpl._originalColumn19 = headModelImpl._column19;
+
+		headModelImpl._originalColumn20 = headModelImpl._column20;
 
 		headModelImpl._columnBitmask = 0;
 	}
@@ -1238,25 +1498,45 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	private String _task;
 	private String _originalTask;
 	private String _column01;
+	private String _originalColumn01;
 	private String _column02;
+	private String _originalColumn02;
 	private String _column03;
+	private String _originalColumn03;
 	private String _column04;
+	private String _originalColumn04;
 	private String _column05;
+	private String _originalColumn05;
 	private String _column06;
+	private String _originalColumn06;
 	private String _column07;
+	private String _originalColumn07;
 	private String _column08;
+	private String _originalColumn08;
 	private String _column09;
+	private String _originalColumn09;
 	private String _column10;
+	private String _originalColumn10;
 	private String _column11;
+	private String _originalColumn11;
 	private String _column12;
+	private String _originalColumn12;
 	private String _column13;
+	private String _originalColumn13;
 	private String _column14;
+	private String _originalColumn14;
 	private String _column15;
+	private String _originalColumn15;
 	private String _column16;
+	private String _originalColumn16;
 	private String _column17;
+	private String _originalColumn17;
 	private String _column18;
+	private String _originalColumn18;
 	private String _column19;
+	private String _originalColumn19;
 	private String _column20;
+	private String _originalColumn20;
 	private long _columnBitmask;
 	private Head _escapedModel;
 }

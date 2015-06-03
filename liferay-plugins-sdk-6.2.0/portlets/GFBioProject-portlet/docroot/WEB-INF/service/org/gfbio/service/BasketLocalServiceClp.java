@@ -141,11 +141,15 @@ public class BasketLocalServiceClp implements BasketLocalService {
 
 		_methodName26 = "removeBasket";
 
-		_methodParameterTypes26 = new String[] { "long" };
+		_methodParameterTypes26 = new String[] { "long", "long" };
 
 		_methodName27 = "getStartDateFromPeriod";
 
 		_methodParameterTypes27 = new String[] { "int" };
+
+		_methodName28 = "getBasketUsersIds";
+
+		_methodParameterTypes28 = new String[] { "long" };
 	}
 
 	@Override
@@ -934,14 +938,14 @@ public class BasketLocalServiceClp implements BasketLocalService {
 	}
 
 	@Override
-	public org.gfbio.model.Basket removeBasket(long basketId)
+	public org.gfbio.model.Basket removeBasket(long basketId, long userId)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] { basketId });
+					_methodParameterTypes26, new Object[] { basketId, userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -987,6 +991,34 @@ public class BasketLocalServiceClp implements BasketLocalService {
 		}
 
 		return (java.util.Date)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.Map<java.lang.Long, java.lang.String> getBasketUsersIds(
+		long userId) throws java.lang.Exception {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof java.lang.Exception) {
+				throw (java.lang.Exception)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.Map<java.lang.Long, java.lang.String>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -1044,4 +1076,6 @@ public class BasketLocalServiceClp implements BasketLocalService {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

@@ -17,28 +17,23 @@
 
 
 
-<!---------------------------------------------------------------------------------------------------------------------------------------->
-<!------------------------------------------------ Tabs -------------------------------------------------------------------->
-<!---------------------------------------------------------------------------------------------------------------------------------------->
-
-
-
 <body >
+
 
 	<%if (PortalUtil.getUser(request)==null){ %>
 
 		<div class="section" id="tabNoSubmission">
 			<div id="noSignSubmission">
 				<p>
-				<h2>Data Submission</h2>
+				<h2>Submission Workflows</h2>
 				<p>
-				Please select a data center in order to start an archiving workflow.
+				Please select a data center in order to start a submission workflow.
 				<br>
 				<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 				<input id="submissionCheck" type="hidden" value="true">
 
 				<form action="select.htm">
-					<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+					<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 						<option selected value="none">None </option>
 						<option value="-1010">BGBM </option>
 						<option value="-1010">DSMZ </option>
@@ -56,32 +51,6 @@
 
 				<!--------------------------------------------------------------GCDJ-Widget ---------------------------------------------------->
 				<div class="swHide" id="hide_-1011">
-					<h3>ENA / PANGAEA (Molecular Sequence Data)</h3>
-					<br>
-					Welcome to the molecular data submission workflow!
-					The workflow consists of five major parts:
-					<br>
-					Welcome to the molecular data submission workflow!
-					The workflow consists of five major parts:
-					<br /><br />
-					1.) At first, you enter describing information about the sequence (metadata) and upload the sequence files.
-					<br />
-					2.) The metadata and the sequence data will be transfered to the ENA data center. If the submission is successful, an ENA accession number will be delivered.
-					<br />
-					3.) The metadata and the ENA accession number will be send to PANGAEA. A data curator will review the submitted data and a DOI will be generated.
-					<br />
-					4.) The ENA will obtain a notification about the generated DOI.
-					<br />
-					5.) You will receive a confirmation about the data submission with DOI and ENA accession number.
-					<br /><br />
-					Both identifiers, DOI and ENA accession number ensure the connection between the submitted data.
-				    All your submitted data is accessible in the project profile to which the data has been assigned.<br>
-					<br>
-					<br>
-
-					<div class="portlet-msg-alert">
-						Please sign in to continue the submission process.
-					</div>
 				</div>
 
 				<div class="swHide" id="hide_-1010">
@@ -97,15 +66,15 @@
 		<div class="section" id="tabSubmission">
 
 			<p>
-			<h2>Data Submission</h2>
+			<h2>Submission Workflows</h2>
 			<p>
-			Please select a data center in order to start an archiving workflow.
+			Please select a data center in order to start a submission workflow.
 			<br>
 			<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 			<input id="submissionCheck" type="hidden" value="true">
 
 			<form action="select.htm">
-				<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="radiohide(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+				<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 					<option selected value="none">None </option>
 					<option value="-10">BGBM </option>
 					<option value="-10">DSMZ </option>
@@ -122,53 +91,6 @@
 
 			<!--------------------------------------------------------------GCDJ-Widget ---------------------------------------------------->
 			<div class="swHide" id="hide_-11">
-
-				<h3>ENA / PANGAEA (Molecular Sequence Data)</h3>
-				<br>
-				Welcome to the molecular data submission workflow!
-				The workflow consists of five major parts:
-				<br /><br />
-				1.) At first, you enter describing information about the sequence (metadata) and upload the sequence files.
-				<br />
-				2.) The metadata and the sequence data will be transfered to the ENA data center. If the submission is successful, an ENA accession number will be delivered.
-				<br />
-				3.) The metadata and the ENA accession number will be send to PANGAEA. A data curator will review the submitted data and a DOI will be generated.
-				<br />
-				4.) The ENA will obtain a notification about the generated DOI.
-				<br />
-				5.) You will receive a confirmation about the data submission with DOI and ENA accession number.
-				<br /><br />
-				Both identifiers, DOI and ENA accession number ensure the connection between the submitted data.
-			    All your submitted data is accessible in the<a href="#" onclick="showSection('#tabProjProfile')"> project profile to which the data has been assigned</a>.<br>
-				<br>
-				<br>
-
-				<%
-					Long userID = PortalUtil.getUserId(request);
-					List <Project> projectList = new ArrayList<Project>();
-					projectList = null;
-					try {
-						 projectList = ProjectLocalServiceUtil.getProjectList(userID);
-					} catch (NoSuchModelException e) {
-						e.printStackTrace();
-					} catch (SystemException e) {
-						e.printStackTrace();
-					}
-				%>
-
-
-				Please select a project to which the data should be assigned. <br>
-				If no project is available, please create a <a href="#" onclick="showSection('#tabProjProfile')">new project</a>.<br>
-				<br>
-				<form action="select.htm">
-					<select id="chooPro" name="<portlet:namespace/>chooPro" onchange="checkContent(this.form.chooPro.options[this.form.chooPro.selectedIndex].value)" size="1" style="width:50%">
-						<option selected value="none"  >None  </option>
-						<%if (projectList!=null){ for (int i = 0; i < projectList.size(); i++) { %>
-								<option selected value="<%= projectList.get(i).getProjectID()  %>"  ><%= projectList.get(i).getLabel() %>  </option>
-						<%} } %>
-					</select>
-				</form>
-
 			</div>
 
 			<!-- ------------------------------------------------------------- Rest ------------------------------------------------------->

@@ -58,6 +58,15 @@ public class ResearchObjectServiceWrapper implements ResearchObjectService,
 			arguments);
 	}
 
+	@Override
+	public long updateResearchObject(long projectID, long researchObjectID,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _researchObjectService.updateResearchObject(projectID,
+			researchObjectID, name, label, metadata, formatmetadata);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

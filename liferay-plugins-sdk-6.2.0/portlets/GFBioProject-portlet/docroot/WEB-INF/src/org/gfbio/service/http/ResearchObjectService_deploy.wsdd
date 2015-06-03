@@ -2,7 +2,15 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Plugin_gfbio_ResearchObjectService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateResearchObject" qname="operNS:updateResearchObject" returnQName="updateResearchObjectReturn" returnType="rtns:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="label" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="metadata" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="formatmetadata" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="updateResearchObject" />
 		<parameter name="className" value="org.gfbio.service.http.ResearchObjectServiceSoap" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ResearchObjectServiceSoap" />
