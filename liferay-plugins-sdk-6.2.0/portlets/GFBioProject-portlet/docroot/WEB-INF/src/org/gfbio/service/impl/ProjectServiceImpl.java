@@ -59,38 +59,7 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	}
 
 	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
-
-		Project project = null;
-		try {
-			project = projectPersistence.findByPrimaryKey(projectID);
-		} catch (NoSuchProjectException e) {e.printStackTrace();}
-
-		//create new project
-		if (project == null) {
-			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-			project.setName(name);
-			project.setLabel(label);
-			project.setDescription(description);
-			project.setStartDate(startDate);
-			project.setEndDate(endDate);
-			project.setStatus(status);
-			super.updateProject(project);
-			try {
-				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
-				System.out.println(foobar);
-			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
-		}
-		//update project
-		else {
-			project.setName(name);
-			project.setLabel(label);
-			project.setDescription(description);
-			project.setStartDate(startDate);
-			project.setEndDate(endDate);
-			project.setStatus(status);
-			super.updateProject(project);
-		}
-		return project.getProjectID();
+		return ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, startDate, endDate, status);
 	}
 	
 	

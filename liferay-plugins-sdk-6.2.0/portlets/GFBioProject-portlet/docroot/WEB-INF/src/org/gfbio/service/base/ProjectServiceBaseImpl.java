@@ -738,8 +738,4 @@ public abstract class ProjectServiceBaseImpl extends BaseServiceImpl
 	private String _beanIdentifier;
 	private ClassLoader _classLoader;
 	private ProjectServiceClpInvoker _clpInvoker = new ProjectServiceClpInvoker();
-	public void updateProject(Project project) {
-		// TODO Auto-generated method stub
-		
-	}
 }
