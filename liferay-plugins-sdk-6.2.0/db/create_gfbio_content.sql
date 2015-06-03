@@ -169,7 +169,7 @@ INSERT INTO gfbio_position (positionid, headid, column01, column02, column03, co
 -- relation category | Data Provider
 INSERT INTO gfbio_position (positionid, headid, column01, column02, column03, column04, column05, column06, column07, column08, column09, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20)VALUES('2026','308','122','135','','','','','','','','','','','','','','','','','','');	
 INSERT INTO gfbio_position (positionid, headid, column01, column02, column03, column04, column05, column06, column07, column08, column09, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20)VALUES('2027','308','120','135','','','','','','','','','','','','','','','','','','');	
-INSERT INTO gfbio_position (positionid, headid, column01, column02, column03, column04, column05, column06, column07, column08, column09, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20)VALUES('2026','308','121','135','','','','','','','','','','','','','','','','','','');	
+INSERT INTO gfbio_position (positionid, headid, column01, column02, column03, column04, column05, column06, column07, column08, column09, column10, column11, column12, column13, column14, column15, column16, column17, column18, column19, column20)VALUES('2028','308','121','135','','','','','','','','','','','','','','','','','','');	
   
   
   
