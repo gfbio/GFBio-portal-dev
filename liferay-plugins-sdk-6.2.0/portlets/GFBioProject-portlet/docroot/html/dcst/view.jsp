@@ -32,34 +32,59 @@ Es gibt <%=projectList.size() %> Projekte. Ich bin User <%=userid %>>
 		<%} } %>
 	</table>
 	
-
+<!-- Acordion um die Types anzuzeigen -->
 <div  class="toggler">
 Type
 </div>
 
 <div class="accordion">
 
-		<% 	Long typeId = HeadLocalServiceUtil.getHeadID("gfbio_type");
+		<% 	//get the headid of table gfbio_type
+			Long typeId = HeadLocalServiceUtil.getHeadID("gfbio_type");
+		    //get the list of all Positions(all rows) for the specified typeid
 			List<Position> typeList = PositionLocalServiceUtil.getPositionsbyHeadId(typeId); 
 			
+		    //get the headid of relation category_type
 			Long categoryTypeId = HeadLocalServiceUtil.getHeadID("gfbio_category_type");
+		    //get the list of all positions for categoy_type
 			List<Position> categoryTypeList = PositionLocalServiceUtil.getPositionsbyHeadId(categoryTypeId); 
 			
-			
+			PositionLocalServiceImpl posLSI = new PositionLocalServiceImpl();
 			
 		%>
 		
-		<%	for(int i = 0; i < typeList.size();i++){ %>
-		
+		<%	for(int i = 0; i < typeList.size();i++){ 
+			    //columnnumber for feature name of table type
+				int headColNum = HeadLocalServiceUtil.getColumnByName(typeId, "name");%>
+				
+		<!-- PseudoAcordion um für jeden Type die entsprechende Categorieliste anzuzeigen -->
 			<div id="<%="hide_accordion_".concat("type").concat(new Integer(i).toString())%>" onclick="pseudoaccordion('<%="type".concat(new Integer(i).toString()) %>')" style="cursor:pointer;">
-				<h4 > <span id="<%="h_".concat("type").concat(new Integer(i).toString())%>">+</span> <%= PositionLocalServiceUtil.getColumnContent(typeList.get(i).getPositionID(), HeadLocalServiceUtil.getColumnByName(typeId, "name") ) %></h4>
+				<!-- Display list of Types at column headColNum and row positionid for type  -->
+				<h4 > <span id="<%="h_".concat("type").concat(new Integer(i).toString())%>">+</span> <%= PositionLocalServiceUtil.getColumnContent(typeList.get(i).getPositionID(), headColNum) %></h4>
 			</div>
-					
+			
+			<!-- Display the list of categories for every type -->		
 			<div id= "<%="hide_".concat("type").concat(new Integer(i).toString())%>" class="swHide">
 			
-				<% 	Long id = typeList.get(i).getPositionID();
-					positionPersistence.findbyColumn01("string");
-					%>
+				<% 	//get columnnumber of category in relation category_type
+					int catColNumb = HeadLocalServiceUtil.getColumnByName(categoryTypeId, "gfbio_category");
+					//get columnnumber of type in relation category_type
+					int typeColNumb = HeadLocalServiceUtil.getColumnByName(categoryTypeId, "gfbio_type");
+					
+					
+					//List<Position> catList = categoryTypeList.
+					
+					//Long id = typeList.get(i).getPositionID();
+					//positionPersistence.findbyColumn01("string");
+					
+					//get the positionid for the actual type
+					String posTypeId = new Long(typeList.get(i).getPositionID()).toString();
+					//List of all positions for a specific typeid ??in category_type relation
+					List<Position> catList = posLSI.getPositionsbyColumnName(posTypeId, typeColNumb);
+					
+					for(int j=0; j<catList.size(); j++){ %>
+						<h4><%= PositionLocalServiceUtil.getColumnContent(catList.get(i).getPositionID(), catColNumb) %></h4>
+					<% }	%>
 			
 			</div>
 		
@@ -68,6 +93,7 @@ Type
 	
 </div>	
 
+<!-- Acordion um die Research Fields anzuzeigen -->
 <div   class="toggler">
 Research Field
 </div>
@@ -78,9 +104,14 @@ test
 	
 
 <div id="datacenters">
-	<% 	Long headId = HeadLocalServiceUtil.getHeadID("gfbio_dataprovider");
+	<% 	//get the headid for table dataprovider
+	    Long headId = HeadLocalServiceUtil.getHeadID("gfbio_dataprovider");
+		//list of positions for dataprovider
 		List<Position> positionList = PositionLocalServiceUtil.getPositionsbyHeadId(headId); %>
-	<%	for(int i = 0; i < positionList.size();i++){ %>
-		<div id=<%="hide_datacenter_".concat(new Integer(i).toString()) %> class="swMain"> <%=PositionLocalServiceUtil.getColumnContent(positionList.get(i).getPositionID(), HeadLocalServiceUtil.getColumnByName(headId, "name") ) %></div>
+	<%	for(int i = 0; i < positionList.size();i++){ 
+		    //get the columnnumber for feature name of table dataprovider
+			int headColNum = HeadLocalServiceUtil.getColumnByName(headId, "name");%>
+			<!-- Display the list of all DataCenter at column headColNum and row positionid_datacenter -->
+		<div id=<%="hide_datacenter_".concat(new Integer(i).toString()) %> class="swMain"> <%=PositionLocalServiceUtil.getColumnContent(positionList.get(i).getPositionID(), headColNum ) %></div>
 	<%	} %>
 </div>

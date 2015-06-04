@@ -276,6 +276,12 @@ public class PositionLocalServiceUtil {
 		return getService().getColumnContent(positionId, i);
 	}
 
+	public static java.util.List<org.gfbio.model.Position> getPositionsbyColumnName(
+		java.lang.String content, int i)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPositionsbyColumnName(content, i);
+	}
+
 	public static java.lang.String[] getNameArray(long headId)
 		throws org.gfbio.NoSuchHeadException {
 		return getService().getNameArray(headId);

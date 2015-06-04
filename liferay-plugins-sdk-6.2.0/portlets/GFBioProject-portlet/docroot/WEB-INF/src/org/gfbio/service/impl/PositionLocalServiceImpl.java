@@ -74,7 +74,7 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 	}
 	
 	public List<Position> getPositionsbyColumnName(String content, int i) throws SystemException{
-		return positionPersistence.findByColumn01(content);
+		return positionPersistence.findByColumn02(content);
 	}
 	
 	public String[] getNameArray(long headId) throws NoSuchHeadException {

@@ -254,6 +254,11 @@ public interface PositionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Position> getPositionsbyColumnName(
+		java.lang.String content, int i)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getNameArray(long headId)
 		throws org.gfbio.NoSuchHeadException;
 

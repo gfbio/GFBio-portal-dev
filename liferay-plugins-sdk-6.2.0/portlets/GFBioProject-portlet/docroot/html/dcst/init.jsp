@@ -25,6 +25,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="org.gfbio.model.ResearchObject" %>
 <%@ page import="org.gfbio.service.HeadLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.PositionLocalServiceUtil" %>
+<%@ page import="org.gfbio.service.impl.PositionLocalServiceImpl" %>
 <%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
 
 <%@ page import="org.json.simple.JSONObject" %>
