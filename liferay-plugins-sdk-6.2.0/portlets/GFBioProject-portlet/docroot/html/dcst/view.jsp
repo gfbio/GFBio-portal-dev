@@ -72,10 +72,8 @@ Type
 					int typeColNumb = HeadLocalServiceUtil.getColumnByName(categoryTypeId, "gfbio_type");
 					
 					
-					//List<Position> catList = categoryTypeList.
-					
-					//Long id = typeList.get(i).getPositionID();
-					//positionPersistence.findbyColumn01("string");
+										
+					//positionPersistencefindbyColumn01("string");
 					
 					//get the positionid for the actual type
 					String posTypeId = new Long(typeList.get(i).getPositionID()).toString();
