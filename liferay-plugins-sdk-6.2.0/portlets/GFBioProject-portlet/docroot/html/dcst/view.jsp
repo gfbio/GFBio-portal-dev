@@ -14,7 +14,7 @@ long userid = PortalUtil.getUserId(request);
 List <Project> projectList = new ArrayList<Project>();
 projectList = null;
 try {
-	 projectList = ProjectLocalServiceUtil.getProjectList(1);
+	 projectList = ProjectLocalServiceUtil.getProjectList(userid);
 } catch (NoSuchModelException e) {
 	e.printStackTrace();
 } catch (SystemException e) {
@@ -29,3 +29,12 @@ Es gibt <%=projectList.size() %> Projekte. Ich bin User <%=userid %>>
 		</tr> 
 		<%} } %>
 	</table>
+	
+
+<div id="datacenters">
+	<% 	Long headId = HeadLocalServiceUtil.getHeadID("gfbio_dataprovider");
+		List<Position> positionList = PositionLocalServiceUtil.getPositionsbyHeadId(headId); %>
+	<%	for(int i = 0; i < positionList.size();i++){ %>
+		<div id=<%="hide_datacenter_".concat(new Integer(i).toString()) %> class="swMain"> <%=PositionLocalServiceUtil.getColumnContent(positionList.get(i).getPositionID(), HeadLocalServiceUtil.getColumnByName(headId, "name") ) %></div>
+	<%	} %>
+</div>

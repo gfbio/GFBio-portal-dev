@@ -261,6 +261,11 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 			org.gfbio.NoSuchHeadException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getColumnByName(long headId, java.lang.String column)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.Long getHeadID(java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
