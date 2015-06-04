@@ -6,6 +6,11 @@ input[type=search] {
 	min-width: 200px;
     vertical-align: bottom;
 }
+
+.ui-state-default .ui-icon , .ui-icon, .ui-widget-content .ui-icon{
+	background-image: url("../images/ui-icons_888888_256x240.png") !important;
+}
+
 #gfbioSearchInput{
 	width: 40%;
 }

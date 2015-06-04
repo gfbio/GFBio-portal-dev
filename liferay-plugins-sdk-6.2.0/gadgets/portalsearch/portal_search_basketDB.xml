@@ -58,7 +58,7 @@
 					if (q != '') {
 						//console.log("q_= "+q);
 						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = q;
+						searchbox.value = q.replace("+"," ");
 						newQuery();
 					}
 				};
