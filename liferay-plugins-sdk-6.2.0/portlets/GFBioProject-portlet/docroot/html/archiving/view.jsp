@@ -37,7 +37,7 @@
 						<option selected value="none">None </option>
 						<option value="-1010">BGBM </option>
 						<option value="-1010">DSMZ </option>
-						<option value="-1011">ENA (molecular sequence data) </option>
+						<option value="-1011" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
 						<option value="-1010">MfN </option>
 						<option value="-1010">PANGAEA </option>
 						<option value="-1010">SGN </option>
@@ -78,7 +78,7 @@
 					<option selected value="none">None </option>
 					<option value="-10">BGBM </option>
 					<option value="-10">DSMZ </option>
-					<option value="-11">ENA (molecular sequence data) </option>
+					<option value="-11" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
 					<option value="-10">MfN </option>
 					<option value="-10">PANGAEA </option>
 					<option value="-10">SGN </option>
