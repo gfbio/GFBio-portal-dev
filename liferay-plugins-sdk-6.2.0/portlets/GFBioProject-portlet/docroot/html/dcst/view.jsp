@@ -42,7 +42,10 @@ Type
 		<% 	Long typeId = HeadLocalServiceUtil.getHeadID("gfbio_type");
 			List<Position> typeList = PositionLocalServiceUtil.getPositionsbyHeadId(typeId); 
 			
-			Long categoryId = HeadLocalServiceUtil.getHeadID("gfbio_category");
+			Long categoryTypeId = HeadLocalServiceUtil.getHeadID("gfbio_category_type");
+			List<Position> categoryTypeList = PositionLocalServiceUtil.getPositionsbyHeadId(categoryTypeId); 
+			
+			
 			
 		%>
 		
@@ -54,7 +57,8 @@ Type
 					
 			<div id= "<%="hide_".concat("type").concat(new Integer(i).toString())%>" class="swHide">
 			
-				<% 	
+				<% 	Long id = typeList.get(i).getPositionID();
+					positionPersistence.findbyColumn01("string");
 					%>
 			
 			</div>
