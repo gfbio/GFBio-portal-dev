@@ -48,6 +48,10 @@ Type
 			Long categoryTypeId = HeadLocalServiceUtil.getHeadID("gfbio_category_type");
 		    //get the list of all positions for categoy_type
 			List<Position> categoryTypeList = PositionLocalServiceUtil.getPositionsbyHeadId(categoryTypeId); 
+		    		
+			//get the headid of relation category
+			Long categoryId = HeadLocalServiceUtil.getHeadID("gfbio_category");	
+			int catColumnNum = HeadLocalServiceUtil.getColumnByName(categoryId, "name");
 						
 		%>
 		
@@ -79,6 +83,18 @@ Type
 					List<Position> catList = PositionLocalServiceUtil.getPositionsbyColumnName(posTypeId, typeColNumb);
 					
 					%>
+					
+					<%for(int j=0; j<catList.size(); j++){ 
+						String stringCatId_ij = PositionLocalServiceUtil.getColumnContent(catList.get(j).getPositionID(), catColNumb);
+						Long catId_ij = Long.valueOf(stringCatId_ij).longValue();%>
+						
+						<div class="row">
+							<div class="dynamicIcon1st">- </div>
+							<label  class="dynamicTableIst" id="<%="type_".concat(new Integer(i).toString()).concat("_category_").concat(new Integer(j).toString())%> "><%= PositionLocalServiceUtil.getColumnContent(catId_ij, catColumnNum) %><br/></label> 
+						</div>
+						
+						
+					<% }	%>
 			
 			</div>
 		
