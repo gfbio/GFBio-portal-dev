@@ -78,9 +78,7 @@ Type
 					//List of all positions for a specific typeid ??in category_type relation
 					List<Position> catList = PositionLocalServiceUtil.getPositionsbyColumnName(posTypeId, typeColNumb);
 					
-					for(int j=0; j<catList.size(); j++){ %>
-						<h4><%= PositionLocalServiceUtil.getColumnContent(catList.get(i).getPositionID(), catColNumb) %></h4>
-					<% }	%>
+					%>
 			
 			</div>
 		
