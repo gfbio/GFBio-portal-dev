@@ -48,9 +48,7 @@ Type
 			Long categoryTypeId = HeadLocalServiceUtil.getHeadID("gfbio_category_type");
 		    //get the list of all positions for categoy_type
 			List<Position> categoryTypeList = PositionLocalServiceUtil.getPositionsbyHeadId(categoryTypeId); 
-			
-			PositionLocalServiceImpl posLSI = new PositionLocalServiceImpl();
-			
+						
 		%>
 		
 		<%	for(int i = 0; i < typeList.size();i++){ 
@@ -78,7 +76,7 @@ Type
 					//get the positionid for the actual type
 					String posTypeId = new Long(typeList.get(i).getPositionID()).toString();
 					//List of all positions for a specific typeid ??in category_type relation
-					List<Position> catList = posLSI.getPositionsbyColumnName(posTypeId, typeColNumb);
+					List<Position> catList = PositionLocalServiceUtil.getPositionsbyColumnName(posTypeId, typeColNumb);
 					
 					for(int j=0; j<catList.size(); j++){ %>
 						<h4><%= PositionLocalServiceUtil.getColumnContent(catList.get(i).getPositionID(), catColNumb) %></h4>
