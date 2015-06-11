@@ -76,10 +76,10 @@ public class UserExtensionServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject getUserAsJsonbyId(long userId)
+	public static org.json.simple.JSONObject getUserAsJsonById(long userId)
 		throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = UserExtensionServiceUtil.getUserAsJsonbyId(userId);
+			org.json.simple.JSONObject returnValue = UserExtensionServiceUtil.getUserAsJsonById(userId);
 
 			return returnValue;
 		}

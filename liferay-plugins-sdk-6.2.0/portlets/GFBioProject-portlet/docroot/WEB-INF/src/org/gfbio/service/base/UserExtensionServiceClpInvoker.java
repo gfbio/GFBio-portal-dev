@@ -36,7 +36,7 @@ public class UserExtensionServiceClpInvoker {
 
 		_methodParameterTypes72 = new String[] { "long" };
 
-		_methodName73 = "getUserAsJsonbyId";
+		_methodName73 = "getUserAsJsonById";
 
 		_methodParameterTypes73 = new String[] { "long" };
 	}
@@ -62,7 +62,7 @@ public class UserExtensionServiceClpInvoker {
 
 		if (_methodName73.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
-			return UserExtensionServiceUtil.getUserAsJsonbyId(((Long)arguments[0]).longValue());
+			return UserExtensionServiceUtil.getUserAsJsonById(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();

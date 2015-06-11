@@ -69,10 +69,10 @@ public class UserExtensionServiceUtil {
 		return getService().getUserById(userId);
 	}
 
-	public static org.json.simple.JSONObject getUserAsJsonbyId(long userId)
+	public static org.json.simple.JSONObject getUserAsJsonById(long userId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserAsJsonbyId(userId);
+		return getService().getUserAsJsonById(userId);
 	}
 
 	public static void clearService() {

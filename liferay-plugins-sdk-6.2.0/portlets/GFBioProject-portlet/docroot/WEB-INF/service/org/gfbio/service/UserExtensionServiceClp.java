@@ -36,7 +36,7 @@ public class UserExtensionServiceClp implements UserExtensionService {
 
 		_methodParameterTypes3 = new String[] { "long" };
 
-		_methodName4 = "getUserAsJsonbyId";
+		_methodName4 = "getUserAsJsonById";
 
 		_methodParameterTypes4 = new String[] { "long" };
 	}
@@ -125,7 +125,7 @@ public class UserExtensionServiceClp implements UserExtensionService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject getUserAsJsonbyId(long userId)
+	public org.json.simple.JSONObject getUserAsJsonById(long userId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

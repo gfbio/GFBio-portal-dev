@@ -44,7 +44,7 @@ public class UserExtensionServiceImpl extends UserExtensionServiceBaseImpl {
 		return UserExtensionLocalServiceUtil.getUserById(userId);
 	}
 	
-	public JSONObject getUserAsJsonbyId(long userId) throws NoSuchUserException, SystemException{
+	public JSONObject getUserAsJsonById(long userId) throws NoSuchUserException, SystemException{
 		return UserExtensionLocalServiceUtil.getUserAsJsonById(userId);
 	}
 	

@@ -71,7 +71,7 @@ public interface UserExtensionService extends BaseService, InvokableService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getUserAsJsonbyId(long userId)
+	public org.json.simple.JSONObject getUserAsJsonById(long userId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

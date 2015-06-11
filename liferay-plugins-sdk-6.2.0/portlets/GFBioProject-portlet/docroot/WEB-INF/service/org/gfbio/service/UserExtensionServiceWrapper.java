@@ -66,10 +66,10 @@ public class UserExtensionServiceWrapper implements UserExtensionService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject getUserAsJsonbyId(long userId)
+	public org.json.simple.JSONObject getUserAsJsonById(long userId)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userExtensionService.getUserAsJsonbyId(userId);
+		return _userExtensionService.getUserAsJsonById(userId);
 	}
 
 	/**
