@@ -54,7 +54,7 @@ public class TableBuilder extends GenericPortlet {
 			System.out.println("||||");
 			json = UserExtensionLocalServiceUtil.getUserAsJsonById(15301);
 			System.out.println(json.toJSONString());
-			System.out.println("||||");
+			
 		} catch (NoSuchUserException | SystemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
