@@ -14,18 +14,16 @@
 
 package org.gfbio.service.impl;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
+
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Date;
 import java.util.List;
 
-import org.gfbio.NoSuchProjectException;
-import org.gfbio.NoSuchProject_UserException;
+
 import org.gfbio.model.Project;
 import org.gfbio.service.ProjectLocalServiceUtil;
-import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
 
 /**

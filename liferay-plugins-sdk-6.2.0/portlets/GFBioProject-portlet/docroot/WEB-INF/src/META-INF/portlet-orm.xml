@@ -153,6 +153,14 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.UserExtensionModelImpl">
+		<attributes>
+			<id name="userID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="org.gfbio.model.impl.BasketImpl" name="Basket">
 		<table name="gfbio_Basket" />
 		<attributes />
@@ -183,6 +191,10 @@
 	</entity>
 	<entity class="org.gfbio.model.impl.ResearchObjectImpl" name="ResearchObject">
 		<table name="gfbio_ResearchObject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.UserExtensionImpl" name="UserExtension">
+		<table name="gfbio_UserExtension" />
 		<attributes />
 	</entity>
 </entity-mappings>

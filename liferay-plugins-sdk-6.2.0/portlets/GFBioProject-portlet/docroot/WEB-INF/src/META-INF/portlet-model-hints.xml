@@ -90,4 +90,7 @@
 		<field name="metadata" type="String" />
 		<field name="formatmetadata" type="String" />
 	</model>
+	<model name="org.gfbio.model.UserExtension">
+		<field name="userID" type="long" />
+	</model>
 </model-hints>

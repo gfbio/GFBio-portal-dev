@@ -24,21 +24,21 @@ import java.util.Arrays;
  */
 public class ProjectServiceClpInvoker {
 	public ProjectServiceClpInvoker() {
-		_methodName60 = "getBeanIdentifier";
+		_methodName66 = "getBeanIdentifier";
 
-		_methodParameterTypes60 = new String[] {  };
+		_methodParameterTypes66 = new String[] {  };
 
-		_methodName61 = "setBeanIdentifier";
+		_methodName67 = "setBeanIdentifier";
 
-		_methodParameterTypes61 = new String[] { "java.lang.String" };
+		_methodParameterTypes67 = new String[] { "java.lang.String" };
 
-		_methodName66 = "getProjectList";
+		_methodName72 = "getProjectList";
 
-		_methodParameterTypes66 = new String[] { "long" };
+		_methodParameterTypes72 = new String[] { "long" };
 
-		_methodName67 = "updateProject";
+		_methodName73 = "updateProject";
 
-		_methodParameterTypes67 = new String[] {
+		_methodParameterTypes73 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
@@ -47,25 +47,25 @@ public class ProjectServiceClpInvoker {
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName60.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+		if (_methodName66.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
 			return ProjectServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName61.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+		if (_methodName67.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
 			ProjectServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName66.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+		if (_methodName72.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
 			return ProjectServiceUtil.getProjectList(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName67.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+		if (_methodName73.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
 			return ProjectServiceUtil.updateProject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -76,12 +76,12 @@ public class ProjectServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName60;
-	private String[] _methodParameterTypes60;
-	private String _methodName61;
-	private String[] _methodParameterTypes61;
 	private String _methodName66;
 	private String[] _methodParameterTypes66;
 	private String _methodName67;
 	private String[] _methodParameterTypes67;
+	private String _methodName72;
+	private String[] _methodParameterTypes72;
+	private String _methodName73;
+	private String[] _methodParameterTypes73;
 }

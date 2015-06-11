@@ -34,7 +34,7 @@
 
 				<form action="select.htm">
 					<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
-						<option selected value="none">None </option>
+						<option selected value="none"> </option>
 						<option value="-1010">BGBM </option>
 						<option value="-1010">DSMZ </option>
 						<option value="-1011" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
@@ -75,7 +75,7 @@
 
 			<form action="select.htm">
 				<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
-					<option selected value="none">None </option>
+					<option selected value="none"> </option>
 					<option value="-10">BGBM </option>
 					<option value="-10">DSMZ </option>
 					<option value="-11" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
@@ -97,7 +97,7 @@
 			<div class="swHide" id="hide_-10">
 
 				<div class="portlet-msg-alert">
-					This function is still not available. Please select ENA (molecular sequence data).
+					This part will be build at later time. Please select ENA (molecular sequence data).
 				</div>
 			</div>
 

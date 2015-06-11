@@ -10,6 +10,7 @@
 	<import class="org.gfbio.model.Project_User" />
 	<import class="org.gfbio.model.Project_User_PI" />
 	<import class="org.gfbio.model.ResearchObject" />
+	<import class="org.gfbio.model.UserExtension" />
 	<class name="org.gfbio.model.impl.BasketImpl" table="gfbio_Basket">
 		<id name="basketID" type="long">
 			<generator class="assigned" />
@@ -114,5 +115,10 @@
 		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="formatmetadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.UserExtensionImpl" table="gfbio_UserExtension">
+		<id name="userID" type="long">
+			<generator class="assigned" />
+		</id>
 	</class>
 </hibernate-mapping>
