@@ -18,6 +18,7 @@
 	.rowFieldB{float:left;width:28% }
 	.rowInput{float:left;width:34% }
 	
+	.dynamicIcon1st{  clear:left;	float:left;	width:15px}
 	.dynamicTable1st{ clear:left;	float:left;	width:50px;  font-weight:bold}
 	.dynamicHeadIst{				float:left;	width:250px; font-weight:bold}
 	.dynamicIcon{	 		 		float:left;	width:80px}

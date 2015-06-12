@@ -100,69 +100,69 @@ public class HeadLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Head" };
 
-		_methodName76 = "getBeanIdentifier";
+		_methodName82 = "getBeanIdentifier";
 
-		_methodParameterTypes76 = new String[] {  };
+		_methodParameterTypes82 = new String[] {  };
 
-		_methodName77 = "setBeanIdentifier";
+		_methodName83 = "setBeanIdentifier";
 
-		_methodParameterTypes77 = new String[] { "java.lang.String" };
+		_methodParameterTypes83 = new String[] { "java.lang.String" };
 
-		_methodName82 = "deleteCompleteHead";
+		_methodName88 = "deleteCompleteHead";
 
-		_methodParameterTypes82 = new String[] { "long" };
+		_methodParameterTypes88 = new String[] { "long" };
 
-		_methodName83 = "getColumnCount";
+		_methodName89 = "getColumnCount";
 
-		_methodParameterTypes83 = new String[] { "long" };
+		_methodParameterTypes89 = new String[] { "long" };
 
-		_methodName84 = "getColumnName";
+		_methodName90 = "getColumnName";
 
-		_methodParameterTypes84 = new String[] { "long", "int" };
+		_methodParameterTypes90 = new String[] { "long", "int" };
 
-		_methodName85 = "getColumnByName";
+		_methodName91 = "getColumnByName";
 
-		_methodParameterTypes85 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes91 = new String[] { "long", "java.lang.String" };
 
-		_methodName86 = "getHeadID";
-
-		_methodParameterTypes86 = new String[] { "java.lang.String" };
-
-		_methodName87 = "getHeadById";
-
-		_methodParameterTypes87 = new String[] { "long" };
-
-		_methodName88 = "getHeadbyName";
-
-		_methodParameterTypes88 = new String[] { "java.lang.String" };
-
-		_methodName89 = "getHeads";
-
-		_methodParameterTypes89 = new String[] {  };
-
-		_methodName90 = "getHeadsByTask";
-
-		_methodParameterTypes90 = new String[] { "java.lang.String" };
-
-		_methodName91 = "getName";
-
-		_methodParameterTypes91 = new String[] { "long" };
-
-		_methodName92 = "getNameArray";
+		_methodName92 = "getHeadID";
 
 		_methodParameterTypes92 = new String[] { "java.lang.String" };
 
-		_methodName93 = "getNameArray";
+		_methodName93 = "getHeadById";
 
-		_methodParameterTypes93 = new String[] { "java.util.List" };
+		_methodParameterTypes93 = new String[] { "long" };
 
-		_methodName94 = "setStandard";
+		_methodName94 = "getHeadbyName";
 
-		_methodParameterTypes94 = new String[] {  };
+		_methodParameterTypes94 = new String[] { "java.lang.String" };
 
-		_methodName95 = "updateHead";
+		_methodName95 = "getHeads";
 
-		_methodParameterTypes95 = new String[] {
+		_methodParameterTypes95 = new String[] {  };
+
+		_methodName96 = "getHeadsByTask";
+
+		_methodParameterTypes96 = new String[] { "java.lang.String" };
+
+		_methodName97 = "getName";
+
+		_methodParameterTypes97 = new String[] { "long" };
+
+		_methodName98 = "getNameArray";
+
+		_methodParameterTypes98 = new String[] { "java.lang.String" };
+
+		_methodName99 = "getNameArray";
+
+		_methodParameterTypes99 = new String[] { "java.util.List" };
+
+		_methodName100 = "setStandard";
+
+		_methodParameterTypes100 = new String[] {  };
+
+		_methodName101 = "updateHead";
+
+		_methodParameterTypes101 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -173,9 +173,9 @@ public class HeadLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName96 = "updateRelationTable";
+		_methodName102 = "updateRelationTable";
 
-		_methodParameterTypes96 = new String[] {
+		_methodParameterTypes102 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 	}
@@ -269,89 +269,89 @@ public class HeadLocalServiceClpInvoker {
 			return HeadLocalServiceUtil.updateHead((org.gfbio.model.Head)arguments[0]);
 		}
 
-		if (_methodName76.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
+		if (_methodName82.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
 			return HeadLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName77.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
 			HeadLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName82.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+		if (_methodName88.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
 			HeadLocalServiceUtil.deleteCompleteHead(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName83.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return HeadLocalServiceUtil.getColumnCount(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName84.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return HeadLocalServiceUtil.getColumnName(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue());
-		}
-
-		if (_methodName85.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
-			return HeadLocalServiceUtil.getColumnByName(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
-		}
-
-		if (_methodName86.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadID((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName87.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadById(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName88.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadbyName((java.lang.String)arguments[0]);
-		}
-
 		if (_methodName89.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeads();
+			return HeadLocalServiceUtil.getColumnCount(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName90.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadsByTask((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getColumnName(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName91.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
-			return HeadLocalServiceUtil.getName(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getColumnByName(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName92.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
-			return HeadLocalServiceUtil.getNameArray((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getHeadID((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName93.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
-			return HeadLocalServiceUtil.getNameArray((java.util.List<org.gfbio.model.Head>)arguments[0]);
+			return HeadLocalServiceUtil.getHeadById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName94.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
-			return HeadLocalServiceUtil.setStandard();
+			return HeadLocalServiceUtil.getHeadbyName((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName95.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes95, parameterTypes)) {
+			return HeadLocalServiceUtil.getHeads();
+		}
+
+		if (_methodName96.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
+			return HeadLocalServiceUtil.getHeadsByTask((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName97.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
+			return HeadLocalServiceUtil.getName(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName98.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
+			return HeadLocalServiceUtil.getNameArray((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName99.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
+			return HeadLocalServiceUtil.getNameArray((java.util.List<org.gfbio.model.Head>)arguments[0]);
+		}
+
+		if (_methodName100.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
+			return HeadLocalServiceUtil.setStandard();
+		}
+
+		if (_methodName101.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
 			return HeadLocalServiceUtil.updateHead(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -372,8 +372,8 @@ public class HeadLocalServiceClpInvoker {
 				(java.lang.String)arguments[21], (java.lang.String)arguments[22]);
 		}
 
-		if (_methodName96.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
+		if (_methodName102.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
 			return HeadLocalServiceUtil.updateRelationTable(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
@@ -413,22 +413,10 @@ public class HeadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName76;
-	private String[] _methodParameterTypes76;
-	private String _methodName77;
-	private String[] _methodParameterTypes77;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
 	private String _methodName83;
 	private String[] _methodParameterTypes83;
-	private String _methodName84;
-	private String[] _methodParameterTypes84;
-	private String _methodName85;
-	private String[] _methodParameterTypes85;
-	private String _methodName86;
-	private String[] _methodParameterTypes86;
-	private String _methodName87;
-	private String[] _methodParameterTypes87;
 	private String _methodName88;
 	private String[] _methodParameterTypes88;
 	private String _methodName89;
@@ -447,4 +435,16 @@ public class HeadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes95;
 	private String _methodName96;
 	private String[] _methodParameterTypes96;
+	private String _methodName97;
+	private String[] _methodParameterTypes97;
+	private String _methodName98;
+	private String[] _methodParameterTypes98;
+	private String _methodName99;
+	private String[] _methodParameterTypes99;
+	private String _methodName100;
+	private String[] _methodParameterTypes100;
+	private String _methodName101;
+	private String[] _methodParameterTypes101;
+	private String _methodName102;
+	private String[] _methodParameterTypes102;
 }

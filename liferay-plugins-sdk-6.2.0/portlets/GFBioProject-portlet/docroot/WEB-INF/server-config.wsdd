@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<globalConfiguration>
+		<parameter name="adminPassword" value="admin" />
+		<parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl" />
+		<parameter name="sendXsiTypes" value="true" />
+		<parameter name="sendMultiRefs" value="true" />
+		<parameter name="sendXMLDeclaration" value="true" />
+		<parameter name="axis.sendMinimizedElements" value="true" />
+		<requestFlow>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="session" />
+			</handler>
+			<handler type="java:org.apache.axis.handlers.JWSHandler">
+				<parameter name="scope" value="request" />
+				<parameter name="extension" value=".jwr" />
+			</handler>
+		</requestFlow>
+	</globalConfiguration>
+	<handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder" />
+	<handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper" />
+	<handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" />
+	<transport name="http">
+		<requestFlow>
+			<handler type="URLMapper" />
+			<handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler" />
+		</requestFlow>
+	</transport>
+	<transport name="local">
+		<responseFlow>
+			<handler type="LocalResponder" />
+		</responseFlow>
+	</transport>
+	<service name="Plugin_gfbio_BasketService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_BasketSoap" type="java:org.gfbio.model.BasketSoap[]" innerType="cmp-ns:BasketSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:BasketSoap" type="java:org.gfbio.model.BasketSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="getBasketById" qname="operNS:getBasketById" returnQName="getBasketByIdReturn" returnType="rtns:BasketSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getBasketsByIds" qname="operNS:getBasketsByIds" returnQName="getBasketsByIdsReturn" returnType="rtns:ArrayOf_tns2_BasketSoap" returnItemType="tns2:BasketSoap" soapAction="">
+			<parameter xmlns:tns="urn:http.service.gfbio.org" qname="basketIds" type="tns:ArrayOf_xsd_long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getBasketsByUserAndPeriod" qname="operNS:getBasketsByUserAndPeriod" returnQName="getBasketsByUserAndPeriodReturn" returnType="rtns:ArrayOf_tns2_BasketSoap" returnItemType="tns2:BasketSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="period" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getBasketsByUserId" qname="operNS:getBasketsByUserId" returnQName="getBasketsByUserIdReturn" returnType="rtns:ArrayOf_tns2_BasketSoap" returnItemType="tns2:BasketSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getBasketsIdByUserAndPeriod" qname="operNS:getBasketsIdByUserAndPeriod" returnQName="getBasketsIdByUserAndPeriodReturn" returnType="rtns:ArrayOf_xsd_long" returnItemType="tns2:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="period" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getBasketsIdByUserId" qname="operNS:getBasketsIdByUserId" returnQName="getBasketsIdByUserIdReturn" returnType="rtns:ArrayOf_xsd_long" returnItemType="tns2:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="removeBasket" qname="operNS:removeBasket" returnQName="removeBasketReturn" returnType="rtns:BasketSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateBasket" qname="operNS:updateBasket" returnQName="updateBasketReturn" returnType="rtns:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketJSON" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryJSON" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getBasketById getBasketsByIds getBasketsByUserAndPeriod getBasketsByUserId getBasketsIdByUserAndPeriod getBasketsIdByUserId removeBasket updateBasket" />
+		<parameter name="className" value="org.gfbio.service.http.BasketServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.gfbio.org,urn:http.service.gfbio.org" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="BasketServiceSoap" />
+		<parameter name="wsdlServiceElement" value="BasketServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_BasketService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_HeadService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.HeadServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="HeadServiceSoap" />
+		<parameter name="wsdlServiceElement" value="HeadServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_HeadService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_PositionService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.PositionServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="PositionServiceSoap" />
+		<parameter name="wsdlServiceElement" value="PositionServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_PositionService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_ProjectService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_ProjectSoap" type="java:org.gfbio.model.ProjectSoap[]" innerType="cmp-ns:ProjectSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:ProjectSoap" type="java:org.gfbio.model.ProjectSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getProjectList" qname="operNS:getProjectList" returnQName="getProjectListReturn" returnType="rtns:ArrayOf_tns2_ProjectSoap" returnItemType="tns2:ProjectSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateProject" qname="operNS:updateProject" returnQName="updateProjectReturn" returnType="rtns:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="label" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="startDate" type="tns:dateTime"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="endDate" type="tns:dateTime"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getProjectList updateProject" />
+		<parameter name="className" value="org.gfbio.service.http.ProjectServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.gfbio.org,urn:http.service.gfbio.org" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ProjectServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ProjectServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_ProjectService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Project_ResearchObjectService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Project_ResearchObjectServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Project_ResearchObjectServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Project_ResearchObjectServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Project_ResearchObjectService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Project_UserService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Project_UserServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Project_UserServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Project_UserServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Project_UserService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Project_User_PIService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Project_User_PIServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Project_User_PIServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Project_User_PIServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Project_User_PIService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_ResearchObjectService" provider="java:RPC" style="rpc" use="encoded">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateResearchObject" qname="operNS:updateResearchObject" returnQName="updateResearchObjectReturn" returnType="rtns:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectID" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="label" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="metadata" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="formatmetadata" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="updateResearchObject" />
+		<parameter name="className" value="org.gfbio.service.http.ResearchObjectServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ResearchObjectServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ResearchObjectServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_ResearchObjectService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_UserExtensionService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.UserExtensionServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="UserExtensionServiceSoap" />
+		<parameter name="wsdlServiceElement" value="UserExtensionServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_UserExtensionService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+</deployment>

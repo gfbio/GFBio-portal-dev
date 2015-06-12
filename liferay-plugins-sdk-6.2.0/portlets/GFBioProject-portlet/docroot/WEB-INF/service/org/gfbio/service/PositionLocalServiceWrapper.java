@@ -288,6 +288,13 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Position> getPositionsbyColumnName(
+		java.lang.String content, int i)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _positionLocalService.getPositionsbyColumnName(content, i);
+	}
+
+	@Override
 	public java.lang.String[] getNameArray(long headId)
 		throws org.gfbio.NoSuchHeadException {
 		return _positionLocalService.getNameArray(headId);

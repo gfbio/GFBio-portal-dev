@@ -1,5 +1,6 @@
 package org.gfbio.tablebuilder;
 
+import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -23,6 +24,7 @@ import org.gfbio.NoSuchPositionException;
 import org.gfbio.model.Position;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PositionLocalServiceUtil;
+import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -46,6 +48,18 @@ public class TableBuilder extends GenericPortlet {
 	
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
+		
+		JSONObject json;
+		try {
+			System.out.println("||||");
+			json = UserExtensionLocalServiceUtil.getUserAsJsonById(15301);
+			System.out.println(json.toJSONString());
+			
+		} catch (NoSuchUserException | SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		include(viewTemplate, renderRequest, renderResponse);
 	}
