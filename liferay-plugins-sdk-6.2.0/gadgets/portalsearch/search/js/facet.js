@@ -4,20 +4,6 @@ function listenToPubSub() {
 	gadgets.Hub.subscribe("gfbio.search.facetreset", resetFacet);
 }
 
-function createTagBox(){
-	var facetTags = document.getElementById('facetTags');
-	facetTags.tagit({
-		afterTagRemoved: function(evt, ui) {
-			var tagName = facetTags.tagit('tagLabel', ui.tag);
-			console.log(':Facet: afterTagRemoved: ' + tagName);
-			// remove term from facet basket
-			removeFromFacetBasket(tagName);
-			fireFacetData();
-		},
-	});
-	$(facetTags.getElementsByClassName('ui-widget-content')).attr("readOnly","true");
-}
-
 function appendDivAfteriFrame() {
 	 var iFrame = window.parent.document.getElementById(window.frameElement.id)
 	 
@@ -248,6 +234,23 @@ function JSONfindAndRemove(array, property, value) {
 		  if (result[property] == value) {
 			  // Remove from array is not working I don't know why,
 			  // just do it another way round
+			  
+			  // -----------------------------------------
+			  // When the removed tag is a year range, then reset the slider
+			  var tagLabel = result[property];
+			  $("#facetTags").tagit("removeTagByLabel", tagLabel);
+			  var first = tagLabel.substring(0,4);
+			  var last = tagLabel.substring(7,4);
+			  console.log(first);
+			  console.log(last);
+			  if (isNumeric(first) && isNumeric(last) && (tagLabel.indexOf(' - ') ==4)){
+				var minYear = getMinYear(yearFacet);
+				var maxYear = getMaxYear(yearFacet);
+				var slider = document.getElementById("slider-range");
+				slider.slider("option", 'min', minYear*1);
+				slider.slider("option", 'max', maxYear*1);
+			  }
+			  // -----------------------------------------
 		  }    else {
 			  resultArray.push(result);
 		  }
@@ -288,8 +291,9 @@ function JSONfindAndRemoveWithTagRemove(array, property, value) {
 			  console.log('*****************');
 			  console.log(result['facetTerm']);
 			  console.log('*****************');
-			  $("#facetTags").tagit("removeTagByLabel", result['facetTerm']);
-		  }    else {
+			  //var tagLabel = result['facetTerm'];
+		  }    
+		  else {
 			  resultArray.push(result);
 		  }
 		});
@@ -326,6 +330,10 @@ function getMaxYear(facetArray){
 		}
 	}
 	return maxYear;
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function adjust() {
