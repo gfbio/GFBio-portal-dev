@@ -40,13 +40,41 @@ import org.gfbio.service.base.HeadLocalServiceBaseImpl;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.HeadLocalServiceBaseImpl
  * @see org.gfbio.service.HeadLocalServiceUtil
  */
 public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
-	public void deleteCompleteHead(long headId) throws SystemException, PortalException{
+	public Long getHeadId(String name) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByName(name).getHeadID();
+	}
+	
+	public Head getHeadById(long headId) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByHeadId(headId);
+	}
+
+	
+	public Head getHeadByName(String name) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByName(name);
+	}
+
+	
+	public List<Head> getHeads() throws SystemException {
+		System.out.println(headPersistence.findAll().toString());
+		return headPersistence.findAll();
+	}
+	
+	public List<Head> getHeadsByTask(String task) throws SystemException {
+		return headPersistence.findByTask(task);
+	}
+	
+
+	public String getName(long headId) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByHeadId(headId).getName();
+	}
+	
+/*	public void deleteCompleteHead(long headId) throws SystemException, PortalException{
 		System.out.println(headId);
 		
 		
@@ -163,33 +191,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	}
 	
 
-	public Long getHeadID(String name) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByName(name).getHeadID();
-	}
-	
-	public Head getHeadById(long headId) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByHeadID(headId);
-	}
 
-	
-	public Head getHeadbyName(String name) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByName(name);
-	}
-
-	
-	public List<Head> getHeads() throws SystemException {
-		System.out.println(headPersistence.findAll().toString());
-		return headPersistence.findAll();
-	}
-	
-	public List<Head> getHeadsByTask(String task) throws SystemException {
-		return headPersistence.findByTask(task);
-	}
-	
-
-	public String getName(long headId) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByHeadID(headId).getName();
-	}
 	
 
 	public String[] getNameArray(String task) throws SystemException  {
@@ -238,7 +240,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		check = updateHead(0, "gfbio_gfbio_fileformat_license"			, "relation","fileformatid", "licenseid","","","","","","","","","","","","","","","","","","");
 		check = updateHead(0, "gfbio_gfbio_persistentidentifier_rule"	, "relation","persistentidentifierid","ruleid","","","","","","","","","","","","","","","","","","");
 
-/*		try {
+		try {
 			check  = updateHead(0, "gfbio_keytable", "tablelocation","system","name","function","","","","","","","","","","","","","","","","","");
 			long headID = getHeadID("gfbio_keytable");
 			check = PositionLocalServiceUtil.updatePosition(0, headID, String.valueOf(HeadLocalServiceUtil.getHeadID("gfbio_metadata")), "gfbio_metadata", "table", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
@@ -246,7 +248,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		} catch (SystemException | NoSuchHeadException e) {e.printStackTrace();}
 		
 		check  = updateHead(0, "gfbio_relationtable", "system","m_table","n_table","","","","","","","","","","","","","","","","","","");
-	*/
+	
 		return check;
 	}
 	
@@ -364,5 +366,5 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		System.out.println(check);
 		return check;
 	}
-
+*/
 }

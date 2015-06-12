@@ -27,7 +27,7 @@ import java.io.ObjectOutput;
 /**
  * The cache model class for representing UserExtension in entity cache.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see UserExtension
  * @generated
  */

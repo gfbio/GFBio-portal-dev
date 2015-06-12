@@ -22,7 +22,7 @@ import org.gfbio.model.Basket;
 import org.gfbio.service.BasketLocalServiceUtil;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public abstract class BasketActionableDynamicQuery

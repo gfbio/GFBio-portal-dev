@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  */
 public class Project_UserClp extends BaseModelImpl<Project_User>
 	implements Project_User {

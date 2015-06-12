@@ -25,7 +25,7 @@ import java.util.Map;
  * This class is a wrapper for {@link UserExtension}.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see UserExtension
  * @generated
  */

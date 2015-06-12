@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a wrapper for {@link Basket}.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see Basket
  * @generated
  */

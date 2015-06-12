@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link HeadService}.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see HeadService
  * @generated
  */

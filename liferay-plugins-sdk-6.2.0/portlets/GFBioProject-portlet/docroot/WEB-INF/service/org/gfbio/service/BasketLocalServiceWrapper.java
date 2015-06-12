@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link BasketLocalService}.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see BasketLocalService
  * @generated
  */

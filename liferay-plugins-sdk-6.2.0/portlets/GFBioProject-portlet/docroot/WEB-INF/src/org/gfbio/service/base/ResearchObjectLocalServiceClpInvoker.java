@@ -19,7 +19,7 @@ import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public class ResearchObjectLocalServiceClpInvoker {
@@ -100,17 +100,17 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.ResearchObject" };
 
-		_methodName82 = "getBeanIdentifier";
+		_methodName100 = "getBeanIdentifier";
 
-		_methodParameterTypes82 = new String[] {  };
+		_methodParameterTypes100 = new String[] {  };
 
-		_methodName83 = "setBeanIdentifier";
+		_methodName101 = "setBeanIdentifier";
 
-		_methodParameterTypes83 = new String[] { "java.lang.String" };
+		_methodParameterTypes101 = new String[] { "java.lang.String" };
 
-		_methodName88 = "updateResearchObject";
+		_methodName106 = "updateResearchObject";
 
-		_methodParameterTypes88 = new String[] {
+		_methodParameterTypes106 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String"
 			};
@@ -205,20 +205,20 @@ public class ResearchObjectLocalServiceClpInvoker {
 			return ResearchObjectLocalServiceUtil.updateResearchObject((org.gfbio.model.ResearchObject)arguments[0]);
 		}
 
-		if (_methodName82.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+		if (_methodName100.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName83.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+		if (_methodName101.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
 			ResearchObjectLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName88.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
+		if (_methodName106.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -260,10 +260,10 @@ public class ResearchObjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName82;
-	private String[] _methodParameterTypes82;
-	private String _methodName83;
-	private String[] _methodParameterTypes83;
-	private String _methodName88;
-	private String[] _methodParameterTypes88;
+	private String _methodName100;
+	private String[] _methodParameterTypes100;
+	private String _methodName101;
+	private String[] _methodParameterTypes101;
+	private String _methodName106;
+	private String[] _methodParameterTypes106;
 }

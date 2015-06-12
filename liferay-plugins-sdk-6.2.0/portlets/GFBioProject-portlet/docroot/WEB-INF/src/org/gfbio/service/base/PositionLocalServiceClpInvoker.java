@@ -19,7 +19,7 @@ import org.gfbio.service.PositionLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public class PositionLocalServiceClpInvoker {
@@ -100,53 +100,17 @@ public class PositionLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Position" };
 
-		_methodName82 = "getBeanIdentifier";
+		_methodName100 = "getBeanIdentifier";
 
-		_methodParameterTypes82 = new String[] {  };
+		_methodParameterTypes100 = new String[] {  };
 
-		_methodName83 = "setBeanIdentifier";
+		_methodName101 = "setBeanIdentifier";
 
-		_methodParameterTypes83 = new String[] { "java.lang.String" };
+		_methodParameterTypes101 = new String[] { "java.lang.String" };
 
-		_methodName88 = "getColumnContent";
+		_methodName106 = "getPositionById";
 
-		_methodParameterTypes88 = new String[] { "long", "int" };
-
-		_methodName89 = "getPositionsbyColumnName";
-
-		_methodParameterTypes89 = new String[] { "java.lang.String", "int" };
-
-		_methodName90 = "getNameArray";
-
-		_methodParameterTypes90 = new String[] { "long" };
-
-		_methodName91 = "getPositionbyId";
-
-		_methodParameterTypes91 = new String[] { "long" };
-
-		_methodName92 = "getPositionByHeadIdAndName";
-
-		_methodParameterTypes92 = new String[] { "long", "java.lang.String" };
-
-		_methodName93 = "getPositionsbyHeadId";
-
-		_methodParameterTypes93 = new String[] { "long" };
-
-		_methodName94 = "getTable";
-
-		_methodParameterTypes94 = new String[] { "long" };
-
-		_methodName95 = "updatePosition";
-
-		_methodParameterTypes95 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes106 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -238,75 +202,21 @@ public class PositionLocalServiceClpInvoker {
 			return PositionLocalServiceUtil.updatePosition((org.gfbio.model.Position)arguments[0]);
 		}
 
-		if (_methodName82.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+		if (_methodName100.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
 			return PositionLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName83.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+		if (_methodName101.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
 			PositionLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName88.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
-			return PositionLocalServiceUtil.getColumnContent(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue());
-		}
-
-		if (_methodName89.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsbyColumnName((java.lang.String)arguments[0],
-				((Integer)arguments[1]).intValue());
-		}
-
-		if (_methodName90.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
-			return PositionLocalServiceUtil.getNameArray(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName91.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionbyId(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName92.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionByHeadIdAndName(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
-		}
-
-		if (_methodName93.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsbyHeadId(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName94.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
-			return PositionLocalServiceUtil.getTable(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName95.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes95, parameterTypes)) {
-			return PositionLocalServiceUtil.updatePosition(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4], (java.lang.String)arguments[5],
-				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
-				(java.lang.String)arguments[8], (java.lang.String)arguments[9],
-				(java.lang.String)arguments[10],
-				(java.lang.String)arguments[11],
-				(java.lang.String)arguments[12],
-				(java.lang.String)arguments[13],
-				(java.lang.String)arguments[14],
-				(java.lang.String)arguments[15],
-				(java.lang.String)arguments[16],
-				(java.lang.String)arguments[17],
-				(java.lang.String)arguments[18],
-				(java.lang.String)arguments[19],
-				(java.lang.String)arguments[20], (java.lang.String)arguments[21]);
+		if (_methodName106.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
+			return PositionLocalServiceUtil.getPositionById(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -344,24 +254,10 @@ public class PositionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName82;
-	private String[] _methodParameterTypes82;
-	private String _methodName83;
-	private String[] _methodParameterTypes83;
-	private String _methodName88;
-	private String[] _methodParameterTypes88;
-	private String _methodName89;
-	private String[] _methodParameterTypes89;
-	private String _methodName90;
-	private String[] _methodParameterTypes90;
-	private String _methodName91;
-	private String[] _methodParameterTypes91;
-	private String _methodName92;
-	private String[] _methodParameterTypes92;
-	private String _methodName93;
-	private String[] _methodParameterTypes93;
-	private String _methodName94;
-	private String[] _methodParameterTypes94;
-	private String _methodName95;
-	private String[] _methodParameterTypes95;
+	private String _methodName100;
+	private String[] _methodParameterTypes100;
+	private String _methodName101;
+	private String[] _methodParameterTypes101;
+	private String _methodName106;
+	private String[] _methodParameterTypes106;
 }

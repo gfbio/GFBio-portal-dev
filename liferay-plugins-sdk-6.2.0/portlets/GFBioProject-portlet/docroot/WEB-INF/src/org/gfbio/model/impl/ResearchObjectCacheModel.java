@@ -28,7 +28,7 @@ import java.io.ObjectOutput;
 /**
  * The cache model class for representing ResearchObject in entity cache.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see ResearchObject
  * @generated
  */

@@ -25,7 +25,7 @@ import org.gfbio.model.Project_User_PI;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see Project_User_PIPersistenceImpl
  * @see Project_User_PIUtil
  * @generated

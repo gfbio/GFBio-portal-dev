@@ -17,7 +17,7 @@ package org.gfbio.service;
 import com.liferay.portal.service.InvokableService;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public class PositionServiceClp implements PositionService {

@@ -25,7 +25,7 @@ import org.gfbio.model.Project_ResearchObject;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see Project_ResearchObjectPersistenceImpl
  * @see Project_ResearchObjectUtil
  * @generated

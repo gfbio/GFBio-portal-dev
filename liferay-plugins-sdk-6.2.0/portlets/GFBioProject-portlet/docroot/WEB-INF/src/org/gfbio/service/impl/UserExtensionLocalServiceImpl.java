@@ -14,18 +14,14 @@
 
 package org.gfbio.service.impl;
 
-import org.gfbio.NoSuchHeadException;
 import org.gfbio.NoSuchUserExtensionException;
-import org.gfbio.model.Head;
 import org.gfbio.model.UserExtension;
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
 
 import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserServiceUtil;
 
 
 

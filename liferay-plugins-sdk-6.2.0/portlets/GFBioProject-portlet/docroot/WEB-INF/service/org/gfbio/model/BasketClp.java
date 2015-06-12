@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  */
 public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 	public BasketClp() {

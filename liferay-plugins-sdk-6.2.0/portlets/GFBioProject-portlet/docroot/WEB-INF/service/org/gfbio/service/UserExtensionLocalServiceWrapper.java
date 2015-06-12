@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link UserExtensionLocalService}.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see UserExtensionLocalService
  * @generated
  */

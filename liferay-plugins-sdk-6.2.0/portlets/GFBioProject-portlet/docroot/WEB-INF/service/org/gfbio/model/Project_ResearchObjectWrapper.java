@@ -25,7 +25,7 @@ import java.util.Map;
  * This class is a wrapper for {@link Project_ResearchObject}.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see Project_ResearchObject
  * @generated
  */

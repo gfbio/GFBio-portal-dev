@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Serializable;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public class Project_ResearchObjectPK implements Comparable<Project_ResearchObjectPK>,

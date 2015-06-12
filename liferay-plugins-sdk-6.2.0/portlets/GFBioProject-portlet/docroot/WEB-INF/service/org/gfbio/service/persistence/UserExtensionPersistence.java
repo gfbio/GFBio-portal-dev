@@ -25,7 +25,7 @@ import org.gfbio.model.UserExtension;
  * Caching information and settings can be found in <code>portal.properties</code>
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see UserExtensionPersistenceImpl
  * @see UserExtensionUtil
  * @generated

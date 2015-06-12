@@ -30,7 +30,7 @@ import java.util.Date;
 /**
  * The cache model class for representing Project in entity cache.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see Project
  * @generated
  */

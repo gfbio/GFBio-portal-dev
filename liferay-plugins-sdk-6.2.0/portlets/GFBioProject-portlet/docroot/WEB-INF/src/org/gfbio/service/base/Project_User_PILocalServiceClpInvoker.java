@@ -19,7 +19,7 @@ import org.gfbio.service.Project_User_PILocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public class Project_User_PILocalServiceClpInvoker {
@@ -108,13 +108,13 @@ public class Project_User_PILocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Project_User_PI" };
 
-		_methodName82 = "getBeanIdentifier";
+		_methodName100 = "getBeanIdentifier";
 
-		_methodParameterTypes82 = new String[] {  };
+		_methodParameterTypes100 = new String[] {  };
 
-		_methodName83 = "setBeanIdentifier";
+		_methodName101 = "setBeanIdentifier";
 
-		_methodParameterTypes83 = new String[] { "java.lang.String" };
+		_methodParameterTypes101 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -206,13 +206,13 @@ public class Project_User_PILocalServiceClpInvoker {
 			return Project_User_PILocalServiceUtil.updateProject_User_PI((org.gfbio.model.Project_User_PI)arguments[0]);
 		}
 
-		if (_methodName82.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+		if (_methodName100.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
 			return Project_User_PILocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName83.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+		if (_methodName101.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
 			Project_User_PILocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
@@ -253,8 +253,8 @@ public class Project_User_PILocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName82;
-	private String[] _methodParameterTypes82;
-	private String _methodName83;
-	private String[] _methodParameterTypes83;
+	private String _methodName100;
+	private String[] _methodParameterTypes100;
+	private String _methodName101;
+	private String[] _methodParameterTypes101;
 }

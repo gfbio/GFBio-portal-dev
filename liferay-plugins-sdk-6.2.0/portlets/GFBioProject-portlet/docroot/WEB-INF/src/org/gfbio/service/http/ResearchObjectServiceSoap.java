@@ -55,7 +55,7 @@ import java.rmi.RemoteException;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see ResearchObjectServiceHttp
  * @see org.gfbio.model.ResearchObjectSoap
  * @see org.gfbio.service.ResearchObjectServiceUtil

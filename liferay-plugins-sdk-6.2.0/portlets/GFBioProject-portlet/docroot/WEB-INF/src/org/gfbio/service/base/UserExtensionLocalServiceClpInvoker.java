@@ -19,7 +19,7 @@ import org.gfbio.service.UserExtensionLocalServiceUtil;
 import java.util.Arrays;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public class UserExtensionLocalServiceClpInvoker {
@@ -100,25 +100,25 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.UserExtension" };
 
-		_methodName82 = "getBeanIdentifier";
+		_methodName100 = "getBeanIdentifier";
 
-		_methodParameterTypes82 = new String[] {  };
+		_methodParameterTypes100 = new String[] {  };
 
-		_methodName83 = "setBeanIdentifier";
+		_methodName101 = "setBeanIdentifier";
 
-		_methodParameterTypes83 = new String[] { "java.lang.String" };
+		_methodParameterTypes101 = new String[] { "java.lang.String" };
 
-		_methodName88 = "getUserExtensionById";
+		_methodName106 = "getUserExtensionById";
 
-		_methodParameterTypes88 = new String[] { "long" };
+		_methodParameterTypes106 = new String[] { "long" };
 
-		_methodName89 = "getUserById";
+		_methodName107 = "getUserById";
 
-		_methodParameterTypes89 = new String[] { "long" };
+		_methodParameterTypes107 = new String[] { "long" };
 
-		_methodName90 = "getUserAsJsonById";
+		_methodName108 = "getUserAsJsonById";
 
-		_methodParameterTypes90 = new String[] { "long" };
+		_methodParameterTypes108 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -210,30 +210,30 @@ public class UserExtensionLocalServiceClpInvoker {
 			return UserExtensionLocalServiceUtil.updateUserExtension((org.gfbio.model.UserExtension)arguments[0]);
 		}
 
-		if (_methodName82.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+		if (_methodName100.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName83.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+		if (_methodName101.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
 			UserExtensionLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName88.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
+		if (_methodName106.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getUserExtensionById(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName89.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
+		if (_methodName107.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getUserById(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName90.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
+		if (_methodName108.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getUserAsJsonById(((Long)arguments[0]).longValue());
 		}
 
@@ -272,14 +272,14 @@ public class UserExtensionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName82;
-	private String[] _methodParameterTypes82;
-	private String _methodName83;
-	private String[] _methodParameterTypes83;
-	private String _methodName88;
-	private String[] _methodParameterTypes88;
-	private String _methodName89;
-	private String[] _methodParameterTypes89;
-	private String _methodName90;
-	private String[] _methodParameterTypes90;
+	private String _methodName100;
+	private String[] _methodParameterTypes100;
+	private String _methodName101;
+	private String[] _methodParameterTypes101;
+	private String _methodName106;
+	private String[] _methodParameterTypes106;
+	private String _methodName107;
+	private String[] _methodParameterTypes107;
+	private String _methodName108;
+	private String[] _methodParameterTypes108;
 }

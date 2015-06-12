@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  */
 public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObject>
 	implements Project_ResearchObject {

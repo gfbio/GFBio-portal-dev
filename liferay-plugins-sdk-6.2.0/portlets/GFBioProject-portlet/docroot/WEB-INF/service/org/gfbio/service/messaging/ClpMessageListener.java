@@ -19,6 +19,12 @@ import com.liferay.portal.kernel.messaging.Message;
 
 import org.gfbio.service.BasketLocalServiceUtil;
 import org.gfbio.service.BasketServiceUtil;
+import org.gfbio.service.CellLocalServiceUtil;
+import org.gfbio.service.CellServiceUtil;
+import org.gfbio.service.Cell_HeadLocalServiceUtil;
+import org.gfbio.service.Cell_HeadServiceUtil;
+import org.gfbio.service.Cell_PositionLocalServiceUtil;
+import org.gfbio.service.Cell_PositionServiceUtil;
 import org.gfbio.service.ClpSerializer;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.HeadServiceUtil;
@@ -38,7 +44,7 @@ import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.UserExtensionServiceUtil;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  */
 public class ClpMessageListener extends BaseMessageListener {
 	public static String getServletContextName() {
@@ -55,6 +61,15 @@ public class ClpMessageListener extends BaseMessageListener {
 			BasketLocalServiceUtil.clearService();
 
 			BasketServiceUtil.clearService();
+			CellLocalServiceUtil.clearService();
+
+			CellServiceUtil.clearService();
+			Cell_HeadLocalServiceUtil.clearService();
+
+			Cell_HeadServiceUtil.clearService();
+			Cell_PositionLocalServiceUtil.clearService();
+
+			Cell_PositionServiceUtil.clearService();
 			HeadLocalServiceUtil.clearService();
 
 			HeadServiceUtil.clearService();

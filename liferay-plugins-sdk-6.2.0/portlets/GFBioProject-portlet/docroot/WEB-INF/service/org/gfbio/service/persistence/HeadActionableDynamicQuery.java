@@ -22,7 +22,7 @@ import org.gfbio.model.Head;
 import org.gfbio.service.HeadLocalServiceUtil;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public abstract class HeadActionableDynamicQuery

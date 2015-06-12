@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link PositionLocalService}.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see PositionLocalService
  * @generated
  */
@@ -282,69 +282,10 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
-	public java.lang.String getColumnContent(long positionId, int i)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _positionLocalService.getColumnContent(positionId, i);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Position> getPositionsbyColumnName(
-		java.lang.String content, int i)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _positionLocalService.getPositionsbyColumnName(content, i);
-	}
-
-	@Override
-	public java.lang.String[] getNameArray(long headId)
-		throws org.gfbio.NoSuchHeadException {
-		return _positionLocalService.getNameArray(headId);
-	}
-
-	@Override
-	public org.gfbio.model.Position getPositionbyId(long positionId)
+	public org.gfbio.model.Position getPositionById(long positionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException {
-		return _positionLocalService.getPositionbyId(positionId);
-	}
-
-	@Override
-	public org.gfbio.model.Position getPositionByHeadIdAndName(long headId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _positionLocalService.getPositionByHeadIdAndName(headId, name);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Position> getPositionsbyHeadId(
-		long headId) throws com.liferay.portal.kernel.exception.SystemException {
-		return _positionLocalService.getPositionsbyHeadId(headId);
-	}
-
-	@Override
-	public java.lang.String[][] getTable(long headID)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _positionLocalService.getTable(headID);
-	}
-
-	@Override
-	public java.lang.Boolean updatePosition(long positionID, long headID,
-		java.lang.String column01, java.lang.String column02,
-		java.lang.String column03, java.lang.String column04,
-		java.lang.String column05, java.lang.String column06,
-		java.lang.String column07, java.lang.String column08,
-		java.lang.String column09, java.lang.String column10,
-		java.lang.String column11, java.lang.String column12,
-		java.lang.String column13, java.lang.String column14,
-		java.lang.String column15, java.lang.String column16,
-		java.lang.String column17, java.lang.String column18,
-		java.lang.String column19, java.lang.String column20)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _positionLocalService.updatePosition(positionID, headID,
-			column01, column02, column03, column04, column05, column06,
-			column07, column08, column09, column10, column11, column12,
-			column13, column14, column15, column16, column17, column18,
-			column19, column20);
+		return _positionLocalService.getPositionById(positionId);
 	}
 
 	/**
