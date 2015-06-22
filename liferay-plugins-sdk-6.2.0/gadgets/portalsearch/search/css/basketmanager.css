@@ -12,6 +12,17 @@
 	font-size: 14px ;
 }
 
+.ui-accordion-content {
+	padding-left: 14px !important; 
+	padding-right: 14px !important;
+}
+.narrow-header{
+	display: inline-flex !important;
+}
+.wide-header{
+	display: block !important;
+}
+
 #baskets { margin-top: 25px; }
 #baskets .ui-state-active .action-button {
     display: inline;
