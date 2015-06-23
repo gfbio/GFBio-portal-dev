@@ -238,12 +238,12 @@ function JSONfindAndRemove(array, property, value) {
 			  // -----------------------------------------
 			  // When the removed tag is a year range, then reset the slider
 			  var tagLabel = result[property];
-			  $("#facetTags").tagit("removeTagByLabel", tagLabel);
 			  var first = tagLabel.substring(0,4);
 			  var last = tagLabel.substring(7,4);
 			  console.log(first);
 			  console.log(last);
 			  if (isNumeric(first) && isNumeric(last) && (tagLabel.indexOf(' - ') ==4)){
+				$("#facetTags").tagit("removeTagByLabel", tagLabel);
 				var minYear = getMinYear(yearFacet);
 				var maxYear = getMaxYear(yearFacet);
 				var slider = document.getElementById("slider-range");

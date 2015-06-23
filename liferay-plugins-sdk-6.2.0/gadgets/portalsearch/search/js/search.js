@@ -1,4 +1,250 @@
 
+function updateVisualisation() {
+	var jsonData = getSelectedResult();
+	// Add query message in JSON format 
+	var queryJSON = document.getElementById("queryJSON").value;
+	jsonData.queryStr = queryJSON;
+	console.log(':Search: fire selected data: '+JSON.stringify(jsonData));
+	addBasket();
+	if (gadgets.Hub.isConnected()){
+		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
+	}
+}
+
+function addBasket(){
+	var val = document.getElementById("visualBasket").value;
+	if (val == "") {
+		console.log('No basket selected.');
+	}
+	else{
+		var uid = parent.Liferay.ThemeDisplay.getUserId();
+		var basketid = document.getElementById("basketID").value;
+		var query = document.getElementById("queryJSON").value;
+		parent.Liferay.Service(
+		  '/GFBioProject-portlet.basket/update-basket',
+		  {
+			basketID: basketid,
+			userID: uid,
+			name: uid+'_basket',
+			basketJSON: val,
+			queryJSON: query
+		  },
+		  function(obj) {
+			console.log("Post return: "+obj);
+			// if the returned value is basket id
+			if (!isNaN(obj)){
+				document.getElementById("basketID").value = obj;
+			}
+		  }
+		);
+	}
+}
+
+function newQuery(clearBasket) {
+	$('#tableId').DataTable().clear();
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	var filter = [];
+	
+	if (gadgets.Hub.isConnected())gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+	
+	$('#gfbioSearchInput').autocomplete('close');
+	
+	getSearchResult(keyword,filter,"");
+	// clear visualBasket
+	var visualBasket = document.getElementById("visualBasket");
+	if (clearBasket) visualBasket.value = "";
+	updateVisualisation();
+}
+
+
+function filterQuery(filter,yearRange) {
+	// keep only filtered items
+	$('#tableId').DataTable().clear();
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	
+	getSearchResult(keyword,filter,yearRange);
+}
+
+function getSearchResult(keyword,filter,yearRange) {
+	//console.log(':Search: getSearchResult: '+keyword);
+	if (gadgets.Hub.isConnected() && (keyword != "")){
+		gadgets.Hub.publish('gfbio.search.ts', keyword);
+	}
+	writeResultTable();
+	var oTable = $('#tableId').DataTable( {
+					"bDestroy" : true,
+					"bPaginate": true,
+					"bJQueryUI" : true,
+					"bProcessing": true,
+					"bServerSide": true,
+					"sAjaxSource":'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search',
+					"bRetrieve": true,
+					"fnServerData": fnServerObjectToArray(keyword,filter,yearRange), 
+					 
+					"aoColumns" : [ 
+						{
+							"data" : "score",
+							"visible" : false,
+							"sortable" : false
+						},
+						{
+							"data" : "html",
+							"visible" : true,
+							"sortable" : false
+						},
+						{
+							"class" : "color-control",
+							"sortable" : false,
+							"data" : null,
+							"defaultContent" : "<input type='text' class='full-spectrum'/><div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>",
+						}
+					],
+					"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',//'lrtip',
+					//"order" : [ [ 0, "desc" ] ], 
+					"sAutoWidth" : true,
+
+					"fnDrawCallback" : function(oSettings) {
+						// do nothing if table is empty
+						//console.log(':Search: table draw callback');
+						if (!$(".dataTables_empty")[0]) {
+							addColorPicker();
+							setSelectedRowStyle();
+							//adjust();
+						}
+					},
+					"fnRowCallback": function (nRow, aData, iDisplayIndex) {
+							showCartIcon(nRow,aData);
+					},
+						"oLanguage": {
+							"sLengthMenu": "Show _MENU_ entries per page"
+						}
+				} );
+	onRowClick();
+
+}
+	
+function fnServerObjectToArray(keyword,filterArray,yearRange){
+		return function (sSource, aoData, fnCallback){
+
+			var iDisplayStart = getValueByAttribute(aoData,"name","iDisplayStart");
+			var iDisplayLength = getValueByAttribute(aoData,"name","iDisplayLength");
+			// Construct query message in JSON format
+			var queryfield = createQueryFieldArray();
+		var filteredQuery = getFilteredQuery(keyword,filterArray,yearRange);
+			var boostedQuery = applyBoost(filteredQuery);
+			var completeQuery = getCompleteQuery(boostedQuery,iDisplayStart,iDisplayLength,queryfield);
+			// Store query string for sending to VAT
+			document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
+			// Send request via AJAX
+			$.ajax(sSource, {
+				contentType: 'application/json; charset=UTF-8',
+				type: 'POST',
+				data: JSON.stringify(completeQuery),
+				dataType: 'json',
+				success: function(json) {
+					var datasrc = json.hits.hits;
+					// display facet only if the search return more than 1 result
+					if (datasrc.length >0){
+						var facet = json.aggregations;
+						console.log(facet);
+						if (gadgets.Hub.isConnected())gadgets.Hub.publish('gfbio.search.facet', facet);
+					}
+					else {
+						if (gadgets.Hub.isConnected())gadgets.Hub.publish('gfbio.search.facet', '');
+					}
+				var res = parseReturnedJSONfromSearch(datasrc);
+						
+						
+						
+					json.iTotalRecords = json.hits.total;
+					json.iTotalDisplayRecords = json.hits.total;
+					json.data = res;
+					fnCallback(json);
+				}
+			});
+		};
+	};
+	
+function setSelectedRowStyle() {
+	// read basket value
+	var basket = document.getElementById("visualBasket");
+	var basketStr = basket.value;
+	var jsonData = {};
+	if (basketStr!="") {
+		jsonData = JSON.parse(basketStr);
+		// loop through each value and compare if the
+		// similar value exists on the current page
+		 $.each(jsonData.selected, function(index, result) {
+			 var selectedLink = result['metadataLink'];
+			 var tb = $('#tableId').DataTable();
+			 var displayedResult = tb.rows().data();
+
+			 $.each(displayedResult, function(ind2, res2) {
+				var displayedLink = res2.metadataLink;
+				if (selectedLink == displayedLink) {
+						// if yes, toggle class to selected.
+						var row = tb.rows().nodes()[ind2];
+						row.className +=' selected';
+						//console.log('found selected row: '+ind2);
+						row.childNodes[1].childNodes[2].className = 'cart_selected';
+						$(row.childNodes[1].childNodes[1]).removeClass("invisible");
+					}
+			 });
+		 });
+	}
+}
+
+function onRowClick() {
+	$('#tableId tbody').off('click');
+	$('#tableId tbody').on('click', '#cart', function(e) {
+		var cell = $(this).parent();
+		var row = cell.parent();
+		var icol = row.children().index(cell);
+		var irow = row.parent().children().index(row);
+		
+		row.toggleClass('selected');
+		
+		var basket = document.getElementById("visualBasket");
+		var basketStr = basket.value;
+		var jsonData = {};
+		var selected = [];
+		if (row.hasClass('selected')) {
+			$(this).attr('class','cart_selected');
+			$($(".sp-replacer")[irow]).removeClass("invisible");
+			// add to basket
+			if (basketStr=="") {
+				jsonData.selected = selected;
+			}else {
+				jsonData = JSON.parse(basketStr);
+			}
+
+			var nRow = row[0];
+			var tRows = $('#tableId').DataTable().rows();
+			var resultArray = createResultArray(nRow,tRows);
+			jsonData.selected.push(resultArray);
+			basket.value = JSON.stringify(jsonData);
+		}else {
+			$(this).attr('class','cart_unselected');
+			$($(".sp-replacer")[irow]).addClass("invisible");
+			// remove from basket
+			if (basketStr!="") {
+				jsonData = JSON.parse(basketStr);
+				// get row index to find metadatalink as id
+				var nRow = row[0];
+				var tRows = $('#tableId').DataTable().rows();
+				var resultArray = createResultArray(nRow,tRows);
+				jsonData.selected = JSONfindAndRemove(jsonData.selected,'metadataLink',resultArray.metadataLink);
+				basket.value = JSON.stringify(jsonData);
+			}
+		}
+//	    	console.log(':Search: basket: ');
+//    		console.log(JSON.stringify(document.getElementById("visualBasket").value));
+
+		//update visualisation
+		updateVisualisation();
+	} );
+}
+
 function listenToEnterPress() {
 	 $("#gfbioSearchInput").keyup(function(event) {
 			if (event.keyCode == 13) {

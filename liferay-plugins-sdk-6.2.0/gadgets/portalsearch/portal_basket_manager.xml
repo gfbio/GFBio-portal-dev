@@ -144,6 +144,18 @@
 									  }
 									);
 								}
+								else if (evt.indexOf('load')==0){
+									var bID = evt.substring(5);
+									var bJSON = document.getElementById(bID+'.basketJSON').value;
+									var qJSON = document.getElementById(bID+'.queryJSON').value;
+									var jsonData = {};
+									jsonData.basketID = bID;
+									jsonData.basketJSON = bJSON;
+									jsonData.query = qJSON;
+									if (gadgets.Hub.isConnected()){
+										gadgets.Hub.publish('gfbio.search.basketData', jsonData);
+									}
+								}
 								return false;
 							});
 						  }
@@ -158,7 +170,8 @@
 											basket.basketID+"' class='ui-icon 	ui-icon-closethick'>Delete</a></span>"+
 											"<span class='action-button' title='Save change'><a href='save:"+
 											basket.basketID+"' class='ui-icon 	ui-icon-disk'>Save</a></span>"+
-											"<span class='action-button' title='Load basket'><a href='load' class='ui-icon ui-icon-circle-check'>Load</a></span></p>"+"</h3>";
+											"<span class='action-button' title='Load basket'><a href='load:"+
+											basket.basketID+"' class='ui-icon ui-icon-circle-check'>Load</a></span></p>"+"</h3>";
 											
 						basketsHTML += "<div><table>";
 						
