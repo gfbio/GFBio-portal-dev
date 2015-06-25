@@ -144,6 +144,18 @@
 									  }
 									);
 								}
+								else if (evt.indexOf('load')==0){
+									var bID = evt.substring(5);
+									var bJSON = document.getElementById(bID+'.basketJSON').value;
+									var qJSON = document.getElementById(bID+'.queryJSON').value;
+									var jsonData = {};
+									jsonData.basketID = bID;
+									jsonData.basketJSON = bJSON;
+									jsonData.query = qJSON;
+									if (gadgets.Hub.isConnected()){
+										gadgets.Hub.publish('gfbio.search.basketData', jsonData);
+									}
+								}
 								return false;
 							});
 						  }
@@ -154,11 +166,12 @@
 					function writeBasketsHTML(basket){
 						// create header of row containing: name/id/delete/save/load buttons
 						var basketsHTML = "<h3>"+basket.name+" : "+basket.basketID+
-											"<span class='action-button' title='Delete basket'><a href='delete:"+
+											"<p style='float: right;margin-top: 0px;margin-bottom: 0px;'><span class='action-button' title='Delete basket'><a href='delete:"+
 											basket.basketID+"' class='ui-icon 	ui-icon-closethick'>Delete</a></span>"+
 											"<span class='action-button' title='Save change'><a href='save:"+
 											basket.basketID+"' class='ui-icon 	ui-icon-disk'>Save</a></span>"+
-											"<span class='action-button' title='Load basket'><a href='load' class='ui-icon ui-icon-circle-check'>Load</a></span>"+"</h3>";
+											"<span class='action-button' title='Load basket'><a href='load:"+
+											basket.basketID+"' class='ui-icon ui-icon-circle-check'>Load</a></span></p>"+"</h3>";
 											
 						basketsHTML += "<div><table>";
 						
@@ -218,9 +231,9 @@
 								  }, 
 								  function(obj){
 									console.log(obj);
+									getBaskets();
 								   }
 								);
-								getBaskets();
 								$( this ).dialog( "close" );
 							},
 							Cancel: function() {
@@ -233,10 +246,26 @@
 					function adjust() {
 					   //console.log('auto adjust height');
 					   var height = $('#input').height()+$('#baskets').height()+50;
+					   var width = $('#baskets').width();
 					   if (height < 350){ 
 							height = 350;
 					   }
 						gadgets.window.adjustHeight(height);
+					   if (width <250){
+							var elms = document.getElementsByClassName("ui-accordion-header");
+							for (var i=0; i<elms.length; i++){
+								if ($(elms[i]).hasClass('ui-accordion-header-active')){
+									$(elms[i]).removeClass("wide-header");
+									$(elms[i]).addClass("narrow-header");
+								}else{
+									$(elms[i]).removeClass("narrow-header");
+									$(elms[i]).addClass("wide-header");
+								}
+							}
+					   }else{
+							$('.ui-accordion-header').removeClass("narrow-header");
+							$('.ui-accordion-header').addClass("wide-header");
+					   }
 					}
 				</script>
 			</head>

@@ -43,6 +43,7 @@ import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.Project_User_PIPersistence;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
+import org.gfbio.service.persistence.UserExtensionPersistence;
 
 import java.io.Serializable;
 
@@ -747,6 +748,63 @@ public abstract class Project_ResearchObjectLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the user extension local service.
+	 *
+	 * @return the user extension local service
+	 */
+	public org.gfbio.service.UserExtensionLocalService getUserExtensionLocalService() {
+		return userExtensionLocalService;
+	}
+
+	/**
+	 * Sets the user extension local service.
+	 *
+	 * @param userExtensionLocalService the user extension local service
+	 */
+	public void setUserExtensionLocalService(
+		org.gfbio.service.UserExtensionLocalService userExtensionLocalService) {
+		this.userExtensionLocalService = userExtensionLocalService;
+	}
+
+	/**
+	 * Returns the user extension remote service.
+	 *
+	 * @return the user extension remote service
+	 */
+	public org.gfbio.service.UserExtensionService getUserExtensionService() {
+		return userExtensionService;
+	}
+
+	/**
+	 * Sets the user extension remote service.
+	 *
+	 * @param userExtensionService the user extension remote service
+	 */
+	public void setUserExtensionService(
+		org.gfbio.service.UserExtensionService userExtensionService) {
+		this.userExtensionService = userExtensionService;
+	}
+
+	/**
+	 * Returns the user extension persistence.
+	 *
+	 * @return the user extension persistence
+	 */
+	public UserExtensionPersistence getUserExtensionPersistence() {
+		return userExtensionPersistence;
+	}
+
+	/**
+	 * Sets the user extension persistence.
+	 *
+	 * @param userExtensionPersistence the user extension persistence
+	 */
+	public void setUserExtensionPersistence(
+		UserExtensionPersistence userExtensionPersistence) {
+		this.userExtensionPersistence = userExtensionPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -970,6 +1028,12 @@ public abstract class Project_ResearchObjectLocalServiceBaseImpl
 	protected org.gfbio.service.ResearchObjectService researchObjectService;
 	@BeanReference(type = ResearchObjectPersistence.class)
 	protected ResearchObjectPersistence researchObjectPersistence;
+	@BeanReference(type = org.gfbio.service.UserExtensionLocalService.class)
+	protected org.gfbio.service.UserExtensionLocalService userExtensionLocalService;
+	@BeanReference(type = org.gfbio.service.UserExtensionService.class)
+	protected org.gfbio.service.UserExtensionService userExtensionService;
+	@BeanReference(type = UserExtensionPersistence.class)
+	protected UserExtensionPersistence userExtensionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

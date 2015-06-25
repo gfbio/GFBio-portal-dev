@@ -1,4 +1,319 @@
 
+function updateVisualisation() {
+	var jsonData = getSelectedResult();
+	// Add query message in JSON format 
+	var queryJSON = document.getElementById("queryJSON").value;
+	jsonData.queryStr = queryJSON;
+	console.log(':Search: fire selected data: '+JSON.stringify(jsonData));
+	addBasket();
+	if (gadgets.Hub.isConnected()){
+		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
+	}
+}
+
+function addBasket(){
+	var val = document.getElementById("visualBasket").value;
+	if (val == "") {
+		console.log('No basket selected.');
+	}
+	else{
+		var uid = parent.Liferay.ThemeDisplay.getUserId();
+		var basketid = document.getElementById("basketID").value;
+		var query = document.getElementById("queryJSON").value;
+		parent.Liferay.Service(
+		  '/GFBioProject-portlet.basket/update-basket',
+		  {
+			basketID: basketid,
+			userID: uid,
+			name: uid+'_basket',
+			basketJSON: val,
+			queryJSON: query
+		  },
+		  function(obj) {
+			console.log("Post return: "+obj);
+			// if the returned value is basket id
+			if (!isNaN(obj)){
+				document.getElementById("basketID").value = obj;
+			}
+		  }
+		);
+	}
+}
+
+function newQuery(clearBasket) {
+	$('#tableId').DataTable().clear();
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	var filter = [];
+	
+	if (gadgets.Hub.isConnected())gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+	
+	$('#gfbioSearchInput').autocomplete('close');
+	
+	getSearchResult(keyword,filter,"");
+	// clear visualBasket
+	var visualBasket = document.getElementById("visualBasket");
+	if (clearBasket) visualBasket.value = "";
+	updateVisualisation();
+}
+
+
+function filterQuery(filter,yearRange) {
+	// keep only filtered items
+	$('#tableId').DataTable().clear();
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	
+	getSearchResult(keyword,filter,yearRange);
+}
+
+function getSearchResult(keyword,filter,yearRange) {
+	//console.log(':Search: getSearchResult: '+keyword);
+	if (gadgets.Hub.isConnected() && (keyword != "")){
+		gadgets.Hub.publish('gfbio.search.ts', keyword);
+	}
+	writeResultTable();
+	var oTable = $('#tableId').DataTable( {
+					"bDestroy" : true,
+					"bPaginate": true,
+					"bJQueryUI" : true,
+					"bProcessing": true,
+					"bServerSide": true,
+					"sAjaxSource":'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search',
+					"bRetrieve": true,
+					"fnServerData": fnServerObjectToArray(keyword,filter,yearRange), 
+					 
+					"aoColumns" : [ 
+						{
+							"data" : "score",
+							"visible" : false,
+							"sortable" : false
+						},
+						{
+							"data" : "html",
+							"visible" : true,
+							"sortable" : false
+						},
+						{
+							"class" : "color-control",
+							"sortable" : false,
+							"data" : null,
+							"defaultContent" : "<input type='text' class='full-spectrum'/><div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>",
+						}
+					],
+					"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',//'lrtip',
+					//"order" : [ [ 0, "desc" ] ], 
+					"sAutoWidth" : true,
+
+					"fnDrawCallback" : function(oSettings) {
+						// do nothing if table is empty
+						//console.log(':Search: table draw callback');
+						if (!$(".dataTables_empty")[0]) {
+							addColorPicker();
+							setSelectedRowStyle();
+							//adjust();
+						}
+					},
+					"fnRowCallback": function (nRow, aData, iDisplayIndex) {
+							showCartIcon(nRow,aData);
+					},
+						"oLanguage": {
+							"sLengthMenu": "Show _MENU_ entries per page"
+						}
+				} );
+	onRowClick();
+
+}
+	
+function fnServerObjectToArray(keyword,filterArray,yearRange){
+		return function (sSource, aoData, fnCallback){
+
+			var iDisplayStart = getValueByAttribute(aoData,"name","iDisplayStart");
+			var iDisplayLength = getValueByAttribute(aoData,"name","iDisplayLength");
+			// Construct query message in JSON format
+			var queryfield = createQueryFieldArray();
+		var filteredQuery = getFilteredQuery(keyword,filterArray,yearRange);
+			var boostedQuery = applyBoost(filteredQuery);
+			var completeQuery = getCompleteQuery(boostedQuery,iDisplayStart,iDisplayLength,queryfield);
+			// Store query string for sending to VAT
+			document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
+			// Send request via AJAX
+			$.ajax(sSource, {
+				contentType: 'application/json; charset=UTF-8',
+				type: 'POST',
+				data: JSON.stringify(completeQuery),
+				dataType: 'json',
+				success: function(json) {
+					var datasrc = json.hits.hits;
+					// display facet only if the search return more than 1 result
+					if (datasrc.length >0){
+						var facet = json.aggregations;
+						console.log(facet);
+						if (gadgets.Hub.isConnected())gadgets.Hub.publish('gfbio.search.facet', facet);
+					}
+					else {
+						if (gadgets.Hub.isConnected())gadgets.Hub.publish('gfbio.search.facet', '');
+					}
+				var res = parseReturnedJSONfromSearch(datasrc);
+						
+						
+						
+					json.iTotalRecords = json.hits.total;
+					json.iTotalDisplayRecords = json.hits.total;
+					json.data = res;
+					fnCallback(json);
+				}
+			});
+		};
+	};
+	
+function setSelectedRowStyle() {
+	// read basket value
+	var basket = document.getElementById("visualBasket");
+	var basketStr = basket.value;
+	var jsonData = {};
+	if (basketStr!="") {
+		jsonData = JSON.parse(basketStr);
+		// loop through each value and compare if the
+		// similar value exists on the current page
+		 $.each(jsonData.selected, function(index, result) {
+			 var selectedLink = result['metadataLink'];
+			 var tb = $('#tableId').DataTable();
+			 var displayedResult = tb.rows().data();
+
+			 $.each(displayedResult, function(ind2, res2) {
+				var displayedLink = res2.metadataLink;
+				if (selectedLink == displayedLink) {
+						// if yes, toggle class to selected.
+						var row = tb.rows().nodes()[ind2];
+						row.className +=' selected';
+						//console.log('found selected row: '+ind2);
+						row.childNodes[1].childNodes[2].className = 'cart_selected';
+						$(row.childNodes[1].childNodes[1]).removeClass("invisible");
+					}
+			 });
+		 });
+	}
+}
+
+function onRowClick() {
+	$('#tableId tbody').off('click');
+	$('#tableId tbody').on('click', '#cart', function(e) {
+		var cell = $(this).parent();
+		var row = cell.parent();
+		var icol = row.children().index(cell);
+		var irow = row.parent().children().index(row);
+		
+		row.toggleClass('selected');
+		
+		var basket = document.getElementById("visualBasket");
+		var basketStr = basket.value;
+		var jsonData = {};
+		var selected = [];
+		if (row.hasClass('selected')) {
+			$(this).attr('class','cart_selected');
+			$($(".sp-replacer")[irow]).removeClass("invisible");
+			// add to basket
+			if (basketStr=="") {
+				jsonData.selected = selected;
+			}else {
+				jsonData = JSON.parse(basketStr);
+			}
+
+			var nRow = row[0];
+			var tRows = $('#tableId').DataTable().rows();
+			var resultArray = createResultArray(nRow,tRows);
+			jsonData.selected.push(resultArray);
+			basket.value = JSON.stringify(jsonData);
+		}else {
+			$(this).attr('class','cart_unselected');
+			$($(".sp-replacer")[irow]).addClass("invisible");
+			// remove from basket
+			if (basketStr!="") {
+				jsonData = JSON.parse(basketStr);
+				// get row index to find metadatalink as id
+				var nRow = row[0];
+				var tRows = $('#tableId').DataTable().rows();
+				var resultArray = createResultArray(nRow,tRows);
+				jsonData.selected = JSONfindAndRemove(jsonData.selected,'metadataLink',resultArray.metadataLink);
+				basket.value = JSON.stringify(jsonData);
+			}
+		}
+//	    	console.log(':Search: basket: ');
+//    		console.log(JSON.stringify(document.getElementById("visualBasket").value));
+
+		//update visualisation
+		updateVisualisation();
+	} );
+}
+
+function listenToEnterPress() {
+	 $("#gfbioSearchInput").keyup(function(event) {
+			if (event.keyCode == 13) {
+				$('#gfbioSearchInput').autocomplete('close');
+				$("#QueryButton").click();
+			}
+		});
+}
+
+function setAutoComplete() {
+	$('#gfbioSearchInput').autocomplete({
+		minLength: 1,
+		delay: 0,
+		source: function(request, response) {
+		  $.ajax('http://ws.pangaea.de/es/portals/_suggest', {
+			contentType: 'application/json; charset=UTF-8',
+			type: 'POST',
+			data: JSON.stringify({
+			  'suggest': {
+				'text': request.term,
+				'completion': {
+				  'field': 'suggest',
+				  'size': 12,
+				},
+			  },
+			}),
+			dataType: 'json',
+			success: function(data) {
+			  response($.map(data.suggest[0].options, function(item) {
+				return item.text;
+			  }));
+			},
+		  });
+		},
+		open: function() {
+		  var maxWidth = $(document).width() - $(this).offset().left - 16;
+		  $(this).autocomplete('widget').css({
+			'max-width': maxWidth + "px"
+		  });
+		},
+	 });
+}
+
+function getSelectedResult() {
+	var jsonData = {};
+	var selected = [];
+	var basket = document.getElementById("visualBasket");
+	var basketStr = basket.value;
+	if (basketStr=="") {
+		jsonData.selected = selected;
+	}else {
+		jsonData = JSON.parse(basketStr);
+	}
+
+	return jsonData;
+}
+function getQueryVariable(variable) {
+	var query = document.referrer;
+	var vars = query.split('&');
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=');
+		if (decodeURIComponent(pair[0]) == variable) {
+			return decodeURIComponent(pair[1]);
+		}
+	}
+	//console.log('Query variable %s not found', variable);
+	return '';
+}
+
 function createQueryFieldArray() {
 	var jArr = [];
 		jArr.push("_score");
@@ -236,6 +551,109 @@ function componentFromStr(numStr, percent) {
 		Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
 }
 
+function addColorPicker() {
+	var i =0;
+	var color="rgb(204, 204, 204)";
+	$("#tableId tbody tr").each(function() {
+		var row = i%10;
+		i++;
+		switch (row) {
+		case 0:
+			color = "rgb(224, 102, 102)";
+			break;
+		case 1:
+			color = "rgb(246, 178, 107)";
+			break;
+		case 2:
+			color = "rgb(255, 217, 102)";
+			break;
+		case 3:
+			color = "rgb(147, 196, 125)";
+			break;
+		case 4:
+			color = "rgb(118, 165, 175)";
+			break;
+		case 5:
+			color = "rgb(109, 158, 235)";
+			break;
+		case 6:
+			color = "rgb(111, 168, 220)";
+			break;
+		case 7:
+			color = "rgb(142, 124, 195)";
+			break;
+		case 8:
+			color = "rgb(204, 0, 0)";
+			break;
+		case 9:
+			color = "rgb(106, 168, 79)";
+			break;
+		}
+		var elm = $(this).context.childNodes;
+		for (j in elm) {
+			var tdClass = elm[j].className;
+			if (tdClass  !== undefined){
+			if (tdClass.indexOf("color-control") >= 0) {
+//				console.log(color);
+				var input = elm[j].childNodes[0];
+				input.value = color;
+				break;
+			}
+			}
+		}
+	});
+	  $("input.full-spectrum").spectrum(
+			  {
+//			    color: "rgb(244, 204, 204)",
+//			    showInput: true,
+			showInitial: true,
+			showPalette: true,
+			showSelectionPalette: true,
+			maxPaletteSize: 10,
+//			    preferredFormat: "hex",
+			palette: [
+				["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
+				"rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
+				["rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)",
+				"rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)"],
+				["rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
+				"rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)"],
+				["rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
+				"rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)"],
+				["rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+				"rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)"],
+				["rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
+				"rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)"]
+			],
+			change: function(color) {
+				// read basket value
+				var basket = document.getElementById("visualBasket");
+				var basketStr = basket.value;
+				if (basketStr!="") {
+					var jsonData = {};
+					jsonData = JSON.parse(basketStr);
+					// get metadata link of the current row
+					var col = this.parentElement;
+					var row = col.parentElement;
+					var tb = $('#tableId').DataTable();
+					var metadataLink = tb.rows().data()[row.rowIndex-1].metadataLink;
+					// loop compare with the link in basket
+					$.each(jsonData.selected, function(index, result) {
+						var selectedLink = result['metadataLink'];
+						if (selectedLink == metadataLink) {
+							// if found the link, update row detail
+							jsonData.selected[index].color = color.toHexString();
+						}
+					});
+					basket.value = JSON.stringify(jsonData);
+					updateVisualisation();
+				}
+			}
+		}
+	  );
+	$(".sp-replacer").addClass("invisible").attr("title","Select color to display on VAT (for registered user).");
+}
+				
 function rgbToHex(rgb) {
 	var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
 	var result;
@@ -263,3 +681,23 @@ function getStyle(x,styleProp)
 }
 
 function tog(v){return v?'addClass':'removeClass';} 
+
+function showCartIcon(nRow,aData){
+	if (((aData.maxLatitude!=undefined)||(aData.minLatitude!=undefined))&&
+	((aData.maxLongitude!=undefined)||(aData.minLongitude!=undefined))){
+		var elmRow = $(nRow);
+		var elmTD = $(elmRow[0].lastElementChild);
+		var elmDiv = $(elmTD[0].lastElementChild); 
+		elmDiv.removeClass('invisible');
+	}
+}
+				
+function adjust() {
+   //console.log('auto adjust height');
+   var height = $('#search_gadget').height()+20;
+   if (height < 350){ 
+		height = 350;
+   }
+	gadgets.window.adjustHeight(height);
+}
+				

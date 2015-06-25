@@ -44,7 +44,7 @@ function ajaxGetCategory(category) {
 		"type" : "GET",
 		"url": document.getElementById("dcstURL").value.concat("/GFBioDCST"),
 		"data" : {
-			"<portlet:namespace />category" : category
+			"<portlet:namespace />category" : JSON.stringify(category)
 		},
 		success : function(data) {
 		}

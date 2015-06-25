@@ -77,6 +77,16 @@
 		<finder name="Label" 			return-type="Collection">			<finder-column name="label" />				</finder>
 		<finder name="ResearchObjectID"	return-type="ResearchObject">	<finder-column name="researchObjectID" />		</finder>
 	</entity>
+	
+	<!-- Research Object  -->
+	<entity name="UserExtension" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="userID" 	type="long" 					primary="true" />
+		<order 	by="asc">															<order-column name="userID" />		</order>
+		<finder name="UserID" 	return-type="UserExtension">						<finder-column name="userID" />		</finder>
+	</entity>
+	
+	
+	
 
 
 
