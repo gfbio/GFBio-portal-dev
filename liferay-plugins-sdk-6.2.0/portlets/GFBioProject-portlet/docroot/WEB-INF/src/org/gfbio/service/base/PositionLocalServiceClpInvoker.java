@@ -100,91 +100,103 @@ public class PositionLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Position" };
 
-		_methodName90 = "getBeanIdentifier";
+		_methodName92 = "getBeanIdentifier";
 
-		_methodParameterTypes90 = new String[] {  };
+		_methodParameterTypes92 = new String[] {  };
 
-		_methodName91 = "setBeanIdentifier";
+		_methodName93 = "setBeanIdentifier";
 
-		_methodParameterTypes91 = new String[] { "java.lang.String" };
+		_methodParameterTypes93 = new String[] { "java.lang.String" };
 
-		_methodName96 = "deletePositionById";
-
-		_methodParameterTypes96 = new String[] { "long" };
-
-		_methodName97 = "deletePositionsByColumnId";
-
-		_methodParameterTypes97 = new String[] { "long" };
-
-		_methodName98 = "deleteCompletePositionsByHeadId";
+		_methodName98 = "deletePositionById";
 
 		_methodParameterTypes98 = new String[] { "long" };
 
-		_methodName99 = "deletePositionsByRowId";
+		_methodName99 = "deletePositionsByColumnId";
 
 		_methodParameterTypes99 = new String[] { "long" };
 
-		_methodName100 = "getCountOfColumns";
+		_methodName100 = "deleteCompletePositionsByHeadId";
 
 		_methodParameterTypes100 = new String[] { "long" };
 
-		_methodName101 = "getCountOfRows";
+		_methodName101 = "deletePositionsByRowId";
 
 		_methodParameterTypes101 = new String[] { "long" };
 
-		_methodName102 = "getPositionById";
+		_methodName102 = "getContentByTableIds";
 
-		_methodParameterTypes102 = new String[] { "long" };
+		_methodParameterTypes102 = new String[] { "long", "long" };
 
-		_methodName103 = "getPositionsByColumnId";
+		_methodName103 = "getCountOfColumns";
 
 		_methodParameterTypes103 = new String[] { "long" };
 
-		_methodName104 = "getPositionsByHeadId";
+		_methodName104 = "getCountOfRows";
 
 		_methodParameterTypes104 = new String[] { "long" };
 
-		_methodName105 = "getPositionsByRowId";
+		_methodName105 = "getPositionById";
 
 		_methodParameterTypes105 = new String[] { "long" };
 
-		_methodName106 = "getPositionInformationAsJSONByRowId";
+		_methodName106 = "getPositionsByColumnId";
 
 		_methodParameterTypes106 = new String[] { "long" };
 
-		_methodName107 = "getPositionsAsJSONByRowId";
+		_methodName107 = "getPositionsByHeadId";
 
 		_methodParameterTypes107 = new String[] { "long" };
 
-		_methodName108 = "getColumnIdById";
+		_methodName108 = "getPositionIdByTableIds";
 
-		_methodParameterTypes108 = new String[] { "long" };
+		_methodParameterTypes108 = new String[] { "long", "long" };
 
-		_methodName109 = "getPositionsByContent";
+		_methodName109 = "getPositionsByRowId";
 
-		_methodParameterTypes109 = new String[] { "java.lang.String" };
+		_methodParameterTypes109 = new String[] { "long" };
 
-		_methodName110 = "getPositionsByContentOfColumn";
+		_methodName110 = "getPositionByTableIds";
 
-		_methodParameterTypes110 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes110 = new String[] { "long", "long" };
 
-		_methodName111 = "getRowIdById";
+		_methodName111 = "getPositionInformationAsJSONByRowId";
 
 		_methodParameterTypes111 = new String[] { "long" };
 
-		_methodName112 = "getContentByTableIds";
+		_methodName112 = "getPositionsAsJSONByRowId";
 
-		_methodParameterTypes112 = new String[] { "long", "int" };
+		_methodParameterTypes112 = new String[] { "long" };
 
-		_methodName113 = "updatePosition";
+		_methodName113 = "getRowIds";
 
-		_methodParameterTypes113 = new String[] {
+		_methodParameterTypes113 = new String[] { "long" };
+
+		_methodName114 = "getColumnIdById";
+
+		_methodParameterTypes114 = new String[] { "long" };
+
+		_methodName115 = "getPositionsByContent";
+
+		_methodParameterTypes115 = new String[] { "java.lang.String" };
+
+		_methodName116 = "getPositionsByContentOfColumn";
+
+		_methodParameterTypes116 = new String[] { "java.lang.String", "long" };
+
+		_methodName117 = "getRowIdById";
+
+		_methodParameterTypes117 = new String[] { "long" };
+
+		_methodName118 = "updatePosition";
+
+		_methodParameterTypes118 = new String[] {
 				"long", "long", "long", "long", "java.lang.String"
 			};
 
-		_methodName114 = "updatePosition";
+		_methodName119 = "updatePosition";
 
-		_methodParameterTypes114 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes119 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -276,123 +288,140 @@ public class PositionLocalServiceClpInvoker {
 			return PositionLocalServiceUtil.updatePosition((org.gfbio.model.Position)arguments[0]);
 		}
 
-		if (_methodName90.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
+		if (_methodName92.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
 			return PositionLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName91.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
+		if (_methodName93.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
 			PositionLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName96.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
-			PositionLocalServiceUtil.deletePositionById(((Long)arguments[0]).longValue());
-
-			return null;
-		}
-
-		if (_methodName97.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
-			PositionLocalServiceUtil.deletePositionsByColumnId(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
 		if (_methodName98.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
-			PositionLocalServiceUtil.deleteCompletePositionsByHeadId(((Long)arguments[0]).longValue());
+			PositionLocalServiceUtil.deletePositionById(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
 		if (_methodName99.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
-			PositionLocalServiceUtil.deletePositionsByRowId(((Long)arguments[0]).longValue());
+			PositionLocalServiceUtil.deletePositionsByColumnId(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
 		if (_methodName100.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
-			return PositionLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
+			PositionLocalServiceUtil.deleteCompletePositionsByHeadId(((Long)arguments[0]).longValue());
+
+			return null;
 		}
 
 		if (_methodName101.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
-			return PositionLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
+			PositionLocalServiceUtil.deletePositionsByRowId(((Long)arguments[0]).longValue());
+
+			return null;
 		}
 
 		if (_methodName102.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionById(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getContentByTableIds(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName103.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsByColumnId(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName104.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsByHeadId(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName105.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsByRowId(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getPositionById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName106.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionInformationAsJSONByRowId(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getPositionsByColumnId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName107.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsAsJSONByRowId(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getPositionsByHeadId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName108.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
-			return PositionLocalServiceUtil.getColumnIdById(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getPositionIdByTableIds(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName109.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsByContent((java.lang.String)arguments[0]);
+			return PositionLocalServiceUtil.getPositionsByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName110.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
-			return PositionLocalServiceUtil.getPositionsByContentOfColumn((java.lang.String)arguments[0],
+			return PositionLocalServiceUtil.getPositionByTableIds(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName111.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
-			return PositionLocalServiceUtil.getRowIdById(((Long)arguments[0]).longValue());
+			return PositionLocalServiceUtil.getPositionInformationAsJSONByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName112.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
-			return PositionLocalServiceUtil.getContentByTableIds(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue());
+			return PositionLocalServiceUtil.getPositionsAsJSONByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName113.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+			return PositionLocalServiceUtil.getRowIds(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
+			return PositionLocalServiceUtil.getColumnIdById(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
+			return PositionLocalServiceUtil.getPositionsByContent((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+			return PositionLocalServiceUtil.getPositionsByContentOfColumn((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+			return PositionLocalServiceUtil.getRowIdById(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return PositionLocalServiceUtil.updatePosition(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
 		}
 
-		if (_methodName114.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return PositionLocalServiceUtil.updatePosition((org.json.simple.JSONObject)arguments[0]);
 		}
 
@@ -431,14 +460,10 @@ public class PositionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName90;
-	private String[] _methodParameterTypes90;
-	private String _methodName91;
-	private String[] _methodParameterTypes91;
-	private String _methodName96;
-	private String[] _methodParameterTypes96;
-	private String _methodName97;
-	private String[] _methodParameterTypes97;
+	private String _methodName92;
+	private String[] _methodParameterTypes92;
+	private String _methodName93;
+	private String[] _methodParameterTypes93;
 	private String _methodName98;
 	private String[] _methodParameterTypes98;
 	private String _methodName99;
@@ -473,4 +498,14 @@ public class PositionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes113;
 	private String _methodName114;
 	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
+	private String _methodName116;
+	private String[] _methodParameterTypes116;
+	private String _methodName117;
+	private String[] _methodParameterTypes117;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
+	private String _methodName119;
+	private String[] _methodParameterTypes119;
 }

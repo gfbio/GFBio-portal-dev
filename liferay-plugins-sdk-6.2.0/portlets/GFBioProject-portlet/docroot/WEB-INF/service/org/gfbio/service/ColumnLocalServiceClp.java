@@ -124,13 +124,17 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "getHeadIdById";
+		_methodName23 = "getCountofColumns";
 
 		_methodParameterTypes23 = new String[] { "long" };
 
-		_methodName24 = "updateColumn";
+		_methodName24 = "getHeadIdById";
 
-		_methodParameterTypes24 = new String[] {
+		_methodParameterTypes24 = new String[] { "long" };
+
+		_methodName25 = "updateColumn";
+
+		_methodParameterTypes25 = new String[] {
 				"long", "long", "java.lang.String"
 			};
 	}
@@ -767,14 +771,42 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	}
 
 	@Override
+	public int getCountofColumns(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { headId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public long getHeadIdById(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -805,8 +837,8 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						columnId,
 						
@@ -879,4 +911,6 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

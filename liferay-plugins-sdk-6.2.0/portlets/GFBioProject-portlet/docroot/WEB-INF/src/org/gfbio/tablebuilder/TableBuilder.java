@@ -17,7 +17,9 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ValidatorException;
 
+import org.gfbio.model.Column;
 import org.gfbio.model.Head;
+import org.gfbio.model.Position;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PositionLocalServiceUtil;
 import org.json.simple.JSONObject;
@@ -50,25 +52,37 @@ public class TableBuilder extends GenericPortlet {
 		System.out.println("---|1|---");
 		List<Head> headList= null;
 		headList = HeadLocalServiceUtil.getHeadBetweenHeadId(0, 3);
-		System.out.println("---|2|---");
-		System.out.println("---|2|---");
-		System.out.println("---|2|---");
-		System.out.println("---|2|---");
-		
-		System.out.println("---|3|---");
-		System.out.println("---|3|---");
-		System.out.println("---|3|---");
-		System.out.println("---|3|---");
 		if (headList !=null)
 			for (int i = 0; i < headList.size();i++)
 				System.out.println(headList.get(i).getTable_name());
 		else
 			System.out.println("");
-		System.out.println("---|4|---");
-		System.out.println("---|4|---");
-		System.out.println("---|4|---");
-		System.out.println("---|4|---");
-		System.out.println("---|4|---");
+		System.out.println("---|2|---");
+		System.out.println("---|2|---");
+		System.out.println("---|2|---");
+		System.out.println("---|2|---");
+		Head head = null;
+		Column column = null;
+		Position position = null;
+		List list = HeadLocalServiceUtil.getEntitiesByHeadId(1);
+		
+		if (list !=null){
+			System.out.println(list.size());
+			for (int i = 0; i < list.size();i++){
+				Object[] arrayobject = (Object[]) list.get(i);
+		       	head=(Head)arrayobject[0];
+		       	column=(Column)arrayobject[1];
+		       position =(Position)arrayobject[2];
+		       	     	System.out.println(head.getTable_name() + " | " + column.getColumn_name() + " | " + position.getContent());
+			}
+		}
+		else
+			System.out.println("");
+		System.out.println("---|3|---");
+		System.out.println("---|3|---");
+		System.out.println("---|3|---");
+		System.out.println("---|3|---");
+
 		
 		include(viewTemplate, renderRequest, renderResponse);
 	}

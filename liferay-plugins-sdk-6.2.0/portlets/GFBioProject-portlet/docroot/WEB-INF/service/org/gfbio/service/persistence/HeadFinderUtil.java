@@ -26,6 +26,10 @@ public class HeadFinderUtil {
 		return getFinder().getHeadBetweenHeadIds(start, end);
 	}
 
+	public static java.util.List getEntitiesByHeadId(long headId) {
+		return getFinder().getEntitiesByHeadId(headId);
+	}
+
 	public static HeadFinder getFinder() {
 		if (_finder == null) {
 			_finder = (HeadFinder)PortletBeanLocatorUtil.locate(org.gfbio.service.ClpSerializer.getServletContextName(),

@@ -288,14 +288,19 @@ public class PositionLocalServiceUtil {
 		getService().deletePositionsByRowId(rowId);
 	}
 
+	public static java.lang.String getContentByTableIds(long rowId,
+		long columnId) {
+		return getService().getContentByTableIds(rowId, columnId);
+	}
+
 	public static int getCountOfColumns(long rowId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCountOfColumns(rowId);
 	}
 
-	public static int getCountOfRows(long columnId)
+	public static int getCountOfRows(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCountOfRows(columnId);
+		return getService().getCountOfRows(headId);
 	}
 
 	public static org.gfbio.model.Position getPositionById(long positionId)
@@ -315,9 +320,22 @@ public class PositionLocalServiceUtil {
 		return getService().getPositionsByHeadId(headId);
 	}
 
+	public static long getPositionIdByTableIds(long rowId, long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException {
+		return getService().getPositionIdByTableIds(rowId, columnId);
+	}
+
 	public static java.util.List<org.gfbio.model.Position> getPositionsByRowId(
 		long rowId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getPositionsByRowId(rowId);
+	}
+
+	public static org.gfbio.model.Position getPositionByTableIds(long rowId,
+		long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException {
+		return getService().getPositionByTableIds(rowId, columnId);
 	}
 
 	public static org.json.simple.JSONObject getPositionInformationAsJSONByRowId(
@@ -328,6 +346,10 @@ public class PositionLocalServiceUtil {
 	public static org.json.simple.JSONObject getPositionsAsJSONByRowId(
 		long rowId) {
 		return getService().getPositionsAsJSONByRowId(rowId);
+	}
+
+	public static java.util.List getRowIds(long headId) {
+		return getService().getRowIds(headId);
 	}
 
 	public static long getColumnIdById(long positionId)
@@ -352,10 +374,6 @@ public class PositionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRowIdById(positionId);
-	}
-
-	public static java.lang.String getContentByTableIds(long columnId, int rowId) {
-		return getService().getContentByTableIds(columnId, rowId);
 	}
 
 	public static java.lang.Boolean updatePosition(long positionId,

@@ -282,11 +282,8 @@ public class HeadLocalServiceUtil {
 		return getService().getCountOfRows(headId);
 	}
 
-	public static java.lang.Long getHeadIdByTableName(
-		java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return getService().getHeadIdByTableName(tableName);
+	public static java.util.List getEntitiesByHeadId(long headId) {
+		return getService().getEntitiesByHeadId(headId);
 	}
 
 	public static java.util.List<org.gfbio.model.Head> getHeadBetweenHeadId(
@@ -307,6 +304,13 @@ public class HeadLocalServiceUtil {
 		return getService().getHeadByTableName(tableName);
 	}
 
+	public static java.lang.Long getHeadIdByTableName(
+		java.lang.String tableName)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return getService().getHeadIdByTableName(tableName);
+	}
+
 	public static java.util.List<org.gfbio.model.Head> getHeads()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getHeads();
@@ -316,6 +320,10 @@ public class HeadLocalServiceUtil {
 		java.lang.String tableType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getHeadsByTableType(tableType);
+	}
+
+	public static long[][] getTableAsArray(long headId) {
+		return getService().getTableAsArray(headId);
 	}
 
 	public static java.lang.String getTableName(long headId)

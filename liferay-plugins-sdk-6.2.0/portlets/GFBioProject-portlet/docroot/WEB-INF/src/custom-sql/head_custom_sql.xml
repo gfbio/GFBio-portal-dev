@@ -10,9 +10,20 @@
 		  	gfbio_head.headid between ? AND ?
 		]]>
     </sql>
-
-
-
+    <sql id="org.gfbio.service.persistence.HeadFinderImpl.getEntitiesByHeadId">
+	    <![CDATA[
+			SELECT 
+			  * 
+			FROM 
+			  public.gfbio_column,
+			  public.gfbio_head,
+			  public.gfbio_position 
+			WHERE 
+			  gfbio_head.headid = ? AND
+			  gfbio_head.headid = gfbio_column.headid AND
+			  gfbio_column.columnid = gfbio_position.columnid 
+		]]>
+    </sql>
 </custom-sql>
 
 

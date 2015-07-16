@@ -20,4 +20,6 @@ package org.gfbio.service.persistence;
 public interface HeadFinder {
 	public java.util.List<org.gfbio.model.Head> getHeadBetweenHeadIds(
 		int start, int end);
+
+	public java.util.List getEntitiesByHeadId(long headId);
 }

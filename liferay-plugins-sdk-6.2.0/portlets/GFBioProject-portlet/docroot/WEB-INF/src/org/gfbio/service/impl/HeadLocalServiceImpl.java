@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
+import org.gfbio.model.Column;
 import org.gfbio.model.Head;
 import org.gfbio.model.Position;
 import org.gfbio.service.ColumnLocalServiceUtil;
@@ -46,10 +47,9 @@ import org.json.simple.JSONObject;
  */
 public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
-	
+
+	//ColumnLocalServiceUtil.deleteColumnsByHeadId ( headId);
 	public void deleteHeadByHeadId(long headId) throws SystemException, PortalException{
-	
-		//ColumnLocalServiceUtil.deleteColumnsByHeadId ( headId);
 		HeadLocalServiceUtil.deleteHead(headId);
 	}
 	
@@ -82,29 +82,35 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return PositionLocalServiceUtil.getPositionsByHeadId(headId).size();
 	}
 	
-
-	//get ID of a head by tableName
-	public Long getHeadIdByTableName(String tableName) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByTableName(tableName).getHeadID();
+	
+	//get the Entities that have a relation to a specific headId
+	public List getEntitiesByHeadId(long headId) {
+		return HeadFinderUtil.getEntitiesByHeadId(headId);
 	}
 	
-	
+
 	public List<Head> getHeadBetweenHeadId(int start, int end) {
 		return HeadFinderUtil.getHeadBetweenHeadIds(start, end);
 	}
-		
 	
+		
 	//get head by headID
 	public Head getHeadById(long headId) throws NoSuchHeadException, SystemException {
 		return headPersistence.findByHeadId(headId);
 	}
-
+	
 	
 	//get head by tableName of the table
 	public Head getHeadByTableName(String tableName) throws NoSuchHeadException, SystemException {
 		return headPersistence.findByTableName(tableName);
 	}
 
+	
+	//get ID of a head by tableName
+	public Long getHeadIdByTableName(String tableName) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByTableName(tableName).getHeadID();
+	}
+	
 	
 	//get all heads
 	public List<Head> getHeads() throws SystemException {
@@ -139,6 +145,52 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		}
 		return json;
 	}*/
+	
+	
+	//get Entities of a specific head in a TableArray
+	public long[][] getTableAsArray(long headId){
+		
+		long[][] table = null;
+		Head head = null;
+		Column column = null;
+		Position position = null;
+		List list = HeadLocalServiceUtil.getEntitiesByHeadId(headId);
+		
+		if (list !=null){
+
+			try {
+				table = new long[PositionLocalServiceUtil.getCountOfRows(headId)+1][ColumnLocalServiceUtil.getCountofColumns(headId)+1];
+			} catch (SystemException e) {e.printStackTrace();}
+			
+			//head of table
+			Object[] arrayobject = (Object[]) list.get(0);
+			head=(Head)arrayobject[0];
+			table[0][0]= head.getHeadID();
+			for (int j=1;j < table[0].length;j++){
+				column=(Column)arrayobject[j-1];
+				table[0][j]=column.getColumnID();
+			}
+			
+			//body of table
+			for (int i = 1; i < table.length;i++){
+				
+				position =(Position)arrayobject[2];
+				table[i][0]= position.getRowID();
+				for (int j =1;j< table[0].length;j++){
+					table[i][j] = PositionLocalServiceUtil.getPositionIdByTableIds(i, j);
+				}
+			}
+				
+				
+		       	
+		       	
+		       position =(Position)arrayobject[2];
+		       	     	System.out.println(head.getTable_name() + " | " + column.getColumn_name() + " | " + position.getContent());
+			}
+		return table;
+		}
+		
+	
 	
 
 	//get tableName of a specific head

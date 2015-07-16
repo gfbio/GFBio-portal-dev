@@ -24,130 +24,126 @@ import java.util.Arrays;
  */
 public class BasketServiceClpInvoker {
 	public BasketServiceClpInvoker() {
-		_methodName74 = "getBeanIdentifier";
+		_methodName76 = "getBeanIdentifier";
 
-		_methodParameterTypes74 = new String[] {  };
+		_methodParameterTypes76 = new String[] {  };
 
-		_methodName75 = "setBeanIdentifier";
+		_methodName77 = "setBeanIdentifier";
 
-		_methodParameterTypes75 = new String[] { "java.lang.String" };
+		_methodParameterTypes77 = new String[] { "java.lang.String" };
 
-		_methodName80 = "getBasketById";
+		_methodName82 = "getBasketById";
 
-		_methodParameterTypes80 = new String[] { "long" };
+		_methodParameterTypes82 = new String[] { "long" };
 
-		_methodName81 = "getBasketsByIds";
+		_methodName83 = "getBasketsByIds";
 
-		_methodParameterTypes81 = new String[] { "long[][]" };
+		_methodParameterTypes83 = new String[] { "long[][]" };
 
-		_methodName82 = "getBasketsByUserAndPeriod";
-
-		_methodParameterTypes82 = new String[] { "long", "int" };
-
-		_methodName83 = "getBasketsByUserId";
-
-		_methodParameterTypes83 = new String[] { "long" };
-
-		_methodName84 = "getBasketsIdByUserAndPeriod";
+		_methodName84 = "getBasketsByUserAndPeriod";
 
 		_methodParameterTypes84 = new String[] { "long", "int" };
 
-		_methodName85 = "getBasketsIdByUserId";
+		_methodName85 = "getBasketsByUserId";
 
 		_methodParameterTypes85 = new String[] { "long" };
 
-		_methodName86 = "updateBasket";
+		_methodName86 = "getBasketsIdByUserAndPeriod";
 
-		_methodParameterTypes86 = new String[] {
+		_methodParameterTypes86 = new String[] { "long", "int" };
+
+		_methodName87 = "getBasketsIdByUserId";
+
+		_methodParameterTypes87 = new String[] { "long" };
+
+		_methodName88 = "updateBasket";
+
+		_methodParameterTypes88 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName87 = "removeBasket";
+		_methodName89 = "removeBasket";
 
-		_methodParameterTypes87 = new String[] { "long", "long" };
+		_methodParameterTypes89 = new String[] { "long", "long" };
 
-		_methodName88 = "getBasketUsersIds";
+		_methodName90 = "getBasketUsersIds";
 
-		_methodParameterTypes88 = new String[] { "long" };
+		_methodParameterTypes90 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName74.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
+		if (_methodName76.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
 			return BasketServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName75.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
+		if (_methodName77.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
 			BasketServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName80.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
-			return BasketServiceUtil.getBasketById(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName81.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
-			return BasketServiceUtil.getBasketsByIds((long[])arguments[0]);
-		}
-
 		if (_methodName82.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
-			return BasketServiceUtil.getBasketsByUserAndPeriod(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue());
+			return BasketServiceUtil.getBasketById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName83.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
-			return BasketServiceUtil.getBasketsByUserId(((Long)arguments[0]).longValue());
+			return BasketServiceUtil.getBasketsByIds((long[])arguments[0]);
 		}
 
 		if (_methodName84.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
-			return BasketServiceUtil.getBasketsIdByUserAndPeriod(((Long)arguments[0]).longValue(),
+			return BasketServiceUtil.getBasketsByUserAndPeriod(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName85.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
-			return BasketServiceUtil.getBasketsIdByUserId(((Long)arguments[0]).longValue());
+			return BasketServiceUtil.getBasketsByUserId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName86.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
+			return BasketServiceUtil.getBasketsIdByUserAndPeriod(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName87.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
+			return BasketServiceUtil.getBasketsIdByUserId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName88.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
 			return BasketServiceUtil.updateBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(java.lang.String)arguments[4]);
 		}
 
-		if (_methodName87.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
+		if (_methodName89.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
 			return BasketServiceUtil.removeBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName88.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
+		if (_methodName90.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
 			return BasketServiceUtil.getBasketUsersIds(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName74;
-	private String[] _methodParameterTypes74;
-	private String _methodName75;
-	private String[] _methodParameterTypes75;
-	private String _methodName80;
-	private String[] _methodParameterTypes80;
-	private String _methodName81;
-	private String[] _methodParameterTypes81;
+	private String _methodName76;
+	private String[] _methodParameterTypes76;
+	private String _methodName77;
+	private String[] _methodParameterTypes77;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
 	private String _methodName83;
@@ -162,4 +158,8 @@ public class BasketServiceClpInvoker {
 	private String[] _methodParameterTypes87;
 	private String _methodName88;
 	private String[] _methodParameterTypes88;
+	private String _methodName89;
+	private String[] _methodParameterTypes89;
+	private String _methodName90;
+	private String[] _methodParameterTypes90;
 }

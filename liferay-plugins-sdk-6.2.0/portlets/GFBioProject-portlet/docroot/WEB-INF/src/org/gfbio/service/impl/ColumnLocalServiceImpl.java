@@ -81,6 +81,12 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	}
 	
 	
+	// get the count of columns of a specific head
+	public int getCountofColumns (long headId) throws SystemException{
+		return ColumnLocalServiceUtil.getColumnsByHeadId(headId).size();
+	}
+	
+	
 	//get a head id to the column id
 	public long getHeadIdById(long columnId) throws PortalException, SystemException {
 		return ColumnLocalServiceUtil.getColumn(columnId).getHeadID();

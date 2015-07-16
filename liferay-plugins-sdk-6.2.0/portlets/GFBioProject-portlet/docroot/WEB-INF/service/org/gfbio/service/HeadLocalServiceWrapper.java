@@ -295,10 +295,8 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public java.lang.Long getHeadIdByTableName(java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getHeadIdByTableName(tableName);
+	public java.util.List getEntitiesByHeadId(long headId) {
+		return _headLocalService.getEntitiesByHeadId(headId);
 	}
 
 	@Override
@@ -322,6 +320,13 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public java.lang.Long getHeadIdByTableName(java.lang.String tableName)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return _headLocalService.getHeadIdByTableName(tableName);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Head> getHeads()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _headLocalService.getHeads();
@@ -332,6 +337,11 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 		java.lang.String tableType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _headLocalService.getHeadsByTableType(tableType);
+	}
+
+	@Override
+	public long[][] getTableAsArray(long headId) {
+		return _headLocalService.getTableAsArray(headId);
 	}
 
 	@Override

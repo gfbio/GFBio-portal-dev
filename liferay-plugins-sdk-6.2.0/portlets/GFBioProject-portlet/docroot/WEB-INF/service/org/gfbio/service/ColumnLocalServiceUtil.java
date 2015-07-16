@@ -287,6 +287,11 @@ public class ColumnLocalServiceUtil {
 		return getService().getColumnsByHeadId(headId);
 	}
 
+	public static int getCountofColumns(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCountofColumns(headId);
+	}
+
 	public static long getHeadIdById(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -99,7 +99,7 @@
 
 		<order by="asc">				<order-column name="table_name" />	</order>
 
-		<finder name="HeadId" 		return-type="head">					<finder-column name="headID" />				</finder>
+		<finder name="HeadId" 		return-type="head">					<finder-column name="headID" />					</finder>
 		<finder name="TableName" 	return-type="head">					<finder-column name="table_name" />				</finder>
 		<finder name="TableType"	return-type="Collection">			<finder-column name="table_type" />				</finder>
 	</entity>
@@ -109,12 +109,12 @@
 	<entity name="Column" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="columnID"			type="long" 		primary="true" />
 		<column name="headID" 			type="long" />
-		<column name="column_name" 			type="String" />
+		<column name="column_name" 		type="String" />
 
 		<order by="asc">	<order-column name="columnID" />	</order>
 
 		<finder name="ColumnId" 		return-type="Column">		<finder-column name="columnID" />			</finder>
-		<finder name="ColumnName" 		return-type="Colection">	<finder-column name="column_name" />				</finder>
+		<finder name="ColumnName" 		return-type="Colection">	<finder-column name="column_name" />		</finder>
 		<finder name="HeadId"			return-type="Collection">	<finder-column name="headID" />				</finder>	
 	</entity>
 

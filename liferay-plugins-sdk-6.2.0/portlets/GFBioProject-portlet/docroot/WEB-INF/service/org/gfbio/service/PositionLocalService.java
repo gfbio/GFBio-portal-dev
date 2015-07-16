@@ -259,11 +259,14 @@ public interface PositionLocalService extends BaseLocalService,
 	public void deletePositionsByRowId(long rowId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getContentByTableIds(long rowId, long columnId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountOfColumns(long rowId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCountOfRows(long columnId)
+	public int getCountOfRows(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -281,8 +284,19 @@ public interface PositionLocalService extends BaseLocalService,
 		long headId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getPositionIdByTableIds(long rowId, long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Position> getPositionsByRowId(
 		long rowId) throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.Position getPositionByTableIds(long rowId,
+		long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONObject getPositionInformationAsJSONByRowId(
@@ -290,6 +304,9 @@ public interface PositionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONObject getPositionsAsJSONByRowId(long rowId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getRowIds(long headId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getColumnIdById(long positionId)
@@ -310,9 +327,6 @@ public interface PositionLocalService extends BaseLocalService,
 	public long getRowIdById(long positionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getContentByTableIds(long columnId, int rowId);
 
 	public java.lang.Boolean updatePosition(long positionId, long headId,
 		long columnId, long rowId, java.lang.String content);

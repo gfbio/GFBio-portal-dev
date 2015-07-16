@@ -124,67 +124,79 @@ public class PositionLocalServiceClp implements PositionLocalService {
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "getCountOfColumns";
+		_methodName23 = "getContentByTableIds";
 
-		_methodParameterTypes23 = new String[] { "long" };
+		_methodParameterTypes23 = new String[] { "long", "long" };
 
-		_methodName24 = "getCountOfRows";
+		_methodName24 = "getCountOfColumns";
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "getPositionById";
+		_methodName25 = "getCountOfRows";
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "getPositionsByColumnId";
+		_methodName26 = "getPositionById";
 
 		_methodParameterTypes26 = new String[] { "long" };
 
-		_methodName27 = "getPositionsByHeadId";
+		_methodName27 = "getPositionsByColumnId";
 
 		_methodParameterTypes27 = new String[] { "long" };
 
-		_methodName28 = "getPositionsByRowId";
+		_methodName28 = "getPositionsByHeadId";
 
 		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName29 = "getPositionInformationAsJSONByRowId";
+		_methodName29 = "getPositionIdByTableIds";
 
-		_methodParameterTypes29 = new String[] { "long" };
+		_methodParameterTypes29 = new String[] { "long", "long" };
 
-		_methodName30 = "getPositionsAsJSONByRowId";
+		_methodName30 = "getPositionsByRowId";
 
 		_methodParameterTypes30 = new String[] { "long" };
 
-		_methodName31 = "getColumnIdById";
+		_methodName31 = "getPositionByTableIds";
 
-		_methodParameterTypes31 = new String[] { "long" };
+		_methodParameterTypes31 = new String[] { "long", "long" };
 
-		_methodName32 = "getPositionsByContent";
+		_methodName32 = "getPositionInformationAsJSONByRowId";
 
-		_methodParameterTypes32 = new String[] { "java.lang.String" };
+		_methodParameterTypes32 = new String[] { "long" };
 
-		_methodName33 = "getPositionsByContentOfColumn";
+		_methodName33 = "getPositionsAsJSONByRowId";
 
-		_methodParameterTypes33 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes33 = new String[] { "long" };
 
-		_methodName34 = "getRowIdById";
+		_methodName34 = "getRowIds";
 
 		_methodParameterTypes34 = new String[] { "long" };
 
-		_methodName35 = "getContentByTableIds";
+		_methodName35 = "getColumnIdById";
 
-		_methodParameterTypes35 = new String[] { "long", "int" };
+		_methodParameterTypes35 = new String[] { "long" };
 
-		_methodName36 = "updatePosition";
+		_methodName36 = "getPositionsByContent";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes36 = new String[] { "java.lang.String" };
+
+		_methodName37 = "getPositionsByContentOfColumn";
+
+		_methodParameterTypes37 = new String[] { "java.lang.String", "long" };
+
+		_methodName38 = "getRowIdById";
+
+		_methodParameterTypes38 = new String[] { "long" };
+
+		_methodName39 = "updatePosition";
+
+		_methodParameterTypes39 = new String[] {
 				"long", "long", "long", "long", "java.lang.String"
 			};
 
-		_methodName37 = "updatePosition";
+		_methodName40 = "updatePosition";
 
-		_methodParameterTypes37 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes40 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -814,13 +826,36 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
+	public java.lang.String getContentByTableIds(long rowId, long columnId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { rowId, columnId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int getCountOfColumns(long rowId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -842,13 +877,13 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
-	public int getCountOfRows(long columnId)
+	public int getCountOfRows(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] { columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -876,8 +911,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { positionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { positionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -909,8 +944,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] { columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -937,8 +972,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -957,6 +992,39 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		}
 
 		return (java.util.List<org.gfbio.model.Position>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long getPositionIdByTableIds(long rowId, long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] { rowId, columnId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchPositionException) {
+				throw (org.gfbio.NoSuchPositionException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
 	}
 
 	@Override
@@ -965,8 +1033,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -988,13 +1056,47 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
+	public org.gfbio.model.Position getPositionByTableIds(long rowId,
+		long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31, new Object[] { rowId, columnId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchPositionException) {
+				throw (org.gfbio.NoSuchPositionException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.Position)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public org.json.simple.JSONObject getPositionInformationAsJSONByRowId(
 		long rowId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1016,8 +1118,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1035,14 +1137,37 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
+	public java.util.List getRowIds(long headId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34, new Object[] { headId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long getColumnIdById(long positionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31, new Object[] { positionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35, new Object[] { positionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1074,8 +1199,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] { ClpSerializer.translateInput(content) });
 		}
 		catch (Throwable t) {
@@ -1104,8 +1229,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] { ClpSerializer.translateInput(content), columnId });
 		}
 		catch (Throwable t) {
@@ -1134,8 +1259,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34, new Object[] { positionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38, new Object[] { positionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1161,36 +1286,13 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
-	public java.lang.String getContentByTableIds(long columnId, int rowId) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35, new Object[] { columnId, rowId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public java.lang.Boolean updatePosition(long positionId, long headId,
 		long columnId, long rowId, java.lang.String content) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] {
 						positionId,
 						
@@ -1223,8 +1325,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1317,4 +1419,10 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	private String[] _methodParameterTypes36;
 	private String _methodName37;
 	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
 }

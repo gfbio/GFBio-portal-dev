@@ -120,9 +120,9 @@ public class HeadLocalServiceClp implements HeadLocalService {
 
 		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName22 = "getHeadIdByTableName";
+		_methodName22 = "getEntitiesByHeadId";
 
-		_methodParameterTypes22 = new String[] { "java.lang.String" };
+		_methodParameterTypes22 = new String[] { "long" };
 
 		_methodName23 = "getHeadBetweenHeadId";
 
@@ -136,25 +136,33 @@ public class HeadLocalServiceClp implements HeadLocalService {
 
 		_methodParameterTypes25 = new String[] { "java.lang.String" };
 
-		_methodName26 = "getHeads";
+		_methodName26 = "getHeadIdByTableName";
 
-		_methodParameterTypes26 = new String[] {  };
+		_methodParameterTypes26 = new String[] { "java.lang.String" };
 
-		_methodName27 = "getHeadsByTableType";
+		_methodName27 = "getHeads";
 
-		_methodParameterTypes27 = new String[] { "java.lang.String" };
+		_methodParameterTypes27 = new String[] {  };
 
-		_methodName28 = "getTableName";
+		_methodName28 = "getHeadsByTableType";
 
-		_methodParameterTypes28 = new String[] { "long" };
+		_methodParameterTypes28 = new String[] { "java.lang.String" };
 
-		_methodName29 = "getTableNameArray";
+		_methodName29 = "getTableAsArray";
 
-		_methodParameterTypes29 = new String[] { "java.lang.String" };
+		_methodParameterTypes29 = new String[] { "long" };
 
-		_methodName30 = "getTableNameArray";
+		_methodName30 = "getTableName";
 
-		_methodParameterTypes30 = new String[] { "java.util.List" };
+		_methodParameterTypes30 = new String[] { "long" };
+
+		_methodName31 = "getTableNameArray";
+
+		_methodParameterTypes31 = new String[] { "java.lang.String" };
+
+		_methodName32 = "getTableNameArray";
+
+		_methodParameterTypes32 = new String[] { "java.util.List" };
 	}
 
 	@Override
@@ -780,26 +788,15 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	}
 
 	@Override
-	public java.lang.Long getHeadIdByTableName(java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
+	public java.util.List getEntitiesByHeadId(long headId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
-					new Object[] { ClpSerializer.translateInput(tableName) });
+					_methodParameterTypes22, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof org.gfbio.NoSuchHeadException) {
-				throw (org.gfbio.NoSuchHeadException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -810,7 +807,7 @@ public class HeadLocalServiceClp implements HeadLocalService {
 			}
 		}
 
-		return (java.lang.Long)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -905,13 +902,47 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	}
 
 	@Override
+	public java.lang.Long getHeadIdByTableName(java.lang.String tableName)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] { ClpSerializer.translateInput(tableName) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchHeadException) {
+				throw (org.gfbio.NoSuchHeadException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Long)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Head> getHeads()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -939,8 +970,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] { ClpSerializer.translateInput(tableType) });
 		}
 		catch (Throwable t) {
@@ -963,14 +994,37 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	}
 
 	@Override
+	public long[][] getTableAsArray(long headId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] { headId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (long[][])ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.lang.String getTableName(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1001,8 +1055,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] { ClpSerializer.translateInput(tableType) });
 		}
 		catch (Throwable t) {
@@ -1031,8 +1085,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] { ClpSerializer.translateInput(headList) });
 		}
 		catch (Throwable t) {
@@ -1115,4 +1169,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	private String[] _methodParameterTypes29;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

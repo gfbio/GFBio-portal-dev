@@ -303,15 +303,20 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
+	public java.lang.String getContentByTableIds(long rowId, long columnId) {
+		return _positionLocalService.getContentByTableIds(rowId, columnId);
+	}
+
+	@Override
 	public int getCountOfColumns(long rowId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _positionLocalService.getCountOfColumns(rowId);
 	}
 
 	@Override
-	public int getCountOfRows(long columnId)
+	public int getCountOfRows(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _positionLocalService.getCountOfRows(columnId);
+		return _positionLocalService.getCountOfRows(headId);
 	}
 
 	@Override
@@ -335,9 +340,24 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
+	public long getPositionIdByTableIds(long rowId, long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException {
+		return _positionLocalService.getPositionIdByTableIds(rowId, columnId);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Position> getPositionsByRowId(
 		long rowId) throws com.liferay.portal.kernel.exception.SystemException {
 		return _positionLocalService.getPositionsByRowId(rowId);
+	}
+
+	@Override
+	public org.gfbio.model.Position getPositionByTableIds(long rowId,
+		long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchPositionException {
+		return _positionLocalService.getPositionByTableIds(rowId, columnId);
 	}
 
 	@Override
@@ -349,6 +369,11 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	@Override
 	public org.json.simple.JSONObject getPositionsAsJSONByRowId(long rowId) {
 		return _positionLocalService.getPositionsAsJSONByRowId(rowId);
+	}
+
+	@Override
+	public java.util.List getRowIds(long headId) {
+		return _positionLocalService.getRowIds(headId);
 	}
 
 	@Override
@@ -378,11 +403,6 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _positionLocalService.getRowIdById(positionId);
-	}
-
-	@Override
-	public java.lang.String getContentByTableIds(long columnId, int rowId) {
-		return _positionLocalService.getContentByTableIds(columnId, rowId);
 	}
 
 	@Override

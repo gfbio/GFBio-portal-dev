@@ -24,6 +24,7 @@ import org.gfbio.NoSuchPositionException;
 import org.gfbio.model.Position;
 import org.gfbio.service.PositionLocalServiceUtil;
 import org.gfbio.service.base.PositionLocalServiceBaseImpl;
+import org.gfbio.service.persistence.PositionFinderUtil;
 import org.json.simple.JSONObject;
 
 /**
@@ -87,6 +88,15 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 			for (int i =0; i < positionList.size();i++)
 				PositionLocalServiceUtil.deletePositionById(positionList.get(i).getRowID());
 	}
+	
+	
+	//get Content of a Cell in a specific row and column
+	public String getContentByTableIds(long rowId, long columnId)  {
+		try {
+			return positionPersistence.findByTableIds(columnId, rowId).getContent();
+		} catch (NoSuchPositionException | SystemException e) {e.printStackTrace();}
+		return null;
+	}
 		
 	
 	//get the count of columns from a specific row
@@ -96,9 +106,11 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 	
 	
 	//get the count of rows from a specific column 
-	public int getCountOfRows(long columnId) throws SystemException{
-		return positionPersistence.findByColumnId(columnId).size();
+	public int getCountOfRows(long headId) throws SystemException{
+		return PositionLocalServiceUtil.getRowIds(headId).size();
 	}
+	
+	
 		
 	
 	//get a position object by the position id
@@ -117,11 +129,25 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 	public List<Position> getPositionsByHeadId(long headId) throws SystemException {
 		return positionPersistence.findByHeadId(headId);
 	}
+	
+	
+	//get ID of a Cell in a specific row and column
+	public long getPositionIdByTableIds(long rowId, long columnId) throws NoSuchPositionException, SystemException  {
+		return positionPersistence.findByTableIds(columnId, rowId).getPositionID();
+	}
 
 	
 	// get a List of Positions with a specific content in a specific column
 	public List<Position> getPositionsByRowId(long rowId) throws SystemException{
 		return positionPersistence.findByRowId(rowId);
+	}
+	
+	
+	
+	
+	//get Position of  a specific row and column
+	public Position getPositionByTableIds(long rowId, long columnId) throws NoSuchPositionException, SystemException  {
+		return positionPersistence.findByTableIds(columnId, rowId);
 	}
 	
 	
@@ -143,7 +169,7 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return json;
 	}
 	
-		
+	
 	//get the basic Information of the Positions of a specific row as JSON
 	@SuppressWarnings("unchecked")
 	public JSONObject getPositionsAsJSONByRowId (long rowId){
@@ -168,6 +194,12 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 	}
 	
 	
+	//get a List of rowIds of specific head
+	public List  getRowIds (long headId){
+		return PositionFinderUtil.getRowIds(headId);
+	}
+	
+		
 	// get the columnId of a specific position.
 	public long getColumnIdById(long positionId) throws SystemException, PortalException{
 		return PositionLocalServiceUtil.getPosition(positionId).getColumnID();
@@ -191,16 +223,7 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return PositionLocalServiceUtil.getPosition(positionId).getRowID();
 	}
 
-	
-	//get Content of a Cell in a specific position and column
-	public String getContentByTableIds(long columnId, int rowId)  {
-		try {
-			return positionPersistence.findByTableIds(columnId, rowId).getContent();
-		} catch (NoSuchPositionException | SystemException e) {e.printStackTrace();}
-		return null;
-	}
-	
-	
+		
 	//update or build a new the position
 	public Boolean updatePosition (long positionId, long headId, long columnId, long rowId, String content){
 		

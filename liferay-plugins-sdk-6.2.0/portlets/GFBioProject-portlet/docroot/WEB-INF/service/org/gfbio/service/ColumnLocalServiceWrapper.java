@@ -298,6 +298,12 @@ public class ColumnLocalServiceWrapper implements ColumnLocalService,
 	}
 
 	@Override
+	public int getCountofColumns(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _columnLocalService.getCountofColumns(headId);
+	}
+
+	@Override
 	public long getHeadIdById(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

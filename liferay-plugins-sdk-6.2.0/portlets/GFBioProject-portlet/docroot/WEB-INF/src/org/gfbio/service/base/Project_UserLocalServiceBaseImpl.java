@@ -38,6 +38,7 @@ import org.gfbio.service.persistence.BasketPersistence;
 import org.gfbio.service.persistence.ColumnPersistence;
 import org.gfbio.service.persistence.HeadFinder;
 import org.gfbio.service.persistence.HeadPersistence;
+import org.gfbio.service.persistence.PositionFinder;
 import org.gfbio.service.persistence.PositionPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
@@ -529,6 +530,24 @@ public abstract class Project_UserLocalServiceBaseImpl
 	 */
 	public void setPositionPersistence(PositionPersistence positionPersistence) {
 		this.positionPersistence = positionPersistence;
+	}
+
+	/**
+	 * Returns the position finder.
+	 *
+	 * @return the position finder
+	 */
+	public PositionFinder getPositionFinder() {
+		return positionFinder;
+	}
+
+	/**
+	 * Sets the position finder.
+	 *
+	 * @param positionFinder the position finder
+	 */
+	public void setPositionFinder(PositionFinder positionFinder) {
+		this.positionFinder = positionFinder;
 	}
 
 	/**
@@ -1074,6 +1093,8 @@ public abstract class Project_UserLocalServiceBaseImpl
 	protected org.gfbio.service.PositionService positionService;
 	@BeanReference(type = PositionPersistence.class)
 	protected PositionPersistence positionPersistence;
+	@BeanReference(type = PositionFinder.class)
+	protected PositionFinder positionFinder;
 	@BeanReference(type = org.gfbio.service.ProjectLocalService.class)
 	protected org.gfbio.service.ProjectLocalService projectLocalService;
 	@BeanReference(type = org.gfbio.service.ProjectService.class)
