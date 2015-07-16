@@ -267,10 +267,31 @@ public class HeadLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.lang.Long getHeadId(java.lang.String name)
+	public static void deleteHeadByHeadId(long headId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteHeadByHeadId(headId);
+	}
+
+	public static int getCountOfColumns(long headId) {
+		return getService().getCountOfColumns(headId);
+	}
+
+	public static int getCountOfRows(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCountOfRows(headId);
+	}
+
+	public static java.lang.Long getHeadIdByTableName(
+		java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return getService().getHeadId(name);
+		return getService().getHeadIdByTableName(tableName);
+	}
+
+	public static java.util.List<org.gfbio.model.Head> getHeadBetweenHeadId(
+		int start, int end) {
+		return getService().getHeadBetweenHeadId(start, end);
 	}
 
 	public static org.gfbio.model.Head getHeadById(long headId)
@@ -279,10 +300,11 @@ public class HeadLocalServiceUtil {
 		return getService().getHeadById(headId);
 	}
 
-	public static org.gfbio.model.Head getHeadByName(java.lang.String name)
+	public static org.gfbio.model.Head getHeadByTableName(
+		java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return getService().getHeadByName(name);
+		return getService().getHeadByTableName(tableName);
 	}
 
 	public static java.util.List<org.gfbio.model.Head> getHeads()
@@ -290,16 +312,28 @@ public class HeadLocalServiceUtil {
 		return getService().getHeads();
 	}
 
-	public static java.util.List<org.gfbio.model.Head> getHeadsByTask(
-		java.lang.String task)
+	public static java.util.List<org.gfbio.model.Head> getHeadsByTableType(
+		java.lang.String tableType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getHeadsByTask(task);
+		return getService().getHeadsByTableType(tableType);
 	}
 
-	public static java.lang.String getName(long headId)
+	public static java.lang.String getTableName(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return getService().getName(headId);
+		return getService().getTableName(headId);
+	}
+
+	public static java.lang.String[] getTableNameArray(
+		java.lang.String tableType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTableNameArray(tableType);
+	}
+
+	public static java.lang.String[] getTableNameArray(
+		java.util.List<org.gfbio.model.Head> headList)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTableNameArray(headList);
 	}
 
 	public static void clearService() {

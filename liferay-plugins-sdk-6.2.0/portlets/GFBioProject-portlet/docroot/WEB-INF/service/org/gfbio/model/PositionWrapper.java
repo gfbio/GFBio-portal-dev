@@ -50,6 +50,9 @@ public class PositionWrapper implements Position, ModelWrapper<Position> {
 
 		attributes.put("positionID", getPositionID());
 		attributes.put("headID", getHeadID());
+		attributes.put("columnID", getColumnID());
+		attributes.put("rowID", getRowID());
+		attributes.put("content", getContent());
 
 		return attributes;
 	}
@@ -66,6 +69,24 @@ public class PositionWrapper implements Position, ModelWrapper<Position> {
 
 		if (headID != null) {
 			setHeadID(headID);
+		}
+
+		Long columnID = (Long)attributes.get("columnID");
+
+		if (columnID != null) {
+			setColumnID(columnID);
+		}
+
+		Long rowID = (Long)attributes.get("rowID");
+
+		if (rowID != null) {
+			setRowID(rowID);
+		}
+
+		String content = (String)attributes.get("content");
+
+		if (content != null) {
+			setContent(content);
 		}
 	}
 
@@ -127,6 +148,66 @@ public class PositionWrapper implements Position, ModelWrapper<Position> {
 	@Override
 	public void setHeadID(long headID) {
 		_position.setHeadID(headID);
+	}
+
+	/**
+	* Returns the column i d of this position.
+	*
+	* @return the column i d of this position
+	*/
+	@Override
+	public long getColumnID() {
+		return _position.getColumnID();
+	}
+
+	/**
+	* Sets the column i d of this position.
+	*
+	* @param columnID the column i d of this position
+	*/
+	@Override
+	public void setColumnID(long columnID) {
+		_position.setColumnID(columnID);
+	}
+
+	/**
+	* Returns the row i d of this position.
+	*
+	* @return the row i d of this position
+	*/
+	@Override
+	public long getRowID() {
+		return _position.getRowID();
+	}
+
+	/**
+	* Sets the row i d of this position.
+	*
+	* @param rowID the row i d of this position
+	*/
+	@Override
+	public void setRowID(long rowID) {
+		_position.setRowID(rowID);
+	}
+
+	/**
+	* Returns the content of this position.
+	*
+	* @return the content of this position
+	*/
+	@Override
+	public java.lang.String getContent() {
+		return _position.getContent();
+	}
+
+	/**
+	* Sets the content of this position.
+	*
+	* @param content the content of this position
+	*/
+	@Override
+	public void setContent(java.lang.String content) {
+		_position.setContent(content);
 	}
 
 	@Override

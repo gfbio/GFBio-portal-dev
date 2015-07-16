@@ -21,10 +21,10 @@ package org.gfbio.model.impl;
  * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gfbio.model.Position} interface.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  */
 public class PositionImpl extends PositionBaseImpl {
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a position model instance should use the {@link org.gfbio.model.Position} interface instead.

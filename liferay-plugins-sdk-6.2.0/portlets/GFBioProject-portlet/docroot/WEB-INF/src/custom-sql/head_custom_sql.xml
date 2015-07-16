@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="org.gfbio.service.persistence.HeadFinderImpl.getHeadBetweenHeadIds">
+	    <![CDATA[
+		  SELECT
+		  	*
+		  FROM
+		  	public.gfbio_head
+		  WHERE
+		  	gfbio_head.headid between ? AND ?
+		]]>
+    </sql>
+
+
+
+</custom-sql>
+
+

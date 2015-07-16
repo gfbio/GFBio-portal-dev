@@ -26,12 +26,12 @@ import org.gfbio.service.base.PositionServiceBaseImpl;
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.PositionServiceBaseImpl
  * @see org.gfbio.service.PositionServiceUtil
  */
 public class PositionServiceImpl extends PositionServiceBaseImpl {
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.PositionServiceUtil} to access the position remote service.

@@ -15,6 +15,7 @@
 package org.gfbio.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import org.gfbio.model.Position;
@@ -34,12 +35,18 @@ import java.io.ObjectOutput;
 public class PositionCacheModel implements CacheModel<Position>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{positionID=");
 		sb.append(positionID);
 		sb.append(", headID=");
 		sb.append(headID);
+		sb.append(", columnID=");
+		sb.append(columnID);
+		sb.append(", rowID=");
+		sb.append(rowID);
+		sb.append(", content=");
+		sb.append(content);
 		sb.append("}");
 
 		return sb.toString();
@@ -51,6 +58,15 @@ public class PositionCacheModel implements CacheModel<Position>, Externalizable 
 
 		positionImpl.setPositionID(positionID);
 		positionImpl.setHeadID(headID);
+		positionImpl.setColumnID(columnID);
+		positionImpl.setRowID(rowID);
+
+		if (content == null) {
+			positionImpl.setContent(StringPool.BLANK);
+		}
+		else {
+			positionImpl.setContent(content);
+		}
 
 		positionImpl.resetOriginalValues();
 
@@ -61,6 +77,9 @@ public class PositionCacheModel implements CacheModel<Position>, Externalizable 
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		positionID = objectInput.readLong();
 		headID = objectInput.readLong();
+		columnID = objectInput.readLong();
+		rowID = objectInput.readLong();
+		content = objectInput.readUTF();
 	}
 
 	@Override
@@ -68,8 +87,20 @@ public class PositionCacheModel implements CacheModel<Position>, Externalizable 
 		throws IOException {
 		objectOutput.writeLong(positionID);
 		objectOutput.writeLong(headID);
+		objectOutput.writeLong(columnID);
+		objectOutput.writeLong(rowID);
+
+		if (content == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(content);
+		}
 	}
 
 	public long positionID;
 	public long headID;
+	public long columnID;
+	public long rowID;
+	public String content;
 }

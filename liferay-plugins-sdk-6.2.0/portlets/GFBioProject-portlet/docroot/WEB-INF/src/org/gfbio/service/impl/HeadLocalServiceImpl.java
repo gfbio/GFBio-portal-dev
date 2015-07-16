@@ -18,17 +18,17 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
-import org.gfbio.NoSuchPositionException;
 import org.gfbio.model.Head;
 import org.gfbio.model.Position;
+import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PositionLocalServiceUtil;
 import org.gfbio.service.base.HeadLocalServiceBaseImpl;
+import org.gfbio.service.persistence.HeadFinderUtil;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the head local service.
@@ -46,324 +46,266 @@ import org.gfbio.service.base.HeadLocalServiceBaseImpl;
  */
 public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
-	public Long getHeadId(String name) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByName(name).getHeadID();
+	
+	public void deleteHeadByHeadId(long headId) throws SystemException, PortalException{
+	
+		//ColumnLocalServiceUtil.deleteColumnsByHeadId ( headId);
+		HeadLocalServiceUtil.deleteHead(headId);
 	}
 	
+	
+	//get the Counts of Column of a specific head 
+	public int getCountOfColumns(long headId){
+		
+		int count =0;
+		List <Position> positionList = null;
+		try {
+			positionList = PositionLocalServiceUtil.getPositionsByHeadId(headId);
+		} catch (SystemException e) {e.printStackTrace();}
+		
+		if (positionList != null){
+			for( int i=0; i <positionList.size();i++){
+				try {
+					if (count < PositionLocalServiceUtil.getCountOfColumns(positionList.get(i).getRowID()))
+							count = PositionLocalServiceUtil.getCountOfColumns(positionList.get(i).getRowID());
+				} catch (SystemException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return count;
+	}
+	
+	
+	//get the count of rows of a specific head
+	public int getCountOfRows(long headId) throws SystemException{
+		return PositionLocalServiceUtil.getPositionsByHeadId(headId).size();
+	}
+	
+
+	//get ID of a head by tableName
+	public Long getHeadIdByTableName(String tableName) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByTableName(tableName).getHeadID();
+	}
+	
+	
+	public List<Head> getHeadBetweenHeadId(int start, int end) {
+		return HeadFinderUtil.getHeadBetweenHeadIds(start, end);
+	}
+		
+	
+	//get head by headID
 	public Head getHeadById(long headId) throws NoSuchHeadException, SystemException {
 		return headPersistence.findByHeadId(headId);
 	}
 
 	
-	public Head getHeadByName(String name) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByName(name);
+	//get head by tableName of the table
+	public Head getHeadByTableName(String tableName) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByTableName(tableName);
 	}
 
 	
+	//get all heads
 	public List<Head> getHeads() throws SystemException {
-		System.out.println(headPersistence.findAll().toString());
 		return headPersistence.findAll();
 	}
 	
-	public List<Head> getHeadsByTask(String task) throws SystemException {
-		return headPersistence.findByTask(task);
+	
+	//get all heads with a specific table type
+	public List<Head> getHeadsByTableType(String tableType) throws SystemException {
+		return headPersistence.findByTableType(tableType);
 	}
 	
-
-	public String getName(long headId) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByHeadId(headId).getName();
-	}
+/*	
+	//get the Head with all Cells as JSON
+	public JSONObject getHeadAsJSONById (long headId){
 	
-/*	public void deleteCompleteHead(long headId) throws SystemException, PortalException{
-		System.out.println(headId);
+		JSONObject json = new JSONObject();
+		Head head = null;
 		
+	try {
+		head = HeadLocalServiceUtil.getHead(headId);
+	} catch (PortalException | SystemException e) {e.printStackTrace();}
 		
-		
-		// delete relations of table
-		List <Head> headListC1 = headPersistence.findByColumn01(HeadLocalServiceUtil.getName(headId));
-		if (headListC1.size()>0) 
-			for (int i=0; i < headListC1.size();i++){
-				List <Position> tempList = PositionLocalServiceUtil.getPositionsbyHeadId(headListC1.get(i).getHeadID());
-				for (int j=0; j < tempList.size();j++ )
-					PositionLocalServiceUtil.deletePosition(tempList.get(j).getPositionID());
-				HeadLocalServiceUtil.deleteHead(headListC1.get(i).getHeadID());
-			}
-		
-		List <Head> headListC2 = headPersistence.findByColumn02(HeadLocalServiceUtil.getName(headId));
-		if (headListC2.size()>0)
-			for (int i=0; i < headListC2.size();i++){
-				List <Position> tempList = PositionLocalServiceUtil.getPositionsbyHeadId(headListC2.get(i).getHeadID());
-				for (int j=0; j < tempList.size();j++ )
-					PositionLocalServiceUtil.deletePosition(tempList.get(j).getPositionID());
-				HeadLocalServiceUtil.deleteHead(headListC2.get(i).getHeadID());
-			}
-			
-		// delete Content of table
-		List <Position> positionList = PositionLocalServiceUtil.getPositionsbyHeadId(headId);
-		for (int i=0; i < positionList.size();i++)
-			PositionLocalServiceUtil.deletePosition(positionList.get(i));
-			
-		// delete table in head
-		HeadLocalServiceUtil.deleteHead(headId);
-	}
+		if (head != null){
+			json.put("headId", head.getHeadID());
+			json.put("tableName", head.getTable_name());
+			json.put("table_type", head.getTable_type());
+			try {
+				for (int i =0; i < HeadLocalServiceUtil.getColumnCount(headId);i++)
+					json.put(new Integer(i).toString(), CellLocalServiceUtil.getCell(Cell_HeadLocalServiceUtil.getCellId(headId, i)));
+			} catch (SystemException | PortalException e) {e.printStackTrace();	}
+		}
+		return json;
+	}*/
 	
 
-	public int getColumnCount(long headId) throws NoSuchHeadException, SystemException {
-
-		Head head = getHeadById(headId);
-		int size = 0;
-
-		if (head.getColumn01().startsWith(" ")){}
-		else {size++; if (head.getColumn02().startsWith(" ")){}
-			else {size++;if (head.getColumn03().startsWith(" ")){}
-				else {size++;if (head.getColumn04().startsWith(" ")){}
-					else {size++;if (head.getColumn05().startsWith(" ")){}
-						else {size++;if (head.getColumn06().startsWith(" ")){}
-							else {size++;if (head.getColumn07().startsWith(" ")){}
-								else {size++;if (head.getColumn08().startsWith(" ")){}
-									else {size++;if (head.getColumn09().startsWith(" ")){}
-										else {size++;if (head.getColumn10().startsWith(" ")){}
-											else {size++;if (head.getColumn11().startsWith(" ")){}
-												else {size++;if (head.getColumn12().startsWith(" ")){}
-													else {size++;if (head.getColumn13().startsWith(" ")){}
-														else {size++;if (head.getColumn14().startsWith(" ")){}
-															else {size++;if (head.getColumn15().startsWith(" ")){}
-																else {size++;if (head.getColumn16().startsWith(" ")){}
-																	else {size++;if (head.getColumn17().startsWith(" ")){}
-																		else {size++;if (head.getColumn18().startsWith(" ")){}
-																			else {size++;if (head.getColumn19().startsWith(" ")){}
-																				else {size++;if (head.getColumn20().startsWith(" ")){}
-																					else {size++;
-		} } } } } } } } } } } } } } } } } } } }
-		return size;
-	}
-
-	public String getColumnName(long headId, int i) throws NoSuchHeadException, SystemException {
-		Head head = getHeadById(headId);
-		String column = "";
-		if (i == 1)column = head.getColumn01(); else
-			if (i == 2)column = head.getColumn02(); else
-				if (i == 3)column = head.getColumn03(); else
-					if (i == 4)column = head.getColumn04(); else
-						if (i == 5)column = head.getColumn05(); else
-							if (i == 6)column = head.getColumn06(); else
-								if (i == 7)column = head.getColumn07(); else
-									if (i == 8)column = head.getColumn08(); else
-										if (i == 9)column = head.getColumn09(); else
-											if (i == 10)column = head.getColumn10(); else
-												if (i == 11)column = head.getColumn11(); else
-													if (i == 12)column = head.getColumn12(); else
-														if (i == 13)column = head.getColumn13(); else
-															if (i == 14)column = head.getColumn14(); else
-																if (i == 15)column = head.getColumn15(); else
-																	if (i == 16)column = head.getColumn16(); else
-																		if (i == 17)column = head.getColumn17(); else
-																			if (i == 18)column = head.getColumn18(); else
-																				if (i == 19)column = head.getColumn19(); else
-																					if (i == 20)column = head.getColumn20();
-		return column;
+	//get tableName of a specific head
+	public String getTableName(long headId) throws NoSuchHeadException, SystemException {
+		return headPersistence.findByHeadId(headId).getTable_name();
 	}
 	
-	public int getColumnByName(long headId, String column) throws NoSuchHeadException, SystemException {
-		Head head = getHeadById(headId);
-		int i =0;
-		if (column.equals(head.getColumn01().trim())) i=1;  else
-			if (column.equals(head.getColumn02().trim())) i=2; else
-				if (column.equals(head.getColumn03().trim())) i=3; else
-					if (column.equals(head.getColumn04().trim())) i=4; else
-						if (column.equals(head.getColumn05().trim())) i=5; else
-							if (column.equals(head.getColumn06().trim())) i=6; else
-								if (column.equals(head.getColumn07().trim())) i=7; else
-									if (column.equals(head.getColumn08().trim())) i=8; else
-										if (column.equals(head.getColumn09().trim())) i=9; else
-											if (column.equals(head.getColumn10().trim())) i=10; else
-												if (column.equals(head.getColumn11().trim())) i=11; else
-													if (column.equals(head.getColumn12().trim())) i=12; else
-														if (column.equals(head.getColumn13().trim())) i=13; else
-															if (column.equals(head.getColumn14().trim())) i=14; else
-																if (column.equals(head.getColumn15().trim())) i=15; else
-																	if (column.equals(head.getColumn16().trim())) i=16; else
-																		if (column.equals(head.getColumn17().trim())) i=17; else
-																			if (column.equals(head.getColumn18().trim())) i=18; else
-																				if (column.equals(head.getColumn19().trim())) i=19; else
-																					if (column.equals(head.getColumn20().trim())) i=20;
-			return i;
-	}
 	
-
-
-	
-
-	public String[] getNameArray(String task) throws SystemException  {
+	//get an Array of TableNames with a specific table type
+	public String[] getTableNameArray(String tableType) throws SystemException  {
 
 		List<Head> headList;
-		if (task.equals(""))
+		if (tableType.equals(""))
 			headList = null;
 		else
-			headList = getHeadsByTask(task);
-		return getNameArray(headList);
+			headList = getHeadsByTableType(tableType);
+		return HeadLocalServiceUtil.getTableNameArray(headList);
 	}
 	
-	public String[] getNameArray(List<Head> headList) throws SystemException {
+	//get an Array of Tablenames with a specific table type out of a List of heads
+	public String[] getTableNameArray(List<Head> headList) throws SystemException {
 
-		String[] names = null;
+		String[] tableNames = null;
 		if (headList == null)
 			headList = headPersistence.findAll();
 
-		names = new String[headList.size()];
+		tableNames = new String[headList.size()];
 		if (headList!= null)
 			for (int i = 0; i<headList.size(); i++)
-				names[i] = headList.get(i).getName();
+				tableNames[i] = headList.get(i).getTable_name();
 
-		return names;
+		return tableNames;
 	}
-
 	
-	public Boolean setStandard() throws SystemException {
-		Boolean check = true;
-		//check = updateHead(0, "gfbio_", "", "","","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_category"    			, "table","name","label","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware" , "table","name","label","version","local_usible","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_fileformat"   			, "table","name","labe","version","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_metadata"    			, "table","name","label","version","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_persistentidentifier" 	, "table","name","label","has_fee_on_id_registration","kind_of_id_organisation","change_on_id_possible","resolves_data_types","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_researchfield"   		, "table","name","","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_type"     				, "table","name","","","","","","","","","","","","","","","","","","","");
-
-		check = updateHead(0, "gfbio_category_researchfield"   			, "relation","categoryid","researchfieldid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_category_type"						, "relation","categoryid","typeid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware_dataprovider", "relation","datamanagmentsoftwareid","dataproviderid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware_fileformat" 	, "relation","datamanagmentsoftwareid","fileformatid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_datamanagmentsoftware_metadata" 	, "relation","datamanagmentsoftwareid","metadataid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_dataprovider_metadata"    			, "relation","dataproviderid","metadataid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_dataprovider_persistentidentifier" , "relation","dataproviderid","persistentidentifierid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_gfbio_fileformat_license"			, "relation","fileformatid", "licenseid","","","","","","","","","","","","","","","","","","");
-		check = updateHead(0, "gfbio_gfbio_persistentidentifier_rule"	, "relation","persistentidentifierid","ruleid","","","","","","","","","","","","","","","","","","");
-
-		try {
-			check  = updateHead(0, "gfbio_keytable", "tablelocation","system","name","function","","","","","","","","","","","","","","","","","");
-			long headID = getHeadID("gfbio_keytable");
-			check = PositionLocalServiceUtil.updatePosition(0, headID, String.valueOf(HeadLocalServiceUtil.getHeadID("gfbio_metadata")), "gfbio_metadata", "table", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-			check = PositionLocalServiceUtil.updatePosition(0, headID, String.valueOf(HeadLocalServiceUtil.getHeadID("gfbio_datamanagmentsoftware")), "gfbio_datamanagmentsoftware", "table", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
-		} catch (SystemException | NoSuchHeadException e) {e.printStackTrace();}
+	
+	
+/*	//update or build a new the head
+	public Boolean updateHead (long headId, String tableName, String tableType){
 		
-		check  = updateHead(0, "gfbio_relationtable", "system","m_table","n_table","","","","","","","","","","","","","","","","","","");
-	
-		return check;
-	}
-	
-	public Boolean updateHead(long headId, String name, String task, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
-
-		Boolean check = true;
+		Boolean check = false;
 		Head head = null;
 
 		try {
-			head = headPersistence.findByHeadID(headId);
-		} catch (NoSuchHeadException e) {e.printStackTrace();}
+			head = HeadLocalServiceUtil.getHeadByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
 
-		//create new head
-		if (head == null) {
+
+		// the tableName of a table must be unique
+		if (head == null){
+
 			try {
-				head = headPersistence.findByName(name);
-			} catch (NoSuchHeadException e) {e.printStackTrace();}
+				head = HeadLocalServiceUtil.getHead(headId);
+			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
 
-			if (head != null)
-				check = false;
-			else
-				head = headPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-				head.setName(name);
-				head.setTask(task);
-				head.setColumn01(column01);
-				head.setColumn02(column02);
-				head.setColumn03(column03);
-				head.setColumn04(column04);
-				head.setColumn05(column05);
-				head.setColumn06(column06);
-				head.setColumn07(column07);
-				head.setColumn08(column08);
-				head.setColumn09(column09);
-				head.setColumn10(column10);
-				head.setColumn11(column11);
-				head.setColumn12(column12);
-				head.setColumn13(column13);
-				head.setColumn14(column14);
-				head.setColumn15(column15);
-				head.setColumn16(column16);
-				head.setColumn17(column17);
-				head.setColumn18(column18);
-				head.setColumn19(column19);
-				head.setColumn20(column20);
+			// if it true, then must be build a new head else update the head
+			if (head == null){
+				try {
+					head = headPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
+				} catch (SystemException e) {e.printStackTrace();}
+			}
+			head.setTable_name(tableName);
+			head.setTable_type(tableType);
+			try {
 				super.updateHead(head);
-		}else {
-			//update head
-			head.setName(name);
-			head.setTask(task);
-			head.setColumn01(column01);
-			head.setColumn02(column02);
-			head.setColumn03(column03);
-			head.setColumn04(column04);
-			head.setColumn05(column05);
-			head.setColumn06(column06);
-			head.setColumn07(column07);
-			head.setColumn08(column08);
-			head.setColumn09(column09);
-			head.setColumn10(column10);
-			head.setColumn11(column11);
-			head.setColumn12(column12);
-			head.setColumn13(column13);
-			head.setColumn14(column14);
-			head.setColumn15(column15);
-			head.setColumn16(column16);
-			head.setColumn17(column17);
-			head.setColumn18(column18);
-			head.setColumn19(column19);
-			head.setColumn20(column20);
-			super.updateHead(head);
+				check = true;
+			} catch (SystemException e) {e.printStackTrace();}
 		}
 
 		return check;
 	}
 	
-	public Boolean updateRelationTable(long headId, String mtable, String ntable)throws SystemException, NoSuchHeadException, NoSuchPositionException{
+	public Boolean updateHead (JSONObject content){
+		
+		Boolean check = false;
+		String headKey ="headId";
+		String tableNameKey = "tableName";
+		String tableTypeKey = "tableType";
+		if (content.containsKey(headKey) && content.containsKey(tableNameKey) && content.containsKey(tableTypeKey))
+			check = HeadLocalServiceUtil.updateHead((long) content.get(headKey), (String) content.get(tableNameKey), (String) content.get(tableTypeKey));
+		return check;
+	}
+	
+	public Boolean updateHeadWithCells (long headId, String tableName, String tableType, JSONObject json){
+		
+		Boolean check = HeadLocalServiceUtil.updateHead(headId, tableName, tableType);
+		for (int i=0;i <json.size();i++){
+			try {
+				check = CellLocalServiceUtil.updateCellOfHead(Cell_HeadLocalServiceUtil.getCellId(headId, i), "head", (String) json.get(new Integer(i).toString()), headId, i);
+			} catch (NoSuchCell_HeadException | SystemException e) {e.printStackTrace();}
+		}
+		return check;
+	}
+	
+
+	
+	//get the Table with Head and all Cells
+	public String[][] getTable(long headId) throws SystemException, NoSuchHeadException, NoSuchCellException, NoSuchCell_HeadException, NoSuchCell_PositionException {
+
+		List<Position> rows = PositionLocalServiceUtil.getPositionsByHeadId(headId);
+		String[][] table = new String[(1 + HeadLocalServiceUtil.getColumnCount(headId))][(rows.size()+1)];
+
+		//Head of Table
+		table[0][0]= "ID";
+		for (int j = 1; j < table.length; j++)
+			table[j][0]= HeadLocalServiceUtil.getColumnName(headId, j-1);
+		
+		//Content of Table
+		
+		for (int i = 1; i < (table[0].length); i++) 
+			for (int j = 0; j < table.length; j++)
+				if (j == 0)
+					table[j][i] = Long.toString(rows.get(i-1).getPositionID());
+				else
+					table[j][i] = getColumnContent(rows.get(i-1).getPositionID(), j-1);
+			
+		
+
+		return table;
+	}
+	
+	
+	//update or build a relation table 
+	public Boolean updateRelationTable(long headId, String mtable, String ntable){
 
 		Boolean check = true;
 		mtable = mtable.trim();
 		ntable = ntable.trim();
-		//List<Position> rows = positionPersistence.findByHeadID(HeadLocalServiceUtil.getHeadID("gfbio_relationtable"));
-		
-
-		
-		List <Head> headList = HeadLocalServiceUtil.getHeadsByTask("relation");
+		List<Head> headList = null;
+		try {
+			headList = HeadLocalServiceUtil.getHeadsByTableType("relation");
+		} catch (SystemException e) {e.printStackTrace();}
 		
 		
 		if (mtable.equals(ntable))
 			check = false;
 		else{
 			
-			//sort table names
-			List <String> names = new ArrayList<String>();
-			names.add(mtable);
-			names.add(ntable);
-			Collections.sort(names);
-			mtable = names.get(0);
-			ntable = names.get(1);
+			//sort table tableNames
+			List <String> tableNames = new ArrayList<String>();
+			tableNames.add(mtable);
+			tableNames.add(ntable);
+			Collections.sort(tableNames);
+			mtable = tableNames.get(0);
+			ntable = tableNames.get(1);
 			
 			//check, that relation table do not existing
 			for (int i =0;i < headList.size();i++){
-				System.out.println(i+" "+mtable+" "+headList.get(i).getColumn01());
-				if (mtable.equals(headList.get(i).getColumn01()))
-					if (ntable.equals(headList.get(i).getColumn01()))
-						check = false;
-				if (ntable.equals(headList.get(i).getColumn01()))
-					if (mtable.equals(headList.get(i).getColumn01()))
-						check = false;
+				try {
+					if (mtable.equals(CellLocalServiceUtil.getCellOfHeadByIdAndColumn(headList.get(i).getHeadID(), 1)))
+						if (ntable.equals(CellLocalServiceUtil.getCellOfHeadByIdAndColumn(headList.get(i).getHeadID(), 1)))
+							check = false;
+				} catch (PortalException | SystemException e) {e.printStackTrace();	}
+				try {
+					if (ntable.equals(CellLocalServiceUtil.getCellOfHeadByIdAndColumn(headList.get(i).getHeadID(), 1)))
+						if (mtable.equals(CellLocalServiceUtil.getCellOfHeadByIdAndColumn(headList.get(i).getHeadID(), 1)))
+							check = false;
+				} catch (PortalException | SystemException e) {e.printStackTrace();	}
 			}
 		}
+		
+		JSONObject json = new JSONObject();
+		json.put("1", mtable);
+		json.put("2", ntable);
 				
 		if (check == true)
-			check = updateHead(headId, "gfbio_".concat(mtable.substring(6)).concat("_").concat(ntable.substring(6)), "relation", mtable, ntable,"","","","","","","","","","","","","","","","","","");
-		
-		System.out.println(check);
+			check =HeadLocalServiceUtil.updateHeadWithCells(headId, mtable.substring(6).concat("_").concat(ntable.substring(6)), "relation", json );
+
 		return check;
 	}
 */

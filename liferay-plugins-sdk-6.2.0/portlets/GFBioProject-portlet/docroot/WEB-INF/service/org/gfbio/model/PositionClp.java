@@ -74,6 +74,9 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 
 		attributes.put("positionID", getPositionID());
 		attributes.put("headID", getHeadID());
+		attributes.put("columnID", getColumnID());
+		attributes.put("rowID", getRowID());
+		attributes.put("content", getContent());
 
 		return attributes;
 	}
@@ -90,6 +93,24 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 
 		if (headID != null) {
 			setHeadID(headID);
+		}
+
+		Long columnID = (Long)attributes.get("columnID");
+
+		if (columnID != null) {
+			setColumnID(columnID);
+		}
+
+		Long rowID = (Long)attributes.get("rowID");
+
+		if (rowID != null) {
+			setRowID(rowID);
+		}
+
+		String content = (String)attributes.get("content");
+
+		if (content != null) {
+			setContent(content);
 		}
 	}
 
@@ -132,6 +153,75 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 				Method method = clazz.getMethod("setHeadID", long.class);
 
 				method.invoke(_positionRemoteModel, headID);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getColumnID() {
+		return _columnID;
+	}
+
+	@Override
+	public void setColumnID(long columnID) {
+		_columnID = columnID;
+
+		if (_positionRemoteModel != null) {
+			try {
+				Class<?> clazz = _positionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setColumnID", long.class);
+
+				method.invoke(_positionRemoteModel, columnID);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getRowID() {
+		return _rowID;
+	}
+
+	@Override
+	public void setRowID(long rowID) {
+		_rowID = rowID;
+
+		if (_positionRemoteModel != null) {
+			try {
+				Class<?> clazz = _positionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setRowID", long.class);
+
+				method.invoke(_positionRemoteModel, rowID);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getContent() {
+		return _content;
+	}
+
+	@Override
+	public void setContent(String content) {
+		_content = content;
+
+		if (_positionRemoteModel != null) {
+			try {
+				Class<?> clazz = _positionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setContent", String.class);
+
+				method.invoke(_positionRemoteModel, content);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -210,6 +300,9 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 
 		clone.setPositionID(getPositionID());
 		clone.setHeadID(getHeadID());
+		clone.setColumnID(getColumnID());
+		clone.setRowID(getRowID());
+		clone.setContent(getContent());
 
 		return clone;
 	}
@@ -268,12 +361,18 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{positionID=");
 		sb.append(getPositionID());
 		sb.append(", headID=");
 		sb.append(getHeadID());
+		sb.append(", columnID=");
+		sb.append(getColumnID());
+		sb.append(", rowID=");
+		sb.append(getRowID());
+		sb.append(", content=");
+		sb.append(getContent());
 		sb.append("}");
 
 		return sb.toString();
@@ -281,7 +380,7 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Position");
@@ -295,6 +394,18 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 			"<column><column-name>headID</column-name><column-value><![CDATA[");
 		sb.append(getHeadID());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>columnID</column-name><column-value><![CDATA[");
+		sb.append(getColumnID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>rowID</column-name><column-value><![CDATA[");
+		sb.append(getRowID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>content</column-name><column-value><![CDATA[");
+		sb.append(getContent());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -303,6 +414,9 @@ public class PositionClp extends BaseModelImpl<Position> implements Position {
 
 	private long _positionID;
 	private long _headID;
+	private long _columnID;
+	private long _rowID;
+	private String _content;
 	private BaseModel<?> _positionRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

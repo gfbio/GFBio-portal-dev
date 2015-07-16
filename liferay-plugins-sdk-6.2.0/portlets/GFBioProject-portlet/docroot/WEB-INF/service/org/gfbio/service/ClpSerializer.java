@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import org.gfbio.model.BasketClp;
-import org.gfbio.model.CellClp;
-import org.gfbio.model.Cell_HeadClp;
-import org.gfbio.model.Cell_PositionClp;
+import org.gfbio.model.ColumnClp;
 import org.gfbio.model.HeadClp;
 import org.gfbio.model.PositionClp;
 import org.gfbio.model.ProjectClp;
@@ -117,16 +115,8 @@ public class ClpSerializer {
 			return translateInputBasket(oldModel);
 		}
 
-		if (oldModelClassName.equals(CellClp.class.getName())) {
-			return translateInputCell(oldModel);
-		}
-
-		if (oldModelClassName.equals(Cell_HeadClp.class.getName())) {
-			return translateInputCell_Head(oldModel);
-		}
-
-		if (oldModelClassName.equals(Cell_PositionClp.class.getName())) {
-			return translateInputCell_Position(oldModel);
+		if (oldModelClassName.equals(ColumnClp.class.getName())) {
+			return translateInputColumn(oldModel);
 		}
 
 		if (oldModelClassName.equals(HeadClp.class.getName())) {
@@ -186,30 +176,10 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputCell(BaseModel<?> oldModel) {
-		CellClp oldClpModel = (CellClp)oldModel;
+	public static Object translateInputColumn(BaseModel<?> oldModel) {
+		ColumnClp oldClpModel = (ColumnClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getCellRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputCell_Head(BaseModel<?> oldModel) {
-		Cell_HeadClp oldClpModel = (Cell_HeadClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getCell_HeadRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputCell_Position(BaseModel<?> oldModel) {
-		Cell_PositionClp oldClpModel = (Cell_PositionClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getCell_PositionRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getColumnRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -350,80 +320,8 @@ public class ClpSerializer {
 			}
 		}
 
-		if (oldModelClassName.equals("org.gfbio.model.impl.CellImpl")) {
-			return translateOutputCell(oldModel);
-		}
-		else if (oldModelClassName.endsWith("Clp")) {
-			try {
-				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
-
-				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
-
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
-
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
-
-				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
-
-				Class<?> oldModelModelClass = oldModel.getModelClass();
-
-				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
-
-				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
-
-				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
-
-				return newModel;
-			}
-			catch (Throwable t) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to translate " + oldModelClassName, t);
-				}
-			}
-		}
-
-		if (oldModelClassName.equals("org.gfbio.model.impl.Cell_HeadImpl")) {
-			return translateOutputCell_Head(oldModel);
-		}
-		else if (oldModelClassName.endsWith("Clp")) {
-			try {
-				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
-
-				Method getClpSerializerClassMethod = oldModelClass.getMethod(
-						"getClpSerializerClass");
-
-				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
-
-				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
-
-				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-						BaseModel.class);
-
-				Class<?> oldModelModelClass = oldModel.getModelClass();
-
-				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-						oldModelModelClass.getSimpleName() + "RemoteModel");
-
-				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
-
-				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
-						oldRemoteModel);
-
-				return newModel;
-			}
-			catch (Throwable t) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Unable to translate " + oldModelClassName, t);
-				}
-			}
-		}
-
-		if (oldModelClassName.equals("org.gfbio.model.impl.Cell_PositionImpl")) {
-			return translateOutputCell_Position(oldModel);
+		if (oldModelClassName.equals("org.gfbio.model.impl.ColumnImpl")) {
+			return translateOutputColumn(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -831,16 +729,8 @@ public class ClpSerializer {
 			return new org.gfbio.NoSuchBasketException();
 		}
 
-		if (className.equals("org.gfbio.NoSuchCellException")) {
-			return new org.gfbio.NoSuchCellException();
-		}
-
-		if (className.equals("org.gfbio.NoSuchCell_HeadException")) {
-			return new org.gfbio.NoSuchCell_HeadException();
-		}
-
-		if (className.equals("org.gfbio.NoSuchCell_PositionException")) {
-			return new org.gfbio.NoSuchCell_PositionException();
+		if (className.equals("org.gfbio.NoSuchColumnException")) {
+			return new org.gfbio.NoSuchColumnException();
 		}
 
 		if (className.equals("org.gfbio.NoSuchHeadException")) {
@@ -888,32 +778,12 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputCell(BaseModel<?> oldModel) {
-		CellClp newModel = new CellClp();
+	public static Object translateOutputColumn(BaseModel<?> oldModel) {
+		ColumnClp newModel = new ColumnClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setCellRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputCell_Head(BaseModel<?> oldModel) {
-		Cell_HeadClp newModel = new Cell_HeadClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setCell_HeadRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputCell_Position(BaseModel<?> oldModel) {
-		Cell_PositionClp newModel = new Cell_PositionClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setCell_PositionRemoteModel(oldModel);
+		newModel.setColumnRemoteModel(oldModel);
 
 		return newModel;
 	}

@@ -35,9 +35,8 @@ import org.gfbio.model.Head;
 
 import org.gfbio.service.HeadLocalService;
 import org.gfbio.service.persistence.BasketPersistence;
-import org.gfbio.service.persistence.CellPersistence;
-import org.gfbio.service.persistence.Cell_HeadPersistence;
-import org.gfbio.service.persistence.Cell_PositionPersistence;
+import org.gfbio.service.persistence.ColumnPersistence;
+import org.gfbio.service.persistence.HeadFinder;
 import org.gfbio.service.persistence.HeadPersistence;
 import org.gfbio.service.persistence.PositionPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
@@ -338,172 +337,58 @@ public abstract class HeadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the cell local service.
+	 * Returns the column local service.
 	 *
-	 * @return the cell local service
+	 * @return the column local service
 	 */
-	public org.gfbio.service.CellLocalService getCellLocalService() {
-		return cellLocalService;
+	public org.gfbio.service.ColumnLocalService getColumnLocalService() {
+		return columnLocalService;
 	}
 
 	/**
-	 * Sets the cell local service.
+	 * Sets the column local service.
 	 *
-	 * @param cellLocalService the cell local service
+	 * @param columnLocalService the column local service
 	 */
-	public void setCellLocalService(
-		org.gfbio.service.CellLocalService cellLocalService) {
-		this.cellLocalService = cellLocalService;
+	public void setColumnLocalService(
+		org.gfbio.service.ColumnLocalService columnLocalService) {
+		this.columnLocalService = columnLocalService;
 	}
 
 	/**
-	 * Returns the cell remote service.
+	 * Returns the column remote service.
 	 *
-	 * @return the cell remote service
+	 * @return the column remote service
 	 */
-	public org.gfbio.service.CellService getCellService() {
-		return cellService;
+	public org.gfbio.service.ColumnService getColumnService() {
+		return columnService;
 	}
 
 	/**
-	 * Sets the cell remote service.
+	 * Sets the column remote service.
 	 *
-	 * @param cellService the cell remote service
+	 * @param columnService the column remote service
 	 */
-	public void setCellService(org.gfbio.service.CellService cellService) {
-		this.cellService = cellService;
+	public void setColumnService(org.gfbio.service.ColumnService columnService) {
+		this.columnService = columnService;
 	}
 
 	/**
-	 * Returns the cell persistence.
+	 * Returns the column persistence.
 	 *
-	 * @return the cell persistence
+	 * @return the column persistence
 	 */
-	public CellPersistence getCellPersistence() {
-		return cellPersistence;
+	public ColumnPersistence getColumnPersistence() {
+		return columnPersistence;
 	}
 
 	/**
-	 * Sets the cell persistence.
+	 * Sets the column persistence.
 	 *
-	 * @param cellPersistence the cell persistence
+	 * @param columnPersistence the column persistence
 	 */
-	public void setCellPersistence(CellPersistence cellPersistence) {
-		this.cellPersistence = cellPersistence;
-	}
-
-	/**
-	 * Returns the cell_ head local service.
-	 *
-	 * @return the cell_ head local service
-	 */
-	public org.gfbio.service.Cell_HeadLocalService getCell_HeadLocalService() {
-		return cell_HeadLocalService;
-	}
-
-	/**
-	 * Sets the cell_ head local service.
-	 *
-	 * @param cell_HeadLocalService the cell_ head local service
-	 */
-	public void setCell_HeadLocalService(
-		org.gfbio.service.Cell_HeadLocalService cell_HeadLocalService) {
-		this.cell_HeadLocalService = cell_HeadLocalService;
-	}
-
-	/**
-	 * Returns the cell_ head remote service.
-	 *
-	 * @return the cell_ head remote service
-	 */
-	public org.gfbio.service.Cell_HeadService getCell_HeadService() {
-		return cell_HeadService;
-	}
-
-	/**
-	 * Sets the cell_ head remote service.
-	 *
-	 * @param cell_HeadService the cell_ head remote service
-	 */
-	public void setCell_HeadService(
-		org.gfbio.service.Cell_HeadService cell_HeadService) {
-		this.cell_HeadService = cell_HeadService;
-	}
-
-	/**
-	 * Returns the cell_ head persistence.
-	 *
-	 * @return the cell_ head persistence
-	 */
-	public Cell_HeadPersistence getCell_HeadPersistence() {
-		return cell_HeadPersistence;
-	}
-
-	/**
-	 * Sets the cell_ head persistence.
-	 *
-	 * @param cell_HeadPersistence the cell_ head persistence
-	 */
-	public void setCell_HeadPersistence(
-		Cell_HeadPersistence cell_HeadPersistence) {
-		this.cell_HeadPersistence = cell_HeadPersistence;
-	}
-
-	/**
-	 * Returns the cell_ position local service.
-	 *
-	 * @return the cell_ position local service
-	 */
-	public org.gfbio.service.Cell_PositionLocalService getCell_PositionLocalService() {
-		return cell_PositionLocalService;
-	}
-
-	/**
-	 * Sets the cell_ position local service.
-	 *
-	 * @param cell_PositionLocalService the cell_ position local service
-	 */
-	public void setCell_PositionLocalService(
-		org.gfbio.service.Cell_PositionLocalService cell_PositionLocalService) {
-		this.cell_PositionLocalService = cell_PositionLocalService;
-	}
-
-	/**
-	 * Returns the cell_ position remote service.
-	 *
-	 * @return the cell_ position remote service
-	 */
-	public org.gfbio.service.Cell_PositionService getCell_PositionService() {
-		return cell_PositionService;
-	}
-
-	/**
-	 * Sets the cell_ position remote service.
-	 *
-	 * @param cell_PositionService the cell_ position remote service
-	 */
-	public void setCell_PositionService(
-		org.gfbio.service.Cell_PositionService cell_PositionService) {
-		this.cell_PositionService = cell_PositionService;
-	}
-
-	/**
-	 * Returns the cell_ position persistence.
-	 *
-	 * @return the cell_ position persistence
-	 */
-	public Cell_PositionPersistence getCell_PositionPersistence() {
-		return cell_PositionPersistence;
-	}
-
-	/**
-	 * Sets the cell_ position persistence.
-	 *
-	 * @param cell_PositionPersistence the cell_ position persistence
-	 */
-	public void setCell_PositionPersistence(
-		Cell_PositionPersistence cell_PositionPersistence) {
-		this.cell_PositionPersistence = cell_PositionPersistence;
+	public void setColumnPersistence(ColumnPersistence columnPersistence) {
+		this.columnPersistence = columnPersistence;
 	}
 
 	/**
@@ -559,6 +444,24 @@ public abstract class HeadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setHeadPersistence(HeadPersistence headPersistence) {
 		this.headPersistence = headPersistence;
+	}
+
+	/**
+	 * Returns the head finder.
+	 *
+	 * @return the head finder
+	 */
+	public HeadFinder getHeadFinder() {
+		return headFinder;
+	}
+
+	/**
+	 * Sets the head finder.
+	 *
+	 * @param headFinder the head finder
+	 */
+	public void setHeadFinder(HeadFinder headFinder) {
+		this.headFinder = headFinder;
 	}
 
 	/**
@@ -1140,30 +1043,20 @@ public abstract class HeadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected org.gfbio.service.BasketService basketService;
 	@BeanReference(type = BasketPersistence.class)
 	protected BasketPersistence basketPersistence;
-	@BeanReference(type = org.gfbio.service.CellLocalService.class)
-	protected org.gfbio.service.CellLocalService cellLocalService;
-	@BeanReference(type = org.gfbio.service.CellService.class)
-	protected org.gfbio.service.CellService cellService;
-	@BeanReference(type = CellPersistence.class)
-	protected CellPersistence cellPersistence;
-	@BeanReference(type = org.gfbio.service.Cell_HeadLocalService.class)
-	protected org.gfbio.service.Cell_HeadLocalService cell_HeadLocalService;
-	@BeanReference(type = org.gfbio.service.Cell_HeadService.class)
-	protected org.gfbio.service.Cell_HeadService cell_HeadService;
-	@BeanReference(type = Cell_HeadPersistence.class)
-	protected Cell_HeadPersistence cell_HeadPersistence;
-	@BeanReference(type = org.gfbio.service.Cell_PositionLocalService.class)
-	protected org.gfbio.service.Cell_PositionLocalService cell_PositionLocalService;
-	@BeanReference(type = org.gfbio.service.Cell_PositionService.class)
-	protected org.gfbio.service.Cell_PositionService cell_PositionService;
-	@BeanReference(type = Cell_PositionPersistence.class)
-	protected Cell_PositionPersistence cell_PositionPersistence;
+	@BeanReference(type = org.gfbio.service.ColumnLocalService.class)
+	protected org.gfbio.service.ColumnLocalService columnLocalService;
+	@BeanReference(type = org.gfbio.service.ColumnService.class)
+	protected org.gfbio.service.ColumnService columnService;
+	@BeanReference(type = ColumnPersistence.class)
+	protected ColumnPersistence columnPersistence;
 	@BeanReference(type = org.gfbio.service.HeadLocalService.class)
 	protected org.gfbio.service.HeadLocalService headLocalService;
 	@BeanReference(type = org.gfbio.service.HeadService.class)
 	protected org.gfbio.service.HeadService headService;
 	@BeanReference(type = HeadPersistence.class)
 	protected HeadPersistence headPersistence;
+	@BeanReference(type = HeadFinder.class)
+	protected HeadFinder headFinder;
 	@BeanReference(type = org.gfbio.service.PositionLocalService.class)
 	protected org.gfbio.service.PositionLocalService positionLocalService;
 	@BeanReference(type = org.gfbio.service.PositionService.class)

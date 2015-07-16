@@ -54,12 +54,11 @@ function showhide(j) {
 };
 
 function ENAradio(j){
-	radiohide(j);
-	if (j=="-11" || j=="-1011")
-		SubmitENA('-21', "show");
-	else
-		SubmitENA('-21', "hide");
-	
+	//radiohide(j);
+	for (i = -20; i>-29;i--)
+		SubmitENA(i, "hide");
+	console.log(j);
+	SubmitENA(j, "show");
 }
 
 function radiohide(j) {
@@ -193,6 +192,7 @@ function newProject(archivingURL, method, name, size, hide,  userID) {
 
 //Method to update a Row in Head/Position
 function updateTable (method, name, size, task, tab, path) {
+	console.log(method+ " "+name+" "+size+" "+task);
 	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task, false);
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }

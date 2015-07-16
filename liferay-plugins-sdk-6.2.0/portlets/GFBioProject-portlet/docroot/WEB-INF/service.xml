@@ -89,33 +89,33 @@
 	
 	
 	
-	<!-- Head & Position Tables -->
-
-
-	<!-- Cell -->
-	<entity name="Cell" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="cellID" 			type="long" 		primary="true" />
-		<column name="content" 			type="String" />
-		<column name="task" 			type="String" />
-
-		<order by="asc">	<order-column name="content" />	</order>
-
-		<finder name="CellId" 			return-type="cell">			<finder-column name="cellID" />										</finder>
-		<finder name="Content" 			return-type="cell">			<finder-column name="content" />									</finder>
-		<finder name="Task"				return-type="Collection">	<finder-column name="task" />										</finder>	
-	</entity>
+	<!-- Head, Column & Position Tables -->
 
 	<!-- Head -->
 	<entity name="Head" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="headID" 			type="long" 		primary="true" />
-		<column name="name" 			type="String" />
-		<column name="task" 			type="String" />
+		<column name="table_name" 		type="String" />
+		<column name="table_type" 		type="String" />
 
-		<order by="asc">				<order-column name="name" />	</order>
+		<order by="asc">				<order-column name="table_name" />	</order>
 
 		<finder name="HeadId" 		return-type="head">					<finder-column name="headID" />				</finder>
-		<finder name="Name" 		return-type="head">					<finder-column name="name" />				</finder>
-		<finder name="Task"			return-type="Collection">			<finder-column name="task" />				</finder>
+		<finder name="TableName" 	return-type="head">					<finder-column name="table_name" />				</finder>
+		<finder name="TableType"	return-type="Collection">			<finder-column name="table_type" />				</finder>
+	</entity>
+
+
+	<!-- Column -->
+	<entity name="Column" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="columnID"			type="long" 		primary="true" />
+		<column name="headID" 			type="long" />
+		<column name="column_name" 			type="String" />
+
+		<order by="asc">	<order-column name="columnID" />	</order>
+
+		<finder name="ColumnId" 		return-type="Column">		<finder-column name="columnID" />			</finder>
+		<finder name="ColumnName" 		return-type="Colection">	<finder-column name="column_name" />				</finder>
+		<finder name="HeadId"			return-type="Collection">	<finder-column name="headID" />				</finder>	
 	</entity>
 
 
@@ -123,37 +123,20 @@
 	<entity name="Position" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="positionID" 			type="long" 		primary="true" />
 		<column name="headID" 				type="long" />
+		<column name="columnID" 			type="long" />
+		<column name="rowID" 				type="long" />
+		<column name="content" 				type="String" />
 
 		<order by="asc">	<order-column name="positionID" />	</order>
 
-		<finder name="PositionId" 	return-type="Position">				<finder-column name="positionID" />			</finder>
-		<finder name="HeadId" 		return-type="Collection">			<finder-column name="headID" />				</finder>
+		<finder name="PositionId" 		return-type="Position">				<finder-column name="positionID" />											</finder>
+		<finder name="TableIds" 		return-type="Position">				<finder-column name="columnID" />	<finder-column name="rowID" />			</finder>
+		<finder name="HeadId" 			return-type="Collection">			<finder-column name="headID" />												</finder>
+		<finder name="ColumnId"			return-type="Collection">			<finder-column name="columnID" />											</finder>
+		<finder name="RowId"			return-type="Collection">			<finder-column name="rowID" />												</finder>
+		<finder name="Content" 			return-type="Collection">			<finder-column name="content" />												</finder>
+		<finder name="ContentOfColumn"	return-type="Collection">			<finder-column name="content" />		<finder-column name="columnID" />		</finder>
 	</entity>
-	
-	<!-- Relationship between Cell and Head   -->
-	<entity name="Cell_Head" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="cellID"				type="long"		primary="true" />
-		<column name="headID" 				type="long" 	primary="true" />
-		<column name="column" 				type="int" />
-
-		<finder name="CellId"				return-type="Collection">		<finder-column name="cellID" />											</finder>
-		<finder name="HeadId" 				return-type="Collection">		<finder-column name="headID" />											</finder>
-		<finder name="findByPrimaryKey" 	return-type="Cell_Head">		<finder-column	name="cellID" />	<finder-column	name="headID" />	</finder>
-		<finder name="HeadIdWithColumn"		return-type="Cell_Head">		<finder-column	name="headID" />	<finder-column	name="column" />	</finder>
-	</entity>
-	
-	<!-- Relationship between Cell and Position   -->
-	<entity name="Cell_Position" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="cellID"				type="long"		primary="true" />
-		<column name="positionID" 			type="long" 	primary="true" />
-		<column name="column" 				type="int" />
-
-		<finder name="CellId"				return-type="Collection">		<finder-column  name="cellID" />											</finder>
-		<finder name="PositionId"			return-type="Collection">		<finder-column  name="positionID" />										</finder>
-		<finder name="findByPrimaryKey" 	return-type="Cell_Position">	<finder-column	name="cellID" />		<finder-column	name="positionID" />	</finder>
-		<finder name="PositionIdWithColumn"	return-type="Cell_Position">	<finder-column	name="positionID" />	<finder-column	name="column" />	</finder>
-	</entity>
-
 
 
 	<!-- n to m tables -->

@@ -21,10 +21,10 @@ package org.gfbio.model.impl;
  * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gfbio.model.Head} interface.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  */
 public class HeadImpl extends HeadBaseImpl {
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a head model instance should use the {@link org.gfbio.model.Head} interface instead.

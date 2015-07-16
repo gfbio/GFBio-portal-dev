@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -63,9 +64,12 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 	public static final String TABLE_NAME = "gfbio_Position";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "positionID", Types.BIGINT },
-			{ "headID", Types.BIGINT }
+			{ "headID", Types.BIGINT },
+			{ "columnID", Types.BIGINT },
+			{ "rowID", Types.BIGINT },
+			{ "content", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Position (positionID LONG not null primary key,headID LONG)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Position (positionID LONG not null primary key,headID LONG,columnID LONG,rowID LONG,content VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Position";
 	public static final String ORDER_BY_JPQL = " ORDER BY position.positionID ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Position.positionID ASC";
@@ -81,8 +85,11 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.org.gfbio.model.Position"),
 			true);
-	public static long HEADID_COLUMN_BITMASK = 1L;
-	public static long POSITIONID_COLUMN_BITMASK = 2L;
+	public static long COLUMNID_COLUMN_BITMASK = 1L;
+	public static long CONTENT_COLUMN_BITMASK = 2L;
+	public static long HEADID_COLUMN_BITMASK = 4L;
+	public static long POSITIONID_COLUMN_BITMASK = 8L;
+	public static long ROWID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -99,6 +106,9 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 
 		model.setPositionID(soapModel.getPositionID());
 		model.setHeadID(soapModel.getHeadID());
+		model.setColumnID(soapModel.getColumnID());
+		model.setRowID(soapModel.getRowID());
+		model.setContent(soapModel.getContent());
 
 		return model;
 	}
@@ -165,6 +175,9 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 
 		attributes.put("positionID", getPositionID());
 		attributes.put("headID", getHeadID());
+		attributes.put("columnID", getColumnID());
+		attributes.put("rowID", getRowID());
+		attributes.put("content", getContent());
 
 		return attributes;
 	}
@@ -181,6 +194,24 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 
 		if (headID != null) {
 			setHeadID(headID);
+		}
+
+		Long columnID = (Long)attributes.get("columnID");
+
+		if (columnID != null) {
+			setColumnID(columnID);
+		}
+
+		Long rowID = (Long)attributes.get("rowID");
+
+		if (rowID != null) {
+			setRowID(rowID);
+		}
+
+		String content = (String)attributes.get("content");
+
+		if (content != null) {
+			setContent(content);
 		}
 	}
 
@@ -230,6 +261,78 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 		return _originalHeadID;
 	}
 
+	@JSON
+	@Override
+	public long getColumnID() {
+		return _columnID;
+	}
+
+	@Override
+	public void setColumnID(long columnID) {
+		_columnBitmask |= COLUMNID_COLUMN_BITMASK;
+
+		if (!_setOriginalColumnID) {
+			_setOriginalColumnID = true;
+
+			_originalColumnID = _columnID;
+		}
+
+		_columnID = columnID;
+	}
+
+	public long getOriginalColumnID() {
+		return _originalColumnID;
+	}
+
+	@JSON
+	@Override
+	public long getRowID() {
+		return _rowID;
+	}
+
+	@Override
+	public void setRowID(long rowID) {
+		_columnBitmask |= ROWID_COLUMN_BITMASK;
+
+		if (!_setOriginalRowID) {
+			_setOriginalRowID = true;
+
+			_originalRowID = _rowID;
+		}
+
+		_rowID = rowID;
+	}
+
+	public long getOriginalRowID() {
+		return _originalRowID;
+	}
+
+	@JSON
+	@Override
+	public String getContent() {
+		if (_content == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _content;
+		}
+	}
+
+	@Override
+	public void setContent(String content) {
+		_columnBitmask |= CONTENT_COLUMN_BITMASK;
+
+		if (_originalContent == null) {
+			_originalContent = _content;
+		}
+
+		_content = content;
+	}
+
+	public String getOriginalContent() {
+		return GetterUtil.getString(_originalContent);
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -263,6 +366,9 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 
 		positionImpl.setPositionID(getPositionID());
 		positionImpl.setHeadID(getHeadID());
+		positionImpl.setColumnID(getColumnID());
+		positionImpl.setRowID(getRowID());
+		positionImpl.setContent(getContent());
 
 		positionImpl.resetOriginalValues();
 
@@ -329,6 +435,16 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 
 		positionModelImpl._setOriginalHeadID = false;
 
+		positionModelImpl._originalColumnID = positionModelImpl._columnID;
+
+		positionModelImpl._setOriginalColumnID = false;
+
+		positionModelImpl._originalRowID = positionModelImpl._rowID;
+
+		positionModelImpl._setOriginalRowID = false;
+
+		positionModelImpl._originalContent = positionModelImpl._content;
+
 		positionModelImpl._columnBitmask = 0;
 	}
 
@@ -340,17 +456,35 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 
 		positionCacheModel.headID = getHeadID();
 
+		positionCacheModel.columnID = getColumnID();
+
+		positionCacheModel.rowID = getRowID();
+
+		positionCacheModel.content = getContent();
+
+		String content = positionCacheModel.content;
+
+		if ((content != null) && (content.length() == 0)) {
+			positionCacheModel.content = null;
+		}
+
 		return positionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{positionID=");
 		sb.append(getPositionID());
 		sb.append(", headID=");
 		sb.append(getHeadID());
+		sb.append(", columnID=");
+		sb.append(getColumnID());
+		sb.append(", rowID=");
+		sb.append(getRowID());
+		sb.append(", content=");
+		sb.append(getContent());
 		sb.append("}");
 
 		return sb.toString();
@@ -358,7 +492,7 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Position");
@@ -371,6 +505,18 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 		sb.append(
 			"<column><column-name>headID</column-name><column-value><![CDATA[");
 		sb.append(getHeadID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>columnID</column-name><column-value><![CDATA[");
+		sb.append(getColumnID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>rowID</column-name><column-value><![CDATA[");
+		sb.append(getRowID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>content</column-name><column-value><![CDATA[");
+		sb.append(getContent());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -388,6 +534,14 @@ public class PositionModelImpl extends BaseModelImpl<Position>
 	private long _headID;
 	private long _originalHeadID;
 	private boolean _setOriginalHeadID;
+	private long _columnID;
+	private long _originalColumnID;
+	private boolean _setOriginalColumnID;
+	private long _rowID;
+	private long _originalRowID;
+	private boolean _setOriginalRowID;
+	private String _content;
+	private String _originalContent;
 	private long _columnBitmask;
 	private Position _escapedModel;
 }

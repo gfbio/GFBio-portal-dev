@@ -249,8 +249,73 @@ public interface PositionLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public void deletePositionById(long positionId);
+
+	public void deletePositionsByColumnId(long columnId);
+
+	public void deleteCompletePositionsByHeadId(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deletePositionsByRowId(long rowId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCountOfColumns(long rowId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCountOfRows(long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.Position getPositionById(long positionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Position> getPositionsByColumnId(
+		long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Position> getPositionsByHeadId(
+		long headId) throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Position> getPositionsByRowId(
+		long rowId) throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getPositionInformationAsJSONByRowId(
+		long rowId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getPositionsAsJSONByRowId(long rowId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getColumnIdById(long positionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Position> getPositionsByContent(
+		java.lang.String content)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Position> getPositionsByContentOfColumn(
+		java.lang.String content, long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getRowIdById(long positionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getContentByTableIds(long columnId, int rowId);
+
+	public java.lang.Boolean updatePosition(long positionId, long headId,
+		long columnId, long rowId, java.lang.String content);
+
+	public java.lang.Boolean updatePosition(org.json.simple.JSONObject json);
 }

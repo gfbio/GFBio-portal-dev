@@ -9,29 +9,22 @@
 		<field name="basketJSON" type="String" />
 		<field name="queryJSON" type="String" />
 	</model>
-	<model name="org.gfbio.model.Cell">
-		<field name="cellID" type="long" />
-		<field name="content" type="String" />
-		<field name="task" type="String" />
-	</model>
-	<model name="org.gfbio.model.Cell_Head">
-		<field name="cellID" type="long" />
+	<model name="org.gfbio.model.Column">
+		<field name="columnID" type="long" />
 		<field name="headID" type="long" />
-		<field name="column" type="int" />
-	</model>
-	<model name="org.gfbio.model.Cell_Position">
-		<field name="cellID" type="long" />
-		<field name="positionID" type="long" />
-		<field name="column" type="int" />
+		<field name="column_name" type="String" />
 	</model>
 	<model name="org.gfbio.model.Head">
 		<field name="headID" type="long" />
-		<field name="name" type="String" />
-		<field name="task" type="String" />
+		<field name="table_name" type="String" />
+		<field name="table_type" type="String" />
 	</model>
 	<model name="org.gfbio.model.Position">
 		<field name="positionID" type="long" />
 		<field name="headID" type="long" />
+		<field name="columnID" type="long" />
+		<field name="rowID" type="long" />
+		<field name="content" type="String" />
 	</model>
 	<model name="org.gfbio.model.Project">
 		<field name="projectID" type="long" />

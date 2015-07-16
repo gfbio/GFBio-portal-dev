@@ -22,37 +22,11 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.CellModelImpl">
+	<mapped-superclass class="org.gfbio.model.impl.ColumnModelImpl">
 		<attributes>
-			<id name="cellID" />
-			<basic name="content" />
-			<basic name="task" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.Cell_HeadModelImpl">
-		<id-class class="org.gfbio.service.persistence.Cell_HeadPK" />
-		<attributes>
-			<id name="cellID" />
-			<id name="headID" />
-			<basic name="column">
-				<column name="COLUMN_" />
-			</basic>
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.Cell_PositionModelImpl">
-		<id-class class="org.gfbio.service.persistence.Cell_PositionPK" />
-		<attributes>
-			<id name="cellID" />
-			<id name="positionID" />
-			<basic name="column">
-				<column name="COLUMN_" />
-			</basic>
+			<id name="columnID" />
+			<basic name="headID" />
+			<basic name="column_name" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -61,8 +35,8 @@
 	<mapped-superclass class="org.gfbio.model.impl.HeadModelImpl">
 		<attributes>
 			<id name="headID" />
-			<basic name="name" />
-			<basic name="task" />
+			<basic name="table_name" />
+			<basic name="table_type" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -72,6 +46,9 @@
 		<attributes>
 			<id name="positionID" />
 			<basic name="headID" />
+			<basic name="columnID" />
+			<basic name="rowID" />
+			<basic name="content" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -161,16 +138,8 @@
 		<table name="gfbio_Basket" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.CellImpl" name="Cell">
-		<table name="gfbio_Cell" />
-		<attributes />
-	</entity>
-	<entity class="org.gfbio.model.impl.Cell_HeadImpl" name="Cell_Head">
-		<table name="gfbio_Cell_Head" />
-		<attributes />
-	</entity>
-	<entity class="org.gfbio.model.impl.Cell_PositionImpl" name="Cell_Position">
-		<table name="gfbio_Cell_Position" />
+	<entity class="org.gfbio.model.impl.ColumnImpl" name="Column">
+		<table name="gfbio_Column" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.HeadImpl" name="Head">

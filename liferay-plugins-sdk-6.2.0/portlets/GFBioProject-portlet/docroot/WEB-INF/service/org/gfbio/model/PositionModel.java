@@ -14,6 +14,7 @@
 
 package org.gfbio.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -83,6 +84,49 @@ public interface PositionModel extends BaseModel<Position> {
 	 * @param headID the head i d of this position
 	 */
 	public void setHeadID(long headID);
+
+	/**
+	 * Returns the column i d of this position.
+	 *
+	 * @return the column i d of this position
+	 */
+	public long getColumnID();
+
+	/**
+	 * Sets the column i d of this position.
+	 *
+	 * @param columnID the column i d of this position
+	 */
+	public void setColumnID(long columnID);
+
+	/**
+	 * Returns the row i d of this position.
+	 *
+	 * @return the row i d of this position
+	 */
+	public long getRowID();
+
+	/**
+	 * Sets the row i d of this position.
+	 *
+	 * @param rowID the row i d of this position
+	 */
+	public void setRowID(long rowID);
+
+	/**
+	 * Returns the content of this position.
+	 *
+	 * @return the content of this position
+	 */
+	@AutoEscape
+	public String getContent();
+
+	/**
+	 * Sets the content of this position.
+	 *
+	 * @param content the content of this position
+	 */
+	public void setContent(String content);
 
 	@Override
 	public boolean isNew();

@@ -76,6 +76,42 @@
 		<parameter name="wsdlServicePort" value="Plugin_gfbio_BasketService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
+	<service name="Plugin_gfbio_CellService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.CellServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="CellServiceSoap" />
+		<parameter name="wsdlServiceElement" value="CellServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_CellService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Cell_HeadService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Cell_HeadServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Cell_HeadServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Cell_HeadServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Cell_HeadService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_Cell_PositionService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.Cell_PositionServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="Cell_PositionServiceSoap" />
+		<parameter name="wsdlServiceElement" value="Cell_PositionServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_Cell_PositionService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_ColumnService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.ColumnServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ColumnServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ColumnServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_ColumnService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
 	<service name="Plugin_gfbio_HeadService" provider="java:RPC" style="rpc" use="encoded">
 		<parameter name="allowedMethods" value="*" />
 		<parameter name="className" value="org.gfbio.service.http.HeadServiceSoap" />
@@ -164,7 +200,13 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
 	<service name="Plugin_gfbio_UserExtensionService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getUserAsJsonById" qname="operNS:getUserAsJsonById" returnQName="getUserAsJsonByIdReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getUserById" qname="operNS:getUserById" returnQName="getUserByIdReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getUserAsJsonById getUserById" />
 		<parameter name="className" value="org.gfbio.service.http.UserExtensionServiceSoap" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="UserExtensionServiceSoap" />

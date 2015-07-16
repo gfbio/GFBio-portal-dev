@@ -271,10 +271,102 @@ public class PositionLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static void deletePositionById(long positionId) {
+		getService().deletePositionById(positionId);
+	}
+
+	public static void deletePositionsByColumnId(long columnId) {
+		getService().deletePositionsByColumnId(columnId);
+	}
+
+	public static void deleteCompletePositionsByHeadId(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCompletePositionsByHeadId(headId);
+	}
+
+	public static void deletePositionsByRowId(long rowId) {
+		getService().deletePositionsByRowId(rowId);
+	}
+
+	public static int getCountOfColumns(long rowId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCountOfColumns(rowId);
+	}
+
+	public static int getCountOfRows(long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCountOfRows(columnId);
+	}
+
 	public static org.gfbio.model.Position getPositionById(long positionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException {
 		return getService().getPositionById(positionId);
+	}
+
+	public static java.util.List<org.gfbio.model.Position> getPositionsByColumnId(
+		long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPositionsByColumnId(columnId);
+	}
+
+	public static java.util.List<org.gfbio.model.Position> getPositionsByHeadId(
+		long headId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPositionsByHeadId(headId);
+	}
+
+	public static java.util.List<org.gfbio.model.Position> getPositionsByRowId(
+		long rowId) throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPositionsByRowId(rowId);
+	}
+
+	public static org.json.simple.JSONObject getPositionInformationAsJSONByRowId(
+		long rowId) {
+		return getService().getPositionInformationAsJSONByRowId(rowId);
+	}
+
+	public static org.json.simple.JSONObject getPositionsAsJSONByRowId(
+		long rowId) {
+		return getService().getPositionsAsJSONByRowId(rowId);
+	}
+
+	public static long getColumnIdById(long positionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getColumnIdById(positionId);
+	}
+
+	public static java.util.List<org.gfbio.model.Position> getPositionsByContent(
+		java.lang.String content)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPositionsByContent(content);
+	}
+
+	public static java.util.List<org.gfbio.model.Position> getPositionsByContentOfColumn(
+		java.lang.String content, long columnId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPositionsByContentOfColumn(content, columnId);
+	}
+
+	public static long getRowIdById(long positionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRowIdById(positionId);
+	}
+
+	public static java.lang.String getContentByTableIds(long columnId, int rowId) {
+		return getService().getContentByTableIds(columnId, rowId);
+	}
+
+	public static java.lang.Boolean updatePosition(long positionId,
+		long headId, long columnId, long rowId, java.lang.String content) {
+		return getService()
+				   .updatePosition(positionId, headId, columnId, rowId, content);
+	}
+
+	public static java.lang.Boolean updatePosition(
+		org.json.simple.JSONObject json) {
+		return getService().updatePosition(json);
 	}
 
 	public static void clearService() {

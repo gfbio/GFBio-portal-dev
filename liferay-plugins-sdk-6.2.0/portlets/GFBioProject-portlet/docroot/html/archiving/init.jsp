@@ -66,6 +66,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 	
 	//ENA Widget Publish
 	function SubmitENA(hidecode, showhide) {
+		console.log(hidecode);
 		var toSubmit = {
 			     "hidecode" : hidecode,
 			     "showhide" : showhide,

@@ -32,6 +32,9 @@ public class PositionSoap implements Serializable {
 
 		soapModel.setPositionID(model.getPositionID());
 		soapModel.setHeadID(model.getHeadID());
+		soapModel.setColumnID(model.getColumnID());
+		soapModel.setRowID(model.getRowID());
+		soapModel.setContent(model.getContent());
 
 		return soapModel;
 	}
@@ -100,6 +103,33 @@ public class PositionSoap implements Serializable {
 		_headID = headID;
 	}
 
+	public long getColumnID() {
+		return _columnID;
+	}
+
+	public void setColumnID(long columnID) {
+		_columnID = columnID;
+	}
+
+	public long getRowID() {
+		return _rowID;
+	}
+
+	public void setRowID(long rowID) {
+		_rowID = rowID;
+	}
+
+	public String getContent() {
+		return _content;
+	}
+
+	public void setContent(String content) {
+		_content = content;
+	}
+
 	private long _positionID;
 	private long _headID;
+	private long _columnID;
+	private long _rowID;
+	private String _content;
 }

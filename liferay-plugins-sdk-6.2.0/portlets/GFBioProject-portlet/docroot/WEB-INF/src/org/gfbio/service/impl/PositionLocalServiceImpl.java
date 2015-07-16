@@ -14,18 +14,17 @@
 
 package org.gfbio.service.impl;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
-
 import java.util.List;
 
-import org.gfbio.NoSuchHeadException;
-import org.gfbio.NoSuchPositionException;
-import org.gfbio.model.Head;
-import org.gfbio.model.Position;
-import org.gfbio.service.HeadLocalServiceUtil;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
+import org.gfbio.NoSuchPositionException;
+import org.gfbio.model.Position;
+import org.gfbio.service.PositionLocalServiceUtil;
 import org.gfbio.service.base.PositionLocalServiceBaseImpl;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the position local service.
@@ -45,168 +44,204 @@ import org.gfbio.service.base.PositionLocalServiceBaseImpl;
 public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
 
+	//delete position 
+	public void deletePositionById (long positionId)  {
+		try {
+			PositionLocalServiceUtil.deletePosition(positionId);
+		} catch (PortalException | SystemException e) {e.printStackTrace();	}
+	}
 
+	
+	//delete positions of a specific column
+	public void deletePositionsByColumnId (long columnId){
+		
+		List <Position> positionList = null;
+		try {
+			positionList = PositionLocalServiceUtil.getPositionsByColumnId(columnId);
+		} catch (SystemException e) {e.printStackTrace();}
+		
+		if (positionList != null)
+			for (int i =0; i < positionList.size();i++)
+				PositionLocalServiceUtil.deletePositionById(positionList.get(i).getRowID());
+	}
+	
+	
+	//delete cells/relations of positions
+	public void deleteCompletePositionsByHeadId(long headId) throws SystemException{
+		List <Position> positionList = PositionLocalServiceUtil.getPositionsByHeadId(headId);
+		for (int i =0; i<positionList.size();i++){
+			PositionLocalServiceUtil.deletePositionById(positionList.get(i).getPositionID());
+		}
+	}
+	
+	
+	//delete positions of a specific row
+	public void deletePositionsByRowId (long rowId){
+		
+		List <Position> positionList = null;
+		try {
+			positionList = PositionLocalServiceUtil.getPositionsByRowId(rowId);
+		} catch (SystemException e) {e.printStackTrace();}
+		
+		if (positionList != null)
+			for (int i =0; i < positionList.size();i++)
+				PositionLocalServiceUtil.deletePositionById(positionList.get(i).getRowID());
+	}
+		
+	
+	//get the count of columns from a specific row
+	public int getCountOfColumns(long rowId) throws SystemException{
+		return positionPersistence.findByRowId(rowId).size();
+	}	
+	
+	
+	//get the count of rows from a specific column 
+	public int getCountOfRows(long columnId) throws SystemException{
+		return positionPersistence.findByColumnId(columnId).size();
+	}
+		
+	
+	//get a position object by the position id
 	public Position getPositionById(long positionId) throws NoSuchPositionException, SystemException {
 		return positionPersistence.findByPositionId(positionId);
 	}	
-
-/*
-
-	public List<Position> getPositionsByColumnName(String content, int i) throws SystemException{
-		
-		return positionPersistence.findByColumn02(content);
-	}
-	
-	public String getColumnContent(long positionId, int i) throws SystemException {
-		Position position = null;
-
-		try {
-			position = getPositionbyId(positionId);
-		} catch (NoSuchPositionException e) {e.printStackTrace();}
-		String column = "";
-		if (i == 1)column = position.getColumn01(); else
-			if (i == 2)column = position.getColumn02(); else
-				if (i == 3)column = position.getColumn03(); else
-					if (i == 4)column = position.getColumn04(); else
-						if (i == 5)column = position.getColumn05(); else
-							if (i == 6)column = position.getColumn06(); else
-								if (i == 7)column = position.getColumn07(); else
-									if (i == 8)column = position.getColumn08(); else
-										if (i == 9)column = position.getColumn09(); else
-											if (i == 10)column = position.getColumn10(); else
-												if (i == 11)column = position.getColumn11(); else
-													if (i == 12)column = position.getColumn12(); else
-														if (i == 13)column = position.getColumn13(); else
-															if (i == 14)column = position.getColumn14(); else
-																if (i == 15)column = position.getColumn15(); else
-																	if (i == 16)column = position.getColumn16(); else
-																		if (i == 17)column = position.getColumn17(); else
-																			if (i == 18)column = position.getColumn18(); else
-																				if (i == 19)column = position.getColumn19(); else
-																					if (i == 20)column = position.getColumn20();
-		return column;
-	}
-	
-
-	
-	public String[] getNameArray(long headId) throws NoSuchHeadException {
-
-		
-		List<Position> positionList;
-		String[] names = null;
-		try {
-			positionList = getPositionsbyHeadId(headId);
-			names = new String[positionList.size()];
 			
-			for (int j =1;j<= 20;j++)
-				if (HeadLocalServiceUtil.getColumnName(headId, j).trim().equals("name"))
-					if (positionList!= null)
-						for (int i = 0; i<positionList.size(); i++)
-							names[i] = getColumnContent(positionList.get(i).getPositionID(),j);
-		} catch (SystemException e1) {e1.printStackTrace();	}
-
-		return names;
-	}
-
-	public Position getPositionbyId(long positionId) throws NoSuchPositionException, SystemException {
-		return positionPersistence.findByPositionID(positionId);
+	
+	//get a List of positions of a specific head
+	public List<Position> getPositionsByColumnId(long columnId) throws SystemException {
+		return positionPersistence.findByColumnId(columnId);
 	}
 	
-	public Position getPositionByHeadIdAndName(long headId, String name) throws SystemException {
-		List<Position> positionList;
-		Position position = null;
-		positionList = getPositionsbyHeadId(headId);
-		for (int i =0; i < positionList.size();i++)
-			if (name.equals(positionList.get(i).getColumn01()))
-				position = positionList.get(i);
-		return position;
+	
+	//get a List of positions of a specific head
+	public List<Position> getPositionsByHeadId(long headId) throws SystemException {
+		return positionPersistence.findByHeadId(headId);
 	}
 
-	public List<Position> getPositionsbyHeadId(long headId) throws SystemException {
-		return positionPersistence.findByHeadID(headId);
-	}
-
-	public String[][] getTable(long headID) throws NoSuchHeadException, SystemException {
-
-		List<Position> rows = positionPersistence.findByHeadID(headID);
-		String[][] table = new String[(1 + HeadLocalServiceUtil.getColumnCount(headID))][(rows.size()+1)];
-
-		table[0][0]= "ID";
-
-		for (int j = 1; j < table.length; j++)
-			table[j][0]= HeadLocalServiceUtil.getColumnName(headID, j);
-
-		for (int i = 1; i < (table[0].length); i++) {
-			for (int j = 0; j < table.length; j++)
-
-				if (j == 0)
-					table[j][i] = Long.toString(rows.get(i-1).getPositionID());
-				else
-					table[j][i] = getColumnContent(rows.get(i-1).getPositionID(), j);
-		}
-
-		return table;
+	
+	// get a List of Positions with a specific content in a specific column
+	public List<Position> getPositionsByRowId(long rowId) throws SystemException{
+		return positionPersistence.findByRowId(rowId);
 	}
 	
-
-
-	public Boolean updatePosition(long positionID, long headID, String column01, String column02, String column03, String column04, String column05, String column06, String column07, String column08, String column09, String column10, String column11, String column12, String column13, String column14, String column15, String column16, String column17, String column18, String column19, String column20)throws SystemException {
+	
+	//get the basic Information of the Positions of a specific row as JSON
+	@SuppressWarnings("unchecked")
+	public JSONObject getPositionInformationAsJSONByRowId (long rowId){
+	
+		JSONObject json = new JSONObject();
+		List <Position> positionList = null;
 		
-		Boolean check = true;
+		try {
+			positionList = PositionLocalServiceUtil.getPositionsByRowId(rowId);
+		} catch (SystemException e) {e.printStackTrace();}
+		
+		if (positionList != null)
+			for(int i =0;i<positionList.size();i++)
+				json.put(Long.toString(positionList.get(i).getColumnID()), Long.toString(positionList.get(i).getPositionID()));
+		
+		return json;
+	}
+	
+		
+	//get the basic Information of the Positions of a specific row as JSON
+	@SuppressWarnings("unchecked")
+	public JSONObject getPositionsAsJSONByRowId (long rowId){
+	
+		JSONObject json = new JSONObject();
+		List <Position> positionList = null;
+		
+		try {
+			positionList = PositionLocalServiceUtil.getPositionsByRowId(rowId);
+		} catch (SystemException e) {e.printStackTrace();}
+		
+		if (positionList != null)
+			for(int i =0;i<positionList.size();i++){
+				JSONObject subJson = new JSONObject();
+				subJson.put("headId", Long.toString(positionList.get(i).getHeadID()));
+				subJson.put("columnId", Long.toString(positionList.get(i).getColumnID()));
+				subJson.put("rowId", Long.toString(positionList.get(i).getRowID()));
+				subJson.put("content", positionList.get(i).getContent());
+				json.put(Long.toString(positionList.get(i).getPositionID()), subJson);
+			}
+		return json;
+	}
+	
+	
+	// get the columnId of a specific position.
+	public long getColumnIdById(long positionId) throws SystemException, PortalException{
+		return PositionLocalServiceUtil.getPosition(positionId).getColumnID();
+	}
+	
+	
+	// get a List of Positions with a specific content
+	public List<Position> getPositionsByContent(String content) throws SystemException{
+		return positionPersistence.findByContent(content);
+	}
+	
+	
+	// get a List of Positions with a specific content in a specific column
+	public List<Position> getPositionsByContentOfColumn(String content, long columnId) throws SystemException{
+		return positionPersistence.findByContentOfColumn(content, columnId);
+	}
+	
+	
+	// get the columnId of a specific position.
+	public long getRowIdById(long positionId) throws SystemException, PortalException{
+		return PositionLocalServiceUtil.getPosition(positionId).getRowID();
+	}
+
+	
+	//get Content of a Cell in a specific position and column
+	public String getContentByTableIds(long columnId, int rowId)  {
+		try {
+			return positionPersistence.findByTableIds(columnId, rowId).getContent();
+		} catch (NoSuchPositionException | SystemException e) {e.printStackTrace();}
+		return null;
+	}
+	
+	
+	//update or build a new the position
+	public Boolean updatePosition (long positionId, long headId, long columnId, long rowId, String content){
+		
+		Boolean check = false;
 		Position position = null;
-		Head head = null;
 
 		try {
-			position = positionPersistence.findByPositionID(positionID);
-		} catch (NoSuchPositionException e) {e.printStackTrace();}
+			position = PositionLocalServiceUtil.getPosition(positionId);
+		} catch (PortalException | SystemException e) {e.printStackTrace();	}
 
-		try {
-			head = headPersistence.findByHeadID(headID);
-		} catch (NoSuchHeadException e) {e.printStackTrace();}
-
-		if (head != null) {
-
-			int columncount = 0;
+		// if it true, then must be build a new position with a new primary keay else update the position
+		if (position == null)
 			try {
-				columncount = HeadLocalServiceUtil.getColumnCount(headID);
-			} catch (NoSuchHeadException e) {e.printStackTrace();}
-			
-			//create new position
-			if (position == null)
 				position = positionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-			//update position
-			position.setHeadID(headID);
-
-			if (columncount >= 1){ position.setColumn01(column01);
-				if (columncount >= 2){ position.setColumn02(column02);
-					if (columncount >= 3){ position.setColumn03(column03);
-						if (columncount >= 4){ position.setColumn04(column04);
-							if (columncount >= 5){ position.setColumn05(column05);
-								if (columncount >= 6){ position.setColumn06(column06);
-									if (columncount >= 7){ position.setColumn07(column07);
-										if (columncount >= 8){ position.setColumn08(column08);
-											if (columncount >= 9){ position.setColumn09(column09);
-												if (columncount >= 10){ position.setColumn10(column10);
-													if (columncount >= 11){ position.setColumn11(column11);
-														if (columncount >= 12){ position.setColumn12(column12);
-															if (columncount >= 13){ position.setColumn13(column13);
-																if (columncount >= 14){ position.setColumn14(column14);
-																	if (columncount >= 15){ position.setColumn15(column15);
-																		if (columncount >= 16){ position.setColumn16(column16);
-																			if (columncount >= 17){ position.setColumn17(column17);
-																				if (columncount >= 18){ position.setColumn18(column18);
-																					if (columncount >= 19){ position.setColumn19(column19);
-																						if (columncount >= 20){ position.setColumn20(column20);
-			}	}	}	}	}	}	}	}	}	}	}	}	}	}	}	}	}	}	}	}
-			
-		
+			} catch (SystemException e) {e.printStackTrace();}
+		position.setHeadID(headId);
+		position.setColumnID(columnId);
+		position.setRowID(rowId);
+		position.setContent(content);
+		try {
 			super.updatePosition(position);
-		}
-
-		else
-			check = false;
-
+			check = true;
+		} catch (SystemException e) {e.printStackTrace();}
+		
 		return check;
 	}
-*/
+	
+	
+	//update or build a new the position with a json as input
+	public Boolean updatePosition (JSONObject json){
+		
+		Boolean check = false;
+		String positionKey ="positionId";
+		String headKey ="headId";
+		String columnKey ="columnId";
+		String rowKey = "rowId";
+		String contentKey = "content";
+		if (json.containsKey(positionKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
+			check = PositionLocalServiceUtil.updatePosition((long) json.get(positionKey), (long) json.get(headKey), (long) json.get(columnKey), (long) json.get(rowKey), (String) json.get(contentKey));
+		return check;
+	}
+	
+
 }
