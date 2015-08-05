@@ -246,9 +246,17 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType);
+
 	public void deleteHeadByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteTableByHeadId(long headId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getArrayOfTableNames(java.lang.String tybleType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountOfColumns(long headId);
@@ -304,4 +312,14 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 	public java.lang.String[] getTableNameArray(
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.Boolean updateHead(long headId,
+		java.lang.String tableName, java.lang.String tableType);
+
+	public java.lang.Boolean updateHead(org.json.simple.JSONObject json);
+
+	public java.lang.Boolean updateHeadWithColumns(
+		org.json.simple.JSONObject json);
+
+	public java.lang.Boolean updateTable(org.json.simple.JSONObject json);
 }

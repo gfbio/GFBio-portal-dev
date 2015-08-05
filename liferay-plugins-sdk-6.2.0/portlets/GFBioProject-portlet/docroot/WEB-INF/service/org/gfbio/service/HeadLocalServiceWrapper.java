@@ -277,10 +277,26 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return _headLocalService.constructHeadJson(headId, tableName, tableType);
+	}
+
+	@Override
 	public void deleteHeadByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_headLocalService.deleteHeadByHeadId(headId);
+	}
+
+	@Override
+	public void deleteTableByHeadId(long headId) {
+		_headLocalService.deleteTableByHeadId(headId);
+	}
+
+	@Override
+	public java.lang.String[] getArrayOfTableNames(java.lang.String tybleType) {
+		return _headLocalService.getArrayOfTableNames(tybleType);
 	}
 
 	@Override
@@ -362,6 +378,28 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _headLocalService.getTableNameArray(headList);
+	}
+
+	@Override
+	public java.lang.Boolean updateHead(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return _headLocalService.updateHead(headId, tableName, tableType);
+	}
+
+	@Override
+	public java.lang.Boolean updateHead(org.json.simple.JSONObject json) {
+		return _headLocalService.updateHead(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateHeadWithColumns(
+		org.json.simple.JSONObject json) {
+		return _headLocalService.updateHeadWithColumns(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateTable(org.json.simple.JSONObject json) {
+		return _headLocalService.updateTable(json);
 	}
 
 	/**

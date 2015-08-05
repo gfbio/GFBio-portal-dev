@@ -89,7 +89,7 @@
 	
 	
 	
-	<!-- Head, Column & Position Tables -->
+	<!-- Head, Column & Content Tables -->
 
 	<!-- Head -->
 	<entity name="Head" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
@@ -113,29 +113,31 @@
 
 		<order by="asc">	<order-column name="columnID" />	</order>
 
-		<finder name="ColumnId" 		return-type="Column">		<finder-column name="columnID" />			</finder>
-		<finder name="ColumnName" 		return-type="Colection">	<finder-column name="column_name" />		</finder>
-		<finder name="HeadId"			return-type="Collection">	<finder-column name="headID" />				</finder>	
+		<finder name="ColumnId" 			return-type="Column">		<finder-column name="columnID" />												</finder>
+		<finder name="ColumnName" 			return-type="Colection">	<finder-column name="column_name" />											</finder>
+		<finder name="HeadId"				return-type="Collection">	<finder-column name="headID" />													</finder>
+		<finder name="HeadIdAndColumnName"	return-type="Collection">	<finder-column name="headID" />			<finder-column name="column_name" />	</finder>		
 	</entity>
 
 
-	<!-- Position -->
-	<entity name="Position" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="positionID" 			type="long" 		primary="true" />
+
+	<!-- Content -->
+	<entity name="Content" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="contentID" 			type="long" 		primary="true" />
 		<column name="headID" 				type="long" />
 		<column name="columnID" 			type="long" />
 		<column name="rowID" 				type="long" />
-		<column name="content" 				type="String" />
+		<column name="cellContent" 			type="String" />
 
-		<order by="asc">	<order-column name="positionID" />	</order>
+		<order by="asc">	<order-column name="contentID" />	</order>
 
-		<finder name="PositionId" 		return-type="Position">				<finder-column name="positionID" />											</finder>
-		<finder name="TableIds" 		return-type="Position">				<finder-column name="columnID" />	<finder-column name="rowID" />			</finder>
-		<finder name="HeadId" 			return-type="Collection">			<finder-column name="headID" />												</finder>
-		<finder name="ColumnId"			return-type="Collection">			<finder-column name="columnID" />											</finder>
-		<finder name="RowId"			return-type="Collection">			<finder-column name="rowID" />												</finder>
-		<finder name="Content" 			return-type="Collection">			<finder-column name="content" />												</finder>
-		<finder name="ContentOfColumn"	return-type="Collection">			<finder-column name="content" />		<finder-column name="columnID" />		</finder>
+		<finder name="ContentId" 			return-type="Content">			<finder-column name="contentID" />											</finder>
+		<finder name="TableIds" 			return-type="Content">			<finder-column name="columnID" />	<finder-column name="rowID" />			</finder>
+		<finder name="HeadId" 				return-type="Collection">		<finder-column name="headID" />												</finder>
+		<finder name="ColumnId"				return-type="Collection">		<finder-column name="columnID" />											</finder>
+		<finder name="RowId"				return-type="Collection">		<finder-column name="rowID" />												</finder>
+		<finder name="CellContent" 			return-type="Collection">		<finder-column name="cellContent" />										</finder>
+		<finder name="CellContentOfColumn"	return-type="Collection">		<finder-column name="cellContent" />	<finder-column name="columnID" />	</finder>
 	</entity>
 
 

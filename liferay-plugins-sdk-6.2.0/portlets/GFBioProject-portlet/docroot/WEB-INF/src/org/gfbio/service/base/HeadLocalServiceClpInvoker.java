@@ -108,61 +108,93 @@ public class HeadLocalServiceClpInvoker {
 
 		_methodParameterTypes93 = new String[] { "java.lang.String" };
 
-		_methodName98 = "deleteHeadByHeadId";
+		_methodName98 = "constructHeadJson";
 
-		_methodParameterTypes98 = new String[] { "long" };
+		_methodParameterTypes98 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
-		_methodName99 = "getCountOfColumns";
+		_methodName99 = "deleteHeadByHeadId";
 
 		_methodParameterTypes99 = new String[] { "long" };
 
-		_methodName100 = "getCountOfRows";
+		_methodName100 = "deleteTableByHeadId";
 
 		_methodParameterTypes100 = new String[] { "long" };
 
-		_methodName101 = "getEntitiesByHeadId";
+		_methodName101 = "getArrayOfTableNames";
 
-		_methodParameterTypes101 = new String[] { "long" };
+		_methodParameterTypes101 = new String[] { "java.lang.String" };
 
-		_methodName102 = "getHeadBetweenHeadId";
+		_methodName102 = "getCountOfColumns";
 
-		_methodParameterTypes102 = new String[] { "int", "int" };
+		_methodParameterTypes102 = new String[] { "long" };
 
-		_methodName103 = "getHeadById";
+		_methodName103 = "getCountOfRows";
 
 		_methodParameterTypes103 = new String[] { "long" };
 
-		_methodName104 = "getHeadByTableName";
+		_methodName104 = "getEntitiesByHeadId";
 
-		_methodParameterTypes104 = new String[] { "java.lang.String" };
+		_methodParameterTypes104 = new String[] { "long" };
 
-		_methodName105 = "getHeadIdByTableName";
+		_methodName105 = "getHeadBetweenHeadId";
 
-		_methodParameterTypes105 = new String[] { "java.lang.String" };
+		_methodParameterTypes105 = new String[] { "int", "int" };
 
-		_methodName106 = "getHeads";
+		_methodName106 = "getHeadById";
 
-		_methodParameterTypes106 = new String[] {  };
+		_methodParameterTypes106 = new String[] { "long" };
 
-		_methodName107 = "getHeadsByTableType";
+		_methodName107 = "getHeadByTableName";
 
 		_methodParameterTypes107 = new String[] { "java.lang.String" };
 
-		_methodName108 = "getTableAsArray";
+		_methodName108 = "getHeadIdByTableName";
 
-		_methodParameterTypes108 = new String[] { "long" };
+		_methodParameterTypes108 = new String[] { "java.lang.String" };
 
-		_methodName109 = "getTableName";
+		_methodName109 = "getHeads";
 
-		_methodParameterTypes109 = new String[] { "long" };
+		_methodParameterTypes109 = new String[] {  };
 
-		_methodName110 = "getTableNameArray";
+		_methodName110 = "getHeadsByTableType";
 
 		_methodParameterTypes110 = new String[] { "java.lang.String" };
 
-		_methodName111 = "getTableNameArray";
+		_methodName111 = "getTableAsArray";
 
-		_methodParameterTypes111 = new String[] { "java.util.List" };
+		_methodParameterTypes111 = new String[] { "long" };
+
+		_methodName112 = "getTableName";
+
+		_methodParameterTypes112 = new String[] { "long" };
+
+		_methodName113 = "getTableNameArray";
+
+		_methodParameterTypes113 = new String[] { "java.lang.String" };
+
+		_methodName114 = "getTableNameArray";
+
+		_methodParameterTypes114 = new String[] { "java.util.List" };
+
+		_methodName115 = "updateHead";
+
+		_methodParameterTypes115 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName116 = "updateHead";
+
+		_methodParameterTypes116 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName117 = "updateHeadWithColumns";
+
+		_methodParameterTypes117 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName118 = "updateTable";
+
+		_methodParameterTypes118 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -268,75 +300,114 @@ public class HeadLocalServiceClpInvoker {
 
 		if (_methodName98.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
+			return HeadLocalServiceUtil.constructHeadJson(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+		}
+
+		if (_methodName99.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
 			HeadLocalServiceUtil.deleteHeadByHeadId(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName99.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
-			return HeadLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
-		}
-
 		if (_methodName100.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
-			return HeadLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
+			HeadLocalServiceUtil.deleteTableByHeadId(((Long)arguments[0]).longValue());
+
+			return null;
 		}
 
 		if (_methodName101.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
-			return HeadLocalServiceUtil.getEntitiesByHeadId(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getArrayOfTableNames((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName102.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadBetweenHeadId(((Integer)arguments[0]).intValue(),
-				((Integer)arguments[1]).intValue());
+			return HeadLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName103.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadById(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName104.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadByTableName((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getEntitiesByHeadId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName105.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadIdByTableName((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getHeadBetweenHeadId(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName106.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeads();
+			return HeadLocalServiceUtil.getHeadById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName107.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
-			return HeadLocalServiceUtil.getHeadsByTableType((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getHeadByTableName((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName108.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
-			return HeadLocalServiceUtil.getTableAsArray(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getHeadIdByTableName((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName109.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
-			return HeadLocalServiceUtil.getTableName(((Long)arguments[0]).longValue());
+			return HeadLocalServiceUtil.getHeads();
 		}
 
 		if (_methodName110.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
-			return HeadLocalServiceUtil.getTableNameArray((java.lang.String)arguments[0]);
+			return HeadLocalServiceUtil.getHeadsByTableType((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName111.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+			return HeadLocalServiceUtil.getTableAsArray(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName112.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+			return HeadLocalServiceUtil.getTableName(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName113.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+			return HeadLocalServiceUtil.getTableNameArray((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
 			return HeadLocalServiceUtil.getTableNameArray((java.util.List<org.gfbio.model.Head>)arguments[0]);
+		}
+
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
+			return HeadLocalServiceUtil.updateHead(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+		}
+
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+			return HeadLocalServiceUtil.updateHead((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+			return HeadLocalServiceUtil.updateHeadWithColumns((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+			return HeadLocalServiceUtil.updateTable((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -406,4 +477,18 @@ public class HeadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes110;
 	private String _methodName111;
 	private String[] _methodParameterTypes111;
+	private String _methodName112;
+	private String[] _methodParameterTypes112;
+	private String _methodName113;
+	private String[] _methodParameterTypes113;
+	private String _methodName114;
+	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
+	private String _methodName116;
+	private String[] _methodParameterTypes116;
+	private String _methodName117;
+	private String[] _methodParameterTypes117;
+	private String _methodName118;
+	private String[] _methodParameterTypes118;
 }

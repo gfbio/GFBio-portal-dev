@@ -14,7 +14,7 @@
 
 package org.gfbio.service.base;
 
-import org.gfbio.service.PositionServiceUtil;
+import org.gfbio.service.ContentServiceUtil;
 
 import java.util.Arrays;
 
@@ -22,8 +22,8 @@ import java.util.Arrays;
  * @author Marcel Froemming
  * @generated
  */
-public class PositionServiceClpInvoker {
-	public PositionServiceClpInvoker() {
+public class ContentServiceClpInvoker {
+	public ContentServiceClpInvoker() {
 		_methodName76 = "getBeanIdentifier";
 
 		_methodParameterTypes76 = new String[] {  };
@@ -37,12 +37,12 @@ public class PositionServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName76.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
-			return PositionServiceUtil.getBeanIdentifier();
+			return ContentServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName77.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
-			PositionServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			ContentServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}

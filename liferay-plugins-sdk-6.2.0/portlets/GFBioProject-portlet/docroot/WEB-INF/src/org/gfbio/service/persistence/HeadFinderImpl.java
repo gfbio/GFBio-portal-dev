@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.gfbio.model.Head;
 import org.gfbio.model.impl.ColumnImpl;
+import org.gfbio.model.impl.ContentImpl;
 import org.gfbio.model.impl.HeadImpl;
-import org.gfbio.model.impl.PositionImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -58,7 +58,7 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 			queryObject.setCacheable(false);
 			queryObject.addEntity("Head", HeadImpl.class);
 			queryObject.addEntity("Column", ColumnImpl.class);
-			queryObject.addEntity("Position", PositionImpl.class);
+			queryObject.addEntity("Content", ContentImpl.class);
 			
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(headId);

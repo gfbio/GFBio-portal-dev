@@ -108,95 +108,101 @@ public class PositionLocalServiceClp implements PositionLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "deletePositionById";
+		_methodName19 = "constructColumnJson";
 
-		_methodParameterTypes19 = new String[] { "long" };
-
-		_methodName20 = "deletePositionsByColumnId";
-
-		_methodParameterTypes20 = new String[] { "long" };
-
-		_methodName21 = "deleteCompletePositionsByHeadId";
-
-		_methodParameterTypes21 = new String[] { "long" };
-
-		_methodName22 = "deletePositionsByRowId";
-
-		_methodParameterTypes22 = new String[] { "long" };
-
-		_methodName23 = "getContentByTableIds";
-
-		_methodParameterTypes23 = new String[] { "long", "long" };
-
-		_methodName24 = "getCountOfColumns";
-
-		_methodParameterTypes24 = new String[] { "long" };
-
-		_methodName25 = "getCountOfRows";
-
-		_methodParameterTypes25 = new String[] { "long" };
-
-		_methodName26 = "getPositionById";
-
-		_methodParameterTypes26 = new String[] { "long" };
-
-		_methodName27 = "getPositionsByColumnId";
-
-		_methodParameterTypes27 = new String[] { "long" };
-
-		_methodName28 = "getPositionsByHeadId";
-
-		_methodParameterTypes28 = new String[] { "long" };
-
-		_methodName29 = "getPositionIdByTableIds";
-
-		_methodParameterTypes29 = new String[] { "long", "long" };
-
-		_methodName30 = "getPositionsByRowId";
-
-		_methodParameterTypes30 = new String[] { "long" };
-
-		_methodName31 = "getPositionByTableIds";
-
-		_methodParameterTypes31 = new String[] { "long", "long" };
-
-		_methodName32 = "getPositionInformationAsJSONByRowId";
-
-		_methodParameterTypes32 = new String[] { "long" };
-
-		_methodName33 = "getPositionsAsJSONByRowId";
-
-		_methodParameterTypes33 = new String[] { "long" };
-
-		_methodName34 = "getRowIds";
-
-		_methodParameterTypes34 = new String[] { "long" };
-
-		_methodName35 = "getColumnIdById";
-
-		_methodParameterTypes35 = new String[] { "long" };
-
-		_methodName36 = "getPositionsByContent";
-
-		_methodParameterTypes36 = new String[] { "java.lang.String" };
-
-		_methodName37 = "getPositionsByContentOfColumn";
-
-		_methodParameterTypes37 = new String[] { "java.lang.String", "long" };
-
-		_methodName38 = "getRowIdById";
-
-		_methodParameterTypes38 = new String[] { "long" };
-
-		_methodName39 = "updatePosition";
-
-		_methodParameterTypes39 = new String[] {
+		_methodParameterTypes19 = new String[] {
 				"long", "long", "long", "long", "java.lang.String"
 			};
 
+		_methodName20 = "deletePositionById";
+
+		_methodParameterTypes20 = new String[] { "long" };
+
+		_methodName21 = "deletePositionsByColumnId";
+
+		_methodParameterTypes21 = new String[] { "long" };
+
+		_methodName22 = "deletePositionsByHeadId";
+
+		_methodParameterTypes22 = new String[] { "long" };
+
+		_methodName23 = "deletePositionsByRowId";
+
+		_methodParameterTypes23 = new String[] { "long" };
+
+		_methodName24 = "getContentByTableIds";
+
+		_methodParameterTypes24 = new String[] { "long", "long" };
+
+		_methodName25 = "getCountOfColumns";
+
+		_methodParameterTypes25 = new String[] { "long" };
+
+		_methodName26 = "getCountOfRows";
+
+		_methodParameterTypes26 = new String[] { "long" };
+
+		_methodName27 = "getPositionById";
+
+		_methodParameterTypes27 = new String[] { "long" };
+
+		_methodName28 = "getPositionsByColumnId";
+
+		_methodParameterTypes28 = new String[] { "long" };
+
+		_methodName29 = "getPositionsByHeadId";
+
+		_methodParameterTypes29 = new String[] { "long" };
+
+		_methodName30 = "getPositionIdByTableIds";
+
+		_methodParameterTypes30 = new String[] { "long", "long" };
+
+		_methodName31 = "getPositionsByRowId";
+
+		_methodParameterTypes31 = new String[] { "long" };
+
+		_methodName32 = "getPositionByTableIds";
+
+		_methodParameterTypes32 = new String[] { "long", "long" };
+
+		_methodName33 = "getPositionInformationAsJSONByRowId";
+
+		_methodParameterTypes33 = new String[] { "long" };
+
+		_methodName34 = "getPositionsAsJSONByRowId";
+
+		_methodParameterTypes34 = new String[] { "long" };
+
+		_methodName35 = "getRowIds";
+
+		_methodParameterTypes35 = new String[] { "long" };
+
+		_methodName36 = "getColumnIdById";
+
+		_methodParameterTypes36 = new String[] { "long" };
+
+		_methodName37 = "getPositionsByContent";
+
+		_methodParameterTypes37 = new String[] { "java.lang.String" };
+
+		_methodName38 = "getPositionsByContentOfColumn";
+
+		_methodParameterTypes38 = new String[] { "java.lang.String", "long" };
+
+		_methodName39 = "getRowIdById";
+
+		_methodParameterTypes39 = new String[] { "long" };
+
 		_methodName40 = "updatePosition";
 
-		_methodParameterTypes40 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes40 = new String[] {
+				"long", "long", "long", "long", "java.lang.String"
+			};
+
+		_methodName41 = "updatePosition";
+
+		_methodParameterTypes41 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -745,10 +751,45 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
+	public org.json.simple.JSONObject constructColumnJson(long positionId,
+		long headId, long columnId, long rowId, java.lang.String content) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] {
+						positionId,
+						
+					headId,
+						
+					columnId,
+						
+					rowId,
+						
+					ClpSerializer.translateInput(content)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public void deletePositionById(long positionId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName19,
-				_methodParameterTypes19, new Object[] { positionId });
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20, new Object[] { positionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -766,8 +807,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	@Override
 	public void deletePositionsByColumnId(long columnId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName20,
-				_methodParameterTypes20, new Object[] { columnId });
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21, new Object[] { columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -783,11 +824,11 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	}
 
 	@Override
-	public void deleteCompletePositionsByHeadId(long headId)
+	public void deletePositionsByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName21,
-				_methodParameterTypes21, new Object[] { headId });
+			_invokableLocalService.invokeMethod(_methodName22,
+				_methodParameterTypes22, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -809,8 +850,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	@Override
 	public void deletePositionsByRowId(long rowId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName22,
-				_methodParameterTypes22, new Object[] { rowId });
+			_invokableLocalService.invokeMethod(_methodName23,
+				_methodParameterTypes23, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -830,8 +871,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { rowId, columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { rowId, columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -854,8 +895,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -882,8 +923,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -911,8 +952,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] { positionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { positionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -944,8 +985,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -972,8 +1013,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1001,8 +1042,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29, new Object[] { rowId, columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { rowId, columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1033,8 +1074,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1063,8 +1104,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31, new Object[] { rowId, columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32, new Object[] { rowId, columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1095,8 +1136,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1118,8 +1159,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1141,8 +1182,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1166,8 +1207,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35, new Object[] { positionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36, new Object[] { positionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1199,8 +1240,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] { ClpSerializer.translateInput(content) });
 		}
 		catch (Throwable t) {
@@ -1229,8 +1270,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] { ClpSerializer.translateInput(content), columnId });
 		}
 		catch (Throwable t) {
@@ -1259,8 +1300,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38, new Object[] { positionId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39, new Object[] { positionId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1291,8 +1332,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						positionId,
 						
@@ -1325,8 +1366,8 @@ public class PositionLocalServiceClp implements PositionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1425,4 +1466,6 @@ public class PositionLocalServiceClp implements PositionLocalService {
 	private String[] _methodParameterTypes39;
 	private String _methodName40;
 	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
 }

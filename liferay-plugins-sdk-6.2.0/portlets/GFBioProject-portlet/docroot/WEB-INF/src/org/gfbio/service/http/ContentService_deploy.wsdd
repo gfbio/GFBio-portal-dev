@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_gfbio_ContentService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.ContentServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ContentServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ContentServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_ContentService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+</deployment>

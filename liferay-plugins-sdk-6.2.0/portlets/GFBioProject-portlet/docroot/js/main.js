@@ -92,6 +92,7 @@ function visibleHide(j) {
 
 /////////////////////////////////////////   ResourceRequest  //////////////////////////////////////////////
 
+
 //check Content
 function checkContent(check) {
 	if (check == "none")
@@ -100,17 +101,20 @@ function checkContent(check) {
 		SubmitGCDJ('-21', "show");
 }
 
+
 //Method to choose a Proejct
 function chooseTable(method, data) {
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
 
 }
 
+
 // Method to choose a Project
 function chooseProject(url, method, data, j) {
 	resourceMethod(url, method, data, false);
 	window.setTimeout('reload()',5);
 }
+
 
 //Method to choose a Project
 function chooseProject2(archivingURL, method, id, name, j) {
@@ -123,9 +127,7 @@ function chooseProject2(archivingURL, method, id, name, j) {
 }
 
 
-
 // Method for build a new Project
-
 function checkDate(name, size) {
 
 	console.log("check");
@@ -166,12 +168,12 @@ function deleteContent(method, data, tab, path){
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }
 
+
 function deleteTable(method, data, tab1, path1,tab2,path2){
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
 	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
 	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
 }
-
 
 
 function newProject(archivingURL, method, name, size, hide,  userID) {
@@ -190,9 +192,9 @@ function newProject(archivingURL, method, name, size, hide,  userID) {
 	}
 }
 
+
 //Method to update a Row in Head/Position
 function updateTable (method, name, size, task, tab, path) {
-	console.log(method+ " "+name+" "+size+" "+task);
 	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task, false);
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }
@@ -223,24 +225,29 @@ function updateRelationTable (archivingURL, method, mtable, ntable, hide) {
 }
 
 
-
 //generally Methods
 function resourceMethod(archivingURL, method, data, async) {
 	ajaxRequest(archivingURL, method, data, async);
 }
 
+
 function resourceMethod_I_to(archivingURL, method, name, size, relationID, async) {
+
 	var str ;
+	var headStr;
 	var data = {};
-	data["relationID"] = relationID;
 	
+	
+	headStr = name.concat("_").concat("table_name");
+	data = buildJsonHead(document.getElementById('top'.concat(headStr)).value,  document.getElementById(headStr).value, relationID);
 	for (var i = 0; i < size; i++) {
 		str = name.concat("_").concat(i);
-		var topic = document.getElementById('top'.concat(str)).value;
-		data[topic] = document.getElementById(str).value;
+		data = addJsonColumnToHead(data, buildJsonColum(document.getElementById('top'.concat(str)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById(str).value), i);
 	}
+	console.log(JSON.stringify(data));
 	ajaxRequest(archivingURL, method, data, async);
 };
+
 
 function resourceMethod_I(archivingURL, method, name, size, relationID, async) {
 	
@@ -256,6 +263,7 @@ function resourceMethod_I(archivingURL, method, name, size, relationID, async) {
 	updateLaVaSet_I(name, size);
 };
 
+
 function resourceMethod_JI(archivingURL, method, name, j, size, async) {
 	var str ;
 	var data = new Object() ;
@@ -266,6 +274,53 @@ function resourceMethod_JI(archivingURL, method, name, j, size, async) {
 	ajaxRequest(archivingURL, method, data, async);
 	updateLaVaSet_JI(name, j, size);
 };
+
+/////////////////////////////////////////   build fields  //////////////////////////////////////////////
+
+
+
+
+
+/////////////////////////////////////////   build JSON  //////////////////////////////////////////////
+
+
+//build JSON of Column
+function buildJsonColum(columnId, headId, columnName){
+	var json = {};
+	json["columnid"]=columnId;
+	json["headid"]=headId;
+	json["column_name"]=columnName;
+	return json;
+}
+
+
+//build JSON of Content
+function buildJsonContent(contentId, headId, columnId, rowId, content){
+	var json = {};
+	json["contentid"]=contentId;
+	json["headid"]=headId;
+	json["columnid"]=columnId;
+	json["rowid"]=rowId;
+	json["content"]=content;
+	return json;
+}
+
+
+//build JSON of Head
+function buildJsonHead(headId, tableName, tableType){
+	var json = {};
+	json["headid"]=headId;
+	json["table_name"]=tableName;
+	json["table_type"]=tableType;
+	return json;
+}
+
+
+//add column to head
+function addJsonColumnToHead(jsonHead, jsonColumn, key){
+	jsonHead[key] = jsonColumn;
+	return jsonHead
+}
 
 
 //////////////////////////////////////////////////  update Label-Value-Data in the view ///////////////////////////////////////////////

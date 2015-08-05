@@ -4,8 +4,8 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="org.gfbio.model.Basket" />
 	<import class="org.gfbio.model.Column" />
+	<import class="org.gfbio.model.Content" />
 	<import class="org.gfbio.model.Head" />
-	<import class="org.gfbio.model.Position" />
 	<import class="org.gfbio.model.Project" />
 	<import class="org.gfbio.model.Project_ResearchObject" />
 	<import class="org.gfbio.model.Project_User" />
@@ -29,21 +29,21 @@
 		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="column_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
+	<class name="org.gfbio.model.impl.ContentImpl" table="gfbio_Content">
+		<id name="contentID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="columnID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rowID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="cellContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
 	<class name="org.gfbio.model.impl.HeadImpl" table="gfbio_Head">
 		<id name="headID" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="table_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="table_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-	</class>
-	<class name="org.gfbio.model.impl.PositionImpl" table="gfbio_Position">
-		<id name="positionID" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="columnID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="rowID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
 		<id name="projectID" type="long">

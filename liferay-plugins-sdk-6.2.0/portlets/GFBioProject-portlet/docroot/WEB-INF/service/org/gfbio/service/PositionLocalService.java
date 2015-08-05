@@ -249,11 +249,14 @@ public interface PositionLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public org.json.simple.JSONObject constructColumnJson(long positionId,
+		long headId, long columnId, long rowId, java.lang.String content);
+
 	public void deletePositionById(long positionId);
 
 	public void deletePositionsByColumnId(long columnId);
 
-	public void deleteCompletePositionsByHeadId(long headId)
+	public void deletePositionsByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deletePositionsByRowId(long rowId);

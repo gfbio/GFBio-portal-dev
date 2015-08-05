@@ -22,10 +22,10 @@ import org.gfbio.service.BasketServiceUtil;
 import org.gfbio.service.ClpSerializer;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ColumnServiceUtil;
+import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.ContentServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.HeadServiceUtil;
-import org.gfbio.service.PositionLocalServiceUtil;
-import org.gfbio.service.PositionServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ProjectServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
@@ -60,12 +60,12 @@ public class ClpMessageListener extends BaseMessageListener {
 			ColumnLocalServiceUtil.clearService();
 
 			ColumnServiceUtil.clearService();
+			ContentLocalServiceUtil.clearService();
+
+			ContentServiceUtil.clearService();
 			HeadLocalServiceUtil.clearService();
 
 			HeadServiceUtil.clearService();
-			PositionLocalServiceUtil.clearService();
-
-			PositionServiceUtil.clearService();
 			ProjectLocalServiceUtil.clearService();
 
 			ProjectServiceUtil.clearService();

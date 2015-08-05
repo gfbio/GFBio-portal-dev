@@ -108,61 +108,93 @@ public class HeadLocalServiceClp implements HeadLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "deleteHeadByHeadId";
+		_methodName19 = "constructHeadJson";
 
-		_methodParameterTypes19 = new String[] { "long" };
+		_methodParameterTypes19 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
-		_methodName20 = "getCountOfColumns";
+		_methodName20 = "deleteHeadByHeadId";
 
 		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "getCountOfRows";
+		_methodName21 = "deleteTableByHeadId";
 
 		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName22 = "getEntitiesByHeadId";
+		_methodName22 = "getArrayOfTableNames";
 
-		_methodParameterTypes22 = new String[] { "long" };
+		_methodParameterTypes22 = new String[] { "java.lang.String" };
 
-		_methodName23 = "getHeadBetweenHeadId";
+		_methodName23 = "getCountOfColumns";
 
-		_methodParameterTypes23 = new String[] { "int", "int" };
+		_methodParameterTypes23 = new String[] { "long" };
 
-		_methodName24 = "getHeadById";
+		_methodName24 = "getCountOfRows";
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "getHeadByTableName";
+		_methodName25 = "getEntitiesByHeadId";
 
-		_methodParameterTypes25 = new String[] { "java.lang.String" };
+		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "getHeadIdByTableName";
+		_methodName26 = "getHeadBetweenHeadId";
 
-		_methodParameterTypes26 = new String[] { "java.lang.String" };
+		_methodParameterTypes26 = new String[] { "int", "int" };
 
-		_methodName27 = "getHeads";
+		_methodName27 = "getHeadById";
 
-		_methodParameterTypes27 = new String[] {  };
+		_methodParameterTypes27 = new String[] { "long" };
 
-		_methodName28 = "getHeadsByTableType";
+		_methodName28 = "getHeadByTableName";
 
 		_methodParameterTypes28 = new String[] { "java.lang.String" };
 
-		_methodName29 = "getTableAsArray";
+		_methodName29 = "getHeadIdByTableName";
 
-		_methodParameterTypes29 = new String[] { "long" };
+		_methodParameterTypes29 = new String[] { "java.lang.String" };
 
-		_methodName30 = "getTableName";
+		_methodName30 = "getHeads";
 
-		_methodParameterTypes30 = new String[] { "long" };
+		_methodParameterTypes30 = new String[] {  };
 
-		_methodName31 = "getTableNameArray";
+		_methodName31 = "getHeadsByTableType";
 
 		_methodParameterTypes31 = new String[] { "java.lang.String" };
 
-		_methodName32 = "getTableNameArray";
+		_methodName32 = "getTableAsArray";
 
-		_methodParameterTypes32 = new String[] { "java.util.List" };
+		_methodParameterTypes32 = new String[] { "long" };
+
+		_methodName33 = "getTableName";
+
+		_methodParameterTypes33 = new String[] { "long" };
+
+		_methodName34 = "getTableNameArray";
+
+		_methodParameterTypes34 = new String[] { "java.lang.String" };
+
+		_methodName35 = "getTableNameArray";
+
+		_methodParameterTypes35 = new String[] { "java.util.List" };
+
+		_methodName36 = "updateHead";
+
+		_methodParameterTypes36 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName37 = "updateHead";
+
+		_methodParameterTypes37 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName38 = "updateHeadWithColumns";
+
+		_methodParameterTypes38 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName39 = "updateTable";
+
+		_methodParameterTypes39 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -708,12 +740,43 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	}
 
 	@Override
+	public org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] {
+						headId,
+						
+					ClpSerializer.translateInput(tableName),
+						
+					ClpSerializer.translateInput(tableType)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public void deleteHeadByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName19,
-				_methodParameterTypes19, new Object[] { headId });
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -737,12 +800,55 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	}
 
 	@Override
+	public void deleteTableByHeadId(long headId) {
+		try {
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21, new Object[] { headId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public java.lang.String[] getArrayOfTableNames(java.lang.String tybleType) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(tybleType) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String[])ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int getCountOfColumns(long headId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -765,8 +871,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -792,8 +898,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -816,8 +922,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { start, end });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { start, end });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -841,8 +947,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -874,8 +980,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] { ClpSerializer.translateInput(tableName) });
 		}
 		catch (Throwable t) {
@@ -908,8 +1014,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] { ClpSerializer.translateInput(tableName) });
 		}
 		catch (Throwable t) {
@@ -941,8 +1047,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -970,8 +1076,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] { ClpSerializer.translateInput(tableType) });
 		}
 		catch (Throwable t) {
@@ -998,8 +1104,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1023,8 +1129,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1055,8 +1161,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] { ClpSerializer.translateInput(tableType) });
 		}
 		catch (Throwable t) {
@@ -1085,8 +1191,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] { ClpSerializer.translateInput(headList) });
 		}
 		catch (Throwable t) {
@@ -1106,6 +1212,110 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		}
 
 		return (java.lang.String[])ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateHead(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
+					new Object[] {
+						headId,
+						
+					ClpSerializer.translateInput(tableName),
+						
+					ClpSerializer.translateInput(tableType)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateHead(org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateHeadWithColumns(
+		org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateTable(org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -1173,4 +1383,18 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	private String[] _methodParameterTypes31;
 	private String _methodName32;
 	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
+	private String _methodName34;
+	private String[] _methodParameterTypes34;
+	private String _methodName35;
+	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
 }

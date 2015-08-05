@@ -13,6 +13,16 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.ContentLocalService" class="org.gfbio.service.impl.ContentLocalServiceImpl" />
+	<bean id="org.gfbio.service.ContentService" class="org.gfbio.service.impl.ContentServiceImpl" />
+	<bean id="org.gfbio.service.persistence.ContentPersistence" class="org.gfbio.service.persistence.ContentPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.persistence.ContentFinder" class="org.gfbio.service.persistence.ContentFinderImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.HeadLocalService" class="org.gfbio.service.impl.HeadLocalServiceImpl" />
 	<bean id="org.gfbio.service.HeadService" class="org.gfbio.service.impl.HeadServiceImpl" />
 	<bean id="org.gfbio.service.persistence.HeadPersistence" class="org.gfbio.service.persistence.HeadPersistenceImpl" parent="basePersistence">
@@ -20,16 +30,6 @@
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
 	<bean id="org.gfbio.service.persistence.HeadFinder" class="org.gfbio.service.persistence.HeadFinderImpl" parent="basePersistence">
-		<property name="dataSource" ref="gfbioDataSource" />
-		<property name="sessionFactory" ref="gfbioSessionFactory" />
-	</bean>
-	<bean id="org.gfbio.service.PositionLocalService" class="org.gfbio.service.impl.PositionLocalServiceImpl" />
-	<bean id="org.gfbio.service.PositionService" class="org.gfbio.service.impl.PositionServiceImpl" />
-	<bean id="org.gfbio.service.persistence.PositionPersistence" class="org.gfbio.service.persistence.PositionPersistenceImpl" parent="basePersistence">
-		<property name="dataSource" ref="gfbioDataSource" />
-		<property name="sessionFactory" ref="gfbioSessionFactory" />
-	</bean>
-	<bean id="org.gfbio.service.persistence.PositionFinder" class="org.gfbio.service.persistence.PositionFinderImpl" parent="basePersistence">
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>

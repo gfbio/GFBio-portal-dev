@@ -27,10 +27,10 @@ import org.gfbio.model.Basket;
 import org.gfbio.service.BasketService;
 import org.gfbio.service.persistence.BasketPersistence;
 import org.gfbio.service.persistence.ColumnPersistence;
+import org.gfbio.service.persistence.ContentFinder;
+import org.gfbio.service.persistence.ContentPersistence;
 import org.gfbio.service.persistence.HeadFinder;
 import org.gfbio.service.persistence.HeadPersistence;
-import org.gfbio.service.persistence.PositionFinder;
-import org.gfbio.service.persistence.PositionPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
@@ -171,6 +171,80 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the content local service.
+	 *
+	 * @return the content local service
+	 */
+	public org.gfbio.service.ContentLocalService getContentLocalService() {
+		return contentLocalService;
+	}
+
+	/**
+	 * Sets the content local service.
+	 *
+	 * @param contentLocalService the content local service
+	 */
+	public void setContentLocalService(
+		org.gfbio.service.ContentLocalService contentLocalService) {
+		this.contentLocalService = contentLocalService;
+	}
+
+	/**
+	 * Returns the content remote service.
+	 *
+	 * @return the content remote service
+	 */
+	public org.gfbio.service.ContentService getContentService() {
+		return contentService;
+	}
+
+	/**
+	 * Sets the content remote service.
+	 *
+	 * @param contentService the content remote service
+	 */
+	public void setContentService(
+		org.gfbio.service.ContentService contentService) {
+		this.contentService = contentService;
+	}
+
+	/**
+	 * Returns the content persistence.
+	 *
+	 * @return the content persistence
+	 */
+	public ContentPersistence getContentPersistence() {
+		return contentPersistence;
+	}
+
+	/**
+	 * Sets the content persistence.
+	 *
+	 * @param contentPersistence the content persistence
+	 */
+	public void setContentPersistence(ContentPersistence contentPersistence) {
+		this.contentPersistence = contentPersistence;
+	}
+
+	/**
+	 * Returns the content finder.
+	 *
+	 * @return the content finder
+	 */
+	public ContentFinder getContentFinder() {
+		return contentFinder;
+	}
+
+	/**
+	 * Sets the content finder.
+	 *
+	 * @param contentFinder the content finder
+	 */
+	public void setContentFinder(ContentFinder contentFinder) {
+		this.contentFinder = contentFinder;
+	}
+
+	/**
 	 * Returns the head local service.
 	 *
 	 * @return the head local service
@@ -241,80 +315,6 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setHeadFinder(HeadFinder headFinder) {
 		this.headFinder = headFinder;
-	}
-
-	/**
-	 * Returns the position local service.
-	 *
-	 * @return the position local service
-	 */
-	public org.gfbio.service.PositionLocalService getPositionLocalService() {
-		return positionLocalService;
-	}
-
-	/**
-	 * Sets the position local service.
-	 *
-	 * @param positionLocalService the position local service
-	 */
-	public void setPositionLocalService(
-		org.gfbio.service.PositionLocalService positionLocalService) {
-		this.positionLocalService = positionLocalService;
-	}
-
-	/**
-	 * Returns the position remote service.
-	 *
-	 * @return the position remote service
-	 */
-	public org.gfbio.service.PositionService getPositionService() {
-		return positionService;
-	}
-
-	/**
-	 * Sets the position remote service.
-	 *
-	 * @param positionService the position remote service
-	 */
-	public void setPositionService(
-		org.gfbio.service.PositionService positionService) {
-		this.positionService = positionService;
-	}
-
-	/**
-	 * Returns the position persistence.
-	 *
-	 * @return the position persistence
-	 */
-	public PositionPersistence getPositionPersistence() {
-		return positionPersistence;
-	}
-
-	/**
-	 * Sets the position persistence.
-	 *
-	 * @param positionPersistence the position persistence
-	 */
-	public void setPositionPersistence(PositionPersistence positionPersistence) {
-		this.positionPersistence = positionPersistence;
-	}
-
-	/**
-	 * Returns the position finder.
-	 *
-	 * @return the position finder
-	 */
-	public PositionFinder getPositionFinder() {
-		return positionFinder;
-	}
-
-	/**
-	 * Sets the position finder.
-	 *
-	 * @param positionFinder the position finder
-	 */
-	public void setPositionFinder(PositionFinder positionFinder) {
-		this.positionFinder = positionFinder;
 	}
 
 	/**
@@ -841,6 +841,14 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.ColumnService columnService;
 	@BeanReference(type = ColumnPersistence.class)
 	protected ColumnPersistence columnPersistence;
+	@BeanReference(type = org.gfbio.service.ContentLocalService.class)
+	protected org.gfbio.service.ContentLocalService contentLocalService;
+	@BeanReference(type = org.gfbio.service.ContentService.class)
+	protected org.gfbio.service.ContentService contentService;
+	@BeanReference(type = ContentPersistence.class)
+	protected ContentPersistence contentPersistence;
+	@BeanReference(type = ContentFinder.class)
+	protected ContentFinder contentFinder;
 	@BeanReference(type = org.gfbio.service.HeadLocalService.class)
 	protected org.gfbio.service.HeadLocalService headLocalService;
 	@BeanReference(type = org.gfbio.service.HeadService.class)
@@ -849,14 +857,6 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	protected HeadPersistence headPersistence;
 	@BeanReference(type = HeadFinder.class)
 	protected HeadFinder headFinder;
-	@BeanReference(type = org.gfbio.service.PositionLocalService.class)
-	protected org.gfbio.service.PositionLocalService positionLocalService;
-	@BeanReference(type = org.gfbio.service.PositionService.class)
-	protected org.gfbio.service.PositionService positionService;
-	@BeanReference(type = PositionPersistence.class)
-	protected PositionPersistence positionPersistence;
-	@BeanReference(type = PositionFinder.class)
-	protected PositionFinder positionFinder;
 	@BeanReference(type = org.gfbio.service.ProjectLocalService.class)
 	protected org.gfbio.service.ProjectLocalService projectLocalService;
 	@BeanReference(type = org.gfbio.service.ProjectService.class)

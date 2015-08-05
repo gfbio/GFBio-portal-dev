@@ -14,17 +14,17 @@
 		<field name="headID" type="long" />
 		<field name="column_name" type="String" />
 	</model>
+	<model name="org.gfbio.model.Content">
+		<field name="contentID" type="long" />
+		<field name="headID" type="long" />
+		<field name="columnID" type="long" />
+		<field name="rowID" type="long" />
+		<field name="cellContent" type="String" />
+	</model>
 	<model name="org.gfbio.model.Head">
 		<field name="headID" type="long" />
 		<field name="table_name" type="String" />
 		<field name="table_type" type="String" />
-	</model>
-	<model name="org.gfbio.model.Position">
-		<field name="positionID" type="long" />
-		<field name="headID" type="long" />
-		<field name="columnID" type="long" />
-		<field name="rowID" type="long" />
-		<field name="content" type="String" />
 	</model>
 	<model name="org.gfbio.model.Project">
 		<field name="projectID" type="long" />

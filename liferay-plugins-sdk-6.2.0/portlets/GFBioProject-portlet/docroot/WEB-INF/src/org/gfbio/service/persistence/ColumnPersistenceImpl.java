@@ -1035,6 +1035,588 @@ public class ColumnPersistenceImpl extends BasePersistenceImpl<Column>
 	}
 
 	private static final String _FINDER_COLUMN_HEADID_HEADID_2 = "column.headID = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_HEADIDANDCOLUMNNAME =
+		new FinderPath(ColumnModelImpl.ENTITY_CACHE_ENABLED,
+			ColumnModelImpl.FINDER_CACHE_ENABLED, ColumnImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByHeadIdAndColumnName",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HEADIDANDCOLUMNNAME =
+		new FinderPath(ColumnModelImpl.ENTITY_CACHE_ENABLED,
+			ColumnModelImpl.FINDER_CACHE_ENABLED, ColumnImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByHeadIdAndColumnName",
+			new String[] { Long.class.getName(), String.class.getName() },
+			ColumnModelImpl.HEADID_COLUMN_BITMASK |
+			ColumnModelImpl.COLUMN_NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_HEADIDANDCOLUMNNAME = new FinderPath(ColumnModelImpl.ENTITY_CACHE_ENABLED,
+			ColumnModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByHeadIdAndColumnName",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the columns where headID = &#63; and column_name = &#63;.
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @return the matching columns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Column> findByHeadIdAndColumnName(long headID,
+		String column_name) throws SystemException {
+		return findByHeadIdAndColumnName(headID, column_name,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the columns where headID = &#63; and column_name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @param start the lower bound of the range of columns
+	 * @param end the upper bound of the range of columns (not inclusive)
+	 * @return the range of matching columns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Column> findByHeadIdAndColumnName(long headID,
+		String column_name, int start, int end) throws SystemException {
+		return findByHeadIdAndColumnName(headID, column_name, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the columns where headID = &#63; and column_name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @param start the lower bound of the range of columns
+	 * @param end the upper bound of the range of columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching columns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Column> findByHeadIdAndColumnName(long headID,
+		String column_name, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HEADIDANDCOLUMNNAME;
+			finderArgs = new Object[] { headID, column_name };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_HEADIDANDCOLUMNNAME;
+			finderArgs = new Object[] {
+					headID, column_name,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Column> list = (List<Column>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Column column : list) {
+				if ((headID != column.getHeadID()) ||
+						!Validator.equals(column_name, column.getColumn_name())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COLUMN_WHERE);
+
+			query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_HEADID_2);
+
+			boolean bindColumn_name = false;
+
+			if (column_name == null) {
+				query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_1);
+			}
+			else if (column_name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_3);
+			}
+			else {
+				bindColumn_name = true;
+
+				query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ColumnModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(headID);
+
+				if (bindColumn_name) {
+					qPos.add(column_name);
+				}
+
+				if (!pagination) {
+					list = (List<Column>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Column>(list);
+				}
+				else {
+					list = (List<Column>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first column in the ordered set where headID = &#63; and column_name = &#63;.
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching column
+	 * @throws org.gfbio.NoSuchColumnException if a matching column could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Column findByHeadIdAndColumnName_First(long headID,
+		String column_name, OrderByComparator orderByComparator)
+		throws NoSuchColumnException, SystemException {
+		Column column = fetchByHeadIdAndColumnName_First(headID, column_name,
+				orderByComparator);
+
+		if (column != null) {
+			return column;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("headID=");
+		msg.append(headID);
+
+		msg.append(", column_name=");
+		msg.append(column_name);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchColumnException(msg.toString());
+	}
+
+	/**
+	 * Returns the first column in the ordered set where headID = &#63; and column_name = &#63;.
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching column, or <code>null</code> if a matching column could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Column fetchByHeadIdAndColumnName_First(long headID,
+		String column_name, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<Column> list = findByHeadIdAndColumnName(headID, column_name, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last column in the ordered set where headID = &#63; and column_name = &#63;.
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching column
+	 * @throws org.gfbio.NoSuchColumnException if a matching column could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Column findByHeadIdAndColumnName_Last(long headID,
+		String column_name, OrderByComparator orderByComparator)
+		throws NoSuchColumnException, SystemException {
+		Column column = fetchByHeadIdAndColumnName_Last(headID, column_name,
+				orderByComparator);
+
+		if (column != null) {
+			return column;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("headID=");
+		msg.append(headID);
+
+		msg.append(", column_name=");
+		msg.append(column_name);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchColumnException(msg.toString());
+	}
+
+	/**
+	 * Returns the last column in the ordered set where headID = &#63; and column_name = &#63;.
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching column, or <code>null</code> if a matching column could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Column fetchByHeadIdAndColumnName_Last(long headID,
+		String column_name, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByHeadIdAndColumnName(headID, column_name);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Column> list = findByHeadIdAndColumnName(headID, column_name,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the columns before and after the current column in the ordered set where headID = &#63; and column_name = &#63;.
+	 *
+	 * @param columnID the primary key of the current column
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next column
+	 * @throws org.gfbio.NoSuchColumnException if a column with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Column[] findByHeadIdAndColumnName_PrevAndNext(long columnID,
+		long headID, String column_name, OrderByComparator orderByComparator)
+		throws NoSuchColumnException, SystemException {
+		Column column = findByPrimaryKey(columnID);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Column[] array = new ColumnImpl[3];
+
+			array[0] = getByHeadIdAndColumnName_PrevAndNext(session, column,
+					headID, column_name, orderByComparator, true);
+
+			array[1] = column;
+
+			array[2] = getByHeadIdAndColumnName_PrevAndNext(session, column,
+					headID, column_name, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Column getByHeadIdAndColumnName_PrevAndNext(Session session,
+		Column column, long headID, String column_name,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_COLUMN_WHERE);
+
+		query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_HEADID_2);
+
+		boolean bindColumn_name = false;
+
+		if (column_name == null) {
+			query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_1);
+		}
+		else if (column_name.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_3);
+		}
+		else {
+			bindColumn_name = true;
+
+			query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ColumnModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(headID);
+
+		if (bindColumn_name) {
+			qPos.add(column_name);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(column);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Column> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the columns where headID = &#63; and column_name = &#63; from the database.
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByHeadIdAndColumnName(long headID, String column_name)
+		throws SystemException {
+		for (Column column : findByHeadIdAndColumnName(headID, column_name,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(column);
+		}
+	}
+
+	/**
+	 * Returns the number of columns where headID = &#63; and column_name = &#63;.
+	 *
+	 * @param headID the head i d
+	 * @param column_name the column_name
+	 * @return the number of matching columns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByHeadIdAndColumnName(long headID, String column_name)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_HEADIDANDCOLUMNNAME;
+
+		Object[] finderArgs = new Object[] { headID, column_name };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COLUMN_WHERE);
+
+			query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_HEADID_2);
+
+			boolean bindColumn_name = false;
+
+			if (column_name == null) {
+				query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_1);
+			}
+			else if (column_name.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_3);
+			}
+			else {
+				bindColumn_name = true;
+
+				query.append(_FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(headID);
+
+				if (bindColumn_name) {
+					qPos.add(column_name);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_HEADIDANDCOLUMNNAME_HEADID_2 = "column.headID = ? AND ";
+	private static final String _FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_1 =
+		"column.column_name IS NULL";
+	private static final String _FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_2 =
+		"column.column_name = ?";
+	private static final String _FINDER_COLUMN_HEADIDANDCOLUMNNAME_COLUMN_NAME_3 =
+		"(column.column_name IS NULL OR column.column_name = '')";
 
 	public ColumnPersistenceImpl() {
 		setModelClass(Column.class);
@@ -1351,6 +1933,29 @@ public class ColumnPersistenceImpl extends BasePersistenceImpl<Column>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HEADID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HEADID,
+					args);
+			}
+
+			if ((columnModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HEADIDANDCOLUMNNAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						columnModelImpl.getOriginalHeadID(),
+						columnModelImpl.getOriginalColumn_name()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HEADIDANDCOLUMNNAME,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HEADIDANDCOLUMNNAME,
+					args);
+
+				args = new Object[] {
+						columnModelImpl.getHeadID(),
+						columnModelImpl.getColumn_name()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_HEADIDANDCOLUMNNAME,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_HEADIDANDCOLUMNNAME,
 					args);
 			}
 		}

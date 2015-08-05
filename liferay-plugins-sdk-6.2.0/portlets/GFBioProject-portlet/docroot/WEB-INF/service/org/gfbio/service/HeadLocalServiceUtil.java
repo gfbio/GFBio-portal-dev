@@ -267,10 +267,24 @@ public class HeadLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return getService().constructHeadJson(headId, tableName, tableType);
+	}
+
 	public static void deleteHeadByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteHeadByHeadId(headId);
+	}
+
+	public static void deleteTableByHeadId(long headId) {
+		getService().deleteTableByHeadId(headId);
+	}
+
+	public static java.lang.String[] getArrayOfTableNames(
+		java.lang.String tybleType) {
+		return getService().getArrayOfTableNames(tybleType);
 	}
 
 	public static int getCountOfColumns(long headId) {
@@ -342,6 +356,24 @@ public class HeadLocalServiceUtil {
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTableNameArray(headList);
+	}
+
+	public static java.lang.Boolean updateHead(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return getService().updateHead(headId, tableName, tableType);
+	}
+
+	public static java.lang.Boolean updateHead(org.json.simple.JSONObject json) {
+		return getService().updateHead(json);
+	}
+
+	public static java.lang.Boolean updateHeadWithColumns(
+		org.json.simple.JSONObject json) {
+		return getService().updateHeadWithColumns(json);
+	}
+
+	public static java.lang.Boolean updateTable(org.json.simple.JSONObject json) {
+		return getService().updateTable(json);
 	}
 
 	public static void clearService() {

@@ -283,6 +283,156 @@ public interface ColumnPersistence extends BasePersistence<Column> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the columns where headID = &#63; and column_name = &#63;.
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @return the matching columns
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gfbio.model.Column> findByHeadIdAndColumnName(
+		long headID, java.lang.String column_name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the columns where headID = &#63; and column_name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @param start the lower bound of the range of columns
+	* @param end the upper bound of the range of columns (not inclusive)
+	* @return the range of matching columns
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gfbio.model.Column> findByHeadIdAndColumnName(
+		long headID, java.lang.String column_name, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the columns where headID = &#63; and column_name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @param start the lower bound of the range of columns
+	* @param end the upper bound of the range of columns (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching columns
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gfbio.model.Column> findByHeadIdAndColumnName(
+		long headID, java.lang.String column_name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first column in the ordered set where headID = &#63; and column_name = &#63;.
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching column
+	* @throws org.gfbio.NoSuchColumnException if a matching column could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Column findByHeadIdAndColumnName_First(long headID,
+		java.lang.String column_name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchColumnException;
+
+	/**
+	* Returns the first column in the ordered set where headID = &#63; and column_name = &#63;.
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching column, or <code>null</code> if a matching column could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Column fetchByHeadIdAndColumnName_First(
+		long headID, java.lang.String column_name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last column in the ordered set where headID = &#63; and column_name = &#63;.
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching column
+	* @throws org.gfbio.NoSuchColumnException if a matching column could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Column findByHeadIdAndColumnName_Last(long headID,
+		java.lang.String column_name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchColumnException;
+
+	/**
+	* Returns the last column in the ordered set where headID = &#63; and column_name = &#63;.
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching column, or <code>null</code> if a matching column could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Column fetchByHeadIdAndColumnName_Last(long headID,
+		java.lang.String column_name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the columns before and after the current column in the ordered set where headID = &#63; and column_name = &#63;.
+	*
+	* @param columnID the primary key of the current column
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next column
+	* @throws org.gfbio.NoSuchColumnException if a column with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Column[] findByHeadIdAndColumnName_PrevAndNext(
+		long columnID, long headID, java.lang.String column_name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchColumnException;
+
+	/**
+	* Removes all the columns where headID = &#63; and column_name = &#63; from the database.
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByHeadIdAndColumnName(long headID,
+		java.lang.String column_name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of columns where headID = &#63; and column_name = &#63;.
+	*
+	* @param headID the head i d
+	* @param column_name the column_name
+	* @return the number of matching columns
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByHeadIdAndColumnName(long headID,
+		java.lang.String column_name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the column in the entity cache if it is enabled.
 	*
 	* @param column the column

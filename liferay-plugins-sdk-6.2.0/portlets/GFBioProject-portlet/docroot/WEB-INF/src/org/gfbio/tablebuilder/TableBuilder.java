@@ -6,7 +6,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -15,13 +14,11 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.portlet.ValidatorException;
 
-import org.gfbio.model.Column;
-import org.gfbio.model.Head;
-import org.gfbio.model.Position;
+
+
 import org.gfbio.service.HeadLocalServiceUtil;
-import org.gfbio.service.PositionLocalServiceUtil;
+import org.gfbio.service.ContentLocalServiceUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -46,7 +43,7 @@ public class TableBuilder extends GenericPortlet {
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
 
-		System.out.println("---|1|---");
+/*		System.out.println("---|1|---");
 		System.out.println("---|1|---");
 		System.out.println("---|1|---");
 		System.out.println("---|1|---");
@@ -63,7 +60,7 @@ public class TableBuilder extends GenericPortlet {
 		System.out.println("---|2|---");
 		Head head = null;
 		Column column = null;
-		Position position = null;
+		Content position = null;
 		List list = HeadLocalServiceUtil.getEntitiesByHeadId(1);
 		
 		if (list !=null){
@@ -72,7 +69,7 @@ public class TableBuilder extends GenericPortlet {
 				Object[] arrayobject = (Object[]) list.get(i);
 		       	head=(Head)arrayobject[0];
 		       	column=(Column)arrayobject[1];
-		       position =(Position)arrayobject[2];
+		       position =(Content)arrayobject[2];
 		       	     	System.out.println(head.getTable_name() + " | " + column.getColumn_name() + " | " + position.getContent());
 			}
 		}
@@ -81,7 +78,7 @@ public class TableBuilder extends GenericPortlet {
 		System.out.println("---|3|---");
 		System.out.println("---|3|---");
 		System.out.println("---|3|---");
-		System.out.println("---|3|---");
+		System.out.println("---|3|---");*/
 
 		
 		include(viewTemplate, renderRequest, renderResponse);
@@ -91,7 +88,7 @@ public class TableBuilder extends GenericPortlet {
 		viewTemplate = getInitParameter("view-template");
 	}
 	
-/*
+
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
 		response.setContentType("text/html");
@@ -99,9 +96,9 @@ public class TableBuilder extends GenericPortlet {
 		if (request.getParameter("responseTarget") != null) {
 
 			
-			//choose Table
+/*			//choose Table
 			if ("chooseTable".toString().equals(request.getParameter("responseTarget").toString()))
-				chooseTable(request, response);
+				chooseTable(request, response);*/
 			
 			//delete Content
 			if ("deleteContent".toString().equals(request.getParameter("responseTarget").toString()))
@@ -115,9 +112,9 @@ public class TableBuilder extends GenericPortlet {
 			if ("newTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateTable(request, response);		
 
-			//new Relationship between tables
+/*			//new Relationship between tables
 			if ("relationTable".toString().equals(request.getParameter("responseTarget").toString()))
-				updateRelationTable(request, response);
+				updateRelationTable(request, response);*/
 									
 			//new Content of a Table
 			if ("updateContent".toString().equals(request.getParameter("responseTarget").toString())) 
@@ -131,7 +128,7 @@ public class TableBuilder extends GenericPortlet {
 	}
 	
 	
-	// choose Row in Position
+/*	// choose Row in Content
 	public void chooseRow(ResourceRequest request, ResourceResponse response) throws ValidatorException, IOException  {
 
 		JSONParser parser = new JSONParser();
@@ -144,20 +141,20 @@ public class TableBuilder extends GenericPortlet {
 		String name = (String) json.get("name");
 		long headID =(Long) json.get("id");
 		
-		Position position=null;
+		Content position=null;
 		try {
-			position = PositionLocalServiceUtil.getPositionByHeadIdAndName(headID, name);
+			position = ContentLocalServiceUtil.getContentByHeadIdAndName(headID, name);
 		} catch (SystemException e1) {e1.printStackTrace();}
 		PortletPreferences prefs = request.getPreferences();
 		if (name != null) {
 		try {
-			prefs.setValue("choRow", Long.toString(position.getPositionID()));
+			prefs.setValue("choRow", Long.toString(position.getContentID()));
 		} catch (ReadOnlyException e) {e.printStackTrace();	}
 		prefs.store();
 		}
-	}
+	}*/
 	
-	// choose Row in Head
+/*	// choose Row in Head
 	public void chooseTable(ResourceRequest request, ResourceResponse response) throws IOException, ValidatorException {
 
 		String name = request.getParameter("data").substring(1, request.getParameter("data").length()-1);
@@ -179,21 +176,20 @@ public class TableBuilder extends GenericPortlet {
 		} catch (NoSuchHeadException | ReadOnlyException | SystemException e) {e.printStackTrace();	}
 		prefs.store();
 		}
-	}
+	}*/
 	
 	public void deleteContent (ResourceRequest request, ResourceResponse response){
 		
 		try {
-			PositionLocalServiceUtil.deletePosition(Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue());
+			ContentLocalServiceUtil.deleteContent(Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue());
 		} catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
 	public void deleteTable (ResourceRequest request, ResourceResponse response){
 		
 		Long headId = Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue();
-		try {
-			HeadLocalServiceUtil.deleteCompleteHeadByHeadId(headId);
-		} catch (PortalException | SystemException e) {e.printStackTrace();}
+		HeadLocalServiceUtil.deleteTableByHeadId(headId);
+
 	}
 	
 
@@ -209,13 +205,13 @@ public class TableBuilder extends GenericPortlet {
 		Boolean check = false;
 
 		System.out.println(json);
-		check = PositionLocalServiceUtil.updateHeadWithCells(json);
+		check = HeadLocalServiceUtil.updateTable(json);
 		System.out.println("new Content: "+check);
 
 	}
 	
 	
-	public void updateRelationTable(ResourceRequest request, ResourceResponse response)  {
+/*	public void updateRelationTable(ResourceRequest request, ResourceResponse response)  {
 	
 		JSONParser parser = new JSONParser();
 		JSONObject json = new JSONObject();
@@ -228,7 +224,7 @@ public class TableBuilder extends GenericPortlet {
 		check = HeadLocalServiceUtil.updateRelationTable(0, (String) json.get("mtable"), (String) json.get("ntable"));
 		System.out.println("new connection: "+check);
 
-	}
+	}*/
 	
 
 	public void updateTable(ResourceRequest request, ResourceResponse response) {
@@ -241,13 +237,13 @@ public class TableBuilder extends GenericPortlet {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
 		System.out.println(json.toJSONString());
-		Boolean check = HeadLocalServiceUtil.updateHeadWithCells(json);
+		Boolean check = HeadLocalServiceUtil.updateHeadWithColumns(json);
 		System.out.println("update Table: "+check);
 
 	}
 
 
-*/
+
 
 
 }

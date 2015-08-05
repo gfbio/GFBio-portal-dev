@@ -271,6 +271,14 @@ public class PositionLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONObject constructColumnJson(
+		long positionId, long headId, long columnId, long rowId,
+		java.lang.String content) {
+		return getService()
+				   .constructColumnJson(positionId, headId, columnId, rowId,
+			content);
+	}
+
 	public static void deletePositionById(long positionId) {
 		getService().deletePositionById(positionId);
 	}
@@ -279,9 +287,9 @@ public class PositionLocalServiceUtil {
 		getService().deletePositionsByColumnId(columnId);
 	}
 
-	public static void deleteCompletePositionsByHeadId(long headId)
+	public static void deletePositionsByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteCompletePositionsByHeadId(headId);
+		getService().deletePositionsByHeadId(headId);
 	}
 
 	public static void deletePositionsByRowId(long rowId) {

@@ -277,6 +277,13 @@ public class ColumnLocalServiceWrapper implements ColumnLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject constructColumnJson(long columnId,
+		long headId, java.lang.String columnName) {
+		return _columnLocalService.constructColumnJson(columnId, headId,
+			columnName);
+	}
+
+	@Override
 	public void deleteColumnById(long columnId) {
 		_columnLocalService.deleteColumnById(columnId);
 	}
@@ -298,6 +305,13 @@ public class ColumnLocalServiceWrapper implements ColumnLocalService,
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Column> getColumnsByHeadIdAndName(
+		long headId, java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _columnLocalService.getColumnsByHeadIdAndName(headId, columnName);
+	}
+
+	@Override
 	public int getCountofColumns(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _columnLocalService.getCountofColumns(headId);
@@ -311,9 +325,27 @@ public class ColumnLocalServiceWrapper implements ColumnLocalService,
 	}
 
 	@Override
+	public int getMaxCountofColumns(
+		java.util.List<org.gfbio.model.Head> headList)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _columnLocalService.getMaxCountofColumns(headList);
+	}
+
+	@Override
 	public java.lang.Boolean updateColumn(long columnId, long headId,
 		java.lang.String content) {
 		return _columnLocalService.updateColumn(columnId, headId, content);
+	}
+
+	@Override
+	public java.lang.Boolean updateColumn(org.json.simple.JSONObject json) {
+		return _columnLocalService.updateColumn(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateColumnWithContents(
+		org.json.simple.JSONObject json) {
+		return _columnLocalService.updateColumnWithContents(json);
 	}
 
 	/**

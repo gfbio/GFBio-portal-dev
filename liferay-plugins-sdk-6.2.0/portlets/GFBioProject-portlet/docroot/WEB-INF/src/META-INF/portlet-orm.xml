@@ -32,23 +32,23 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.HeadModelImpl">
+	<mapped-superclass class="org.gfbio.model.impl.ContentModelImpl">
 		<attributes>
-			<id name="headID" />
-			<basic name="table_name" />
-			<basic name="table_type" />
+			<id name="contentID" />
+			<basic name="headID" />
+			<basic name="columnID" />
+			<basic name="rowID" />
+			<basic name="cellContent" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.PositionModelImpl">
+	<mapped-superclass class="org.gfbio.model.impl.HeadModelImpl">
 		<attributes>
-			<id name="positionID" />
-			<basic name="headID" />
-			<basic name="columnID" />
-			<basic name="rowID" />
-			<basic name="content" />
+			<id name="headID" />
+			<basic name="table_name" />
+			<basic name="table_type" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -142,12 +142,12 @@
 		<table name="gfbio_Column" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.HeadImpl" name="Head">
-		<table name="gfbio_Head" />
+	<entity class="org.gfbio.model.impl.ContentImpl" name="Content">
+		<table name="gfbio_Content" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.PositionImpl" name="Position">
-		<table name="gfbio_Position" />
+	<entity class="org.gfbio.model.impl.HeadImpl" name="Head">
+		<table name="gfbio_Head" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.ProjectImpl" name="Project">

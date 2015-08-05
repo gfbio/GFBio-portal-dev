@@ -15,20 +15,20 @@
 package org.gfbio.model.impl;
 
 /**
- * The extended model implementation for the Position service. Represents a row in the &quot;gfbio_Position&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the Content service. Represents a row in the &quot;gfbio_Content&quot; database table, with each column mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gfbio.model.Position} interface.
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gfbio.model.Content} interface.
  * </p>
  *
  * @author Marcel Froemming
  */
-public class PositionImpl extends PositionBaseImpl {
+public class ContentImpl extends ContentBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a position model instance should use the {@link org.gfbio.model.Position} interface instead.
+	 * Never reference this class directly. All methods that expect a content model instance should use the {@link org.gfbio.model.Content} interface instead.
 	 */
-	public PositionImpl() {
+	public ContentImpl() {
 	}
 }

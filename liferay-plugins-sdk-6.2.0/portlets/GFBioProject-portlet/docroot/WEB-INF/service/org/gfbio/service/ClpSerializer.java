@@ -27,8 +27,8 @@ import com.liferay.portal.model.BaseModel;
 
 import org.gfbio.model.BasketClp;
 import org.gfbio.model.ColumnClp;
+import org.gfbio.model.ContentClp;
 import org.gfbio.model.HeadClp;
-import org.gfbio.model.PositionClp;
 import org.gfbio.model.ProjectClp;
 import org.gfbio.model.Project_ResearchObjectClp;
 import org.gfbio.model.Project_UserClp;
@@ -119,12 +119,12 @@ public class ClpSerializer {
 			return translateInputColumn(oldModel);
 		}
 
-		if (oldModelClassName.equals(HeadClp.class.getName())) {
-			return translateInputHead(oldModel);
+		if (oldModelClassName.equals(ContentClp.class.getName())) {
+			return translateInputContent(oldModel);
 		}
 
-		if (oldModelClassName.equals(PositionClp.class.getName())) {
-			return translateInputPosition(oldModel);
+		if (oldModelClassName.equals(HeadClp.class.getName())) {
+			return translateInputHead(oldModel);
 		}
 
 		if (oldModelClassName.equals(ProjectClp.class.getName())) {
@@ -186,20 +186,20 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputHead(BaseModel<?> oldModel) {
-		HeadClp oldClpModel = (HeadClp)oldModel;
+	public static Object translateInputContent(BaseModel<?> oldModel) {
+		ContentClp oldClpModel = (ContentClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getHeadRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getContentRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
 		return newModel;
 	}
 
-	public static Object translateInputPosition(BaseModel<?> oldModel) {
-		PositionClp oldClpModel = (PositionClp)oldModel;
+	public static Object translateInputHead(BaseModel<?> oldModel) {
+		HeadClp oldClpModel = (HeadClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getPositionRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getHeadRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -356,8 +356,8 @@ public class ClpSerializer {
 			}
 		}
 
-		if (oldModelClassName.equals("org.gfbio.model.impl.HeadImpl")) {
-			return translateOutputHead(oldModel);
+		if (oldModelClassName.equals("org.gfbio.model.impl.ContentImpl")) {
+			return translateOutputContent(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -392,8 +392,8 @@ public class ClpSerializer {
 			}
 		}
 
-		if (oldModelClassName.equals("org.gfbio.model.impl.PositionImpl")) {
-			return translateOutputPosition(oldModel);
+		if (oldModelClassName.equals("org.gfbio.model.impl.HeadImpl")) {
+			return translateOutputHead(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -733,12 +733,12 @@ public class ClpSerializer {
 			return new org.gfbio.NoSuchColumnException();
 		}
 
-		if (className.equals("org.gfbio.NoSuchHeadException")) {
-			return new org.gfbio.NoSuchHeadException();
+		if (className.equals("org.gfbio.NoSuchContentException")) {
+			return new org.gfbio.NoSuchContentException();
 		}
 
-		if (className.equals("org.gfbio.NoSuchPositionException")) {
-			return new org.gfbio.NoSuchPositionException();
+		if (className.equals("org.gfbio.NoSuchHeadException")) {
+			return new org.gfbio.NoSuchHeadException();
 		}
 
 		if (className.equals("org.gfbio.NoSuchProjectException")) {
@@ -788,22 +788,22 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateOutputContent(BaseModel<?> oldModel) {
+		ContentClp newModel = new ContentClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setContentRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Object translateOutputHead(BaseModel<?> oldModel) {
 		HeadClp newModel = new HeadClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setHeadRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputPosition(BaseModel<?> oldModel) {
-		PositionClp newModel = new PositionClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setPositionRemoteModel(oldModel);
 
 		return newModel;
 	}

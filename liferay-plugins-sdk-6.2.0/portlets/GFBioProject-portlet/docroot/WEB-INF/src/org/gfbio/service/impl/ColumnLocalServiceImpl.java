@@ -18,8 +18,9 @@ import java.util.List;
 
 import org.gfbio.NoSuchColumnException;
 import org.gfbio.model.Column;
+import org.gfbio.model.Head;
 import org.gfbio.service.ColumnLocalServiceUtil;
-import org.gfbio.service.PositionLocalServiceUtil;
+import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.ColumnLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
 
@@ -43,9 +44,19 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 
+	
+	public JSONObject constructColumnJson(long columnId, long headId, String columnName){
+		JSONObject json = new JSONObject();
+		json.put("columnId", columnId);
+		json.put("headId", headId);
+		json.put("columnName", columnName);
+		return json;
+	}
+	
+	
 	//delete column 
 	public void deleteColumnById (long columnId)  {
-		PositionLocalServiceUtil.deletePositionsByColumnId(columnId);
+		ContentLocalServiceUtil.deleteContentsByColumnId(columnId);
 		try {
 			ColumnLocalServiceUtil.deleteColumn(columnId);
 		} catch (PortalException | SystemException e) {e.printStackTrace();	}
@@ -74,10 +85,16 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		return null;
 	}
 	
-	
+		
 	// get a List of Columns by headid
-	public List<Column> getColumnsByHeadId(long headId) throws SystemException{
+	public List<Column> getColumnsByHeadId(long headId) throws SystemException {
 		return columnPersistence.findByHeadId(headId);
+	}
+	
+	
+	//get a List of Columns by headid and column name
+	public List<Column> getColumnsByHeadIdAndName(long headId, String columnName) throws SystemException{
+		return columnPersistence.findByHeadIdAndColumnName(headId, columnName);
 	}
 	
 	
@@ -95,22 +112,33 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	
 /*	
 	//
-	public String[] getNameArray(long headId) throws SystemException, NoSuchCellException, NoSuchCell_HeadException, NoSuchCell_PositionException  {
+	public String[] getNameArray(long headId) throws SystemException, NoSuchCellException, NoSuchCell_HeadException, NoSuchCell_ContentException  {
 
-		List<Position> positionList;
+		List<Content> contentList;
 		String[] names = null;
 
-		positionList = PositionLocalServiceUtil.getPositionsByHeadId(headId);
-		names = new String[positionList.size()];
+		contentList = ContentLocalServiceUtil.getContentsByHeadId(headId);
+		names = new String[contentList.size()];
 			
 		for (int j =1;j<= 20;j++)
 			if (HeadLocalServiceUtil.getColumnName(headId, j).trim().equals("name"))
-				if (positionList!= null)
-					for (int i = 0; i<positionList.size(); i++)
-						names[i] = getColumnContent(positionList.get(i).getPositionID(),j);
+				if (contentList!= null)
+					for (int i = 0; i<contentList.size(); i++)
+						names[i] = getColumnContent(contentList.get(i).getContentID(),j);
 		return names;
 	}
 	*/
+	
+	
+	//get the maximal count of columns of a List of heads
+	public int getMaxCountofColumns (List <Head> headList) throws SystemException{
+		int maxcolumncount = 0;
+		for (int i = 0; i < headList.size();i++)
+			if (maxcolumncount < ColumnLocalServiceUtil.getCountofColumns(headList.get(i).getHeadID()))
+				maxcolumncount = ColumnLocalServiceUtil.getCountofColumns(headList.get(i).getHeadID());
+		return maxcolumncount;
+	}
+	
 	
 	//update or build a new the column
 	public Boolean updateColumn (long columnId, long headId, String content){
@@ -123,7 +151,7 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		} catch (PortalException | SystemException e) {e.printStackTrace();}
 
 
-		// if it true, then must be build a new position with a new primary keay else update the position
+		// if it true, then must be build a new content with a new primary keay else update the content
 		if (column == null)
 			try {
 				column = columnPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
@@ -140,18 +168,34 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		return check;
 	}
 	
-/*	
+	
 	//update or build a new the column with a json as input
 	public Boolean updateColumn (JSONObject json){
 		
 		Boolean check = false;
-		String columnKey ="columnId";
-		String headKey ="headId";
-		String contentKey = "content";
-		if (json.containsKey(columnKey) && json.containsKey(headKey) && json.containsKey(contentKey))
-			check = ColumnLocalServiceUtil.updateColumn((long) json.get(columnKey),  (long) json.get(headKey), (String) json.get(contentKey));
+		String columnKey ="columnid";
+		String headKey ="headid";
+		String columnNameKey = "column_name";
+		if (json.containsKey(columnKey) && json.containsKey(headKey) && json.containsKey(columnNameKey))
+			check = ColumnLocalServiceUtil.updateColumn(Long.valueOf((String) json.get(columnKey)).longValue(),  Long.valueOf((String) json.get(headKey)).longValue(), (String) json.get(columnNameKey));
 		return check;
-	}*/
+	}
 	
+	
+	//update or build a new the column and their content with a json as input
+	public Boolean updateColumnWithContents (JSONObject json){
+		Boolean check = false;
+		check = ColumnLocalServiceUtil.updateColumn(json);
+		int i=0;
+		while (json.containsKey(i)){
+			JSONObject contentjson = (JSONObject) json.get(i);
+			
+			check = ContentLocalServiceUtil.updateContent(contentjson);
+
+			i++;
+		}
+	
+		return check;
+	}
 	
 }

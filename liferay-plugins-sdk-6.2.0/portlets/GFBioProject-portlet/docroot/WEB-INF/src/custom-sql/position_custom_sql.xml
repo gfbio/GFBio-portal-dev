@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="org.gfbio.service.persistence.PositionFinderImpl.getRowIds">
+	    <![CDATA[
+			SELECT DISTINCT 
+				gfbio_position.rowid
+			FROM 
+				public.gfbio_position
+			WHERE 
+				gfbio_position.headid = ?
+		]]>
+    </sql>
+</custom-sql>

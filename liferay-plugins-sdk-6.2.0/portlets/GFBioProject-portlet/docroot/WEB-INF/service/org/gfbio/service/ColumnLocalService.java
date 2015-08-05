@@ -246,6 +246,9 @@ public interface ColumnLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public org.json.simple.JSONObject constructColumnJson(long columnId,
+		long headId, java.lang.String columnName);
+
 	public void deleteColumnById(long columnId);
 
 	public void deleteColumnsByHeadId(long headId);
@@ -258,6 +261,11 @@ public interface ColumnLocalService extends BaseLocalService,
 		long headId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Column> getColumnsByHeadIdAndName(
+		long headId, java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountofColumns(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -266,6 +274,16 @@ public interface ColumnLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMaxCountofColumns(
+		java.util.List<org.gfbio.model.Head> headList)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.lang.Boolean updateColumn(long columnId, long headId,
 		java.lang.String content);
+
+	public java.lang.Boolean updateColumn(org.json.simple.JSONObject json);
+
+	public java.lang.Boolean updateColumnWithContents(
+		org.json.simple.JSONObject json);
 }

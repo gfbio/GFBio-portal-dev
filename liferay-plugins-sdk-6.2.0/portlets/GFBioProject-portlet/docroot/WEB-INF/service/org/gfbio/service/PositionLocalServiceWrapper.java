@@ -282,6 +282,13 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject constructColumnJson(long positionId,
+		long headId, long columnId, long rowId, java.lang.String content) {
+		return _positionLocalService.constructColumnJson(positionId, headId,
+			columnId, rowId, content);
+	}
+
+	@Override
 	public void deletePositionById(long positionId) {
 		_positionLocalService.deletePositionById(positionId);
 	}
@@ -292,9 +299,9 @@ public class PositionLocalServiceWrapper implements PositionLocalService,
 	}
 
 	@Override
-	public void deleteCompletePositionsByHeadId(long headId)
+	public void deletePositionsByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_positionLocalService.deleteCompletePositionsByHeadId(headId);
+		_positionLocalService.deletePositionsByHeadId(headId);
 	}
 
 	@Override
