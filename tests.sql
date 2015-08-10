@@ -2,8 +2,9 @@ INSERT INTO person (screenname) VALUES ('ivo'),('marc');
 SELECT * FROM person;
 
 INSERT INTO research_object (label,type) VALUES ('s1','sample'), ('s2','sample');
-
+SELECT * FROM add_research_object('exp1','experiment');
 SELECT * FROM research_object;
+
 UPDATE research_object SET label='s3' WHERE research_object_id=1;
 SELECT * FROM research_object;
 
