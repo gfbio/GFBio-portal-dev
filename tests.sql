@@ -31,3 +31,30 @@ UPDATE submission_registry
      WHERE research_object_id=1 AND archive='ENA' AND broker_submission_id='a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11';
 
 SELECT * FROM submission_registry;
+       
+/***
+* TEST CASE 2
+***/
+
+INSERT INTO research_object (label,type) VALUES ('s4','sample');
+SELECT * FROM research_object;
+
+
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
+     VALUES (3,1,'ENA','ACCESSION',1,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
+     VALUES (3,1,'PANGAEA','DOI',2,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
+
+SELECT * FROM submission_registry;
+
+UPDATE research_object SET type='experiment' WHERE research_object_id=3;
+
+UPDATE submission_registry
+     SET archive_pid='10.24355/PANGAEA.927462', status='archived'
+     WHERE research_object_id=3 AND archive='PANGAEA' AND broker_submission_id='E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95';
+
+UPDATE submission_registry
+     SET archive_pid='ARX05463', status='archived'
+     WHERE research_object_id=3 AND archive='ENA' AND broker_submission_id='E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95';
+
+SELECT * FROM submission_registry;
