@@ -17,6 +17,23 @@ person smallint NOT NULL REFERENCES person (user_id) ON UPDATE CASCADE ON DELETE
 status submission_status NOT NULL DEFAULT 'sent',
 is_public boolean NOT NULL DEFAULT FALSE,
 public_after timestamp NOT NULL DEFAULT now() + interval '6 months',
-PRIMARY KEY (research_object_id,research_object_version,archive)
+PRIMARY KEY (research_object_id,research_object_version,archive),
+UNIQUE (research_object_id,archive,archive_pid)
 --FOREIGN KEY (research_object_id,research_object_version) REFERENCES research_object (research_object_id,research_object_version) -- cannot use this because updates on object might come later
 );
+
+
+CREATE OR REPLACE VIEW latest_submissions AS
+SELECT * FROM (
+       SELECT *,
+       	      rank() OVER (PARTITION BY research_object_id,archive ORDER BY research_object_version DESC) AS pos
+       FROM submission_registry) AS iq
+       WHERE pos=1
+;
+
+CREATE OR REPLACE FUNCTION get_submission_history(roid bigint) RETURNS SETOF submission_registry AS $$
+   BEGIN
+       RETURN QUERY SELECT * FROM submission_registry WHERE research_object_id=roid;
+       RETURN;
+   END;
+$$ LANGUAGE plpgsql;
