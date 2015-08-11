@@ -61,7 +61,7 @@ SELECT * FROM submission_registry;
 /***
 * TEST CASE 3 - use function to add research object and get id back
 ***/
-SELECT add_research_object('E1'::text,'experiment'::text);
+SELECT add_research_object('E1','experiment');
 SELECT * FROM research_object;
 
 /***
