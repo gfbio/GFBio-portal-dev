@@ -18,7 +18,7 @@ SELECT * FROM persistent_identifier;
 INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
      VALUES (1,2,'ENA','ACCESSION',1,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
 INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (1,2,'PANGAEA','DOI',2,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
+     VALUES (1,2,'PANGAEA','DOI',1,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
 
 SELECT * FROM submission_registry;
 
@@ -39,9 +39,8 @@ SELECT * FROM submission_registry;
 INSERT INTO research_object (label,type) VALUES ('s4','sample');
 SELECT * FROM research_object;
 
-
 INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (3,1,'ENA','ACCESSION',1,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
+     VALUES (3,1,'ENA','ACCESSION',2,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
 INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
      VALUES (3,1,'PANGAEA','DOI',2,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
 
@@ -64,3 +63,28 @@ SELECT * FROM submission_registry;
 ***/
 SELECT add_research_object('E1'::text,'experiment'::text);
 SELECT * FROM research_object;
+
+/***
+* TEST CASE 4 - views on submission registry
+* USE CASE: Research object is submitted in version 1, then it is updated and submitted again (the broker agent handles that as an update).
+***/
+
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
+     VALUES (2,1,'ENA','ACCESSION',1,'b1ddcd00-9c0b-4ef8-bb6d-6bb9bd380a11');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
+     VALUES (2,1,'PANGAEA','DOI',1,'b1ddcd00-9c0b-4ef8-bb6d-6bb9bd380a11');
+
+UPDATE research_object SET label='B1' WHERE research_object_id=2;
+
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
+     VALUES (2,2,'ENA','ACCESSION',2,'46BE1BB9-243B-4DBA-81ED-1F0CAB54F27A');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
+     VALUES (2,2,'PANGAEA','DOI',2,'46BE1BB9-243B-4DBA-81ED-1F0CAB54F27A');
+
+SELECT * FROM latest_submissions;
+
+    SELECT sh.*, p.screenname
+      FROM get_submission_history(2) AS sh
+INNER JOIN person p ON  p.user_id=sh.person
+     WHERE archive='ENA';
+
