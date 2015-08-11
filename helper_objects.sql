@@ -18,6 +18,15 @@ type ro_type NOT NULL,
 UNIQUE (research_object_id,research_object_version)
 );
 
+CREATE OR REPLACE FUNCTION add_research_object(in_label text,in_type ro_type) RETURNS bigint AS $$
+    DECLARE
+        roid bigint;
+    BEGIN
+	INSERT INTO research_object (label,type) VALUES (in_label,in_type) RETURNING research_object_id INTO STRICT roid;
+	RETURN roid;
+    END;
+$$ LANGUAGE plpgsql;
+
 CREATE FUNCTION increment_version() RETURNS trigger AS $inc_ver$
        BEGIN
         NEW.research_object_version := OLD.research_object_version+1;

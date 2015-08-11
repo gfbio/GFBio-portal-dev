@@ -2,8 +2,8 @@ INSERT INTO person (screenname) VALUES ('ivo'),('marc');
 SELECT * FROM person;
 
 INSERT INTO research_object (label,type) VALUES ('s1','sample'), ('s2','sample');
-
 SELECT * FROM research_object;
+
 UPDATE research_object SET label='s3' WHERE research_object_id=1;
 SELECT * FROM research_object;
 
@@ -58,3 +58,9 @@ UPDATE submission_registry
      WHERE research_object_id=3 AND archive='ENA' AND broker_submission_id='E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95';
 
 SELECT * FROM submission_registry;
+
+/***
+* TEST CASE 3 - use function to add research object and get id back
+***/
+SELECT add_research_object('E1'::text,'experiment'::text);
+SELECT * FROM research_object;
