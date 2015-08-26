@@ -13,15 +13,15 @@
     <sql id="org.gfbio.service.persistence.HeadFinderImpl.getEntitiesByHeadId">
 	    <![CDATA[
 			SELECT 
-			  * 
+			 *
 			FROM 
 			  public.gfbio_column,
 			  public.gfbio_head,
-			  public.gfbio_position 
+			  public.gfbio_content 
 			WHERE 
 			  gfbio_head.headid = ? AND
 			  gfbio_head.headid = gfbio_column.headid AND
-			  gfbio_column.columnid = gfbio_position.columnid 
+			  gfbio_column.columnid = gfbio_content.columnid 
 		]]>
     </sql>
 </custom-sql>

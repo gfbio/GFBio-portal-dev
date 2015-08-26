@@ -283,8 +283,8 @@ public class HeadLocalServiceUtil {
 	}
 
 	public static java.lang.String[] getArrayOfTableNames(
-		java.lang.String tybleType) {
-		return getService().getArrayOfTableNames(tybleType);
+		java.lang.String tableType) {
+		return getService().getArrayOfTableNames(tableType);
 	}
 
 	public static int getCountOfColumns(long headId) {

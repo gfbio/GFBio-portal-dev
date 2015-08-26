@@ -11,10 +11,11 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-public class ContentFinderImpl  extends BasePersistenceImpl<Head> implements PositionFinder{
+public class ContentFinderImpl  extends BasePersistenceImpl<Head> implements ContentFinder{
 	
 	public static String FINDER_CLASS_NAME_ENTITY = HeadFinderImpl.class.getName();
 	public static String GET_COUNT_OF_ROW = FINDER_CLASS_NAME_ENTITY + ".getCountOfRow";
+
 	
 	public List getRowIds(long headId) {
 		

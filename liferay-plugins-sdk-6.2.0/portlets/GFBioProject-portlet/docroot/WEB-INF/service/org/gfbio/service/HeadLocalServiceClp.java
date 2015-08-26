@@ -819,13 +819,13 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	}
 
 	@Override
-	public java.lang.String[] getArrayOfTableNames(java.lang.String tybleType) {
+	public java.lang.String[] getArrayOfTableNames(java.lang.String tableType) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
 					_methodParameterTypes22,
-					new Object[] { ClpSerializer.translateInput(tybleType) });
+					new Object[] { ClpSerializer.translateInput(tableType) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

@@ -256,7 +256,7 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 	public void deleteTableByHeadId(long headId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String[] getArrayOfTableNames(java.lang.String tybleType);
+	public java.lang.String[] getArrayOfTableNames(java.lang.String tableType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountOfColumns(long headId);

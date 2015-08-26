@@ -43,7 +43,7 @@ public class TableBuilder extends GenericPortlet {
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
 
-/*		System.out.println("---|1|---");
+		/*System.out.println("---|1|---");
 		System.out.println("---|1|---");
 		System.out.println("---|1|---");
 		System.out.println("---|1|---");
@@ -203,10 +203,9 @@ public class TableBuilder extends GenericPortlet {
 		} catch (ParseException e1) {e1.printStackTrace();}
 		
 		Boolean check = false;
-
-		System.out.println(json);
+		//System.out.println(json);
 		check = HeadLocalServiceUtil.updateTable(json);
-		System.out.println("new Content: "+check);
+		//System.out.println("new Content: "+check);
 
 	}
 	
@@ -236,9 +235,9 @@ public class TableBuilder extends GenericPortlet {
 		try {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
-		System.out.println(json.toJSONString());
+		//System.out.println(json.toJSONString());
 		Boolean check = HeadLocalServiceUtil.updateHeadWithColumns(json);
-		System.out.println("update Table: "+check);
+		//System.out.println("update Table: "+check);
 
 	}
 

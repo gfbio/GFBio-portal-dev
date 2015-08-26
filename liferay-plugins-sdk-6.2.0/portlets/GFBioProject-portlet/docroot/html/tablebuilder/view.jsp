@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 
 
+
+
 <%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
 <script src="${pageContext.request.contextPath}/js/main.js"  					type="text/javascript"></script>  <!--  main.js  imports -->
 <link href="<%= request.getContextPath() %>/css/main.css" rel="stylesheet" type="text/css"> <!-- main.css imports -->
@@ -214,7 +216,11 @@
 		<h2>content menu</h2>	
 		<br>
 		
-		<% String[] names = HeadLocalServiceUtil.getArrayOfTableNames("table"); %>
+		<!-- -------------------------------------------- Choose Table for new Content (Position) ---------------------------------------------------------------->
+	
+		
+		<% String[] names = HeadLocalServiceUtil.getArrayOfTableNames("entity"); %>
+		
 		
 		<%	for (int h=0; h<names.length;h++){ %>
 		
@@ -228,6 +234,17 @@
 			
 				<br>
 				<% 	long[][] contentTable = HeadLocalServiceUtil.getTableAsArray(HeadLocalServiceUtil.getHeadIdByTableName(names[h])); 	%>
+				
+				<!-- head of content table -->
+				
+				<div class="row" >
+					<div class="dynamicTable1st">&nbsp;</div>
+					<div class="dynamicIcon">&nbsp;</div>		
+						
+
+
+				</div>
+				<br>
 				
 			</div>
 			

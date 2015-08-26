@@ -295,8 +295,8 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public java.lang.String[] getArrayOfTableNames(java.lang.String tybleType) {
-		return _headLocalService.getArrayOfTableNames(tybleType);
+	public java.lang.String[] getArrayOfTableNames(java.lang.String tableType) {
+		return _headLocalService.getArrayOfTableNames(tableType);
 	}
 
 	@Override

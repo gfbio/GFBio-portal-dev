@@ -196,7 +196,16 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	//get the count of rows from a specific column 
 	public int getCountOfRows(long headId) throws SystemException{
-		return ContentLocalServiceUtil.getRowIds(headId).size();
+		System.out.println("--------------");
+		int count =0;
+		List list = ContentLocalServiceUtil.getRowIds(headId);
+		if (list != null)
+			count = list.size();
+		else
+			count = 0;
+		System.out.println(count);
+		System.out.println("--------------");
+		return count;
 	}
 	
 	

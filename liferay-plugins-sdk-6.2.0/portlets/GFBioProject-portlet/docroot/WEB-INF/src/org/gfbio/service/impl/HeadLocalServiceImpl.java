@@ -18,6 +18,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
@@ -77,13 +78,13 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 		
 	//get Table_names of a List of heads selected by TableType
-	public String[] getArrayOfTableNames(String tybleType){
+	public String[] getArrayOfTableNames(String tableType){
 		
 		List <Head> headList = null;
 		String[] names =null;
 		
 		try {
-			headList = HeadLocalServiceUtil.getHeadsByTableType(tybleType);
+			headList = HeadLocalServiceUtil.getHeadsByTableType(tableType);
 		} catch (SystemException e) {e.printStackTrace();}
 		if (headList != null){
 			names = new String[headList.size()];
@@ -99,16 +100,16 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	public int getCountOfColumns(long headId){
 		
 		int count =0;
-		List <Content> positionList = null;
+		List <Content> contentList = null;
 		try {
-			positionList = ContentLocalServiceUtil.getContentsByHeadId(headId);
+			contentList = ContentLocalServiceUtil.getContentsByHeadId(headId);
 		} catch (SystemException e) {e.printStackTrace();}
 		
-		if (positionList != null){
-			for( int i=0; i <positionList.size();i++){
+		if (contentList != null){
+			for( int i=0; i <contentList.size();i++){
 				try {
-					if (count < ContentLocalServiceUtil.getCountOfColumns(positionList.get(i).getRowID()))
-							count = ContentLocalServiceUtil.getCountOfColumns(positionList.get(i).getRowID());
+					if (count < ContentLocalServiceUtil.getCountOfColumns(contentList.get(i).getRowID()))
+							count = ContentLocalServiceUtil.getCountOfColumns(contentList.get(i).getRowID());
 				} catch (SystemException e) {
 					e.printStackTrace();
 				}
@@ -194,37 +195,83 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	//get Entities of a specific head in a TableArray
 	public long[][] getTableAsArray(long headId){
 		
+		System.out.println("getgetStart: |"+headId+"|");
+		
 		long[][] table = null;
 		Head head = null;
 		Column column = null;
-		Content position = null;
+		Content content = null;
 		List list = HeadLocalServiceUtil.getEntitiesByHeadId(headId);
 		
+		
 		if (list !=null){
+			System.out.println("test:" + list.size());
 
+			System.out.println("test positiv");
+			System.out.println(headId);
 			try {
-				table = new long[ContentLocalServiceUtil.getCountOfRows(headId)+1][ColumnLocalServiceUtil.getCountofColumns(headId)+1];
+				table = new long[(ContentLocalServiceUtil.getContentsByHeadId(headId).size())+1][(ColumnLocalServiceUtil.getCountofColumns(headId))+1];
 			} catch (SystemException e) {e.printStackTrace();}
 			
 			//head of table
+
 			Object[] arrayobject = (Object[]) list.get(0);
 			head=(Head)arrayobject[0];
 			table[0][0]= head.getHeadID();
-			for (int j=1;j < table[0].length;j++){
-				column=(Column)arrayobject[j-1];
-				table[0][j]=column.getColumnID();
+			System.out.println(table[0][0]);
+
+			
+			System.out.println("---------");
+			for (int g =0; g < list.size();g++){
+				Object[] arrayobject2 = (Object[]) list.get(g);
+				for (int i =0; i < arrayobject2.length;i++){
+					System.out.print("-::- "+ g + " | "+i+ " - ");
+					System.out.println(arrayobject2[i]);
+					}
+				System.out.println();
+			}
+			System.out.println("---------");
+			
+			
+			System.out.println("");
+			
+			Long check  = (long) 0;
+
+			ArrayList <Long> idList = new ArrayList<Long>();
+			for (int i = 0; i < list.size();i++){
+				arrayobject = (Object[]) list.get(i);
+				column=(Column)arrayobject[1];
+				if (check != column.getColumnID()){
+					idList.add(column.getColumnID());
+					check = column.getColumnID();
+				}
 			}
 			
+			for(int i =0; i < idList.size();i++){
+				System.out.println(i+ ": "+idList.get(i));
+			}
+			
+			System.out.println(table[0].length);
+			for (int i=1;i < table[0].length;i++){
+				table[0][i]=idList.get(i-1);
+				System.out.println(i+ " || "+table[0][i]);
+			}
+			
+			/*
 			//body of table
 			for (int i = 1; i < table.length;i++){
-				
-				position =(Content)arrayobject[2];
-				table[i][0]= position.getRowID();
+				System.out.println("getStart");
+				content =(Content)arrayobject[2];
+				table[i][0]= content.getRowID();
 				for (int j =1;j< table[0].length;j++)
 					try {
 						table[i][j] = ContentLocalServiceUtil.getContentIdByTableIds(i, j);
+						System.out.println(table[i][j]);
 					} catch (NoSuchContentException | SystemException e) {e.printStackTrace();	}
 			}
+		}else{
+			System.out.println("test negativ");
+		}*/
 		}
 		return table;
 	}
@@ -386,7 +433,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		
 
 	
-	//update or build a new head with their columns and their positions
+	//update or build a new head with their columns and their contents
 	public Boolean updateTable (JSONObject json){
 		
 		Boolean check = HeadLocalServiceUtil.updateHead(json);
