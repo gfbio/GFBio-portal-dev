@@ -14,7 +14,9 @@
 
 package org.gfbio.service.impl;
 
+import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.ContentServiceBaseImpl;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the content remote service.
@@ -31,9 +33,8 @@ import org.gfbio.service.base.ContentServiceBaseImpl;
  * @see org.gfbio.service.ContentServiceUtil
  */
 public class ContentServiceImpl extends ContentServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link org.gfbio.service.ContentServiceUtil} to access the content remote service.
-	 */
+
+	public JSONObject constructColumnJson(long contentId, long headId, long columnId, long rowId, String cellContent){
+		return ContentLocalServiceUtil.constructColumnJson(contentId, headId, columnId, rowId, cellContent);
+	}
 }

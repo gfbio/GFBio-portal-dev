@@ -336,7 +336,11 @@ public class HeadLocalServiceUtil {
 		return getService().getHeadsByTableType(tableType);
 	}
 
-	public static long[][] getTableAsArray(long headId) {
+	public static long[][] getIdTableAsArray(long headId) {
+		return getService().getIdTableAsArray(headId);
+	}
+
+	public static java.lang.String[][] getTableAsArray(long headId) {
 		return getService().getTableAsArray(headId);
 	}
 

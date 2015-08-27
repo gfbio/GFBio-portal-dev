@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <custom-sql>
+    <sql file="custom-sql/content_custom_sql.xml"/>
     <sql file="custom-sql/head_custom_sql.xml"/>
 </custom-sql>

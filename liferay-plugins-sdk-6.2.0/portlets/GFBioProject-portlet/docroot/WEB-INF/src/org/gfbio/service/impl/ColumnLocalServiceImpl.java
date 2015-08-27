@@ -187,11 +187,9 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		Boolean check = false;
 		check = ColumnLocalServiceUtil.updateColumn(json);
 		int i=0;
-		while (json.containsKey(i)){
-			JSONObject contentjson = (JSONObject) json.get(i);
-			
+		while (json.containsKey(new Integer (i).toString())){
+			JSONObject contentjson = (JSONObject) json.get(new Integer (i).toString());
 			check = ContentLocalServiceUtil.updateContent(contentjson);
-
 			i++;
 		}
 	

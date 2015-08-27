@@ -25,6 +25,11 @@ public class ContentFinderUtil {
 		return getFinder().getRowIds(headId);
 	}
 
+	public static java.util.List getCellContent(long headId, long rowId,
+		long columnId) {
+		return getFinder().getCellContent(headId, rowId, columnId);
+	}
+
 	public static ContentFinder getFinder() {
 		if (_finder == null) {
 			_finder = (ContentFinder)PortletBeanLocatorUtil.locate(org.gfbio.service.ClpSerializer.getServletContextName(),

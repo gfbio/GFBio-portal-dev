@@ -131,6 +131,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return null;
 	}
 	
+
 	
 	//get Content of  a specific row and column
 	public Content getContentByTableIds(long rowId, long columnId) throws NoSuchContentException, SystemException  {
@@ -140,7 +141,13 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	//get ID of a Cell in a specific row and column
 	public long getContentIdByTableIds(long rowId, long columnId) throws NoSuchContentException, SystemException  {
-		return contentPersistence.findByTableIds(columnId, rowId).getContentID();
+		long id =0;
+		Content content = contentPersistence.findByTableIds(columnId, rowId);
+		if (content != null)
+			id = content.getContentID();
+		else
+			id=0;
+		return id;
 	}
 
 	
@@ -196,15 +203,12 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	//get the count of rows from a specific column 
 	public int getCountOfRows(long headId) throws SystemException{
-		System.out.println("--------------");
 		int count =0;
 		List list = ContentLocalServiceUtil.getRowIds(headId);
 		if (list != null)
 			count = list.size();
 		else
 			count = 0;
-		System.out.println(count);
-		System.out.println("--------------");
 		return count;
 	}
 	
@@ -270,11 +274,12 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	//update or build a new the content with a json as input
 	public Boolean updateContent (JSONObject json){
 		
+		
 		Boolean check = false;
-		String contentIdKey ="contentId";
-		String headKey ="headId";
-		String columnKey ="columnId";
-		String rowKey = "rowId";
+		String contentIdKey ="contentid";
+		String headKey ="headid";
+		String columnKey ="columnid";
+		String rowKey = "rowid";
 		String contentKey = "cellcontent";
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
 			check = ContentLocalServiceUtil.updateContent(Long.valueOf((String) json.get(contentIdKey)).longValue(), Long.valueOf((String) json.get(headKey)).longValue(), Long.valueOf((String) json.get(columnKey)).longValue(), Long.valueOf((String) json.get(rowKey)).longValue(), (String) json.get(contentKey));

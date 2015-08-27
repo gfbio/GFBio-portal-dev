@@ -42,45 +42,6 @@ public class TableBuilder extends GenericPortlet {
 	
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
-
-		/*System.out.println("---|1|---");
-		System.out.println("---|1|---");
-		System.out.println("---|1|---");
-		System.out.println("---|1|---");
-		List<Head> headList= null;
-		headList = HeadLocalServiceUtil.getHeadBetweenHeadId(0, 3);
-		if (headList !=null)
-			for (int i = 0; i < headList.size();i++)
-				System.out.println(headList.get(i).getTable_name());
-		else
-			System.out.println("");
-		System.out.println("---|2|---");
-		System.out.println("---|2|---");
-		System.out.println("---|2|---");
-		System.out.println("---|2|---");
-		Head head = null;
-		Column column = null;
-		Content position = null;
-		List list = HeadLocalServiceUtil.getEntitiesByHeadId(1);
-		
-		if (list !=null){
-			System.out.println(list.size());
-			for (int i = 0; i < list.size();i++){
-				Object[] arrayobject = (Object[]) list.get(i);
-		       	head=(Head)arrayobject[0];
-		       	column=(Column)arrayobject[1];
-		       position =(Content)arrayobject[2];
-		       	     	System.out.println(head.getTable_name() + " | " + column.getColumn_name() + " | " + position.getContent());
-			}
-		}
-		else
-			System.out.println("");
-		System.out.println("---|3|---");
-		System.out.println("---|3|---");
-		System.out.println("---|3|---");
-		System.out.println("---|3|---");*/
-
-		
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 
@@ -203,9 +164,7 @@ public class TableBuilder extends GenericPortlet {
 		} catch (ParseException e1) {e1.printStackTrace();}
 		
 		Boolean check = false;
-		//System.out.println(json);
-		check = HeadLocalServiceUtil.updateTable(json);
-		//System.out.println("new Content: "+check);
+		check = HeadLocalServiceUtil.updateHeadWithColumns(json);
 
 	}
 	
@@ -235,9 +194,9 @@ public class TableBuilder extends GenericPortlet {
 		try {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
-		//System.out.println(json.toJSONString());
+		System.out.println(json.toJSONString());
 		Boolean check = HeadLocalServiceUtil.updateHeadWithColumns(json);
-		//System.out.println("update Table: "+check);
+		System.out.println("update Table: "+check);
 
 	}
 

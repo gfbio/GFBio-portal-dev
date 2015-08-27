@@ -137,9 +137,9 @@
 					
 					<!-- icons -->
 					<div class="dynamicIcon">
-						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("editplus")%>" 	class="icon-plus" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(i).toString()) %>', '<%= columnCount+1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu')"  /></i>&nbsp;
-						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("editminus")%>" 	class="icon-minus" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(i).toString()) %>', '<%= columnCount-1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu')"  /></i>&nbsp;
-						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(i).toString()) %>', '<%= columnCount %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu')"  /></i>
+						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("editplus")%>" 	class="icon-plus" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(i).toString()) %>', '<%= columnCount+1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu','<%=i %>')"  /></i>&nbsp;
+						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("editminus")%>" 	class="icon-minus" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(i).toString()) %>', '<%= columnCount-1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu','<%=i %>')"  /></i>&nbsp;
+						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(i).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(i).toString()) %>', '<%= columnCount %>',   'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu','<%=i %>')"  /></i>
 					</div>
 				</div>
 				
@@ -196,7 +196,7 @@
 					<input 	type="hidden"	id="<%="lavanewta_".concat(new Integer(k).toString())%>" 	value="<%="0"%>" />
 				</div>
 				<div class="dynamicIcon">
-					<i style="cursor:pointer" id="<%="newta_".concat("newok")%>" 		class="icon-ok" 	onclick="updateTable('updateTable', '<%="newta" %>', '<%= k+1 %>', 'table','tabTableMenu', '/html/tablebuilder/view.jsp #tabTableMenu')"  /></i>
+					<i style="cursor:pointer" id="<%="newta_".concat("newok")%>" 		class="icon-ok" 	onclick="updateTable('updateTable', '<%="newta" %>', '<%= k+1 %>', 'entity','tabTableMenu', '/html/tablebuilder/view.jsp #tabTableMenu','<%=l %>')"  /></i>
 				</div>
 			</div>
 		</div>
@@ -224,16 +224,18 @@
 		
 		<%	for (int h=0; h<names.length;h++){ %>
 		
-			<br>
-		
 			<div id="<%="hide_accordion_".concat(names[h])%>" onclick="pseudoaccordion('<%=names[h] %>')" style="cursor:pointer;">
 				<h4 > <span id="<%="h_".concat(names[h])%>">+</span> <%= names[h] %></h4>
 			</div>
 					
 			<div id= "<%="hide_".concat(names[h])%>" class="swHide">
 			
+			
 				<br>
-				<% 	long[][] contentTable = HeadLocalServiceUtil.getTableAsArray(HeadLocalServiceUtil.getHeadIdByTableName(names[h])); 	%>
+				<% 	
+					String[][] contentTable = HeadLocalServiceUtil.getTableAsArray(HeadLocalServiceUtil.getHeadIdByTableName(names[h])); 
+					long[][] idTable = HeadLocalServiceUtil.getIdTableAsArray(HeadLocalServiceUtil.getHeadIdByTableName(names[h]));
+				%>
 				
 				<!-- head of content table -->
 				
@@ -241,13 +243,137 @@
 					<div class="dynamicTable1st">&nbsp;</div>
 					<div class="dynamicIcon">&nbsp;</div>		
 						
-
-
-				</div>
-				<br>
+					<% for(int j =1; j <contentTable.length;j++){ %>
+						<div class="dynamicHeadIst">	<%=contentTable[j][0] %>		</div>
+						<input 	type="hidden" 	id="<%= "dycon_".concat(new Integer(j).toString()).concat("_columID") %>" 	value="<%=idTable[j][0] %>" />
+					<%} %>
+					
+					<!-- body of table -->
 				
+					<% int m = 0; %>
+					
+					<%	for(int i=1;i < contentTable[0].length;i++){%>
+						
+						<div class="row" >
+						
+							<div class="dynamicTable1st">
+								<%=(i) %>
+								<input 	type=hidden 	id="<%= "dycon_".concat(new Integer(m).toString()).concat("_rowID") %>" 	value="<%=idTable[0][i] %>" />
+								<%m=(i); %>
+								
+							</div>
+							
+							<!-- manage icons -->
+						
+							<div class="dynamicIcon">
+								<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("edit")%>" 				class="icon-edit"  		  onclick="hideswitch('<%="97".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>','<%="98".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>')"></i>&nbsp;
+								<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("icon-resize-small")%>" 	class="icon-resize-small" onclick="showhide('<%="93".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>')"></i>&nbsp;
+								<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("remove")%>" 				class="icon-remove"		  onclick="deleteContent('deleteContent', '<%= contentTable[0][i]%>', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"></i>
+							</div>
+							
+							
+							<!-- default information -->
+						
+							<div id="<%="hide_97".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>" class="swMain">
+								<div class="dynamicTableIst">
+									<label  id="<%= "lavadycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("_").concat(new Integer(1).toString()) %>"><%=contentTable[1][i]%></label>
+								</div>
+								<%if(contentTable.length>1){	for (int j =2; j < contentTable.length;j++){ %>
+										<div class="dynamicTableIst">
+											<label  id="<%= "lavadycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("_").concat(new Integer(j).toString()) %>"><%=contentTable[j][i] %></label>
+										</div>
+								<%}} %>
+							</div>
+							
+							
+							<!-- change information -->
+						
+							<div id="<%="hide_98".concat(new Integer(h).toString()).concat(new Integer(i).toString()) %>" class="swHide">
+							
+								
+								<div>
+									<input 	type="hidden" 	id="<%= "topdycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(0).toString()) %>" 	value="contentID" />
+									<input 	type="hidden"	id="<%=    "dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(0).toString())%>"   	value="<%=contentTable[0][i].trim() %>" />
+									<input 	type="hidden"	id="<%="lavadycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(0).toString())%>" 	value="<%=contentTable[0][i].trim() %>" />
+								</div>
+								<% int n =0; %>
+								<%	for (int j =1; j < (contentTable.length);j++){ %>
+									<div class="dynamicTableIst">
+										<input 					type="hidden" 	id="<%="topdycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(j).toString()) %>"  	value="<%=idTable[j][i] %>" />
+										<input class="widthM" 	type="text" 	id="<%=   "dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(j).toString()) %>"   	value="<%=contentTable[j][i].trim() %>" />
+									</div>
+									<%n=j; %>
+								<%} %>
+								<%n=n+1; %>
+								<div>
+									<input 	type="hidden" 	id="<%= "topdycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(n).toString()) %>" 	value="headID" />
+									<input 	type="hidden"	id="<%=    "dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(n).toString())%>"   	value="<%=HeadLocalServiceUtil.getHeadIdByTableName(names[h]) %>" />
+									<input 	type="hidden"	id="<%="lavadycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()).concat("_").concat(new Integer(n).toString())%>" 	value="<%=HeadLocalServiceUtil.getHeadIdByTableName(names[h]) %>" />
+								</div>
+								
+								<div class="dynamicIcon">
+									<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(i).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateContent', '<%="dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(i).toString()) %>', '<%= i+1 %>', 'entity','tabContentMenu','<%="/html/tablebuilder/view.jsp #tabContentMenu"%>','<%=h %>')"  /></i>
+								</div>
+								
+							</div>
+						
+						</div>
+	
+					<%} %>
+				</div>
+					
+				
+				<!---- add new row ---->
+					
+				<div class="row" >
+					
+					<!--  running number -->
+						
+					<div class="dynamicTable1st">
+						<%=(m+1) %>
+					</div>
+							
+						
+					<!-- manage icons -->
+						
+					<div class="dynamicIcon">
+						<i style="cursor:pointer" id="<%="newcon_".concat("newplus")%>" 	class="icon-plus" 	onclick="hideswitch('<%="99".concat(new Integer(h).toString()) %>','<%="newcon_".concat("newplus")%>')"></i>
+					</div>
+						
+						
+					<!-- add content -->
+						
+					<div id="<%="hide_99".concat(new Integer(h).toString()) %>" class="swHide">
+						
+						<% int n =0; %>
+						<div>
+							<input 	type="hidden" 	id="<%= "topnewcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(n).toString())%>" 	value="positionID" />
+							<input 	type="hidden"	id="<%=    "newcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(n).toString())%>"   	value="0" />
+							<input 	type="hidden"	id="<%="lavanewcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(n).toString())%>" 	value="0" />
+						</div>
+								
+						<%	for (int j =1; j < contentTable.length;j++){ %>
+							<div class="dynamicTableIst">
+								<input 					type="hidden" 	id="<%="topnewcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(j).toString()) %>"  	value="<%=contentTable[j][0].trim() %>" />
+								<input class="widthM" 	type="text" 	id="<%=   "newcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(j).toString()) %>"   	value="" />
+							</div>
+							<%n=j; %>
+						<%} %>
+						<%n=n+1; %>
+							
+						<div>
+							<input 	type="hidden" 	id="<%= "topnewcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(n).toString()) %>" 	value="headID" />
+							<input 	type="hidden"	id="<%=    "newcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(n).toString())%>"   	value="<%=HeadLocalServiceUtil.getHeadIdByTableName(names[h]) %>" />
+							<input 	type="hidden"	id="<%="lavanewcon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(n).toString())%>" 	value="<%=HeadLocalServiceUtil.getHeadIdByTableName(names[h]) %>" />
+						</div>
+							
+						<div class="dynamicIcon">
+							<i style="cursor:pointer" id="<%="newcon_".concat("newok")%>" 		class="icon-ok" 	onclick="updateTable('updateContent', '<%="newcon_".concat(new Integer(h).toString()) %>', '<%= n+1 %>', 'entity','tabContentMenu', '/html/tablebuilder/view.jsp #tabContentMenu','<%=h %>')"  /></i>
+						</div>
+						
+					</div>		
+				</div>
 			</div>
-			
 		<%} %>
 	</div>
 

@@ -194,8 +194,8 @@ function newProject(archivingURL, method, name, size, hide,  userID) {
 
 
 //Method to update a Row in Head/Position
-function updateTable (method, name, size, task, tab, path) {
-	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task, false);
+function updateTable (method, name, size, task, tab, path, runningNumber) {
+	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task, false, runningNumber);
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }
 
@@ -231,20 +231,26 @@ function resourceMethod(archivingURL, method, data, async) {
 }
 
 
-function resourceMethod_I_to(archivingURL, method, name, size, relationID, async) {
-
+function resourceMethod_I_to(archivingURL, method, name, size, relationID, async, runningNumber) {
+	console.log("2");
 	var str ;
 	var headStr;
 	var data = {};
-	
-	
+	var contentName;
+	if (method == 'updateContent'){
+		contentName = name;
+		name ="dyta_".concat(runningNumber);
+	}
 	headStr = name.concat("_").concat("table_name");
 	data = buildJsonHead(document.getElementById('top'.concat(headStr)).value,  document.getElementById(headStr).value, relationID);
 	for (var i = 0; i < size; i++) {
 		str = name.concat("_").concat(i);
-		data = addJsonColumnToHead(data, buildJsonColum(document.getElementById('top'.concat(str)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById(str).value), i);
+		var subdata = buildJsonColum(document.getElementById('top'.concat(str)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById(str).value);
+		if (method == 'updateContent'){
+			subdate = addSubJsonToJson(subdata, buildJsonContent(document.getElementById("top".concat(contentName).concat("_").concat(i+1)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById('top'.concat(str)).value, document.getElementById("dycon_".concat(runningNumber).concat("_rowID")).value, document.getElementById(contentName.concat("_").concat(i+1)).value),0);
+		}
+		data = addSubJsonToJson(data, subdata, i);
 	}
-	console.log(JSON.stringify(data));
 	ajaxRequest(archivingURL, method, data, async);
 };
 
@@ -301,7 +307,7 @@ function buildJsonContent(contentId, headId, columnId, rowId, content){
 	json["headid"]=headId;
 	json["columnid"]=columnId;
 	json["rowid"]=rowId;
-	json["content"]=content;
+	json["cellcontent"]=content;
 	return json;
 }
 
@@ -316,11 +322,13 @@ function buildJsonHead(headId, tableName, tableType){
 }
 
 
-//add column to head
-function addJsonColumnToHead(jsonHead, jsonColumn, key){
-	jsonHead[key] = jsonColumn;
-	return jsonHead
+//add a sub JSON to a JSON
+function addSubJsonToJson(json, subJson, key){
+	json[key] = subJson;
+	return json;
 }
+
+
 
 
 //////////////////////////////////////////////////  update Label-Value-Data in the view ///////////////////////////////////////////////

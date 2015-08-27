@@ -19,4 +19,6 @@ package org.gfbio.service.persistence;
  */
 public interface ContentFinder {
 	public java.util.List getRowIds(long headId);
+
+	public java.util.List getCellContent(long headId, long rowId, long columnId);
 }

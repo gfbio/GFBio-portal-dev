@@ -356,7 +356,12 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public long[][] getTableAsArray(long headId) {
+	public long[][] getIdTableAsArray(long headId) {
+		return _headLocalService.getIdTableAsArray(headId);
+	}
+
+	@Override
+	public java.lang.String[][] getTableAsArray(long headId) {
 		return _headLocalService.getTableAsArray(headId);
 	}
 
