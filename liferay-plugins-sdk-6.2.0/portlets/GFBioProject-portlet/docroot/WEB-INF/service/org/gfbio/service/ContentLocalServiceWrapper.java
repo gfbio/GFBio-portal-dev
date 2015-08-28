@@ -353,6 +353,12 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
+		long contentId) {
+		return _contentLocalService.getContentInformationAsJSONBycontentId(contentId);
+	}
+
+	@Override
 	public org.json.simple.JSONObject getContentInformationAsJSONByRowId(
 		long rowId) {
 		return _contentLocalService.getContentInformationAsJSONByRowId(rowId);
@@ -414,6 +420,12 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 		long columnId, long rowId, java.lang.String cellContent) {
 		return _contentLocalService.updateContent(contentId, headId, columnId,
 			rowId, cellContent);
+	}
+
+	@Override
+	public long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _contentLocalService.constructNewId();
 	}
 
 	@Override

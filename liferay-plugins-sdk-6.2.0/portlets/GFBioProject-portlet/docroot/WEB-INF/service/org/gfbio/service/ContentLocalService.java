@@ -293,6 +293,10 @@ public interface ContentLocalService extends BaseLocalService,
 			org.gfbio.NoSuchContentException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
+		long contentId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONObject getContentInformationAsJSONByRowId(
 		long rowId);
 
@@ -332,6 +336,9 @@ public interface ContentLocalService extends BaseLocalService,
 
 	public java.lang.Boolean updateContent(long contentId, long headId,
 		long columnId, long rowId, java.lang.String cellContent);
+
+	public long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.Boolean updateContent(org.json.simple.JSONObject json);
 }

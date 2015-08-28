@@ -158,51 +158,59 @@ public class ContentLocalServiceClpInvoker {
 
 		_methodParameterTypes109 = new String[] { "long", "long" };
 
-		_methodName110 = "getContentInformationAsJSONByRowId";
+		_methodName110 = "getContentInformationAsJSONBycontentId";
 
 		_methodParameterTypes110 = new String[] { "long" };
 
-		_methodName111 = "getContentsAsJSONByRowId";
+		_methodName111 = "getContentInformationAsJSONByRowId";
 
 		_methodParameterTypes111 = new String[] { "long" };
 
-		_methodName112 = "getCountOfColumns";
+		_methodName112 = "getContentsAsJSONByRowId";
 
 		_methodParameterTypes112 = new String[] { "long" };
 
-		_methodName113 = "getCountOfRows";
+		_methodName113 = "getCountOfColumns";
 
 		_methodParameterTypes113 = new String[] { "long" };
 
-		_methodName114 = "getRowIds";
+		_methodName114 = "getCountOfRows";
 
 		_methodParameterTypes114 = new String[] { "long" };
 
-		_methodName115 = "getColumnIdById";
+		_methodName115 = "getRowIds";
 
 		_methodParameterTypes115 = new String[] { "long" };
 
-		_methodName116 = "getContentsByContent";
+		_methodName116 = "getColumnIdById";
 
-		_methodParameterTypes116 = new String[] { "java.lang.String" };
+		_methodParameterTypes116 = new String[] { "long" };
 
-		_methodName117 = "getContentsByContentOfColumn";
+		_methodName117 = "getContentsByContent";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes117 = new String[] { "java.lang.String" };
 
-		_methodName118 = "getRowIdById";
+		_methodName118 = "getContentsByContentOfColumn";
 
-		_methodParameterTypes118 = new String[] { "long" };
+		_methodParameterTypes118 = new String[] { "java.lang.String", "long" };
 
-		_methodName119 = "updateContent";
+		_methodName119 = "getRowIdById";
 
-		_methodParameterTypes119 = new String[] {
-				"long", "long", "long", "long", "java.lang.String"
-			};
+		_methodParameterTypes119 = new String[] { "long" };
 
 		_methodName120 = "updateContent";
 
-		_methodParameterTypes120 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes120 = new String[] {
+				"long", "long", "long", "long", "java.lang.String"
+			};
+
+		_methodName121 = "constructNewId";
+
+		_methodParameterTypes121 = new String[] {  };
+
+		_methodName122 = "updateContent";
+
+		_methodParameterTypes122 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -382,60 +390,70 @@ public class ContentLocalServiceClpInvoker {
 
 		if (_methodName110.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentInformationAsJSONByRowId(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentInformationAsJSONBycontentId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName111.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentsAsJSONByRowId(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentInformationAsJSONByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName112.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
-			return ContentLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentsAsJSONByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName113.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
-			return ContentLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName114.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
-			return ContentLocalServiceUtil.getRowIds(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName115.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
-			return ContentLocalServiceUtil.getColumnIdById(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getRowIds(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName116.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentsByContent((java.lang.String)arguments[0]);
+			return ContentLocalServiceUtil.getColumnIdById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName117.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentsByContentOfColumn((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
+			return ContentLocalServiceUtil.getContentsByContent((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName118.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
-			return ContentLocalServiceUtil.getRowIdById(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentsByContentOfColumn((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName119.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+			return ContentLocalServiceUtil.getRowIdById(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			return ContentLocalServiceUtil.updateContent(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
 		}
 
-		if (_methodName120.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+			return ContentLocalServiceUtil.constructNewId();
+		}
+
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return ContentLocalServiceUtil.updateContent((org.json.simple.JSONObject)arguments[0]);
 		}
 
@@ -524,4 +542,8 @@ public class ContentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes119;
 	private String _methodName120;
 	private String[] _methodParameterTypes120;
+	private String _methodName121;
+	private String[] _methodParameterTypes121;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
 }

@@ -51,6 +51,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 	
 	//construt a JSON with  the head attributs
+	@SuppressWarnings("unchecked")
 	public JSONObject constructHeadJson(long headId, String tableName, String tableType){
 		JSONObject json = new JSONObject();
 		json.put("headId", headId);
@@ -409,12 +410,28 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 
 	
 	//update or build a new head with their columns and their contents
+	@SuppressWarnings("unchecked")
 	public Boolean updateTable (JSONObject json){
 		
 		Boolean check = HeadLocalServiceUtil.updateHead(json);
 		int i=0;
+		long rowId =0;
 		while (json.containsKey(i)){
 			JSONObject columnjson = (JSONObject) json.get(i);
+/*			if (columnjson.containsKey("0")){
+				JSONObject contentjson = (JSONObject) json.get(i);
+				if ((long)contentjson.get("rowid")==0){
+					if(rowId ==0)
+						try {
+							rowId= ContentLocalServiceUtil.constructNewId();
+						} catch (SystemException e) {e.printStackTrace();}
+					contentjson.remove("rowid");
+					contentjson.put("rowid", rowId);
+					columnjson.remove("0");
+					columnjson.put("0", contentjson);
+				}
+			}*/
+				
 			check = ColumnLocalServiceUtil.updateColumnWithContents(columnjson);
 			i++;
 		}

@@ -34,7 +34,7 @@ import org.json.simple.JSONObject;
  */
 public class ContentServiceImpl extends ContentServiceBaseImpl {
 
-	public JSONObject constructColumnJson(long contentId, long headId, long columnId, long rowId, String cellContent){
-		return ContentLocalServiceUtil.constructColumnJson(contentId, headId, columnId, rowId, cellContent);
-	}
+
+	
+	
 }

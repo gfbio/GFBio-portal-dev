@@ -232,7 +232,7 @@ function resourceMethod(archivingURL, method, data, async) {
 
 
 function resourceMethod_I_to(archivingURL, method, name, size, relationID, async, runningNumber) {
-	console.log("2");
+	console.log(archivingURL+" | "+ method+" | "+name+" | "+size+" | "+relationID+" | "+async+" | "+runningNumber);
 	var str ;
 	var headStr;
 	var data = {};
@@ -240,14 +240,21 @@ function resourceMethod_I_to(archivingURL, method, name, size, relationID, async
 	if (method == 'updateContent'){
 		contentName = name;
 		name ="dyta_".concat(runningNumber);
+		console.log(contentName.concat("_rowID"));
 	}
 	headStr = name.concat("_").concat("table_name");
+	console.log("1");
+	console.log('top'.concat(headStr));
+	console.log(headStr);
 	data = buildJsonHead(document.getElementById('top'.concat(headStr)).value,  document.getElementById(headStr).value, relationID);
+	console.log("2");
 	for (var i = 0; i < size; i++) {
 		str = name.concat("_").concat(i);
+		console.log("3");
 		var subdata = buildJsonColum(document.getElementById('top'.concat(str)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById(str).value);
+		console.log("4");
 		if (method == 'updateContent'){
-			subdate = addSubJsonToJson(subdata, buildJsonContent(document.getElementById("top".concat(contentName).concat("_").concat(i+1)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById('top'.concat(str)).value, document.getElementById("dycon_".concat(runningNumber).concat("_rowID")).value, document.getElementById(contentName.concat("_").concat(i+1)).value),0);
+				subdate = addSubJsonToJson(subdata, buildJsonContent(document.getElementById("top".concat(contentName).concat("_").concat(i+1)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById('top'.concat(str)).value, document.getElementById(contentName.concat("_rowID")).value, document.getElementById(contentName.concat("_").concat(i+1)).value),0);
 		}
 		data = addSubJsonToJson(data, subdata, i);
 	}

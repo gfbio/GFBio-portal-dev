@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 
+	@SuppressWarnings("unchecked")
 	public JSONObject constructColumnJson(long contentId, long headId, long columnId, long rowId, String cellContent){
 		JSONObject json = new JSONObject();
 		json.put("contentid", contentId);
@@ -151,6 +152,18 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 
 	
+	public JSONObject getContentInformationAsJSONBycontentId (long contentId){
+		
+		JSONObject json = new JSONObject();
+		Content content = null;
+		try {
+			content = ContentLocalServiceUtil.getContentById(contentId);
+		} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
+		if (content != null)
+			json = ContentLocalServiceUtil.constructColumnJson(content.getContentID(), content.getHeadID(), content.getColumnID(), content.getRowID(), content.getCellContent());
+		return json;
+	}
+	
 	
 	//get the basic Information of the Contents of a specific row as JSON
 	@SuppressWarnings("unchecked")
@@ -202,6 +215,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	//get the count of rows from a specific column 
+	
 	public int getCountOfRows(long headId) throws SystemException{
 		int count =0;
 		List list = ContentLocalServiceUtil.getRowIds(headId);
@@ -258,9 +272,13 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			try {
 				content = contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			} catch (SystemException e) {e.printStackTrace();}
+		if (rowId ==0)
+			try {
+				rowId= constructNewId();
+			} catch (SystemException e1) {e1.printStackTrace();}
 		content.setHeadID(headId);
 		content.setColumnID(columnId);
-		content.setRowID(rowId);
+		content.setHeadID(rowId);
 		content.setCellContent(cellContent);
 		try {
 			super.updateContent(content);
@@ -268,6 +286,11 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		return check;
+	}
+	
+	
+	public long constructNewId() throws SystemException{
+		return contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName())).getContentID();
 	}
 	
 	

@@ -336,6 +336,11 @@ public class ContentLocalServiceUtil {
 		return getService().getContentIdByTableIds(rowId, columnId);
 	}
 
+	public static org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
+		long contentId) {
+		return getService().getContentInformationAsJSONBycontentId(contentId);
+	}
+
 	public static org.json.simple.JSONObject getContentInformationAsJSONByRowId(
 		long rowId) {
 		return getService().getContentInformationAsJSONByRowId(rowId);
@@ -389,6 +394,11 @@ public class ContentLocalServiceUtil {
 		return getService()
 				   .updateContent(contentId, headId, columnId, rowId,
 			cellContent);
+	}
+
+	public static long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().constructNewId();
 	}
 
 	public static java.lang.Boolean updateContent(
