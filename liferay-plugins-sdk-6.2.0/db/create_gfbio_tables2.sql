@@ -68,11 +68,10 @@ ALTER TABLE gfbio_researchobject
 
 CREATE TABLE gfbio_head
 (
-  headId bigint NOT NULL,
-  name text NOT NULL,
-  task text NOT NULL,
-
-  CONSTRAINT gfbio_head_pkey PRIMARY KEY (headId)
+  headid bigint NOT NULL,
+  table_name text NOT NULL,
+  table_type text NOT NULL,
+  CONSTRAINT gfbio_head_pkey PRIMARY KEY (headid)
 )
 WITH (
   OIDS=FALSE
@@ -86,7 +85,7 @@ CREATE TABLE gfbio_column
 (
   columnid bigint NOT NULL,
   headid bigint NOT NULL,
-  value text,
+  column_name text,
   CONSTRAINT gfbio_column_pkey PRIMARY KEY (columnid),
   CONSTRAINT gfbio_head_fkey FOREIGN KEY (headid)
       REFERENCES gfbio_head (headid) MATCH SIMPLE
@@ -98,14 +97,15 @@ WITH (
 ALTER TABLE gfbio_column
   OWNER TO liferay;
   
-CREATE TABLE gfbio_position
+  
+CREATE TABLE gfbio_content
 (
-  positionid bigint NOT NULL,
+  contentid bigint NOT NULL,
   headid bigint NOT NULL,
   columnid bigint NOT NULL,
   rowid bigint NOT NULL,
-  value text,
-  CONSTRAINT gfbio_position_pkey PRIMARY KEY (positionid),
+  cellcontent text,
+  CONSTRAINT gfbio_content_pkey PRIMARY KEY (contentid),
   CONSTRAINT gfbio_column_fkey FOREIGN KEY (columnid)
       REFERENCES gfbio_column (columnid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -116,7 +116,7 @@ CREATE TABLE gfbio_position
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE gfbio_position
+ALTER TABLE gfbio_content
   OWNER TO liferay;
 
 

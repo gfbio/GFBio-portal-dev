@@ -251,6 +251,9 @@ public interface ContentLocalService extends BaseLocalService,
 	public org.json.simple.JSONObject constructColumnJson(long contentId,
 		long headId, long columnId, long rowId, java.lang.String cellContent);
 
+	public long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteContentById(long contentId);
 
 	public void deleteContentsByColumnId(long columnId);
@@ -336,9 +339,6 @@ public interface ContentLocalService extends BaseLocalService,
 
 	public java.lang.Boolean updateContent(long contentId, long headId,
 		long columnId, long rowId, java.lang.String cellContent);
-
-	public long constructNewId()
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.Boolean updateContent(org.json.simple.JSONObject json);
 }

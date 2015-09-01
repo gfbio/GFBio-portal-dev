@@ -57,7 +57,6 @@ function ENAradio(j){
 	//radiohide(j);
 	for (i = -20; i>-29;i--)
 		SubmitENA(i, "hide");
-	console.log(j);
 	SubmitENA(j, "show");
 }
 
@@ -169,6 +168,13 @@ function deleteContent(method, data, tab, path){
 }
 
 
+function deleteColumn(method, data, tab1, path1,tab2,path2){
+	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
+	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
+	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
+}
+
+
 function deleteTable(method, data, tab1, path1,tab2,path2){
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
 	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
@@ -195,6 +201,8 @@ function newProject(archivingURL, method, name, size, hide,  userID) {
 
 //Method to update a Row in Head/Position
 function updateTable (method, name, size, task, tab, path, runningNumber) {
+	console.log("");
+	console.log(method+" | "+ name+" | "+ size+" | "+ task+" | "+tab+" | "+ path+" | "+ runningNumber);
 	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task, false, runningNumber);
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }
@@ -215,13 +223,13 @@ function updateProject (archivingURL, method, name, size, hide, userID) {
 
 
 //Method to update a RelationTable in Head
-function updateRelationTable (archivingURL, method, mtable, ntable, hide) {
+function updateRelationTable (method, mtable, ntable,tab,  path) {
+	console.log(method+" | "+mtable+" | "+ntable+" | "+tab+" | "+path);
 	var data = {};
 	data["mtable"] = mtable;
 	data["ntable"] = ntable;
-	resourceMethod(archivingURL, method, data, false);
-	visibleShow(hide);
-	window.setTimeout('visibleHide('+hide+')',1500);
+	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
+	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }
 
 
@@ -232,7 +240,7 @@ function resourceMethod(archivingURL, method, data, async) {
 
 
 function resourceMethod_I_to(archivingURL, method, name, size, relationID, async, runningNumber) {
-	console.log(archivingURL+" | "+ method+" | "+name+" | "+size+" | "+relationID+" | "+async+" | "+runningNumber);
+	console.log(archivingURL+ " | "+method+ " | "+name+ " | "+size+ " | "+relationID+ " | "+async+ " | "+runningNumber);
 	var str ;
 	var headStr;
 	var data = {};
@@ -240,26 +248,38 @@ function resourceMethod_I_to(archivingURL, method, name, size, relationID, async
 	if (method == 'updateContent'){
 		contentName = name;
 		name ="dyta_".concat(runningNumber);
-		console.log(contentName.concat("_rowID"));
 	}
 	headStr = name.concat("_").concat("table_name");
-	console.log("1");
-	console.log('top'.concat(headStr));
-	console.log(headStr);
+	console.log("1: "+'top'.concat(headStr)+ ": ");
+	console.log("2: "+headStr+ ": "+document.getElementById(headStr).value);
 	data = buildJsonHead(document.getElementById('top'.concat(headStr)).value,  document.getElementById(headStr).value, relationID);
-	console.log("2");
+	if (method == 'addColumnToTable')
+		size=size-1;
 	for (var i = 0; i < size; i++) {
 		str = name.concat("_").concat(i);
-		console.log("3");
+		console.log("- "+i+" -");
+		console.log('top'.concat(str));
+		console.log(document.getElementById('top'.concat(str)).value);
+		console.log(document.getElementById('top'.concat(headStr)).value);
+		console.log(document.getElementById(str).value);
+		console.log("-----");
 		var subdata = buildJsonColum(document.getElementById('top'.concat(str)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById(str).value);
-		console.log("4");
-		if (method == 'updateContent'){
-				subdate = addSubJsonToJson(subdata, buildJsonContent(document.getElementById("top".concat(contentName).concat("_").concat(i+1)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById('top'.concat(str)).value, document.getElementById(contentName.concat("_rowID")).value, document.getElementById(contentName.concat("_").concat(i+1)).value),0);
-		}
-		data = addSubJsonToJson(data, subdata, i);
+		if (method == 'updateContent')
+			data = addSubJsonToJson(data, addSubJsonToJson(subdata, buildJsonContent(document.getElementById("top".concat(contentName).concat("_").concat(i+1)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById('top'.concat(str)).value, document.getElementById(contentName.concat("_rowID")).value, document.getElementById(contentName.concat("_").concat(i+1)).value),0), i);
+		else
+			data = addSubJsonToJson(data, subdata, i);
 	}
+	if (method =='addColumnToTable'){
+		var subdata = buildJsonColum("0", document.getElementById('top'.concat(headStr)).value, "");
+		data = addSubJsonToJson(data, subdata, size);
+		console.log("::::::::::::::::::::::::");
+		console.log(data);
+	}
+	
+	
 	ajaxRequest(archivingURL, method, data, async);
 };
+
 
 
 function resourceMethod_I(archivingURL, method, name, size, relationID, async) {
@@ -299,39 +319,46 @@ function resourceMethod_JI(archivingURL, method, name, j, size, async) {
 
 //build JSON of Column
 function buildJsonColum(columnId, headId, columnName){
+	console.log("column "+columnId+ " - "+ headId+ " - "+ columnName);
 	var json = {};
 	json["columnid"]=columnId;
 	json["headid"]=headId;
 	json["column_name"]=columnName;
+	console.log(json);
 	return json;
 }
 
 
 //build JSON of Content
 function buildJsonContent(contentId, headId, columnId, rowId, content){
+	console.log("content "+contentId+ " - "+ headId+ " - "+  columnId+ " - "+ rowId+ " - "+ content);
 	var json = {};
 	json["contentid"]=contentId;
 	json["headid"]=headId;
 	json["columnid"]=columnId;
 	json["rowid"]=rowId;
 	json["cellcontent"]=content;
+	console.log(json);
 	return json;
 }
 
 
 //build JSON of Head
 function buildJsonHead(headId, tableName, tableType){
+	console.log("head "+headId+ " - "+tableName+ " - "+tableType);
 	var json = {};
 	json["headid"]=headId;
 	json["table_name"]=tableName;
 	json["table_type"]=tableType;
+	console.log(json);
 	return json;
 }
 
 
 //add a sub JSON to a JSON
-function addSubJsonToJson(json, subJson, key){
-	json[key] = subJson;
+function addSubJsonToJson(json, subjson, key){
+	json[key] = subjson;
+	console.log(json);
 	return json;
 }
 

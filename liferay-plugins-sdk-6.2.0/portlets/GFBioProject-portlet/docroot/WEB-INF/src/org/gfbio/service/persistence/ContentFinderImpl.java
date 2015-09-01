@@ -21,7 +21,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Head> implements Con
 	public static String GET_CELL_CONTENT = FINDER_CLASS_NAME_ENTITY + ".getCellContent";
 
 	
-	public List getRowIds(long headId) {
+	public  List getRowIds(long headId) {
 		
 		Session session = null;
 		try {

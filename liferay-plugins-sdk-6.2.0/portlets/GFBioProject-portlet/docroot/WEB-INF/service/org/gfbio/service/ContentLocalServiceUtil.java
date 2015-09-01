@@ -279,6 +279,11 @@ public class ContentLocalServiceUtil {
 			cellContent);
 	}
 
+	public static long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().constructNewId();
+	}
+
 	public static void deleteContentById(long contentId) {
 		getService().deleteContentById(contentId);
 	}
@@ -394,11 +399,6 @@ public class ContentLocalServiceUtil {
 		return getService()
 				   .updateContent(contentId, headId, columnId, rowId,
 			cellContent);
-	}
-
-	public static long constructNewId()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().constructNewId();
 	}
 
 	public static java.lang.Boolean updateContent(

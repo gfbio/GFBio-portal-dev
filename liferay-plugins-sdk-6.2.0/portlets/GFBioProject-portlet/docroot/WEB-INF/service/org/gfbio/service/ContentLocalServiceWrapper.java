@@ -286,6 +286,12 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _contentLocalService.constructNewId();
+	}
+
+	@Override
 	public void deleteContentById(long contentId) {
 		_contentLocalService.deleteContentById(contentId);
 	}
@@ -420,12 +426,6 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 		long columnId, long rowId, java.lang.String cellContent) {
 		return _contentLocalService.updateContent(contentId, headId, columnId,
 			rowId, cellContent);
-	}
-
-	@Override
-	public long constructNewId()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.constructNewId();
 	}
 
 	@Override

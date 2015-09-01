@@ -298,6 +298,18 @@ public class ColumnLocalServiceUtil {
 		return getService().getColumnsByHeadIdAndName(headId, columnName);
 	}
 
+	public static java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
+		java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getColumnsWithRelation(columnName);
+	}
+
+	public static java.util.List getColumnIdsWithoutRelation(
+		java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getColumnIdsWithoutRelation(columnName);
+	}
+
 	public static int getCountofColumns(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCountofColumns(headId);

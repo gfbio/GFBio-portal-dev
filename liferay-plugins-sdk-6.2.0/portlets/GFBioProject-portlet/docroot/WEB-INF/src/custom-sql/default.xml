@@ -2,5 +2,6 @@
 
 <custom-sql>
     <sql file="custom-sql/content_custom_sql.xml"/>
+    <sql file="custom-sql/column_custom_sql.xml"/>
     <sql file="custom-sql/head_custom_sql.xml"/>
 </custom-sql>

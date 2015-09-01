@@ -13,6 +13,10 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.persistence.ColumnFinder" class="org.gfbio.service.persistence.ColumnFinderImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.ContentLocalService" class="org.gfbio.service.impl.ContentLocalServiceImpl" />
 	<bean id="org.gfbio.service.ContentService" class="org.gfbio.service.impl.ContentServiceImpl" />
 	<bean id="org.gfbio.service.persistence.ContentPersistence" class="org.gfbio.service.persistence.ContentPersistenceImpl" parent="basePersistence">

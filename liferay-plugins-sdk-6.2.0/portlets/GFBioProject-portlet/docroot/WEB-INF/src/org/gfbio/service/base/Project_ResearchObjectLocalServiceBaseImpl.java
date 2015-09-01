@@ -35,6 +35,7 @@ import org.gfbio.model.Project_ResearchObject;
 
 import org.gfbio.service.Project_ResearchObjectLocalService;
 import org.gfbio.service.persistence.BasketPersistence;
+import org.gfbio.service.persistence.ColumnFinder;
 import org.gfbio.service.persistence.ColumnPersistence;
 import org.gfbio.service.persistence.ContentFinder;
 import org.gfbio.service.persistence.ContentPersistence;
@@ -408,6 +409,24 @@ public abstract class Project_ResearchObjectLocalServiceBaseImpl
 	 */
 	public void setColumnPersistence(ColumnPersistence columnPersistence) {
 		this.columnPersistence = columnPersistence;
+	}
+
+	/**
+	 * Returns the column finder.
+	 *
+	 * @return the column finder
+	 */
+	public ColumnFinder getColumnFinder() {
+		return columnFinder;
+	}
+
+	/**
+	 * Sets the column finder.
+	 *
+	 * @param columnFinder the column finder
+	 */
+	public void setColumnFinder(ColumnFinder columnFinder) {
+		this.columnFinder = columnFinder;
 	}
 
 	/**
@@ -1086,6 +1105,8 @@ public abstract class Project_ResearchObjectLocalServiceBaseImpl
 	protected org.gfbio.service.ColumnService columnService;
 	@BeanReference(type = ColumnPersistence.class)
 	protected ColumnPersistence columnPersistence;
+	@BeanReference(type = ColumnFinder.class)
+	protected ColumnFinder columnFinder;
 	@BeanReference(type = org.gfbio.service.ContentLocalService.class)
 	protected org.gfbio.service.ContentLocalService contentLocalService;
 	@BeanReference(type = org.gfbio.service.ContentService.class)

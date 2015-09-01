@@ -22,6 +22,7 @@ import org.gfbio.model.Head;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.ColumnLocalServiceBaseImpl;
+import org.gfbio.service.persistence.ColumnFinderUtil;
 import org.json.simple.JSONObject;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -45,17 +46,19 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 
 	
+	@SuppressWarnings("unchecked")
 	public JSONObject constructColumnJson(long columnId, long headId, String columnName){
 		JSONObject json = new JSONObject();
-		json.put("columnId", columnId);
-		json.put("headId", headId);
-		json.put("columnName", columnName);
+		json.put("columnid", Long.toString(columnId));
+		json.put("headid", Long.toString(headId));
+		json.put("column_name", columnName);
 		return json;
 	}
 	
 	
 	//delete column 
 	public void deleteColumnById (long columnId)  {
+		System.out.println("delColumn: "+columnId);
 		ContentLocalServiceUtil.deleteContentsByColumnId(columnId);
 		try {
 			ColumnLocalServiceUtil.deleteColumn(columnId);
@@ -98,10 +101,23 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	}
 	
 	
+
+	public List<Column> getColumnsWithRelation(String columnName) throws SystemException{
+		return ColumnFinderUtil.getColumnsWithRelation(columnName);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List getColumnIdsWithoutRelation(String columnName) throws SystemException{
+		return ColumnFinderUtil.getColumnIdsWithoutRelation(columnName);
+	}
+	
+	
 	// get the count of columns of a specific head
 	public int getCountofColumns (long headId) throws SystemException{
 		return ColumnLocalServiceUtil.getColumnsByHeadId(headId).size();
 	}
+	
+
 	
 	
 	//get a head id to the column id
@@ -143,6 +159,7 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	//update or build a new the column
 	public Boolean updateColumn (long columnId, long headId, String content){
 		
+		System.out.println("columnID: "+columnId+ ", headID: "+headId+", Content: "+content);
 		Boolean check = false;
 		Column column = null;
 
@@ -155,19 +172,29 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		if (column == null)
 			try {
 				column = columnPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
+				System.out.println("columnID: "+column.getColumnID()+ ", headID: "+headId+", Content: "+content);
 			} catch (SystemException e) {e.printStackTrace();}
 
 		column.setHeadID(headId);
 		column.setColumn_name(content);
 
+
 		try {
 			super.updateColumn(column);
 			check = true;
-		} catch (SystemException e) {e.printStackTrace();}			
+			if (columnId ==0){
+				@SuppressWarnings("rawtypes")
+				List rowCount = ContentLocalServiceUtil.getRowIds(headId);
+				if (rowCount.size()>0)
+					for (int i =0;i<rowCount.size();i++)
+						ContentLocalServiceUtil.updateContent(0, headId, column.getColumnID(), (long) rowCount.get(i), "");
+			}
+		} catch (SystemException e) {e.printStackTrace();}
+		
 
 		return check;
 	}
-	
+
 	
 	//update or build a new the column with a json as input
 	public Boolean updateColumn (JSONObject json){
@@ -184,11 +211,13 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	
 	//update or build a new the column and their content with a json as input
 	public Boolean updateColumnWithContents (JSONObject json){
+		System.out.println("column: "+json);
 		Boolean check = false;
 		check = ColumnLocalServiceUtil.updateColumn(json);
 		int i=0;
 		while (json.containsKey(new Integer (i).toString())){
 			JSONObject contentjson = (JSONObject) json.get(new Integer (i).toString());
+			System.out.println(contentjson);
 			check = ContentLocalServiceUtil.updateContent(contentjson);
 			i++;
 		}

@@ -397,9 +397,33 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public long updateHeadWithLongRequest(org.json.simple.JSONObject json) {
+		return _headLocalService.updateHeadWithLongRequest(json);
+	}
+
+	@Override
+	public long updateHeadWithLongRequest(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return _headLocalService.updateHeadWithLongRequest(headId, tableName,
+			tableType);
+	}
+
+	@Override
 	public java.lang.Boolean updateHeadWithColumns(
 		org.json.simple.JSONObject json) {
 		return _headLocalService.updateHeadWithColumns(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateRelationTable(long headId,
+		java.lang.String mtable, java.lang.String ntable) {
+		return _headLocalService.updateRelationTable(headId, mtable, ntable);
+	}
+
+	@Override
+	public java.lang.String constructRelationName(java.lang.String mtable,
+		java.lang.String ntable) {
+		return _headLocalService.constructRelationName(mtable, ntable);
 	}
 
 	@Override

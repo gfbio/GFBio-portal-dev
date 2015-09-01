@@ -55,6 +55,10 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 	
 	
+	public long constructNewId() throws SystemException{
+		return contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName())).getContentID();
+	}
+	
 	//delete content 
 	public void deleteContentById (long contentId)  {
 		try {
@@ -65,15 +69,18 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	//delete contents of a specific column
 	public void deleteContentsByColumnId (long columnId){
-		
+		System.out.println("content: "+columnId);
 		List <Content> contentList = null;
+
 		try {
 			contentList = ContentLocalServiceUtil.getContentsByColumnId(columnId);
+			System.out.println("content: "+contentList.toString());
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				ContentLocalServiceUtil.deleteContentById(contentList.get(i).getRowID());
+				//System.out.println(contentList.get(i).getContentID());
+				ContentLocalServiceUtil.deleteContentById(contentList.get(i).getContentID());
 	}
 	
 	
@@ -96,7 +103,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				ContentLocalServiceUtil.deleteContentById(contentList.get(i).getRowID());
+				ContentLocalServiceUtil.deleteContentById(contentList.get(i).getContentID());
 	}
 	
 	
@@ -259,7 +266,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		
 	//update or build a new the content
 	public Boolean updateContent (long contentId, long headId, long columnId, long rowId, String cellContent){
-		
+		System.out.println("updateContent: "+ contentId+ " | "+headId+ " | "+ columnId+ " | "+rowId+ " | "+cellContent);
 		Boolean check = false;
 		Content content = null;
 
@@ -272,15 +279,23 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			try {
 				content = contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			} catch (SystemException e) {e.printStackTrace();}
+		System.out.println("updateContent in content: "+ content.getContentID()+ " | "+headId+ " | "+ columnId+ " | "+rowId+ " | "+cellContent);
 		if (rowId ==0)
 			try {
-				rowId= constructNewId();
+				System.out.println("tester: "+ rowId);
+				rowId= ContentLocalServiceUtil.constructNewId();
 			} catch (SystemException e1) {e1.printStackTrace();}
+		System.out.println("tester: "+ headId);
 		content.setHeadID(headId);
+		System.out.println("tester: "+ columnId);
 		content.setColumnID(columnId);
-		content.setHeadID(rowId);
+		System.out.println("tester: "+ columnId);
+		content.setRowID(rowId);
+		System.out.println("tester: "+ rowId);
 		content.setCellContent(cellContent);
+		System.out.println("tester: "+ cellContent);
 		try {
+			System.out.println("tester: content" + content.toString());
 			super.updateContent(content);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
@@ -289,23 +304,29 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 	
 	
-	public long constructNewId() throws SystemException{
-		return contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName())).getContentID();
-	}
+
 	
 	
 	//update or build a new the content with a json as input
 	public Boolean updateContent (JSONObject json){
 		
-		
+		System.out.println("updateContent: "+json);
 		Boolean check = false;
 		String contentIdKey ="contentid";
 		String headKey ="headid";
 		String columnKey ="columnid";
 		String rowKey = "rowid";
 		String contentKey = "cellcontent";
+		long contentId = Long.valueOf((String) json.get(contentIdKey)).longValue();
+		long headId = Long.valueOf((String) json.get(headKey)).longValue();
+		long columnId = Long.valueOf((String) json.get(columnKey)).longValue();
+		System.out.println("rowId");
+		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
+		System.out.println("cellcontent");
+		String cellcontent = (String) json.get(contentKey);
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
-			check = ContentLocalServiceUtil.updateContent(Long.valueOf((String) json.get(contentIdKey)).longValue(), Long.valueOf((String) json.get(headKey)).longValue(), Long.valueOf((String) json.get(columnKey)).longValue(), Long.valueOf((String) json.get(rowKey)).longValue(), (String) json.get(contentKey));
+			check = ContentLocalServiceUtil.updateContent(contentId, headId, columnId, rowId, cellcontent);
+			//check = ContentLocalServiceUtil.updateContent(Long.valueOf((String) json.get(contentIdKey)).longValue(), Long.valueOf((String) json.get(headKey)).longValue(), Long.valueOf((String) json.get(columnKey)).longValue(), Long.valueOf((String) json.get(rowKey)).longValue(), (String) json.get(contentKey));
 		return check;
 	}
 	

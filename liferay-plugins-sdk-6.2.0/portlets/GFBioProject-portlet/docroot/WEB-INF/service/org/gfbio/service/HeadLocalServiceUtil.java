@@ -371,9 +371,30 @@ public class HeadLocalServiceUtil {
 		return getService().updateHead(json);
 	}
 
+	public static long updateHeadWithLongRequest(
+		org.json.simple.JSONObject json) {
+		return getService().updateHeadWithLongRequest(json);
+	}
+
+	public static long updateHeadWithLongRequest(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return getService()
+				   .updateHeadWithLongRequest(headId, tableName, tableType);
+	}
+
 	public static java.lang.Boolean updateHeadWithColumns(
 		org.json.simple.JSONObject json) {
 		return getService().updateHeadWithColumns(json);
+	}
+
+	public static java.lang.Boolean updateRelationTable(long headId,
+		java.lang.String mtable, java.lang.String ntable) {
+		return getService().updateRelationTable(headId, mtable, ntable);
+	}
+
+	public static java.lang.String constructRelationName(
+		java.lang.String mtable, java.lang.String ntable) {
+		return getService().constructRelationName(mtable, ntable);
 	}
 
 	public static java.lang.Boolean updateTable(org.json.simple.JSONObject json) {

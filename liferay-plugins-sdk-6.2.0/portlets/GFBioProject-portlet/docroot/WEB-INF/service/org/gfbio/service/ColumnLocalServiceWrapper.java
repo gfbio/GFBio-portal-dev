@@ -312,6 +312,20 @@ public class ColumnLocalServiceWrapper implements ColumnLocalService,
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
+		java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _columnLocalService.getColumnsWithRelation(columnName);
+	}
+
+	@Override
+	public java.util.List getColumnIdsWithoutRelation(
+		java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _columnLocalService.getColumnIdsWithoutRelation(columnName);
+	}
+
+	@Override
 	public int getCountofColumns(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _columnLocalService.getCountofColumns(headId);
