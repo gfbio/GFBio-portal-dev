@@ -29,8 +29,9 @@ function changeToMinus(j) {
 
 
 
-function iconshowhide(j, iconid){
+function iconshowhidesinmple(j, iconid){
 
+	console.log(j + " || "+ iconid);
 	showhide(j);
 	(document.getElementById(iconid).className=="icon-plus") ?document.getElementById(iconid).className = "icon-minus" : document.getElementById(iconid).className = "icon-plus";
 }
@@ -200,11 +201,10 @@ function newProject(archivingURL, method, name, size, hide,  userID) {
 
 
 //Method to update a Row in Head/Position
-function updateTable (method, name, size, task, tab, path, runningNumber) {
-	console.log("");
-	console.log(method+" | "+ name+" | "+ size+" | "+ task+" | "+tab+" | "+ path+" | "+ runningNumber);
+function updateTable (method, name, size, task, tab1, path1, tab2, path2,runningNumber) {
 	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task, false, runningNumber);
-	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
+	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
+	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
 }
 
 

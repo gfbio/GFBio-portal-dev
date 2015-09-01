@@ -135,9 +135,9 @@
 					
 					<!-- icons -->
 					<div class="dynamicIcon">
-						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(y).toString()).concat("editplus")%>" 	class="icon-plus" 	onclick="updateTable('addColumnToTable', '<%="dyta_".concat(new Integer(y).toString()) %>', '<%= columnCount+1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu','<%=y %>')"  /></i>&nbsp;
+						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(y).toString()).concat("editplus")%>" 	class="icon-plus" 	onclick="updateTable('addColumnToTable', '<%="dyta_".concat(new Integer(y).toString()) %>', '<%= columnCount+1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu','<%=y %>')"  /></i>&nbsp;
 						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(y).toString()).concat("editminus")%>" 	class="icon-minus" 	onclick="deleteColumn('deleteColumn', '<%=columnList.get(x).getColumnID() %>', 'tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"  /></i>&nbsp;
-						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(y).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(y).toString()) %>', '<%= columnCount %>',   'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu','<%=y %>')"  /></i>
+						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(y).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(y).toString()) %>', '<%= columnCount %>',   'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu','<%=y %>')"  /></i>
 					</div>
 				</div>
 				
@@ -220,7 +220,7 @@
 						<input 	type="hidden"	id="<%="lavadyta_".concat(new Integer(y).toString())%>" 	value="<%="0"%>" />
 					</div>
 					<div class="dynamicIcon">
-						<i style="cursor:pointer" id="<%="dyta_".concat("newok")%>" 	class="icon-ok" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(y).toString()) %>', '<%= columncount %>', 'entity','tabTableMenu', '/html/tablebuilder/view.jsp #tabTableMenu','<%=y %>')"  /></i>
+						<i style="cursor:pointer" id="<%="dyta_".concat("newok")%>" 	class="icon-ok" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(y).toString()) %>', '<%= columncount %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu','<%=y %>')"  /></i>
 					</div>
 				</div>
 			<%} %>
@@ -366,8 +366,7 @@
 					<!-- manage icons -->
 						
 					<div class="dynamicIcon">
-						
-						<i style="cursor:pointer" id="<%="dycon_".concat("newplus")%>" 	class="icon-plus" 	onclick="showhide('<%="99".concat(new Integer(h).toString()) %>')"></i>
+						<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat("_").concat("newplus")%>" 	class="icon-plus" 	onclick="iconshowhidesinmple('<%="99".concat(new Integer(h).toString()) %>','<%="dycon_".concat(new Integer(h).toString()).concat("_").concat("newplus")%>')"></i>
 					</div>
 						
 						
@@ -398,7 +397,7 @@
 						</div>
 							
 						<div class="dynamicIcon">
-							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(x).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateContent', '<%="dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>', '<%= x-1 %>', 'entity','tabContentMenu', '/html/tablebuilder/view.jsp #tabContentMenu','<%=h %>')"  /></i>
+							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(x).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateContent', '<%="dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>', '<%= x-1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu','<%=h %>')"  /></i>
 
 						</div>
 						
