@@ -1,4 +1,4 @@
-﻿ DROP TABLE 
+﻿DROP TABLE IF EXISTS
  gfbio_basket, gfbio_project, gfbio_researchobject,  
  gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi,
  gfbio_position, gfbio_column, gfbio_head;
@@ -95,7 +95,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE gfbio_column
-  OWNER TO liferay;
+  OWNER TO liferay_gfbio;
   
   
 CREATE TABLE gfbio_content
@@ -117,7 +117,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE gfbio_content
-  OWNER TO liferay;
+  OWNER TO liferay_gfbio;
 
 
 
@@ -189,11 +189,3 @@ WITH (
 );
 ALTER TABLE gfbio_project_user_pi
   OWNER TO liferay_gfbio;
-  
-  
-
-
-  
-  
-  
-  
