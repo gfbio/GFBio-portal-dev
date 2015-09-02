@@ -1,7 +1,8 @@
-﻿DROP TABLE IF EXISTS
+﻿/*DROP TABLE IF EXISTS
  gfbio_basket, gfbio_project, gfbio_researchobject,  
  gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi,
  gfbio_position, gfbio_column, gfbio_head;
+*/
 
 -- Table: gfbio_basket
 
@@ -44,7 +45,8 @@ ALTER TABLE gfbio_project
   
 
 -- Table: gfbio_researchobject
-
+-- Table definition moved to ./submission_registry/research_object.sql
+/*
 CREATE TABLE gfbio_researchobject
 (
   researchobjectId bigint NOT NULL,
@@ -59,7 +61,7 @@ WITH (
 );
 ALTER TABLE gfbio_researchobject
   OWNER TO liferay_gfbio;
-  
+*/
   
 -----------------------------------------------------------------------------------------
 ---------------------------------- Head, Column & Position --------------------------------

@@ -5,7 +5,7 @@ CREATE TYPE submission_status AS ENUM ('sent', 'archived');
 
 --LOGIC: Contains one entry per research_object+archive combination.
 CREATE TABLE submission_registry (
-research_object_id bigint NOT NULL REFERENCES research_object (research_object_id),
+research_object_id bigint NOT NULL REFERENCES gfbio_researchobject (researchobjectId),
 research_object_version smallint NOT NULL,
 archive text NOT NULL REFERENCES data_provider (label), --FOREIGN KEY
 archive_pid text DEFAULT NULL,
@@ -19,7 +19,6 @@ is_public boolean NOT NULL DEFAULT FALSE,
 public_after timestamp NOT NULL DEFAULT now() + interval '6 months',
 PRIMARY KEY (research_object_id,research_object_version,archive),
 UNIQUE (research_object_id,archive,archive_pid)
---FOREIGN KEY (research_object_id,research_object_version) REFERENCES research_object (research_object_id,research_object_version) -- cannot use this because updates on object might come later
 );
 
 

@@ -6,6 +6,9 @@ SET search_path=gfbio_subreg;
 CREATE ROLE liferay_gfbio;
 GRANT USAGE ON SCHEMA gfbio_subreg TO liferay_gfbio;
 
+\echo '--- RESEARCH OBJECT ---\n'
+\i ./research_object.sql
+
 \echo '--- CREATE GFBIO TABLES ---\n'
 \i ../create_gfbio_tables2.sql
 
