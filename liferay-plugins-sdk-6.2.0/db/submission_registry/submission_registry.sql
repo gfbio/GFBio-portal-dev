@@ -1,10 +1,10 @@
-﻿-- DROP TABLE IF EXISTS submission_registry;
+﻿-- DROP TABLE IF EXISTS gfbio_submission_registry;
 
 
 CREATE TYPE submission_status AS ENUM ('sent', 'archived');
 
 --LOGIC: Contains one entry per research_object+archive combination.
-CREATE TABLE submission_registry (
+CREATE TABLE gfbio_submission_registry (
 research_object_id bigint NOT NULL REFERENCES gfbio_researchobject (researchobjectId),
 research_object_version smallint NOT NULL,
 archive text NOT NULL REFERENCES data_provider (label), --FOREIGN KEY
@@ -26,13 +26,13 @@ CREATE OR REPLACE VIEW latest_submissions AS
 SELECT * FROM (
        SELECT *,
        	      rank() OVER (PARTITION BY research_object_id,archive ORDER BY research_object_version DESC) AS pos
-       FROM submission_registry) AS iq
+       FROM gfbio_submission_registry) AS iq
        WHERE pos=1
 ;
 
-CREATE OR REPLACE FUNCTION get_submission_history(roid bigint) RETURNS SETOF submission_registry AS $$
+CREATE OR REPLACE FUNCTION get_submission_history(roid bigint) RETURNS SETOF gfbio_submission_registry AS $$
    BEGIN
-       RETURN QUERY SELECT * FROM submission_registry WHERE research_object_id=roid;
+       RETURN QUERY SELECT * FROM gfbio_submission_registry WHERE research_object_id=roid;
        RETURN;
    END;
 $$ LANGUAGE plpgsql;
