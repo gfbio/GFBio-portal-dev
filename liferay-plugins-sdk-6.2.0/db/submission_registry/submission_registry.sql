@@ -9,7 +9,7 @@ research_object_id bigint NOT NULL REFERENCES gfbio_researchobject (researchobje
 research_object_version smallint NOT NULL,
 archive text NOT NULL REFERENCES data_provider (label), --FOREIGN KEY
 archive_pid text DEFAULT NULL,
-archive_pid_type text DEFAULT NULL REFERENCES persistent_identifier (label), --FOREIGN KEY
+archive_pid_type bigint DEFAULT NULL REFERENCES gfbio_content (contentid), --FOREIGN KEY
 broker_submission_id UUID NOT NULL,
 --submission_data json NOT NULL, --NOT NULL
 last_changed timestamp NOT NULL DEFAULT now(),

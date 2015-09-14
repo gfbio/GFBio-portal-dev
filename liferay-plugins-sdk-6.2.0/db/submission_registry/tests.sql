@@ -11,14 +11,10 @@ INSERT INTO data_provider (label) VALUES ('ENA');
 INSERT INTO data_provider (label) VALUES ('PANGAEA');
 SELECT * FROM data_provider;
 
-INSERT INTO persistent_identifier (name,label) VALUES ('Accession Number','ACCESSION');
-INSERT INTO persistent_identifier (name,label) VALUES ('Digital Object Identifier','DOI');
-SELECT * FROM persistent_identifier;
-
 INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (1,2,'ENA','ACCESSION',1,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
+     VALUES (1,2,'ENA',1111,1,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
 INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (1,2,'PANGAEA','DOI',1,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
+     VALUES (1,2,'PANGAEA',1113,1,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11');
 
 SELECT * FROM submission_registry;
 
@@ -39,10 +35,10 @@ SELECT * FROM submission_registry;
 INSERT INTO gfbio_researchobject (label,type) VALUES ('s4','sample');
 SELECT * FROM gfbio_researchobject;
 
-INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (3,1,'ENA','ACCESSION',2,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
-INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (3,1,'PANGAEA','DOI',2,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,person,broker_submission_id)
+     VALUES (3,1,'ENA',2,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,person,broker_submission_id)
+     VALUES (3,1,'PANGAEA',2,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95');
 
 SELECT * FROM submission_registry;
 
@@ -69,17 +65,17 @@ SELECT * FROM gfbio_researchobject;
 * USE CASE: Research object is submitted in version 1, then it is updated and submitted again (the broker agent handles that as an update).
 ***/
 
-INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (2,1,'ENA','ACCESSION',1,'b1ddcd00-9c0b-4ef8-bb6d-6bb9bd380a11');
-INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (2,1,'PANGAEA','DOI',1,'b1ddcd00-9c0b-4ef8-bb6d-6bb9bd380a11');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,person,broker_submission_id)
+     VALUES (2,1,'ENA',1,'b1ddcd00-9c0b-4ef8-bb6d-6bb9bd380a11');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,person,broker_submission_id)
+     VALUES (2,1,'PANGAEA',1,'b1ddcd00-9c0b-4ef8-bb6d-6bb9bd380a11');
 
 UPDATE gfbio_researchobject SET label='B1' WHERE researchobjectId=2;
 
-INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (2,2,'ENA','ACCESSION',2,'46BE1BB9-243B-4DBA-81ED-1F0CAB54F27A');
-INSERT INTO submission_registry (research_object_id,research_object_version,archive,archive_pid_type,person,broker_submission_id)
-     VALUES (2,2,'PANGAEA','DOI',2,'46BE1BB9-243B-4DBA-81ED-1F0CAB54F27A');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,person,broker_submission_id)
+     VALUES (2,2,'ENA',2,'46BE1BB9-243B-4DBA-81ED-1F0CAB54F27A');
+INSERT INTO submission_registry (research_object_id,research_object_version,archive,person,broker_submission_id)
+     VALUES (2,2,'PANGAEA',2,'46BE1BB9-243B-4DBA-81ED-1F0CAB54F27A');
 
 SELECT * FROM latest_submissions;
 

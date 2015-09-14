@@ -13,11 +13,3 @@ CREATE TABLE data_provider (
 data_provider_id smallserial NOT NULL PRIMARY KEY,
 label text UNIQUE NOT NULL
 );
-
-
--- DROP TABLE IF EXISTS persistent_identifier;
-CREATE TABLE persistent_identifier (
-pid smallserial NOT NULL PRIMARY KEY,
-name text UNIQUE NOT NULL,
-label text UNIQUE NOT NULL
-);

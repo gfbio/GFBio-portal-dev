@@ -11,7 +11,7 @@
 ---- tables  ----
 INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('1','gfbio_category','entity');
 INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('2','gfbio_researchfield','entity');
-
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('4','gfbio_persistent_identifier','entity');
 
 --- relations ----
 INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('3','gfbio_category_researchfield','relationship');
@@ -27,6 +27,9 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('100','1','name')
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('101','1','label');
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('102','2','name');
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('103','2','description');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('106','4','name');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('107','4','label');
+
 
 
 --- relations ----
@@ -55,6 +58,14 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1007','2','103','13','Branch of Earth science that studies the ocean.');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1008','2','102','14','Microbiology');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1009','2','103','14','It is the study of microscopic organisms.');
+
+
+--- gfbio_persistent_identifier
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1110','4','106','15','Accession Number');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1111','4','107','15','ACC');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1112','4','106','16','Digital Object Identifier');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1113','4','107','16','DOI');
+
 
 
 --- relations
