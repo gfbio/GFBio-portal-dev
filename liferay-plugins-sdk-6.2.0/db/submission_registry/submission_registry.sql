@@ -16,11 +16,10 @@ last_changed timestamp NOT NULL DEFAULT now(),
 person smallint NOT NULL REFERENCES person (user_id) ON UPDATE CASCADE ON DELETE RESTRICT,
 status submission_status NOT NULL DEFAULT 'sent',
 is_public boolean NOT NULL DEFAULT FALSE,
-public_after timestamp NOT NULL DEFAULT now() + interval '6 months',
+public_after timestamp DEFAULT NULL,
 PRIMARY KEY (research_object_id,research_object_version,archive),
 UNIQUE (research_object_id,archive,archive_pid)
 );
-
 
 CREATE OR REPLACE VIEW latest_submissions AS
 SELECT * FROM (
