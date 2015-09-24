@@ -1374,6 +1374,509 @@ public class ResearchObjectPersistenceImpl extends BasePersistenceImpl<ResearchO
 
 	private static final String _FINDER_COLUMN_RESEARCHOBJECTID_RESEARCHOBJECTID_2 =
 		"researchObject.researchObjectID = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PARENTID = new FinderPath(ResearchObjectModelImpl.ENTITY_CACHE_ENABLED,
+			ResearchObjectModelImpl.FINDER_CACHE_ENABLED,
+			ResearchObjectImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByParentID",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTID =
+		new FinderPath(ResearchObjectModelImpl.ENTITY_CACHE_ENABLED,
+			ResearchObjectModelImpl.FINDER_CACHE_ENABLED,
+			ResearchObjectImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByParentID",
+			new String[] { Long.class.getName() },
+			ResearchObjectModelImpl.PARENTRESEARCHOBJECTID_COLUMN_BITMASK |
+			ResearchObjectModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PARENTID = new FinderPath(ResearchObjectModelImpl.ENTITY_CACHE_ENABLED,
+			ResearchObjectModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByParentID",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the research objects where parentResearchObjectID = &#63;.
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @return the matching research objects
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ResearchObject> findByParentID(long parentResearchObjectID)
+		throws SystemException {
+		return findByParentID(parentResearchObjectID, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the research objects where parentResearchObjectID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ResearchObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @param start the lower bound of the range of research objects
+	 * @param end the upper bound of the range of research objects (not inclusive)
+	 * @return the range of matching research objects
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ResearchObject> findByParentID(long parentResearchObjectID,
+		int start, int end) throws SystemException {
+		return findByParentID(parentResearchObjectID, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the research objects where parentResearchObjectID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ResearchObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @param start the lower bound of the range of research objects
+	 * @param end the upper bound of the range of research objects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching research objects
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ResearchObject> findByParentID(long parentResearchObjectID,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTID;
+			finderArgs = new Object[] { parentResearchObjectID };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PARENTID;
+			finderArgs = new Object[] {
+					parentResearchObjectID,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<ResearchObject> list = (List<ResearchObject>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (ResearchObject researchObject : list) {
+				if ((parentResearchObjectID != researchObject.getParentResearchObjectID())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_RESEARCHOBJECT_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTID_PARENTRESEARCHOBJECTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ResearchObjectModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentResearchObjectID);
+
+				if (!pagination) {
+					list = (List<ResearchObject>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<ResearchObject>(list);
+				}
+				else {
+					list = (List<ResearchObject>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first research object in the ordered set where parentResearchObjectID = &#63;.
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching research object
+	 * @throws org.gfbio.NoSuchResearchObjectException if a matching research object could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ResearchObject findByParentID_First(long parentResearchObjectID,
+		OrderByComparator orderByComparator)
+		throws NoSuchResearchObjectException, SystemException {
+		ResearchObject researchObject = fetchByParentID_First(parentResearchObjectID,
+				orderByComparator);
+
+		if (researchObject != null) {
+			return researchObject;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("parentResearchObjectID=");
+		msg.append(parentResearchObjectID);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResearchObjectException(msg.toString());
+	}
+
+	/**
+	 * Returns the first research object in the ordered set where parentResearchObjectID = &#63;.
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching research object, or <code>null</code> if a matching research object could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ResearchObject fetchByParentID_First(long parentResearchObjectID,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<ResearchObject> list = findByParentID(parentResearchObjectID, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last research object in the ordered set where parentResearchObjectID = &#63;.
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching research object
+	 * @throws org.gfbio.NoSuchResearchObjectException if a matching research object could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ResearchObject findByParentID_Last(long parentResearchObjectID,
+		OrderByComparator orderByComparator)
+		throws NoSuchResearchObjectException, SystemException {
+		ResearchObject researchObject = fetchByParentID_Last(parentResearchObjectID,
+				orderByComparator);
+
+		if (researchObject != null) {
+			return researchObject;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("parentResearchObjectID=");
+		msg.append(parentResearchObjectID);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchResearchObjectException(msg.toString());
+	}
+
+	/**
+	 * Returns the last research object in the ordered set where parentResearchObjectID = &#63;.
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching research object, or <code>null</code> if a matching research object could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ResearchObject fetchByParentID_Last(long parentResearchObjectID,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByParentID(parentResearchObjectID);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ResearchObject> list = findByParentID(parentResearchObjectID,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the research objects before and after the current research object in the ordered set where parentResearchObjectID = &#63;.
+	 *
+	 * @param researchObjectID the primary key of the current research object
+	 * @param parentResearchObjectID the parent research object i d
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next research object
+	 * @throws org.gfbio.NoSuchResearchObjectException if a research object with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ResearchObject[] findByParentID_PrevAndNext(long researchObjectID,
+		long parentResearchObjectID, OrderByComparator orderByComparator)
+		throws NoSuchResearchObjectException, SystemException {
+		ResearchObject researchObject = findByPrimaryKey(researchObjectID);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ResearchObject[] array = new ResearchObjectImpl[3];
+
+			array[0] = getByParentID_PrevAndNext(session, researchObject,
+					parentResearchObjectID, orderByComparator, true);
+
+			array[1] = researchObject;
+
+			array[2] = getByParentID_PrevAndNext(session, researchObject,
+					parentResearchObjectID, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ResearchObject getByParentID_PrevAndNext(Session session,
+		ResearchObject researchObject, long parentResearchObjectID,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_RESEARCHOBJECT_WHERE);
+
+		query.append(_FINDER_COLUMN_PARENTID_PARENTRESEARCHOBJECTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ResearchObjectModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(parentResearchObjectID);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(researchObject);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ResearchObject> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the research objects where parentResearchObjectID = &#63; from the database.
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByParentID(long parentResearchObjectID)
+		throws SystemException {
+		for (ResearchObject researchObject : findByParentID(
+				parentResearchObjectID, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(researchObject);
+		}
+	}
+
+	/**
+	 * Returns the number of research objects where parentResearchObjectID = &#63;.
+	 *
+	 * @param parentResearchObjectID the parent research object i d
+	 * @return the number of matching research objects
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByParentID(long parentResearchObjectID)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PARENTID;
+
+		Object[] finderArgs = new Object[] { parentResearchObjectID };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_RESEARCHOBJECT_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTID_PARENTRESEARCHOBJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentResearchObjectID);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PARENTID_PARENTRESEARCHOBJECTID_2 =
+		"researchObject.parentResearchObjectID = ?";
 
 	public ResearchObjectPersistenceImpl() {
 		setModelClass(ResearchObject.class);
@@ -1689,6 +2192,25 @@ public class ResearchObjectPersistenceImpl extends BasePersistenceImpl<ResearchO
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LABEL,
 					args);
 			}
+
+			if ((researchObjectModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						researchObjectModelImpl.getOriginalParentResearchObjectID()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PARENTID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTID,
+					args);
+
+				args = new Object[] {
+						researchObjectModelImpl.getParentResearchObjectID()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PARENTID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PARENTID,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(ResearchObjectModelImpl.ENTITY_CACHE_ENABLED,
@@ -1712,10 +2234,13 @@ public class ResearchObjectPersistenceImpl extends BasePersistenceImpl<ResearchO
 		researchObjectImpl.setPrimaryKey(researchObject.getPrimaryKey());
 
 		researchObjectImpl.setResearchObjectID(researchObject.getResearchObjectID());
+		researchObjectImpl.setVersion(researchObject.getVersion());
+		researchObjectImpl.setParentResearchObjectID(researchObject.getParentResearchObjectID());
 		researchObjectImpl.setName(researchObject.getName());
 		researchObjectImpl.setLabel(researchObject.getLabel());
 		researchObjectImpl.setMetadata(researchObject.getMetadata());
 		researchObjectImpl.setFormatmetadata(researchObject.getFormatmetadata());
+		researchObjectImpl.setResearchObjectType(researchObject.getResearchObjectType());
 
 		return researchObjectImpl;
 	}

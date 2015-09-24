@@ -267,11 +267,6 @@ public class HeadLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject constructHeadJson(long headId,
-		java.lang.String tableName, java.lang.String tableType) {
-		return getService().constructHeadJson(headId, tableName, tableType);
-	}
-
 	public static void deleteHeadByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -280,6 +275,10 @@ public class HeadLocalServiceUtil {
 
 	public static void deleteTableByHeadId(long headId) {
 		getService().deleteTableByHeadId(headId);
+	}
+
+	public static void deleteTableByHeadIdWithoutCheck(long headId) {
+		getService().deleteTableByHeadIdWithoutCheck(headId);
 	}
 
 	public static java.lang.String[] getArrayOfTableNames(
@@ -362,6 +361,16 @@ public class HeadLocalServiceUtil {
 		return getService().getTableNameArray(headList);
 	}
 
+	public static org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return getService().constructHeadJson(headId, tableName, tableType);
+	}
+
+	public static java.lang.String constructRelationName(
+		java.lang.String mtable, java.lang.String ntable) {
+		return getService().constructRelationName(mtable, ntable);
+	}
+
 	public static java.lang.Boolean updateHead(long headId,
 		java.lang.String tableName, java.lang.String tableType) {
 		return getService().updateHead(headId, tableName, tableType);
@@ -387,14 +396,21 @@ public class HeadLocalServiceUtil {
 		return getService().updateHeadWithColumns(json);
 	}
 
+	public static java.lang.Boolean updateHeadWithColumns2(
+		org.json.simple.JSONObject json) {
+		return getService().updateHeadWithColumns2(json);
+	}
+
 	public static java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable) {
 		return getService().updateRelationTable(headId, mtable, ntable);
 	}
 
-	public static java.lang.String constructRelationName(
-		java.lang.String mtable, java.lang.String ntable) {
-		return getService().constructRelationName(mtable, ntable);
+	public static java.lang.Boolean updateRelationTableWithContent(
+		long headId1, long headId2, long contentId1, long contentId2) {
+		return getService()
+				   .updateRelationTableWithContent(headId1, headId2,
+			contentId1, contentId2);
 	}
 
 	public static java.lang.Boolean updateTable(org.json.simple.JSONObject json) {

@@ -74,6 +74,20 @@ public interface ProjectModel extends BaseModel<Project> {
 	public void setProjectID(long projectID);
 
 	/**
+	 * Returns the parent project i d of this project.
+	 *
+	 * @return the parent project i d of this project
+	 */
+	public long getParentProjectID();
+
+	/**
+	 * Sets the parent project i d of this project.
+	 *
+	 * @param parentProjectID the parent project i d of this project
+	 */
+	public void setParentProjectID(long parentProjectID);
+
+	/**
 	 * Returns the name of this project.
 	 *
 	 * @return the name of this project

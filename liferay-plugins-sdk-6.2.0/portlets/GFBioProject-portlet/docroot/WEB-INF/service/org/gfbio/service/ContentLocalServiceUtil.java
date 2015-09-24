@@ -271,19 +271,6 @@ public class ContentLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject constructColumnJson(
-		long contentId, long headId, long columnId, long rowId,
-		java.lang.String cellContent) {
-		return getService()
-				   .constructColumnJson(contentId, headId, columnId, rowId,
-			cellContent);
-	}
-
-	public static long constructNewId()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().constructNewId();
-	}
-
 	public static void deleteContentById(long contentId) {
 		getService().deleteContentById(contentId);
 	}
@@ -328,6 +315,10 @@ public class ContentLocalServiceUtil {
 		return getService().getCellContentByTableIds(rowId, columnId);
 	}
 
+	public static java.util.List getCellContentByContentId(long contentId) {
+		return getService().getCellContentByContentId(contentId);
+	}
+
 	public static org.gfbio.model.Content getContentByTableIds(long rowId,
 		long columnId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -341,6 +332,23 @@ public class ContentLocalServiceUtil {
 		return getService().getContentIdByTableIds(rowId, columnId);
 	}
 
+	public static java.util.List getContentIdsByRowId(long rowId) {
+		return getService().getContentIdsByRowId(rowId);
+	}
+
+	public static java.util.List getContentIdsWithoutRelationships(long rowId,
+		java.lang.String tableName1, java.lang.String tableName2) {
+		return getService()
+				   .getContentIdsWithoutRelationships(rowId, tableName1,
+			tableName2);
+	}
+
+	public static java.util.List getContentIdsWithRelationships(long rowId,
+		java.lang.String tableName1, java.lang.String tableName2) {
+		return getService()
+				   .getContentIdsWithRelationships(rowId, tableName1, tableName2);
+	}
+
 	public static org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
 		long contentId) {
 		return getService().getContentInformationAsJSONBycontentId(contentId);
@@ -349,6 +357,20 @@ public class ContentLocalServiceUtil {
 	public static org.json.simple.JSONObject getContentInformationAsJSONByRowId(
 		long rowId) {
 		return getService().getContentInformationAsJSONByRowId(rowId);
+	}
+
+	public static long getFirstContentIdByRowId(long rowId) {
+		return getService().getFirstContentIdByRowId(rowId);
+	}
+
+	public static long getHeadIdById(long headId) {
+		return getService().getHeadIdById(headId);
+	}
+
+	public static long getRowIdByCellContent(long headId,
+		java.lang.String columnName, java.lang.String cellContent) {
+		return getService()
+				   .getRowIdByCellContent(headId, columnName, cellContent);
 	}
 
 	public static org.json.simple.JSONObject getContentsAsJSONByRowId(
@@ -388,10 +410,26 @@ public class ContentLocalServiceUtil {
 		return getService().getContentsByContentOfColumn(cellContent, columnId);
 	}
 
-	public static long getRowIdById(long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static long getRowIdById(long contentId) {
 		return getService().getRowIdById(contentId);
+	}
+
+	public static long getRowIdOfRelation(java.lang.String cellContent1,
+		java.lang.String cellContent2) {
+		return getService().getRowIdOfRelation(cellContent1, cellContent2);
+	}
+
+	public static org.json.simple.JSONObject constructColumnJson(
+		long contentId, long headId, long columnId, long rowId,
+		java.lang.String cellContent) {
+		return getService()
+				   .constructColumnJson(contentId, headId, columnId, rowId,
+			cellContent);
+	}
+
+	public static long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().constructNewId();
 	}
 
 	public static java.lang.Boolean updateContent(long contentId, long headId,
@@ -404,6 +442,11 @@ public class ContentLocalServiceUtil {
 	public static java.lang.Boolean updateContent(
 		org.json.simple.JSONObject json) {
 		return getService().updateContent(json);
+	}
+
+	public static java.lang.Boolean updateContent2(
+		org.json.simple.JSONObject json) {
+		return getService().updateContent2(json);
 	}
 
 	public static void clearService() {

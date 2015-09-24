@@ -21,13 +21,53 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class ContentFinderUtil {
+	public static java.util.List getCellContent(long headId, long rowId,
+		long columnId) {
+		return getFinder().getCellContent(headId, rowId, columnId);
+	}
+
+	public static java.util.List getCellContentByContentId(long contentId) {
+		return getFinder().getCellContentByContentId(contentId);
+	}
+
+	public static java.util.List getContentIdsWithoutRelationships(long rowId,
+		java.lang.String columnName1, java.lang.String columnName2) {
+		return getFinder()
+				   .getContentIdsWithoutRelationships(rowId, columnName1,
+			columnName2);
+	}
+
+	public static java.util.List getContentIdsWithRelationships(long rowId,
+		java.lang.String columnName1, java.lang.String columnName2) {
+		return getFinder()
+				   .getContentIdsWithRelationships(rowId, columnName1,
+			columnName2);
+	}
+
 	public static java.util.List getRowIds(long headId) {
 		return getFinder().getRowIds(headId);
 	}
 
-	public static java.util.List getCellContent(long headId, long rowId,
-		long columnId) {
-		return getFinder().getCellContent(headId, rowId, columnId);
+	public static java.util.List getRowIdByCellContent(long headId,
+		java.lang.String columnName, java.lang.String cellContent) {
+		return getFinder().getRowIdByCellContent(headId, columnName, cellContent);
+	}
+
+	public static java.util.List getRowIdByContentId(long contentId) {
+		return getFinder().getRowIdByContentId(contentId);
+	}
+
+	public static java.util.List getHeadIdById(long contentId) {
+		return getFinder().getHeadIdById(contentId);
+	}
+
+	public static java.util.List getContentIdsByRowId(long rowId) {
+		return getFinder().getContentIdsByRowId(rowId);
+	}
+
+	public static java.util.List getRowIdOfRelation(
+		java.lang.String cellContent1, java.lang.String cellContent2) {
+		return getFinder().getRowIdOfRelation(cellContent1, cellContent2);
 	}
 
 	public static ContentFinder getFinder() {

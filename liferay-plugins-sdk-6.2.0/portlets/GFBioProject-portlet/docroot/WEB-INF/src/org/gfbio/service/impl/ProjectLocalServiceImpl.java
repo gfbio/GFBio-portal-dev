@@ -41,7 +41,7 @@ import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.ProjectLocalServiceBaseImpl
  * @see org.gfbio.service.ProjectLocalServiceUtil
  */
@@ -73,8 +73,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return researchObjectList;
 	}
 
-	// update or create a new project
 
+	// update or create a new project
 	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
 
 		Project project = null;
@@ -93,8 +93,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			project.setStatus(status);
 			super.updateProject(project);
 			try {
+				@SuppressWarnings("unused")
 				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
-				System.out.println(foobar);
 			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
 		}
 		//update project
@@ -109,6 +109,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		}
 		return project.getProjectID();
 	}
+	
 
 	@Override
 	public long updateProject(long projectID, String name, String description)
@@ -119,9 +120,5 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return 0;
 	}
 
-//	public int getProjectSize(long projectID) {
-//		int size = 0;
-//		Project project = null;
-//		size = project. //		return size;
-//	}
+
 }

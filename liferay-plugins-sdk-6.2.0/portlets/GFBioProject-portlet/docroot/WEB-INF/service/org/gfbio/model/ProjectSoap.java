@@ -32,6 +32,7 @@ public class ProjectSoap implements Serializable {
 		ProjectSoap soapModel = new ProjectSoap();
 
 		soapModel.setProjectID(model.getProjectID());
+		soapModel.setParentProjectID(model.getParentProjectID());
 		soapModel.setName(model.getName());
 		soapModel.setLabel(model.getLabel());
 		soapModel.setDescription(model.getDescription());
@@ -98,6 +99,14 @@ public class ProjectSoap implements Serializable {
 		_projectID = projectID;
 	}
 
+	public long getParentProjectID() {
+		return _parentProjectID;
+	}
+
+	public void setParentProjectID(long parentProjectID) {
+		_parentProjectID = parentProjectID;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -147,6 +156,7 @@ public class ProjectSoap implements Serializable {
 	}
 
 	private long _projectID;
+	private long _parentProjectID;
 	private String _name;
 	private String _label;
 	private String _description;

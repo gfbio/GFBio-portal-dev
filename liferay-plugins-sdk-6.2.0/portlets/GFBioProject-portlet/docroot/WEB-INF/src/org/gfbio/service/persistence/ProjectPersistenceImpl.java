@@ -1358,6 +1358,226 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 	}
 
 	private static final String _FINDER_COLUMN_PROJECTID_PROJECTID_2 = "project.projectID = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_PARENTPROJECTID = new FinderPath(ProjectModelImpl.ENTITY_CACHE_ENABLED,
+			ProjectModelImpl.FINDER_CACHE_ENABLED, ProjectImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByParentProjectID",
+			new String[] { Long.class.getName() },
+			ProjectModelImpl.PARENTPROJECTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PARENTPROJECTID = new FinderPath(ProjectModelImpl.ENTITY_CACHE_ENABLED,
+			ProjectModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByParentProjectID", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the project where parentProjectID = &#63; or throws a {@link org.gfbio.NoSuchProjectException} if it could not be found.
+	 *
+	 * @param parentProjectID the parent project i d
+	 * @return the matching project
+	 * @throws org.gfbio.NoSuchProjectException if a matching project could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Project findByParentProjectID(long parentProjectID)
+		throws NoSuchProjectException, SystemException {
+		Project project = fetchByParentProjectID(parentProjectID);
+
+		if (project == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("parentProjectID=");
+			msg.append(parentProjectID);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchProjectException(msg.toString());
+		}
+
+		return project;
+	}
+
+	/**
+	 * Returns the project where parentProjectID = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param parentProjectID the parent project i d
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Project fetchByParentProjectID(long parentProjectID)
+		throws SystemException {
+		return fetchByParentProjectID(parentProjectID, true);
+	}
+
+	/**
+	 * Returns the project where parentProjectID = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param parentProjectID the parent project i d
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching project, or <code>null</code> if a matching project could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Project fetchByParentProjectID(long parentProjectID,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { parentProjectID };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+					finderArgs, this);
+		}
+
+		if (result instanceof Project) {
+			Project project = (Project)result;
+
+			if ((parentProjectID != project.getParentProjectID())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_PROJECT_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTPROJECTID_PARENTPROJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentProjectID);
+
+				List<Project> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"ProjectPersistenceImpl.fetchByParentProjectID(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Project project = list.get(0);
+
+					result = project;
+
+					cacheResult(project);
+
+					if ((project.getParentProjectID() != parentProjectID)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+							finderArgs, project);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Project)result;
+		}
+	}
+
+	/**
+	 * Removes the project where parentProjectID = &#63; from the database.
+	 *
+	 * @param parentProjectID the parent project i d
+	 * @return the project that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Project removeByParentProjectID(long parentProjectID)
+		throws NoSuchProjectException, SystemException {
+		Project project = findByParentProjectID(parentProjectID);
+
+		return remove(project);
+	}
+
+	/**
+	 * Returns the number of projects where parentProjectID = &#63;.
+	 *
+	 * @param parentProjectID the parent project i d
+	 * @return the number of matching projects
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByParentProjectID(long parentProjectID)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_PARENTPROJECTID;
+
+		Object[] finderArgs = new Object[] { parentProjectID };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_PROJECT_WHERE);
+
+			query.append(_FINDER_COLUMN_PARENTPROJECTID_PARENTPROJECTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(parentProjectID);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_PARENTPROJECTID_PARENTPROJECTID_2 =
+		"project.parentProjectID = ?";
 
 	public ProjectPersistenceImpl() {
 		setModelClass(Project.class);
@@ -1375,6 +1595,9 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PROJECTID,
 			new Object[] { project.getProjectID() }, project);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+			new Object[] { project.getParentProjectID() }, project);
 
 		project.resetOriginalValues();
 	}
@@ -1457,6 +1680,13 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PROJECTID, args,
 				project);
+
+			args = new Object[] { project.getParentProjectID() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PARENTPROJECTID,
+				args, Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+				args, project);
 		}
 		else {
 			ProjectModelImpl projectModelImpl = (ProjectModelImpl)project;
@@ -1469,6 +1699,16 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PROJECTID, args,
 					project);
+			}
+
+			if ((projectModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_PARENTPROJECTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { project.getParentProjectID() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PARENTPROJECTID,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+					args, project);
 			}
 		}
 	}
@@ -1487,6 +1727,21 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PROJECTID, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PROJECTID, args);
+		}
+
+		args = new Object[] { project.getParentProjectID() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PARENTPROJECTID, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID, args);
+
+		if ((projectModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_PARENTPROJECTID.getColumnBitmask()) != 0) {
+			args = new Object[] { projectModelImpl.getOriginalParentProjectID() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PARENTPROJECTID,
+				args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PARENTPROJECTID,
+				args);
 		}
 	}
 
@@ -1680,6 +1935,7 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 		projectImpl.setPrimaryKey(project.getPrimaryKey());
 
 		projectImpl.setProjectID(project.getProjectID());
+		projectImpl.setParentProjectID(project.getParentProjectID());
 		projectImpl.setName(project.getName());
 		projectImpl.setLabel(project.getLabel());
 		projectImpl.setDescription(project.getDescription());

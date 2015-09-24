@@ -100,25 +100,25 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.UserExtension" };
 
-		_methodName94 = "getBeanIdentifier";
+		_methodName120 = "getBeanIdentifier";
 
-		_methodParameterTypes94 = new String[] {  };
+		_methodParameterTypes120 = new String[] {  };
 
-		_methodName95 = "setBeanIdentifier";
+		_methodName121 = "setBeanIdentifier";
 
-		_methodParameterTypes95 = new String[] { "java.lang.String" };
+		_methodParameterTypes121 = new String[] { "java.lang.String" };
 
-		_methodName100 = "getUserExtensionById";
+		_methodName126 = "getUserExtensionById";
 
-		_methodParameterTypes100 = new String[] { "long" };
+		_methodParameterTypes126 = new String[] { "long" };
 
-		_methodName101 = "getUserById";
+		_methodName127 = "getUserById";
 
-		_methodParameterTypes101 = new String[] { "long" };
+		_methodParameterTypes127 = new String[] { "long" };
 
-		_methodName102 = "getUserAsJsonById";
+		_methodName128 = "getUserAsJsonById";
 
-		_methodParameterTypes102 = new String[] { "long" };
+		_methodParameterTypes128 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -210,30 +210,30 @@ public class UserExtensionLocalServiceClpInvoker {
 			return UserExtensionLocalServiceUtil.updateUserExtension((org.gfbio.model.UserExtension)arguments[0]);
 		}
 
-		if (_methodName94.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName95.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes95, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
 			UserExtensionLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName100.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getUserExtensionById(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName101.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getUserById(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName102.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getUserAsJsonById(((Long)arguments[0]).longValue());
 		}
 
@@ -272,14 +272,14 @@ public class UserExtensionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName94;
-	private String[] _methodParameterTypes94;
-	private String _methodName95;
-	private String[] _methodParameterTypes95;
-	private String _methodName100;
-	private String[] _methodParameterTypes100;
-	private String _methodName101;
-	private String[] _methodParameterTypes101;
-	private String _methodName102;
-	private String[] _methodParameterTypes102;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
+	private String _methodName121;
+	private String[] _methodParameterTypes121;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
+	private String _methodName127;
+	private String[] _methodParameterTypes127;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
 }

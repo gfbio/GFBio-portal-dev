@@ -24,17 +24,29 @@ import java.util.Arrays;
  */
 public class ResearchObjectServiceClpInvoker {
 	public ResearchObjectServiceClpInvoker() {
-		_methodName78 = "getBeanIdentifier";
+		_methodName104 = "getBeanIdentifier";
 
-		_methodParameterTypes78 = new String[] {  };
+		_methodParameterTypes104 = new String[] {  };
 
-		_methodName79 = "setBeanIdentifier";
+		_methodName105 = "setBeanIdentifier";
 
-		_methodParameterTypes79 = new String[] { "java.lang.String" };
+		_methodParameterTypes105 = new String[] { "java.lang.String" };
 
-		_methodName84 = "updateResearchObject";
+		_methodName110 = "getDirectChildren";
 
-		_methodParameterTypes84 = new String[] {
+		_methodParameterTypes110 = new String[] { "long" };
+
+		_methodName111 = "getDirectParent";
+
+		_methodParameterTypes111 = new String[] { "long" };
+
+		_methodName112 = "getTopParent";
+
+		_methodParameterTypes112 = new String[] { "long" };
+
+		_methodName113 = "updateResearchObject";
+
+		_methodParameterTypes113 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String"
 			};
@@ -42,20 +54,35 @@ public class ResearchObjectServiceClpInvoker {
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName78.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
+		if (_methodName104.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
 			return ResearchObjectServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName79.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
+		if (_methodName105.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
 			ResearchObjectServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName84.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+			return ResearchObjectServiceUtil.getDirectChildren(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+			return ResearchObjectServiceUtil.getDirectParent(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName112.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+			return ResearchObjectServiceUtil.getTopParent(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName113.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
 			return ResearchObjectServiceUtil.updateResearchObject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -65,10 +92,16 @@ public class ResearchObjectServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName78;
-	private String[] _methodParameterTypes78;
-	private String _methodName79;
-	private String[] _methodParameterTypes79;
-	private String _methodName84;
-	private String[] _methodParameterTypes84;
+	private String _methodName104;
+	private String[] _methodParameterTypes104;
+	private String _methodName105;
+	private String[] _methodParameterTypes105;
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
+	private String _methodName112;
+	private String[] _methodParameterTypes112;
+	private String _methodName113;
+	private String[] _methodParameterTypes113;
 }

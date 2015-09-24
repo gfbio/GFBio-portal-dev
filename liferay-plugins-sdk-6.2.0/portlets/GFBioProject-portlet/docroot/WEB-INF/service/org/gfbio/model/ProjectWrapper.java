@@ -50,6 +50,7 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("projectID", getProjectID());
+		attributes.put("parentProjectID", getParentProjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("description", getDescription());
@@ -66,6 +67,12 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 
 		if (projectID != null) {
 			setProjectID(projectID);
+		}
+
+		Long parentProjectID = (Long)attributes.get("parentProjectID");
+
+		if (parentProjectID != null) {
+			setParentProjectID(parentProjectID);
 		}
 
 		String name = (String)attributes.get("name");
@@ -143,6 +150,26 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 	@Override
 	public void setProjectID(long projectID) {
 		_project.setProjectID(projectID);
+	}
+
+	/**
+	* Returns the parent project i d of this project.
+	*
+	* @return the parent project i d of this project
+	*/
+	@Override
+	public long getParentProjectID() {
+		return _project.getParentProjectID();
+	}
+
+	/**
+	* Sets the parent project i d of this project.
+	*
+	* @param parentProjectID the parent project i d of this project
+	*/
+	@Override
+	public void setParentProjectID(long parentProjectID) {
+		_project.setParentProjectID(parentProjectID);
 	}
 
 	/**

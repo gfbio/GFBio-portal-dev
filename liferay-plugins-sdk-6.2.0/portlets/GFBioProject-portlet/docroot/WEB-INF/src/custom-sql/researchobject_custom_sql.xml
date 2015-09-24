@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getDirectParent">
+	    <![CDATA[
+			SELECT
+				*
+			FROM
+				public.gfbio_researchobject
+			WHERE researchobjectid =(
+				SELECT 
+				  parentresearchobjectid 
+				FROM 
+				  public.gfbio_researchobject
+				where
+				  researchobjectid=?)
+		]]>
+    </sql>
+    
+</custom-sql>

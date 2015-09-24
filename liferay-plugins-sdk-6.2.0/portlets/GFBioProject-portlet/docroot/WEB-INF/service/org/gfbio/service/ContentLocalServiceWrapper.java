@@ -279,19 +279,6 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject constructColumnJson(long contentId,
-		long headId, long columnId, long rowId, java.lang.String cellContent) {
-		return _contentLocalService.constructColumnJson(contentId, headId,
-			columnId, rowId, cellContent);
-	}
-
-	@Override
-	public long constructNewId()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.constructNewId();
-	}
-
-	@Override
 	public void deleteContentById(long contentId) {
 		_contentLocalService.deleteContentById(contentId);
 	}
@@ -344,6 +331,11 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public java.util.List getCellContentByContentId(long contentId) {
+		return _contentLocalService.getCellContentByContentId(contentId);
+	}
+
+	@Override
 	public org.gfbio.model.Content getContentByTableIds(long rowId,
 		long columnId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -359,6 +351,25 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public java.util.List getContentIdsByRowId(long rowId) {
+		return _contentLocalService.getContentIdsByRowId(rowId);
+	}
+
+	@Override
+	public java.util.List getContentIdsWithoutRelationships(long rowId,
+		java.lang.String tableName1, java.lang.String tableName2) {
+		return _contentLocalService.getContentIdsWithoutRelationships(rowId,
+			tableName1, tableName2);
+	}
+
+	@Override
+	public java.util.List getContentIdsWithRelationships(long rowId,
+		java.lang.String tableName1, java.lang.String tableName2) {
+		return _contentLocalService.getContentIdsWithRelationships(rowId,
+			tableName1, tableName2);
+	}
+
+	@Override
 	public org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
 		long contentId) {
 		return _contentLocalService.getContentInformationAsJSONBycontentId(contentId);
@@ -368,6 +379,23 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	public org.json.simple.JSONObject getContentInformationAsJSONByRowId(
 		long rowId) {
 		return _contentLocalService.getContentInformationAsJSONByRowId(rowId);
+	}
+
+	@Override
+	public long getFirstContentIdByRowId(long rowId) {
+		return _contentLocalService.getFirstContentIdByRowId(rowId);
+	}
+
+	@Override
+	public long getHeadIdById(long headId) {
+		return _contentLocalService.getHeadIdById(headId);
+	}
+
+	@Override
+	public long getRowIdByCellContent(long headId, java.lang.String columnName,
+		java.lang.String cellContent) {
+		return _contentLocalService.getRowIdByCellContent(headId, columnName,
+			cellContent);
 	}
 
 	@Override
@@ -415,10 +443,28 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public long getRowIdById(long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public long getRowIdById(long contentId) {
 		return _contentLocalService.getRowIdById(contentId);
+	}
+
+	@Override
+	public long getRowIdOfRelation(java.lang.String cellContent1,
+		java.lang.String cellContent2) {
+		return _contentLocalService.getRowIdOfRelation(cellContent1,
+			cellContent2);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructColumnJson(long contentId,
+		long headId, long columnId, long rowId, java.lang.String cellContent) {
+		return _contentLocalService.constructColumnJson(contentId, headId,
+			columnId, rowId, cellContent);
+	}
+
+	@Override
+	public long constructNewId()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _contentLocalService.constructNewId();
 	}
 
 	@Override
@@ -431,6 +477,11 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	@Override
 	public java.lang.Boolean updateContent(org.json.simple.JSONObject json) {
 		return _contentLocalService.updateContent(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateContent2(org.json.simple.JSONObject json) {
+		return _contentLocalService.updateContent2(json);
 	}
 
 	/**

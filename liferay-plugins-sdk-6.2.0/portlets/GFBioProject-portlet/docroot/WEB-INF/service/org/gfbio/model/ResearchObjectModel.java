@@ -72,6 +72,34 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	public void setResearchObjectID(long researchObjectID);
 
 	/**
+	 * Returns the version of this research object.
+	 *
+	 * @return the version of this research object
+	 */
+	public int getVersion();
+
+	/**
+	 * Sets the version of this research object.
+	 *
+	 * @param version the version of this research object
+	 */
+	public void setVersion(int version);
+
+	/**
+	 * Returns the parent research object i d of this research object.
+	 *
+	 * @return the parent research object i d of this research object
+	 */
+	public long getParentResearchObjectID();
+
+	/**
+	 * Sets the parent research object i d of this research object.
+	 *
+	 * @param parentResearchObjectID the parent research object i d of this research object
+	 */
+	public void setParentResearchObjectID(long parentResearchObjectID);
+
+	/**
 	 * Returns the name of this research object.
 	 *
 	 * @return the name of this research object
@@ -130,6 +158,21 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	 * @param formatmetadata the formatmetadata of this research object
 	 */
 	public void setFormatmetadata(String formatmetadata);
+
+	/**
+	 * Returns the research object type of this research object.
+	 *
+	 * @return the research object type of this research object
+	 */
+	@AutoEscape
+	public String getResearchObjectType();
+
+	/**
+	 * Sets the research object type of this research object.
+	 *
+	 * @param researchObjectType the research object type of this research object
+	 */
+	public void setResearchObjectType(String researchObjectType);
 
 	@Override
 	public boolean isNew();

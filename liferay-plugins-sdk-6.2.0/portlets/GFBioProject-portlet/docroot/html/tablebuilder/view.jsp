@@ -5,6 +5,7 @@
 
 <portlet:defineObjects />
 <portlet:resourceURL escapeXml="false" id="tablebuilderURL" var="tablebuilderURL" />
+<portlet:actionURL  var="tablebuilderactionURL" portletMode="view"/>
 <meta charset="UTF-8">
 
 
@@ -16,6 +17,7 @@
 
 <input type="hidden" class="widthL" id="path"  				value="<%=request.getContextPath()%>" />
 <input type="hidden" class="widthL" id="tablebuilderurl"  	value="<%=tablebuilderURL %>" />
+
 
 
 
@@ -140,41 +142,58 @@
 						<i style="cursor:pointer" id="<%="dyta_".concat(new Integer(y).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateTable', '<%="dyta_".concat(new Integer(y).toString()) %>', '<%= columnCount %>',   'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu','<%=y %>')"  /></i>
 					</div>
 				</div>
-				
-				
-				<!-- connection between head tables -->
-				
-				<div id="<%="hide_93".concat(new Integer(y).toString()) %>" class="swHide">
-					<br>
-					<%
-						String tableName = headList.get(y).getTable_name();
-						List <Column> withRelationList = ColumnLocalServiceUtil.getColumnsWithRelation(tableName);
-						List  withoutRelationList = ColumnLocalServiceUtil.getColumnIdsWithoutRelation(tableName);
-					%>
-					
-					<div class="row" >
-						<div class="dynamicTableIst">
-							<form>	<select name="<%="withoutRelationship_".concat(new Integer(y).toString()) %>" size="<%=withoutRelationList.size() %>" onclick="updateRelationTable ('relationTable', '<%=tableName %>', <%="this.form.withoutRelationship_".concat(new Integer(y).toString()).concat(".options[this.form.withoutRelationship_").concat(new Integer(y).toString()).concat(".selectedIndex].value") %>,'tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu')"> 
-									<%for(int ysub=0;ysub<withoutRelationList.size();ysub++){ %>
-										<option value="<%=HeadLocalServiceUtil.getTableName( (Long) withoutRelationList.get(ysub)) %>"><%=HeadLocalServiceUtil.getTableName( (Long) withoutRelationList.get(ysub)) %></option> 
-									<%} %>
-							</select> </form>
-	
-						</div>
-						&nbsp;
-						<div class="dynamicTableIst">
-							<form>	<select name="<%="withRelationship_".concat(new Integer(y).toString()) %>" size="<%=withRelationList.size() %>" onchange="deleteTable('deleteTable', <%="this.form.withRelationship_".concat(new Integer(y).toString()).concat(".options[this.form.withRelationship_").concat(new Integer(y).toString()).concat(".selectedIndex].value") %>, 'tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"> 
-									<%for(int ysub=0;ysub<withRelationList.size();ysub++){ %>
-										<option value=<%=HeadLocalServiceUtil.getHeadIdByTableName(HeadLocalServiceUtil.constructRelationName(tableName, withRelationList.get(ysub).getColumn_name()))%>><%=withRelationList.get(ysub).getColumn_name() %></option> 
-									<%} %>
-							</select> </form>
-						</div>
-					
-					</div>
-					<br>
-				</div>
-				
+			
 			</div>
+				
+				
+			<!-- connection between head tables -->
+			
+
+				
+			<div id="<%="hide_93".concat(new Integer(y).toString()) %>" class="swHide">
+				<br>
+				<%
+					String tableName = headList.get(y).getTable_name();
+					List <Column> withRelationList = ColumnLocalServiceUtil.getColumnsWithRelation(tableName);
+					List  withoutRelationList = ColumnLocalServiceUtil.getColumnIdsWithoutRelation(tableName);
+				%>
+				
+				<div class="row" >
+					<div class="dynamicTable1st">&nbsp;	</div>
+					<div class="dynamicIcon">&nbsp; </div>
+					<div class="dynamicTableIst">No Relationship with:</div>
+					<div class="dynamicTableIst">Relationship with:</div>
+				</div>
+					
+				
+				<div class="row" >
+				
+					<div class="dynamicTable1st">&nbsp;	</div>
+			
+					<div class="dynamicIcon">&nbsp; </div>
+				
+					<div class="dynamicTableIst">
+						<form>	<select name="<%="withoutRelationship_".concat(new Integer(y).toString()) %>" size="<%=withoutRelationList.size() %>" onclick="updateRelationTable ('relationTable', '<%=tableName %>', <%="this.form.withoutRelationship_".concat(new Integer(y).toString()).concat(".options[this.form.withoutRelationship_").concat(new Integer(y).toString()).concat(".selectedIndex].value") %>,'tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu')"> 
+								<%for(int ysub=0;ysub<withoutRelationList.size();ysub++){ %>
+									<option value="<%=HeadLocalServiceUtil.getTableName( (Long) withoutRelationList.get(ysub)) %>"><%=HeadLocalServiceUtil.getTableName( (Long) withoutRelationList.get(ysub)) %></option> 
+								<%} %>
+						</select> </form>
+	
+					</div>
+					&nbsp;
+					<div class="dynamicTableIst">
+						<form>	<select name="<%="withRelationship_".concat(new Integer(y).toString()) %>" size="<%=withRelationList.size() %>" onchange="deleteTable('deleteTable', <%="this.form.withRelationship_".concat(new Integer(y).toString()).concat(".options[this.form.withRelationship_").concat(new Integer(y).toString()).concat(".selectedIndex].value") %>, 'tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"> 
+								<%for(int ysub=0;ysub<withRelationList.size();ysub++){ %>
+									<option value=<%=HeadLocalServiceUtil.getHeadIdByTableName(HeadLocalServiceUtil.constructRelationName(tableName, withRelationList.get(ysub).getColumn_name()))%>><%=withRelationList.get(ysub).getColumn_name() %></option> 
+								<%} %>
+						</select> </form>
+					</div>
+				
+				</div>
+				<br>
+			</div>
+				
+			
 		<%} %>
 		
 		
@@ -241,7 +260,7 @@
 		<h2>content menu</h2>	
 		<br>
 		
-		<!-- -------------------------------------------- Choose Table for new Content (Position) ---------------------------------------------------------------->
+		<!-- -------------------------------------------- Choose Table for new Content (Content) ---------------------------------------------------------------->
 	
 		
 		<% String[] names = HeadLocalServiceUtil.getArrayOfTableNames("entity"); %>
@@ -294,7 +313,7 @@
 						
 						<div class="dynamicIcon">
 							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(y).toString()).concat("edit")%>" 				class="icon-edit"  		  onclick="hideswitch('<%="97".concat(new Integer(h).toString()).concat(new Integer(y).toString()) %>','<%="98".concat(new Integer(h).toString()).concat(new Integer(y).toString()) %>')"></i>&nbsp;
-							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(y).toString()).concat("icon-resize-small")%>" 	class="icon-resize-small" onclick="showhide('<%="93".concat(new Integer(h).toString()).concat(new Integer(y).toString()) %>')"></i>&nbsp;
+							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(y).toString()).concat("icon-resize-small")%>" 	class="icon-resize-small" onclick="showhide('<%="93_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>')"></i>&nbsp;
 							<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(y).toString()).concat("remove")%>" 				class="icon-remove"		  onclick="deleteContent('deleteContent', '<%= contentTable[0][y]%>', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"></i>
 						</div>
 							
@@ -338,16 +357,67 @@
 							</div>
 								
 							<div class="dynamicIcon">
-								<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(y).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateContent', '<%="dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>', '<%= x-1 %>', 'entity','tabContentMenu','<%="/html/tablebuilder/view.jsp #tabContentMenu"%>','<%=h %>')"  /></i>
+								<i style="cursor:pointer" id="<%="dycon_".concat(new Integer(h).toString()).concat(new Integer(y).toString()).concat("editok")%>" 		class="icon-ok" 	onclick="updateTable('updateContent', '<%="dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>', '<%= x-1 %>', 'entity','tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu','tabContentMenu','<%="/html/tablebuilder/view.jsp #tabContentMenu"%>','<%=h %>')"  /></i>
 							</div>
 								
 						</div>
 						
 					</div>
-	
+				
+					<!---- manage the content relations ---->	
+					
+					
+					<div id="<%="hide_93_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>" class="swHide">
+						
+						<%
+							String tableName = headList.get(h).getTable_name();
+							List <Column> withRelationList = ColumnLocalServiceUtil.getColumnsWithRelation(tableName);
+						%>
+							
+						<div class="row" >
+							<div class="dynamicTable1st">&nbsp;	</div>
+							<div class="dynamicIcon">&nbsp; </div>
+							<div class="dynamicTableIst">choose Entity:</div>
+							<div class="dynamicTableIst">No Relationship with:</div>
+							<div class="dynamicTableIst">Relationship with:</div>
+						</div>
+						
+						<div class="row" >
+							<div class="dynamicTable1st">&nbsp;	</div>
+							<div class="dynamicIcon">&nbsp; </div>
+							<div class="dynamicTableIst">
+								<%
+									int contentSize = 2;
+									if (withRelationList.size()>2)
+										contentSize = withRelationList.size();
+								%>
+								<form>	<select id="<%="entiesWithRelationship_".concat(new Integer(y).toString()) %>" name="<%="entiesWithRelationship_".concat(new Integer(y).toString()) %>" size="<%=contentSize %>" onchange="chooseTableForRelationship('chooseTableForRelationship', <%=idTable[0][y] %>, <%=idTable[0][0] %>,<%="this.form.entiesWithRelationship_".concat(new Integer(y).toString()).concat(".options[this.form.entiesWithRelationship_").concat(new Integer(y).toString()).concat(".selectedIndex].value") %>,'<%=tablebuilderURL%>','<%="withoutRelationship_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>', '<%="withRelationship_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>')"> 
+										<%for(int ysub=0;ysub<withRelationList.size();ysub++){ %>
+											<option value=<%=HeadLocalServiceUtil.getHeadIdByTableName(withRelationList.get(ysub).getColumn_name())%>><%=withRelationList.get(ysub).getColumn_name() %></option> 
+										<%} %>
+								</select> </form>
+							</div>
+							&nbsp;
+							<div class="dynamicTableIst">
+								<form>	<select id="<%="withoutRelationship_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>"  name="<%="withoutRelationship_".concat(new Integer(y).toString()) %>" size="<%=2 %>" onclick="updateRelationContent ('relationContent', '<%=tableName %>', <%=idTable[0][y] %> , <%="this.form.withoutRelationship_".concat(new Integer(y).toString()).concat(".options[this.form.withoutRelationship_").concat(new Integer(y).toString()).concat(".selectedIndex].value") %> ,'tabTableMenu','/html/tablebuilder/view.jsp #tabTableMenu', 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu' )"> 
+										<%for(int ysub=0;ysub<0;ysub++){ %>
+										<%} %>
+								</select> </form>
+							</div>
+							&nbsp;
+							<div class="dynamicTableIst">																																																	
+								<form>	<select id="<%="withRelationship_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()) %>" name="<%="withRelationship_".concat(new Integer(y).toString()) %>" size="<%=2 %>" onchange="deleteRelationContent('deleteRelationContent', <%=idTable[0][y] %> , <%="this.form.withRelationship_".concat(new Integer(y).toString()).concat(".options[this.form.withRelationship_").concat(new Integer(y).toString()).concat(".selectedIndex].value") %>, 'tabContentMenu','/html/tablebuilder/view.jsp #tabContentMenu')"> 
+										<%for(int ysub=0;ysub<0;ysub++){ %>
+										<%} %>
+								</select> </form>
+							</div>
+						</div>
+					</div>
+					
+					
 				<%} %>
 				
-					
+				
 				<!---- add new row ---->
 					
 				<div class="row" >
@@ -381,7 +451,14 @@
 							<input 	type="hidden"	id="<%="lavadycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()).concat("_").concat(new Integer(0).toString())%>" 	value="0" />
 						</div>
 								
-						<%	for (int xsub =1; xsub < contentTable.length;xsub++){ %>
+
+						<div class="dynamicTableIst">
+							<input 					type="hidden" 	id="<%="topdycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()).concat("_").concat(new Integer(1).toString()) %>"  	value="0" />
+							<input class="widthM" 	type="hidden" 	id="<%=   "dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()).concat("_").concat(new Integer(1).toString()) %>"   	value="0" />
+							<label class="widthM">  will be build</label>				
+						</div>
+
+						<%	for (int xsub =2; xsub < contentTable.length;xsub++){ %>
 							<div class="dynamicTableIst">
 								<input 					type="hidden" 	id="<%="topdycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()).concat("_").concat(new Integer(xsub).toString()) %>"  	value="0" />
 								<input class="widthM" 	type="text" 	id="<%=   "dycon_".concat(new Integer(h).toString()).concat("_").concat(new Integer(y).toString()).concat("_").concat(new Integer(xsub).toString()) %>"   	value="" />

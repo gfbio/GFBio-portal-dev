@@ -32,9 +32,21 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "updateResearchObject";
+		_methodName3 = "getDirectChildren";
 
-		_methodParameterTypes3 = new String[] {
+		_methodParameterTypes3 = new String[] { "long" };
+
+		_methodName4 = "getDirectParent";
+
+		_methodParameterTypes4 = new String[] { "long" };
+
+		_methodName5 = "getTopParent";
+
+		_methodParameterTypes5 = new String[] { "long" };
+
+		_methodName6 = "updateResearchObject";
+
+		_methodParameterTypes6 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String"
 			};
@@ -91,6 +103,76 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3, new Object[] { researchObjectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.ResearchObject>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4, new Object[] { researchObjectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.ResearchObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { researchObjectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.ResearchObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long updateResearchObject(long projectID, long researchObjectID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String metadata, java.lang.String formatmetadata)
@@ -98,8 +180,8 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3,
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6,
 					new Object[] {
 						projectID,
 						
@@ -140,4 +222,10 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	private String[] _methodParameterTypes1;
 	private String _methodName3;
 	private String[] _methodParameterTypes3;
+	private String _methodName4;
+	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
+	private String _methodName6;
+	private String[] _methodParameterTypes6;
 }

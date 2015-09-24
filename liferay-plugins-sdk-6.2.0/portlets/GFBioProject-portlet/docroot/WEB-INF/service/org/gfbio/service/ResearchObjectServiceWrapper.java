@@ -59,6 +59,22 @@ public class ResearchObjectServiceWrapper implements ResearchObjectService,
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId) {
+		return _researchObjectService.getDirectChildren(researchObjectId);
+	}
+
+	@Override
+	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId) {
+		return _researchObjectService.getDirectParent(researchObjectId);
+	}
+
+	@Override
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
+		return _researchObjectService.getTopParent(researchObjectId);
+	}
+
+	@Override
 	public long updateResearchObject(long projectID, long researchObjectID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String metadata, java.lang.String formatmetadata)

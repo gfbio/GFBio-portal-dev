@@ -39,12 +39,14 @@ import com.liferay.portal.model.User;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.UserExtensionLocalServiceBaseImpl
  * @see org.gfbio.service.UserExtensionLocalServiceUtil
  */
 public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBaseImpl {
 	
+	
+	//
 	public UserExtension getUserExtensionById(long userExtensionId) throws NoSuchUserExtensionException, SystemException  {
 		return userExtensionPersistence.findByUserID(userExtensionId);
 	}
@@ -53,6 +55,7 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		return userPersistence.findByPrimaryKey(userId);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public  JSONObject getUserAsJsonById (long userId) throws NoSuchUserException, SystemException {
 		User user = userPersistence.findByPrimaryKey(userId);
 		JSONObject json = new JSONObject();

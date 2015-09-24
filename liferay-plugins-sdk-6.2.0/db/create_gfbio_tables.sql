@@ -1,18 +1,102 @@
-﻿-- DROP TABLE 
--- gfbio_basket, gfbio_head, gfbio_project, gfbio_researchobject,  gfbio_position, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi
--- gfbio_2cell, gfbio_2head, gfbio_2position;
+﻿DROP TABLE IF EXISTS
+ gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi,
+ gfbio_content, gfbio_column, gfbio_head
+ gfbio_basket, gfbio_project, gfbio_researchobject;
+ 
+ 
+ CREATE TYPE ro_type AS ENUM ('sample', 'experiment');
+ CREATE TYPE submission_status AS ENUM ('sent', 'archived');
+ 
+ 
+ 
+ 
+ 
+-------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content ---------------------------------
+--------------------------------------      Tables      -----------------------------------
+-------------------------------------------------------------------------------------------
 
--- Table: gfbio_basket
+
+------------------------------------- Head  -------------------------------------
+
+
+CREATE TABLE gfbio_head
+(
+  headid bigint NOT NULL,
+  table_name text NOT NULL,
+  table_type text NOT NULL,
+  CONSTRAINT gfbio_head_pkey PRIMARY KEY (headid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_head
+  OWNER TO liferay_gfbio;
+ 
+
+------------------------------------- Column   ------------------------------------- 
+
+
+CREATE TABLE gfbio_column
+(
+  columnid bigint NOT NULL,
+  headid bigint NOT NULL,
+  column_name text,
+  CONSTRAINT gfbio_column_pkey PRIMARY KEY (columnid),
+  CONSTRAINT gfbio_head_fkey FOREIGN KEY (headid)
+      REFERENCES gfbio_head (headid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_column
+  OWNER TO liferay_gfbio;
+  
+  
+------------------------------------- Content  ------------------------------------- 
+  
+  
+CREATE TABLE gfbio_content
+(
+  contentid bigint NOT NULL,
+  headid bigint NOT NULL,
+  columnid bigint NOT NULL,
+  rowid bigint NOT NULL,
+  cellcontent text,
+  CONSTRAINT gfbio_content_pkey PRIMARY KEY (contentid),
+  CONSTRAINT gfbio_column_fkey FOREIGN KEY (columnid)
+      REFERENCES gfbio_column (columnid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT gfbio_head_fkey FOREIGN KEY (headid)
+      REFERENCES gfbio_head (headid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_content
+  OWNER TO liferay_gfbio;
+ 
+  
+---------------------------------------------------------------------------------------------
+--------------------------------------- Other entities --------------------------------------
+--------------------------------------      Tables     --------------------------------------
+---------------------------------------------------------------------------------------------
+
+
+------------------------------------- Basket ------------------------------------- 
+
 
 CREATE TABLE gfbio_basket
 (
-  basketid bigint NOT NULL,
-  userid bigint NOT NULL,
+  basketId bigint NOT NULL,
+  userId bigint NOT NULL,
   name character varying(75),
   lastmodifieddate timestamp without time zone,
   basketJSON text,
   queryJSON text,
-  CONSTRAINT gfbio_basket_pkey PRIMARY KEY (basketid)
+  CONSTRAINT gfbio_basket_pkey PRIMARY KEY (basketId)
 )
 WITH (
   OIDS=FALSE
@@ -20,20 +104,43 @@ WITH (
 ALTER TABLE gfbio_basket
   OWNER TO liferay_gfbio;
 
-
   
--- Table: gfbio_project
+------------------------------------- Data Provider ------------------------------------- 
+
+
+CREATE TABLE gfbio_dataprovider
+(
+  dataproviderid bigint NOT NULL,
+  name character(75) NOT NULL,
+  label character(75) NOT NULL,
+  description text,
+  address text,
+  website character(150),
+  training text,
+  CONSTRAINT gfbio_dataprovider_pkey PRIMARY KEY (dataproviderid),
+  CONSTRAINT gfbio_dataprovider_label_key UNIQUE (label),
+  CONSTRAINT gfbio_dataprovider_unique_label UNIQUE (label)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_dataprovider
+  OWNER TO liferay_gfbio;
+
+
+------------------------------------- Project ------------------------------------- 
+  
 
 CREATE TABLE gfbio_project
 (
-  projectID bigint NOT NULL,
+  projectId bigint NOT NULL,
   name varchar(75),
   label varchar(75),
   description text,
   startdate timestamp without time zone,
   enddate timestamp without time zone,
   status varchar(75),
-  CONSTRAINT gfbio_project_pkey PRIMARY KEY (projectID)
+  CONSTRAINT gfbio_project_pkey PRIMARY KEY (projectId)
 )
 WITH (
   OIDS=FALSE
@@ -42,16 +149,19 @@ ALTER TABLE gfbio_project
   OWNER TO liferay_gfbio;
   
 
--- Table: gfbio_researchobject
-
+------------------------------------- Research Object ------------------------------------- 
+  
+  
 CREATE TABLE gfbio_researchobject
 (
-  researchobjectid bigint NOT NULL,
+  researchobjectId bigserial NOT NULL,
   name character varying(75),
-  label character varying(75),
+  label character varying(75) NOT NULL UNIQUE,
   metadata character varying(5000),
   formatmetadata character varying(5000),
-  CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid)
+  research_object_version smallint NOT NULL DEFAULT 1 CHECK (research_object_version>0),
+  type researchobjecttype NOT NULL,
+  CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectId)
 )
 WITH (
   OIDS=FALSE
@@ -60,136 +170,74 @@ ALTER TABLE gfbio_researchobject
   OWNER TO liferay_gfbio;
   
   
------------------------------------------------------------------------------------------
-------------------------------------- Head & Position -----------------------------------
------------------------------------------------------------------------------------------
-
--- Table: gfbio_head
-
-
-CREATE TABLE gfbio_head
-(
-  headid bigint NOT NULL,
-  name character(50) NOT NULL,
-  task character(50) NOT NULL,
-  column01 character(50),
-  column02 character(50),
-  column03 character(50),
-  column04 character(50),
-  column05 character(50),
-  column06 character(50),
-  column07 character(50),
-  column08 character(50),
-  column09 character(50),
-  column10 character(50),
-  column11 character(50),
-  column12 character(50),
-  column13 character(50),
-  column14 character(50),
-  column15 character(50),
-  column16 character(50),
-  column17 character(50),
-  column18 character(50),
-  column19 character(50),
-  column20 character(50),
-  CONSTRAINT gfbio_head_pkey PRIMARY KEY (headid)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE gfbio_head
-  OWNER TO liferay_gfbio;
+------------------------------------- Submission Registry ------------------------------------- 
   
--- Table: gfbio_position
 
-
-CREATE TABLE gfbio_position
+CREATE TABLE gfbio_submissionregistry
 (
-  positionid bigint NOT NULL,
-  headid bigint NOT NULL,
-  column01 text,
-  column02 text,
-  column03 text,
-  column04 text,
-  column05 text,
-  column06 text,
-  column07 text,
-  column08 text,
-  column09 text,
-  column10 text,
-  column11 text,
-  column12 text,
-  column13 text,
-  column14 text,
-  column15 text,
-  column16 text,
-  column17 text,
-  column18 text,
-  column19 text,
-  column20 text,
-  CONSTRAINT gfbio_position_pkey PRIMARY KEY (positionid),
-  CONSTRAINT gfbio_head_fkey FOREIGN KEY (headid)
-      REFERENCES gfbio_head (headid) MATCH SIMPLE
+  researchobjectid bigint NOT NULL,
+  researchobjectversion smallint NOT NULL,
+  archive character(75) NOT NULL,
+  archive_pid text,
+  archive_pid_type bigint,
+  brokersubmissionid character(75)  NOT NULL,
+  last_changed timestamp with time zone NOT NULL DEFAULT now(),
+  userid bigint NOT NULL,
+  is_public boolean NOT NULL DEFAULT false,
+  public_after time with time zone NOT NULL DEFAULT (now() + '6 mons'::interval),
+  status text NOT NULL,
+  CONSTRAINT gfbio_submissionregistry_pkey PRIMARY KEY (researchobjectid, researchobjectversion, archive),
+  CONSTRAINT gfbio_dataprovider_fkey FOREIGN KEY (archive)
+      REFERENCES gfbio_dataprovider (label) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archivetypeid)
+      REFERENCES gfbio_content (contentid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE gfbio_position
-  OWNER TO liferay_gfbio;
   
-    
-
----------------------------------- new cell, head & position ----------------------------
------------------------------------------------------------------------------------------
-
-
-CREATE TABLE gfbio_2head
-(
-  headid bigint NOT NULL,
-  name text NOT NULL,
-  task text NOT NULL,
-
-  CONSTRAINT gfbio_2head_pkey PRIMARY KEY (headid)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE gfbio_2head
-  OWNER TO liferay_gfbio;
   
-CREATE TABLE gfbio_2position
-(
-  positionid bigint NOT NULL,
-  headid bigint NOT NULL,
-  CONSTRAINT gfbio_2position_pkey PRIMARY KEY (positionid),
-  CONSTRAINT gfbio_2head_fkey FOREIGN KEY (headid)
-      REFERENCES gfbio_2head (headid) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE gfbio_2position
-  OWNER TO liferay_gfbio;  
-
------------------------------------------------------------------------------------------
-------------------------------------- m to n tables -------------------------------------
------------------------------------------------------------------------------------------
+  
+---------------------------------------------------------------------------------------------
+------------------------------------ Other relationships ------------------------------------
+--------------------------------------      Tables     --------------------------------------
+---------------------------------------------------------------------------------------------
  
+ 
+------------------------------- Data Provider / Persistent Identifier -----------------------
+ 
+
+ CREATE TABLE gfbio_dataprovider_persistentidentifier
+(
+  gfbio_dataprovider bigint NOT NULL,
+  gfbio_persistentidentifier bigint NOT NULL,
+  CONSTRAINT gfbio_dataprovider_persistentidentifier_pkey PRIMARY KEY (gfbio_dataprovider, gfbio_persistentidentifier),
+  CONSTRAINT gfbio_dataprovider FOREIGN KEY (gfbio_dataprovider)
+      REFERENCES gfbio_dataprovider (dataproviderid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT gfbio_persistentidentifier FOREIGN KEY (gfbio_persistentidentifier)
+      REFERENCES gfbio_content (contentid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_dataprovider_persistentidentifier
+  OWNER TO liferay_gfbio;
+
+ 
+------------------------------- Project / Research Object -----------------------
   
--- Table: gfbio_project_researchobject
   
 CREATE TABLE gfbio_project_researchobject
 (
-  projectid bigint NOT NULL,
-  researchobjectid bigint NOT NULL,
-  CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectid, researchobjectid),
-  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
-      REFERENCES gfbio_project (projectid) MATCH SIMPLE
+  projectId bigint NOT NULL,
+  researchobjectId bigint NOT NULL,
+  CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectId, researchobjectId),
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectId)
+      REFERENCES gfbio_project (projectId) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT gfbio_researchobject_fkey FOREIGN KEY (researchobjectid)
-      REFERENCES gfbio_researchobject (researchobjectid) MATCH SIMPLE
+  CONSTRAINT gfbio_researchobject_fkey FOREIGN KEY (researchobjectId)
+      REFERENCES gfbio_researchobject (researchobjectId) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
@@ -199,17 +247,18 @@ ALTER TABLE gfbio_project_researchobject
   OWNER TO liferay_gfbio;
   
 
--- Table: gfbio_project_user
+------------------------------- Project / User -----------------------
+
 
 CREATE TABLE gfbio_project_user
 (
-  projectid bigint NOT NULL,
-  userid bigint NOT NULL,
+  projectId bigint NOT NULL,
+  userId bigint NOT NULL,
   startdate timestamp without time zone,
   enddate timestamp without time zone,
-  CONSTRAINT gfbio_project_user_pkey PRIMARY KEY (projectid, userid),
-  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
-      REFERENCES gfbio_project (projectid) MATCH SIMPLE
+  CONSTRAINT gfbio_project_user_pkey PRIMARY KEY (projectId, userId),
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectId)
+      REFERENCES gfbio_project (projectId) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
@@ -219,17 +268,18 @@ ALTER TABLE gfbio_project_user
   OWNER TO liferay_gfbio;
 
   
--- Table: gfbio_project_user_pi
+------------------------------- Project / User Pi -----------------------
+
 
 CREATE TABLE gfbio_project_user_pi
 (
-  projectid bigint NOT NULL,
-  userid bigint NOT NULL,
+  projectId bigint NOT NULL,
+  userId bigint NOT NULL,
   startdate timestamp without time zone,
   enddate timestamp without time zone,
-  CONSTRAINT gfbio_project_user_pi_pkey PRIMARY KEY (projectid, userid),
-  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
-      REFERENCES gfbio_project (projectid) MATCH SIMPLE
+  CONSTRAINT gfbio_project_user_pi_pkey PRIMARY KEY (projectId, userId),
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectId)
+      REFERENCES gfbio_project (projectId) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (

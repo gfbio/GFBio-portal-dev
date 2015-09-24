@@ -22,6 +22,7 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 	public static String GET_ENITIES_BY_HEADID = FINDER_CLASS_NAME_ENTITY + ".getEntitiesByHeadId";
 
 	
+	@SuppressWarnings("unchecked")
 	public List<Head> getHeadBetweenHeadIds(int start, int end) {
 
 		Session session = null;
@@ -46,6 +47,7 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 	}
 	
 	
+	@SuppressWarnings("rawtypes")
 	public List getEntitiesByHeadId(long headId) {
 		
 		Session session = null;

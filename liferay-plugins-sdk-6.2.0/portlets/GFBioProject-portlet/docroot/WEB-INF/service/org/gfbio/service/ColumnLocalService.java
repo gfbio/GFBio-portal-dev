@@ -246,15 +246,30 @@ public interface ColumnLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public org.json.simple.JSONObject constructColumnJson(long columnId,
-		long headId, java.lang.String columnName);
-
 	public void deleteColumnById(long columnId);
 
 	public void deleteColumnsByHeadId(long headId);
 
+	public java.lang.Boolean checkHaveTableRelationsById(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException;
+
+	public java.lang.Boolean checkHaveTableRelationsByName(
+		java.lang.String tableName);
+
+	public org.json.simple.JSONObject constructColumnJson(long columnId,
+		long headId, java.lang.String columnName);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.Column getColumnById(long columnId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getColumnNameById(long columnId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getColumnIdsWithoutRelation(
+		java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Column> getColumnsByHeadId(
@@ -271,11 +286,6 @@ public interface ColumnLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List getColumnIdsWithoutRelation(
-		java.lang.String columnName)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCountofColumns(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -283,6 +293,9 @@ public interface ColumnLocalService extends BaseLocalService,
 	public long getHeadIdById(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getHeadIdsByColumnName(java.lang.String columnName);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMaxCountofColumns(
@@ -295,5 +308,8 @@ public interface ColumnLocalService extends BaseLocalService,
 	public java.lang.Boolean updateColumn(org.json.simple.JSONObject json);
 
 	public java.lang.Boolean updateColumnWithContents(
+		org.json.simple.JSONObject json);
+
+	public java.lang.Boolean updateColumnWithContents2(
 		org.json.simple.JSONObject json);
 }

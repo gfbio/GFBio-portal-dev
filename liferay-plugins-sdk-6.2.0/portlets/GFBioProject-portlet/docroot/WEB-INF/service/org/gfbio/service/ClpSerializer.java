@@ -28,12 +28,15 @@ import com.liferay.portal.model.BaseModel;
 import org.gfbio.model.BasketClp;
 import org.gfbio.model.ColumnClp;
 import org.gfbio.model.ContentClp;
+import org.gfbio.model.DataProviderClp;
+import org.gfbio.model.DataProvider_PersistentIdentifierClp;
 import org.gfbio.model.HeadClp;
 import org.gfbio.model.ProjectClp;
 import org.gfbio.model.Project_ResearchObjectClp;
 import org.gfbio.model.Project_UserClp;
 import org.gfbio.model.Project_User_PIClp;
 import org.gfbio.model.ResearchObjectClp;
+import org.gfbio.model.SubmissionRegistryClp;
 import org.gfbio.model.UserExtensionClp;
 
 import java.io.ObjectInputStream;
@@ -123,6 +126,15 @@ public class ClpSerializer {
 			return translateInputContent(oldModel);
 		}
 
+		if (oldModelClassName.equals(DataProviderClp.class.getName())) {
+			return translateInputDataProvider(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					DataProvider_PersistentIdentifierClp.class.getName())) {
+			return translateInputDataProvider_PersistentIdentifier(oldModel);
+		}
+
 		if (oldModelClassName.equals(HeadClp.class.getName())) {
 			return translateInputHead(oldModel);
 		}
@@ -145,6 +157,10 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(ResearchObjectClp.class.getName())) {
 			return translateInputResearchObject(oldModel);
+		}
+
+		if (oldModelClassName.equals(SubmissionRegistryClp.class.getName())) {
+			return translateInputSubmissionRegistry(oldModel);
 		}
 
 		if (oldModelClassName.equals(UserExtensionClp.class.getName())) {
@@ -190,6 +206,27 @@ public class ClpSerializer {
 		ContentClp oldClpModel = (ContentClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getContentRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputDataProvider(BaseModel<?> oldModel) {
+		DataProviderClp oldClpModel = (DataProviderClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getDataProviderRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputDataProvider_PersistentIdentifier(
+		BaseModel<?> oldModel) {
+		DataProvider_PersistentIdentifierClp oldClpModel = (DataProvider_PersistentIdentifierClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getDataProvider_PersistentIdentifierRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -251,6 +288,16 @@ public class ClpSerializer {
 		ResearchObjectClp oldClpModel = (ResearchObjectClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getResearchObjectRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputSubmissionRegistry(BaseModel<?> oldModel) {
+		SubmissionRegistryClp oldClpModel = (SubmissionRegistryClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getSubmissionRegistryRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -358,6 +405,79 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("org.gfbio.model.impl.ContentImpl")) {
 			return translateOutputContent(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals("org.gfbio.model.impl.DataProviderImpl")) {
+			return translateOutputDataProvider(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl")) {
+			return translateOutputDataProvider_PersistentIdentifier(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -609,6 +729,43 @@ public class ClpSerializer {
 			}
 		}
 
+		if (oldModelClassName.equals(
+					"org.gfbio.model.impl.SubmissionRegistryImpl")) {
+			return translateOutputSubmissionRegistry(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
 		if (oldModelClassName.equals("org.gfbio.model.impl.UserExtensionImpl")) {
 			return translateOutputUserExtension(oldModel);
 		}
@@ -737,6 +894,15 @@ public class ClpSerializer {
 			return new org.gfbio.NoSuchContentException();
 		}
 
+		if (className.equals("org.gfbio.NoSuchDataProviderException")) {
+			return new org.gfbio.NoSuchDataProviderException();
+		}
+
+		if (className.equals(
+					"org.gfbio.NoSuchDataProvider_PersistentIdentifierException")) {
+			return new org.gfbio.NoSuchDataProvider_PersistentIdentifierException();
+		}
+
 		if (className.equals("org.gfbio.NoSuchHeadException")) {
 			return new org.gfbio.NoSuchHeadException();
 		}
@@ -759,6 +925,10 @@ public class ClpSerializer {
 
 		if (className.equals("org.gfbio.NoSuchResearchObjectException")) {
 			return new org.gfbio.NoSuchResearchObjectException();
+		}
+
+		if (className.equals("org.gfbio.NoSuchSubmissionRegistryException")) {
+			return new org.gfbio.NoSuchSubmissionRegistryException();
 		}
 
 		if (className.equals("org.gfbio.NoSuchUserExtensionException")) {
@@ -794,6 +964,27 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setContentRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputDataProvider(BaseModel<?> oldModel) {
+		DataProviderClp newModel = new DataProviderClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setDataProviderRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputDataProvider_PersistentIdentifier(
+		BaseModel<?> oldModel) {
+		DataProvider_PersistentIdentifierClp newModel = new DataProvider_PersistentIdentifierClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setDataProvider_PersistentIdentifierRemoteModel(oldModel);
 
 		return newModel;
 	}
@@ -855,6 +1046,17 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setResearchObjectRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputSubmissionRegistry(
+		BaseModel<?> oldModel) {
+		SubmissionRegistryClp newModel = new SubmissionRegistryClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setSubmissionRegistryRemoteModel(oldModel);
 
 		return newModel;
 	}

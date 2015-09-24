@@ -50,10 +50,13 @@ public class ResearchObjectWrapper implements ResearchObject,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("researchObjectID", getResearchObjectID());
+		attributes.put("version", getVersion());
+		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
 		attributes.put("formatmetadata", getFormatmetadata());
+		attributes.put("researchObjectType", getResearchObjectType());
 
 		return attributes;
 	}
@@ -64,6 +67,19 @@ public class ResearchObjectWrapper implements ResearchObject,
 
 		if (researchObjectID != null) {
 			setResearchObjectID(researchObjectID);
+		}
+
+		Integer version = (Integer)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
+		}
+
+		Long parentResearchObjectID = (Long)attributes.get(
+				"parentResearchObjectID");
+
+		if (parentResearchObjectID != null) {
+			setParentResearchObjectID(parentResearchObjectID);
 		}
 
 		String name = (String)attributes.get("name");
@@ -88,6 +104,12 @@ public class ResearchObjectWrapper implements ResearchObject,
 
 		if (formatmetadata != null) {
 			setFormatmetadata(formatmetadata);
+		}
+
+		String researchObjectType = (String)attributes.get("researchObjectType");
+
+		if (researchObjectType != null) {
+			setResearchObjectType(researchObjectType);
 		}
 	}
 
@@ -129,6 +151,46 @@ public class ResearchObjectWrapper implements ResearchObject,
 	@Override
 	public void setResearchObjectID(long researchObjectID) {
 		_researchObject.setResearchObjectID(researchObjectID);
+	}
+
+	/**
+	* Returns the version of this research object.
+	*
+	* @return the version of this research object
+	*/
+	@Override
+	public int getVersion() {
+		return _researchObject.getVersion();
+	}
+
+	/**
+	* Sets the version of this research object.
+	*
+	* @param version the version of this research object
+	*/
+	@Override
+	public void setVersion(int version) {
+		_researchObject.setVersion(version);
+	}
+
+	/**
+	* Returns the parent research object i d of this research object.
+	*
+	* @return the parent research object i d of this research object
+	*/
+	@Override
+	public long getParentResearchObjectID() {
+		return _researchObject.getParentResearchObjectID();
+	}
+
+	/**
+	* Sets the parent research object i d of this research object.
+	*
+	* @param parentResearchObjectID the parent research object i d of this research object
+	*/
+	@Override
+	public void setParentResearchObjectID(long parentResearchObjectID) {
+		_researchObject.setParentResearchObjectID(parentResearchObjectID);
 	}
 
 	/**
@@ -209,6 +271,26 @@ public class ResearchObjectWrapper implements ResearchObject,
 	@Override
 	public void setFormatmetadata(java.lang.String formatmetadata) {
 		_researchObject.setFormatmetadata(formatmetadata);
+	}
+
+	/**
+	* Returns the research object type of this research object.
+	*
+	* @return the research object type of this research object
+	*/
+	@Override
+	public java.lang.String getResearchObjectType() {
+		return _researchObject.getResearchObjectType();
+	}
+
+	/**
+	* Sets the research object type of this research object.
+	*
+	* @param researchObjectType the research object type of this research object
+	*/
+	@Override
+	public void setResearchObjectType(java.lang.String researchObjectType) {
+		_researchObject.setResearchObjectType(researchObjectType);
 	}
 
 	@Override

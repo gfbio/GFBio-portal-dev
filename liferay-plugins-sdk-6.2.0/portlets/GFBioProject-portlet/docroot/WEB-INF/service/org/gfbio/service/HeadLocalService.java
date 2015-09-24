@@ -246,14 +246,13 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public org.json.simple.JSONObject constructHeadJson(long headId,
-		java.lang.String tableName, java.lang.String tableType);
-
 	public void deleteHeadByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteTableByHeadId(long headId);
+
+	public void deleteTableByHeadIdWithoutCheck(long headId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getArrayOfTableNames(java.lang.String tableType);
@@ -316,6 +315,12 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType);
+
+	public java.lang.String constructRelationName(java.lang.String mtable,
+		java.lang.String ntable);
+
 	public java.lang.Boolean updateHead(long headId,
 		java.lang.String tableName, java.lang.String tableType);
 
@@ -329,11 +334,14 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 	public java.lang.Boolean updateHeadWithColumns(
 		org.json.simple.JSONObject json);
 
+	public java.lang.Boolean updateHeadWithColumns2(
+		org.json.simple.JSONObject json);
+
 	public java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable);
 
-	public java.lang.String constructRelationName(java.lang.String mtable,
-		java.lang.String ntable);
+	public java.lang.Boolean updateRelationTableWithContent(long headId1,
+		long headId2, long contentId1, long contentId2);
 
 	public java.lang.Boolean updateTable(org.json.simple.JSONObject json);
 }

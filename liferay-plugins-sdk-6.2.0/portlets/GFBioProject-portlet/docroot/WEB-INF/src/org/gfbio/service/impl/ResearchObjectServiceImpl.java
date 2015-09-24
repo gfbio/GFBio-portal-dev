@@ -15,9 +15,11 @@
 package org.gfbio.service.impl;
 
 
+import java.util.List;
+
+import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
-
 
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -31,14 +33,45 @@ import com.liferay.portal.kernel.exception.SystemException;
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author froemm
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.ResearchObjectServiceBaseImpl
  * @see org.gfbio.service.ResearchObjectServiceUtil
  */
 public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
-	
-	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException {
 
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+
+/*	//
+	public List <ResearchObject> getAllChildren (long researchObjectId){
+		return ResearchObjectLocalServiceUtil.getAllChildren(researchObjectId);
+	}*/
+	
+	
+	//
+	public List <ResearchObject> getDirectChildren (long researchObjectId){
+		return ResearchObjectLocalServiceUtil.getDirectChildren(researchObjectId);
+	}
+	
+	
+	//
+	public ResearchObject getDirectParent(long researchObjectId) {
+		return ResearchObjectLocalServiceUtil.getDirectParent(researchObjectId) ;
+	}
+	
+	
+	//
+	public ResearchObject getTopParent(long researchObjectId) {
+		return ResearchObjectLocalServiceUtil.getTopParent(researchObjectId);
+	}
+	
+	
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException {
 		return ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, name, label, metadata, formatmetadata);
 	}
 }

@@ -500,6 +500,177 @@ public class ResearchObjectUtil {
 	}
 
 	/**
+	* Returns all the research objects where parentResearchObjectID = &#63;.
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @return the matching research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.ResearchObject> findByParentID(
+		long parentResearchObjectID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByParentID(parentResearchObjectID);
+	}
+
+	/**
+	* Returns a range of all the research objects where parentResearchObjectID = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ResearchObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @param start the lower bound of the range of research objects
+	* @param end the upper bound of the range of research objects (not inclusive)
+	* @return the range of matching research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.ResearchObject> findByParentID(
+		long parentResearchObjectID, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByParentID(parentResearchObjectID, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the research objects where parentResearchObjectID = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.ResearchObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @param start the lower bound of the range of research objects
+	* @param end the upper bound of the range of research objects (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<org.gfbio.model.ResearchObject> findByParentID(
+		long parentResearchObjectID, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByParentID(parentResearchObjectID, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first research object in the ordered set where parentResearchObjectID = &#63;.
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching research object
+	* @throws org.gfbio.NoSuchResearchObjectException if a matching research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.ResearchObject findByParentID_First(
+		long parentResearchObjectID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		return getPersistence()
+				   .findByParentID_First(parentResearchObjectID,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first research object in the ordered set where parentResearchObjectID = &#63;.
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching research object, or <code>null</code> if a matching research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.ResearchObject fetchByParentID_First(
+		long parentResearchObjectID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByParentID_First(parentResearchObjectID,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last research object in the ordered set where parentResearchObjectID = &#63;.
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching research object
+	* @throws org.gfbio.NoSuchResearchObjectException if a matching research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.ResearchObject findByParentID_Last(
+		long parentResearchObjectID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		return getPersistence()
+				   .findByParentID_Last(parentResearchObjectID,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last research object in the ordered set where parentResearchObjectID = &#63;.
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching research object, or <code>null</code> if a matching research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.ResearchObject fetchByParentID_Last(
+		long parentResearchObjectID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByParentID_Last(parentResearchObjectID,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the research objects before and after the current research object in the ordered set where parentResearchObjectID = &#63;.
+	*
+	* @param researchObjectID the primary key of the current research object
+	* @param parentResearchObjectID the parent research object i d
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next research object
+	* @throws org.gfbio.NoSuchResearchObjectException if a research object with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.ResearchObject[] findByParentID_PrevAndNext(
+		long researchObjectID, long parentResearchObjectID,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		return getPersistence()
+				   .findByParentID_PrevAndNext(researchObjectID,
+			parentResearchObjectID, orderByComparator);
+	}
+
+	/**
+	* Removes all the research objects where parentResearchObjectID = &#63; from the database.
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByParentID(long parentResearchObjectID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByParentID(parentResearchObjectID);
+	}
+
+	/**
+	* Returns the number of research objects where parentResearchObjectID = &#63;.
+	*
+	* @param parentResearchObjectID the parent research object i d
+	* @return the number of matching research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByParentID(long parentResearchObjectID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByParentID(parentResearchObjectID);
+	}
+
+	/**
 	* Caches the research object in the entity cache if it is enabled.
 	*
 	* @param researchObject the research object

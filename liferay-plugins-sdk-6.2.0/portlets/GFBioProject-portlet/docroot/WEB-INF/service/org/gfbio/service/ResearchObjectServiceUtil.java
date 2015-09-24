@@ -63,6 +63,21 @@ public class ResearchObjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId) {
+		return getService().getDirectChildren(researchObjectId);
+	}
+
+	public static org.gfbio.model.ResearchObject getDirectParent(
+		long researchObjectId) {
+		return getService().getDirectParent(researchObjectId);
+	}
+
+	public static org.gfbio.model.ResearchObject getTopParent(
+		long researchObjectId) {
+		return getService().getTopParent(researchObjectId);
+	}
+
 	public static long updateResearchObject(long projectID,
 		long researchObjectID, java.lang.String name, java.lang.String label,
 		java.lang.String metadata, java.lang.String formatmetadata)

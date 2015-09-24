@@ -132,6 +132,45 @@ page import="com.liferay.portal.util.PortalUtil" %>
 			}
 		});
 	}
+	
+/////////////////////////////////////////   ActionRequest  //////////////////////////////////////////////
+
+	
+
+	function ajaxActionRequest_Choose(archivingURL, method, data, withoutRelationship, withRelationship, as) {
+		console.log("ajaxActionRequest_Choose: "+archivingURL+" | "+method+" | "+data+" | "+as);
+
+ 		$.ajax({
+			"type" : "POST",
+			"url": archivingURL.concat("/GFBioArchiving"),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : method
+			},
+			async: as,
+			success : function(data) {
+				
+				var withoutRelation = data.withoutRelationIdList;
+				var withoutSelect = $("#".concat(withoutRelationship));  
+				withoutSelect.empty();
+				
+				var withRelation = data.withRelationIdList;
+				var withSelect = $("#".concat(withRelationship));   
+				withSelect.empty();
+				
+				for (y = 0; y < withoutRelation.length; y++){
+					withoutSelect.append("<option value='" + withoutRelation[y]+ "'>" + data.withoutJson[withoutRelation[y]] + "</option>");
+					console.log(y  + " | "+data.withoutJson[withoutRelation[y]] + " | "+withoutRelation[y] );
+				}
+
+				for (y = 0; y < withRelation.length; y++){
+					withSelect.append("<option value='" + withRelation[y]+ "'>" + data.withJson[withRelation[y]] + "</option>");
+					console.log(y  + " | "+data.withJson[withRelation[y]] + " | "+withRelation[y] );					
+				}
+					
+			}
+		});
+	}
 
 	//////////////////////////////////////// content //////////////////////////////////////////////////////////
 

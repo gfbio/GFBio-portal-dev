@@ -289,6 +289,22 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId) {
+		return _researchObjectLocalService.getDirectChildren(researchObjectId);
+	}
+
+	@Override
+	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId) {
+		return _researchObjectLocalService.getDirectParent(researchObjectId);
+	}
+
+	@Override
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
+		return _researchObjectLocalService.getTopParent(researchObjectId);
+	}
+
+	@Override
 	public long updateResearchObject(long projectID, long researchObjectID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String metadata, java.lang.String formatmetadata)

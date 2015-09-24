@@ -254,6 +254,16 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId);
+
 	public long updateResearchObject(long projectID, long researchObjectID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String metadata, java.lang.String formatmetadata)

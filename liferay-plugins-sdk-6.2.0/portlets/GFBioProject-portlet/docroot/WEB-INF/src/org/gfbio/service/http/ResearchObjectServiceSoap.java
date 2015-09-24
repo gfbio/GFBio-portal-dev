@@ -62,6 +62,48 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ResearchObjectServiceSoap {
+	public static org.gfbio.model.ResearchObjectSoap[] getDirectChildren(
+		long researchObjectId) throws RemoteException {
+		try {
+			java.util.List<org.gfbio.model.ResearchObject> returnValue = ResearchObjectServiceUtil.getDirectChildren(researchObjectId);
+
+			return org.gfbio.model.ResearchObjectSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.gfbio.model.ResearchObjectSoap getDirectParent(
+		long researchObjectId) throws RemoteException {
+		try {
+			org.gfbio.model.ResearchObject returnValue = ResearchObjectServiceUtil.getDirectParent(researchObjectId);
+
+			return org.gfbio.model.ResearchObjectSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.gfbio.model.ResearchObjectSoap getTopParent(
+		long researchObjectId) throws RemoteException {
+		try {
+			org.gfbio.model.ResearchObject returnValue = ResearchObjectServiceUtil.getTopParent(researchObjectId);
+
+			return org.gfbio.model.ResearchObjectSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static long updateResearchObject(long projectID,
 		long researchObjectID, java.lang.String name, java.lang.String label,
 		java.lang.String metadata, java.lang.String formatmetadata)

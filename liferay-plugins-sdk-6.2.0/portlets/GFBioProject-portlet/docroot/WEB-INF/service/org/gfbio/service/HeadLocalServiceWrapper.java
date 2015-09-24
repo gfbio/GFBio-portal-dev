@@ -277,12 +277,6 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject constructHeadJson(long headId,
-		java.lang.String tableName, java.lang.String tableType) {
-		return _headLocalService.constructHeadJson(headId, tableName, tableType);
-	}
-
-	@Override
 	public void deleteHeadByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -292,6 +286,11 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	@Override
 	public void deleteTableByHeadId(long headId) {
 		_headLocalService.deleteTableByHeadId(headId);
+	}
+
+	@Override
+	public void deleteTableByHeadIdWithoutCheck(long headId) {
+		_headLocalService.deleteTableByHeadIdWithoutCheck(headId);
 	}
 
 	@Override
@@ -386,6 +385,18 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return _headLocalService.constructHeadJson(headId, tableName, tableType);
+	}
+
+	@Override
+	public java.lang.String constructRelationName(java.lang.String mtable,
+		java.lang.String ntable) {
+		return _headLocalService.constructRelationName(mtable, ntable);
+	}
+
+	@Override
 	public java.lang.Boolean updateHead(long headId,
 		java.lang.String tableName, java.lang.String tableType) {
 		return _headLocalService.updateHead(headId, tableName, tableType);
@@ -415,15 +426,22 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public java.lang.Boolean updateHeadWithColumns2(
+		org.json.simple.JSONObject json) {
+		return _headLocalService.updateHeadWithColumns2(json);
+	}
+
+	@Override
 	public java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable) {
 		return _headLocalService.updateRelationTable(headId, mtable, ntable);
 	}
 
 	@Override
-	public java.lang.String constructRelationName(java.lang.String mtable,
-		java.lang.String ntable) {
-		return _headLocalService.constructRelationName(mtable, ntable);
+	public java.lang.Boolean updateRelationTableWithContent(long headId1,
+		long headId2, long contentId1, long contentId2) {
+		return _headLocalService.updateRelationTableWithContent(headId1,
+			headId2, contentId1, contentId2);
 	}
 
 	@Override

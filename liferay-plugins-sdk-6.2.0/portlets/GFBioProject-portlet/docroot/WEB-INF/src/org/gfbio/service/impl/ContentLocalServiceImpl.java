@@ -17,7 +17,9 @@ package org.gfbio.service.impl;
 import java.util.List;
 
 import org.gfbio.NoSuchContentException;
+import org.gfbio.model.Column;
 import org.gfbio.model.Content;
+import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.ContentLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ContentFinderUtil;
@@ -43,21 +45,9 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 
-	@SuppressWarnings("unchecked")
-	public JSONObject constructColumnJson(long contentId, long headId, long columnId, long rowId, String cellContent){
-		JSONObject json = new JSONObject();
-		json.put("contentid", contentId);
-		json.put("headid", headId);
-		json.put("columnid", columnId);
-		json.put("rowid", rowId);
-		json.put("cellcontent", cellContent);
-		return json;
-	}
 	
+	///////////////////////////////////// Delete Functions ///////////////////////////////////////////////////
 	
-	public long constructNewId() throws SystemException{
-		return contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName())).getContentID();
-	}
 	
 	//delete content 
 	public void deleteContentById (long contentId)  {
@@ -107,6 +97,9 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 	
 	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
 	//get a content object by the content id
 	public Content getContentById(long contentId) throws NoSuchContentException, SystemException {
 		return contentPersistence.findByContentId(contentId);
@@ -139,6 +132,14 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return null;
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public List getCellContentByContentId(long contentId) {
+		System.out.println(contentId);
+		List list = ContentFinderUtil.getCellContentByContentId(contentId);
+		System.out.println(list);
+		return list;
+	}
+	
 
 	
 	//get Content of  a specific row and column
@@ -159,6 +160,27 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 
 	
+	//
+	@SuppressWarnings("rawtypes")
+	public List getContentIdsByRowId (long rowId){
+		return ContentFinderUtil.getContentIdsByRowId(rowId);
+	}
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public List getContentIdsWithoutRelationships (long rowId, String tableName1, String tableName2){
+		return ContentFinderUtil.getContentIdsWithoutRelationships(rowId, tableName1, tableName2);
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public  List getContentIdsWithRelationships(long rowId, String tableName1, String tableName2) {
+		return ContentFinderUtil.getContentIdsWithRelationships(rowId, tableName1, tableName2);
+	}
+
+	
+	//
 	public JSONObject getContentInformationAsJSONBycontentId (long contentId){
 		
 		JSONObject json = new JSONObject();
@@ -188,6 +210,24 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 				json.put(Long.toString(contentList.get(i).getColumnID()), Long.toString(contentList.get(i).getContentID()));
 		
 		return json;
+	}
+	
+	
+	//
+	public long getFirstContentIdByRowId (long rowId){
+		return (long) ContentFinderUtil.getContentIdsByRowId(rowId).get(0);
+	}
+	
+	
+	//
+	public long getHeadIdById(long headId){
+		return (long) ContentFinderUtil.getHeadIdById(headId).get(0);
+	}
+	
+	
+	//
+	public long getRowIdByCellContent(long headId, String columnName, String cellContent){
+		return (long) ContentFinderUtil.getRowIdByCellContent(headId, columnName, cellContent).get(0);
 	}
 	
 	
@@ -222,7 +262,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	//get the count of rows from a specific column 
-	
+	@SuppressWarnings("rawtypes")
 	public int getCountOfRows(long headId) throws SystemException{
 		int count =0;
 		List list = ContentLocalServiceUtil.getRowIds(headId);
@@ -235,6 +275,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	//get a List of rowIds of specific head
+	@SuppressWarnings("rawtypes")
 	public List  getRowIds (long headId){
 		return ContentFinderUtil.getRowIds(headId);
 	}
@@ -259,14 +300,46 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	// get the columnId of a specific content.
-	public long getRowIdById(long contentId) throws SystemException, PortalException{
-		return ContentLocalServiceUtil.getContent(contentId).getRowID();
+	public long getRowIdById(long contentId) {
+		return (long) ContentFinderUtil.getRowIdByContentId(contentId).get(0);
+	}
+	
+	
+	//get a List of rowIds of specific head
+	public long  getRowIdOfRelation (String cellContent1, String cellContent2){
+		System.out.println(cellContent1 + " | "+cellContent2);
+		return (long) ContentFinderUtil.getRowIdOfRelation(cellContent1, cellContent2).get(0);
+	}
+	
+	
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructColumnJson(long contentId, long headId, long columnId, long rowId, String cellContent){
+		JSONObject json = new JSONObject();
+		json.put("contentid", contentId);
+		json.put("headid", headId);
+		json.put("columnid", columnId);
+		json.put("rowid", rowId);
+		json.put("cellcontent", cellContent);
+		return json;
+	}
+	
+	
+	//
+	public long constructNewId() throws SystemException{
+		return contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName())).getContentID();
 	}
 
 		
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
+	
+	
 	//update or build a new the content
 	public Boolean updateContent (long contentId, long headId, long columnId, long rowId, String cellContent){
-		System.out.println("updateContent: "+ contentId+ " | "+headId+ " | "+ columnId+ " | "+rowId+ " | "+cellContent);
+
 		Boolean check = false;
 		Content content = null;
 
@@ -277,25 +350,32 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		// if it true, then must be build a new content with a new primary keay else update the content
 		if (content == null)
 			try {
+
 				content = contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
+				System.out.println("new cellcontent id before test |"+ content.toString()+"|:"+columnId+":|");
+				Column column = null;
+				try {
+					column = ColumnLocalServiceUtil.getColumn(columnId);
+				} catch (PortalException e) {e.printStackTrace();}
+				if (column != null)
+					if (ColumnLocalServiceUtil.getColumnNameById(columnId).equals("id")){
+						System.out.println("new cellcontent id "+ content.getContentID());
+						cellContent = Long.toString(content.getContentID());
+					}
+				System.out.println("new cellcontent id after test "+ cellContent);
+
 			} catch (SystemException e) {e.printStackTrace();}
-		System.out.println("updateContent in content: "+ content.getContentID()+ " | "+headId+ " | "+ columnId+ " | "+rowId+ " | "+cellContent);
-		if (rowId ==0)
+
+		if (rowId==0)
 			try {
-				System.out.println("tester: "+ rowId);
 				rowId= ContentLocalServiceUtil.constructNewId();
-			} catch (SystemException e1) {e1.printStackTrace();}
-		System.out.println("tester: "+ headId);
+			} catch (SystemException e) {e.printStackTrace();}
+
 		content.setHeadID(headId);
-		System.out.println("tester: "+ columnId);
 		content.setColumnID(columnId);
-		System.out.println("tester: "+ columnId);
 		content.setRowID(rowId);
-		System.out.println("tester: "+ rowId);
 		content.setCellContent(cellContent);
-		System.out.println("tester: "+ cellContent);
 		try {
-			System.out.println("tester: content" + content.toString());
 			super.updateContent(content);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
@@ -326,7 +406,29 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		String cellcontent = (String) json.get(contentKey);
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
 			check = ContentLocalServiceUtil.updateContent(contentId, headId, columnId, rowId, cellcontent);
-			//check = ContentLocalServiceUtil.updateContent(Long.valueOf((String) json.get(contentIdKey)).longValue(), Long.valueOf((String) json.get(headKey)).longValue(), Long.valueOf((String) json.get(columnKey)).longValue(), Long.valueOf((String) json.get(rowKey)).longValue(), (String) json.get(contentKey));
+		return check;
+	}
+	
+	
+	//update or build a new the content with a json as input
+	public Boolean updateContent2 (JSONObject json){
+		
+		System.out.println("updateContent: "+json);
+		Boolean check = false;
+		String contentIdKey ="contentid";
+		String headKey ="headid";
+		String columnKey ="columnid";
+		String rowKey = "rowid";
+		String contentKey = "cellcontent";
+		long contentId = (long) json.get(contentIdKey);
+		long headId = Long.valueOf((String) json.get(headKey)).longValue();
+		long columnId = (long) json.get(columnKey);
+		System.out.println("rowId");
+		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
+		System.out.println("cellcontent");
+		String cellcontent = (String) json.get(contentKey);
+		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
+			check = ContentLocalServiceUtil.updateContent(contentId, headId, columnId, rowId, cellcontent);
 		return check;
 	}
 	
