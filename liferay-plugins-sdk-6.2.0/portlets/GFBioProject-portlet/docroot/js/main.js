@@ -268,6 +268,12 @@ function resourceMethod_JI(archivingURL, method, name, j, size, async) {
 };
 
 
+//testfunction dcst portlet
+function getCategory(category) {
+	console.log(category);
+	ajaxGetCategory(category);
+}
+
 //////////////////////////////////////////////////  update Label-Value-Data in the view ///////////////////////////////////////////////
 
 

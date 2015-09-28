@@ -24,13 +24,6 @@ try {
 }
 %>
 Es gibt <%=projectList.size() %> Projekte. Ich bin User <%=userid %>>
-	<table> 
-		<% if (projectList!=null){ for (int i = 0; i < projectList.size(); i++) { %>
-		<tr> 
-			<td><%= projectList.get(i).getLabel() %></td> 
-		</tr> 
-		<%} } %>
-	</table>
 	
 <!-- Acordion um die Types anzuzeigen -->
 <div  class="toggler">
@@ -90,7 +83,8 @@ Type
 						
 						<div class="row">
 							<div class="dynamicIcon1st">- </div>
-							<label  class="dynamicTableIst" id="<%="type_".concat(new Integer(i).toString()).concat("_category_").concat(new Integer(j).toString())%> "><%= PositionLocalServiceUtil.getColumnContent(catId_ij, catColumnNum) %><br/></label> 
+							<label  class="dynamicTableIst" id="<%="type_".concat(new Integer(i).toString()).concat("_category_").concat(new Integer(j).toString())%> "
+									onclick="getCategory('<%= PositionLocalServiceUtil.getColumnContent(catId_ij, catColumnNum) %>')"><%= PositionLocalServiceUtil.getColumnContent(catId_ij, catColumnNum) %></label><br/>
 						</div>
 						
 						
