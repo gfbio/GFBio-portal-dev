@@ -26,7 +26,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see PositionLocalService
  * @see org.gfbio.service.base.PositionLocalServiceBaseImpl
  * @see org.gfbio.service.impl.PositionLocalServiceImpl
@@ -271,62 +271,10 @@ public class PositionLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.lang.String getColumnContent(long positionId, int i)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getColumnContent(positionId, i);
-	}
-
-	public static java.util.List<org.gfbio.model.Position> getPositionsbyColumnName(
-		java.lang.String content, int i)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPositionsbyColumnName(content, i);
-	}
-
-	public static java.lang.String[] getNameArray(long headId)
-		throws org.gfbio.NoSuchHeadException {
-		return getService().getNameArray(headId);
-	}
-
-	public static org.gfbio.model.Position getPositionbyId(long positionId)
+	public static org.gfbio.model.Position getPositionById(long positionId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchPositionException {
-		return getService().getPositionbyId(positionId);
-	}
-
-	public static org.gfbio.model.Position getPositionByHeadIdAndName(
-		long headId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPositionByHeadIdAndName(headId, name);
-	}
-
-	public static java.util.List<org.gfbio.model.Position> getPositionsbyHeadId(
-		long headId) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPositionsbyHeadId(headId);
-	}
-
-	public static java.lang.String[][] getTable(long headID)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return getService().getTable(headID);
-	}
-
-	public static java.lang.Boolean updatePosition(long positionID,
-		long headID, java.lang.String column01, java.lang.String column02,
-		java.lang.String column03, java.lang.String column04,
-		java.lang.String column05, java.lang.String column06,
-		java.lang.String column07, java.lang.String column08,
-		java.lang.String column09, java.lang.String column10,
-		java.lang.String column11, java.lang.String column12,
-		java.lang.String column13, java.lang.String column14,
-		java.lang.String column15, java.lang.String column16,
-		java.lang.String column17, java.lang.String column18,
-		java.lang.String column19, java.lang.String column20)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updatePosition(positionID, headID, column01, column02,
-			column03, column04, column05, column06, column07, column08,
-			column09, column10, column11, column12, column13, column14,
-			column15, column16, column17, column18, column19, column20);
+		return getService().getPositionById(positionId);
 	}
 
 	public static void clearService() {

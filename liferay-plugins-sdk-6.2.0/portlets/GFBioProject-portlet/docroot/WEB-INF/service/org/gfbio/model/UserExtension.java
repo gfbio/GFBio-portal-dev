@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the UserExtension service. Represents a row in the &quot;gfbio_UserExtension&quot; database table, with each column mapped to a property of this class.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see UserExtensionModel
  * @see org.gfbio.model.impl.UserExtensionImpl
  * @see org.gfbio.model.impl.UserExtensionModelImpl

@@ -48,7 +48,7 @@ package org.gfbio.service.http;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see PositionServiceHttp
  * @see org.gfbio.model.PositionSoap
  * @see org.gfbio.service.PositionServiceUtil

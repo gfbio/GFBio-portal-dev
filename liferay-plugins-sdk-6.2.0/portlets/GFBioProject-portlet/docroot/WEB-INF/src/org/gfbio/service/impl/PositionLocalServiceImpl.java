@@ -37,12 +37,26 @@ import org.gfbio.service.base.PositionLocalServiceBaseImpl;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.PositionLocalServiceBaseImpl
  * @see org.gfbio.service.PositionLocalServiceUtil
  */
+
 public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
+
+
+	public Position getPositionById(long positionId) throws NoSuchPositionException, SystemException {
+		return positionPersistence.findByPositionId(positionId);
+	}	
+
+/*
+
+	public List<Position> getPositionsByColumnName(String content, int i) throws SystemException{
+		
+		return positionPersistence.findByColumn02(content);
+	}
+	
 	public String getColumnContent(long positionId, int i) throws SystemException {
 		Position position = null;
 
@@ -73,9 +87,7 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 		return column;
 	}
 	
-	public List<Position> getPositionsbyColumnName(String content, int i) throws SystemException{
-		return positionPersistence.findByColumn02(content);
-	}
+
 	
 	public String[] getNameArray(long headId) throws NoSuchHeadException {
 
@@ -196,5 +208,5 @@ public class PositionLocalServiceImpl extends PositionLocalServiceBaseImpl {
 
 		return check;
 	}
-
+*/
 }

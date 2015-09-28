@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Serializable;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public class Project_User_PIPK implements Comparable<Project_User_PIPK>,

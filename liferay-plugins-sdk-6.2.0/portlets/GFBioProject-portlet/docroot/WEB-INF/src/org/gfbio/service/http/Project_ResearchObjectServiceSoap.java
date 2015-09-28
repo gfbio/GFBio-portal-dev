@@ -48,7 +48,7 @@ package org.gfbio.service.http;
  * The SOAP utility is only generated for remote services.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see Project_ResearchObjectServiceHttp
  * @see org.gfbio.model.Project_ResearchObjectSoap
  * @see org.gfbio.service.Project_ResearchObjectServiceUtil

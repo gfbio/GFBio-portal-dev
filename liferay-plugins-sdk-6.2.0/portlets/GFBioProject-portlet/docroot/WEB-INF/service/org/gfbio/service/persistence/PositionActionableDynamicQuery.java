@@ -22,7 +22,7 @@ import org.gfbio.model.Position;
 import org.gfbio.service.PositionLocalServiceUtil;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public abstract class PositionActionableDynamicQuery

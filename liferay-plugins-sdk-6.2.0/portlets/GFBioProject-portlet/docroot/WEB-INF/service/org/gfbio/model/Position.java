@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the Position service. Represents a row in the &quot;gfbio_Position&quot; database table, with each column mapped to a property of this class.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see PositionModel
  * @see org.gfbio.model.impl.PositionImpl
  * @see org.gfbio.model.impl.PositionModelImpl

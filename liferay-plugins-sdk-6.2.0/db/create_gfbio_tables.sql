@@ -1,6 +1,6 @@
-﻿DROP TABLE 
-gfbio_basket, gfbio_head, gfbio_position,  gfbio_project, gfbio_researchobject,  
-gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi;
+﻿-- DROP TABLE 
+-- gfbio_basket, gfbio_head, gfbio_project, gfbio_researchobject,  gfbio_position, gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi
+-- gfbio_2cell, gfbio_2head, gfbio_2position;
 
 -- Table: gfbio_basket
 
@@ -140,7 +140,38 @@ ALTER TABLE gfbio_position
   
     
 
+---------------------------------- new cell, head & position ----------------------------
+-----------------------------------------------------------------------------------------
 
+
+CREATE TABLE gfbio_2head
+(
+  headid bigint NOT NULL,
+  name text NOT NULL,
+  task text NOT NULL,
+
+  CONSTRAINT gfbio_2head_pkey PRIMARY KEY (headid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_2head
+  OWNER TO liferay_gfbio;
+  
+CREATE TABLE gfbio_2position
+(
+  positionid bigint NOT NULL,
+  headid bigint NOT NULL,
+  CONSTRAINT gfbio_2position_pkey PRIMARY KEY (positionid),
+  CONSTRAINT gfbio_2head_fkey FOREIGN KEY (headid)
+      REFERENCES gfbio_2head (headid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_2position
+  OWNER TO liferay_gfbio;  
 
 -----------------------------------------------------------------------------------------
 ------------------------------------- m to n tables -------------------------------------

@@ -19,7 +19,7 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link ResearchObjectService}.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see ResearchObjectService
  * @generated
  */

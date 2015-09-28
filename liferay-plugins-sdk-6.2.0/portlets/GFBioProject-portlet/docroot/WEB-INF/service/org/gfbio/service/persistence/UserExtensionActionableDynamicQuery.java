@@ -22,7 +22,7 @@ import org.gfbio.model.UserExtension;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @generated
  */
 public abstract class UserExtensionActionableDynamicQuery

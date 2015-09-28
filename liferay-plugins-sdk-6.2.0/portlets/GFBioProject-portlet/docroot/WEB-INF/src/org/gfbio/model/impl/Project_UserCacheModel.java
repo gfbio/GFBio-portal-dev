@@ -29,7 +29,7 @@ import java.util.Date;
 /**
  * The cache model class for representing Project_User in entity cache.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see Project_User
  * @generated
  */

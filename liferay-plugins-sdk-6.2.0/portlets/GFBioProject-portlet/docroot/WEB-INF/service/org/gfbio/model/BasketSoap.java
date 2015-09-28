@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * This class is used by SOAP remote services, specifically {@link org.gfbio.service.http.BasketServiceSoap}.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.http.BasketServiceSoap
  * @generated
  */

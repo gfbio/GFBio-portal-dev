@@ -19,7 +19,7 @@ import com.liferay.portal.model.PersistedModel;
 /**
  * The extended model interface for the Basket service. Represents a row in the &quot;gfbio_Basket&quot; database table, with each column mapped to a property of this class.
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see BasketModel
  * @see org.gfbio.model.impl.BasketImpl
  * @see org.gfbio.model.impl.BasketModelImpl
