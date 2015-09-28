@@ -1,0 +1,9 @@
+#*
+This file allows you to override and define new Velocity variables.
+*#
+
+#set ($portal_url = $portalUtil.getPortalURL($theme_display))
+#set ($is_wap = $theme_display.isWapTheme())
+
+#*set ($css_class = "${css_class} dockbar-split")*#
+#set ($css_class = "$css_class dockbar-bubbles over")
