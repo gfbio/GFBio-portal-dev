@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import java.util.Date;
 import java.util.List;
 
-
 import org.gfbio.model.Project;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the project remote service.
@@ -42,30 +42,29 @@ import org.gfbio.service.base.ProjectServiceBaseImpl;
  */
 
 public class ProjectServiceImpl extends ProjectServiceBaseImpl {
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link org.gfbio.service.ProjectServiceUtil} to access the project remote service.
-	 */
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.sample.service.ProjectServiceUtil} to access the project remote service.
-	 */
+	
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public JSONObject getProject (JSONObject json){
+		return ProjectLocalServiceUtil.getProjectById(json);
+	}
+	
+	//
 	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 		return ProjectLocalServiceUtil.getProjectList(userID);
 	}
+	
+	
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
+	
 
+	//
 	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
 		return ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, startDate, endDate, status);
 	}
 	
-	
-//
-//	@Override
-//	public long updateProject(long arg0, String arg1, String arg2)
-//			throws SystemException {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+
 }

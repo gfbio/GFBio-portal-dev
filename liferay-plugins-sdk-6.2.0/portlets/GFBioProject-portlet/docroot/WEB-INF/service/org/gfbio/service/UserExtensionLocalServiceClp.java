@@ -109,17 +109,17 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getUserExtensionById";
+		_methodName19 = "getUserExtentionById";
 
-		_methodParameterTypes19 = new String[] { "long" };
+		_methodParameterTypes19 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName20 = "getUserById";
 
 		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "getUserAsJsonById";
+		_methodName21 = "constructUserExtentionJsonById";
 
-		_methodParameterTypes21 = new String[] { "long" };
+		_methodParameterTypes21 = new String[] { "com.liferay.portal.model.User" };
 	}
 
 	@Override
@@ -669,26 +669,17 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 	}
 
 	@Override
-	public org.gfbio.model.UserExtension getUserExtensionById(
-		long userExtensionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchUserExtensionException {
+	public org.json.simple.JSONObject getUserExtentionById(
+		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { userExtensionId });
+					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof org.gfbio.NoSuchUserExtensionException) {
-				throw (org.gfbio.NoSuchUserExtensionException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -699,7 +690,7 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 			}
 		}
 
-		return (org.gfbio.model.UserExtension)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -736,14 +727,16 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject getUserAsJsonById(long userId)
+	public org.json.simple.JSONObject constructUserExtentionJsonById(
+		com.liferay.portal.model.User user)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { userId });
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(user) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

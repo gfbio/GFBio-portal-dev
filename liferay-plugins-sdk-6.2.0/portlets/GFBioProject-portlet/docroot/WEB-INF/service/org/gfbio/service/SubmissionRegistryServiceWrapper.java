@@ -102,45 +102,27 @@ public class SubmissionRegistryServiceWrapper
 	}
 
 	@Override
-	public java.lang.Boolean updateStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String status) {
-		return _submissionRegistryService.updateStatus(researchObjectId,
-			researchObjectVersion, archive, status);
+	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json) {
+		return _submissionRegistryService.getSubmissionRegistriesByBrokerSubmissionId(json);
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter) {
-		return _submissionRegistryService.updateSubmissionregistry(researchObjectId,
-			researchObjectVersion, archive, brockerSubmissionId, archivePId,
-			lastChanged, userID, isPublic, publicAfter);
+	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json) {
+		return _submissionRegistryService.getSubmissionRegistriesByResearchObjectId(json);
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
-		return _submissionRegistryService.updateSubmissionregistry(researchObjectId,
-			researchObjectVersion, archive, brockerSubmissionId, archivePId,
-			lastChanged, userID, isPublic, publicAfter, status);
+	public org.json.simple.JSONObject createSubmissionregistry(
+		org.json.simple.JSONObject json) {
+		return _submissionRegistryService.createSubmissionregistry(json);
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		long archivePIdType, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
-		java.lang.String status) {
-		return _submissionRegistryService.updateSubmissionregistry(researchObjectId,
-			researchObjectVersion, archive, brockerSubmissionId, archivePId,
-			archivePIdType, lastChanged, userID, isPublic, publicAfter, status);
+	public org.json.simple.JSONObject updateSubmissionregistry(
+		org.json.simple.JSONObject json) {
+		return _submissionRegistryService.updateSubmissionregistry(json);
 	}
 
 	/**

@@ -249,6 +249,15 @@ public interface ProjectLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject json);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.Project getProjectById(long projectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProjectException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -258,6 +267,9 @@ public interface ProjectLocalService extends BaseLocalService,
 		long projectID, long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public org.json.simple.JSONObject constructProjectAsJson(
+		org.gfbio.model.Project project);
 
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,

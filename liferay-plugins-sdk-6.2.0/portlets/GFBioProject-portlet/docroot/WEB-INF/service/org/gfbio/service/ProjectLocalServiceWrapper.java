@@ -279,6 +279,19 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject json) {
+		return _projectLocalService.getProjectById(json);
+	}
+
+	@Override
+	public org.gfbio.model.Project getProjectById(long projectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProjectException {
+		return _projectLocalService.getProjectById(projectId);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -291,6 +304,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _projectLocalService.getResearchObjectList(projectID, userID);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructProjectAsJson(
+		org.gfbio.model.Project project) {
+		return _projectLocalService.constructProjectAsJson(project);
 	}
 
 	@Override

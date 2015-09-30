@@ -92,26 +92,17 @@ public interface SubmissionRegistryService extends BaseService, InvokableService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions();
 
-	public java.lang.Boolean updateStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String status);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json);
 
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json);
 
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status);
+	public org.json.simple.JSONObject createSubmissionregistry(
+		org.json.simple.JSONObject json);
 
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		long archivePIdType, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
-		java.lang.String status);
+	public org.json.simple.JSONObject updateSubmissionregistry(
+		org.json.simple.JSONObject json);
 }

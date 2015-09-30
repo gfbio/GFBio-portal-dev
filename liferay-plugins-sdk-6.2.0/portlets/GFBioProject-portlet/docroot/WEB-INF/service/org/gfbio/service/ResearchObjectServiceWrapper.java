@@ -59,28 +59,39 @@ public class ResearchObjectServiceWrapper implements ResearchObjectService,
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject json) {
+		return _researchObjectService.getResearchObjectAbsolutParent(json);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectsByParent(
+		org.json.simple.JSONObject json) {
+		return _researchObjectService.getResearchObjectsByParent(json);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectById(
 		long researchObjectId) {
-		return _researchObjectService.getDirectChildren(researchObjectId);
+		return _researchObjectService.getResearchObjectById(researchObjectId);
 	}
 
 	@Override
-	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId) {
-		return _researchObjectService.getDirectParent(researchObjectId);
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject json) {
+		return _researchObjectService.getResearchObjectParent(json);
 	}
 
 	@Override
-	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
-		return _researchObjectService.getTopParent(researchObjectId);
+	public org.json.simple.JSONObject createResearchObject(
+		org.json.simple.JSONObject json) {
+		return _researchObjectService.createResearchObject(json);
 	}
 
 	@Override
-	public long updateResearchObject(long projectID, long researchObjectID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _researchObjectService.updateResearchObject(projectID,
-			researchObjectID, name, label, metadata, formatmetadata);
+	public org.json.simple.JSONObject updateResearchObject(
+		org.json.simple.JSONObject json) {
+		return _researchObjectService.updateResearchObject(json);
 	}
 
 	/**

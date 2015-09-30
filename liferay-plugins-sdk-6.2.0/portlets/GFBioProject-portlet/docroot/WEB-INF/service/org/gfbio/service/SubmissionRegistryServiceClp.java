@@ -60,35 +60,21 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 
 		_methodParameterTypes9 = new String[] {  };
 
-		_methodName10 = "updateStatus";
+		_methodName10 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes10 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes10 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName11 = "updateSubmissionregistry";
+		_methodName11 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes11 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date"
-			};
+		_methodParameterTypes11 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName12 = "updateSubmissionregistry";
+		_methodName12 = "createSubmissionregistry";
 
-		_methodParameterTypes12 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date", "java.lang.String"
-			};
+		_methodParameterTypes12 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName13 = "updateSubmissionregistry";
 
-		_methodParameterTypes13 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date", "java.lang.String"
-			};
+		_methodParameterTypes13 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -318,23 +304,14 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public java.lang.Boolean updateStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String status) {
+	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName10,
 					_methodParameterTypes10,
-					new Object[] {
-						researchObjectId,
-						
-					researchObjectVersion,
-						
-					ClpSerializer.translateInput(archive),
-						
-					ClpSerializer.translateInput(status)
-					});
+					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -348,39 +325,18 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter) {
+	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName11,
 					_methodParameterTypes11,
-					new Object[] {
-						researchObjectId,
-						
-					researchObjectVersion,
-						
-					ClpSerializer.translateInput(archive),
-						
-					ClpSerializer.translateInput(brockerSubmissionId),
-						
-					ClpSerializer.translateInput(archivePId),
-						
-					ClpSerializer.translateInput(lastChanged),
-						
-					userID,
-						
-					ClpSerializer.translateInput(isPublic),
-						
-					ClpSerializer.translateInput(publicAfter)
-					});
+					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -394,41 +350,18 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
+	public org.json.simple.JSONObject createSubmissionregistry(
+		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName12,
 					_methodParameterTypes12,
-					new Object[] {
-						researchObjectId,
-						
-					researchObjectVersion,
-						
-					ClpSerializer.translateInput(archive),
-						
-					ClpSerializer.translateInput(brockerSubmissionId),
-						
-					ClpSerializer.translateInput(archivePId),
-						
-					ClpSerializer.translateInput(lastChanged),
-						
-					userID,
-						
-					ClpSerializer.translateInput(isPublic),
-						
-					ClpSerializer.translateInput(publicAfter),
-						
-					ClpSerializer.translateInput(status)
-					});
+					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -442,44 +375,18 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionregistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brockerSubmissionId, java.lang.String archivePId,
-		long archivePIdType, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
-		java.lang.String status) {
+	public org.json.simple.JSONObject updateSubmissionregistry(
+		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName13,
 					_methodParameterTypes13,
-					new Object[] {
-						researchObjectId,
-						
-					researchObjectVersion,
-						
-					ClpSerializer.translateInput(archive),
-						
-					ClpSerializer.translateInput(brockerSubmissionId),
-						
-					ClpSerializer.translateInput(archivePId),
-						
-					archivePIdType,
-						
-					ClpSerializer.translateInput(lastChanged),
-						
-					userID,
-						
-					ClpSerializer.translateInput(isPublic),
-						
-					ClpSerializer.translateInput(publicAfter),
-						
-					ClpSerializer.translateInput(status)
-					});
+					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -493,7 +400,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableService _invokableService;

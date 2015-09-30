@@ -121,6 +121,24 @@
 		<parameter name="wsdlServicePort" value="Plugin_gfbio_ContentService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
+	<service name="Plugin_gfbio_DataProviderService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.DataProviderServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="DataProviderServiceSoap" />
+		<parameter name="wsdlServiceElement" value="DataProviderServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_DataProviderService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_DataProvider_PersistentIdentifierService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="org.gfbio.service.http.DataProvider_PersistentIdentifierServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="DataProvider_PersistentIdentifierServiceSoap" />
+		<parameter name="wsdlServiceElement" value="DataProvider_PersistentIdentifierServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_DataProvider_PersistentIdentifierService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
 	<service name="Plugin_gfbio_HeadService" provider="java:RPC" style="rpc" use="encoded">
 		<parameter name="allowedMethods" value="*" />
 		<parameter name="className" value="org.gfbio.service.http.HeadServiceSoap" />
@@ -145,6 +163,9 @@
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getProjectList" qname="operNS:getProjectList" returnQName="getProjectListReturn" returnType="rtns:ArrayOf_tns2_ProjectSoap" returnItemType="tns2:ProjectSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getProject" qname="operNS:getProject" returnQName="getProjectReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="in0" type="tns:anyType"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateProject" qname="operNS:updateProject" returnQName="updateProjectReturn" returnType="rtns:long" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectID" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userID" type="tns:long"></parameter>
@@ -155,7 +176,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="endDate" type="tns:dateTime"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="status" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="getProjectList updateProject" />
+		<parameter name="allowedMethods" value="getProject getProjectList updateProject" />
 		<parameter name="className" value="org.gfbio.service.http.ProjectServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.gfbio.org,urn:http.service.gfbio.org" />
 		<parameter name="typeMappingVersion" value="1.2" />
@@ -192,20 +213,76 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
 	<service name="Plugin_gfbio_ResearchObjectService" provider="java:RPC" style="rpc" use="encoded">
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateResearchObject" qname="operNS:updateResearchObject" returnQName="updateResearchObjectReturn" returnType="rtns:long" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectID" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectID" type="tns:long"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="label" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="metadata" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="formatmetadata" type="tns:string"></parameter>
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_ResearchObjectSoap" type="java:org.gfbio.model.ResearchObjectSoap[]" innerType="cmp-ns:ResearchObjectSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:ResearchObjectSoap" type="java:org.gfbio.model.ResearchObjectSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createResearchObject" qname="operNS:createResearchObject" returnQName="createResearchObjectReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="updateResearchObject" />
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getDirectChildren" qname="operNS:getDirectChildren" returnQName="getDirectChildrenReturn" returnType="rtns:ArrayOf_tns2_ResearchObjectSoap" returnItemType="tns2:ResearchObjectSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="getDirectParent" qname="operNS:getDirectParent" returnQName="getDirectParentReturn" returnType="rtns:ResearchObjectSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getResearchObjectById" qname="operNS:getResearchObjectById" returnQName="getResearchObjectByIdReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="getTopParent" qname="operNS:getTopParent" returnQName="getTopParentReturn" returnType="rtns:ResearchObjectSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateResearchObject" qname="operNS:updateResearchObject" returnQName="updateResearchObjectReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="createResearchObject getDirectChildren getDirectParent getResearchObjectById getTopParent updateResearchObject" />
 		<parameter name="className" value="org.gfbio.service.http.ResearchObjectServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.gfbio.org,urn:http.service.gfbio.org" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ResearchObjectServiceSoap" />
 		<parameter name="wsdlServiceElement" value="ResearchObjectServiceSoapService" />
 		<parameter name="wsdlServicePort" value="Plugin_gfbio_ResearchObjectService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+	<service name="Plugin_gfbio_SubmissionRegistryService" provider="java:RPC" style="rpc" use="encoded">
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_SubmissionRegistrySoap" type="java:org.gfbio.model.SubmissionRegistrySoap[]" innerType="cmp-ns:SubmissionRegistrySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:SubmissionRegistrySoap" type="java:org.gfbio.model.SubmissionRegistrySoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://persistence.service.gfbio.org" qname="ns:SubmissionRegistryPK" type="java:org.gfbio.service.persistence.SubmissionRegistryPK" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createSubmissionregistry" qname="operNS:createSubmissionregistry" returnQName="createSubmissionregistryReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getArchivepidWithTypeStudyOfENA" qname="operNS:getArchivepidWithTypeStudyOfENA" returnQName="getArchivepidWithTypeStudyOfENAReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="archivePId" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getArchivepidsOfENA" qname="operNS:getArchivepidsOfENA" returnQName="getArchivepidsOfENAReturn" returnType="rtns:ArrayOf_xsd_string" returnItemType="tns2:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="archivePId" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getArchivepidsWithTypeSampleOfENA" qname="operNS:getArchivepidsWithTypeSampleOfENA" returnQName="getArchivepidsWithTypeSampleOfENAReturn" returnType="rtns:ArrayOf_xsd_string" returnItemType="tns2:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="archivePId" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="getLatestSubmissionByIds" qname="operNS:getLatestSubmissionByIds" returnQName="getLatestSubmissionByIdsReturn" returnType="rtns:SubmissionRegistrySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="archive" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getLatestSubmissionsByArchive" qname="operNS:getLatestSubmissionsByArchive" returnQName="getLatestSubmissionsByArchiveReturn" returnType="rtns:ArrayOf_tns2_SubmissionRegistrySoap" returnItemType="tns2:SubmissionRegistrySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="archive" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getLatestSubmissionsByResearchobjectid" qname="operNS:getLatestSubmissionsByResearchobjectid" returnQName="getLatestSubmissionsByResearchobjectidReturn" returnType="rtns:ArrayOf_tns2_SubmissionRegistrySoap" returnItemType="tns2:SubmissionRegistrySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getLatestSubmissions" qname="operNS:getLatestSubmissions" returnQName="getLatestSubmissionsReturn" returnType="rtns:ArrayOf_tns2_SubmissionRegistrySoap" returnItemType="tns2:SubmissionRegistrySoap" soapAction=""> </operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getSubmissionRegistriesByBrockerSubmissionId" qname="operNS:getSubmissionRegistriesByBrockerSubmissionId" returnQName="getSubmissionRegistriesByBrockerSubmissionIdReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="brokerSubmissionId" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateSubmissionregistry" qname="operNS:updateSubmissionregistry" returnQName="updateSubmissionregistryReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="createSubmissionregistry getArchivepidWithTypeStudyOfENA getArchivepidsOfENA getArchivepidsWithTypeSampleOfENA getLatestSubmissionByIds getLatestSubmissions getLatestSubmissionsByArchive getLatestSubmissionsByResearchobjectid getSubmissionRegistriesByBrockerSubmissionId updateSubmissionregistry" />
+		<parameter name="className" value="org.gfbio.service.http.SubmissionRegistryServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.gfbio.org,http://persistence.service.gfbio.org,urn:http.service.gfbio.org" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="SubmissionRegistryServiceSoap" />
+		<parameter name="wsdlServiceElement" value="SubmissionRegistryServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_SubmissionRegistryService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
 	<service name="Plugin_gfbio_UserExtensionService" provider="java:RPC" style="rpc" use="encoded">

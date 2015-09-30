@@ -275,6 +275,17 @@ public class SubmissionRegistryLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getSubmissionRegistriesByBrokerSubmissionId(json);
+	}
+
+	public static org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json) {
+		return getService().getSubmissionRegistriesByResearchObjectId(json);
+	}
+
 	public static java.util.List<java.lang.String> getArchivePIdsOfENA(
 		java.lang.String archivePId) {
 		return getService().getArchivePIdsOfENA(archivePId);
@@ -316,11 +327,18 @@ public class SubmissionRegistryLocalServiceUtil {
 		return getService().getLatestSubmissions();
 	}
 
-	public static java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistryByResearchObjectId(
+	public static java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId(
+		java.lang.String brokerSubmissionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getSubmissionRegistriesByBrokerSubmissionId(brokerSubmissionId);
+	}
+
+	public static java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByResearchObjectId(
 		long researchObjectId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getSubmissionRegistryByResearchObjectId(researchObjectId);
+				   .getSubmissionRegistriesByResearchObjectId(researchObjectId);
 	}
 
 	public static java.lang.String GetStatusByIds(long researchObjectId,
@@ -328,6 +346,148 @@ public class SubmissionRegistryLocalServiceUtil {
 		return getService()
 				   .GetStatusByIds(researchObjectId, ResearchObjectVersion,
 			archive);
+	}
+
+	public static org.json.simple.JSONObject constructSubmissionRegistriesJson(
+		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
+		return getService()
+				   .constructSubmissionRegistriesJson(submissionRegistryList);
+	}
+
+	public static org.json.simple.JSONObject constructSubmissionRegistryJson(
+		org.gfbio.model.SubmissionRegistry submissionRegistry) {
+		return getService().constructSubmissionRegistryJson(submissionRegistry);
+	}
+
+	public static java.lang.String constructStatus(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId) {
+		return getService()
+				   .constructStatus(researchObjectId, researchObjectVersion,
+			archive, archivePId);
+	}
+
+	public static org.json.simple.JSONObject createSubmissionRegistry(
+		org.json.simple.JSONObject json) {
+		return getService().createSubmissionRegistry(json);
+	}
+
+	public static org.json.simple.JSONObject updateSubmissionRegistry(
+		org.json.simple.JSONObject json) {
+		return getService().updateSubmissionRegistry(json);
+	}
+
+	public static java.lang.Boolean updateSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.lang.String archivePId, java.util.Date lastChanged, long userId) {
+		return getService()
+				   .updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			lastChanged, userId);
+	}
+
+	public static java.lang.Boolean updateSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.lang.String archivePId, long archivePIdType,
+		java.util.Date lastChanged, long userId) {
+		return getService()
+				   .updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			archivePIdType, lastChanged, userId);
+	}
+
+	public static java.lang.Boolean updateSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.lang.String archivePId, java.util.Date lastChanged, long userId,
+		java.lang.String status) {
+		return getService()
+				   .updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			lastChanged, userId, status);
+	}
+
+	public static java.lang.Boolean updateSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.lang.String archivePId, long archivePIdType,
+		java.util.Date lastChanged, long userId, java.lang.String status) {
+		return getService()
+				   .updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			archivePIdType, lastChanged, userId, status);
+	}
+
+	public static java.lang.Boolean updateSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.lang.String archivePId, long archivePIdType,
+		java.util.Date lastChanged, long userId, java.lang.String status,
+		java.lang.Boolean isPublic, java.util.Date publicAfter) {
+		return getService()
+				   .updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			archivePIdType, lastChanged, userId, status, isPublic, publicAfter);
+	}
+
+	public static java.lang.Boolean updateSubmissionRegistryWithoutPId(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.util.Date lastChanged, long userID, java.lang.String status) {
+		return getService()
+				   .updateSubmissionRegistryWithoutPId(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, lastChanged,
+			userID, status);
+	}
+
+	public static java.lang.Boolean updateArchivePId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId) {
+		return getService()
+				   .updateArchivePId(researchObjectId, researchObjectVersion,
+			archive, archivePId);
+	}
+
+	public static java.lang.Boolean updateArchivePIdType(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, long archivePIdType) {
+		return getService()
+				   .updateArchivePIdType(researchObjectId,
+			researchObjectVersion, archive, archivePIdType);
+	}
+
+	public static java.lang.Boolean updateBrokerSubmissionId(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId) {
+		return getService()
+				   .updateBrokerSubmissionId(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId);
+	}
+
+	public static java.lang.Boolean updateIsPublic(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.Boolean isPublic) {
+		return getService()
+				   .updateIsPublic(researchObjectId, researchObjectVersion,
+			archive, isPublic);
+	}
+
+	public static java.lang.Boolean updateLastChanged(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date lastChanged) {
+		return getService()
+				   .updateLastChanged(researchObjectId, researchObjectVersion,
+			archive, lastChanged);
+	}
+
+	public static java.lang.Boolean updatePublicAfter(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date publicAfter) {
+		return getService()
+				   .updatePublicAfter(researchObjectId, researchObjectVersion,
+			archive, publicAfter);
 	}
 
 	public static java.lang.Boolean updateStatus(long researchObjectId,
@@ -338,55 +498,11 @@ public class SubmissionRegistryLocalServiceUtil {
 			archive, status);
 	}
 
-	public static java.lang.Boolean updateSubmissionRegistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.lang.String archivePId, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter) {
+	public static java.lang.Boolean updateUserId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive, long userId) {
 		return getService()
-				   .updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			lastChanged, userID, isPublic, publicAfter);
-	}
-
-	public static java.lang.Boolean updateSubmissionRegistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.lang.String archivePId, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
-		java.lang.String status) {
-		return getService()
-				   .updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			lastChanged, userID, isPublic, publicAfter, status);
-	}
-
-	public static java.lang.Boolean updateSubmissionRegistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.lang.String archivePId, long archivePIdType,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
-		return getService()
-				   .updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			archivePIdType, lastChanged, userID, isPublic, publicAfter, status);
-	}
-
-	public static java.lang.Boolean updateSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return getService().updateSubmissionRegistry(json);
-	}
-
-	public static java.lang.Boolean updateSubmissionRegistryWithoutPId(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
-		return getService()
-				   .updateSubmissionRegistryWithoutPId(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, lastChanged,
-			userID, isPublic, publicAfter, status);
+				   .updateUserId(researchObjectId, researchObjectVersion,
+			archive, userId);
 	}
 
 	public static void clearService() {

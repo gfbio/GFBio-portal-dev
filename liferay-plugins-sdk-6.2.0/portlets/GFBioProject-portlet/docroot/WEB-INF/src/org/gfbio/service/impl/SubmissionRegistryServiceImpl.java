@@ -14,12 +14,14 @@
 
 package org.gfbio.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.gfbio.model.SubmissionRegistry;
 import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
 import org.gfbio.service.base.SubmissionRegistryServiceBaseImpl;
+import org.json.simple.JSONObject;
+
+import com.liferay.portal.kernel.exception.SystemException;
 
 
 
@@ -86,32 +88,35 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 		return SubmissionRegistryLocalServiceUtil.getLatestSubmissions();
 	}
 	
+	
+	//
+	public JSONObject getSubmissionRegistriesByBrokerSubmissionId (JSONObject json){
+		return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(json);
+	}
+	
+	
+	//
+	public JSONObject getSubmissionRegistriesByResearchObjectId (JSONObject json){
+		return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId(json);
+	}
+	
 
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
+
+	//
+	public JSONObject createSubmissionregistry (JSONObject json){
+		System.out.println(json);
+		return SubmissionRegistryLocalServiceUtil.createSubmissionRegistry (json);
+	}
+	
 	
 	//
-	public Boolean updateStatus (long researchObjectId, int researchObjectVersion, String archive, String status){
-		return SubmissionRegistryLocalServiceUtil.updateStatus (researchObjectId, researchObjectVersion, archive, status);
+	public JSONObject updateSubmissionregistry (JSONObject json){
+		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (json);
 	}
 	
 
-	//
-	public Boolean updateSubmissionregistry (long researchObjectId, int researchObjectVersion, String archive, String brockerSubmissionId, String archivePId, Date lastChanged, long userID, Boolean isPublic, Date publicAfter){
-		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brockerSubmissionId, archivePId, lastChanged, userID, isPublic, publicAfter);
-	}
-	
-	
-	//
-	public Boolean updateSubmissionregistry (long researchObjectId, int researchObjectVersion, String archive, String brockerSubmissionId, String archivePId, Date lastChanged, long userID, Boolean isPublic, Date publicAfter, String status){
-		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brockerSubmissionId, archivePId, lastChanged, userID, isPublic, publicAfter,  status);
-	}
-	
-	
-	//
-	public Boolean updateSubmissionregistry (long researchObjectId, int researchObjectVersion, String archive, String brockerSubmissionId, String archivePId, long archivePIdType, Date lastChanged, long userID, Boolean isPublic, Date publicAfter, String status){
-		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brockerSubmissionId, archivePId, archivePIdType, lastChanged, userID, isPublic, publicAfter, status);
-	}
 	
 		
 }

@@ -108,25 +108,37 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getProjectList";
+		_methodName19 = "getProjectById";
 
-		_methodParameterTypes19 = new String[] { "long" };
+		_methodParameterTypes19 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName20 = "getResearchObjectList";
+		_methodName20 = "getProjectById";
 
-		_methodParameterTypes20 = new String[] { "long", "long" };
+		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "updateProject";
+		_methodName21 = "getProjectList";
 
-		_methodParameterTypes21 = new String[] {
+		_methodParameterTypes21 = new String[] { "long" };
+
+		_methodName22 = "getResearchObjectList";
+
+		_methodParameterTypes22 = new String[] { "long", "long" };
+
+		_methodName23 = "constructProjectAsJson";
+
+		_methodParameterTypes23 = new String[] { "org.gfbio.model.Project" };
+
+		_methodName24 = "updateProject";
+
+		_methodParameterTypes24 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
 			};
 
-		_methodName22 = "updateProject";
+		_methodName25 = "updateProject";
 
-		_methodParameterTypes22 = new String[] {
+		_methodParameterTypes25 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 	}
@@ -676,14 +688,72 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
+	public org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.gfbio.model.Project getProjectById(long projectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProjectException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { projectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchProjectException) {
+				throw (org.gfbio.NoSuchProjectException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.Project)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { userID });
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { userID });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -716,8 +786,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20, new Object[] { projectID, userID });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { projectID, userID });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -743,6 +813,31 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
+	public org.json.simple.JSONObject constructProjectAsJson(
+		org.gfbio.model.Project project) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
+					new Object[] { ClpSerializer.translateInput(project) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.util.Date startDate,
@@ -751,8 +846,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						projectID,
 						
@@ -797,8 +892,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						projectID,
 						
@@ -871,4 +966,10 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
 }

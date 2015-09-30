@@ -63,28 +63,34 @@ public class ResearchObjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
-		long researchObjectId) {
-		return getService().getDirectChildren(researchObjectId);
+	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject json) {
+		return getService().getResearchObjectAbsolutParent(json);
 	}
 
-	public static org.gfbio.model.ResearchObject getDirectParent(
-		long researchObjectId) {
-		return getService().getDirectParent(researchObjectId);
+	public static org.json.simple.JSONObject getResearchObjectsByParent(
+		org.json.simple.JSONObject json) {
+		return getService().getResearchObjectsByParent(json);
 	}
 
-	public static org.gfbio.model.ResearchObject getTopParent(
+	public static org.json.simple.JSONObject getResearchObjectById(
 		long researchObjectId) {
-		return getService().getTopParent(researchObjectId);
+		return getService().getResearchObjectById(researchObjectId);
 	}
 
-	public static long updateResearchObject(long projectID,
-		long researchObjectID, java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateResearchObject(projectID, researchObjectID, name,
-			label, metadata, formatmetadata);
+	public static org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject json) {
+		return getService().getResearchObjectParent(json);
+	}
+
+	public static org.json.simple.JSONObject createResearchObject(
+		org.json.simple.JSONObject json) {
+		return getService().createResearchObject(json);
+	}
+
+	public static org.json.simple.JSONObject updateResearchObject(
+		org.json.simple.JSONObject json) {
+		return getService().updateResearchObject(json);
 	}
 
 	public static void clearService() {

@@ -16,6 +16,7 @@ package org.gfbio.service.impl;
 
 import org.gfbio.NoSuchUserExtensionException;
 import org.gfbio.model.UserExtension;
+import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
 
@@ -46,20 +47,47 @@ import com.liferay.portal.model.User;
 public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBaseImpl {
 	
 	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
 	//
-	public UserExtension getUserExtensionById(long userExtensionId) throws NoSuchUserExtensionException, SystemException  {
-		return userExtensionPersistence.findByUserID(userExtensionId);
-	}
+	public JSONObject getUserExtentionById(JSONObject json){
+		
+		JSONObject responseJson = new JSONObject();
+		
+		if (json.containsKey("userid")){
+			responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(UserExtensionLocalServiceUtil.getUserById((long)json.get("userid")));
+			if (responseJson == null)
+				responseJson.put("ERROR", "Failed by response user");
+		}
+		else
+			responseJson.put("ERROR", "No key 'userid' exist.");
 
+		
+		return responseJson;
+	}
+	
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+	//
 	public User getUserById(long userId) throws NoSuchUserException, SystemException{
 		return userPersistence.findByPrimaryKey(userId);
 	}
 	
+		
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
 	@SuppressWarnings("unchecked")
-	public  JSONObject getUserAsJsonById (long userId) throws NoSuchUserException, SystemException {
-		User user = userPersistence.findByPrimaryKey(userId);
+	public  JSONObject constructUserExtentionJsonById (User user) throws NoSuchUserException, SystemException {
 		JSONObject json = new JSONObject();
-		json.put("userId", user.getUserId());
+		json.put("userid", user.getUserId());
 		json.put("firstname", user.getFirstName());
 		json.put("middlename", user.getMiddleName());
 		json.put("lastname", user.getLastName());

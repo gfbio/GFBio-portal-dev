@@ -40,12 +40,14 @@ import com.liferay.portal.model.User;
  */
 public class UserExtensionServiceImpl extends UserExtensionServiceBaseImpl {
 
-	public User getUserById(long userId) throws NoSuchModelException, SystemException {
-		return UserExtensionLocalServiceUtil.getUserById(userId);
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public User getUserById(JSONObject json) throws NoSuchModelException, SystemException {
+		return UserExtensionLocalServiceUtil.getProjectById(json);
 	}
 	
-	public JSONObject getUserAsJsonById(long userId) throws NoSuchUserException, SystemException{
-		return UserExtensionLocalServiceUtil.getUserAsJsonById(userId);
-	}
 	
 }

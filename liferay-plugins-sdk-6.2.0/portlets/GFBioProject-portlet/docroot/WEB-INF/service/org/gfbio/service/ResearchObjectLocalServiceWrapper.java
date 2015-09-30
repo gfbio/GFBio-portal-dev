@@ -289,6 +289,24 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject json) {
+		return _researchObjectLocalService.getResearchObjectAbsolutParent(json);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject json) {
+		return _researchObjectLocalService.getResearchObjectParent(json);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectsByParent(
+		org.json.simple.JSONObject json) {
+		return _researchObjectLocalService.getResearchObjectsByParent(json);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
 		long researchObjectId) {
 		return _researchObjectLocalService.getDirectChildren(researchObjectId);
@@ -305,12 +323,92 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public long updateResearchObject(long projectID, long researchObjectID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
+	public org.gfbio.model.ResearchObject getResearchObjectById(
+		long researchObjectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		return _researchObjectLocalService.getResearchObjectById(researchObjectId);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectASJsonById(
+		long researchObjectId) {
+		return _researchObjectLocalService.getResearchObjectASJsonById(researchObjectId);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructResearchObjectJson(
+		org.gfbio.model.ResearchObject researchObject) {
+		return _researchObjectLocalService.constructResearchObjectJson(researchObject);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructResearchObjectsJson(
+		java.util.List<org.gfbio.model.ResearchObject> researchObjectList) {
+		return _researchObjectLocalService.constructResearchObjectsJson(researchObjectList);
+	}
+
+	@Override
+	public java.lang.String constructFormatMetadata(java.lang.String metadata) {
+		return _researchObjectLocalService.constructFormatMetadata(metadata);
+	}
+
+	@Override
+	public org.json.simple.JSONObject createResearchObjectByJson(
+		org.json.simple.JSONObject json) {
+		return _researchObjectLocalService.createResearchObjectByJson(json);
+	}
+
+	@Override
+	public long createResearchObject(java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String researchObjectType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _researchObjectLocalService.updateResearchObject(projectID,
-			researchObjectID, name, label, metadata, formatmetadata);
+		return _researchObjectLocalService.createResearchObject(name, label,
+			metadata, researchObjectType);
+	}
+
+	@Override
+	public long createResearchObjectWithProject(long projectId,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String researchObjectType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _researchObjectLocalService.createResearchObjectWithProject(projectId,
+			name, label, metadata, researchObjectType);
+	}
+
+	@Override
+	public long updateParentResearchObjectIdByIds(long researchObjectId,
+		long parentResearchObjectId) {
+		return _researchObjectLocalService.updateParentResearchObjectIdByIds(researchObjectId,
+			parentResearchObjectId);
+	}
+
+	@Override
+	public long updateResearchObject(long researchObjectId,
+		int researchObjectVersion, java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String formatmetadata, java.lang.String researchObjectType) {
+		return _researchObjectLocalService.updateResearchObject(researchObjectId,
+			researchObjectVersion, name, label, metadata, formatmetadata,
+			researchObjectType);
+	}
+
+	@Override
+	public org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject json) {
+		return _researchObjectLocalService.updateResearchObjectByJson(json);
+	}
+
+	@Override
+	public long updateResearchObjectWithProject(long projectId,
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata,
+		java.lang.String researchObjectType) {
+		return _researchObjectLocalService.updateResearchObjectWithProject(projectId,
+			researchObjectId, researchObjectVersion, name, label, metadata,
+			formatmetadata, researchObjectType);
 	}
 
 	/**

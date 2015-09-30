@@ -60,35 +60,21 @@ public class SubmissionRegistryServiceClpInvoker {
 
 		_methodParameterTypes116 = new String[] {  };
 
-		_methodName117 = "updateStatus";
+		_methodName117 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes117 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes117 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName118 = "updateSubmissionregistry";
+		_methodName118 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes118 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date"
-			};
+		_methodParameterTypes118 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName119 = "updateSubmissionregistry";
+		_methodName119 = "createSubmissionregistry";
 
-		_methodParameterTypes119 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date", "java.lang.String"
-			};
+		_methodParameterTypes119 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName120 = "updateSubmissionregistry";
 
-		_methodParameterTypes120 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date", "java.lang.String"
-			};
+		_methodParameterTypes120 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -143,42 +129,22 @@ public class SubmissionRegistryServiceClpInvoker {
 
 		if (_methodName117.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.updateStatus(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
+			return SubmissionRegistryServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName118.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.updateSubmissionregistry(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
-				((Long)arguments[6]).longValue(),
-				(java.lang.Boolean)arguments[7], (java.util.Date)arguments[8]);
+			return SubmissionRegistryServiceUtil.getSubmissionRegistriesByResearchObjectId((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName119.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.updateSubmissionregistry(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
-				((Long)arguments[6]).longValue(),
-				(java.lang.Boolean)arguments[7], (java.util.Date)arguments[8],
-				(java.lang.String)arguments[9]);
+			return SubmissionRegistryServiceUtil.createSubmissionregistry((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName120.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.updateSubmissionregistry(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4],
-				((Long)arguments[5]).longValue(), (java.util.Date)arguments[6],
-				((Long)arguments[7]).longValue(),
-				(java.lang.Boolean)arguments[8], (java.util.Date)arguments[9],
-				(java.lang.String)arguments[10]);
+			return SubmissionRegistryServiceUtil.updateSubmissionregistry((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

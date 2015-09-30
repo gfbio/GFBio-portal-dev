@@ -32,13 +32,17 @@ public class ProjectServiceClp implements ProjectService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getProjectList";
+		_methodName3 = "getProject";
 
-		_methodParameterTypes3 = new String[] { "long" };
+		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName4 = "updateProject";
+		_methodName4 = "getProjectList";
 
-		_methodParameterTypes4 = new String[] {
+		_methodParameterTypes4 = new String[] { "long" };
+
+		_methodName5 = "updateProject";
+
+		_methodParameterTypes5 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
@@ -96,14 +100,39 @@ public class ProjectServiceClp implements ProjectService {
 	}
 
 	@Override
+	public org.json.simple.JSONObject getProject(
+		org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3, new Object[] { userID });
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4, new Object[] { userID });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -137,8 +166,8 @@ public class ProjectServiceClp implements ProjectService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5,
 					new Object[] {
 						projectID,
 						
@@ -185,4 +214,6 @@ public class ProjectServiceClp implements ProjectService {
 	private String[] _methodParameterTypes3;
 	private String _methodName4;
 	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
 }

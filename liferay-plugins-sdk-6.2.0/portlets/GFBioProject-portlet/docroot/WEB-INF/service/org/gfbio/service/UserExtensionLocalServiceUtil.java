@@ -271,11 +271,9 @@ public class UserExtensionLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.gfbio.model.UserExtension getUserExtensionById(
-		long userExtensionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchUserExtensionException {
-		return getService().getUserExtensionById(userExtensionId);
+	public static org.json.simple.JSONObject getUserExtentionById(
+		org.json.simple.JSONObject json) {
+		return getService().getUserExtentionById(json);
 	}
 
 	public static com.liferay.portal.model.User getUserById(long userId)
@@ -284,10 +282,11 @@ public class UserExtensionLocalServiceUtil {
 		return getService().getUserById(userId);
 	}
 
-	public static org.json.simple.JSONObject getUserAsJsonById(long userId)
+	public static org.json.simple.JSONObject constructUserExtentionJsonById(
+		com.liferay.portal.model.User user)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserAsJsonById(userId);
+		return getService().constructUserExtentionJsonById(user);
 	}
 
 	public static void clearService() {

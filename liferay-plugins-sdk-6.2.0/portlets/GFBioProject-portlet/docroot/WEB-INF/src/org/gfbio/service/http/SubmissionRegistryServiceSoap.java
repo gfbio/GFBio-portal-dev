@@ -162,12 +162,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static java.lang.Boolean updateStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String status) throws RemoteException {
+	public static org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			java.lang.Boolean returnValue = SubmissionRegistryServiceUtil.updateStatus(researchObjectId,
-					researchObjectVersion, archive, status);
+			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(json);
 
 			return returnValue;
 		}
@@ -178,16 +176,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static java.lang.Boolean updateSubmissionregistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brockerSubmissionId,
-		java.lang.String archivePId, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter)
-		throws RemoteException {
+	public static org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			java.lang.Boolean returnValue = SubmissionRegistryServiceUtil.updateSubmissionregistry(researchObjectId,
-					researchObjectVersion, archive, brockerSubmissionId,
-					archivePId, lastChanged, userID, isPublic, publicAfter);
+			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByResearchObjectId(json);
 
 			return returnValue;
 		}
@@ -198,17 +190,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static java.lang.Boolean updateSubmissionregistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brockerSubmissionId,
-		java.lang.String archivePId, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
-		java.lang.String status) throws RemoteException {
+	public static org.json.simple.JSONObject createSubmissionregistry(
+		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			java.lang.Boolean returnValue = SubmissionRegistryServiceUtil.updateSubmissionregistry(researchObjectId,
-					researchObjectVersion, archive, brockerSubmissionId,
-					archivePId, lastChanged, userID, isPublic, publicAfter,
-					status);
+			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.createSubmissionregistry(json);
 
 			return returnValue;
 		}
@@ -219,18 +204,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static java.lang.Boolean updateSubmissionregistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brockerSubmissionId,
-		java.lang.String archivePId, long archivePIdType,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status)
-		throws RemoteException {
+	public static org.json.simple.JSONObject updateSubmissionregistry(
+		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			java.lang.Boolean returnValue = SubmissionRegistryServiceUtil.updateSubmissionregistry(researchObjectId,
-					researchObjectVersion, archive, brockerSubmissionId,
-					archivePId, archivePIdType, lastChanged, userID, isPublic,
-					publicAfter, status);
+			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.updateSubmissionregistry(json);
 
 			return returnValue;
 		}

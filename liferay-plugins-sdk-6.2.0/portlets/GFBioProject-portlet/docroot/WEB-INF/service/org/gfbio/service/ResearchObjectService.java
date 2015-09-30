@@ -66,17 +66,24 @@ public interface ResearchObjectService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject json);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getResearchObjectsByParent(
+		org.json.simple.JSONObject json);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getResearchObjectById(
 		long researchObjectId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId);
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject json);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId);
+	public org.json.simple.JSONObject createResearchObject(
+		org.json.simple.JSONObject json);
 
-	public long updateResearchObject(long projectID, long researchObjectID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public org.json.simple.JSONObject updateResearchObject(
+		org.json.simple.JSONObject json);
 }

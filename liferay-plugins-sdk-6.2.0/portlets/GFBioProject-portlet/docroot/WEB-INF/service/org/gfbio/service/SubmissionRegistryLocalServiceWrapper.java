@@ -291,6 +291,19 @@ public class SubmissionRegistryLocalServiceWrapper
 	}
 
 	@Override
+	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _submissionRegistryLocalService.getSubmissionRegistriesByBrokerSubmissionId(json);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json) {
+		return _submissionRegistryLocalService.getSubmissionRegistriesByResearchObjectId(json);
+	}
+
+	@Override
 	public java.util.List<java.lang.String> getArchivePIdsOfENA(
 		java.lang.String archivePId) {
 		return _submissionRegistryLocalService.getArchivePIdsOfENA(archivePId);
@@ -340,10 +353,17 @@ public class SubmissionRegistryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistryByResearchObjectId(
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId(
+		java.lang.String brokerSubmissionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _submissionRegistryLocalService.getSubmissionRegistriesByBrokerSubmissionId(brokerSubmissionId);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByResearchObjectId(
 		long researchObjectId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _submissionRegistryLocalService.getSubmissionRegistryByResearchObjectId(researchObjectId);
+		return _submissionRegistryLocalService.getSubmissionRegistriesByResearchObjectId(researchObjectId);
 	}
 
 	@Override
@@ -351,6 +371,148 @@ public class SubmissionRegistryLocalServiceWrapper
 		int ResearchObjectVersion, java.lang.String archive) {
 		return _submissionRegistryLocalService.GetStatusByIds(researchObjectId,
 			ResearchObjectVersion, archive);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
+		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
+		return _submissionRegistryLocalService.constructSubmissionRegistriesJson(submissionRegistryList);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructSubmissionRegistryJson(
+		org.gfbio.model.SubmissionRegistry submissionRegistry) {
+		return _submissionRegistryLocalService.constructSubmissionRegistryJson(submissionRegistry);
+	}
+
+	@Override
+	public java.lang.String constructStatus(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId) {
+		return _submissionRegistryLocalService.constructStatus(researchObjectId,
+			researchObjectVersion, archive, archivePId);
+	}
+
+	@Override
+	public org.json.simple.JSONObject createSubmissionRegistry(
+		org.json.simple.JSONObject json) {
+		return _submissionRegistryLocalService.createSubmissionRegistry(json);
+	}
+
+	@Override
+	public org.json.simple.JSONObject updateSubmissionRegistry(
+		org.json.simple.JSONObject json) {
+		return _submissionRegistryLocalService.updateSubmissionRegistry(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		java.util.Date lastChanged, long userId) {
+		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			lastChanged, userId);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId) {
+		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			archivePIdType, lastChanged, userId);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		java.util.Date lastChanged, long userId, java.lang.String status) {
+		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			lastChanged, userId, status);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId,
+		java.lang.String status) {
+		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			archivePIdType, lastChanged, userId, status);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId,
+		java.lang.String status, java.lang.Boolean isPublic,
+		java.util.Date publicAfter) {
+		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, archivePId,
+			archivePIdType, lastChanged, userId, status, isPublic, publicAfter);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistryWithoutPId(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.util.Date lastChanged, long userID, java.lang.String status) {
+		return _submissionRegistryLocalService.updateSubmissionRegistryWithoutPId(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, lastChanged,
+			userID, status);
+	}
+
+	@Override
+	public java.lang.Boolean updateArchivePId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId) {
+		return _submissionRegistryLocalService.updateArchivePId(researchObjectId,
+			researchObjectVersion, archive, archivePId);
+	}
+
+	@Override
+	public java.lang.Boolean updateArchivePIdType(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive, long archivePIdType) {
+		return _submissionRegistryLocalService.updateArchivePIdType(researchObjectId,
+			researchObjectVersion, archive, archivePIdType);
+	}
+
+	@Override
+	public java.lang.Boolean updateBrokerSubmissionId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId) {
+		return _submissionRegistryLocalService.updateBrokerSubmissionId(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId);
+	}
+
+	@Override
+	public java.lang.Boolean updateIsPublic(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.Boolean isPublic) {
+		return _submissionRegistryLocalService.updateIsPublic(researchObjectId,
+			researchObjectVersion, archive, isPublic);
+	}
+
+	@Override
+	public java.lang.Boolean updateLastChanged(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date lastChanged) {
+		return _submissionRegistryLocalService.updateLastChanged(researchObjectId,
+			researchObjectVersion, archive, lastChanged);
+	}
+
+	@Override
+	public java.lang.Boolean updatePublicAfter(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date publicAfter) {
+		return _submissionRegistryLocalService.updatePublicAfter(researchObjectId,
+			researchObjectVersion, archive, publicAfter);
 	}
 
 	@Override
@@ -362,54 +524,10 @@ public class SubmissionRegistryLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter) {
-		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			lastChanged, userID, isPublic, publicAfter);
-	}
-
-	@Override
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
-		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			lastChanged, userID, isPublic, publicAfter, status);
-	}
-
-	@Override
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		long archivePIdType, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
-		java.lang.String status) {
-		return _submissionRegistryLocalService.updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			archivePIdType, lastChanged, userID, isPublic, publicAfter, status);
-	}
-
-	@Override
-	public java.lang.Boolean updateSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return _submissionRegistryLocalService.updateSubmissionRegistry(json);
-	}
-
-	@Override
-	public java.lang.Boolean updateSubmissionRegistryWithoutPId(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
-		return _submissionRegistryLocalService.updateSubmissionRegistryWithoutPId(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, lastChanged,
-			userID, isPublic, publicAfter, status);
+	public java.lang.Boolean updateUserId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive, long userId) {
+		return _submissionRegistryLocalService.updateUserId(researchObjectId,
+			researchObjectVersion, archive, userId);
 	}
 
 	/**

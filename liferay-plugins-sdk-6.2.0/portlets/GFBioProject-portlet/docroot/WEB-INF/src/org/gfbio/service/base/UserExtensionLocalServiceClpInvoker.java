@@ -108,17 +108,17 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		_methodParameterTypes121 = new String[] { "java.lang.String" };
 
-		_methodName126 = "getUserExtensionById";
+		_methodName126 = "getUserExtentionById";
 
-		_methodParameterTypes126 = new String[] { "long" };
+		_methodParameterTypes126 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName127 = "getUserById";
 
 		_methodParameterTypes127 = new String[] { "long" };
 
-		_methodName128 = "getUserAsJsonById";
+		_methodName128 = "constructUserExtentionJsonById";
 
-		_methodParameterTypes128 = new String[] { "long" };
+		_methodParameterTypes128 = new String[] { "com.liferay.portal.model.User" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -224,7 +224,7 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		if (_methodName126.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return UserExtensionLocalServiceUtil.getUserExtensionById(((Long)arguments[0]).longValue());
+			return UserExtensionLocalServiceUtil.getUserExtentionById((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName127.equals(name) &&
@@ -234,7 +234,7 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		if (_methodName128.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
-			return UserExtensionLocalServiceUtil.getUserAsJsonById(((Long)arguments[0]).longValue());
+			return UserExtensionLocalServiceUtil.constructUserExtentionJsonById((com.liferay.portal.model.User)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

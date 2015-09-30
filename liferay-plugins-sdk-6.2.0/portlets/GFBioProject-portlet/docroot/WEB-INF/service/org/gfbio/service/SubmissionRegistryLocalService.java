@@ -255,6 +255,15 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.String> getArchivePIdsOfENA(
 		java.lang.String archivePId);
 
@@ -286,42 +295,94 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistryByResearchObjectId(
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId(
+		java.lang.String brokerSubmissionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByResearchObjectId(
 		long researchObjectId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String GetStatusByIds(long researchObjectId,
 		int ResearchObjectVersion, java.lang.String archive);
 
-	public java.lang.Boolean updateStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String status);
+	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
+		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList);
 
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter);
+	public org.json.simple.JSONObject constructSubmissionRegistryJson(
+		org.gfbio.model.SubmissionRegistry submissionRegistry);
 
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+	public java.lang.String constructStatus(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status);
+		java.lang.String archivePId);
 
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		long archivePIdType, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
-		java.lang.String status);
-
-	public java.lang.Boolean updateSubmissionRegistry(
+	public org.json.simple.JSONObject createSubmissionRegistry(
 		org.json.simple.JSONObject json);
+
+	public org.json.simple.JSONObject updateSubmissionRegistry(
+		org.json.simple.JSONObject json);
+
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		java.util.Date lastChanged, long userId);
+
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId);
+
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		java.util.Date lastChanged, long userId, java.lang.String status);
+
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId,
+		java.lang.String status);
+
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId,
+		java.lang.String status, java.lang.Boolean isPublic,
+		java.util.Date publicAfter);
 
 	public java.lang.Boolean updateSubmissionRegistryWithoutPId(
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status);
+		java.util.Date lastChanged, long userID, java.lang.String status);
+
+	public java.lang.Boolean updateArchivePId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId);
+
+	public java.lang.Boolean updateArchivePIdType(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive, long archivePIdType);
+
+	public java.lang.Boolean updateBrokerSubmissionId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId);
+
+	public java.lang.Boolean updateIsPublic(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.Boolean isPublic);
+
+	public java.lang.Boolean updateLastChanged(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date lastChanged);
+
+	public java.lang.Boolean updatePublicAfter(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date publicAfter);
+
+	public java.lang.Boolean updateStatus(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String status);
+
+	public java.lang.Boolean updateUserId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive, long userId);
 }

@@ -184,7 +184,7 @@ CREATE TABLE gfbio_submissionregistry
   last_changed timestamp with time zone NOT NULL DEFAULT now(),
   userid bigint NOT NULL,
   is_public boolean NOT NULL DEFAULT false,
-  public_after time with time zone NOT NULL DEFAULT (now() + '6 mons'::interval),
+  public_after time with time zone DEFAULT (now() + '6 mons'::interval),
   status text NOT NULL,
   CONSTRAINT gfbio_submissionregistry_pkey PRIMARY KEY (researchobjectid, researchobjectversion, archive),
   CONSTRAINT gfbio_dataprovider_fkey FOREIGN KEY (archive)

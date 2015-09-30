@@ -19,9 +19,11 @@ import java.util.List;
 
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
+import org.json.simple.JSONObject;
 
-import com.liferay.portal.kernel.exception.SystemException;
+
 
 /**
  * The implementation of the research object remote service.
@@ -41,7 +43,7 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
-	
+
 
 /*	//
 	public List <ResearchObject> getAllChildren (long researchObjectId){
@@ -50,28 +52,41 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	
 	
 	//
-	public List <ResearchObject> getDirectChildren (long researchObjectId){
-		return ResearchObjectLocalServiceUtil.getDirectChildren(researchObjectId);
+	public JSONObject getResearchObjectAbsolutParent (JSONObject json){
+		return ResearchObjectLocalServiceUtil.getResearchObjectAbsolutParent(json);
 	}
 	
 	
 	//
-	public ResearchObject getDirectParent(long researchObjectId) {
-		return ResearchObjectLocalServiceUtil.getDirectParent(researchObjectId) ;
+	public JSONObject getResearchObjectsByParent (JSONObject json){
+		return ResearchObjectLocalServiceUtil.getResearchObjectsByParent(json);
 	}
 	
 	
 	//
-	public ResearchObject getTopParent(long researchObjectId) {
-		return ResearchObjectLocalServiceUtil.getTopParent(researchObjectId);
+	public JSONObject getResearchObjectById (long researchObjectId){
+		return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(researchObjectId);
 	}
 	
 	
+	//
+	public JSONObject getResearchObjectParent (JSONObject json){
+		return ResearchObjectLocalServiceUtil.getResearchObjectParent(json);
+	}
+	
+		
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
 	//
-	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException {
-		return ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, name, label, metadata, formatmetadata);
+	public JSONObject createResearchObject(JSONObject json){
+		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(json);
 	}
+	
+	
+	//
+	public JSONObject updateResearchObject(JSONObject json){
+		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(json);
+	}
+	
 }

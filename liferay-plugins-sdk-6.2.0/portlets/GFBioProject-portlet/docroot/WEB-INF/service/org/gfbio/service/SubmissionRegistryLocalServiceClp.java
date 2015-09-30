@@ -124,88 +124,174 @@ public class SubmissionRegistryLocalServiceClp
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getArchivePIdsOfENA";
+		_methodName19 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes19 = new String[] { "java.lang.String" };
+		_methodParameterTypes19 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName20 = "getArchivePIdsWithTypeOfENA";
+		_methodName20 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes20 = new String[] {
-				"java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes20 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName21 = "getArchivePIdsWithTypeSampleOfENA";
+		_methodName21 = "getArchivePIdsOfENA";
 
 		_methodParameterTypes21 = new String[] { "java.lang.String" };
 
-		_methodName22 = "getArchivePIdWithTypeStudyOfENA";
+		_methodName22 = "getArchivePIdsWithTypeOfENA";
 
-		_methodParameterTypes22 = new String[] { "java.lang.String" };
+		_methodParameterTypes22 = new String[] {
+				"java.lang.String", "java.lang.String"
+			};
 
-		_methodName23 = "getLatestSubmissionByIds";
+		_methodName23 = "getArchivePIdsWithTypeSampleOfENA";
 
-		_methodParameterTypes23 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes23 = new String[] { "java.lang.String" };
 
-		_methodName24 = "getLatestSubmissionsByArchive";
+		_methodName24 = "getArchivePIdWithTypeStudyOfENA";
 
 		_methodParameterTypes24 = new String[] { "java.lang.String" };
 
-		_methodName25 = "getLatestSubmissionsByResearchObjectId";
+		_methodName25 = "getLatestSubmissionByIds";
 
-		_methodParameterTypes25 = new String[] { "long" };
+		_methodParameterTypes25 = new String[] { "long", "java.lang.String" };
 
-		_methodName26 = "getLatestSubmissions";
+		_methodName26 = "getLatestSubmissionsByArchive";
 
-		_methodParameterTypes26 = new String[] {  };
+		_methodParameterTypes26 = new String[] { "java.lang.String" };
 
-		_methodName27 = "getSubmissionRegistryByResearchObjectId";
+		_methodName27 = "getLatestSubmissionsByResearchObjectId";
 
 		_methodParameterTypes27 = new String[] { "long" };
 
-		_methodName28 = "GetStatusByIds";
+		_methodName28 = "getLatestSubmissions";
 
-		_methodParameterTypes28 = new String[] { "long", "int", "java.lang.String" };
+		_methodParameterTypes28 = new String[] {  };
 
-		_methodName29 = "updateStatus";
+		_methodName29 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes29 = new String[] { "java.lang.String" };
+
+		_methodName30 = "getSubmissionRegistriesByResearchObjectId";
+
+		_methodParameterTypes30 = new String[] { "long" };
+
+		_methodName31 = "GetStatusByIds";
+
+		_methodParameterTypes31 = new String[] { "long", "int", "java.lang.String" };
+
+		_methodName32 = "constructSubmissionRegistriesJson";
+
+		_methodParameterTypes32 = new String[] { "java.util.List" };
+
+		_methodName33 = "constructSubmissionRegistryJson";
+
+		_methodParameterTypes33 = new String[] {
+				"org.gfbio.model.SubmissionRegistry"
+			};
+
+		_methodName34 = "constructStatus";
+
+		_methodParameterTypes34 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName30 = "updateSubmissionRegistry";
+		_methodName35 = "createSubmissionRegistry";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes35 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName36 = "updateSubmissionRegistry";
+
+		_methodParameterTypes36 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName37 = "updateSubmissionRegistry";
+
+		_methodParameterTypes37 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date"
+				"java.lang.String", "java.util.Date", "long"
 			};
 
-		_methodName31 = "updateSubmissionRegistry";
+		_methodName38 = "updateSubmissionRegistry";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes38 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date", "java.lang.String"
+				"java.lang.String", "long", "java.util.Date", "long"
 			};
 
-		_methodName32 = "updateSubmissionRegistry";
+		_methodName39 = "updateSubmissionRegistry";
 
-		_methodParameterTypes32 = new String[] {
+		_methodParameterTypes39 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.util.Date", "long", "java.lang.String"
+			};
+
+		_methodName40 = "updateSubmissionRegistry";
+
+		_methodParameterTypes40 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "long", "java.util.Date", "long",
-				"java.lang.Boolean", "java.util.Date", "java.lang.String"
+				"java.lang.String"
 			};
 
-		_methodName33 = "updateSubmissionRegistry";
+		_methodName41 = "updateSubmissionRegistry";
 
-		_methodParameterTypes33 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName34 = "updateSubmissionRegistryWithoutPId";
-
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes41 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
-				"java.util.Date", "long", "java.lang.Boolean", "java.util.Date",
-				"java.lang.String"
+				"java.lang.String", "long", "java.util.Date", "long",
+				"java.lang.String", "java.lang.Boolean", "java.util.Date"
+			};
+
+		_methodName42 = "updateSubmissionRegistryWithoutPId";
+
+		_methodParameterTypes42 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String",
+				"java.util.Date", "long", "java.lang.String"
+			};
+
+		_methodName43 = "updateArchivePId";
+
+		_methodParameterTypes43 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName44 = "updateArchivePIdType";
+
+		_methodParameterTypes44 = new String[] {
+				"long", "int", "java.lang.String", "long"
+			};
+
+		_methodName45 = "updateBrokerSubmissionId";
+
+		_methodParameterTypes45 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName46 = "updateIsPublic";
+
+		_methodParameterTypes46 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.Boolean"
+			};
+
+		_methodName47 = "updateLastChanged";
+
+		_methodParameterTypes47 = new String[] {
+				"long", "int", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName48 = "updatePublicAfter";
+
+		_methodParameterTypes48 = new String[] {
+				"long", "int", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName49 = "updateStatus";
+
+		_methodParameterTypes49 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName50 = "updateUserId";
+
+		_methodParameterTypes50 = new String[] {
+				"long", "int", "java.lang.String", "long"
 			};
 	}
 
@@ -778,13 +864,68 @@ public class SubmissionRegistryLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getArchivePIdsOfENA(
-		java.lang.String archivePId) {
+	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONObject json)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<java.lang.String> getArchivePIdsOfENA(
+		java.lang.String archivePId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] { ClpSerializer.translateInput(archivePId) });
 		}
 		catch (Throwable t) {
@@ -808,8 +949,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] {
 						ClpSerializer.translateInput(archivePId),
 						
@@ -837,8 +978,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { ClpSerializer.translateInput(archivePId) });
 		}
 		catch (Throwable t) {
@@ -862,8 +1003,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] { ClpSerializer.translateInput(archivePId) });
 		}
 		catch (Throwable t) {
@@ -887,8 +1028,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						researchObjectId,
 						
@@ -916,8 +1057,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] { ClpSerializer.translateInput(archive) });
 		}
 		catch (Throwable t) {
@@ -941,8 +1082,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { researchObjectId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { researchObjectId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -964,8 +1105,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -983,14 +1124,46 @@ public class SubmissionRegistryLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistryByResearchObjectId(
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId(
+		java.lang.String brokerSubmissionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] {
+						ClpSerializer.translateInput(brokerSubmissionId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.SubmissionRegistry>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByResearchObjectId(
 		long researchObjectId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { researchObjectId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { researchObjectId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1017,8 +1190,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						researchObjectId,
 						
@@ -1043,20 +1216,251 @@ public class SubmissionRegistryLocalServiceClp
 	}
 
 	@Override
-	public java.lang.Boolean updateStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String status) {
+	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
+		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
+					new Object[] {
+						ClpSerializer.translateInput(submissionRegistryList)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructSubmissionRegistryJson(
+		org.gfbio.model.SubmissionRegistry submissionRegistry) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] {
+						ClpSerializer.translateInput(submissionRegistry)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.String constructStatus(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						researchObjectId,
 						
 					researchObjectVersion,
 						
 					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(archivePId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject createSubmissionRegistry(
+		org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject updateSubmissionRegistry(
+		org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		java.util.Date lastChanged, long userId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(brokerSubmissionId),
+						
+					ClpSerializer.translateInput(archivePId),
+						
+					ClpSerializer.translateInput(lastChanged),
+						
+					userId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(brokerSubmissionId),
+						
+					ClpSerializer.translateInput(archivePId),
+						
+					archivePIdType,
+						
+					ClpSerializer.translateInput(lastChanged),
+						
+					userId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		java.util.Date lastChanged, long userId, java.lang.String status) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(brokerSubmissionId),
+						
+					ClpSerializer.translateInput(archivePId),
+						
+					ClpSerializer.translateInput(lastChanged),
+						
+					userId,
 						
 					ClpSerializer.translateInput(status)
 					});
@@ -1080,13 +1484,13 @@ public class SubmissionRegistryLocalServiceClp
 	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive,
 		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter) {
+		long archivePIdType, java.util.Date lastChanged, long userId,
+		java.lang.String status) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						researchObjectId,
 						
@@ -1098,9 +1502,60 @@ public class SubmissionRegistryLocalServiceClp
 						
 					ClpSerializer.translateInput(archivePId),
 						
+					archivePIdType,
+						
 					ClpSerializer.translateInput(lastChanged),
 						
-					userID,
+					userId,
+						
+					ClpSerializer.translateInput(status)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId, java.lang.String archivePId,
+		long archivePIdType, java.util.Date lastChanged, long userId,
+		java.lang.String status, java.lang.Boolean isPublic,
+		java.util.Date publicAfter) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(brokerSubmissionId),
+						
+					ClpSerializer.translateInput(archivePId),
+						
+					archivePIdType,
+						
+					ClpSerializer.translateInput(lastChanged),
+						
+					userId,
+						
+					ClpSerializer.translateInput(status),
 						
 					ClpSerializer.translateInput(isPublic),
 						
@@ -1123,16 +1578,15 @@ public class SubmissionRegistryLocalServiceClp
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
+	public java.lang.Boolean updateSubmissionRegistryWithoutPId(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		java.util.Date lastChanged, long userID, java.lang.String status) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] {
 						researchObjectId,
 						
@@ -1142,15 +1596,9 @@ public class SubmissionRegistryLocalServiceClp
 						
 					ClpSerializer.translateInput(brokerSubmissionId),
 						
-					ClpSerializer.translateInput(archivePId),
-						
 					ClpSerializer.translateInput(lastChanged),
 						
 					userID,
-						
-					ClpSerializer.translateInput(isPublic),
-						
-					ClpSerializer.translateInput(publicAfter),
 						
 					ClpSerializer.translateInput(status)
 					});
@@ -1171,37 +1619,223 @@ public class SubmissionRegistryLocalServiceClp
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
+	public java.lang.Boolean updateArchivePId(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		long archivePIdType, java.util.Date lastChanged, long userID,
-		java.lang.Boolean isPublic, java.util.Date publicAfter,
+		java.lang.String archivePId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(archivePId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateArchivePIdType(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive, long archivePIdType) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					archivePIdType
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateBrokerSubmissionId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String brokerSubmissionId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(brokerSubmissionId)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateIsPublic(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.Boolean isPublic) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName46,
+					_methodParameterTypes46,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(isPublic)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateLastChanged(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date lastChanged) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName47,
+					_methodParameterTypes47,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(lastChanged)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updatePublicAfter(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.util.Date publicAfter) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName48,
+					_methodParameterTypes48,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive),
+						
+					ClpSerializer.translateInput(publicAfter)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateStatus(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
 		java.lang.String status) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName49,
+					_methodParameterTypes49,
 					new Object[] {
 						researchObjectId,
 						
 					researchObjectVersion,
 						
 					ClpSerializer.translateInput(archive),
-						
-					ClpSerializer.translateInput(brokerSubmissionId),
-						
-					ClpSerializer.translateInput(archivePId),
-						
-					archivePIdType,
-						
-					ClpSerializer.translateInput(lastChanged),
-						
-					userID,
-						
-					ClpSerializer.translateInput(isPublic),
-						
-					ClpSerializer.translateInput(publicAfter),
 						
 					ClpSerializer.translateInput(status)
 					});
@@ -1222,41 +1856,13 @@ public class SubmissionRegistryLocalServiceClp
 	}
 
 	@Override
-	public java.lang.Boolean updateSubmissionRegistry(
-		org.json.simple.JSONObject json) {
+	public java.lang.Boolean updateUserId(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive, long userId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
-					new Object[] { ClpSerializer.translateInput(json) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.lang.Boolean updateSubmissionRegistryWithoutPId(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.util.Date lastChanged, long userID, java.lang.Boolean isPublic,
-		java.util.Date publicAfter, java.lang.String status) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName50,
+					_methodParameterTypes50,
 					new Object[] {
 						researchObjectId,
 						
@@ -1264,17 +1870,7 @@ public class SubmissionRegistryLocalServiceClp
 						
 					ClpSerializer.translateInput(archive),
 						
-					ClpSerializer.translateInput(brokerSubmissionId),
-						
-					ClpSerializer.translateInput(lastChanged),
-						
-					userID,
-						
-					ClpSerializer.translateInput(isPublic),
-						
-					ClpSerializer.translateInput(publicAfter),
-						
-					ClpSerializer.translateInput(status)
+					userId
 					});
 		}
 		catch (Throwable t) {
@@ -1361,4 +1957,36 @@ public class SubmissionRegistryLocalServiceClp
 	private String[] _methodParameterTypes33;
 	private String _methodName34;
 	private String[] _methodParameterTypes34;
+	private String _methodName35;
+	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
+	private String _methodName44;
+	private String[] _methodParameterTypes44;
+	private String _methodName45;
+	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
 }

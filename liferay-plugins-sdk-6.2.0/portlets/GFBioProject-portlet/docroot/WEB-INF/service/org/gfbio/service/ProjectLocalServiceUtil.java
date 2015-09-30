@@ -271,6 +271,17 @@ public class ProjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject json) {
+		return getService().getProjectById(json);
+	}
+
+	public static org.gfbio.model.Project getProjectById(long projectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProjectException {
+		return getService().getProjectById(projectId);
+	}
+
 	public static java.util.List<org.gfbio.model.Project> getProjectList(
 		long userID)
 		throws com.liferay.portal.NoSuchModelException,
@@ -283,6 +294,11 @@ public class ProjectLocalServiceUtil {
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getResearchObjectList(projectID, userID);
+	}
+
+	public static org.json.simple.JSONObject constructProjectAsJson(
+		org.gfbio.model.Project project) {
+		return getService().constructProjectAsJson(project);
 	}
 
 	public static long updateProject(long projectID, long userID,

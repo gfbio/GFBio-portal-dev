@@ -32,24 +32,29 @@ public class ResearchObjectServiceClpInvoker {
 
 		_methodParameterTypes105 = new String[] { "java.lang.String" };
 
-		_methodName110 = "getDirectChildren";
+		_methodName110 = "getResearchObjectAbsolutParent";
 
-		_methodParameterTypes110 = new String[] { "long" };
+		_methodParameterTypes110 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName111 = "getDirectParent";
+		_methodName111 = "getResearchObjectsByParent";
 
-		_methodParameterTypes111 = new String[] { "long" };
+		_methodParameterTypes111 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName112 = "getTopParent";
+		_methodName112 = "getResearchObjectById";
 
 		_methodParameterTypes112 = new String[] { "long" };
 
-		_methodName113 = "updateResearchObject";
+		_methodName113 = "getResearchObjectParent";
 
-		_methodParameterTypes113 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes113 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName114 = "createResearchObject";
+
+		_methodParameterTypes114 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName115 = "updateResearchObject";
+
+		_methodParameterTypes115 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -68,25 +73,32 @@ public class ResearchObjectServiceClpInvoker {
 
 		if (_methodName110.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
-			return ResearchObjectServiceUtil.getDirectChildren(((Long)arguments[0]).longValue());
+			return ResearchObjectServiceUtil.getResearchObjectAbsolutParent((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName111.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
-			return ResearchObjectServiceUtil.getDirectParent(((Long)arguments[0]).longValue());
+			return ResearchObjectServiceUtil.getResearchObjectsByParent((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName112.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
-			return ResearchObjectServiceUtil.getTopParent(((Long)arguments[0]).longValue());
+			return ResearchObjectServiceUtil.getResearchObjectById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName113.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
-			return ResearchObjectServiceUtil.updateResearchObject(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4], (java.lang.String)arguments[5]);
+			return ResearchObjectServiceUtil.getResearchObjectParent((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
+			return ResearchObjectServiceUtil.createResearchObject((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
+			return ResearchObjectServiceUtil.updateResearchObject((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -104,4 +116,8 @@ public class ResearchObjectServiceClpInvoker {
 	private String[] _methodParameterTypes112;
 	private String _methodName113;
 	private String[] _methodParameterTypes113;
+	private String _methodName114;
+	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
 }

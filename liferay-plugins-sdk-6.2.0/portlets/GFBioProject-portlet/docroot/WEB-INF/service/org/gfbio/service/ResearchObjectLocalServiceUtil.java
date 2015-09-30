@@ -275,6 +275,21 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject json) {
+		return getService().getResearchObjectAbsolutParent(json);
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject json) {
+		return getService().getResearchObjectParent(json);
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectsByParent(
+		org.json.simple.JSONObject json) {
+		return getService().getResearchObjectsByParent(json);
+	}
+
 	public static java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
 		long researchObjectId) {
 		return getService().getDirectChildren(researchObjectId);
@@ -290,13 +305,87 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().getTopParent(researchObjectId);
 	}
 
-	public static long updateResearchObject(long projectID,
-		long researchObjectID, java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
+	public static org.gfbio.model.ResearchObject getResearchObjectById(
+		long researchObjectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		return getService().getResearchObjectById(researchObjectId);
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectASJsonById(
+		long researchObjectId) {
+		return getService().getResearchObjectASJsonById(researchObjectId);
+	}
+
+	public static org.json.simple.JSONObject constructResearchObjectJson(
+		org.gfbio.model.ResearchObject researchObject) {
+		return getService().constructResearchObjectJson(researchObject);
+	}
+
+	public static org.json.simple.JSONObject constructResearchObjectsJson(
+		java.util.List<org.gfbio.model.ResearchObject> researchObjectList) {
+		return getService().constructResearchObjectsJson(researchObjectList);
+	}
+
+	public static java.lang.String constructFormatMetadata(
+		java.lang.String metadata) {
+		return getService().constructFormatMetadata(metadata);
+	}
+
+	public static org.json.simple.JSONObject createResearchObjectByJson(
+		org.json.simple.JSONObject json) {
+		return getService().createResearchObjectByJson(json);
+	}
+
+	public static long createResearchObject(java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String researchObjectType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateResearchObject(projectID, researchObjectID, name,
-			label, metadata, formatmetadata);
+				   .createResearchObject(name, label, metadata,
+			researchObjectType);
+	}
+
+	public static long createResearchObjectWithProject(long projectId,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String researchObjectType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .createResearchObjectWithProject(projectId, name, label,
+			metadata, researchObjectType);
+	}
+
+	public static long updateParentResearchObjectIdByIds(
+		long researchObjectId, long parentResearchObjectId) {
+		return getService()
+				   .updateParentResearchObjectIdByIds(researchObjectId,
+			parentResearchObjectId);
+	}
+
+	public static long updateResearchObject(long researchObjectId,
+		int researchObjectVersion, java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String formatmetadata, java.lang.String researchObjectType) {
+		return getService()
+				   .updateResearchObject(researchObjectId,
+			researchObjectVersion, name, label, metadata, formatmetadata,
+			researchObjectType);
+	}
+
+	public static org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject json) {
+		return getService().updateResearchObjectByJson(json);
+	}
+
+	public static long updateResearchObjectWithProject(long projectId,
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata,
+		java.lang.String researchObjectType) {
+		return getService()
+				   .updateResearchObjectWithProject(projectId,
+			researchObjectId, researchObjectVersion, name, label, metadata,
+			formatmetadata, researchObjectType);
 	}
 
 	public static void clearService() {

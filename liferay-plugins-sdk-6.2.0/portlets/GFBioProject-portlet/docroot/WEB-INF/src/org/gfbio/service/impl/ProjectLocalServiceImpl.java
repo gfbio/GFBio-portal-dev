@@ -28,8 +28,10 @@ import org.gfbio.model.Project;
 import org.gfbio.model.Project_ResearchObject;
 import org.gfbio.model.Project_User;
 import org.gfbio.model.ResearchObject;
+import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the project local service.
@@ -47,8 +49,40 @@ import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
  */
 public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject getProjectById (JSONObject json){
+		
+		JSONObject responseJson = new JSONObject();
+		
+		if (json.containsKey("projectid")){
+			responseJson = ProjectLocalServiceUtil.constructProjectJson(ProjectLocalServiceUtil.getProjectById((long)json.get("projectid")));
+			if (responseJson == null)
+				responseJson.put("ERROR", "Failed by response project");
+		}
+		else
+			responseJson.put("ERROR", "No key 'projectid' exist.");
+		return responseJson;
+	}
+	
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+	//
+	public Project getProjectById (long projectId) throws NoSuchProjectException, SystemException{
+		return projectPersistence.findByPrimaryKey(projectId);
+	}
+	
+	
 	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
-
 	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 
 		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIDList(userID);
@@ -61,8 +95,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return projectList;
 	}
 
+	
 	// get list of all Research Objects of a specific project
-
 	public List<ResearchObject> getResearchObjectList(long projectID, long userID) throws NoSuchModelException, SystemException {
 
 		List<Project_ResearchObject> idList = project_ResearchObjectPersistence.findByProjectID(projectID);
@@ -73,8 +107,30 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return researchObjectList;
 	}
 
+	
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructProjectAsJson (Project project){
+		JSONObject json = new JSONObject();
+		json.put("projectid", project.getProjectID());
+		json.put("parentprojectid", project.getParentProjectID());
+		json.put("name", project.getName());
+		json.put("label", project.getLabel());
+		json.put("description", project.getDescription());
+		json.put("startdate", project.getStartDate());	
+		json.put("endDate", project.getEndDate());
+		json.put("status", project.getStatus());
+		return json;
+	}
+	
 
-	// update or create a new project
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
+	
+	
+	//
 	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
 
 		Project project = null;
@@ -97,6 +153,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
 			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
 		}
+		
 		//update project
 		else {
 			project.setName(name);
@@ -112,6 +169,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 
 	@Override
+	//
 	public long updateProject(long projectID, String name, String description)
 			throws SystemException {
 

@@ -32,13 +32,17 @@ public class ProjectServiceClpInvoker {
 
 		_methodParameterTypes105 = new String[] { "java.lang.String" };
 
-		_methodName110 = "getProjectList";
+		_methodName110 = "getProject";
 
-		_methodParameterTypes110 = new String[] { "long" };
+		_methodParameterTypes110 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName111 = "updateProject";
+		_methodName111 = "getProjectList";
 
-		_methodParameterTypes111 = new String[] {
+		_methodParameterTypes111 = new String[] { "long" };
+
+		_methodName112 = "updateProject";
+
+		_methodParameterTypes112 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
@@ -61,11 +65,16 @@ public class ProjectServiceClpInvoker {
 
 		if (_methodName110.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
-			return ProjectServiceUtil.getProjectList(((Long)arguments[0]).longValue());
+			return ProjectServiceUtil.getProject((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName111.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+			return ProjectServiceUtil.getProjectList(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName112.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
 			return ProjectServiceUtil.updateProject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -84,4 +93,6 @@ public class ProjectServiceClpInvoker {
 	private String[] _methodParameterTypes110;
 	private String _methodName111;
 	private String[] _methodParameterTypes111;
+	private String _methodName112;
+	private String[] _methodParameterTypes112;
 }

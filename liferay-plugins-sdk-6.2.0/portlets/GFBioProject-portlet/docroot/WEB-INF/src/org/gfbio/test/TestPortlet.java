@@ -8,7 +8,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +24,6 @@ import org.gfbio.model.Project;
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-
 import org.json.simple.JSONObject;
 
 /**
@@ -85,6 +83,7 @@ public class TestPortlet extends GenericPortlet {
 		return jsonUnpack;
 	}
 
+	@SuppressWarnings({ "unchecked", "unused" })
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -146,14 +145,7 @@ public class TestPortlet extends GenericPortlet {
 
 	String formatmetadata = unpackJSON(metadata.toString());
 
-		try {
-			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, "tester", "tester 0.1", metadata.toString(),formatmetadata);
-		} catch (SystemException e1) {
-
-			// TODO Auto-generated catch block
-
-			e1.printStackTrace();
-		}
+		researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObjectWithProject(projectID,  researchObjectID,1, "tester", "tester 0.1", metadata.toString(),formatmetadata, "sample");
 
 		//get all Projects of a specific user in a List
 

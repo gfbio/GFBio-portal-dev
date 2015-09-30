@@ -212,8 +212,8 @@
 	</entity>
 	
 	
+	
 	<!-- Relationship between Project and ResearchObject  -->
-
 
 	<entity name="Project_ResearchObject" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="projectID" 			type="long" 	primary="true" />
