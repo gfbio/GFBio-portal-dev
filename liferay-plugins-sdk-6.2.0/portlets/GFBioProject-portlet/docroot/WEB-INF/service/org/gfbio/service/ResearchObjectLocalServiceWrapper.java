@@ -307,6 +307,12 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId) {
+		return _researchObjectLocalService.getAllChildren(researchObjectId);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
 		long researchObjectId) {
 		return _researchObjectLocalService.getDirectChildren(researchObjectId);
@@ -351,6 +357,11 @@ public class ResearchObjectLocalServiceWrapper
 	@Override
 	public java.lang.String constructFormatMetadata(java.lang.String metadata) {
 		return _researchObjectLocalService.constructFormatMetadata(metadata);
+	}
+
+	@Override
+	public java.lang.Boolean checkParentAttributById(long researchObjectId) {
+		return _researchObjectLocalService.checkParentAttributById(researchObjectId);
 	}
 
 	@Override

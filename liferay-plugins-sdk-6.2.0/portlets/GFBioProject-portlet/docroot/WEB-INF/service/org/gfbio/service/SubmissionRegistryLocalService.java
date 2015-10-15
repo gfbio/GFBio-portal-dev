@@ -307,6 +307,11 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 	public java.lang.String GetStatusByIds(long researchObjectId,
 		int ResearchObjectVersion, java.lang.String archive);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive);
+
 	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
 		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList);
 

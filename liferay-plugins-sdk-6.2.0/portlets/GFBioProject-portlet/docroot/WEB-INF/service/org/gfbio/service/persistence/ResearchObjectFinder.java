@@ -18,6 +18,9 @@ package org.gfbio.service.persistence;
  * @author Marcel Froemming
  */
 public interface ResearchObjectFinder {
+	public java.util.List<java.lang.Boolean> getCheckOfDirectParent(
+		long researchObjectId);
+
 	public java.util.List<org.gfbio.model.ResearchObject> getDirectParent(
 		long researchObjectId);
 }

@@ -59,6 +59,14 @@ public class SubmissionRegistryFinderUtil {
 			archive);
 	}
 
+	public static java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive) {
+		return getFinder()
+				   .getSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive);
+	}
+
 	public static SubmissionRegistryFinder getFinder() {
 		if (_finder == null) {
 			_finder = (SubmissionRegistryFinder)PortletBeanLocatorUtil.locate(org.gfbio.service.ClpSerializer.getServletContextName(),

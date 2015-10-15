@@ -267,6 +267,10 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		org.json.simple.JSONObject json);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
 		long researchObjectId);
 
@@ -293,6 +297,8 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		java.util.List<org.gfbio.model.ResearchObject> researchObjectList);
 
 	public java.lang.String constructFormatMetadata(java.lang.String metadata);
+
+	public java.lang.Boolean checkParentAttributById(long researchObjectId);
 
 	public org.json.simple.JSONObject createResearchObjectByJson(
 		org.json.simple.JSONObject json);

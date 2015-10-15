@@ -178,57 +178,53 @@ public class SubmissionRegistryLocalServiceClp
 
 		_methodParameterTypes31 = new String[] { "long", "int", "java.lang.String" };
 
-		_methodName32 = "constructSubmissionRegistriesJson";
+		_methodName32 = "getSubmissionRegistry";
 
-		_methodParameterTypes32 = new String[] { "java.util.List" };
+		_methodParameterTypes32 = new String[] { "long", "int", "java.lang.String" };
 
-		_methodName33 = "constructSubmissionRegistryJson";
+		_methodName33 = "constructSubmissionRegistriesJson";
 
-		_methodParameterTypes33 = new String[] {
+		_methodParameterTypes33 = new String[] { "java.util.List" };
+
+		_methodName34 = "constructSubmissionRegistryJson";
+
+		_methodParameterTypes34 = new String[] {
 				"org.gfbio.model.SubmissionRegistry"
 			};
 
-		_methodName34 = "constructStatus";
+		_methodName35 = "constructStatus";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes35 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName35 = "createSubmissionRegistry";
-
-		_methodParameterTypes35 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName36 = "updateSubmissionRegistry";
+		_methodName36 = "createSubmissionRegistry";
 
 		_methodParameterTypes36 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName37 = "updateSubmissionRegistry";
 
-		_methodParameterTypes37 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long"
-			};
+		_methodParameterTypes37 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName38 = "updateSubmissionRegistry";
 
 		_methodParameterTypes38 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.util.Date", "long"
+				"java.lang.String", "java.util.Date", "long"
 			};
 
 		_methodName39 = "updateSubmissionRegistry";
 
 		_methodParameterTypes39 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long", "java.lang.String"
+				"java.lang.String", "long", "java.util.Date", "long"
 			};
 
 		_methodName40 = "updateSubmissionRegistry";
 
 		_methodParameterTypes40 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.util.Date", "long",
-				"java.lang.String"
+				"java.lang.String", "java.util.Date", "long", "java.lang.String"
 			};
 
 		_methodName41 = "updateSubmissionRegistry";
@@ -236,61 +232,69 @@ public class SubmissionRegistryLocalServiceClp
 		_methodParameterTypes41 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "long", "java.util.Date", "long",
+				"java.lang.String"
+			};
+
+		_methodName42 = "updateSubmissionRegistry";
+
+		_methodParameterTypes42 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String",
+				"java.lang.String", "long", "java.util.Date", "long",
 				"java.lang.String", "java.lang.Boolean", "java.util.Date"
 			};
 
-		_methodName42 = "updateSubmissionRegistryWithoutPId";
+		_methodName43 = "updateSubmissionRegistryWithoutPId";
 
-		_methodParameterTypes42 = new String[] {
+		_methodParameterTypes43 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.util.Date", "long", "java.lang.String"
 			};
 
-		_methodName43 = "updateArchivePId";
+		_methodName44 = "updateArchivePId";
 
-		_methodParameterTypes43 = new String[] {
+		_methodParameterTypes44 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName44 = "updateArchivePIdType";
+		_methodName45 = "updateArchivePIdType";
 
-		_methodParameterTypes44 = new String[] {
+		_methodParameterTypes45 = new String[] {
 				"long", "int", "java.lang.String", "long"
 			};
 
-		_methodName45 = "updateBrokerSubmissionId";
+		_methodName46 = "updateBrokerSubmissionId";
 
-		_methodParameterTypes45 = new String[] {
+		_methodParameterTypes46 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName46 = "updateIsPublic";
+		_methodName47 = "updateIsPublic";
 
-		_methodParameterTypes46 = new String[] {
+		_methodParameterTypes47 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.Boolean"
 			};
 
-		_methodName47 = "updateLastChanged";
-
-		_methodParameterTypes47 = new String[] {
-				"long", "int", "java.lang.String", "java.util.Date"
-			};
-
-		_methodName48 = "updatePublicAfter";
+		_methodName48 = "updateLastChanged";
 
 		_methodParameterTypes48 = new String[] {
 				"long", "int", "java.lang.String", "java.util.Date"
 			};
 
-		_methodName49 = "updateStatus";
+		_methodName49 = "updatePublicAfter";
 
 		_methodParameterTypes49 = new String[] {
+				"long", "int", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName50 = "updateStatus";
+
+		_methodParameterTypes50 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName50 = "updateUserId";
+		_methodName51 = "updateUserId";
 
-		_methodParameterTypes50 = new String[] {
+		_methodParameterTypes51 = new String[] {
 				"long", "int", "java.lang.String", "long"
 			};
 	}
@@ -1216,13 +1220,45 @@ public class SubmissionRegistryLocalServiceClp
 	}
 
 	@Override
-	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
-		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
+	public org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName32,
 					_methodParameterTypes32,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(archive)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.SubmissionRegistry)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
+		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(submissionRegistryList)
 					});
@@ -1248,8 +1284,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						ClpSerializer.translateInput(submissionRegistry)
 					});
@@ -1276,8 +1312,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						researchObjectId,
 						
@@ -1309,8 +1345,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1334,8 +1370,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1361,8 +1397,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						researchObjectId,
 						
@@ -1402,8 +1438,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] {
 						researchObjectId,
 						
@@ -1445,8 +1481,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						researchObjectId,
 						
@@ -1489,8 +1525,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
 					new Object[] {
 						researchObjectId,
 						
@@ -1536,8 +1572,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] {
 						researchObjectId,
 						
@@ -1585,8 +1621,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName42,
-					_methodParameterTypes42,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] {
 						researchObjectId,
 						
@@ -1625,8 +1661,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43,
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
 					new Object[] {
 						researchObjectId,
 						
@@ -1658,8 +1694,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44,
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45,
 					new Object[] {
 						researchObjectId,
 						
@@ -1692,8 +1728,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName45,
-					_methodParameterTypes45,
+			returnObj = _invokableLocalService.invokeMethod(_methodName46,
+					_methodParameterTypes46,
 					new Object[] {
 						researchObjectId,
 						
@@ -1726,8 +1762,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName46,
-					_methodParameterTypes46,
+			returnObj = _invokableLocalService.invokeMethod(_methodName47,
+					_methodParameterTypes47,
 					new Object[] {
 						researchObjectId,
 						
@@ -1760,8 +1796,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName47,
-					_methodParameterTypes47,
+			returnObj = _invokableLocalService.invokeMethod(_methodName48,
+					_methodParameterTypes48,
 					new Object[] {
 						researchObjectId,
 						
@@ -1794,8 +1830,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName48,
-					_methodParameterTypes48,
+			returnObj = _invokableLocalService.invokeMethod(_methodName49,
+					_methodParameterTypes49,
 					new Object[] {
 						researchObjectId,
 						
@@ -1828,8 +1864,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName49,
-					_methodParameterTypes49,
+			returnObj = _invokableLocalService.invokeMethod(_methodName50,
+					_methodParameterTypes50,
 					new Object[] {
 						researchObjectId,
 						
@@ -1861,8 +1897,8 @@ public class SubmissionRegistryLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName50,
-					_methodParameterTypes50,
+			returnObj = _invokableLocalService.invokeMethod(_methodName51,
+					_methodParameterTypes51,
 					new Object[] {
 						researchObjectId,
 						
@@ -1989,4 +2025,6 @@ public class SubmissionRegistryLocalServiceClp
 	private String[] _methodParameterTypes49;
 	private String _methodName50;
 	private String[] _methodParameterTypes50;
+	private String _methodName51;
+	private String[] _methodParameterTypes51;
 }

@@ -40,6 +40,7 @@ import org.gfbio.service.persistence.Project_ResearchObjectPK;
  */
 public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObjectLocalServiceBaseImpl {
 
+	
 	//get a ID-List (Project_ResearchObject-Object) of all Research Objects of a specific Project
 	public List<Project_ResearchObject> getProjectIDList(long projectID) {
 		List<Project_ResearchObject> idList = null;
@@ -55,6 +56,7 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 		return idList;
 	}
 
+	
 	//update or create a new Relationship between a Project and a Research Object
 	public long updateProjectResearchObject(long projectID, long researchObjectID) throws NoSuchProject_UserException, SystemException {
 

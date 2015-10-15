@@ -57,15 +57,18 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getProjectById (JSONObject json){
 		
 		JSONObject responseJson = new JSONObject();
 		
 		if (json.containsKey("projectid")){
-			responseJson = ProjectLocalServiceUtil.constructProjectJson(ProjectLocalServiceUtil.getProjectById((long)json.get("projectid")));
-			if (responseJson == null)
-				responseJson.put("ERROR", "Failed by response project");
+			try {
+				responseJson = ProjectLocalServiceUtil.constructProjectAsJson(ProjectLocalServiceUtil.getProjectById((long)json.get("projectid")));
+			} catch (NoSuchProjectException | SystemException e) {
+				e.printStackTrace();
+				responseJson.put("ERROR", e);}
+
 		}
 		else
 			responseJson.put("ERROR", "No key 'projectid' exist.");

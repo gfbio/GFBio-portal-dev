@@ -1964,31 +1964,29 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	private static final String _FINDER_COLUMN_ARCHIVE_ARCHIVE_1 = "submissionRegistry.id.archive IS NULL";
 	private static final String _FINDER_COLUMN_ARCHIVE_ARCHIVE_2 = "submissionRegistry.id.archive = ?";
 	private static final String _FINDER_COLUMN_ARCHIVE_ARCHIVE_3 = "(submissionRegistry.id.archive IS NULL OR submissionRegistry.id.archive = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_BROCKERSUBMISSIONID =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_BROKERSUBMISSIONID =
 		new FinderPath(SubmissionRegistryModelImpl.ENTITY_CACHE_ENABLED,
 			SubmissionRegistryModelImpl.FINDER_CACHE_ENABLED,
 			SubmissionRegistryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByBrockerSubmissionID",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBrokerSubmissionID",
 			new String[] {
 				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROCKERSUBMISSIONID =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROKERSUBMISSIONID =
 		new FinderPath(SubmissionRegistryModelImpl.ENTITY_CACHE_ENABLED,
 			SubmissionRegistryModelImpl.FINDER_CACHE_ENABLED,
 			SubmissionRegistryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByBrockerSubmissionID",
+			"findByBrokerSubmissionID",
 			new String[] { String.class.getName() },
 			SubmissionRegistryModelImpl.BROKERSUBMISSIONID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONID = new FinderPath(SubmissionRegistryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_BROKERSUBMISSIONID = new FinderPath(SubmissionRegistryModelImpl.ENTITY_CACHE_ENABLED,
 			SubmissionRegistryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByBrockerSubmissionID",
-			new String[] { String.class.getName() });
+			"countByBrokerSubmissionID", new String[] { String.class.getName() });
 
 	/**
 	 * Returns all the submission registries where brokerSubmissionID = &#63;.
@@ -1998,9 +1996,9 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SubmissionRegistry> findByBrockerSubmissionID(
+	public List<SubmissionRegistry> findByBrokerSubmissionID(
 		String brokerSubmissionID) throws SystemException {
-		return findByBrockerSubmissionID(brokerSubmissionID, QueryUtil.ALL_POS,
+		return findByBrokerSubmissionID(brokerSubmissionID, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -2018,10 +2016,10 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SubmissionRegistry> findByBrockerSubmissionID(
+	public List<SubmissionRegistry> findByBrokerSubmissionID(
 		String brokerSubmissionID, int start, int end)
 		throws SystemException {
-		return findByBrockerSubmissionID(brokerSubmissionID, start, end, null);
+		return findByBrokerSubmissionID(brokerSubmissionID, start, end, null);
 	}
 
 	/**
@@ -2039,7 +2037,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SubmissionRegistry> findByBrockerSubmissionID(
+	public List<SubmissionRegistry> findByBrokerSubmissionID(
 		String brokerSubmissionID, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
@@ -2049,11 +2047,11 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROCKERSUBMISSIONID;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROKERSUBMISSIONID;
 			finderArgs = new Object[] { brokerSubmissionID };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_BROCKERSUBMISSIONID;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_BROKERSUBMISSIONID;
 			finderArgs = new Object[] {
 					brokerSubmissionID,
 					
@@ -2091,15 +2089,15 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 			boolean bindBrokerSubmissionID = false;
 
 			if (brokerSubmissionID == null) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_1);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_1);
 			}
 			else if (brokerSubmissionID.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_3);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_3);
 			}
 			else {
 				bindBrokerSubmissionID = true;
 
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_2);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2166,10 +2164,10 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry findByBrockerSubmissionID_First(
+	public SubmissionRegistry findByBrokerSubmissionID_First(
 		String brokerSubmissionID, OrderByComparator orderByComparator)
 		throws NoSuchSubmissionRegistryException, SystemException {
-		SubmissionRegistry submissionRegistry = fetchByBrockerSubmissionID_First(brokerSubmissionID,
+		SubmissionRegistry submissionRegistry = fetchByBrokerSubmissionID_First(brokerSubmissionID,
 				orderByComparator);
 
 		if (submissionRegistry != null) {
@@ -2197,10 +2195,10 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry fetchByBrockerSubmissionID_First(
+	public SubmissionRegistry fetchByBrokerSubmissionID_First(
 		String brokerSubmissionID, OrderByComparator orderByComparator)
 		throws SystemException {
-		List<SubmissionRegistry> list = findByBrockerSubmissionID(brokerSubmissionID,
+		List<SubmissionRegistry> list = findByBrokerSubmissionID(brokerSubmissionID,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2220,10 +2218,10 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry findByBrockerSubmissionID_Last(
+	public SubmissionRegistry findByBrokerSubmissionID_Last(
 		String brokerSubmissionID, OrderByComparator orderByComparator)
 		throws NoSuchSubmissionRegistryException, SystemException {
-		SubmissionRegistry submissionRegistry = fetchByBrockerSubmissionID_Last(brokerSubmissionID,
+		SubmissionRegistry submissionRegistry = fetchByBrokerSubmissionID_Last(brokerSubmissionID,
 				orderByComparator);
 
 		if (submissionRegistry != null) {
@@ -2251,16 +2249,16 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry fetchByBrockerSubmissionID_Last(
+	public SubmissionRegistry fetchByBrokerSubmissionID_Last(
 		String brokerSubmissionID, OrderByComparator orderByComparator)
 		throws SystemException {
-		int count = countByBrockerSubmissionID(brokerSubmissionID);
+		int count = countByBrokerSubmissionID(brokerSubmissionID);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<SubmissionRegistry> list = findByBrockerSubmissionID(brokerSubmissionID,
+		List<SubmissionRegistry> list = findByBrokerSubmissionID(brokerSubmissionID,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2281,7 +2279,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry[] findByBrockerSubmissionID_PrevAndNext(
+	public SubmissionRegistry[] findByBrokerSubmissionID_PrevAndNext(
 		SubmissionRegistryPK submissionRegistryPK, String brokerSubmissionID,
 		OrderByComparator orderByComparator)
 		throws NoSuchSubmissionRegistryException, SystemException {
@@ -2294,13 +2292,13 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 
 			SubmissionRegistry[] array = new SubmissionRegistryImpl[3];
 
-			array[0] = getByBrockerSubmissionID_PrevAndNext(session,
+			array[0] = getByBrokerSubmissionID_PrevAndNext(session,
 					submissionRegistry, brokerSubmissionID, orderByComparator,
 					true);
 
 			array[1] = submissionRegistry;
 
-			array[2] = getByBrockerSubmissionID_PrevAndNext(session,
+			array[2] = getByBrokerSubmissionID_PrevAndNext(session,
 					submissionRegistry, brokerSubmissionID, orderByComparator,
 					false);
 
@@ -2314,7 +2312,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		}
 	}
 
-	protected SubmissionRegistry getByBrockerSubmissionID_PrevAndNext(
+	protected SubmissionRegistry getByBrokerSubmissionID_PrevAndNext(
 		Session session, SubmissionRegistry submissionRegistry,
 		String brokerSubmissionID, OrderByComparator orderByComparator,
 		boolean previous) {
@@ -2333,15 +2331,15 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		boolean bindBrokerSubmissionID = false;
 
 		if (brokerSubmissionID == null) {
-			query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_1);
+			query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_1);
 		}
 		else if (brokerSubmissionID.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_3);
+			query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_3);
 		}
 		else {
 			bindBrokerSubmissionID = true;
 
-			query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_2);
+			query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2441,9 +2439,9 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByBrockerSubmissionID(String brokerSubmissionID)
+	public void removeByBrokerSubmissionID(String brokerSubmissionID)
 		throws SystemException {
-		for (SubmissionRegistry submissionRegistry : findByBrockerSubmissionID(
+		for (SubmissionRegistry submissionRegistry : findByBrokerSubmissionID(
 				brokerSubmissionID, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(submissionRegistry);
 		}
@@ -2457,9 +2455,9 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByBrockerSubmissionID(String brokerSubmissionID)
+	public int countByBrokerSubmissionID(String brokerSubmissionID)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONID;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_BROKERSUBMISSIONID;
 
 		Object[] finderArgs = new Object[] { brokerSubmissionID };
 
@@ -2474,15 +2472,15 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 			boolean bindBrokerSubmissionID = false;
 
 			if (brokerSubmissionID == null) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_1);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_1);
 			}
 			else if (brokerSubmissionID.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_3);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_3);
 			}
 			else {
 				bindBrokerSubmissionID = true;
 
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_2);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_2);
 			}
 
 			String sql = query.toString();
@@ -2517,25 +2515,25 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_1 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_1 =
 		"submissionRegistry.brokerSubmissionID IS NULL";
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_2 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_2 =
 		"submissionRegistry.brokerSubmissionID = ?";
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONID_BROKERSUBMISSIONID_3 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONID_BROKERSUBMISSIONID_3 =
 		"(submissionRegistry.brokerSubmissionID IS NULL OR submissionRegistry.brokerSubmissionID = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES =
+	public static final FinderPath FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES =
 		new FinderPath(SubmissionRegistryModelImpl.ENTITY_CACHE_ENABLED,
 			SubmissionRegistryModelImpl.FINDER_CACHE_ENABLED,
 			SubmissionRegistryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByBrockerSubmissionIDWithLastChanges",
+			"fetchByBrokerSubmissionIDWithLastChanges",
 			new String[] { String.class.getName(), Date.class.getName() },
 			SubmissionRegistryModelImpl.BROKERSUBMISSIONID_COLUMN_BITMASK |
 			SubmissionRegistryModelImpl.LASTCHANGED_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES =
+	public static final FinderPath FINDER_PATH_COUNT_BY_BROKERSUBMISSIONIDWITHLASTCHANGES =
 		new FinderPath(SubmissionRegistryModelImpl.ENTITY_CACHE_ENABLED,
 			SubmissionRegistryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByBrockerSubmissionIDWithLastChanges",
+			"countByBrokerSubmissionIDWithLastChanges",
 			new String[] { String.class.getName(), Date.class.getName() });
 
 	/**
@@ -2548,10 +2546,10 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry findByBrockerSubmissionIDWithLastChanges(
+	public SubmissionRegistry findByBrokerSubmissionIDWithLastChanges(
 		String brokerSubmissionID, Date lastChanged)
 		throws NoSuchSubmissionRegistryException, SystemException {
-		SubmissionRegistry submissionRegistry = fetchByBrockerSubmissionIDWithLastChanges(brokerSubmissionID,
+		SubmissionRegistry submissionRegistry = fetchByBrokerSubmissionIDWithLastChanges(brokerSubmissionID,
 				lastChanged);
 
 		if (submissionRegistry == null) {
@@ -2586,9 +2584,9 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry fetchByBrockerSubmissionIDWithLastChanges(
+	public SubmissionRegistry fetchByBrokerSubmissionIDWithLastChanges(
 		String brokerSubmissionID, Date lastChanged) throws SystemException {
-		return fetchByBrockerSubmissionIDWithLastChanges(brokerSubmissionID,
+		return fetchByBrokerSubmissionIDWithLastChanges(brokerSubmissionID,
 			lastChanged, true);
 	}
 
@@ -2602,7 +2600,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry fetchByBrockerSubmissionIDWithLastChanges(
+	public SubmissionRegistry fetchByBrokerSubmissionIDWithLastChanges(
 		String brokerSubmissionID, Date lastChanged, boolean retrieveFromCache)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { brokerSubmissionID, lastChanged };
@@ -2610,7 +2608,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 					finderArgs, this);
 		}
 
@@ -2633,26 +2631,26 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 			boolean bindBrokerSubmissionID = false;
 
 			if (brokerSubmissionID == null) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_1);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_1);
 			}
 			else if (brokerSubmissionID.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_3);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_3);
 			}
 			else {
 				bindBrokerSubmissionID = true;
 
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_2);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_2);
 			}
 
 			boolean bindLastChanged = false;
 
 			if (lastChanged == null) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_1);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_1);
 			}
 			else {
 				bindLastChanged = true;
 
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_2);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_2);
 			}
 
 			String sql = query.toString();
@@ -2677,13 +2675,13 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 				List<SubmissionRegistry> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 						finderArgs, list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"SubmissionRegistryPersistenceImpl.fetchByBrockerSubmissionIDWithLastChanges(String, Date, boolean) with parameters (" +
+							"SubmissionRegistryPersistenceImpl.fetchByBrokerSubmissionIDWithLastChanges(String, Date, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -2700,13 +2698,13 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 							(submissionRegistry.getLastChanged() == null) ||
 							!submissionRegistry.getLastChanged()
 												   .equals(lastChanged)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 							finderArgs, submissionRegistry);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 					finderArgs);
 
 				throw processException(e);
@@ -2733,10 +2731,10 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry removeByBrockerSubmissionIDWithLastChanges(
+	public SubmissionRegistry removeByBrokerSubmissionIDWithLastChanges(
 		String brokerSubmissionID, Date lastChanged)
 		throws NoSuchSubmissionRegistryException, SystemException {
-		SubmissionRegistry submissionRegistry = findByBrockerSubmissionIDWithLastChanges(brokerSubmissionID,
+		SubmissionRegistry submissionRegistry = findByBrokerSubmissionIDWithLastChanges(brokerSubmissionID,
 				lastChanged);
 
 		return remove(submissionRegistry);
@@ -2751,9 +2749,9 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByBrockerSubmissionIDWithLastChanges(
+	public int countByBrokerSubmissionIDWithLastChanges(
 		String brokerSubmissionID, Date lastChanged) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_BROKERSUBMISSIONIDWITHLASTCHANGES;
 
 		Object[] finderArgs = new Object[] { brokerSubmissionID, lastChanged };
 
@@ -2768,26 +2766,26 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 			boolean bindBrokerSubmissionID = false;
 
 			if (brokerSubmissionID == null) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_1);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_1);
 			}
 			else if (brokerSubmissionID.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_3);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_3);
 			}
 			else {
 				bindBrokerSubmissionID = true;
 
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_2);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_2);
 			}
 
 			boolean bindLastChanged = false;
 
 			if (lastChanged == null) {
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_1);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_1);
 			}
 			else {
 				bindLastChanged = true;
 
-				query.append(_FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_2);
+				query.append(_FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_2);
 			}
 
 			String sql = query.toString();
@@ -2826,15 +2824,15 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_1 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_1 =
 		"submissionRegistry.brokerSubmissionID IS NULL AND ";
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_2 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_2 =
 		"submissionRegistry.brokerSubmissionID = ? AND ";
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_3 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_BROKERSUBMISSIONID_3 =
 		"(submissionRegistry.brokerSubmissionID IS NULL OR submissionRegistry.brokerSubmissionID = '') AND ";
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_1 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_1 =
 		"submissionRegistry.lastChanged IS NULL";
-	private static final String _FINDER_COLUMN_BROCKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_2 =
+	private static final String _FINDER_COLUMN_BROKERSUBMISSIONIDWITHLASTCHANGES_LASTCHANGED_2 =
 		"submissionRegistry.lastChanged = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PERSISTENTIDENTIFIERID =
 		new FinderPath(SubmissionRegistryModelImpl.ENTITY_CACHE_ENABLED,
@@ -5443,7 +5441,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 				submissionRegistry.getLastChanged()
 			}, submissionRegistry);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 			new Object[] {
 				submissionRegistry.getBrokerSubmissionID(),
 				submissionRegistry.getLastChanged()
@@ -5541,9 +5539,9 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 					submissionRegistry.getLastChanged()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 				args, Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 				args, submissionRegistry);
 		}
 		else {
@@ -5563,15 +5561,15 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 			}
 
 			if ((submissionRegistryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						submissionRegistry.getBrokerSubmissionID(),
 						submissionRegistry.getLastChanged()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 					args, Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 					args, submissionRegistry);
 			}
 		}
@@ -5609,21 +5607,21 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 				submissionRegistry.getLastChanged()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 			args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 			args);
 
 		if ((submissionRegistryModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					submissionRegistryModelImpl.getOriginalBrokerSubmissionID(),
 					submissionRegistryModelImpl.getOriginalLastChanged()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 				args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BROCKERSUBMISSIONIDWITHLASTCHANGES,
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BROKERSUBMISSIONIDWITHLASTCHANGES,
 				args);
 		}
 	}
@@ -5832,23 +5830,23 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 			}
 
 			if ((submissionRegistryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROCKERSUBMISSIONID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROKERSUBMISSIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						submissionRegistryModelImpl.getOriginalBrokerSubmissionID()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROKERSUBMISSIONID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROCKERSUBMISSIONID,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROKERSUBMISSIONID,
 					args);
 
 				args = new Object[] {
 						submissionRegistryModelImpl.getBrokerSubmissionID()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROCKERSUBMISSIONID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BROKERSUBMISSIONID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROCKERSUBMISSIONID,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BROKERSUBMISSIONID,
 					args);
 			}
 

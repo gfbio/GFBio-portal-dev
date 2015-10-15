@@ -62,10 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ProjectServiceSoap {
-	public static org.json.simple.JSONObject getProject(
+	public static org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = ProjectServiceUtil.getProject(json);
+			org.json.simple.JSONObject returnValue = ProjectServiceUtil.getProjectById(json);
 
 			return returnValue;
 		}
@@ -76,10 +76,10 @@ public class ProjectServiceSoap {
 		}
 	}
 
-	public static org.gfbio.model.ProjectSoap[] getProjectList(long userID)
-		throws RemoteException {
+	public static org.gfbio.model.ProjectSoap[] getProjectListByUserId(
+		long userID) throws RemoteException {
 		try {
-			java.util.List<org.gfbio.model.Project> returnValue = ProjectServiceUtil.getProjectList(userID);
+			java.util.List<org.gfbio.model.Project> returnValue = ProjectServiceUtil.getProjectListByUserId(userID);
 
 			return org.gfbio.model.ProjectSoap.toSoapModels(returnValue);
 		}

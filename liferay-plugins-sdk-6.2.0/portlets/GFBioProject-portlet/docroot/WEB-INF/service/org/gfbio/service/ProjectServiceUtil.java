@@ -63,16 +63,16 @@ public class ProjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject getProject(
+	public static org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject json) {
-		return getService().getProject(json);
+		return getService().getProjectById(json);
 	}
 
-	public static java.util.List<org.gfbio.model.Project> getProjectList(
+	public static java.util.List<org.gfbio.model.Project> getProjectListByUserId(
 		long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getProjectList(userID);
+		return getService().getProjectListByUserId(userID);
 	}
 
 	public static long updateProject(long projectID, long userID,

@@ -7,22 +7,25 @@
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createResearchObject" qname="operNS:createResearchObject" returnQName="createResearchObjectReturn" returnType="rtns:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getDirectChildren" qname="operNS:getDirectChildren" returnQName="getDirectChildrenReturn" returnType="rtns:ArrayOf_tns2_ResearchObjectSoap" returnItemType="tns2:ResearchObjectSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getAllChildren" qname="operNS:getAllChildren" returnQName="getAllChildrenReturn" returnType="rtns:ArrayOf_tns2_ResearchObjectSoap" returnItemType="tns2:ResearchObjectSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="getDirectParent" qname="operNS:getDirectParent" returnQName="getDirectParentReturn" returnType="rtns:ResearchObjectSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getResearchObjectAbsolutParent" qname="operNS:getResearchObjectAbsolutParent" returnQName="getResearchObjectAbsolutParentReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getResearchObjectById" qname="operNS:getResearchObjectById" returnQName="getResearchObjectByIdReturn" returnType="rtns:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="getTopParent" qname="operNS:getTopParent" returnQName="getTopParentReturn" returnType="rtns:ResearchObjectSoap" soapAction="">
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="researchObjectId" type="tns:long"></parameter>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getResearchObjectParent" qname="operNS:getResearchObjectParent" returnQName="getResearchObjectParentReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getResearchObjectsByParent" qname="operNS:getResearchObjectsByParent" returnQName="getResearchObjectsByParentReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateResearchObject" qname="operNS:updateResearchObject" returnQName="updateResearchObjectReturn" returnType="rtns:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="json" type="tns:anyType"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="createResearchObject getDirectChildren getDirectParent getResearchObjectById getTopParent updateResearchObject" />
+		<parameter name="allowedMethods" value="createResearchObject getAllChildren getResearchObjectAbsolutParent getResearchObjectById getResearchObjectParent getResearchObjectsByParent updateResearchObject" />
 		<parameter name="className" value="org.gfbio.service.http.ResearchObjectServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.gfbio.org,urn:http.service.gfbio.org" />
 		<parameter name="typeMappingVersion" value="1.2" />

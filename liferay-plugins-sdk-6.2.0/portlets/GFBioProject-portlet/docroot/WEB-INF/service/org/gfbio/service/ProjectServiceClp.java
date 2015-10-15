@@ -32,11 +32,11 @@ public class ProjectServiceClp implements ProjectService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getProject";
+		_methodName3 = "getProjectById";
 
 		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName4 = "getProjectList";
+		_methodName4 = "getProjectListByUserId";
 
 		_methodParameterTypes4 = new String[] { "long" };
 
@@ -100,7 +100,7 @@ public class ProjectServiceClp implements ProjectService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject getProject(
+	public org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 
@@ -125,7 +125,8 @@ public class ProjectServiceClp implements ProjectService {
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
+	public java.util.List<org.gfbio.model.Project> getProjectListByUserId(
+		long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

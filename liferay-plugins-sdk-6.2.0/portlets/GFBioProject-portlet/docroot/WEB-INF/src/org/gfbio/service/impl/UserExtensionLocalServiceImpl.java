@@ -14,9 +14,7 @@
 
 package org.gfbio.service.impl;
 
-import org.gfbio.NoSuchUserExtensionException;
-import org.gfbio.model.UserExtension;
-import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
 
@@ -54,14 +52,17 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	
 	
 	//
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getUserExtentionById(JSONObject json){
 		
 		JSONObject responseJson = new JSONObject();
 		
 		if (json.containsKey("userid")){
-			responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(UserExtensionLocalServiceUtil.getUserById((long)json.get("userid")));
-			if (responseJson == null)
-				responseJson.put("ERROR", "Failed by response user");
+			try {
+				responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(UserExtensionLocalServiceUtil.getUserById((long)json.get("userid")));
+			} catch (NoSuchUserException | SystemException e) {
+				e.printStackTrace();
+				responseJson.put("ERROR", e);}
 		}
 		else
 			responseJson.put("ERROR", "No key 'userid' exist.");

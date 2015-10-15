@@ -48,12 +48,13 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	
 	
 	//
-	public JSONObject getProject (JSONObject json){
+	public JSONObject getProjectById (JSONObject json){
 		return ProjectLocalServiceUtil.getProjectById(json);
 	}
 	
+	
 	//
-	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
+	public List<Project> getProjectListByUserId(long userID) throws NoSuchModelException, SystemException {
 		return ProjectLocalServiceUtil.getProjectList(userID);
 	}
 	

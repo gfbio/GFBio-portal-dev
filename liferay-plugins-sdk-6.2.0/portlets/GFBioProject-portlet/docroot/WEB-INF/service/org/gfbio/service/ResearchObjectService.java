@@ -66,6 +66,10 @@ public interface ResearchObjectService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
 		org.json.simple.JSONObject json);
 

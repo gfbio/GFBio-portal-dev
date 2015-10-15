@@ -66,11 +66,12 @@ public interface ProjectService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getProject(
+	public org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject json);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
+	public java.util.List<org.gfbio.model.Project> getProjectListByUserId(
+		long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 

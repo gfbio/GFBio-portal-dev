@@ -290,6 +290,11 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().getResearchObjectsByParent(json);
 	}
 
+	public static java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId) {
+		return getService().getAllChildren(researchObjectId);
+	}
+
 	public static java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
 		long researchObjectId) {
 		return getService().getDirectChildren(researchObjectId);
@@ -330,6 +335,11 @@ public class ResearchObjectLocalServiceUtil {
 	public static java.lang.String constructFormatMetadata(
 		java.lang.String metadata) {
 		return getService().constructFormatMetadata(metadata);
+	}
+
+	public static java.lang.Boolean checkParentAttributById(
+		long researchObjectId) {
+		return getService().checkParentAttributById(researchObjectId);
 	}
 
 	public static org.json.simple.JSONObject createResearchObjectByJson(

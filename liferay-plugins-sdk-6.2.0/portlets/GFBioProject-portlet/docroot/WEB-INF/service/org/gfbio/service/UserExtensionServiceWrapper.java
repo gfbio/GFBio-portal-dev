@@ -59,7 +59,7 @@ public class UserExtensionServiceWrapper implements UserExtensionService,
 	}
 
 	@Override
-	public com.liferay.portal.model.User getUserById(
+	public org.json.simple.JSONObject getUserById(
 		org.json.simple.JSONObject json)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {

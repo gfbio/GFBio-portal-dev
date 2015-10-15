@@ -32,11 +32,11 @@ public class ProjectServiceClpInvoker {
 
 		_methodParameterTypes105 = new String[] { "java.lang.String" };
 
-		_methodName110 = "getProject";
+		_methodName110 = "getProjectById";
 
 		_methodParameterTypes110 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName111 = "getProjectList";
+		_methodName111 = "getProjectListByUserId";
 
 		_methodParameterTypes111 = new String[] { "long" };
 
@@ -65,12 +65,12 @@ public class ProjectServiceClpInvoker {
 
 		if (_methodName110.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
-			return ProjectServiceUtil.getProject((org.json.simple.JSONObject)arguments[0]);
+			return ProjectServiceUtil.getProjectById((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName111.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
-			return ProjectServiceUtil.getProjectList(((Long)arguments[0]).longValue());
+			return ProjectServiceUtil.getProjectListByUserId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName112.equals(name) &&

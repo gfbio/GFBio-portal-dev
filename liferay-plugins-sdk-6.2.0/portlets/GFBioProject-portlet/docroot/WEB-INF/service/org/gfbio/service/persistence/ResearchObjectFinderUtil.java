@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class ResearchObjectFinderUtil {
+	public static java.util.List<java.lang.Boolean> getCheckOfDirectParent(
+		long researchObjectId) {
+		return getFinder().getCheckOfDirectParent(researchObjectId);
+	}
+
 	public static java.util.List<org.gfbio.model.ResearchObject> getDirectParent(
 		long researchObjectId) {
 		return getFinder().getDirectParent(researchObjectId);

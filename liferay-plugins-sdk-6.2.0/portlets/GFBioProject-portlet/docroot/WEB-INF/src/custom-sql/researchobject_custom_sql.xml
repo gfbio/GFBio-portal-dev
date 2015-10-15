@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
+
     <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getDirectParent">
 	    <![CDATA[
 			SELECT
@@ -13,6 +14,17 @@
 				  public.gfbio_researchobject
 				where
 				  researchobjectid=?)
+		]]>
+    </sql>
+    
+	<sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfDirectParent">
+	    <![CDATA[
+			SELECT 
+				CASE WHEN gfbio_researchobject.parentresearchobjectid IS NULL THEN FALSE ELSE TRUE END AS check
+			FROM 
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid =?
 		]]>
     </sql>
     

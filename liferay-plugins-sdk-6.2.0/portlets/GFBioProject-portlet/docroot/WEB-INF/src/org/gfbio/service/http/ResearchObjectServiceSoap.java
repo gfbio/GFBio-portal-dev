@@ -62,6 +62,20 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ResearchObjectServiceSoap {
+	public static org.gfbio.model.ResearchObjectSoap[] getAllChildren(
+		long researchObjectId) throws RemoteException {
+		try {
+			java.util.List<org.gfbio.model.ResearchObject> returnValue = ResearchObjectServiceUtil.getAllChildren(researchObjectId);
+
+			return org.gfbio.model.ResearchObjectSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
 		org.json.simple.JSONObject json) throws RemoteException {
 		try {

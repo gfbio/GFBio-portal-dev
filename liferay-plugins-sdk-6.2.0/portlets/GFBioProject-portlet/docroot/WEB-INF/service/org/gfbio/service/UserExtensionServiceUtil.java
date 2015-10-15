@@ -63,7 +63,7 @@ public class UserExtensionServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static com.liferay.portal.model.User getUserById(
+	public static org.json.simple.JSONObject getUserById(
 		org.json.simple.JSONObject json)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {

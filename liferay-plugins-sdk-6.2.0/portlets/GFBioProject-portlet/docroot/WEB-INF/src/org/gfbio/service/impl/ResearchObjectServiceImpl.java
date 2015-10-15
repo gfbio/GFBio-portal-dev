@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
 import org.json.simple.JSONObject;
 
@@ -45,10 +44,10 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 
 
-/*	//
+	//
 	public List <ResearchObject> getAllChildren (long researchObjectId){
 		return ResearchObjectLocalServiceUtil.getAllChildren(researchObjectId);
-	}*/
+	}
 	
 	
 	//

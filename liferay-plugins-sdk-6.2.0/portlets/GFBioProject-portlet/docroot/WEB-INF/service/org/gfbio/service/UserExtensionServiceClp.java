@@ -88,7 +88,7 @@ public class UserExtensionServiceClp implements UserExtensionService {
 	}
 
 	@Override
-	public com.liferay.portal.model.User getUserById(
+	public org.json.simple.JSONObject getUserById(
 		org.json.simple.JSONObject json)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -119,7 +119,7 @@ public class UserExtensionServiceClp implements UserExtensionService {
 			}
 		}
 
-		return (com.liferay.portal.model.User)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableService _invokableService;

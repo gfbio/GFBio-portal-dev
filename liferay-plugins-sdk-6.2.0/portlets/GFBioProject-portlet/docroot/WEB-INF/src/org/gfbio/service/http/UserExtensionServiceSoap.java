@@ -62,10 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class UserExtensionServiceSoap {
-	public static com.liferay.portal.model.User getUserById(
+	public static org.json.simple.JSONObject getUserById(
 		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			com.liferay.portal.model.User returnValue = UserExtensionServiceUtil.getUserById(json);
+			org.json.simple.JSONObject returnValue = UserExtensionServiceUtil.getUserById(json);
 
 			return returnValue;
 		}

@@ -538,7 +538,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the matching submission registries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.SubmissionRegistry> findByBrockerSubmissionID(
+	public java.util.List<org.gfbio.model.SubmissionRegistry> findByBrokerSubmissionID(
 		java.lang.String brokerSubmissionID)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -555,7 +555,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the range of matching submission registries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.SubmissionRegistry> findByBrockerSubmissionID(
+	public java.util.List<org.gfbio.model.SubmissionRegistry> findByBrokerSubmissionID(
 		java.lang.String brokerSubmissionID, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -573,7 +573,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the ordered range of matching submission registries
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.SubmissionRegistry> findByBrockerSubmissionID(
+	public java.util.List<org.gfbio.model.SubmissionRegistry> findByBrokerSubmissionID(
 		java.lang.String brokerSubmissionID, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -587,7 +587,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws org.gfbio.NoSuchSubmissionRegistryException if a matching submission registry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry findByBrockerSubmissionID_First(
+	public org.gfbio.model.SubmissionRegistry findByBrokerSubmissionID_First(
 		java.lang.String brokerSubmissionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -601,7 +601,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the first matching submission registry, or <code>null</code> if a matching submission registry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry fetchByBrockerSubmissionID_First(
+	public org.gfbio.model.SubmissionRegistry fetchByBrokerSubmissionID_First(
 		java.lang.String brokerSubmissionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -615,7 +615,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws org.gfbio.NoSuchSubmissionRegistryException if a matching submission registry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry findByBrockerSubmissionID_Last(
+	public org.gfbio.model.SubmissionRegistry findByBrokerSubmissionID_Last(
 		java.lang.String brokerSubmissionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -629,7 +629,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the last matching submission registry, or <code>null</code> if a matching submission registry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry fetchByBrockerSubmissionID_Last(
+	public org.gfbio.model.SubmissionRegistry fetchByBrokerSubmissionID_Last(
 		java.lang.String brokerSubmissionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -644,7 +644,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws org.gfbio.NoSuchSubmissionRegistryException if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry[] findByBrockerSubmissionID_PrevAndNext(
+	public org.gfbio.model.SubmissionRegistry[] findByBrokerSubmissionID_PrevAndNext(
 		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
 		java.lang.String brokerSubmissionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -657,7 +657,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @param brokerSubmissionID the broker submission i d
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByBrockerSubmissionID(java.lang.String brokerSubmissionID)
+	public void removeByBrokerSubmissionID(java.lang.String brokerSubmissionID)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -667,7 +667,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the number of matching submission registries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByBrockerSubmissionID(java.lang.String brokerSubmissionID)
+	public int countByBrokerSubmissionID(java.lang.String brokerSubmissionID)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -679,7 +679,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws org.gfbio.NoSuchSubmissionRegistryException if a matching submission registry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry findByBrockerSubmissionIDWithLastChanges(
+	public org.gfbio.model.SubmissionRegistry findByBrokerSubmissionIDWithLastChanges(
 		java.lang.String brokerSubmissionID, java.util.Date lastChanged)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException;
@@ -692,7 +692,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the matching submission registry, or <code>null</code> if a matching submission registry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry fetchByBrockerSubmissionIDWithLastChanges(
+	public org.gfbio.model.SubmissionRegistry fetchByBrokerSubmissionIDWithLastChanges(
 		java.lang.String brokerSubmissionID, java.util.Date lastChanged)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -705,7 +705,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the matching submission registry, or <code>null</code> if a matching submission registry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry fetchByBrockerSubmissionIDWithLastChanges(
+	public org.gfbio.model.SubmissionRegistry fetchByBrokerSubmissionIDWithLastChanges(
 		java.lang.String brokerSubmissionID, java.util.Date lastChanged,
 		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -718,7 +718,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the submission registry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.SubmissionRegistry removeByBrockerSubmissionIDWithLastChanges(
+	public org.gfbio.model.SubmissionRegistry removeByBrokerSubmissionIDWithLastChanges(
 		java.lang.String brokerSubmissionID, java.util.Date lastChanged)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException;
@@ -731,7 +731,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the number of matching submission registries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByBrockerSubmissionIDWithLastChanges(
+	public int countByBrokerSubmissionIDWithLastChanges(
 		java.lang.String brokerSubmissionID, java.util.Date lastChanged)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

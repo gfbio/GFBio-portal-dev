@@ -32,8 +32,6 @@ public class SubmissionRegistryFinderImpl  extends BasePersistenceImpl<Submissio
 	@SuppressWarnings({  "rawtypes" })
 	public List getArchivePIdsOfENA(String  archivePId) {
 		
-		System.out.println("getArchivePIdsOfENA "+archivePId);
-		
 		Session session = null;
 		try {
 		
@@ -225,7 +223,7 @@ public class SubmissionRegistryFinderImpl  extends BasePersistenceImpl<Submissio
 	}
 	
 	
-/*	//
+	//
 	@SuppressWarnings({ "unchecked" })
 	public List<SubmissionRegistry> getSubmissionRegistry(long researchObjectId, int researchObjectVersion, String archive) {
 		
@@ -252,6 +250,6 @@ public class SubmissionRegistryFinderImpl  extends BasePersistenceImpl<Submissio
 			closeSession(session);
 		}
 		return null;
-	}*/
+	}
 
 }

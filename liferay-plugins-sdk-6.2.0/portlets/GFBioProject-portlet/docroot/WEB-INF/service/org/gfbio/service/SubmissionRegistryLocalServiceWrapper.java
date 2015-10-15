@@ -374,6 +374,14 @@ public class SubmissionRegistryLocalServiceWrapper
 	}
 
 	@Override
+	public org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive) {
+		return _submissionRegistryLocalService.getSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive);
+	}
+
+	@Override
 	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
 		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
 		return _submissionRegistryLocalService.constructSubmissionRegistriesJson(submissionRegistryList);

@@ -140,6 +140,7 @@ CREATE TABLE gfbio_project
   startdate timestamp without time zone,
   enddate timestamp without time zone,
   status varchar(75),
+  parentprojectid bigint,
   CONSTRAINT gfbio_project_pkey PRIMARY KEY (projectId)
 )
 WITH (

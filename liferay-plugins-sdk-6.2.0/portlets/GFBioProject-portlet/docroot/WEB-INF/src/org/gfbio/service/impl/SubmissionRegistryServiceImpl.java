@@ -91,7 +91,11 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 	
 	//
 	public JSONObject getSubmissionRegistriesByBrokerSubmissionId (JSONObject json){
-		return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(json);
+		JSONObject responseJson = null;
+		try {
+			responseJson = SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(json);
+		} catch (SystemException e) {e.printStackTrace();}
+		return responseJson;
 	}
 	
 	

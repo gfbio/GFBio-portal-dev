@@ -59,6 +59,12 @@ public class ResearchObjectServiceWrapper implements ResearchObjectService,
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId) {
+		return _researchObjectService.getAllChildren(researchObjectId);
+	}
+
+	@Override
 	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
 		org.json.simple.JSONObject json) {
 		return _researchObjectService.getResearchObjectAbsolutParent(json);

@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.NoSuchResearchObjectException;
 import org.gfbio.model.ResearchObject;
-import org.gfbio.model.SubmissionRegistry;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.json.simple.JSONObject;
@@ -55,13 +53,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getResearchObjectAbsolutParent (JSONObject json){
 		
 		JSONObject responseJson = new JSONObject();
 		if (json.containsKey("researchobjectid")){
 			responseJson = ResearchObjectLocalServiceUtil.constructResearchObjectJson(ResearchObjectLocalServiceUtil.getTopParent((long)json.get("researchobjectid")));
-			if (responseJson == null)
+			if (responseJson.toString().equals("{}"))
 				responseJson.put("ERROR", "Faile by find absolut parent");
 		}
 		else
@@ -71,13 +69,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getResearchObjectParent (JSONObject json){
 		
 		JSONObject responseJson = new JSONObject();
 		if (json.containsKey("researchobjectid")){
 			responseJson = ResearchObjectLocalServiceUtil.constructResearchObjectJson(ResearchObjectLocalServiceUtil.getDirectParent((long)json.get("researchobjectid")));
-			if (responseJson == null)
+			if (responseJson.toString().equals("{}"))
 				responseJson.put("ERROR", "Faile by find parent");
 		}
 		else
@@ -87,13 +85,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getResearchObjectsByParent (JSONObject json){
 		
 		JSONObject responseJson = new JSONObject();
 		if (json.containsKey("researchobjectid")){
 			responseJson = ResearchObjectLocalServiceUtil.constructResearchObjectsJson(ResearchObjectLocalServiceUtil.getDirectChildren((long)json.get("researchobjectid")));
-			if (responseJson == null)
+			if (responseJson.toString().equals("{}"))
 				responseJson.put("ERROR", "Faile by find research objects by parent");
 		}
 		else
@@ -104,7 +102,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
-/*	//
+	
+	//
 	@SuppressWarnings("null")
 	public List <ResearchObject> getAllChildren (long researchObjectId){
 		List <ResearchObject> researchObjectList = null;
@@ -127,7 +126,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			researchObjectList = researchObjectList.subList(1, researchObjectList.size());
 		}
 		return secondList;
-	}*/
+	}
 	
 	
 	//
@@ -142,7 +141,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	public ResearchObject getDirectParent(long researchObjectId) {
-		return (ResearchObject) ResearchObjectFinderUtil.getDirectParent(researchObjectId).get(0) ;
+		
+		ResearchObject researchObject = null;
+		if (ResearchObjectLocalServiceUtil.checkParentAttributById(researchObjectId))
+			researchObject = (ResearchObject) ResearchObjectFinderUtil.getDirectParent(researchObjectId).get(0) ;
+		return researchObject;
 	}
 
 	
@@ -179,14 +182,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructResearchObjectJson (ResearchObject researchObject){
+
 		JSONObject json = new JSONObject();
-		json.put("researchobjectid", researchObject.getResearchObjectID());
-		json.put("researchobjectversion", researchObject.getVersion());		
-		json.put("name", researchObject.getName());
-		json.put("label", researchObject.getLabel());
-		json.put("metadata", researchObject.getMetadata());
-		json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
-		json.put("researchobjecttype", researchObject.getResearchObjectType());		
+		if (researchObject != null){
+			json.put("researchobjectid", researchObject.getResearchObjectID());
+			json.put("researchobjectversion", researchObject.getVersion());		
+			json.put("name", researchObject.getName());
+			json.put("label", researchObject.getLabel());
+			json.put("metadata", researchObject.getMetadata());
+			json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
+			json.put("researchobjecttype", researchObject.getResearchObjectType());	
+		}
 		return json;
 	}
 	
@@ -194,9 +200,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructResearchObjectsJson (List <ResearchObject> researchObjectList){
+
 		JSONObject json = new JSONObject();
-		for (int i =0; i < researchObjectList.size();i++)
-			json.put((new Integer(i)).toString(), ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+		if (researchObjectList.size()>0)
+			for (int i =0; i < researchObjectList.size();i++)
+				json.put((new Integer(i)).toString(), ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
 		return json;
 	}
 	
@@ -204,6 +212,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	public String constructFormatMetadata(String metadata){
 		return (metadata);
+	}
+	
+	
+	//
+	public Boolean checkParentAttributById(long researchObjectId){
+		return ResearchObjectFinderUtil.getCheckOfDirectParent(researchObjectId).get(0);
 	}
 	
 	
@@ -219,10 +233,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		if (json.containsKey("name") && json.containsKey("label") && json.containsKey("metadata") && json.containsKey("researchobjecttype")){
 
-			String name = (String) json.get("name");
-			String label = (String) json.get("label");
+			String name = ((String) json.get("name")).trim();
+			String label = ((String) json.get("label")).trim();
 			String metadata = json.get("metadata").toString();
-			String researchObjectType = (String) json.get("researchobjecttype");
+			String researchObjectType = ((String) json.get("researchobjecttype")).trim();
 			
 			try {
 				researchObjectId = ResearchObjectLocalServiceUtil.createResearchObject(name, label, metadata, researchObjectType);
@@ -326,10 +340,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			long researchObjectId = (long) json.get("researchobjectid");
 			if (json.containsKey("researchobjectversion") && json.containsKey("name") && json.containsKey("label") && json.containsKey("metadata") && json.containsKey("researchobjecttype")){
 				int researchObjectVersion = (int)((long) json.get("researchobjectversion"));
-				String name = (String) json.get("name");
-				String label = (String) json.get("label");
+				String name = ((String) json.get("name")).trim();
+				String label = ((String) json.get("label")).trim();
 				String metadata = json.get("metadata").toString();
-				String researchObjectType = (String) json.get("researchobjecttype");
+				String researchObjectType = ((String) json.get("researchobjecttype")).trim();
 				String formatmetadata = ResearchObjectLocalServiceUtil.constructFormatMetadata(metadata);
 				researchObjectId = updateResearchObject(researchObjectId, researchObjectVersion, name, label, metadata, formatmetadata, researchObjectType);
 				

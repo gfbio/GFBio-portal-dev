@@ -36,4 +36,8 @@ public interface SubmissionRegistryFinder {
 
 	public java.util.List getStatusByIds(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive);
+
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive);
 }

@@ -63,6 +63,11 @@ public class ResearchObjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId) {
+		return getService().getAllChildren(researchObjectId);
+	}
+
 	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
 		org.json.simple.JSONObject json) {
 		return getService().getResearchObjectAbsolutParent(json);

@@ -348,6 +348,14 @@ public class SubmissionRegistryLocalServiceUtil {
 			archive);
 	}
 
+	public static org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive) {
+		return getService()
+				   .getSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive);
+	}
+
 	public static org.json.simple.JSONObject constructSubmissionRegistriesJson(
 		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
 		return getService()

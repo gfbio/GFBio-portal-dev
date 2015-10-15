@@ -174,8 +174,8 @@
 		<finder name="ResearchObjectIDWithVersion" 			return-type="Collection">			<finder-column name="researchObjectID" />		<finder-column name="researchObjectVersion" />	</finder>
 		<finder name="ResearchObjectIDWithLastChanges" 		return-type="SubmissionRegistry">	<finder-column name="researchObjectID" />		<finder-column name="lastChanged" />			</finder>
 		<finder name="Archive"								return-type="Collection">			<finder-column name="archive" />																</finder>
-		<finder name="BrockerSubmissionID"					return-type="Collection">			<finder-column name="brokerSubmissionID" />													</finder>
-		<finder name="BrockerSubmissionIDWithLastChanges"	return-type="SubmissionRegistry">	<finder-column name="brokerSubmissionID" />	<finder-column name="lastChanged" />			</finder>
+		<finder name="BrokerSubmissionID"					return-type="Collection">			<finder-column name="brokerSubmissionID" />													</finder>
+		<finder name="BrokerSubmissionIDWithLastChanges"	return-type="SubmissionRegistry">	<finder-column name="brokerSubmissionID" />	<finder-column name="lastChanged" />			</finder>
 		<finder name="PersistentIdentifierID"				return-type="Collection">			<finder-column name="archivePID" />																</finder>
 		<finder name="PersistentIdentifierTypeID"			return-type="Collection">			<finder-column name="archivePIDType" />															</finder>
 		<finder name="UserID"								return-type="Collection">			<finder-column name="userID" />																	</finder>
@@ -249,7 +249,7 @@
 
 		<finder name="ProjectID"		return-type="Collection">			<finder-column name="projectID" />												</finder>
 		<finder name="UserID" 			return-type="Collection">			<finder-column name="userID" />													</finder>
-		<finder name="findByPrimaryKey" return-type="Project_User_Worker">	<finder-column	name="projectID" />			<finder-column	name="userID" />	</finder>
+		<finder name="findByPrimaryKey" return-type="Project_User">			<finder-column	name="projectID" />			<finder-column	name="userID" />	</finder>
 	</entity>
 
 

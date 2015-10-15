@@ -19,7 +19,6 @@ import java.util.List;
 
 import org.gfbio.model.SubmissionRegistry;
 import org.gfbio.service.DataProviderLocalServiceUtil;
-import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
 import org.gfbio.service.base.SubmissionRegistryLocalServiceBaseImpl;
 import org.gfbio.service.persistence.SubmissionRegistryFinderUtil;
@@ -54,13 +53,13 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	
 	
 	//
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getSubmissionRegistriesByBrokerSubmissionId (JSONObject json) throws SystemException{
 		
 		JSONObject responseJson = new JSONObject();
 		if (json.containsKey("brokersubmissionid")){
 			responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((String)json.get("brokersubmissionid")));
-			if (responseJson == null)
+			if (responseJson.toString().equals("{}"))
 				responseJson.put("ERROR", "Failed by response submission registry");
 		}
 		else
@@ -70,14 +69,16 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	
 	
 	//
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getSubmissionRegistriesByResearchObjectId (JSONObject json){
 
 		JSONObject responseJson = new JSONObject();
 		if (json.containsKey("researchobjectid")){
-			responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((long)json.get("researchobjectid")));
-			if (responseJson == null)
-				responseJson.put("ERROR", "Failed by response submission registry");
+			try {
+				responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((long)json.get("researchobjectid")));
+			} catch (SystemException e) {
+				e.printStackTrace();
+				responseJson.put("ERROR", e);}
 		}
 		else
 			responseJson.put("ERROR", "No key 'researchobjectid' exist.");
@@ -165,10 +166,10 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	}
 	
 	
-/*	//
+	//
 	public SubmissionRegistry getSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive){
 		return SubmissionRegistryFinderUtil.getSubmissionRegistry(researchObjectId, researchObjectVersion, archive).get(0);
-	}*/
+	}
 	
 	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
@@ -243,7 +244,7 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 			if (!(json.containsKey("status") && json.containsKey("archivepidtype")))
 				check = SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, lastChanged, userId);
 	
-			if (!check && json.containsKey("status") && !(json.containsKey("archivepidtype")))
+			if (check && json.containsKey("status") && !(json.containsKey("archivepidtype")))
 				check = SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, lastChanged, userId, ((String) json.get("status")).trim());
 
 			if (json.containsKey("status") && json.containsKey("archivepidtype"))
