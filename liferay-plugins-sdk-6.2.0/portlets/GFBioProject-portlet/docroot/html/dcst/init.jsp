@@ -28,3 +28,58 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="org.json.simple.parser.JSONParser" %>
 <%@ page import="org.json.simple.parser.ParseException" %>
+
+<portlet:defineObjects />
+<liferay-theme:defineObjects />
+<portlet:resourceURL escapeXml="false" id="dcstURL" var="dcstURL" />
+
+<script type="text/javascript">
+
+function ajaxGetCategory(category) {
+	console.log(document.getElementById("dcstURL").value);
+	$.ajax({
+		"type" : "GET",
+		"url": document.getElementById("dcstURL").value.concat("/GFBioDCST"),
+		"data" : {
+			"<portlet:namespace />category" : JSON.stringify(category)
+		},
+		success : function(data) {
+		}
+	});
+	visibleShow("-20");
+	window.setTimeout('reload()',1);
+}
+
+
+/////////////////////////////////////////   ResourceRequest  //////////////////////////////////////////////
+
+function ajaxRequest(archivingURL, method, data, as) {
+	$.ajax({
+		"type" : "POST",
+		"url": archivingURL.concat("/GFBioArchiving"),
+		"data" : {
+			"<portlet:namespace />data" : JSON.stringify(data),
+			"<portlet:namespace />responseTarget" : method
+		},
+		async: as,
+		success : function() {
+		}
+	});
+}
+
+function ajaxValueResponse(archivingURL, method, data) {
+	
+	$.ajax({
+		"type" : "POST",
+		"url": archivingURL.concat("/GFBioArchiving"),
+		"data" : {
+			"<portlet:namespace />data" : JSON.stringify(data),
+			"<portlet:namespace />responseTarget" : method
+		},
+		async: false,
+		success : function(data) {
+			callbackSuccess(data);
+		}
+	});
+}
+</script>

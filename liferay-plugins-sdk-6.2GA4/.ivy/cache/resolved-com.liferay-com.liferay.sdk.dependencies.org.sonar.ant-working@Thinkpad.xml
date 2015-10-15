@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m2="http://ant.apache.org/ivy/maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+	<info organisation="com.liferay" module="com.liferay.sdk.dependencies.org.sonar.ant" revision="working@Thinkpad" status="integration" publication="20150910094328">
+		<extends extendType="configurations,description,info" location="D:/GFBIO_code/gfbio-portal-dev/liferay-plugins-sdk-6.2GA4/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration"/>
+	</info>
+
+	<dependencies defaultconf="default">
+		<dependency name="sonar-ant-task" org="org.codehaus.sonar-plugins" rev="2.2"/>
+	</dependencies>
+</ivy-module>

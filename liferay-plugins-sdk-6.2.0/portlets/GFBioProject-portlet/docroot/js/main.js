@@ -383,6 +383,12 @@ function addSubJsonToJson(json, subjson, key){
 
 
 
+//testfunction dcst portlet
+function getCategory(category) {
+	console.log(category);
+	ajaxGetCategory(category);
+}
+
 //////////////////////////////////////////////////  update Label-Value-Data in the view ///////////////////////////////////////////////
 
 
