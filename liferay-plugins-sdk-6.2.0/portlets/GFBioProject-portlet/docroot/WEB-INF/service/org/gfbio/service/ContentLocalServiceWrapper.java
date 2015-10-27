@@ -279,11 +279,6 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public void deleteContentById(long contentId) {
-		_contentLocalService.deleteContentById(contentId);
-	}
-
-	@Override
 	public void deleteContentsByColumnId(long columnId) {
 		_contentLocalService.deleteContentsByColumnId(columnId);
 	}
@@ -297,37 +292,6 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	@Override
 	public void deleteContentsByRowId(long rowId) {
 		_contentLocalService.deleteContentsByRowId(rowId);
-	}
-
-	@Override
-	public org.gfbio.model.Content getContentById(long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchContentException {
-		return _contentLocalService.getContentById(contentId);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByColumnId(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.getContentsByColumnId(columnId);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByHeadId(
-		long headId) throws com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.getContentsByHeadId(headId);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByRowId(
-		long rowId) throws com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.getContentsByRowId(rowId);
-	}
-
-	@Override
-	public java.lang.String getCellContentByTableIds(long rowId, long columnId) {
-		return _contentLocalService.getCellContentByTableIds(rowId, columnId);
 	}
 
 	@Override
@@ -370,9 +334,9 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
+	public org.json.simple.JSONObject getContentInformationAsJSONByContentId(
 		long contentId) {
-		return _contentLocalService.getContentInformationAsJSONBycontentId(contentId);
+		return _contentLocalService.getContentInformationAsJSONByContentId(contentId);
 	}
 
 	@Override
@@ -387,8 +351,8 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public long getHeadIdById(long headId) {
-		return _contentLocalService.getHeadIdById(headId);
+	public long getHeadIdById(long contentId) {
+		return _contentLocalService.getHeadIdById(contentId);
 	}
 
 	@Override
@@ -425,21 +389,6 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _contentLocalService.getColumnIdById(contentId);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByContent(
-		java.lang.String cellContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.getContentsByContent(cellContent);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByContentOfColumn(
-		java.lang.String cellContent, long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.getContentsByContentOfColumn(cellContent,
-			columnId);
 	}
 
 	@Override

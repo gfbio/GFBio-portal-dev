@@ -166,11 +166,15 @@ public class SubmissionRegistrySoap implements Serializable {
 		_userID = userID;
 	}
 
-	public Boolean getIsPublic() {
+	public boolean getIsPublic() {
 		return _isPublic;
 	}
 
-	public void setIsPublic(Boolean isPublic) {
+	public boolean isIsPublic() {
+		return _isPublic;
+	}
+
+	public void setIsPublic(boolean isPublic) {
 		_isPublic = isPublic;
 	}
 
@@ -198,7 +202,7 @@ public class SubmissionRegistrySoap implements Serializable {
 	private long _archivePIDType;
 	private Date _lastChanged;
 	private long _userID;
-	private Boolean _isPublic;
+	private boolean _isPublic;
 	private Date _publicAfter;
 	private String _status;
 }

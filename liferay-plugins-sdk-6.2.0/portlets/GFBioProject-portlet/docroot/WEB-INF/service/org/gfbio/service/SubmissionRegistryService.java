@@ -100,9 +100,9 @@ public interface SubmissionRegistryService extends BaseService, InvokableService
 	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
 		org.json.simple.JSONObject json);
 
-	public org.json.simple.JSONObject createSubmissionregistry(
+	public org.json.simple.JSONObject createSubmissionRegistry(
 		org.json.simple.JSONObject json);
 
-	public org.json.simple.JSONObject updateSubmissionregistry(
+	public org.json.simple.JSONObject updateSubmissionRegistry(
 		org.json.simple.JSONObject json);
 }

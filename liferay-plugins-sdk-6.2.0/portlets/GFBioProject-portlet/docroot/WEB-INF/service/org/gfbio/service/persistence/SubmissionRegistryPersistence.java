@@ -1155,7 +1155,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<org.gfbio.model.SubmissionRegistry> findByIsPublic(
-		java.lang.Boolean isPublic)
+		boolean isPublic)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1172,7 +1172,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<org.gfbio.model.SubmissionRegistry> findByIsPublic(
-		java.lang.Boolean isPublic, int start, int end)
+		boolean isPublic, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1190,7 +1190,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<org.gfbio.model.SubmissionRegistry> findByIsPublic(
-		java.lang.Boolean isPublic, int start, int end,
+		boolean isPublic, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1204,7 +1204,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.SubmissionRegistry findByIsPublic_First(
-		java.lang.Boolean isPublic,
+		boolean isPublic,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException;
@@ -1218,7 +1218,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.SubmissionRegistry fetchByIsPublic_First(
-		java.lang.Boolean isPublic,
+		boolean isPublic,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1232,7 +1232,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.SubmissionRegistry findByIsPublic_Last(
-		java.lang.Boolean isPublic,
+		boolean isPublic,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException;
@@ -1246,7 +1246,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.SubmissionRegistry fetchByIsPublic_Last(
-		java.lang.Boolean isPublic,
+		boolean isPublic,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -1262,7 +1262,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	*/
 	public org.gfbio.model.SubmissionRegistry[] findByIsPublic_PrevAndNext(
 		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		java.lang.Boolean isPublic,
+		boolean isPublic,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException;
@@ -1273,7 +1273,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @param isPublic the is public
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByIsPublic(java.lang.Boolean isPublic)
+	public void removeByIsPublic(boolean isPublic)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1283,7 +1283,7 @@ public interface SubmissionRegistryPersistence extends BasePersistence<Submissio
 	* @return the number of matching submission registries
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByIsPublic(java.lang.Boolean isPublic)
+	public int countByIsPublic(boolean isPublic)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

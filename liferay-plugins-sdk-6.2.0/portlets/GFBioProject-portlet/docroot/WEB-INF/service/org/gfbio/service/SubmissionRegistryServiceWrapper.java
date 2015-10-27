@@ -114,15 +114,15 @@ public class SubmissionRegistryServiceWrapper
 	}
 
 	@Override
-	public org.json.simple.JSONObject createSubmissionregistry(
+	public org.json.simple.JSONObject createSubmissionRegistry(
 		org.json.simple.JSONObject json) {
-		return _submissionRegistryService.createSubmissionregistry(json);
+		return _submissionRegistryService.createSubmissionRegistry(json);
 	}
 
 	@Override
-	public org.json.simple.JSONObject updateSubmissionregistry(
+	public org.json.simple.JSONObject updateSubmissionRegistry(
 		org.json.simple.JSONObject json) {
-		return _submissionRegistryService.updateSubmissionregistry(json);
+		return _submissionRegistryService.updateSubmissionRegistry(json);
 	}
 
 	/**

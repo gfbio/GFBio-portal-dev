@@ -181,14 +181,21 @@ public interface SubmissionRegistryModel extends BaseModel<SubmissionRegistry> {
 	 *
 	 * @return the is public of this submission registry
 	 */
-	public Boolean getIsPublic();
+	public boolean getIsPublic();
 
 	/**
-	 * Sets the is public of this submission registry.
+	 * Returns <code>true</code> if this submission registry is is public.
+	 *
+	 * @return <code>true</code> if this submission registry is is public; <code>false</code> otherwise
+	 */
+	public boolean isIsPublic();
+
+	/**
+	 * Sets whether this submission registry is is public.
 	 *
 	 * @param isPublic the is public of this submission registry
 	 */
-	public void setIsPublic(Boolean isPublic);
+	public void setIsPublic(boolean isPublic);
 
 	/**
 	 * Returns the public after of this submission registry.

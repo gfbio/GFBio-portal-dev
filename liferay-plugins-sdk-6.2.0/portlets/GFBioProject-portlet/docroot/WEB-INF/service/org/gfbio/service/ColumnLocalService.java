@@ -246,22 +246,7 @@ public interface ColumnLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void deleteColumnById(long columnId);
-
 	public void deleteColumnsByHeadId(long headId);
-
-	public java.lang.Boolean checkHaveTableRelationsById(long headId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException;
-
-	public java.lang.Boolean checkHaveTableRelationsByName(
-		java.lang.String tableName);
-
-	public org.json.simple.JSONObject constructColumnJson(long columnId,
-		long headId, java.lang.String columnName);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Column getColumnById(long columnId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getColumnNameById(long columnId);
@@ -274,11 +259,6 @@ public interface ColumnLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Column> getColumnsByHeadId(
 		long headId) throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Column> getColumnsByHeadIdAndName(
-		long headId, java.lang.String columnName)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
@@ -301,6 +281,16 @@ public interface ColumnLocalService extends BaseLocalService,
 	public int getMaxCountofColumns(
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.Boolean checkHaveTableRelationsById(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException;
+
+	public java.lang.Boolean checkHaveTableRelationsByName(
+		java.lang.String tableName);
+
+	public org.json.simple.JSONObject constructColumnJson(long columnId,
+		long headId, java.lang.String columnName);
 
 	public java.lang.Boolean updateColumn(long columnId, long headId,
 		java.lang.String content);

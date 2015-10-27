@@ -21,8 +21,12 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 	public static String FINDER_CLASS_NAME_ENTITY = ColumnFinderImpl.class.getName();
 	public static String GET_COLUMNS_WITH_RELATION = FINDER_CLASS_NAME_ENTITY + ".getColumnsWithRelation";
 	public static String GET_COLUMNIDS_WITHOUT_RELATION = FINDER_CLASS_NAME_ENTITY + ".getColumnIdsWithoutRelation";
-	public static String GET_HEADIDS_BY_COLUMNNAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdsByColumnName";
 	public static String GET_COLUMNNAME_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getColumnNameById";	
+	public static String GET_COUNT_OF_COLUMNS = FINDER_CLASS_NAME_ENTITY + ".getCountofColumns";	
+	public static String GET_HEADIDS_BY_COLUMNNAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdsByColumnName";
+
+	
+	
 	
 	
 	
@@ -95,6 +99,31 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(columnid);
 			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	
+	//
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List getCountofColumns(long headId) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_COUNT_OF_COLUMNS);
+
+			SQLQuery queryObject = session.createSQLQuery(sql);
+
+			queryObject.setCacheable(false);
+			queryObject.addScalar("count", Type.INTEGER);
+
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(headId);
+			return (List<Column>) queryObject.list();
 		} catch (Exception e) {e.printStackTrace();}
 		finally {
 			closeSession(session);

@@ -65,6 +65,10 @@ public interface UserExtensionService extends BaseService, InvokableService {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* @param test
+	* @JSONWebService tester
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONObject getUserById(
 		org.json.simple.JSONObject json)

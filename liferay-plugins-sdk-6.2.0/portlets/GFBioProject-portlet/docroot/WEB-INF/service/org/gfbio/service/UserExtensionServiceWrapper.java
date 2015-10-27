@@ -58,6 +58,10 @@ public class UserExtensionServiceWrapper implements UserExtensionService,
 			arguments);
 	}
 
+	/**
+	* @param test
+	* @JSONWebService tester
+	*/
 	@Override
 	public org.json.simple.JSONObject getUserById(
 		org.json.simple.JSONObject json)

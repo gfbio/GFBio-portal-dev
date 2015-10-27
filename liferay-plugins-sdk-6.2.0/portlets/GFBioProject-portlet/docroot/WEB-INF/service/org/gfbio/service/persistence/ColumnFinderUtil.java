@@ -35,6 +35,10 @@ public class ColumnFinderUtil {
 		return getFinder().getColumnNameById(columnid);
 	}
 
+	public static java.util.List getCountofColumns(long headId) {
+		return getFinder().getCountofColumns(headId);
+	}
+
 	public static java.util.List getHeadIdsByColumnName(
 		java.lang.String columnName) {
 		return getFinder().getHeadIdsByColumnName(columnName);

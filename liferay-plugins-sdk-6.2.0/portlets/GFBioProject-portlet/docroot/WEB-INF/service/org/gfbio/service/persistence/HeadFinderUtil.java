@@ -21,13 +21,22 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class HeadFinderUtil {
+	public static java.util.List getEntitiesByHeadId(long headId) {
+		return getFinder().getEntitiesByHeadId(headId);
+	}
+
 	public static java.util.List<org.gfbio.model.Head> getHeadBetweenHeadIds(
 		int start, int end) {
 		return getFinder().getHeadBetweenHeadIds(start, end);
 	}
 
-	public static java.util.List getEntitiesByHeadId(long headId) {
-		return getFinder().getEntitiesByHeadId(headId);
+	public static java.util.List getHeadIdByTableName(
+		java.lang.String tableName) {
+		return getFinder().getHeadIdByTableName(tableName);
+	}
+
+	public static java.util.List getTableNameById(long headId) {
+		return getFinder().getTableNameById(headId);
 	}
 
 	public static HeadFinder getFinder() {

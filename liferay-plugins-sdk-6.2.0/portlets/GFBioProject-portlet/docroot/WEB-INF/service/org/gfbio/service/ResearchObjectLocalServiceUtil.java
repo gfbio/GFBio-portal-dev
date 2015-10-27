@@ -347,6 +347,11 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().createResearchObjectByJson(json);
 	}
 
+	public static org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject json) {
+		return getService().updateResearchObjectByJson(json);
+	}
+
 	public static long createResearchObject(java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
 		java.lang.String researchObjectType)
@@ -380,11 +385,6 @@ public class ResearchObjectLocalServiceUtil {
 				   .updateResearchObject(researchObjectId,
 			researchObjectVersion, name, label, metadata, formatmetadata,
 			researchObjectType);
-	}
-
-	public static org.json.simple.JSONObject updateResearchObjectByJson(
-		org.json.simple.JSONObject json) {
-		return getService().updateResearchObjectByJson(json);
 	}
 
 	public static long updateResearchObjectWithProject(long projectId,

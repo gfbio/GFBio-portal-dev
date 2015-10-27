@@ -472,12 +472,17 @@ public class SubmissionRegistryModelImpl extends BaseModelImpl<SubmissionRegistr
 
 	@JSON
 	@Override
-	public Boolean getIsPublic() {
+	public boolean getIsPublic() {
 		return _isPublic;
 	}
 
 	@Override
-	public void setIsPublic(Boolean isPublic) {
+	public boolean isIsPublic() {
+		return _isPublic;
+	}
+
+	@Override
+	public void setIsPublic(boolean isPublic) {
 		_columnBitmask |= ISPUBLIC_COLUMN_BITMASK;
 
 		if (!_setOriginalIsPublic) {
@@ -489,7 +494,7 @@ public class SubmissionRegistryModelImpl extends BaseModelImpl<SubmissionRegistr
 		_isPublic = isPublic;
 	}
 
-	public Boolean getOriginalIsPublic() {
+	public boolean getOriginalIsPublic() {
 		return _originalIsPublic;
 	}
 
@@ -830,8 +835,8 @@ public class SubmissionRegistryModelImpl extends BaseModelImpl<SubmissionRegistr
 	private long _userID;
 	private long _originalUserID;
 	private boolean _setOriginalUserID;
-	private Boolean _isPublic;
-	private Boolean _originalIsPublic;
+	private boolean _isPublic;
+	private boolean _originalIsPublic;
 	private boolean _setOriginalIsPublic;
 	private Date _publicAfter;
 	private String _status;

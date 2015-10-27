@@ -44,6 +44,10 @@ public class ContentFinderUtil {
 			columnName2);
 	}
 
+	public static java.util.List getColumnIdById(long contentId) {
+		return getFinder().getColumnIdById(contentId);
+	}
+
 	public static java.util.List getRowIds(long headId) {
 		return getFinder().getRowIds(headId);
 	}

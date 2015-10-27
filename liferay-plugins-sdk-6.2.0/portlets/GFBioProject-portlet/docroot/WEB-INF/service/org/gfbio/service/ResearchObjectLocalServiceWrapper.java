@@ -371,6 +371,12 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject json) {
+		return _researchObjectLocalService.updateResearchObjectByJson(json);
+	}
+
+	@Override
 	public long createResearchObject(java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
 		java.lang.String researchObjectType)
@@ -403,12 +409,6 @@ public class ResearchObjectLocalServiceWrapper
 		return _researchObjectLocalService.updateResearchObject(researchObjectId,
 			researchObjectVersion, name, label, metadata, formatmetadata,
 			researchObjectType);
-	}
-
-	@Override
-	public org.json.simple.JSONObject updateResearchObjectByJson(
-		org.json.simple.JSONObject json) {
-		return _researchObjectLocalService.updateResearchObjectByJson(json);
 	}
 
 	@Override

@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
-
-    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIds">
-	    <![CDATA[
-			SELECT  
-				DISTINCT public.gfbio_content.rowid
-			FROM 
-				public.gfbio_content
-			WHERE 
-				gfbio_content.headid = ? 
-		]]>
-    </sql>
     
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getCellContent">
 	    <![CDATA[
@@ -33,6 +22,17 @@
 	 			public.gfbio_content
 			 WHERE
 	 			public.gfbio_content.contentid =?
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getColumnIdById">
+	    <![CDATA[
+			SELECT 
+			  gfbio_content.columnid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  gfbio_content.contentid =  ? 
 		]]>
     </sql>
 
@@ -116,6 +116,39 @@
 		]]>
     </sql>
     
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsByRowId">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_content.contentId
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  rowId = ?
+		]]>
+    </sql>
+           
+   <sql id="org.gfbio.service.persistence.ContentFinderImpl.getHeadIdById">
+	    <![CDATA[
+			SELECT 
+			  gfbio_content.headid
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  contentId = ?
+		]]>
+    </sql>
+        
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIds">
+	    <![CDATA[
+			SELECT  
+				DISTINCT public.gfbio_content.rowid
+			FROM 
+				public.gfbio_content
+			WHERE 
+				gfbio_content.headid = ? 
+		]]>
+    </sql>
+    
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdByCellContent">
 	    <![CDATA[
 			SELECT
@@ -134,28 +167,6 @@
 						column_name = ?
 				) = gfbio_content.columnid AND
 				cellcontent = ?
-		]]>
-    </sql>
-    
-   <sql id="org.gfbio.service.persistence.ContentFinderImpl.getHeadIdById">
-	    <![CDATA[
-			SELECT 
-			  gfbio_content.headid
-			FROM 
-			  public.gfbio_content
-			WHERE
-			  contentId = ?
-		]]>
-    </sql>
-    
-    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsByRowId">
-	    <![CDATA[
-			SELECT 
-			  public.gfbio_content.contentId
-			FROM 
-			  public.gfbio_content
-			WHERE
-			  rowId = ?
 		]]>
     </sql>
     

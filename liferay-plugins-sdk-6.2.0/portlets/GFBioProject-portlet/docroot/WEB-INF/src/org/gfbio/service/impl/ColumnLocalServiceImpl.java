@@ -16,7 +16,6 @@ package org.gfbio.service.impl;
 
 import java.util.List;
 
-import org.gfbio.NoSuchColumnException;
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.model.Column;
 import org.gfbio.model.Head;
@@ -51,74 +50,25 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	///////////////////////////////////// Delete Functions ///////////////////////////////////////////////////////
 	
 	
-	//delete column 
-	public void deleteColumnById (long columnId)  {
-		System.out.println("delColumn: "+columnId);
-		ContentLocalServiceUtil.deleteContentsByColumnId(columnId);
-		try {
-			ColumnLocalServiceUtil.deleteColumn(columnId);
-		} catch (PortalException | SystemException e) {e.printStackTrace();	}
-	}
-	
-	
 	//delete columns of a specific head
 	public void deleteColumnsByHeadId (long headId){
 		
-		//Boolean check = 
-		
 		List <Column> columnList = null;
 		try {
-			columnList = ColumnLocalServiceUtil.getColumnsByHeadId(headId);
+			columnList = columnPersistence.findByHeadId(headId);
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		if (columnList != null)
 			for (int i =0; i < columnList.size();i++)
-				ColumnLocalServiceUtil.deleteColumnById(columnList.get(i).getColumnID());
+				try {
+					ColumnLocalServiceUtil.deleteColumn(columnList.get(i).getColumnID());
+				} catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
-	
-	
-	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////////
-		
-	
-	//
-	public Boolean checkHaveTableRelationsById(long  headId) throws NoSuchHeadException, SystemException{
-		return ColumnLocalServiceUtil.checkHaveTableRelationsByName(HeadLocalServiceUtil.getTableName(headId));
-	}
-	
-	
-	//
-	@SuppressWarnings("rawtypes")
-	public Boolean checkHaveTableRelationsByName(String tableName){
-		Boolean check = false;
-		List list = ColumnLocalServiceUtil.getHeadIdsByColumnName(tableName);
-		if (list != null)
-			check = true;
-		return check;
-	}
-		
-	@SuppressWarnings("unchecked")
-	public JSONObject constructColumnJson(long columnId, long headId, String columnName){
-		JSONObject json = new JSONObject();
-		json.put("columnid", Long.toString(columnId));
-		json.put("headid", Long.toString(headId));
-		json.put("column_name", columnName);
-		return json;
-	}
-	
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////////
 	
 	
-	// get the column by id
-	public Column getColumnById(long columnId){
-		try {
-			return columnPersistence.findByColumnId(columnId);
-		} catch (NoSuchColumnException | SystemException e) {e.printStackTrace();}
-		return null;
-	}
-	
-	
-	//
+	//get the name of a Column
 	@SuppressWarnings("rawtypes")
 	public String getColumnNameById (long columnId){
 		String name ="";
@@ -129,7 +79,7 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	}
 	
 	
-	//
+	//get all Columns of tables that have not a "relationship" as type in head
 	@SuppressWarnings("rawtypes")
 	public List getColumnIdsWithoutRelation(String columnName) throws SystemException{
 		return ColumnFinderUtil.getColumnIdsWithoutRelation(columnName);
@@ -142,13 +92,7 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	}
 	
 	
-	//get a List of Columns by headid and column name
-	public List<Column> getColumnsByHeadIdAndName(long headId, String columnName) throws SystemException{
-		return columnPersistence.findByHeadIdAndColumnName(headId, columnName);
-	}
-	
-	
-	//
+	//get all Columns of tables that have a "relationship" as type in head
 	public List<Column> getColumnsWithRelation(String columnName) throws SystemException{
 		return ColumnFinderUtil.getColumnsWithRelation(columnName);
 	}
@@ -156,7 +100,7 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	
 	// get the count of columns of a specific head
 	public int getCountofColumns (long headId) throws SystemException{
-		return ColumnLocalServiceUtil.getColumnsByHeadId(headId).size();
+		return (int) ColumnFinderUtil.getCountofColumns(headId).get(0);
 	}
 	
 
@@ -169,29 +113,8 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	//get a head id to the column id
 	@SuppressWarnings("rawtypes")
 	public List getHeadIdsByColumnName(String columnName) {
-		System.out.println("getHeadIdsByColumnName "+columnName);
 		return ColumnFinderUtil.getHeadIdsByColumnName(columnName);
 	}	
-	
-	
-/*	
-	//
-	public String[] getNameArray(long headId) throws SystemException, NoSuchCellException, NoSuchCell_HeadException, NoSuchCell_ContentException  {
-
-		List<Content> contentList;
-		String[] names = null;
-
-		contentList = ContentLocalServiceUtil.getContentsByHeadId(headId);
-		names = new String[contentList.size()];
-			
-		for (int j =1;j<= 20;j++)
-			if (HeadLocalServiceUtil.getColumnName(headId, j).trim().equals("name"))
-				if (contentList!= null)
-					for (int i = 0; i<contentList.size(); i++)
-						names[i] = getColumnContent(contentList.get(i).getContentID(),j);
-		return names;
-	}
-	*/
 	
 	
 	//get the maximal count of columns of a List of heads
@@ -203,14 +126,45 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		return maxcolumncount;
 	}
 	
+
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////////
+		
 	
-///////////////////////////////////// Update Functions ///////////////////////////////////////////////////////
+	//check: "if this tableName in Column as columnName". By TRUE have the head with this tableName a relationship to a other head 
+	public Boolean checkHaveTableRelationsById(long  headId) throws NoSuchHeadException, SystemException{
+		return ColumnLocalServiceUtil.checkHaveTableRelationsByName(HeadLocalServiceUtil.getTableNameById(headId));
+	}
+	
+	
+	//check: "if this tableName in Column as columnName". By TRUE have the head with this tableName a relationship to a other head 
+	@SuppressWarnings("rawtypes")
+	public Boolean checkHaveTableRelationsByName(String tableName){
+		Boolean check = false;
+		List list = ColumnLocalServiceUtil.getHeadIdsByColumnName(tableName);
+		if (list != null)
+			check = true;
+		return check;
+	}
+	
+	
+	//construct a JSON of Column
+	@SuppressWarnings("unchecked")
+	public JSONObject constructColumnJson(long columnId, long headId, String columnName){
+		JSONObject json = new JSONObject();
+		json.put("columnid", Long.toString(columnId));
+		json.put("headid", Long.toString(headId));
+		json.put("column_name", columnName);
+		return json;
+	}
+	
+	
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////////
 	
 	
 	//update or build a new the column
+	@SuppressWarnings("rawtypes")
 	public Boolean updateColumn (long columnId, long headId, String content){
 		
-		System.out.println("start: columnID: "+columnId+ ", headID: "+headId+", Content: "+content);
 		Boolean check = false;
 		Column column = null;
 
@@ -220,37 +174,27 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 
 
 		// if it true, then must be build a new content with a new primary key else update the content
-		if (column == null){
+		if (column == null)
 			try {
 				column = columnPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-				
 			} catch (SystemException e) {e.printStackTrace();}
-			System.out.println("new: columnID: "+column.getColumnID()+ ", headID: "+headId+", Content: "+content);
-		}
 
 		column.setHeadID(headId);
 		column.setColumn_name(content);
 
 
 		try {
-			System.out.println("savecheck: " +column.toString());
 			super.updateColumn(column);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 
-			if (columnId ==0){
-				@SuppressWarnings("rawtypes")
-				List rowCount = ContentLocalServiceUtil.getRowIds(headId);
-				System.out.println("rowCount: "+rowCount);
-				if (rowCount.size()>0)
-					for (int i =0;i<rowCount.size();i++){
-						System.out.println(i+": "+ column.getColumnID());
-						check = ContentLocalServiceUtil.updateContent(0, headId, column.getColumnID(), (long) rowCount.get(i), "");
-					}
-			}
+		if (columnId ==0){
+			List rowCount = ContentLocalServiceUtil.getRowIds(headId);
+			if (rowCount.size()>0)
+				for (int i =0;i<rowCount.size();i++)
+					check = ContentLocalServiceUtil.updateContent(0, headId, column.getColumnID(), (long) rowCount.get(i), "");
+		}
 		
-		
-		System.out.println("test: "+check);
 		return check;
 	}
 
@@ -270,31 +214,28 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	
 	//update or build a new the column and their content with a json as input
 	public Boolean updateColumnWithContents (JSONObject json){
-		System.out.println("column: "+json);
+
 		Boolean check = false;
 		check = ColumnLocalServiceUtil.updateColumn(json);
 		int i=0;
 		while (json.containsKey(new Integer (i).toString())){
-			JSONObject contentjson = (JSONObject) json.get(new Integer (i).toString());
-			System.out.println(contentjson);
-			check = ContentLocalServiceUtil.updateContent(contentjson);
+			JSONObject contentJson = (JSONObject) json.get(new Integer (i).toString());
+			check = ContentLocalServiceUtil.updateContent(contentJson);
 			i++;
 		}
-	
 		return check;
 	}
 	
 	
 	//update or build a new the column and their content with a json as input
 	public Boolean updateColumnWithContents2 (JSONObject json){
-		System.out.println("column: "+json);
+		
 		Boolean check = false;
 		check = ColumnLocalServiceUtil.updateColumn(json);
 		int i=0;
 		while (json.containsKey(new Integer (i).toString())){
-			JSONObject contentjson = (JSONObject) json.get(new Integer (i).toString());
-			System.out.println(contentjson);
-			check = ContentLocalServiceUtil.updateContent2(contentjson);
+			JSONObject contentJson = (JSONObject) json.get(new Integer (i).toString());
+			check = ContentLocalServiceUtil.updateContent2(contentJson);
 			i++;
 		}
 	

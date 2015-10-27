@@ -303,6 +303,9 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	public org.json.simple.JSONObject createResearchObjectByJson(
 		org.json.simple.JSONObject json);
 
+	public org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject json);
+
 	public long createResearchObject(java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
 		java.lang.String researchObjectType)
@@ -320,9 +323,6 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		int researchObjectVersion, java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
 		java.lang.String formatmetadata, java.lang.String researchObjectType);
-
-	public org.json.simple.JSONObject updateResearchObjectByJson(
-		org.json.simple.JSONObject json);
 
 	public long updateResearchObjectWithProject(long projectId,
 		long researchObjectId, int researchObjectVersion,

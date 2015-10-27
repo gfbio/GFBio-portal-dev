@@ -224,6 +224,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
+	//------------------------------- Manage Update Functions ----------------------------------------------//
+	
+	
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createResearchObjectByJson(JSONObject json){
@@ -259,6 +262,46 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responeJson.put("ERROR", "The json need minimal 'name', 'label', 'metadata' and 'researchobjecttype' as Strings");
 		return responeJson;
 	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject updateResearchObjectByJson(JSONObject json){
+
+		JSONObject responeJson = new JSONObject();
+		
+		if (json.containsKey("researchobjectid")){
+			long researchObjectId = (long) json.get("researchobjectid");
+			if (json.containsKey("researchobjectversion") && json.containsKey("name") && json.containsKey("label") && json.containsKey("metadata") && json.containsKey("researchobjecttype")){
+				int researchObjectVersion = (int)((long) json.get("researchobjectversion"));
+				String name = ((String) json.get("name")).trim();
+				String label = ((String) json.get("label")).trim();
+				String metadata = json.get("metadata").toString();
+				String researchObjectType = ((String) json.get("researchobjecttype")).trim();
+				String formatmetadata = ResearchObjectLocalServiceUtil.constructFormatMetadata(metadata);
+				researchObjectId = updateResearchObject(researchObjectId, researchObjectVersion, name, label, metadata, formatmetadata, researchObjectType);
+				
+				if (json.containsKey("projectid"))
+					try {
+						researchObjectId = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) json.get("projectid"), researchObjectId) - (long) json.get("projectid");
+					} catch (NoSuchProject_UserException | SystemException e) {e.printStackTrace();}
+				
+				if (json.containsKey("parentresearchobjectid"))
+					researchObjectId = ResearchObjectLocalServiceUtil.updateParentResearchObjectIdByIds(researchObjectId, (long) json.get("parentresearchobjectid"));
+				
+				responeJson.put("researchobjectid", researchObjectId);
+			}else
+				responeJson.put("ERROR", "The json need minimal 'name', 'label', 'metadata' and 'researchobjecttype' as Strings");
+		}
+		else{
+			responeJson = ResearchObjectLocalServiceUtil.createResearchObjectByJson(json);
+		}
+		
+		return responeJson;
+	}
+	
+	
+	//----------------------------------- Update Functions -------------------------------------------------//
 
 	
 	//
@@ -327,43 +370,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		return check;
-	}
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public JSONObject updateResearchObjectByJson(JSONObject json){
-
-		JSONObject responeJson = new JSONObject();
-		
-		if (json.containsKey("researchobjectid")){
-			long researchObjectId = (long) json.get("researchobjectid");
-			if (json.containsKey("researchobjectversion") && json.containsKey("name") && json.containsKey("label") && json.containsKey("metadata") && json.containsKey("researchobjecttype")){
-				int researchObjectVersion = (int)((long) json.get("researchobjectversion"));
-				String name = ((String) json.get("name")).trim();
-				String label = ((String) json.get("label")).trim();
-				String metadata = json.get("metadata").toString();
-				String researchObjectType = ((String) json.get("researchobjecttype")).trim();
-				String formatmetadata = ResearchObjectLocalServiceUtil.constructFormatMetadata(metadata);
-				researchObjectId = updateResearchObject(researchObjectId, researchObjectVersion, name, label, metadata, formatmetadata, researchObjectType);
-				
-				if (json.containsKey("projectid"))
-					try {
-						researchObjectId = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) json.get("projectid"), researchObjectId) - (long) json.get("projectid");
-					} catch (NoSuchProject_UserException | SystemException e) {e.printStackTrace();}
-				
-				if (json.containsKey("parentresearchobjectid"))
-					researchObjectId = ResearchObjectLocalServiceUtil.updateParentResearchObjectIdByIds(researchObjectId, (long) json.get("parentresearchobjectid"));
-				
-				responeJson.put("researchobjectid", researchObjectId);
-			}else
-				responeJson.put("ERROR", "The json need minimal 'name', 'label', 'metadata' and 'researchobjecttype' as Strings");
-		}
-		else{
-			responeJson = ResearchObjectLocalServiceUtil.createResearchObjectByJson(json);
-		}
-		
-		return responeJson;
 	}
 	
 	

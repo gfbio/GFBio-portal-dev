@@ -353,19 +353,24 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 	}
 
 	@Override
-	public Boolean getIsPublic() {
+	public boolean getIsPublic() {
 		return _isPublic;
 	}
 
 	@Override
-	public void setIsPublic(Boolean isPublic) {
+	public boolean isIsPublic() {
+		return _isPublic;
+	}
+
+	@Override
+	public void setIsPublic(boolean isPublic) {
 		_isPublic = isPublic;
 
 		if (_submissionRegistryRemoteModel != null) {
 			try {
 				Class<?> clazz = _submissionRegistryRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setIsPublic", Boolean.class);
+				Method method = clazz.getMethod("setIsPublic", boolean.class);
 
 				method.invoke(_submissionRegistryRemoteModel, isPublic);
 			}
@@ -656,7 +661,7 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 	private long _archivePIDType;
 	private Date _lastChanged;
 	private long _userID;
-	private Boolean _isPublic;
+	private boolean _isPublic;
 	private Date _publicAfter;
 	private String _status;
 	private BaseModel<?> _submissionRegistryRemoteModel;

@@ -124,7 +124,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		json.put("label", project.getLabel());
 		json.put("description", project.getDescription());
 		json.put("startdate", project.getStartDate());	
-		json.put("endDate", project.getEndDate());
+		json.put("enddate", project.getEndDate());
 		json.put("status", project.getStatus());
 		return json;
 	}

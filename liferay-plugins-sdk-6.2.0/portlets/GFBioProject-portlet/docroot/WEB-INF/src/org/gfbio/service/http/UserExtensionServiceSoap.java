@@ -62,6 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class UserExtensionServiceSoap {
+	/**
+	* @param test
+	* @JSONWebService tester
+	*/
 	public static org.json.simple.JSONObject getUserById(
 		org.json.simple.JSONObject json) throws RemoteException {
 		try {

@@ -26,5 +26,7 @@ public interface ColumnFinder {
 
 	public java.util.List getColumnNameById(long columnid);
 
+	public java.util.List getCountofColumns(long headId);
+
 	public java.util.List getHeadIdsByColumnName(java.lang.String columnName);
 }

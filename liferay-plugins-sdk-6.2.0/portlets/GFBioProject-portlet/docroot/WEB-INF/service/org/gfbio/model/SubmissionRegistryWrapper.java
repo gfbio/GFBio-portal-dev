@@ -322,17 +322,27 @@ public class SubmissionRegistryWrapper implements SubmissionRegistry,
 	* @return the is public of this submission registry
 	*/
 	@Override
-	public java.lang.Boolean getIsPublic() {
+	public boolean getIsPublic() {
 		return _submissionRegistry.getIsPublic();
 	}
 
 	/**
-	* Sets the is public of this submission registry.
+	* Returns <code>true</code> if this submission registry is is public.
+	*
+	* @return <code>true</code> if this submission registry is is public; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIsPublic() {
+		return _submissionRegistry.isIsPublic();
+	}
+
+	/**
+	* Sets whether this submission registry is is public.
 	*
 	* @param isPublic the is public of this submission registry
 	*/
 	@Override
-	public void setIsPublic(java.lang.Boolean isPublic) {
+	public void setIsPublic(boolean isPublic) {
 		_submissionRegistry.setIsPublic(isPublic);
 	}
 

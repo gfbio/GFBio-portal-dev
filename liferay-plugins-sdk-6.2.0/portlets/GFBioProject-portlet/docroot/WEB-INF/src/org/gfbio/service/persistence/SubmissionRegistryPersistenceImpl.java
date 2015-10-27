@@ -4418,7 +4418,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SubmissionRegistry> findByIsPublic(Boolean isPublic)
+	public List<SubmissionRegistry> findByIsPublic(boolean isPublic)
 		throws SystemException {
 		return findByIsPublic(isPublic, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
@@ -4438,7 +4438,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SubmissionRegistry> findByIsPublic(Boolean isPublic, int start,
+	public List<SubmissionRegistry> findByIsPublic(boolean isPublic, int start,
 		int end) throws SystemException {
 		return findByIsPublic(isPublic, start, end, null);
 	}
@@ -4458,7 +4458,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SubmissionRegistry> findByIsPublic(Boolean isPublic, int start,
+	public List<SubmissionRegistry> findByIsPublic(boolean isPublic, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4480,7 +4480,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 
 		if ((list != null) && !list.isEmpty()) {
 			for (SubmissionRegistry submissionRegistry : list) {
-				if (!Validator.equals(isPublic, submissionRegistry.getIsPublic())) {
+				if ((isPublic != submissionRegistry.getIsPublic())) {
 					list = null;
 
 					break;
@@ -4523,7 +4523,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(isPublic.booleanValue());
+				qPos.add(isPublic);
 
 				if (!pagination) {
 					list = (List<SubmissionRegistry>)QueryUtil.list(q,
@@ -4565,7 +4565,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry findByIsPublic_First(Boolean isPublic,
+	public SubmissionRegistry findByIsPublic_First(boolean isPublic,
 		OrderByComparator orderByComparator)
 		throws NoSuchSubmissionRegistryException, SystemException {
 		SubmissionRegistry submissionRegistry = fetchByIsPublic_First(isPublic,
@@ -4596,7 +4596,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry fetchByIsPublic_First(Boolean isPublic,
+	public SubmissionRegistry fetchByIsPublic_First(boolean isPublic,
 		OrderByComparator orderByComparator) throws SystemException {
 		List<SubmissionRegistry> list = findByIsPublic(isPublic, 0, 1,
 				orderByComparator);
@@ -4618,7 +4618,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry findByIsPublic_Last(Boolean isPublic,
+	public SubmissionRegistry findByIsPublic_Last(boolean isPublic,
 		OrderByComparator orderByComparator)
 		throws NoSuchSubmissionRegistryException, SystemException {
 		SubmissionRegistry submissionRegistry = fetchByIsPublic_Last(isPublic,
@@ -4649,7 +4649,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry fetchByIsPublic_Last(Boolean isPublic,
+	public SubmissionRegistry fetchByIsPublic_Last(boolean isPublic,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByIsPublic(isPublic);
 
@@ -4679,7 +4679,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 */
 	@Override
 	public SubmissionRegistry[] findByIsPublic_PrevAndNext(
-		SubmissionRegistryPK submissionRegistryPK, Boolean isPublic,
+		SubmissionRegistryPK submissionRegistryPK, boolean isPublic,
 		OrderByComparator orderByComparator)
 		throws NoSuchSubmissionRegistryException, SystemException {
 		SubmissionRegistry submissionRegistry = findByPrimaryKey(submissionRegistryPK);
@@ -4710,7 +4710,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	}
 
 	protected SubmissionRegistry getByIsPublic_PrevAndNext(Session session,
-		SubmissionRegistry submissionRegistry, Boolean isPublic,
+		SubmissionRegistry submissionRegistry, boolean isPublic,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -4794,7 +4794,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(isPublic.booleanValue());
+		qPos.add(isPublic);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(submissionRegistry);
@@ -4821,7 +4821,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByIsPublic(Boolean isPublic) throws SystemException {
+	public void removeByIsPublic(boolean isPublic) throws SystemException {
 		for (SubmissionRegistry submissionRegistry : findByIsPublic(isPublic,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(submissionRegistry);
@@ -4836,7 +4836,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByIsPublic(Boolean isPublic) throws SystemException {
+	public int countByIsPublic(boolean isPublic) throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ISPUBLIC;
 
 		Object[] finderArgs = new Object[] { isPublic };
@@ -4862,7 +4862,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(isPublic.booleanValue());
+				qPos.add(isPublic);
 
 				count = (Long)q.uniqueResult();
 
@@ -5971,7 +5971,7 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		submissionRegistryImpl.setArchivePIDType(submissionRegistry.getArchivePIDType());
 		submissionRegistryImpl.setLastChanged(submissionRegistry.getLastChanged());
 		submissionRegistryImpl.setUserID(submissionRegistry.getUserID());
-		submissionRegistryImpl.setIsPublic(submissionRegistry.getIsPublic());
+		submissionRegistryImpl.setIsPublic(submissionRegistry.isIsPublic());
 		submissionRegistryImpl.setPublicAfter(submissionRegistry.getPublicAfter());
 		submissionRegistryImpl.setStatus(submissionRegistry.getStatus());
 

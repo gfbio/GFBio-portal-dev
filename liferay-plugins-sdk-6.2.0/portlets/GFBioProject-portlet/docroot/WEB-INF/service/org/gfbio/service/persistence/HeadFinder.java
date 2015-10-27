@@ -18,8 +18,12 @@ package org.gfbio.service.persistence;
  * @author Marcel Froemming
  */
 public interface HeadFinder {
+	public java.util.List getEntitiesByHeadId(long headId);
+
 	public java.util.List<org.gfbio.model.Head> getHeadBetweenHeadIds(
 		int start, int end);
 
-	public java.util.List getEntitiesByHeadId(long headId);
+	public java.util.List getHeadIdByTableName(java.lang.String tableName);
+
+	public java.util.List getTableNameById(long headId);
 }

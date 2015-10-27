@@ -270,32 +270,8 @@ public class ColumnLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void deleteColumnById(long columnId) {
-		getService().deleteColumnById(columnId);
-	}
-
 	public static void deleteColumnsByHeadId(long headId) {
 		getService().deleteColumnsByHeadId(headId);
-	}
-
-	public static java.lang.Boolean checkHaveTableRelationsById(long headId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return getService().checkHaveTableRelationsById(headId);
-	}
-
-	public static java.lang.Boolean checkHaveTableRelationsByName(
-		java.lang.String tableName) {
-		return getService().checkHaveTableRelationsByName(tableName);
-	}
-
-	public static org.json.simple.JSONObject constructColumnJson(
-		long columnId, long headId, java.lang.String columnName) {
-		return getService().constructColumnJson(columnId, headId, columnName);
-	}
-
-	public static org.gfbio.model.Column getColumnById(long columnId) {
-		return getService().getColumnById(columnId);
 	}
 
 	public static java.lang.String getColumnNameById(long columnId) {
@@ -311,12 +287,6 @@ public class ColumnLocalServiceUtil {
 	public static java.util.List<org.gfbio.model.Column> getColumnsByHeadId(
 		long headId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getColumnsByHeadId(headId);
-	}
-
-	public static java.util.List<org.gfbio.model.Column> getColumnsByHeadIdAndName(
-		long headId, java.lang.String columnName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getColumnsByHeadIdAndName(headId, columnName);
 	}
 
 	public static java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
@@ -345,6 +315,22 @@ public class ColumnLocalServiceUtil {
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getMaxCountofColumns(headList);
+	}
+
+	public static java.lang.Boolean checkHaveTableRelationsById(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return getService().checkHaveTableRelationsById(headId);
+	}
+
+	public static java.lang.Boolean checkHaveTableRelationsByName(
+		java.lang.String tableName) {
+		return getService().checkHaveTableRelationsByName(tableName);
+	}
+
+	public static org.json.simple.JSONObject constructColumnJson(
+		long columnId, long headId, java.lang.String columnName) {
+		return getService().constructColumnJson(columnId, headId, columnName);
 	}
 
 	public static java.lang.Boolean updateColumn(long columnId, long headId,

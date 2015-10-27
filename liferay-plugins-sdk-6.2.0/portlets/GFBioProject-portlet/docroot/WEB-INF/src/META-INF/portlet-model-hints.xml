@@ -84,7 +84,7 @@
 		<field name="archivePIDType" type="long" />
 		<field name="lastChanged" type="Date" />
 		<field name="userID" type="long" />
-		<field name="isPublic" type="Boolean" />
+		<field name="isPublic" type="boolean" />
 		<field name="publicAfter" type="Date" />
 		<field name="status" type="String" />
 	</model>

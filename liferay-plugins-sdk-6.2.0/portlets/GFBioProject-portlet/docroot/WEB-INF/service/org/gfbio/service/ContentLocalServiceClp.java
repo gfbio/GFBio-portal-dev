@@ -108,153 +108,121 @@ public class ContentLocalServiceClp implements ContentLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "deleteContentById";
+		_methodName19 = "deleteContentsByColumnId";
 
 		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "deleteContentsByColumnId";
+		_methodName20 = "deleteContentsByHeadId";
 
 		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "deleteContentsByHeadId";
+		_methodName21 = "deleteContentsByRowId";
 
 		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName22 = "deleteContentsByRowId";
+		_methodName22 = "getCellContentByContentId";
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "getContentById";
+		_methodName23 = "getContentByTableIds";
 
-		_methodParameterTypes23 = new String[] { "long" };
+		_methodParameterTypes23 = new String[] { "long", "long" };
 
-		_methodName24 = "getContentsByColumnId";
+		_methodName24 = "getContentIdByTableIds";
 
-		_methodParameterTypes24 = new String[] { "long" };
+		_methodParameterTypes24 = new String[] { "long", "long" };
 
-		_methodName25 = "getContentsByHeadId";
+		_methodName25 = "getContentIdsByRowId";
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "getContentsByRowId";
+		_methodName26 = "getContentIdsWithoutRelationships";
 
-		_methodParameterTypes26 = new String[] { "long" };
+		_methodParameterTypes26 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
-		_methodName27 = "getCellContentByTableIds";
+		_methodName27 = "getContentIdsWithRelationships";
 
-		_methodParameterTypes27 = new String[] { "long", "long" };
+		_methodParameterTypes27 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
-		_methodName28 = "getCellContentByContentId";
+		_methodName28 = "getContentInformationAsJSONByContentId";
 
 		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName29 = "getContentByTableIds";
+		_methodName29 = "getContentInformationAsJSONByRowId";
 
-		_methodParameterTypes29 = new String[] { "long", "long" };
+		_methodParameterTypes29 = new String[] { "long" };
 
-		_methodName30 = "getContentIdByTableIds";
+		_methodName30 = "getFirstContentIdByRowId";
 
-		_methodParameterTypes30 = new String[] { "long", "long" };
+		_methodParameterTypes30 = new String[] { "long" };
 
-		_methodName31 = "getContentIdsByRowId";
+		_methodName31 = "getHeadIdById";
 
 		_methodParameterTypes31 = new String[] { "long" };
 
-		_methodName32 = "getContentIdsWithoutRelationships";
+		_methodName32 = "getRowIdByCellContent";
 
 		_methodParameterTypes32 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName33 = "getContentIdsWithRelationships";
+		_methodName33 = "getContentsAsJSONByRowId";
 
-		_methodParameterTypes33 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes33 = new String[] { "long" };
 
-		_methodName34 = "getContentInformationAsJSONBycontentId";
+		_methodName34 = "getCountOfColumns";
 
 		_methodParameterTypes34 = new String[] { "long" };
 
-		_methodName35 = "getContentInformationAsJSONByRowId";
+		_methodName35 = "getCountOfRows";
 
 		_methodParameterTypes35 = new String[] { "long" };
 
-		_methodName36 = "getFirstContentIdByRowId";
+		_methodName36 = "getRowIds";
 
 		_methodParameterTypes36 = new String[] { "long" };
 
-		_methodName37 = "getHeadIdById";
+		_methodName37 = "getColumnIdById";
 
 		_methodParameterTypes37 = new String[] { "long" };
 
-		_methodName38 = "getRowIdByCellContent";
+		_methodName38 = "getRowIdById";
 
-		_methodParameterTypes38 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes38 = new String[] { "long" };
 
-		_methodName39 = "getContentsAsJSONByRowId";
+		_methodName39 = "getRowIdOfRelation";
 
-		_methodParameterTypes39 = new String[] { "long" };
-
-		_methodName40 = "getCountOfColumns";
-
-		_methodParameterTypes40 = new String[] { "long" };
-
-		_methodName41 = "getCountOfRows";
-
-		_methodParameterTypes41 = new String[] { "long" };
-
-		_methodName42 = "getRowIds";
-
-		_methodParameterTypes42 = new String[] { "long" };
-
-		_methodName43 = "getColumnIdById";
-
-		_methodParameterTypes43 = new String[] { "long" };
-
-		_methodName44 = "getContentsByContent";
-
-		_methodParameterTypes44 = new String[] { "java.lang.String" };
-
-		_methodName45 = "getContentsByContentOfColumn";
-
-		_methodParameterTypes45 = new String[] { "java.lang.String", "long" };
-
-		_methodName46 = "getRowIdById";
-
-		_methodParameterTypes46 = new String[] { "long" };
-
-		_methodName47 = "getRowIdOfRelation";
-
-		_methodParameterTypes47 = new String[] {
+		_methodParameterTypes39 = new String[] {
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName48 = "constructColumnJson";
+		_methodName40 = "constructColumnJson";
 
-		_methodParameterTypes48 = new String[] {
+		_methodParameterTypes40 = new String[] {
 				"long", "long", "long", "long", "java.lang.String"
 			};
 
-		_methodName49 = "constructNewId";
+		_methodName41 = "constructNewId";
 
-		_methodParameterTypes49 = new String[] {  };
+		_methodParameterTypes41 = new String[] {  };
 
-		_methodName50 = "updateContent";
+		_methodName42 = "updateContent";
 
-		_methodParameterTypes50 = new String[] {
+		_methodParameterTypes42 = new String[] {
 				"long", "long", "long", "long", "java.lang.String"
 			};
 
-		_methodName51 = "updateContent";
+		_methodName43 = "updateContent";
 
-		_methodParameterTypes51 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes43 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName52 = "updateContent2";
+		_methodName44 = "updateContent2";
 
-		_methodParameterTypes52 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes44 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -802,29 +770,10 @@ public class ContentLocalServiceClp implements ContentLocalService {
 	}
 
 	@Override
-	public void deleteContentById(long contentId) {
-		try {
-			_invokableLocalService.invokeMethod(_methodName19,
-				_methodParameterTypes19, new Object[] { contentId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-	}
-
-	@Override
 	public void deleteContentsByColumnId(long columnId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName20,
-				_methodParameterTypes20, new Object[] { columnId });
+			_invokableLocalService.invokeMethod(_methodName19,
+				_methodParameterTypes19, new Object[] { columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -843,8 +792,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 	public void deleteContentsByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName21,
-				_methodParameterTypes21, new Object[] { headId });
+			_invokableLocalService.invokeMethod(_methodName20,
+				_methodParameterTypes20, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -866,8 +815,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 	@Override
 	public void deleteContentsByRowId(long rowId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName22,
-				_methodParameterTypes22, new Object[] { rowId });
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -880,147 +829,6 @@ public class ContentLocalServiceClp implements ContentLocalService {
 					" is not a valid exception");
 			}
 		}
-	}
-
-	@Override
-	public org.gfbio.model.Content getContentById(long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchContentException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { contentId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof org.gfbio.NoSuchContentException) {
-				throw (org.gfbio.NoSuchContentException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.gfbio.model.Content)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByColumnId(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] { columnId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.Content>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByHeadId(
-		long headId) throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { headId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.Content>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByRowId(
-		long rowId) throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] { rowId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.Content>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.lang.String getCellContentByTableIds(long rowId, long columnId) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { rowId, columnId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -1028,8 +836,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] { contentId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { contentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1054,8 +862,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29, new Object[] { rowId, columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { rowId, columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1087,8 +895,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30, new Object[] { rowId, columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { rowId, columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1118,8 +926,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1142,8 +950,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						rowId,
 						
@@ -1173,8 +981,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						rowId,
 						
@@ -1199,13 +1007,13 @@ public class ContentLocalServiceClp implements ContentLocalService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
+	public org.json.simple.JSONObject getContentInformationAsJSONByContentId(
 		long contentId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34, new Object[] { contentId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { contentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1228,8 +1036,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1251,8 +1059,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1270,12 +1078,12 @@ public class ContentLocalServiceClp implements ContentLocalService {
 	}
 
 	@Override
-	public long getHeadIdById(long headId) {
+	public long getHeadIdById(long contentId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31, new Object[] { contentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1298,8 +1106,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						headId,
 						
@@ -1328,8 +1136,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1352,8 +1160,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40, new Object[] { rowId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34, new Object[] { rowId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1380,8 +1188,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1407,8 +1215,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName42,
-					_methodParameterTypes42, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1432,8 +1240,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43, new Object[] { contentId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37, new Object[] { contentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1459,76 +1267,12 @@ public class ContentLocalServiceClp implements ContentLocalService {
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByContent(
-		java.lang.String cellContent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44,
-					new Object[] { ClpSerializer.translateInput(cellContent) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.Content>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Content> getContentsByContentOfColumn(
-		java.lang.String cellContent, long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName45,
-					_methodParameterTypes45,
-					new Object[] {
-						ClpSerializer.translateInput(cellContent),
-						
-					columnId
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.Content>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public long getRowIdById(long contentId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName46,
-					_methodParameterTypes46, new Object[] { contentId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38, new Object[] { contentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1551,8 +1295,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName47,
-					_methodParameterTypes47,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] {
 						ClpSerializer.translateInput(cellContent1),
 						
@@ -1580,8 +1324,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName48,
-					_methodParameterTypes48,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						contentId,
 						
@@ -1615,8 +1359,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName49,
-					_methodParameterTypes49, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1643,8 +1387,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName50,
-					_methodParameterTypes50,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] {
 						contentId,
 						
@@ -1677,8 +1421,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName51,
-					_methodParameterTypes51,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1701,8 +1445,8 @@ public class ContentLocalServiceClp implements ContentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName52,
-					_methodParameterTypes52,
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1809,20 +1553,4 @@ public class ContentLocalServiceClp implements ContentLocalService {
 	private String[] _methodParameterTypes43;
 	private String _methodName44;
 	private String[] _methodParameterTypes44;
-	private String _methodName45;
-	private String[] _methodParameterTypes45;
-	private String _methodName46;
-	private String[] _methodParameterTypes46;
-	private String _methodName47;
-	private String[] _methodParameterTypes47;
-	private String _methodName48;
-	private String[] _methodParameterTypes48;
-	private String _methodName49;
-	private String[] _methodParameterTypes49;
-	private String _methodName50;
-	private String[] _methodParameterTypes50;
-	private String _methodName51;
-	private String[] _methodParameterTypes51;
-	private String _methodName52;
-	private String[] _methodParameterTypes52;
 }

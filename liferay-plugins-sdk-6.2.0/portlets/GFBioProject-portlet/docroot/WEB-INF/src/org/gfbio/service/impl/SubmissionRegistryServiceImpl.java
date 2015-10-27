@@ -109,14 +109,14 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 	
 
 	//
-	public JSONObject createSubmissionregistry (JSONObject json){
+	public JSONObject createSubmissionRegistry (JSONObject json){
 		System.out.println(json);
 		return SubmissionRegistryLocalServiceUtil.createSubmissionRegistry (json);
 	}
 	
 	
 	//
-	public JSONObject updateSubmissionregistry (JSONObject json){
+	public JSONObject updateSubmissionRegistry (JSONObject json){
 		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (json);
 	}
 	

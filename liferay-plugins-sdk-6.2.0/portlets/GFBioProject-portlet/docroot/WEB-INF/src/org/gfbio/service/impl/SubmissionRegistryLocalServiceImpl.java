@@ -339,7 +339,6 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	
 	//----------------------------------- Update Functions -------------------------------------------------//
 	
-
 	
 	//update without status
 	public Boolean updateSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, String archivePId, Date lastChanged, long userId){

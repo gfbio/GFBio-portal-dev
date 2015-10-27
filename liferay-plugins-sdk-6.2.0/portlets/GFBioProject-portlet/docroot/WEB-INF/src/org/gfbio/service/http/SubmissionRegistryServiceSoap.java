@@ -190,10 +190,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject createSubmissionregistry(
+	public static org.json.simple.JSONObject createSubmissionRegistry(
 		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.createSubmissionregistry(json);
+			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.createSubmissionRegistry(json);
 
 			return returnValue;
 		}
@@ -204,10 +204,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject updateSubmissionregistry(
+	public static org.json.simple.JSONObject updateSubmissionRegistry(
 		org.json.simple.JSONObject json) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.updateSubmissionregistry(json);
+			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.updateSubmissionRegistry(json);
 
 			return returnValue;
 		}

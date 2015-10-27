@@ -164,7 +164,7 @@
 		<column name="archivePIDType" 			type="long"	 />
 		<column name="lastChanged" 				type="Date"	 />
 		<column name="userID" 					type="long"	 />
-		<column name="isPublic"	 				type="Boolean"	 />
+		<column name="isPublic"	 				type="boolean"	 />
 		<column name="publicAfter" 				type="Date"	 />		
 		<column name="status" 					type="String"	 />		
 

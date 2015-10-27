@@ -49,11 +49,13 @@ page import="com.liferay.portal.util.PortalUtil" %>
 
 	/////////////////////////////////////////   GCDJ Widget  //////////////////////////////////////////////
 
+	
 	//hide GCDJ Widget
 	function hideSubmission(hidecode) {
 		var toHide = { "hidecode" : hidecode };
 		Liferay.fire('gadget:gfbio.archiving.submit', toHide);
 	}
+	
 
 	//GCDJ Widget Publish
 	function SubmitGCDJ(hidecode, showhide) {
@@ -65,15 +67,16 @@ page import="com.liferay.portal.util.PortalUtil" %>
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
 	
+	
 	//ENA Widget Publish
 	function SubmitENA(hidecode, showhide) {
-		console.log(hidecode);
 		var toSubmit = {
 			     "hidecode" : hidecode,
 			     "showhide" : showhide,
 			   };
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
+	
 
 	//GCDJ Submit Answer
 	$(document).ready(function() {
@@ -83,7 +86,9 @@ page import="com.liferay.portal.util.PortalUtil" %>
 				submitAnswer(data);
 		});
 	});
+	
 
+	//
 	function submitAnswer(data) {
 		$.ajax({
 			"type" : "POST",
@@ -102,7 +107,9 @@ page import="com.liferay.portal.util.PortalUtil" %>
 
 
 	/////////////////////////////////////////   ResourceRequest  //////////////////////////////////////////////
-
+	
+	
+	//
 	function ajaxRequest(archivingURL, method, data, as) {
 		$.ajax({
 			"type" : "POST",
@@ -117,6 +124,8 @@ page import="com.liferay.portal.util.PortalUtil" %>
 		});
 	}
 
+	
+	//
 	function ajaxValueResponse(archivingURL, method, data) {
 		
 		$.ajax({
@@ -133,13 +142,12 @@ page import="com.liferay.portal.util.PortalUtil" %>
 		});
 	}
 	
-/////////////////////////////////////////   ActionRequest  //////////////////////////////////////////////
+	
+	/////////////////////////////////////////   ActionRequest  //////////////////////////////////////////////
 
 	
-
+	//
 	function ajaxActionRequest_Choose(archivingURL, method, data, withoutRelationship, withRelationship, as) {
-		console.log("ajaxActionRequest_Choose: "+archivingURL+" | "+method+" | "+data+" | "+as);
-
  		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
@@ -160,20 +168,15 @@ page import="com.liferay.portal.util.PortalUtil" %>
 				
 				for (y = 0; y < withoutRelation.length; y++){
 					withoutSelect.append("<option value='" + withoutRelation[y]+ "'>" + data.withoutJson[withoutRelation[y]] + "</option>");
-					console.log(y  + " | "+data.withoutJson[withoutRelation[y]] + " | "+withoutRelation[y] );
 				}
 
 				for (y = 0; y < withRelation.length; y++){
 					withSelect.append("<option value='" + withRelation[y]+ "'>" + data.withJson[withRelation[y]] + "</option>");
-					console.log(y  + " | "+data.withJson[withRelation[y]] + " | "+withRelation[y] );					
 				}
 					
 			}
 		});
 	}
-
-	//////////////////////////////////////// content //////////////////////////////////////////////////////////
-
 
 
 </script>

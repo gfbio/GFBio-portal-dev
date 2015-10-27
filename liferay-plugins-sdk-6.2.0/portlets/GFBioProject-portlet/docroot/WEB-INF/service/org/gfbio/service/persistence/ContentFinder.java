@@ -28,6 +28,8 @@ public interface ContentFinder {
 	public java.util.List getContentIdsWithRelationships(long rowId,
 		java.lang.String columnName1, java.lang.String columnName2);
 
+	public java.util.List getColumnIdById(long contentId);
+
 	public java.util.List getRowIds(long headId);
 
 	public java.util.List getRowIdByCellContent(long headId,

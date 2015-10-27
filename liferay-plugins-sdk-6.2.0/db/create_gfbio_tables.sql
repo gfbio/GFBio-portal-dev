@@ -111,7 +111,7 @@ ALTER TABLE gfbio_basket
 CREATE TABLE gfbio_dataprovider
 (
   dataproviderid bigint NOT NULL,
-  name character(75) NOT NULL,
+  name character(150) NOT NULL,
   label character(75) NOT NULL,
   description text,
   address text,

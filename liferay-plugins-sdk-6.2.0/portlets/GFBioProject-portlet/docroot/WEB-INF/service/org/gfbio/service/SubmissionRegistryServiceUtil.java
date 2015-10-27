@@ -108,14 +108,14 @@ public class SubmissionRegistryServiceUtil {
 		return getService().getSubmissionRegistriesByResearchObjectId(json);
 	}
 
-	public static org.json.simple.JSONObject createSubmissionregistry(
+	public static org.json.simple.JSONObject createSubmissionRegistry(
 		org.json.simple.JSONObject json) {
-		return getService().createSubmissionregistry(json);
+		return getService().createSubmissionRegistry(json);
 	}
 
-	public static org.json.simple.JSONObject updateSubmissionregistry(
+	public static org.json.simple.JSONObject updateSubmissionRegistry(
 		org.json.simple.JSONObject json) {
-		return getService().updateSubmissionregistry(json);
+		return getService().updateSubmissionRegistry(json);
 	}
 
 	public static void clearService() {

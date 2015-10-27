@@ -248,35 +248,12 @@ public interface ContentLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void deleteContentById(long contentId);
-
 	public void deleteContentsByColumnId(long columnId);
 
 	public void deleteContentsByHeadId(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteContentsByRowId(long rowId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Content getContentById(long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchContentException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Content> getContentsByColumnId(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Content> getContentsByHeadId(
-		long headId) throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Content> getContentsByRowId(
-		long rowId) throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getCellContentByTableIds(long rowId, long columnId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getCellContentByContentId(long contentId);
@@ -304,7 +281,7 @@ public interface ContentLocalService extends BaseLocalService,
 		java.lang.String tableName1, java.lang.String tableName2);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getContentInformationAsJSONBycontentId(
+	public org.json.simple.JSONObject getContentInformationAsJSONByContentId(
 		long contentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -315,7 +292,7 @@ public interface ContentLocalService extends BaseLocalService,
 	public long getFirstContentIdByRowId(long rowId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getHeadIdById(long headId);
+	public long getHeadIdById(long contentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getRowIdByCellContent(long headId, java.lang.String columnName,
@@ -339,16 +316,6 @@ public interface ContentLocalService extends BaseLocalService,
 	public long getColumnIdById(long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Content> getContentsByContent(
-		java.lang.String cellContent)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Content> getContentsByContentOfColumn(
-		java.lang.String cellContent, long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getRowIdById(long contentId);

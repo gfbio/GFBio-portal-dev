@@ -277,13 +277,6 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public void deleteHeadByHeadId(long headId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_headLocalService.deleteHeadByHeadId(headId);
-	}
-
-	@Override
 	public void deleteTableByHeadId(long headId) {
 		_headLocalService.deleteTableByHeadId(headId);
 	}
@@ -304,34 +297,8 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public int getCountOfRows(long headId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.getCountOfRows(headId);
-	}
-
-	@Override
 	public java.util.List getEntitiesByHeadId(long headId) {
 		return _headLocalService.getEntitiesByHeadId(headId);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Head> getHeadBetweenHeadId(
-		int start, int end) {
-		return _headLocalService.getHeadBetweenHeadId(start, end);
-	}
-
-	@Override
-	public org.gfbio.model.Head getHeadById(long headId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getHeadById(headId);
-	}
-
-	@Override
-	public org.gfbio.model.Head getHeadByTableName(java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getHeadByTableName(tableName);
 	}
 
 	@Override
@@ -339,12 +306,6 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		return _headLocalService.getHeadIdByTableName(tableName);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Head> getHeads()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.getHeads();
 	}
 
 	@Override
@@ -365,10 +326,10 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public java.lang.String getTableName(long headId)
+	public java.lang.String getTableNameById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getTableName(headId);
+		return _headLocalService.getTableNameById(headId);
 	}
 
 	@Override

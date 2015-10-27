@@ -190,7 +190,7 @@ public class SubmissionRegistryCacheModel implements CacheModel<SubmissionRegist
 	public long archivePIDType;
 	public long lastChanged;
 	public long userID;
-	public Boolean isPublic;
+	public boolean isPublic;
 	public long publicAfter;
 	public String status;
 }

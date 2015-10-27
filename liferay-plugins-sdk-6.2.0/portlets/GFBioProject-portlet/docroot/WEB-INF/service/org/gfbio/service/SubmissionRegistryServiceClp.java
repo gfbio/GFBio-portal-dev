@@ -68,11 +68,11 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 
 		_methodParameterTypes11 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName12 = "createSubmissionregistry";
+		_methodName12 = "createSubmissionRegistry";
 
 		_methodParameterTypes12 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName13 = "updateSubmissionregistry";
+		_methodName13 = "updateSubmissionRegistry";
 
 		_methodParameterTypes13 = new String[] { "org.json.simple.JSONObject" };
 	}
@@ -354,7 +354,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject createSubmissionregistry(
+	public org.json.simple.JSONObject createSubmissionRegistry(
 		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 
@@ -379,7 +379,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject updateSubmissionregistry(
+	public org.json.simple.JSONObject updateSubmissionRegistry(
 		org.json.simple.JSONObject json) {
 		Object returnObj = null;
 

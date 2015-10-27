@@ -68,11 +68,11 @@ public class SubmissionRegistryServiceClpInvoker {
 
 		_methodParameterTypes118 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName119 = "createSubmissionregistry";
+		_methodName119 = "createSubmissionRegistry";
 
 		_methodParameterTypes119 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName120 = "updateSubmissionregistry";
+		_methodName120 = "updateSubmissionRegistry";
 
 		_methodParameterTypes120 = new String[] { "org.json.simple.JSONObject" };
 	}
@@ -139,12 +139,12 @@ public class SubmissionRegistryServiceClpInvoker {
 
 		if (_methodName119.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.createSubmissionregistry((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryServiceUtil.createSubmissionRegistry((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName120.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.updateSubmissionregistry((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryServiceUtil.updateSubmissionRegistry((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

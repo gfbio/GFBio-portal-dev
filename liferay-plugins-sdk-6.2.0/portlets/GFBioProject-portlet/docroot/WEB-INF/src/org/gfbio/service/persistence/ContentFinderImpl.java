@@ -17,6 +17,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String FINDER_CLASS_NAME_ENTITY = ContentFinderImpl.class.getName();
 	public static String GET_CELL_CONTENT = FINDER_CLASS_NAME_ENTITY + ".getCellContent";
 	public static String GET_CELL_CONTENT_BY_CONTENTID = FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
+	public static String GET_COLUMNID_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
 	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS = FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
 	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS = FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
 	public static String GET_COUNT_OF_ROW = FINDER_CLASS_NAME_ENTITY + ".getRowIds";
@@ -25,7 +26,6 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_CONTENTIDS_BY_ROWID = FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
 	public static String GET_ROWID_BY_CONTENTID = FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
 	public static String GET_ROWID_OF_RELATION = FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
-	
 	
 	
 
@@ -137,6 +137,33 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 			qPos.add(Long.toString(rowId));
 			qPos.add(columnName1);
 			qPos.add(columnName2);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public  List getColumnIdById(long contentId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_COLUMNID_BY_ID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("columnID", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(contentId);
 			return (List) queryObject.list();
 			
 		} catch (Exception e) {e.printStackTrace();}
