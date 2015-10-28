@@ -1,11 +1,11 @@
 ﻿DROP TABLE IF EXISTS
- gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi,
- gfbio_content, gfbio_column, gfbio_head
- gfbio_basket, gfbio_project, gfbio_researchobject;
+ gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi, gfbio_dataprovider_persistentidentifier,
+ gfbio_content, gfbio_column, gfbio_head,
+ gfbio_basket, gfbio_project, gfbio_submissionregistry, gfbio_dataprovider, gfbio_researchobject;
  
  
- CREATE TYPE ro_type AS ENUM ('sample', 'experiment');
- CREATE TYPE submission_status AS ENUM ('sent', 'archived');
+ -- CREATE TYPE ro_type AS ENUM ('sample', 'experiment');
+ -- CREATE TYPE submission_status AS ENUM ('sent', 'archived');
  
  
  
@@ -160,8 +160,8 @@ CREATE TABLE gfbio_researchobject
   label character varying(75) NOT NULL UNIQUE,
   metadata character varying(5000),
   formatmetadata character varying(5000),
-  research_object_version smallint NOT NULL DEFAULT 1 CHECK (research_object_version>0),
-  type researchobjecttype NOT NULL,
+  researchobjectversion smallint NOT NULL DEFAULT 1 CHECK (researchobjectversion>0),
+  researchobjecttype character varying(75) NOT NULL,
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectId)
 )
 WITH (
@@ -179,23 +179,27 @@ CREATE TABLE gfbio_submissionregistry
   researchobjectid bigint NOT NULL,
   researchobjectversion smallint NOT NULL,
   archive character(75) NOT NULL,
-  archive_pid text,
-  archive_pid_type bigint,
+  archivepid text,
+  archivepidtype bigint,
   brokersubmissionid character(75)  NOT NULL,
-  last_changed timestamp with time zone NOT NULL DEFAULT now(),
+  lastchanged timestamp with time zone NOT NULL DEFAULT now(),
   userid bigint NOT NULL,
-  is_public boolean NOT NULL DEFAULT false,
-  public_after time with time zone DEFAULT (now() + '6 mons'::interval),
+  ispublic boolean NOT NULL DEFAULT false,
+  publicafter time with time zone DEFAULT (now() + '6 mons'::interval),
   status text NOT NULL,
   CONSTRAINT gfbio_submissionregistry_pkey PRIMARY KEY (researchobjectid, researchobjectversion, archive),
   CONSTRAINT gfbio_dataprovider_fkey FOREIGN KEY (archive)
       REFERENCES gfbio_dataprovider (label) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archivetypeid)
+  CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archivepidtype)
       REFERENCES gfbio_content (contentid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
-  
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_submissionregistry
+  OWNER TO liferay;  
   
   
 ---------------------------------------------------------------------------------------------
@@ -207,7 +211,7 @@ CREATE TABLE gfbio_submissionregistry
 ------------------------------- Data Provider / Persistent Identifier -----------------------
  
 
- CREATE TABLE gfbio_dataprovider_persistentidentifier
+CREATE TABLE gfbio_dataprovider_persistentidentifier
 (
   gfbio_dataprovider bigint NOT NULL,
   gfbio_persistentidentifier bigint NOT NULL,

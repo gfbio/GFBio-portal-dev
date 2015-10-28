@@ -424,12 +424,13 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 
 
 --- persistent_identifier
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)  VALUES ('1029', '3', '7', '1120','1029');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)  VALUES ('1018', '3', '8', '1120','Accession Number');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)  VALUES ('1019', '3', '9', '1120','ACCESSION');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)  VALUES ('1030', '3', '7', '1121','1030');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)  VALUES ('1020', '3', '8', '1121','Digital Object Identifier');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)  VALUES ('1021', '3', '9', '1121','DOI');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('	1265	','	3	','	7	','	574	','	1265');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('	1266	','	3	','	8	','	574	','	Accession Number');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('	1267	','	3	','	9	','	574	','	ACCESSION');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('	1268	','	3	','	7	','	575	','	1030');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('	1269	','	3	','	8	','	575	','	Digital Object Identifier');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('	1270	','	3	','	9	','	575	','	DOI');
+
 
 
 
@@ -1382,19 +1383,19 @@ INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES ('9', 'Euro
 ------------------------------------- Content Research Object -------------------------------------
 
 
-INSERT INTO gfbio_researchobject (researchobjectid, version, label,type) VALUES ('1','1','s1','sample');
-INSERT INTO gfbio_researchobject (researchobjectid, version, label,type) VALUES ('2','1','s2','sample');
-INSERT INTO gfbio_researchobject (researchobjectid, version, label,type) VALUES ('3','1','s4','sample');
-INSERT INTO gfbio_researchobject (researchobjectid, version, label,type) VALUES ('4','1','E1','experiment');
+INSERT INTO gfbio_researchobject (researchobjectid, researchobjectversion, label,researchobjecttype) VALUES ('1','1','s1','sample');
+INSERT INTO gfbio_researchobject (researchobjectid, researchobjectversion, label,researchobjecttype) VALUES ('2','1','s2','sample');
+INSERT INTO gfbio_researchobject (researchobjectid, researchobjectversion, label,researchobjecttype) VALUES ('3','1','s4','sample');
+INSERT INTO gfbio_researchobject (researchobjectid, researchobjectversion, label,researchobjecttype) VALUES ('4','1','E1','experiment');
 
 
 ------------------------------------- Content Submission Registry -------------------------------------
 
 
-INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (1,1,'ENA',1029,'tENA01',10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
-INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (2,1,'PANGAEA',1030,'tPAN01',10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
-INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (3,1,'ENA',1029,'tENA02',10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
-INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (3,1,'PANGAEA',1030,'tPAN02',10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (1,1,'ENA','tENA01',1265,10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (2,1,'PANGAEA','tPAN01',1268,10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (3,1,'ENA','tENA02',1265,10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (3,1,'PANGAEA','tPAN02',1268,10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
 
 
 --------------------------------------------------------------------------------------------
@@ -1403,8 +1404,8 @@ INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,arc
 --------------------------------------------------------------------------------------------
 
 
-INSERT INTO gfbio_dataprovider_persistentidentifier (gfbio_dataprovider, gfbio_persistentidentifier) VALUES ('1','1030');
-INSERT INTO gfbio_dataprovider_persistentidentifier (gfbio_dataprovider, gfbio_persistentidentifier) VALUES ('2','1029');
+INSERT INTO gfbio_dataprovider_persistentidentifier (gfbio_dataprovider, gfbio_persistentidentifier) VALUES ('4','1268');
+INSERT INTO gfbio_dataprovider_persistentidentifier (gfbio_dataprovider, gfbio_persistentidentifier) VALUES ('9','1265');
 
 
 
