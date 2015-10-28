@@ -199,7 +199,7 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE gfbio_submissionregistry
-  OWNER TO liferay;  
+  OWNER TO liferay_gfbio;  
   
   
 ---------------------------------------------------------------------------------------------
