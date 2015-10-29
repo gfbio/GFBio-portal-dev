@@ -29,7 +29,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	
 	
 
-	//
+	//get the content of cell with a specific row and column in a specific table
 	@SuppressWarnings("rawtypes")
 	public List getCellContent(long headId, long rowId, long columnId) {
 		
@@ -58,17 +58,15 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	///get the content of cell with a specific id
 	@SuppressWarnings("rawtypes")
 	public List getCellContentByContentId(long contentId) {
-		System.out.println(contentId);
 		
 		Session session = null;
 		try {
 		
 			session = openSession();
 			String sql = CustomSQLUtil.get(GET_CELL_CONTENT_BY_CONTENTID);
-			System.out.println(sql);
 			SQLQuery queryObject = session.createSQLQuery(sql);
 			queryObject.setCacheable(false);
 			queryObject.addScalar("cellContent", Type.STRING);
@@ -82,7 +80,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	///get List of content IDs, without content of relationship tables
 	@SuppressWarnings("rawtypes")
 	public  List getContentIdsWithoutRelationships(long rowId, String columnName1, String columnName2) {
 		
@@ -113,7 +111,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	//get List of content IDs, with content of relationship tables
 	@SuppressWarnings("rawtypes")
 	public  List getContentIdsWithRelationships(long rowId, String columnName1, String columnName2) {
 		
@@ -122,8 +120,6 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 		
 			session = openSession();
 			String sql = CustomSQLUtil.get(GET_CONTENTIDS_WITH_RELATIONSHIPS);
-			System.out.println(GET_CONTENTIDS_WITH_RELATIONSHIPS);
-			System.out.println(sql);
 			
 			SQLQuery queryObject = session.createSQLQuery(sql);
 			queryObject.setCacheable(false);
@@ -147,7 +143,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	//get the id of a column that have cell with specific cell 
 	@SuppressWarnings("rawtypes")
 	public  List getColumnIdById(long contentId) {
 		
@@ -174,7 +170,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 
-	//
+	//get all IDs of rows of a specific table
 	@SuppressWarnings("rawtypes")
 	public  List getRowIds(long headId) {
 	
@@ -202,7 +198,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	//get ID of a row that are in a specific table and column and content in the cell of column in table
 	@SuppressWarnings("rawtypes")
 	public  List getRowIdByCellContent(long headId, String columnName, String cellContent) {
 		
@@ -233,7 +229,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	//get the ID of a row that include a cell with a specific ID
 	@SuppressWarnings("rawtypes")
 	public List getRowIdByContentId(long contentId) {
 		
@@ -259,7 +255,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	//get the ID of a table that include a cell with a specific ID
 	@SuppressWarnings("rawtypes")
 	public  List getHeadIdById(long contentId) {
 		
@@ -287,7 +283,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	//get all IDs of cells in a specific row
 	@SuppressWarnings("rawtypes")
 	public  List getContentIdsByRowId(long rowId) {
 		
@@ -315,7 +311,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//
+	//get the ID of a row in a relation table with specific content
 	@SuppressWarnings("rawtypes")
 	public  List getRowIdOfRelation(String cellContent1, String cellContent2) {
 		

@@ -105,8 +105,13 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	
 
 	//get a head id to the column id
+	@SuppressWarnings("rawtypes")
 	public long getHeadIdById(long columnId) throws PortalException, SystemException {
-		return ColumnLocalServiceUtil.getColumn(columnId).getHeadID();
+		long headId =0;
+		List headIdList = (List) ColumnLocalServiceUtil.getColumn(columnId);
+		if (headIdList.size() >0)
+			headId = (long) headIdList.get(0);
+		return headId;
 	}
 
 	
@@ -167,11 +172,9 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		
 		Boolean check = false;
 		Column column = null;
-
 		try {
 			column = ColumnLocalServiceUtil.getColumn(columnId);
 		} catch (PortalException | SystemException e) {e.printStackTrace();}
-
 
 		// if it true, then must be build a new content with a new primary key else update the content
 		if (column == null)
@@ -181,8 +184,6 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 
 		column.setHeadID(headId);
 		column.setColumn_name(content);
-
-
 		try {
 			super.updateColumn(column);
 			check = true;
@@ -194,7 +195,6 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 				for (int i =0;i<rowCount.size();i++)
 					check = ContentLocalServiceUtil.updateContent(0, headId, column.getColumnID(), (long) rowCount.get(i), "");
 		}
-		
 		return check;
 	}
 

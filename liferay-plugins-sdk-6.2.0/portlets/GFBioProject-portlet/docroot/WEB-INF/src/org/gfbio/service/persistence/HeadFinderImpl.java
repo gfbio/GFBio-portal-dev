@@ -27,7 +27,7 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 	
 
 	
-	//
+	//get the complete table (head, column, content) with a specific Id as list 
 	@SuppressWarnings("rawtypes")
 	public List getEntitiesByHeadId(long headId) {
 		
@@ -55,7 +55,7 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 	}
 	
 	
-	//
+	//get a list of heads that have IDs from start to end
 	@SuppressWarnings("unchecked")
 	public List<Head> getHeadBetweenHeadIds(int start, int end) {
 
@@ -81,10 +81,10 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 	}
 	
 	
-	//
+	//get the ID of a table with a specific name 
 	@SuppressWarnings("rawtypes")
 	public List getHeadIdByTableName(String tableName) {
-		
+	
 		Session session = null;
 		try {
 		
@@ -108,7 +108,7 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 	}
 	
 	
-	//
+	//get the name of a specific table with a specific id
 	@SuppressWarnings("rawtypes")
 	public List getTableNameById(long headId) {
 		

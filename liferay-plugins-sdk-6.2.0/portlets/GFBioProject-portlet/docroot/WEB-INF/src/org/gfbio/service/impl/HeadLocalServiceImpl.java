@@ -140,11 +140,16 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 
 	//get ID of a head by tableName
+	@SuppressWarnings("rawtypes")
 	public Long getHeadIdByTableName(String tableName) throws NoSuchHeadException, SystemException {
-		return (Long) HeadFinderUtil.getHeadIdByTableName(tableName).get(0);
+		Long headId =(long) 0;
+		List headIdList = HeadFinderUtil.getHeadIdByTableName(tableName);
+		if (headIdList.size() >0)
+			headId = (Long) headIdList.get(0);
+		return headId;
 	}
 	
-		
+	
 	//get all heads with a specific table type
 	public List<Head> getHeadsByTableType(String tableType) throws SystemException {
 		return headPersistence.findByTableType(tableType);
@@ -211,8 +216,13 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 		
 	//get tableName of a specific head  
+	@SuppressWarnings("rawtypes")
 	public String getTableNameById(long headId) throws NoSuchHeadException, SystemException {
-		return (String) HeadFinderUtil.getTableNameById(headId).get(0);
+		String name ="";
+		List nameList =  HeadFinderUtil.getTableNameById(headId);
+		if (nameList.size()>0)
+			name =  (String) nameList.get(0);
+		return name;
 	}
 	
 	

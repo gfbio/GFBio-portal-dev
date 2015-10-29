@@ -55,7 +55,6 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 
 		try {
 			contentList = contentPersistence.findByColumnId(columnId);
-			System.out.println("content: "+contentList.toString());
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null)
@@ -120,7 +119,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 
 	
-	//get all contentId whre the entry have the same rowId
+	//get all contentId where the entry have the same rowId
 	@SuppressWarnings("rawtypes")
 	public List getContentIdsByRowId (long rowId){
 		return ContentFinderUtil.getContentIdsByRowId(rowId);
@@ -173,20 +172,35 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	//get the first element of a list of contentId to a specific rowId
+	@SuppressWarnings("rawtypes")
 	public long getFirstContentIdByRowId (long rowId){
-		return (long) ContentFinderUtil.getContentIdsByRowId(rowId).get(0);
+		long contentId =0;
+		List contentIdList = (List) ContentFinderUtil.getContentIdsByRowId(rowId);
+		if (contentIdList.size() >0)
+			contentId = (long) contentIdList.get(0);
+		return contentId;
 	}
-	
+
 	
 	//get the headId to a content entry
+	@SuppressWarnings("rawtypes")
 	public long getHeadIdById(long contentId){
-		return (long) ContentFinderUtil.getHeadIdById(contentId).get(0);
+		long headId =0;
+		List headIdList = (List) ContentFinderUtil.getHeadIdById(contentId);
+		if (headIdList.size() >0)
+			headId = (long) headIdList.get(0);
+		return headId;
 	}
 	
-	
+
 	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
+	@SuppressWarnings("rawtypes")
 	public long getRowIdByCellContent(long headId, String columnName, String cellContent){
-		return (long) ContentFinderUtil.getRowIdByCellContent(headId, columnName, cellContent).get(0);
+		long rowId =0;
+		List rowIdList = (List)  ContentFinderUtil.getRowIdByCellContent(headId, columnName, cellContent);
+		if (rowIdList.size() >0)
+			rowId = (long) rowIdList.get(0);
+		return rowId;
 	}
 	
 	
@@ -247,14 +261,24 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	// get the columnId of a specific content.
+	@SuppressWarnings("rawtypes")
 	public long getRowIdById(long contentId) {
-		return (long) ContentFinderUtil.getRowIdByContentId(contentId).get(0);
+		long rowId =0;
+		List rowIdList = ContentFinderUtil.getRowIdByContentId(contentId);
+		if (rowIdList.size() >0)
+			rowId = (long) rowIdList.get(0);
+		return rowId;
 	}
-	
+		
 	
 	//get a List of rowIds of specific head
+	@SuppressWarnings("rawtypes")
 	public long  getRowIdOfRelation (String cellContent1, String cellContent2){
-		return (long) ContentFinderUtil.getRowIdOfRelation(cellContent1, cellContent2).get(0);
+		long rowId =0;
+		List rowIdList = (List)  ContentFinderUtil.getRowIdOfRelation(cellContent1, cellContent2);
+		if (rowIdList.size() >0)
+			rowId = (long) rowIdList.get(0);
+		return rowId;
 	}
 	
 	

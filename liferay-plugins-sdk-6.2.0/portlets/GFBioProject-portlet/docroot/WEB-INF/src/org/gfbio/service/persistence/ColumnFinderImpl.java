@@ -25,12 +25,8 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 	public static String GET_COUNT_OF_COLUMNS = FINDER_CLASS_NAME_ENTITY + ".getCountofColumns";	
 	public static String GET_HEADIDS_BY_COLUMNNAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdsByColumnName";
 
-	
-	
-	
-	
-	
 
+	//get all Columns of all relation tables that include a specific table name as column name
 	@SuppressWarnings("unchecked")
 	public List<Column> getColumnsWithRelation(String columnName) {
 
@@ -56,7 +52,7 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 	}
 	
 	
-	//
+	////get all IDs Columns that have the specific same name
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List getColumnIdsWithoutRelation(String columnName) {
 		Session session = null;
@@ -81,15 +77,13 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 	}
 	
 	
-	//
+	//get the name of a column with a specific id
 	@SuppressWarnings({  "rawtypes" })
 	public List getColumnNameById(long columnid) {
-		System.out.println("Finder "+ columnid);
 		Session session = null;
 		try {
 			session = openSession();
 			String sql = CustomSQLUtil.get(GET_COLUMNNAME_BY_ID);
-			System.out.println(sql);
 
 			SQLQuery queryObject = session.createSQLQuery(sql);
 
@@ -108,7 +102,7 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 	
 	
 	
-	//
+	//get the count of columns of a specific table
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List getCountofColumns(long headId) {
 		Session session = null;
@@ -132,7 +126,7 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 	}
 	
 	
-	//
+	//get all IDs of heads that have a column with a specific name 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List getHeadIdsByColumnName(String columnName) {
 		Session session = null;
