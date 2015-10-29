@@ -1392,10 +1392,10 @@ INSERT INTO gfbio_researchobject (researchobjectid, researchobjectversion, label
 ------------------------------------- Content Submission Registry -------------------------------------
 
 
---INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (1,1,'ENA','tENA01',1265,10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
---INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (2,1,'PANGAEA','tPAN01',1268,10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
---INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (3,1,'ENA','tENA02',1265,10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
---INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archivepid,archivepidtype,userid,brokersubmissionid, status) VALUES (3,1,'PANGAEA','tPAN02',1268,10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (1,1,'ENA','tENA01',1265,10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (2,1,'PANGAEA','tPAN01',1268,10199,'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (3,1,'ENA','tENA02',1265,10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
+--INSERT INTO gfbio_submissionregistry (researchobjectid,researchobjectversion,archive,archive_pid,archive_pid_type,userid,brokersubmissionid, status) VALUES (3,1,'PANGAEA','tPAN02',1268,10199,'E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC95', 'local');
 
 
 --------------------------------------------------------------------------------------------

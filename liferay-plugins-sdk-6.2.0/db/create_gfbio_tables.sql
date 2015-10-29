@@ -191,7 +191,7 @@ CREATE TABLE gfbio_submissionregistry
   CONSTRAINT gfbio_dataprovider_fkey FOREIGN KEY (archive)
       REFERENCES gfbio_dataprovider (label) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archivepidtype)
+  CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archive_pid_type)
       REFERENCES gfbio_content (contentid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
