@@ -36,16 +36,6 @@
      </portlet>
 
 	<portlet>
-		<portlet-name>test</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>test-portlet</css-class-wrapper>
-	</portlet>
-
-	<portlet>
 		<portlet-name>table-builder</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
