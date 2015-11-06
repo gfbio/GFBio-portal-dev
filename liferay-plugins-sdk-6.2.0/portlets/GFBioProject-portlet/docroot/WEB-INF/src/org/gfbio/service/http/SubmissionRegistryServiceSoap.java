@@ -62,38 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class SubmissionRegistryServiceSoap {
-	public static java.lang.String[] getArchivepidsOfENA(
-		java.lang.String archivePId) throws RemoteException {
+	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			java.util.List<java.lang.String> returnValue = SubmissionRegistryServiceUtil.getArchivepidsOfENA(archivePId);
-
-			return returnValue.toArray(new java.lang.String[returnValue.size()]);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static java.lang.String[] getArchivepidsWithTypeSampleOfENA(
-		java.lang.String archivePId) throws RemoteException {
-		try {
-			java.util.List<java.lang.String> returnValue = SubmissionRegistryServiceUtil.getArchivepidsWithTypeSampleOfENA(archivePId);
-
-			return returnValue.toArray(new java.lang.String[returnValue.size()]);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static java.lang.String getArchivepidWithTypeStudyOfENA(
-		java.lang.String archivePId) throws RemoteException {
-		try {
-			java.lang.String returnValue = SubmissionRegistryServiceUtil.getArchivepidWithTypeStudyOfENA(archivePId);
+			org.json.simple.JSONArray returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 
 			return returnValue;
 		}
@@ -104,68 +76,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static org.gfbio.model.SubmissionRegistrySoap getLatestSubmissionByIds(
-		long researchObjectId, java.lang.String archive)
-		throws RemoteException {
+	public static org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			org.gfbio.model.SubmissionRegistry returnValue = SubmissionRegistryServiceUtil.getLatestSubmissionByIds(researchObjectId,
-					archive);
-
-			return org.gfbio.model.SubmissionRegistrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.gfbio.model.SubmissionRegistrySoap[] getLatestSubmissionsByArchive(
-		java.lang.String archive) throws RemoteException {
-		try {
-			java.util.List<org.gfbio.model.SubmissionRegistry> returnValue = SubmissionRegistryServiceUtil.getLatestSubmissionsByArchive(archive);
-
-			return org.gfbio.model.SubmissionRegistrySoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.gfbio.model.SubmissionRegistrySoap[] getLatestSubmissionsByResearchobjectid(
-		long researchObjectId) throws RemoteException {
-		try {
-			java.util.List<org.gfbio.model.SubmissionRegistry> returnValue = SubmissionRegistryServiceUtil.getLatestSubmissionsByResearchobjectid(researchObjectId);
-
-			return org.gfbio.model.SubmissionRegistrySoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.gfbio.model.SubmissionRegistrySoap[] getLatestSubmissions()
-		throws RemoteException {
-		try {
-			java.util.List<org.gfbio.model.SubmissionRegistry> returnValue = SubmissionRegistryServiceUtil.getLatestSubmissions();
-
-			return org.gfbio.model.SubmissionRegistrySoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject json) throws RemoteException {
-		try {
-			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(json);
+			org.json.simple.JSONArray returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByResearchObjectId(requestJson);
 
 			return returnValue;
 		}
@@ -176,10 +90,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONObject json) throws RemoteException {
+	public static org.json.simple.JSONArray createSubmissionRegistry(
+		java.lang.String requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByResearchObjectId(json);
+			org.json.simple.JSONArray returnValue = SubmissionRegistryServiceUtil.createSubmissionRegistry(requestJson);
 
 			return returnValue;
 		}
@@ -190,24 +104,10 @@ public class SubmissionRegistryServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject createSubmissionRegistry(
-		org.json.simple.JSONObject json) throws RemoteException {
+	public static org.json.simple.JSONArray updateSubmissionRegistry(
+		java.lang.String requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.createSubmissionRegistry(json);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.json.simple.JSONObject updateSubmissionRegistry(
-		org.json.simple.JSONObject json) throws RemoteException {
-		try {
-			org.json.simple.JSONObject returnValue = SubmissionRegistryServiceUtil.updateSubmissionRegistry(json);
+			org.json.simple.JSONArray returnValue = SubmissionRegistryServiceUtil.updateSubmissionRegistry(requestJson);
 
 			return returnValue;
 		}

@@ -66,15 +66,15 @@ public class SubmissionRegistryModelImpl extends BaseModelImpl<SubmissionRegistr
 			{ "researchObjectVersion", Types.BIGINT },
 			{ "archive", Types.VARCHAR },
 			{ "brokerSubmissionID", Types.VARCHAR },
-			{ "archivePID", Types.VARCHAR },
-			{ "archivePIDType", Types.BIGINT },
-			{ "lastChanged", Types.TIMESTAMP },
+			{ "archive_pid", Types.VARCHAR },
+			{ "archive_pid_type", Types.BIGINT },
+			{ "last_changed", Types.TIMESTAMP },
 			{ "userID", Types.BIGINT },
-			{ "isPublic", Types.BOOLEAN },
-			{ "publicAfter", Types.TIMESTAMP },
+			{ "is_public", Types.BOOLEAN },
+			{ "public_after", Types.TIMESTAMP },
 			{ "status", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_SubmissionRegistry (researchObjectID LONG not null,researchObjectVersion LONG not null,archive VARCHAR(75) not null,brokerSubmissionID VARCHAR(75) null,archivePID VARCHAR(75) null,archivePIDType LONG,lastChanged DATE null,userID LONG,isPublic BOOLEAN,publicAfter DATE null,status VARCHAR(75) null,primary key (researchObjectID, researchObjectVersion, archive))";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_SubmissionRegistry (researchObjectID LONG not null,researchObjectVersion LONG not null,archive VARCHAR(75) not null,brokerSubmissionID VARCHAR(75) null,archive_pid VARCHAR(75) null,archive_pid_type LONG,last_changed DATE null,userID LONG,is_public BOOLEAN,public_after DATE null,status VARCHAR(75) null,primary key (researchObjectID, researchObjectVersion, archive))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_SubmissionRegistry";
 	public static final String ORDER_BY_JPQL = " ORDER BY submissionRegistry.id.researchObjectID ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_SubmissionRegistry.researchObjectID ASC";

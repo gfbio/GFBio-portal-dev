@@ -52,6 +52,7 @@
 	<model name="org.gfbio.model.Project_ResearchObject">
 		<field name="projectID" type="long" />
 		<field name="researchObjectID" type="long" />
+		<field name="researchObjectVersion" type="int" />
 	</model>
 	<model name="org.gfbio.model.Project_User">
 		<field name="projectID" type="long" />
@@ -67,7 +68,7 @@
 	</model>
 	<model name="org.gfbio.model.ResearchObject">
 		<field name="researchObjectID" type="long" />
-		<field name="version" type="int" />
+		<field name="researchObjectVersion" type="int" />
 		<field name="parentResearchObjectID" type="long" />
 		<field name="name" type="String" />
 		<field name="label" type="String" />

@@ -124,11 +124,11 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 
 		_methodName126 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes126 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes126 = new String[] { "org.json.simple.JSONArray" };
 
 		_methodName127 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes127 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes127 = new String[] { "org.json.simple.JSONArray" };
 
 		_methodName128 = "getArchivePIdsOfENA";
 
@@ -144,159 +144,162 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 
 		_methodParameterTypes130 = new String[] { "java.lang.String" };
 
-		_methodName131 = "getArchivePIdWithTypeStudyOfENA";
+		_methodName131 = "getArchivePIdType";
 
 		_methodParameterTypes131 = new String[] { "java.lang.String" };
 
-		_methodName132 = "getLatestSubmissionByIds";
+		_methodName132 = "getArchivePIdWithTypeStudyOfENA";
 
-		_methodParameterTypes132 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes132 = new String[] { "java.lang.String" };
 
-		_methodName133 = "getLatestSubmissionsByArchive";
+		_methodName133 = "getLatestSubmissionByIds";
 
-		_methodParameterTypes133 = new String[] { "java.lang.String" };
+		_methodParameterTypes133 = new String[] { "long", "java.lang.String" };
 
-		_methodName134 = "getLatestSubmissionsByResearchObjectId";
+		_methodName134 = "getLatestSubmissionsByArchive";
 
-		_methodParameterTypes134 = new String[] { "long" };
+		_methodParameterTypes134 = new String[] { "java.lang.String" };
 
-		_methodName135 = "getLatestSubmissions";
+		_methodName135 = "getLatestSubmissionsByResearchObjectId";
 
-		_methodParameterTypes135 = new String[] {  };
+		_methodParameterTypes135 = new String[] { "long" };
 
-		_methodName136 = "getSubmissionRegistriesByBrokerSubmissionId";
+		_methodName136 = "getLatestSubmissions";
 
-		_methodParameterTypes136 = new String[] { "java.lang.String" };
+		_methodParameterTypes136 = new String[] {  };
 
-		_methodName137 = "getSubmissionRegistriesByResearchObjectId";
+		_methodName137 = "getStatus";
 
-		_methodParameterTypes137 = new String[] { "long" };
-
-		_methodName138 = "GetStatusByIds";
-
-		_methodParameterTypes138 = new String[] {
-				"long", "int", "java.lang.String"
-			};
-
-		_methodName139 = "getSubmissionRegistry";
-
-		_methodParameterTypes139 = new String[] {
-				"long", "int", "java.lang.String"
-			};
-
-		_methodName140 = "constructSubmissionRegistriesJson";
-
-		_methodParameterTypes140 = new String[] { "java.util.List" };
-
-		_methodName141 = "constructSubmissionRegistryJson";
-
-		_methodParameterTypes141 = new String[] {
-				"org.gfbio.model.SubmissionRegistry"
-			};
-
-		_methodName142 = "constructStatus";
-
-		_methodParameterTypes142 = new String[] {
+		_methodParameterTypes137 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName143 = "createSubmissionRegistry";
+		_methodName138 = "getResearchObjectVersion";
 
-		_methodParameterTypes143 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName144 = "updateSubmissionRegistry";
-
-		_methodParameterTypes144 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName145 = "updateSubmissionRegistry";
-
-		_methodParameterTypes145 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long"
+		_methodParameterTypes138 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName146 = "updateSubmissionRegistry";
+		_methodName139 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes146 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "long", "java.util.Date", "long"
+		_methodParameterTypes139 = new String[] { "java.lang.String" };
+
+		_methodName140 = "getSubmissionRegistriesByResearchObjectId";
+
+		_methodParameterTypes140 = new String[] { "long" };
+
+		_methodName141 = "GetStatusByIds";
+
+		_methodParameterTypes141 = new String[] {
+				"long", "int", "java.lang.String"
 			};
+
+		_methodName142 = "getSubmissionRegistry";
+
+		_methodParameterTypes142 = new String[] {
+				"long", "int", "java.lang.String"
+			};
+
+		_methodName143 = "constructSubmissionRegistriesJson";
+
+		_methodParameterTypes143 = new String[] { "java.util.List" };
+
+		_methodName144 = "constructSubmissionRegistryJson";
+
+		_methodParameterTypes144 = new String[] {
+				"org.gfbio.model.SubmissionRegistry"
+			};
+
+		_methodName145 = "createSubmissionRegistry";
+
+		_methodParameterTypes145 = new String[] { "org.json.simple.JSONArray" };
+
+		_methodName146 = "createSubmissionRegistry";
+
+		_methodParameterTypes146 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName147 = "updateSubmissionRegistry";
 
-		_methodParameterTypes147 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "long", "java.lang.String"
-			};
+		_methodParameterTypes147 = new String[] { "org.json.simple.JSONArray" };
 
 		_methodName148 = "updateSubmissionRegistry";
 
-		_methodParameterTypes148 = new String[] {
+		_methodParameterTypes148 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName149 = "updateKernelSubmissionRegistry";
+
+		_methodParameterTypes149 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String", "long"
+			};
+
+		_methodName150 = "updateSubmissionRegistry";
+
+		_methodParameterTypes150 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "long", "java.util.Date", "long",
 				"java.lang.String"
 			};
 
-		_methodName149 = "updateSubmissionRegistry";
+		_methodName151 = "updateSubmissionRegistry";
 
-		_methodParameterTypes149 = new String[] {
+		_methodParameterTypes151 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "long", "java.util.Date", "long",
 				"java.lang.String", "java.lang.Boolean", "java.util.Date"
 			};
 
-		_methodName150 = "updateSubmissionRegistryWithoutPId";
+		_methodName152 = "updateSubmissionRegistryWithoutPId";
 
-		_methodParameterTypes150 = new String[] {
+		_methodParameterTypes152 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.util.Date", "long", "java.lang.String"
 			};
 
-		_methodName151 = "updateArchivePId";
-
-		_methodParameterTypes151 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.String"
-			};
-
-		_methodName152 = "updateArchivePIdType";
-
-		_methodParameterTypes152 = new String[] {
-				"long", "int", "java.lang.String", "long"
-			};
-
-		_methodName153 = "updateBrokerSubmissionId";
+		_methodName153 = "updateArchivePId";
 
 		_methodParameterTypes153 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName154 = "updateIsPublic";
+		_methodName154 = "updateArchivePIdType";
 
 		_methodParameterTypes154 = new String[] {
-				"long", "int", "java.lang.String", "java.lang.Boolean"
+				"long", "int", "java.lang.String", "long"
 			};
 
-		_methodName155 = "updateLastChanged";
+		_methodName155 = "updateBrokerSubmissionId";
 
 		_methodParameterTypes155 = new String[] {
-				"long", "int", "java.lang.String", "java.util.Date"
-			};
-
-		_methodName156 = "updatePublicAfter";
-
-		_methodParameterTypes156 = new String[] {
-				"long", "int", "java.lang.String", "java.util.Date"
-			};
-
-		_methodName157 = "updateStatus";
-
-		_methodParameterTypes157 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName158 = "updateUserId";
+		_methodName156 = "updateIsPublic";
+
+		_methodParameterTypes156 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.Boolean"
+			};
+
+		_methodName157 = "updateLastChanged";
+
+		_methodParameterTypes157 = new String[] {
+				"long", "int", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName158 = "updatePublicAfter";
 
 		_methodParameterTypes158 = new String[] {
+				"long", "int", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName159 = "updateStatus";
+
+		_methodParameterTypes159 = new String[] {
+				"long", "int", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName160 = "updateUserId";
+
+		_methodParameterTypes160 = new String[] {
 				"long", "int", "java.lang.String", "long"
 			};
 	}
@@ -404,12 +407,12 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 
 		if (_methodName126.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName127.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName128.equals(name) &&
@@ -430,111 +433,112 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 
 		if (_methodName131.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getArchivePIdWithTypeStudyOfENA((java.lang.String)arguments[0]);
+			return SubmissionRegistryLocalServiceUtil.getArchivePIdType((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName132.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getLatestSubmissionByIds(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+			return SubmissionRegistryLocalServiceUtil.getArchivePIdWithTypeStudyOfENA((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName133.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getLatestSubmissionsByArchive((java.lang.String)arguments[0]);
+			return SubmissionRegistryLocalServiceUtil.getLatestSubmissionByIds(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName134.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getLatestSubmissionsByResearchObjectId(((Long)arguments[0]).longValue());
+			return SubmissionRegistryLocalServiceUtil.getLatestSubmissionsByArchive((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName135.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getLatestSubmissions();
+			return SubmissionRegistryLocalServiceUtil.getLatestSubmissionsByResearchObjectId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName136.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((java.lang.String)arguments[0]);
+			return SubmissionRegistryLocalServiceUtil.getLatestSubmissions();
 		}
 
 		if (_methodName137.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId(((Long)arguments[0]).longValue());
+			return SubmissionRegistryLocalServiceUtil.getStatus(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
 		}
 
 		if (_methodName138.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+			return SubmissionRegistryLocalServiceUtil.getResearchObjectVersion(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+		}
+
+		if (_methodName139.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName140.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName141.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.GetStatusByIds(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2]);
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.getSubmissionRegistry(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson((java.util.List<org.gfbio.model.SubmissionRegistry>)arguments[0]);
-		}
-
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.constructSubmissionRegistryJson((org.gfbio.model.SubmissionRegistry)arguments[0]);
-		}
-
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.constructStatus(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
-		}
-
 		if (_methodName143.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.createSubmissionRegistry((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson((java.util.List<org.gfbio.model.SubmissionRegistry>)arguments[0]);
 		}
 
 		if (_methodName144.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryLocalServiceUtil.constructSubmissionRegistryJson((org.gfbio.model.SubmissionRegistry)arguments[0]);
 		}
 
 		if (_methodName145.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
-				((Long)arguments[6]).longValue());
+			return SubmissionRegistryLocalServiceUtil.createSubmissionRegistry((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName146.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4],
-				((Long)arguments[5]).longValue(), (java.util.Date)arguments[6],
-				((Long)arguments[7]).longValue());
+			return SubmissionRegistryLocalServiceUtil.createSubmissionRegistry((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName147.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
-				((Long)arguments[6]).longValue(), (java.lang.String)arguments[7]);
+			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName148.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
+			return SubmissionRegistryLocalServiceUtil.updateKernelSubmissionRegistry(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				((Long)arguments[4]).longValue());
+		}
+
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -543,8 +547,8 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 				((Long)arguments[7]).longValue(), (java.lang.String)arguments[8]);
 		}
 
-		if (_methodName149.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -555,8 +559,8 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 				(java.lang.Boolean)arguments[9], (java.util.Date)arguments[10]);
 		}
 
-		if (_methodName150.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistryWithoutPId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -564,57 +568,57 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 				(java.lang.String)arguments[6]);
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.updateArchivePId(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
-		}
-
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.updateArchivePIdType(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2], ((Long)arguments[3]).longValue());
-		}
-
 		if (_methodName153.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
-			return SubmissionRegistryLocalServiceUtil.updateBrokerSubmissionId(((Long)arguments[0]).longValue(),
+			return SubmissionRegistryLocalServiceUtil.updateArchivePId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
 		}
 
 		if (_methodName154.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+			return SubmissionRegistryLocalServiceUtil.updateArchivePIdType(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				(java.lang.String)arguments[2], ((Long)arguments[3]).longValue());
+		}
+
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+			return SubmissionRegistryLocalServiceUtil.updateBrokerSubmissionId(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
+		}
+
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updateIsPublic(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.Boolean)arguments[3]);
 		}
 
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updateLastChanged(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updatePublicAfter(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updateStatus(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3]);
 		}
 
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return SubmissionRegistryLocalServiceUtil.updateUserId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], ((Long)arguments[3]).longValue());
@@ -725,4 +729,8 @@ public class SubmissionRegistryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes157;
 	private String _methodName158;
 	private String[] _methodParameterTypes158;
+	private String _methodName159;
+	private String[] _methodParameterTypes159;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
 }

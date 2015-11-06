@@ -32,33 +32,29 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getAllChildren";
+		_methodName3 = "getResearchObjectAbsolutParent";
 
-		_methodParameterTypes3 = new String[] { "long" };
+		_methodParameterTypes3 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName4 = "getResearchObjectAbsolutParent";
+		_methodName4 = "getResearchObjectById";
 
-		_methodParameterTypes4 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes4 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName5 = "getResearchObjectsByParent";
+		_methodName5 = "getResearchObjectParent";
 
-		_methodParameterTypes5 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes5 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName6 = "getResearchObjectById";
+		_methodName6 = "getResearchObjectsByParent";
 
-		_methodParameterTypes6 = new String[] { "long" };
+		_methodParameterTypes6 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName7 = "getResearchObjectParent";
+		_methodName7 = "createResearchObject";
 
-		_methodParameterTypes7 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes7 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName8 = "createResearchObject";
+		_methodName8 = "updateResearchObject";
 
-		_methodParameterTypes8 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName9 = "updateResearchObject";
-
-		_methodParameterTypes9 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes8 = new String[] { "org.json.simple.JSONArray" };
 	}
 
 	@Override
@@ -112,13 +108,14 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
-		long researchObjectId) {
+	public org.json.simple.JSONArray getResearchObjectAbsolutParent(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3, new Object[] { researchObjectId });
+					_methodParameterTypes3,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -132,18 +129,18 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (java.util.List<org.gfbio.model.ResearchObject>)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray getResearchObjectById(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName4,
 					_methodParameterTypes4,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -157,18 +154,18 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectsByParent(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray getResearchObjectParent(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName5,
 					_methodParameterTypes5,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -182,17 +179,18 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectById(
-		long researchObjectId) {
+	public org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { researchObjectId });
+					_methodParameterTypes6,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -206,18 +204,18 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectParent(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray createResearchObject(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName7,
 					_methodParameterTypes7,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -231,18 +229,18 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.json.simple.JSONObject createResearchObject(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray updateResearchObject(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName8,
 					_methodParameterTypes8,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -256,32 +254,7 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public org.json.simple.JSONObject updateResearchObject(
-		org.json.simple.JSONObject json) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName9,
-					_methodParameterTypes9,
-					new Object[] { ClpSerializer.translateInput(json) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableService _invokableService;
@@ -301,6 +274,4 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	private String[] _methodParameterTypes7;
 	private String _methodName8;
 	private String[] _methodParameterTypes8;
-	private String _methodName9;
-	private String[] _methodParameterTypes9;
 }

@@ -110,7 +110,7 @@ public class ProjectLocalServiceClpInvoker {
 
 		_methodName126 = "getProjectById";
 
-		_methodParameterTypes126 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes126 = new String[] { "org.json.simple.JSONArray" };
 
 		_methodName127 = "getProjectById";
 
@@ -128,18 +128,20 @@ public class ProjectLocalServiceClpInvoker {
 
 		_methodParameterTypes130 = new String[] { "org.gfbio.model.Project" };
 
-		_methodName131 = "updateProject";
+		_methodName131 = "constructProjectAsJsonArray";
 
-		_methodParameterTypes131 = new String[] {
+		_methodParameterTypes131 = new String[] { "org.gfbio.model.Project" };
+
+		_methodName132 = "constructProjectsAsJson";
+
+		_methodParameterTypes132 = new String[] { "java.util.List" };
+
+		_methodName133 = "updateProject";
+
+		_methodParameterTypes133 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
-			};
-
-		_methodName132 = "updateProject";
-
-		_methodParameterTypes132 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
 			};
 	}
 
@@ -246,7 +248,7 @@ public class ProjectLocalServiceClpInvoker {
 
 		if (_methodName126.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return ProjectLocalServiceUtil.getProjectById((org.json.simple.JSONObject)arguments[0]);
+			return ProjectLocalServiceUtil.getProjectById((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName127.equals(name) &&
@@ -272,17 +274,21 @@ public class ProjectLocalServiceClpInvoker {
 
 		if (_methodName131.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+			return ProjectLocalServiceUtil.constructProjectAsJsonArray((org.gfbio.model.Project)arguments[0]);
+		}
+
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+			return ProjectLocalServiceUtil.constructProjectsAsJson((java.util.List<org.gfbio.model.Project>)arguments[0]);
+		}
+
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
 				(java.util.Date)arguments[6], (java.lang.String)arguments[7]);
-		}
-
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -338,4 +344,6 @@ public class ProjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes131;
 	private String _methodName132;
 	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }

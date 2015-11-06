@@ -31,11 +31,15 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 		_methodName1 = "createResearchObject";
 
-		_methodParameterTypes1 = new String[] { "long" };
+		_methodParameterTypes1 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName2 = "deleteResearchObject";
 
-		_methodParameterTypes2 = new String[] { "long" };
+		_methodParameterTypes2 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName3 = "deleteResearchObject";
 
@@ -79,11 +83,15 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 		_methodName10 = "fetchResearchObject";
 
-		_methodParameterTypes10 = new String[] { "long" };
+		_methodParameterTypes10 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName11 = "getResearchObject";
 
-		_methodParameterTypes11 = new String[] { "long" };
+		_methodParameterTypes11 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName12 = "getPersistedModel";
 
@@ -109,94 +117,110 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getResearchObjectAbsolutParent";
+		_methodName19 = "getResearchObjectASJsonById";
 
-		_methodParameterTypes19 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes19 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName20 = "getResearchObjectParent";
+		_methodName20 = "getResearchObjectAbsolutParent";
 
-		_methodParameterTypes20 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes20 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName21 = "getResearchObjectsByParent";
+		_methodName21 = "getResearchObjectParent";
 
-		_methodParameterTypes21 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes21 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName22 = "getAllChildren";
+		_methodName22 = "getResearchObjectsByParent";
 
-		_methodParameterTypes22 = new String[] { "long" };
+		_methodParameterTypes22 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName23 = "getDirectChildren";
+		_methodName23 = "getAllChildren";
 
 		_methodParameterTypes23 = new String[] { "long" };
 
-		_methodName24 = "getDirectParent";
+		_methodName24 = "getDirectChildren";
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "getTopParent";
+		_methodName25 = "getDirectParent";
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "getResearchObjectById";
+		_methodName26 = "getTopParent";
 
 		_methodParameterTypes26 = new String[] { "long" };
 
-		_methodName27 = "getResearchObjectASJsonById";
+		_methodName27 = "IdAndVersion";
 
-		_methodParameterTypes27 = new String[] { "long" };
+		_methodParameterTypes27 = new String[] { "long", "int" };
 
-		_methodName28 = "constructResearchObjectJson";
+		_methodName28 = "getResearchObjectById";
 
-		_methodParameterTypes28 = new String[] { "org.gfbio.model.ResearchObject" };
+		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName29 = "constructResearchObjectsJson";
+		_methodName29 = "getResearchObjectASJsonById";
 
-		_methodParameterTypes29 = new String[] { "java.util.List" };
+		_methodParameterTypes29 = new String[] { "long", "int" };
 
-		_methodName30 = "constructFormatMetadata";
+		_methodName30 = "constructResearchObjectJson";
 
-		_methodParameterTypes30 = new String[] { "java.lang.String" };
+		_methodParameterTypes30 = new String[] { "org.gfbio.model.ResearchObject" };
 
-		_methodName31 = "checkParentAttributById";
+		_methodName31 = "constructResearchObjectsJson";
 
-		_methodParameterTypes31 = new String[] { "long" };
+		_methodParameterTypes31 = new String[] { "java.util.List" };
 
-		_methodName32 = "createResearchObjectByJson";
+		_methodName32 = "constructFormatMetadata";
 
-		_methodParameterTypes32 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes32 = new String[] { "java.lang.String" };
 
-		_methodName33 = "updateResearchObjectByJson";
+		_methodName33 = "checkParentAttributById";
 
-		_methodParameterTypes33 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes33 = new String[] { "long" };
 
-		_methodName34 = "createResearchObject";
+		_methodName34 = "createResearchObjectByJson";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes34 = new String[] { "org.json.simple.JSONArray" };
+
+		_methodName35 = "createResearchObjectByJson";
+
+		_methodParameterTypes35 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName36 = "updateResearchObjectByJson";
+
+		_methodParameterTypes36 = new String[] { "org.json.simple.JSONArray" };
+
+		_methodName37 = "createResearchObject";
+
+		_methodParameterTypes37 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName35 = "createResearchObjectWithProject";
+		_methodName38 = "createResearchObjectWithProject";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes38 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName36 = "updateParentResearchObjectIdByIds";
+		_methodName39 = "updateParentResearchObjectIdByIds";
 
-		_methodParameterTypes36 = new String[] { "long", "long" };
+		_methodParameterTypes39 = new String[] { "long", "int", "long" };
 
-		_methodName37 = "updateResearchObject";
+		_methodName40 = "updateResearchObject";
 
-		_methodParameterTypes37 = new String[] {
+		_methodParameterTypes40 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName38 = "updateResearchObjectWithProject";
+		_methodName41 = "updateResearchObjectVersion";
 
-		_methodParameterTypes38 = new String[] {
+		_methodParameterTypes41 = new String[] { "long", "int" };
+
+		_methodName42 = "updateResearchObjectWithProject";
+
+		_methodParameterTypes42 = new String[] {
 				"long", "long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
@@ -234,12 +258,14 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 	@Override
 	public org.gfbio.model.ResearchObject createResearchObject(
-		long researchObjectID) {
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { researchObjectID });
+					_methodParameterTypes1,
+					new Object[] { ClpSerializer.translateInput(
+							researchObjectPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -258,14 +284,16 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 	@Override
 	public org.gfbio.model.ResearchObject deleteResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { researchObjectID });
+					_methodParameterTypes2,
+					new Object[] { ClpSerializer.translateInput(
+							researchObjectPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -519,13 +547,15 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 	@Override
 	public org.gfbio.model.ResearchObject fetchResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { researchObjectID });
+					_methodParameterTypes10,
+					new Object[] { ClpSerializer.translateInput(
+							researchObjectPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -548,14 +578,16 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 	@Override
 	public org.gfbio.model.ResearchObject getResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { researchObjectID });
+					_methodParameterTypes11,
+					new Object[] { ClpSerializer.translateInput(
+							researchObjectPK) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -753,14 +785,14 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray getResearchObjectASJsonById(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -774,18 +806,18 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectParent(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray getResearchObjectAbsolutParent(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -799,18 +831,18 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectsByParent(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray getResearchObjectParent(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -824,17 +856,18 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
-		long researchObjectId) {
+	public org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { researchObjectId });
+					_methodParameterTypes22,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -848,11 +881,11 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 			}
 		}
 
-		return (java.util.List<org.gfbio.model.ResearchObject>)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
 		long researchObjectId) {
 		Object returnObj = null;
 
@@ -876,7 +909,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId) {
+	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId) {
 		Object returnObj = null;
 
 		try {
@@ -895,11 +929,11 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 			}
 		}
 
-		return (org.gfbio.model.ResearchObject)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<org.gfbio.model.ResearchObject>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
+	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId) {
 		Object returnObj = null;
 
 		try {
@@ -922,15 +956,39 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.gfbio.model.ResearchObject getResearchObjectById(
-		long researchObjectId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchResearchObjectException {
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName26,
 					_methodParameterTypes26, new Object[] { researchObjectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.gfbio.model.ResearchObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.gfbio.model.ResearchObject IdAndVersion(long researchObjectId,
+		int researchObjectVersion)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
+					new Object[] { researchObjectId, researchObjectVersion });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -956,13 +1014,48 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectASJsonById(
-		long researchObjectId) {
+	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectById(
+		long researchObjectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { researchObjectId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { researchObjectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchResearchObjectException) {
+				throw (org.gfbio.NoSuchResearchObjectException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.ResearchObject>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectASJsonById(
+		long researchObjectId, int researchObjectVersion) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] { researchObjectId, researchObjectVersion });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -985,8 +1078,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] { ClpSerializer.translateInput(researchObject) });
 		}
 		catch (Throwable t) {
@@ -1005,13 +1098,13 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONObject constructResearchObjectsJson(
+	public org.json.simple.JSONArray constructResearchObjectsJson(
 		java.util.List<org.gfbio.model.ResearchObject> researchObjectList) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						ClpSerializer.translateInput(researchObjectList)
 					});
@@ -1028,7 +1121,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -1036,8 +1129,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] { ClpSerializer.translateInput(metadata) });
 		}
 		catch (Throwable t) {
@@ -1060,8 +1153,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31, new Object[] { researchObjectId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33, new Object[] { researchObjectId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1079,14 +1172,39 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONObject createResearchObjectByJson(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray createResearchObjectByJson(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
-					new Object[] { ClpSerializer.translateInput(json) });
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject createResearchObjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1104,14 +1222,14 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONObject updateResearchObjectByJson(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray updateResearchObjectByJson(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
-					new Object[] { ClpSerializer.translateInput(json) });
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1125,7 +1243,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -1136,8 +1254,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						ClpSerializer.translateInput(name),
 						
@@ -1175,8 +1293,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						projectId,
 						
@@ -1210,13 +1328,19 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 	@Override
 	public long updateParentResearchObjectIdByIds(long researchObjectId,
-		long parentResearchObjectId) {
+		int researchObjectVersion, long parentResearchObjectId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
-					new Object[] { researchObjectId, parentResearchObjectId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					parentResearchObjectId
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1241,8 +1365,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						researchObjectId,
 						
@@ -1275,6 +1399,31 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
+	public int updateResearchObjectVersion(long researchObjectId,
+		int researchObjectVersion) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
+					new Object[] { researchObjectId, researchObjectVersion });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public long updateResearchObjectWithProject(long projectId,
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String name, java.lang.String label,
@@ -1283,8 +1432,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] {
 						projectId,
 						
@@ -1395,4 +1544,12 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	private String[] _methodParameterTypes37;
 	private String _methodName38;
 	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
 }

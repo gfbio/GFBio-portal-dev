@@ -271,9 +271,9 @@ public class ProjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json) {
-		return getService().getProjectById(json);
+	public static org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getProjectById(requestJson);
 	}
 
 	public static org.gfbio.model.Project getProjectById(long projectId)
@@ -301,6 +301,16 @@ public class ProjectLocalServiceUtil {
 		return getService().constructProjectAsJson(project);
 	}
 
+	public static org.json.simple.JSONArray constructProjectAsJsonArray(
+		org.gfbio.model.Project project) {
+		return getService().constructProjectAsJsonArray(project);
+	}
+
+	public static org.json.simple.JSONArray constructProjectsAsJson(
+		java.util.List<org.gfbio.model.Project> projectList) {
+		return getService().constructProjectsAsJson(projectList);
+	}
+
 	public static long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.util.Date startDate,
@@ -309,12 +319,6 @@ public class ProjectLocalServiceUtil {
 		return getService()
 				   .updateProject(projectID, userID, name, label, description,
 			startDate, endDate, status);
-	}
-
-	public static long updateProject(long projectID, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateProject(projectID, name, description);
 	}
 
 	public static void clearService() {

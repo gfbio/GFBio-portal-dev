@@ -14,9 +14,11 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import org.gfbio.NoSuchSubmissionRegistryException;
 import org.gfbio.model.SubmissionRegistry;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
@@ -27,6 +29,7 @@ import org.gfbio.service.persistence.SubmissionRegistryPK;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -54,34 +57,42 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	
 	//
 	@SuppressWarnings({ "unchecked"})
-	public JSONObject getSubmissionRegistriesByBrokerSubmissionId (JSONObject json) throws SystemException{
+	public JSONArray getSubmissionRegistriesByBrokerSubmissionId (JSONArray requestJson) throws SystemException{
 		
-		JSONObject responseJson = new JSONObject();
-		if (json.containsKey("brokersubmissionid")){
-			responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((String)json.get("brokersubmissionid")));
-			if (responseJson.toString().equals("{}"))
-				responseJson.put("ERROR", "Failed by response submission registry");
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++){
+			
+			JSONObject json = (JSONObject) requestJson.get(i);
+			if (json.containsKey("brokersubmissionid")){
+				responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((String)json.get("brokersubmissionid")));
+				if (responseJson.toString().equals("{}"))
+					responseJson.add("ERROR: Failed by response submission registry");
+			}
+			else
+				responseJson.add("ERROR: No key 'researchobjectid' exist.");
 		}
-		else
-			responseJson.put("ERROR", "No key 'researchobjectid' exist.");
 		return responseJson;
 	}
 	
 	
 	//
 	@SuppressWarnings({ "unchecked"})
-	public JSONObject getSubmissionRegistriesByResearchObjectId (JSONObject json){
+	public JSONArray getSubmissionRegistriesByResearchObjectId (JSONArray requestJson){
 
-		JSONObject responseJson = new JSONObject();
-		if (json.containsKey("researchobjectid")){
-			try {
-				responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((long)json.get("researchobjectid")));
-			} catch (SystemException e) {
-				e.printStackTrace();
-				responseJson.put("ERROR", e);}
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++){
+			
+			JSONObject json = (JSONObject) requestJson.get(i);
+			if (json.containsKey("researchobjectid")){
+				try {
+					responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((long)json.get("researchobjectid")));
+				} catch (SystemException e) {
+					e.printStackTrace();
+					responseJson.add(e);}
+			}
+			else
+				responseJson.add("ERROR: No key 'researchobjectid' exist.");
 		}
-		else
-			responseJson.put("ERROR", "No key 'researchobjectid' exist.");
 		return responseJson;
 	}
 	
@@ -114,6 +125,18 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	//
 	public List<String>  getArchivePIdsWithTypeSampleOfENA (String archivePId){
 		return SubmissionRegistryLocalServiceUtil.getArchivePIdsWithTypeOfENA(archivePId, "sample");
+	}
+
+	
+	//update without archivePIdType
+	@SuppressWarnings("rawtypes")
+	public long getArchivePIdType (String archive){
+		
+		long pId = 0;
+		List  pIdList = DataProviderLocalServiceUtil.getPersistentIdentiferIds(DataProviderLocalServiceUtil.getDataProviderIdByLabel(archive));
+		if (pIdList.size()==1) 
+			pId = (long) pIdList.get(0);
+		return pId;
 	}
 	
 	
@@ -149,6 +172,24 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 
 		
 	//
+	public String getStatus(long researchObjectId, int researchObjectVersion, String archive, String archivePId){
+		String status ="";
+		
+		if (archivePId != null && !(archivePId.equals("")))
+			status = "archived";
+		else
+			status = SubmissionRegistryLocalServiceUtil.GetStatusByIds(researchObjectId, researchObjectVersion, archive);
+		return status;
+	}
+
+	
+	//
+	public int getResearchObjectVersion ( long researchObjectId, String archive, String brokerSubmissionId) {
+		return (int) SubmissionRegistryFinderUtil.getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId).get(0);
+	}
+	
+		
+	//
 	public List<SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId (String brokerSubmissionId) throws SystemException{
 		return submissionRegistryPersistence.findByBrokerSubmissionID(brokerSubmissionId);
 	}
@@ -177,10 +218,10 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONObject constructSubmissionRegistriesJson (List <SubmissionRegistry> submissionRegistryList){
-		JSONObject json = new JSONObject();
+	public JSONArray constructSubmissionRegistriesJson (List <SubmissionRegistry> submissionRegistryList){
+		JSONArray json = new JSONArray();
 		for (int i =0; i < submissionRegistryList.size();i++)
-			json.put((new Integer(i)).toString(), SubmissionRegistryLocalServiceUtil.constructSubmissionRegistryJson(submissionRegistryList.get(i)));
+			json.add(SubmissionRegistryLocalServiceUtil.constructSubmissionRegistryJson(submissionRegistryList.get(i)));
 		return json;
 	}
 	
@@ -204,18 +245,6 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	}
 	
 	
-	//
-	public String constructStatus(long researchObjectId, int researchObjectVersion, String archive, String archivePId){
-		String status ="";
-		
-		if (archivePId != null && !(archivePId.equals("")))
-			status = "archived";
-		else
-			status = SubmissionRegistryLocalServiceUtil.GetStatusByIds(researchObjectId, researchObjectVersion, archive);
-		return status;
-	}
-	
-	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
@@ -224,146 +253,194 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONObject createSubmissionRegistry (JSONObject json){
+	public JSONArray createSubmissionRegistry (JSONArray requestJson){
 		
-		Boolean check = false;
-		JSONObject responseJson = new JSONObject();
-		if (json.containsKey("researchobjectid") && json.containsKey("researchobjectversion") && json.containsKey("archive") && json.containsKey("brokersubmissionid") && json.containsKey("archivepid")&& json.containsKey("lastchanged")&& json.containsKey("userid")){
-
-			long researchObjectId =(long)json.get("researchobjectid");
-			int researchObjectVersion = (int)((long) json.get("researchobjectversion"));
-			String archive = ((String)json.get("archive")).trim();
-			String brokerSubmissionId = ((String)json.get("brokersubmissionid")).trim();
-			String archivePId =((String)json.get("archivepid")).trim();
-			Date lastChanged = new Date ((long)json.get("lastchanged"));
-			long userId = (long)json.get("userid");
-
-			if (!(json.containsKey("status")) && json.containsKey("archivepidtype"))
-				check = SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, (long) json.get("archivepidtype"),lastChanged, userId);
-
-			if (!(json.containsKey("status") && json.containsKey("archivepidtype")))
-				check = SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, lastChanged, userId);
-	
-			if (check && json.containsKey("status") && !(json.containsKey("archivepidtype")))
-				check = SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, lastChanged, userId, ((String) json.get("status")).trim());
-
-			if (json.containsKey("status") && json.containsKey("archivepidtype"))
-				check = SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry( researchObjectId,  researchObjectVersion,  archive,  brokerSubmissionId, archivePId, (long) json.get("archivepidtype"), lastChanged,  userId,  ((String) json.get("status")).trim());
-			
-			if (json.containsKey("ispublic"))
-				check = SubmissionRegistryLocalServiceUtil.updateIsPublic(researchObjectId, researchObjectVersion, archive, (Boolean) json.get("ispublic"));
-			
-			if (json.containsKey("publicafter"))
-				check = SubmissionRegistryLocalServiceUtil.updatePublicAfter(researchObjectId, researchObjectVersion, archive, new Date ((long) json.get("publicafter")));
-			
-
-			if (check == true){
-				responseJson.put("researchobjectid", researchObjectId);
-				responseJson.put("researchobjectversion", researchObjectVersion);
-				responseJson.put("archive", archive);
-			}
-			else
-				responseJson.put("ERROR", "Faile by create submission registry entry");
-		}
-		else
-			responseJson.put("ERROR", "One or more basic attributs are not correct");
-		
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++)
+			responseJson.add(createSubmissionRegistry((JSONObject) requestJson.get(i)));
 		return responseJson;
 	}
 
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONObject updateSubmissionRegistry (JSONObject json){
+	public JSONObject createSubmissionRegistry (JSONObject requestJson){
 		
-		JSONObject responseJson = new JSONObject();
-		SubmissionRegistry submissionRegistry = null;
-		
-		if (json.containsKey("researchobjectid") && json.containsKey("researchobjectversion") && json.containsKey("archive")&& json.containsKey("userid")){
+		Boolean check = false;
+		JSONObject keyJson = new JSONObject();
 
-			long researchObjectId =(long)json.get("researchobjectid");
-			int researchObjectVersion = (int)((long) json.get("researchobjectversion"));
-			String archive = ((String)json.get("archive")).trim();
+		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion") && requestJson.containsKey("archive") && requestJson.containsKey("brokersubmissionid") && requestJson.containsKey("userid")){
+
+			long researchObjectId =(long)requestJson.get("researchobjectid");
+			int researchObjectVersion = (int)((long) requestJson.get("researchobjectversion"));
+			String archive = ((String)requestJson.get("archive")).trim();
+			String brokerSubmissionId = ((String)requestJson.get("brokersubmissionid")).trim();
+			long userId = (long)requestJson.get("userid");
+			
 			SubmissionRegistryPK pk = new SubmissionRegistryPK(researchObjectId, researchObjectVersion, archive);
+			SubmissionRegistry submissionRegistry = null;
+			try {
+				submissionRegistry = submissionRegistryPersistence.findByPrimaryKey(pk);
+			} catch (NoSuchSubmissionRegistryException | SystemException e) {System.out.println("Entry in SubmissionRegistry does not exist with pk: "+pk+ " and will be create now");}
+			
+			if (submissionRegistry==null){
+
+				check = updateKernelSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, userId);
+
+				if (check){
+
+					if (requestJson.containsKey("status"))
+						check = updateStatus(researchObjectId, researchObjectVersion, archive, (String) requestJson.get("status"));
+					else if (!(requestJson.containsKey("status")) && requestJson.containsKey("archivepidtype"))	
+						check = updateStatus(researchObjectId, researchObjectVersion, archive, getStatus(researchObjectId, researchObjectVersion, archive, (String) requestJson.get("archivepidtype")));
+					else if(!requestJson.containsKey("status"))
+						check = updateStatus(researchObjectId, researchObjectVersion, archive, "send");
+					
+					if (requestJson.containsKey("archivepidtype"))
+						check = updateArchivePIdType(researchObjectId, researchObjectVersion, archive, (long) requestJson.get("archivepidtype") );
+					else if (SubmissionRegistryLocalServiceUtil.getArchivePIdType(archive) !=0)
+						check = updateArchivePIdType(researchObjectId, researchObjectVersion, archive, SubmissionRegistryLocalServiceUtil.getArchivePIdType(archive));
+						
+					if (requestJson.containsKey("archivepid"))
+						check = SubmissionRegistryLocalServiceUtil.updateArchivePId(researchObjectId, researchObjectVersion, archive, ((String)requestJson.get("archivepid")).trim());
+							
+					if (requestJson.containsKey("ispublic"))
+						check = SubmissionRegistryLocalServiceUtil.updateIsPublic(researchObjectId, researchObjectVersion, archive, (Boolean) requestJson.get("ispublic"));
+					else
+						check = SubmissionRegistryLocalServiceUtil.updateIsPublic(researchObjectId, researchObjectVersion, archive, false);
+					
+					if (requestJson.containsKey("publicafter"))
+						check = SubmissionRegistryLocalServiceUtil.updatePublicAfter(researchObjectId, researchObjectVersion, archive, new Date ((long) requestJson.get("publicafter")));
+					
+					if (check){
+						keyJson.put("researchobjectid", researchObjectId);
+						keyJson.put("researchobjectversion", researchObjectVersion);
+						keyJson.put("archive", archive);
+				}	}
+				else
+					keyJson.put("ERROR","ERROR: Faile by create submission registry entry");
+			}
+			else
+				keyJson.put("ERROR","ERROR: One or more basic attributs are not correct");
+		}
+		else
+			keyJson.put("ERROR","ERROR: A entry already exists to this ResearchObject with this Version to this Archive.");
+
+		return keyJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray updateSubmissionRegistry (JSONArray requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++)
+			responseJson.add(updateSubmissionRegistry((JSONObject) requestJson.get(i)));
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONObject updateSubmissionRegistry (JSONObject requestJson){
+		
+		Boolean check = false;
+		JSONObject keyJson = new JSONObject();
+		SubmissionRegistry submissionRegistry = null;
+		System.out.println(requestJson);
+			
+		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("archive") && requestJson.containsKey("archivepid") && requestJson.containsKey("brokersubmissionid")&& requestJson.containsKey("userid") ){
+	
+			long researchObjectId =(long)requestJson.get("researchobjectid");
+			String archive = ((String)requestJson.get("archive")).trim();
+			String brokerSubmissionId = ((String)requestJson.get("brokersubmissionid")).trim();
+			long userId = (long)requestJson.get("userid");
+
+			int researchObjectVersion = getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId);
+			SubmissionRegistryPK pk = new SubmissionRegistryPK(researchObjectId, researchObjectVersion, archive);
+						
 			try {
 				submissionRegistry = SubmissionRegistryLocalServiceUtil.getSubmissionRegistry(pk);
 			} catch (PortalException | SystemException e1) {e1.printStackTrace();}		
-
+	
 			if (submissionRegistry != null){
+					
+				check = updateKernelSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, userId);			
+				check = SubmissionRegistryLocalServiceUtil.updateArchivePId(researchObjectId, researchObjectVersion, archive, ((String) requestJson.get("archivepid")).trim());
 				
-				Boolean check = false;
-			
-				check = SubmissionRegistryLocalServiceUtil.updateUserId(researchObjectId, researchObjectVersion, archive, (long) json.get("userid"));
-			
-				if (json.containsKey("brokersubmissionid"))
-					check = SubmissionRegistryLocalServiceUtil.updateBrokerSubmissionId(researchObjectId, researchObjectVersion, archive, ((String) json.get("brokersubmissionid")).trim());
+				if (requestJson.containsKey("status"))
+					check = updateStatus(researchObjectId, researchObjectVersion, archive, (String) requestJson.get("status"));
+				else if (!(requestJson.containsKey("status")) && requestJson.containsKey("archivepidtype"))	
+					check = updateStatus(researchObjectId, researchObjectVersion, archive, getStatus(researchObjectId, researchObjectVersion, archive, (String) requestJson.get("archivepidtype")));
+	
+				if (requestJson.containsKey("archivepidtype"))
+					check = updateArchivePIdType(researchObjectId, researchObjectVersion, archive, (long) requestJson.get("archivepidtype") );
 
-				if (json.containsKey("archivepid"))
-					check = SubmissionRegistryLocalServiceUtil.updateArchivePId(researchObjectId, researchObjectVersion, archive, ((String) json.get("archivepid")).trim());
-
-				if (json.containsKey("lastchanged"))
-					check = SubmissionRegistryLocalServiceUtil.updateLastChanged(researchObjectId, researchObjectVersion, archive, new Date ((long) json.get("lastchanged")));
-
-				if (json.containsKey("archivepidtype"))
-					check = SubmissionRegistryLocalServiceUtil.updateArchivePIdType(researchObjectId, researchObjectVersion, archive, (long) json.get("archivepidtype"));
-
-				if (json.containsKey("status"))
-					check = SubmissionRegistryLocalServiceUtil.updateStatus(researchObjectId, researchObjectVersion, archive, ((String) json.get("status")).trim());
-
-				if (json.containsKey("ispublic"))
-					check = SubmissionRegistryLocalServiceUtil.updateIsPublic(researchObjectId, researchObjectVersion, archive, (Boolean) json.get("ispublic"));
-
-				if (json.containsKey("publicafter"))
-					check = SubmissionRegistryLocalServiceUtil.updatePublicAfter(researchObjectId, researchObjectVersion, archive, new Date ((long) json.get("publicafter")));
-				
-
+				if (requestJson.containsKey("ispublic"))
+					check = SubmissionRegistryLocalServiceUtil.updateIsPublic(researchObjectId, researchObjectVersion, archive, (Boolean) requestJson.get("ispublic"));
+	
+				if (requestJson.containsKey("publicafter"))
+					check = SubmissionRegistryLocalServiceUtil.updatePublicAfter(researchObjectId, researchObjectVersion, archive, new Date ((long) requestJson.get("publicafter")));
+					
 				if (check == true){
-					responseJson.put("researchobjectid", researchObjectId);
-					responseJson.put("researchobjectversion", researchObjectVersion);
-					responseJson.put("archive", archive);
+					keyJson.put("researchobjectid", researchObjectId);
+					keyJson.put("researchobjectversion", researchObjectVersion);
+					keyJson.put("archive", archive);
 				}
 				else
-					responseJson.put("ERROR", "Faile by create submission registry entry");				
-			
-				
-			}else
-				responseJson = SubmissionRegistryLocalServiceUtil.createSubmissionRegistry(json);
-			
+					keyJson.put("ERROR","ERROR: Faile by update submission registry entry");				
+			}
+			else
+				keyJson = SubmissionRegistryLocalServiceUtil.createSubmissionRegistry(requestJson);
 		}
 		else
-			responseJson.put("ERROR", "A entry with this PK don't exist in SubmissionRegistry");	
-		
-		return responseJson;
+			keyJson.put("ERROR","ERROR: One or more mandatory attributes are not in the input");	
+
+		return keyJson;
 	}
 	
 	
 	//----------------------------------- Update Functions -------------------------------------------------//
 	
 	
-	//update without status
-	public Boolean updateSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, String archivePId, Date lastChanged, long userId){
-		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, lastChanged, userId, SubmissionRegistryLocalServiceUtil.constructStatus(researchObjectId, researchObjectVersion, archive, archivePId));
-	}
-	
-	
-	//update without status and archivepidtype: 
-	public Boolean updateSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, String archivePId, long archivePIdType, Date lastChanged, long userId){
-		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, archivePIdType, lastChanged, userId, SubmissionRegistryLocalServiceUtil.constructStatus(researchObjectId, researchObjectVersion, archive, archivePId));
-	}
-	
-	
-	//update without archivePIdType
-	@SuppressWarnings("rawtypes")
-	public Boolean updateSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, String archivePId, Date lastChanged, long userId, String status){
+	//
+	public Boolean updateKernelSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, long userId){
 		
 		Boolean check = false;
-		List  pIdList = DataProviderLocalServiceUtil.getPersistentIdentiferIds(DataProviderLocalServiceUtil.getDataProviderIdByLabel(archive));
-		if (pIdList.size()==1) 
-			check = SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePId, (long) pIdList.get(0), lastChanged, userId, status);
-		else
-			check = false;
+		SubmissionRegistry submissionRegistry = null;
+		SubmissionRegistryPK pk = new SubmissionRegistryPK(researchObjectId, researchObjectVersion, archive);
+		try {
+			submissionRegistry = SubmissionRegistryLocalServiceUtil.getSubmissionRegistry(pk);
+		} catch (PortalException | SystemException e1) {System.out.println("Entry in SubmissionRegistry does not exist with pk: "+pk+ " and will be create now");}
+
+		if (submissionRegistry == null){
+			submissionRegistry = submissionRegistryPersistence.create(pk);
+			submissionRegistry.setResearchObjectID(researchObjectId);
+			submissionRegistry.setResearchObjectVersion(researchObjectVersion);
+			submissionRegistry.setArchive(archive);
+		}
+		submissionRegistry.setBrokerSubmissionID(brokerSubmissionId);
+		submissionRegistry.setUserID(userId);
+		submissionRegistry.setLastChanged(new Timestamp(new Date().getTime()));
+		try {
+			super.updateSubmissionRegistry(submissionRegistry);
+			check = true;
+		} catch (SystemException e) {e.printStackTrace();}
 		return check;
 	}
+	
+		
+	//update without status
+/*	public Boolean updateSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive){
+		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, lastChanged, userId, SubmissionRegistryLocalServiceUtil.constructStatus(researchObjectId, researchObjectVersion, archive));
+	}*/
+	
+	
+/*	//update without status and archivepidtype: 
+	public Boolean updateSubmissionRegistry (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, long archivePIdType, Date lastChanged, long userId){
+		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, archivePIdType, lastChanged, userId, SubmissionRegistryLocalServiceUtil.constructStatus(researchObjectId, researchObjectVersion, archive, archivePId));
+	}*/
 	
 	
 	//

@@ -59,45 +59,39 @@ public class ResearchObjectServiceWrapper implements ResearchObjectService,
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
-		long researchObjectId) {
-		return _researchObjectService.getAllChildren(researchObjectId);
+	public org.json.simple.JSONArray getResearchObjectAbsolutParent(
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectService.getResearchObjectAbsolutParent(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
-		org.json.simple.JSONObject json) {
-		return _researchObjectService.getResearchObjectAbsolutParent(json);
+	public org.json.simple.JSONArray getResearchObjectById(
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectService.getResearchObjectById(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectsByParent(
-		org.json.simple.JSONObject json) {
-		return _researchObjectService.getResearchObjectsByParent(json);
+	public org.json.simple.JSONArray getResearchObjectParent(
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectService.getResearchObjectParent(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectById(
-		long researchObjectId) {
-		return _researchObjectService.getResearchObjectById(researchObjectId);
+	public org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectService.getResearchObjectsByParent(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectParent(
-		org.json.simple.JSONObject json) {
-		return _researchObjectService.getResearchObjectParent(json);
+	public org.json.simple.JSONArray createResearchObject(
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectService.createResearchObject(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONObject createResearchObject(
-		org.json.simple.JSONObject json) {
-		return _researchObjectService.createResearchObject(json);
-	}
-
-	@Override
-	public org.json.simple.JSONObject updateResearchObject(
-		org.json.simple.JSONObject json) {
-		return _researchObjectService.updateResearchObject(json);
+	public org.json.simple.JSONArray updateResearchObject(
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectService.updateResearchObject(requestJson);
 	}
 
 	/**

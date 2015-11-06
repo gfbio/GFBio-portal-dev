@@ -63,26 +63,9 @@ public class ProjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json) {
-		return getService().getProjectById(json);
-	}
-
-	public static java.util.List<org.gfbio.model.Project> getProjectListByUserId(
-		long userID)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getProjectListByUserId(userID);
-	}
-
-	public static long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateProject(projectID, userID, name, label, description,
-			startDate, endDate, status);
+	public static org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getProjectById(requestJson);
 	}
 
 	public static void clearService() {

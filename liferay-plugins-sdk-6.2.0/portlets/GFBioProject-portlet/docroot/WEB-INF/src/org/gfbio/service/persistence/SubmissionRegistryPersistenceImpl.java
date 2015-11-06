@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The persistence implementation for the submission registry service.
@@ -6253,6 +6255,11 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 		return count.intValue();
 	}
 
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
 	/**
 	 * Initializes the submission registry persistence.
 	 */
@@ -6295,6 +6302,10 @@ public class SubmissionRegistryPersistenceImpl extends BasePersistenceImpl<Submi
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(SubmissionRegistryPersistenceImpl.class);
+	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"archivePID", "archivePIDType", "lastChanged", "isPublic",
+				"publicAfter"
+			});
 	private static SubmissionRegistry _nullSubmissionRegistry = new SubmissionRegistryImpl() {
 			@Override
 			public Object clone() {

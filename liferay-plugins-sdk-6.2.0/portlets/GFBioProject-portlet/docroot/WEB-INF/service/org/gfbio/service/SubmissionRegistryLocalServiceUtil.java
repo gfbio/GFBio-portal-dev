@@ -275,15 +275,17 @@ public class SubmissionRegistryLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject json)
+	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONArray requestJson)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getSubmissionRegistriesByBrokerSubmissionId(json);
+		return getService()
+				   .getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONObject json) {
-		return getService().getSubmissionRegistriesByResearchObjectId(json);
+	public static org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONArray requestJson) {
+		return getService()
+				   .getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
 
 	public static java.util.List<java.lang.String> getArchivePIdsOfENA(
@@ -300,6 +302,10 @@ public class SubmissionRegistryLocalServiceUtil {
 	public static java.util.List<java.lang.String> getArchivePIdsWithTypeSampleOfENA(
 		java.lang.String archivePId) {
 		return getService().getArchivePIdsWithTypeSampleOfENA(archivePId);
+	}
+
+	public static long getArchivePIdType(java.lang.String archive) {
+		return getService().getArchivePIdType(archive);
 	}
 
 	public static java.lang.String getArchivePIdWithTypeStudyOfENA(
@@ -325,6 +331,22 @@ public class SubmissionRegistryLocalServiceUtil {
 
 	public static java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions() {
 		return getService().getLatestSubmissions();
+	}
+
+	public static java.lang.String getStatus(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId) {
+		return getService()
+				   .getStatus(researchObjectId, researchObjectVersion, archive,
+			archivePId);
+	}
+
+	public static int getResearchObjectVersion(long researchObjectId,
+		java.lang.String archive, java.lang.String brokerSubmissionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getResearchObjectVersion(researchObjectId, archive,
+			brokerSubmissionId);
 	}
 
 	public static java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId(
@@ -356,7 +378,7 @@ public class SubmissionRegistryLocalServiceUtil {
 			researchObjectVersion, archive);
 	}
 
-	public static org.json.simple.JSONObject constructSubmissionRegistriesJson(
+	public static org.json.simple.JSONArray constructSubmissionRegistriesJson(
 		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList) {
 		return getService()
 				   .constructSubmissionRegistriesJson(submissionRegistryList);
@@ -367,54 +389,33 @@ public class SubmissionRegistryLocalServiceUtil {
 		return getService().constructSubmissionRegistryJson(submissionRegistry);
 	}
 
-	public static java.lang.String constructStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String archivePId) {
-		return getService()
-				   .constructStatus(researchObjectId, researchObjectVersion,
-			archive, archivePId);
+	public static org.json.simple.JSONArray createSubmissionRegistry(
+		org.json.simple.JSONArray requestJson) {
+		return getService().createSubmissionRegistry(requestJson);
 	}
 
 	public static org.json.simple.JSONObject createSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return getService().createSubmissionRegistry(json);
+		org.json.simple.JSONObject requestJson) {
+		return getService().createSubmissionRegistry(requestJson);
+	}
+
+	public static org.json.simple.JSONArray updateSubmissionRegistry(
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateSubmissionRegistry(requestJson);
 	}
 
 	public static org.json.simple.JSONObject updateSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return getService().updateSubmissionRegistry(json);
+		org.json.simple.JSONObject requestJson) {
+		return getService().updateSubmissionRegistry(requestJson);
 	}
 
-	public static java.lang.Boolean updateSubmissionRegistry(
+	public static java.lang.Boolean updateKernelSubmissionRegistry(
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.lang.String archivePId, java.util.Date lastChanged, long userId) {
+		long userId) {
 		return getService()
-				   .updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			lastChanged, userId);
-	}
-
-	public static java.lang.Boolean updateSubmissionRegistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.lang.String archivePId, long archivePIdType,
-		java.util.Date lastChanged, long userId) {
-		return getService()
-				   .updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			archivePIdType, lastChanged, userId);
-	}
-
-	public static java.lang.Boolean updateSubmissionRegistry(
-		long researchObjectId, int researchObjectVersion,
-		java.lang.String archive, java.lang.String brokerSubmissionId,
-		java.lang.String archivePId, java.util.Date lastChanged, long userId,
-		java.lang.String status) {
-		return getService()
-				   .updateSubmissionRegistry(researchObjectId,
-			researchObjectVersion, archive, brokerSubmissionId, archivePId,
-			lastChanged, userId, status);
+				   .updateKernelSubmissionRegistry(researchObjectId,
+			researchObjectVersion, archive, brokerSubmissionId, userId);
 	}
 
 	public static java.lang.Boolean updateSubmissionRegistry(

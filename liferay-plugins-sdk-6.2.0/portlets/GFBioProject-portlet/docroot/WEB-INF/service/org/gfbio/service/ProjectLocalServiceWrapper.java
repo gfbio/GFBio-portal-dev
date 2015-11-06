@@ -279,9 +279,9 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json) {
-		return _projectLocalService.getProjectById(json);
+	public org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson) {
+		return _projectLocalService.getProjectById(requestJson);
 	}
 
 	@Override
@@ -313,6 +313,18 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONArray constructProjectAsJsonArray(
+		org.gfbio.model.Project project) {
+		return _projectLocalService.constructProjectAsJsonArray(project);
+	}
+
+	@Override
+	public org.json.simple.JSONArray constructProjectsAsJson(
+		java.util.List<org.gfbio.model.Project> projectList) {
+		return _projectLocalService.constructProjectsAsJson(projectList);
+	}
+
+	@Override
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.util.Date startDate,
@@ -320,13 +332,6 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _projectLocalService.updateProject(projectID, userID, name,
 			label, description, startDate, endDate, status);
-	}
-
-	@Override
-	public long updateProject(long projectID, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _projectLocalService.updateProject(projectID, name, description);
 	}
 
 	/**

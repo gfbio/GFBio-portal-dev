@@ -40,8 +40,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 
 		sb.append("{researchObjectID=");
 		sb.append(researchObjectID);
-		sb.append(", version=");
-		sb.append(version);
+		sb.append(", researchObjectVersion=");
+		sb.append(researchObjectVersion);
 		sb.append(", parentResearchObjectID=");
 		sb.append(parentResearchObjectID);
 		sb.append(", name=");
@@ -64,7 +64,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		ResearchObjectImpl researchObjectImpl = new ResearchObjectImpl();
 
 		researchObjectImpl.setResearchObjectID(researchObjectID);
-		researchObjectImpl.setVersion(version);
+		researchObjectImpl.setResearchObjectVersion(researchObjectVersion);
 		researchObjectImpl.setParentResearchObjectID(parentResearchObjectID);
 
 		if (name == null) {
@@ -110,7 +110,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		researchObjectID = objectInput.readLong();
-		version = objectInput.readInt();
+		researchObjectVersion = objectInput.readInt();
 		parentResearchObjectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		label = objectInput.readUTF();
@@ -123,7 +123,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(researchObjectID);
-		objectOutput.writeInt(version);
+		objectOutput.writeInt(researchObjectVersion);
 		objectOutput.writeLong(parentResearchObjectID);
 
 		if (name == null) {
@@ -163,7 +163,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	}
 
 	public long researchObjectID;
-	public int version;
+	public int researchObjectVersion;
 	public long parentResearchObjectID;
 	public String name;
 	public String label;

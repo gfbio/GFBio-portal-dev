@@ -135,7 +135,7 @@
 
 	<entity name="ResearchObject" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="researchObjectID" 		type="long" 		primary="true" />
-		<column name="version" 					type="int"  />
+		<column name="researchObjectVersion" 	type="int"  		primary="true" />
 		<column name="parentResearchObjectID" 	type="long"  />
 		<column name="name" 					type="String" />
 		<column name="label" 					type="String" />
@@ -145,10 +145,11 @@
 
 		<order by="asc">		<order-column name="name" />		</order>
 
-		<finder name="Name" 					return-type="Collection">		<finder-column name="name" />						</finder>
-		<finder name="Label" 					return-type="Collection">		<finder-column name="label" />						</finder>
-		<finder name="ResearchObjectID"			return-type="ResearchObject">	<finder-column name="researchObjectID" />			</finder>
-		<finder name="ParentID"					return-type="Collection">		<finder-column name="parentResearchObjectID" />		</finder>
+		<finder name="Name" 					return-type="Collection">		<finder-column name="name" />																			</finder>
+		<finder name="Label" 					return-type="Collection">		<finder-column name="label" />																			</finder>
+		<finder name="IDAndVersion"				return-type="ResearchObject">	<finder-column name="researchObjectID" />			<finder-column name="researchObjectVersion" />		</finder>
+		<finder name="ResearchObjectID"			return-type="Collection">		<finder-column name="researchObjectID" />																</finder>
+		<finder name="ParentID"					return-type="Collection">		<finder-column name="parentResearchObjectID" />															</finder>
 	</entity>
 
 	
@@ -160,12 +161,12 @@
 		<column name="researchObjectVersion" 	type="long"				primary="true" />
 		<column name="archive"			 		type="String"			primary="true" />
 		<column name="brokerSubmissionID" 		type="String"	 />
-		<column name="archivePID" 				type="String"	 />
-		<column name="archivePIDType" 			type="long"	 />
-		<column name="lastChanged" 				type="Date"	 />
+		<column name="archivePID" 				type="String"	 		db-name="archive_pid"/>
+		<column name="archivePIDType" 			type="long"	 			db-name="archive_pid_type"/>
+		<column name="lastChanged" 				type="Date"	 			db-name="last_changed"/>
 		<column name="userID" 					type="long"	 />
-		<column name="isPublic"	 				type="boolean"	 />
-		<column name="publicAfter" 				type="Date"	 />		
+		<column name="isPublic"	 				type="boolean"	 		db-name="is_public"/>
+		<column name="publicAfter" 				type="Date"	 			db-name="public_after"/>		
 		<column name="status" 					type="String"	 />		
 
 		<order by="asc">				<order-column name="researchObjectID" />		</order>
@@ -216,11 +217,14 @@
 	<!-- Relationship between Project and ResearchObject  -->
 
 	<entity name="Project_ResearchObject" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="projectID" 			type="long" 	primary="true" />
-		<column name="researchObjectID" 	type="long" 	primary="true" />
+		<column name="projectID" 				type="long" 	primary="true" />
+		<column name="researchObjectID" 		type="long" 	primary="true" />
+		<column name="researchObjectVersion"	type="int" 		primary="true" />
+		
 
-		<finder name="ProjectID" 			return-type="Collection">		<finder-column name="projectID" />			</finder>
-		<finder name="ResearchObjectID"		return-type="Collection">		<finder-column name="researchObjectID" />	</finder>
+		<finder name="ProjectID" 			return-type="Collection">		<finder-column name="projectID" />															</finder>
+		<finder name="ResearchObjectID"		return-type="Collection">		<finder-column name="researchObjectID" />	<finder-column name="researchObjectVersion" />	</finder>
+		<finder name="ResearchObjectID2"		return-type="Collection">		<finder-column name="researchObjectID" />													</finder>
 	</entity>
 
 

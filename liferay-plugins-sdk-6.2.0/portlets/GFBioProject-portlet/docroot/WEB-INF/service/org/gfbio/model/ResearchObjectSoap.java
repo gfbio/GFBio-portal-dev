@@ -14,6 +14,8 @@
 
 package org.gfbio.model;
 
+import org.gfbio.service.persistence.ResearchObjectPK;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class ResearchObjectSoap implements Serializable {
 		ResearchObjectSoap soapModel = new ResearchObjectSoap();
 
 		soapModel.setResearchObjectID(model.getResearchObjectID());
-		soapModel.setVersion(model.getVersion());
+		soapModel.setResearchObjectVersion(model.getResearchObjectVersion());
 		soapModel.setParentResearchObjectID(model.getParentResearchObjectID());
 		soapModel.setName(model.getName());
 		soapModel.setLabel(model.getLabel());
@@ -82,12 +84,13 @@ public class ResearchObjectSoap implements Serializable {
 	public ResearchObjectSoap() {
 	}
 
-	public long getPrimaryKey() {
-		return _researchObjectID;
+	public ResearchObjectPK getPrimaryKey() {
+		return new ResearchObjectPK(_researchObjectID, _researchObjectVersion);
 	}
 
-	public void setPrimaryKey(long pk) {
-		setResearchObjectID(pk);
+	public void setPrimaryKey(ResearchObjectPK pk) {
+		setResearchObjectID(pk.researchObjectID);
+		setResearchObjectVersion(pk.researchObjectVersion);
 	}
 
 	public long getResearchObjectID() {
@@ -98,12 +101,12 @@ public class ResearchObjectSoap implements Serializable {
 		_researchObjectID = researchObjectID;
 	}
 
-	public int getVersion() {
-		return _version;
+	public int getResearchObjectVersion() {
+		return _researchObjectVersion;
 	}
 
-	public void setVersion(int version) {
-		_version = version;
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_researchObjectVersion = researchObjectVersion;
 	}
 
 	public long getParentResearchObjectID() {
@@ -155,7 +158,7 @@ public class ResearchObjectSoap implements Serializable {
 	}
 
 	private long _researchObjectID;
-	private int _version;
+	private int _researchObjectVersion;
 	private long _parentResearchObjectID;
 	private String _name;
 	private String _label;

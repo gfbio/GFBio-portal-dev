@@ -66,43 +66,16 @@ public interface SubmissionRegistryService extends BaseService, InvokableService
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.String> getArchivepidsOfENA(
-		java.lang.String archivePId);
+	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONArray requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<java.lang.String> getArchivepidsWithTypeSampleOfENA(
-		java.lang.String archivePId);
+	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONArray requestJson);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getArchivepidWithTypeStudyOfENA(
-		java.lang.String archivePId);
+	public org.json.simple.JSONArray createSubmissionRegistry(
+		java.lang.String requestJson);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.SubmissionRegistry getLatestSubmissionByIds(
-		long researchObjectId, java.lang.String archive);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByArchive(
-		java.lang.String archive);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByResearchobjectid(
-		long researchObjectId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject json);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONObject json);
-
-	public org.json.simple.JSONObject createSubmissionRegistry(
-		org.json.simple.JSONObject json);
-
-	public org.json.simple.JSONObject updateSubmissionRegistry(
-		org.json.simple.JSONObject json);
+	public org.json.simple.JSONArray updateSubmissionRegistry(
+		java.lang.String requestJson);
 }

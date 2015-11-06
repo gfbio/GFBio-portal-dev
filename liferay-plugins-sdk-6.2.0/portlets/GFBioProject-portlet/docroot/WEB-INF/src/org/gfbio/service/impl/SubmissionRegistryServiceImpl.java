@@ -14,12 +14,13 @@
 
 package org.gfbio.service.impl;
 
-import java.util.List;
 
-import org.gfbio.model.SubmissionRegistry;
 import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
 import org.gfbio.service.base.SubmissionRegistryServiceBaseImpl;
-import org.json.simple.JSONObject;
+
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -47,61 +48,61 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 	
 	
 	//
-	public List<String> getArchivepidsOfENA (String archivePId){
+/*	public List<String> getArchivepidsOfENA (String archivePId){
 		return SubmissionRegistryLocalServiceUtil.getArchivePIdsOfENA(archivePId);
-	}
+	}*/
 	
 	
 	//
-	public List <String>getArchivepidsWithTypeSampleOfENA (String archivePId){
+/*	public List <String>getArchivepidsWithTypeSampleOfENA (String archivePId){
 		return SubmissionRegistryLocalServiceUtil.getArchivePIdsWithTypeSampleOfENA(archivePId);
-	}
+	}*/
 	
 	
 	//
-	public String getArchivepidWithTypeStudyOfENA (String archivePId){
+/*	public String getArchivepidWithTypeStudyOfENA (String archivePId){
 		return SubmissionRegistryLocalServiceUtil.getArchivePIdWithTypeStudyOfENA(archivePId);
-	}
+	}*/
 	
 	
 	// get the latest Versions of a specific Submission
-	public SubmissionRegistry getLatestSubmissionByIds (long researchObjectId, String archive ){
+/*	public SubmissionRegistry getLatestSubmissionByIds (long researchObjectId, String archive ){
 		return SubmissionRegistryLocalServiceUtil.getLatestSubmissionByIds(researchObjectId, archive);
-	}
+	}*/
 	
 	
 	// get the latest Versions of a specific ResearchObject
-	public List<SubmissionRegistry> getLatestSubmissionsByArchive (String archive){
+/*	public List<SubmissionRegistry> getLatestSubmissionsByArchive (String archive){
 		return SubmissionRegistryLocalServiceUtil.getLatestSubmissionsByArchive(archive);
-	}
+	}*/
 	
 	
 	
 	// get the latest Versions of a specific ResearchObject
-	public List<SubmissionRegistry> getLatestSubmissionsByResearchobjectid (long researchObjectId){
+/*	public List<SubmissionRegistry> getLatestSubmissionsByResearchobjectid (long researchObjectId){
 		return SubmissionRegistryLocalServiceUtil.getLatestSubmissionsByResearchObjectId(researchObjectId);
-	}
+	}*/
 	
 		
 	// get the latest Versions of all Submissions
-	public List<SubmissionRegistry> getLatestSubmissions (){
+/*	public List<SubmissionRegistry> getLatestSubmissions (){
 		return SubmissionRegistryLocalServiceUtil.getLatestSubmissions();
-	}
+	}*/
 	
 	
 	//
-	public JSONObject getSubmissionRegistriesByBrokerSubmissionId (JSONObject json){
-		JSONObject responseJson = null;
+	public JSONArray getSubmissionRegistriesByBrokerSubmissionId (JSONArray requestJson){
+		JSONArray responseJson = new JSONArray();
 		try {
-			responseJson = SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(json);
+			responseJson =SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 		} catch (SystemException e) {e.printStackTrace();}
 		return responseJson;
 	}
 	
 	
 	//
-	public JSONObject getSubmissionRegistriesByResearchObjectId (JSONObject json){
-		return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId(json);
+	public JSONArray getSubmissionRegistriesByResearchObjectId (JSONArray requestJson){
+		return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
 	
 
@@ -109,15 +110,24 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 	
 
 	//
-	public JSONObject createSubmissionRegistry (JSONObject json){
-		System.out.println(json);
-		return SubmissionRegistryLocalServiceUtil.createSubmissionRegistry (json);
+	public JSONArray createSubmissionRegistry (String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return SubmissionRegistryLocalServiceUtil.createSubmissionRegistry (parseJson);
 	}
 	
 	
 	//
-	public JSONObject updateSubmissionRegistry (JSONObject json){
-		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (json);
+	public JSONArray updateSubmissionRegistry (String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return SubmissionRegistryLocalServiceUtil.updateSubmissionRegistry (parseJson);
 	}
 	
 

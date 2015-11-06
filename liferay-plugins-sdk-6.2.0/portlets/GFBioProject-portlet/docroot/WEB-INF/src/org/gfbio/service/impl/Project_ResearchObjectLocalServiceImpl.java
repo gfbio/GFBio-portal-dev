@@ -46,40 +46,24 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 		List<Project_ResearchObject> idList = null;
 		try {
 			idList = project_ResearchObjectPersistence.findByProjectID(projectID);
-		} catch (SystemException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
-
+		} catch (SystemException e) {e.printStackTrace();}
 		return idList;
 	}
 
 	
 	//update or create a new Relationship between a Project and a Research Object
-	public long updateProjectResearchObject(long projectID, long researchObjectID) throws NoSuchProject_UserException, SystemException {
+	public long updateProjectResearchObject(long projectID, long researchObjectID, int researchObjectVersion) throws NoSuchProject_UserException, SystemException {
 
 		Project_ResearchObject relation = null;
-		Project_ResearchObjectPK pk = new Project_ResearchObjectPK(projectID, researchObjectID);
+		Project_ResearchObjectPK pk = new Project_ResearchObjectPK(projectID, researchObjectID, researchObjectVersion);
 
 		try {
 			relation = project_ResearchObjectPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchProject_ResearchObjectException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchProject_ResearchObjectException e) {e.printStackTrace();	}
 
 		//create new project
-
 		if (relation == null) {
 			relation = project_ResearchObjectPersistence.create(pk);
-		}
-		//update project
-		else {
-			//exception-option or for mar relation-Attributs
 		}
 
 		super.updateProject_ResearchObject(relation);

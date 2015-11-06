@@ -30,11 +30,15 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		_methodName1 = "createResearchObject";
 
-		_methodParameterTypes1 = new String[] { "long" };
+		_methodParameterTypes1 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName2 = "deleteResearchObject";
 
-		_methodParameterTypes2 = new String[] { "long" };
+		_methodParameterTypes2 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName3 = "deleteResearchObject";
 
@@ -78,11 +82,15 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		_methodName10 = "fetchResearchObject";
 
-		_methodParameterTypes10 = new String[] { "long" };
+		_methodParameterTypes10 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName11 = "getResearchObject";
 
-		_methodParameterTypes11 = new String[] { "long" };
+		_methodParameterTypes11 = new String[] {
+				"org.gfbio.service.persistence.ResearchObjectPK"
+			};
 
 		_methodName12 = "getPersistedModel";
 
@@ -108,94 +116,110 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		_methodParameterTypes121 = new String[] { "java.lang.String" };
 
-		_methodName126 = "getResearchObjectAbsolutParent";
+		_methodName126 = "getResearchObjectASJsonById";
 
-		_methodParameterTypes126 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes126 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName127 = "getResearchObjectParent";
+		_methodName127 = "getResearchObjectAbsolutParent";
 
-		_methodParameterTypes127 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes127 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName128 = "getResearchObjectsByParent";
+		_methodName128 = "getResearchObjectParent";
 
-		_methodParameterTypes128 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes128 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName129 = "getAllChildren";
+		_methodName129 = "getResearchObjectsByParent";
 
-		_methodParameterTypes129 = new String[] { "long" };
+		_methodParameterTypes129 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName130 = "getDirectChildren";
+		_methodName130 = "getAllChildren";
 
 		_methodParameterTypes130 = new String[] { "long" };
 
-		_methodName131 = "getDirectParent";
+		_methodName131 = "getDirectChildren";
 
 		_methodParameterTypes131 = new String[] { "long" };
 
-		_methodName132 = "getTopParent";
+		_methodName132 = "getDirectParent";
 
 		_methodParameterTypes132 = new String[] { "long" };
 
-		_methodName133 = "getResearchObjectById";
+		_methodName133 = "getTopParent";
 
 		_methodParameterTypes133 = new String[] { "long" };
 
-		_methodName134 = "getResearchObjectASJsonById";
+		_methodName134 = "IdAndVersion";
 
-		_methodParameterTypes134 = new String[] { "long" };
+		_methodParameterTypes134 = new String[] { "long", "int" };
 
-		_methodName135 = "constructResearchObjectJson";
+		_methodName135 = "getResearchObjectById";
 
-		_methodParameterTypes135 = new String[] { "org.gfbio.model.ResearchObject" };
+		_methodParameterTypes135 = new String[] { "long" };
 
-		_methodName136 = "constructResearchObjectsJson";
+		_methodName136 = "getResearchObjectASJsonById";
 
-		_methodParameterTypes136 = new String[] { "java.util.List" };
+		_methodParameterTypes136 = new String[] { "long", "int" };
 
-		_methodName137 = "constructFormatMetadata";
+		_methodName137 = "constructResearchObjectJson";
 
-		_methodParameterTypes137 = new String[] { "java.lang.String" };
+		_methodParameterTypes137 = new String[] { "org.gfbio.model.ResearchObject" };
 
-		_methodName138 = "checkParentAttributById";
+		_methodName138 = "constructResearchObjectsJson";
 
-		_methodParameterTypes138 = new String[] { "long" };
+		_methodParameterTypes138 = new String[] { "java.util.List" };
 
-		_methodName139 = "createResearchObjectByJson";
+		_methodName139 = "constructFormatMetadata";
 
-		_methodParameterTypes139 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes139 = new String[] { "java.lang.String" };
 
-		_methodName140 = "updateResearchObjectByJson";
+		_methodName140 = "checkParentAttributById";
 
-		_methodParameterTypes140 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes140 = new String[] { "long" };
 
-		_methodName141 = "createResearchObject";
+		_methodName141 = "createResearchObjectByJson";
 
-		_methodParameterTypes141 = new String[] {
+		_methodParameterTypes141 = new String[] { "org.json.simple.JSONArray" };
+
+		_methodName142 = "createResearchObjectByJson";
+
+		_methodParameterTypes142 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName143 = "updateResearchObjectByJson";
+
+		_methodParameterTypes143 = new String[] { "org.json.simple.JSONArray" };
+
+		_methodName144 = "createResearchObject";
+
+		_methodParameterTypes144 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName142 = "createResearchObjectWithProject";
+		_methodName145 = "createResearchObjectWithProject";
 
-		_methodParameterTypes142 = new String[] {
+		_methodParameterTypes145 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName143 = "updateParentResearchObjectIdByIds";
+		_methodName146 = "updateParentResearchObjectIdByIds";
 
-		_methodParameterTypes143 = new String[] { "long", "long" };
+		_methodParameterTypes146 = new String[] { "long", "int", "long" };
 
-		_methodName144 = "updateResearchObject";
+		_methodName147 = "updateResearchObject";
 
-		_methodParameterTypes144 = new String[] {
+		_methodParameterTypes147 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName145 = "updateResearchObjectWithProject";
+		_methodName148 = "updateResearchObjectVersion";
 
-		_methodParameterTypes145 = new String[] {
+		_methodParameterTypes148 = new String[] { "long", "int" };
+
+		_methodName149 = "updateResearchObjectWithProject";
+
+		_methodParameterTypes149 = new String[] {
 				"long", "long", "int", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
@@ -210,12 +234,12 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.createResearchObject(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.createResearchObject((org.gfbio.service.persistence.ResearchObjectPK)arguments[0]);
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.deleteResearchObject(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.deleteResearchObject((org.gfbio.service.persistence.ResearchObjectPK)arguments[0]);
 		}
 
 		if (_methodName3.equals(name) &&
@@ -261,12 +285,12 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.fetchResearchObject(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.fetchResearchObject((org.gfbio.service.persistence.ResearchObjectPK)arguments[0]);
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObject(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.getResearchObject((org.gfbio.service.persistence.ResearchObjectPK)arguments[0]);
 		}
 
 		if (_methodName12.equals(name) &&
@@ -304,101 +328,119 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		if (_methodName126.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObjectAbsolutParent((org.json.simple.JSONObject)arguments[0]);
+			return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName127.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObjectParent((org.json.simple.JSONObject)arguments[0]);
+			return ResearchObjectLocalServiceUtil.getResearchObjectAbsolutParent((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName128.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObjectsByParent((org.json.simple.JSONObject)arguments[0]);
+			return ResearchObjectLocalServiceUtil.getResearchObjectParent((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName129.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getAllChildren(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.getResearchObjectsByParent((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName130.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getDirectChildren(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.getAllChildren(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName131.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getDirectParent(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.getDirectChildren(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName132.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getTopParent(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.getDirectParent(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName133.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObjectById(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.getTopParent(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName134.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.IdAndVersion(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName135.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.constructResearchObjectJson((org.gfbio.model.ResearchObject)arguments[0]);
+			return ResearchObjectLocalServiceUtil.getResearchObjectById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName136.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.constructResearchObjectsJson((java.util.List<org.gfbio.model.ResearchObject>)arguments[0]);
+			return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName137.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.constructFormatMetadata((java.lang.String)arguments[0]);
+			return ResearchObjectLocalServiceUtil.constructResearchObjectJson((org.gfbio.model.ResearchObject)arguments[0]);
 		}
 
 		if (_methodName138.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.checkParentAttributById(((Long)arguments[0]).longValue());
+			return ResearchObjectLocalServiceUtil.constructResearchObjectsJson((java.util.List<org.gfbio.model.ResearchObject>)arguments[0]);
 		}
 
 		if (_methodName139.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.createResearchObjectByJson((org.json.simple.JSONObject)arguments[0]);
+			return ResearchObjectLocalServiceUtil.constructFormatMetadata((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName140.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateResearchObjectByJson((org.json.simple.JSONObject)arguments[0]);
+			return ResearchObjectLocalServiceUtil.checkParentAttributById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.createResearchObjectByJson((org.json.simple.JSONArray)arguments[0]);
+		}
+
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.createResearchObjectByJson((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateResearchObjectByJson((org.json.simple.JSONArray)arguments[0]);
+		}
+
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.createResearchObject((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3]);
 		}
 
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.createResearchObjectWithProject(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4]);
 		}
 
-		if (_methodName143.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateParentResearchObjectIdByIds(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+				((Integer)arguments[1]).intValue(),
+				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObject(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -406,8 +448,14 @@ public class ResearchObjectLocalServiceClpInvoker {
 				(java.lang.String)arguments[6]);
 		}
 
-		if (_methodName145.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateResearchObjectVersion(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObjectWithProject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
@@ -495,4 +543,12 @@ public class ResearchObjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes144;
 	private String _methodName145;
 	private String[] _methodParameterTypes145;
+	private String _methodName146;
+	private String[] _methodParameterTypes146;
+	private String _methodName147;
+	private String[] _methodParameterTypes147;
+	private String _methodName148;
+	private String[] _methodParameterTypes148;
+	private String _methodName149;
+	private String[] _methodParameterTypes149;
 }

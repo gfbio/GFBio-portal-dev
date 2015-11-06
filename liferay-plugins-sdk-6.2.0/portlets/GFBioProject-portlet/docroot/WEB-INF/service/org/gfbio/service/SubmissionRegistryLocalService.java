@@ -255,13 +255,13 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject json)
+	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONArray requestJson)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONObject json);
+	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONArray requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.String> getArchivePIdsOfENA(
@@ -274,6 +274,9 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.String> getArchivePIdsWithTypeSampleOfENA(
 		java.lang.String archivePId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getArchivePIdType(java.lang.String archive);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getArchivePIdWithTypeStudyOfENA(
@@ -295,6 +298,16 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getStatus(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive,
+		java.lang.String archivePId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getResearchObjectVersion(long researchObjectId,
+		java.lang.String archive, java.lang.String brokerSubmissionId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId(
 		java.lang.String brokerSubmissionId)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -312,36 +325,28 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String archive);
 
-	public org.json.simple.JSONObject constructSubmissionRegistriesJson(
+	public org.json.simple.JSONArray constructSubmissionRegistriesJson(
 		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList);
 
 	public org.json.simple.JSONObject constructSubmissionRegistryJson(
 		org.gfbio.model.SubmissionRegistry submissionRegistry);
 
-	public java.lang.String constructStatus(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String archivePId);
+	public org.json.simple.JSONArray createSubmissionRegistry(
+		org.json.simple.JSONArray requestJson);
 
 	public org.json.simple.JSONObject createSubmissionRegistry(
-		org.json.simple.JSONObject json);
+		org.json.simple.JSONObject requestJson);
+
+	public org.json.simple.JSONArray updateSubmissionRegistry(
+		org.json.simple.JSONArray requestJson);
 
 	public org.json.simple.JSONObject updateSubmissionRegistry(
-		org.json.simple.JSONObject json);
+		org.json.simple.JSONObject requestJson);
 
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userId);
-
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		long archivePIdType, java.util.Date lastChanged, long userId);
-
-	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
-		int researchObjectVersion, java.lang.String archive,
-		java.lang.String brokerSubmissionId, java.lang.String archivePId,
-		java.util.Date lastChanged, long userId, java.lang.String status);
+	public java.lang.Boolean updateKernelSubmissionRegistry(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String archive, java.lang.String brokerSubmissionId,
+		long userId);
 
 	public java.lang.Boolean updateSubmissionRegistry(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive,

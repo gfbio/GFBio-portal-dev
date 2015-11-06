@@ -249,8 +249,8 @@ public interface ProjectLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json);
+	public org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.Project getProjectById(long projectId)
@@ -271,13 +271,15 @@ public interface ProjectLocalService extends BaseLocalService,
 	public org.json.simple.JSONObject constructProjectAsJson(
 		org.gfbio.model.Project project);
 
+	public org.json.simple.JSONArray constructProjectAsJsonArray(
+		org.gfbio.model.Project project);
+
+	public org.json.simple.JSONArray constructProjectsAsJson(
+		java.util.List<org.gfbio.model.Project> projectList);
+
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.util.Date startDate,
 		java.util.Date endDate, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public long updateProject(long projectID, java.lang.String name,
-		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

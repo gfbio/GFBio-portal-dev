@@ -15,12 +15,10 @@
 package org.gfbio.service.impl;
 
 
-import java.util.List;
-
-import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
-import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+
 
 
 
@@ -45,47 +43,48 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 
 
 	//
-	public List <ResearchObject> getAllChildren (long researchObjectId){
+/*	public List <ResearchObject> getAllChildren (long researchObjectId){
 		return ResearchObjectLocalServiceUtil.getAllChildren(researchObjectId);
+	}*/
+	
+	
+	//
+	public JSONArray getResearchObjectAbsolutParent (JSONArray requestJson){
+		return ResearchObjectLocalServiceUtil.getResearchObjectAbsolutParent(requestJson);
+	}
+	
+
+	//
+	public JSONArray getResearchObjectById (JSONArray requestJson){
+		return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(requestJson);
 	}
 	
 	
 	//
-	public JSONObject getResearchObjectAbsolutParent (JSONObject json){
-		return ResearchObjectLocalServiceUtil.getResearchObjectAbsolutParent(json);
+	public JSONArray getResearchObjectParent (JSONArray requestJson){
+		return ResearchObjectLocalServiceUtil.getResearchObjectParent(requestJson);
 	}
 	
 	
-	//
-	public JSONObject getResearchObjectsByParent (JSONObject json){
-		return ResearchObjectLocalServiceUtil.getResearchObjectsByParent(json);
+	//get all Child ResearchObjects of a ResearchObject by the ID of this. 
+	public JSONArray getResearchObjectsByParent (JSONArray requestJson){
+		return ResearchObjectLocalServiceUtil.getResearchObjectsByParent(requestJson);
 	}
 	
-	
-	//
-	public JSONObject getResearchObjectById (long researchObjectId){
-		return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(researchObjectId);
-	}
-	
-	
-	//
-	public JSONObject getResearchObjectParent (JSONObject json){
-		return ResearchObjectLocalServiceUtil.getResearchObjectParent(json);
-	}
 	
 		
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
 	//
-	public JSONObject createResearchObject(JSONObject json){
-		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(json);
+	public JSONArray createResearchObject(JSONArray requestJson){
+		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(requestJson);
 	}
 	
 	
 	//
-	public JSONObject updateResearchObject(JSONObject json){
-		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(json);
+	public JSONArray updateResearchObject(JSONArray requestJson){
+		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(requestJson);
 	}
 	
 }

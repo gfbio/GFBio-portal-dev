@@ -106,6 +106,7 @@
 		<attributes>
 			<id name="projectID" />
 			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -144,9 +145,10 @@
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.ResearchObjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.ResearchObjectPK" />
 		<attributes>
 			<id name="researchObjectID" />
-			<basic name="version" />
+			<id name="researchObjectVersion" />
 			<basic name="parentResearchObjectID" />
 			<basic name="name" />
 			<basic name="label" />
@@ -165,14 +167,22 @@
 			<id name="researchObjectVersion" />
 			<id name="archive" />
 			<basic name="brokerSubmissionID" />
-			<basic name="archivePID" />
-			<basic name="archivePIDType" />
+			<basic name="archivePID">
+				<column name="ARCHIVE_PID" />
+			</basic>
+			<basic name="archivePIDType">
+				<column name="ARCHIVE_PID_TYPE" />
+			</basic>
 			<basic name="lastChanged">
+				<column name="LAST_CHANGED" />
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="userID" />
-			<basic name="isPublic" />
+			<basic name="isPublic">
+				<column name="IS_PUBLIC" />
+			</basic>
 			<basic name="publicAfter">
+				<column name="PUBLIC_AFTER" />
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="status" />

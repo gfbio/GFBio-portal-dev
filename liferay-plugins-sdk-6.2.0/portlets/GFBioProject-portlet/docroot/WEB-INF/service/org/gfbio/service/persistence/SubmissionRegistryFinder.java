@@ -34,6 +34,9 @@ public interface SubmissionRegistryFinder {
 	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByResearchObjectId(
 		long researchObjectId);
 
+	public java.util.List getResearchObjectVersion(long researchObjectId,
+		java.lang.String archive, java.lang.String brokerSubmissionId);
+
 	public java.util.List getStatusByIds(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive);
 

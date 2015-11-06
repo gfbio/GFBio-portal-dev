@@ -52,6 +52,14 @@ public class SubmissionRegistryFinderUtil {
 				   .getLatestSubmissionsByResearchObjectId(researchObjectId);
 	}
 
+	public static java.util.List getResearchObjectVersion(
+		long researchObjectId, java.lang.String archive,
+		java.lang.String brokerSubmissionId) {
+		return getFinder()
+				   .getResearchObjectVersion(researchObjectId, archive,
+			brokerSubmissionId);
+	}
+
 	public static java.util.List getStatusByIds(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive) {
 		return getFinder()

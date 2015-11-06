@@ -35,6 +35,7 @@ public class Project_ResearchObjectSoap implements Serializable {
 
 		soapModel.setProjectID(model.getProjectID());
 		soapModel.setResearchObjectID(model.getResearchObjectID());
+		soapModel.setResearchObjectVersion(model.getResearchObjectVersion());
 
 		return soapModel;
 	}
@@ -83,12 +84,14 @@ public class Project_ResearchObjectSoap implements Serializable {
 	}
 
 	public Project_ResearchObjectPK getPrimaryKey() {
-		return new Project_ResearchObjectPK(_projectID, _researchObjectID);
+		return new Project_ResearchObjectPK(_projectID, _researchObjectID,
+			_researchObjectVersion);
 	}
 
 	public void setPrimaryKey(Project_ResearchObjectPK pk) {
 		setProjectID(pk.projectID);
 		setResearchObjectID(pk.researchObjectID);
+		setResearchObjectVersion(pk.researchObjectVersion);
 	}
 
 	public long getProjectID() {
@@ -107,6 +110,15 @@ public class Project_ResearchObjectSoap implements Serializable {
 		_researchObjectID = researchObjectID;
 	}
 
+	public int getResearchObjectVersion() {
+		return _researchObjectVersion;
+	}
+
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_researchObjectVersion = researchObjectVersion;
+	}
+
 	private long _projectID;
 	private long _researchObjectID;
+	private int _researchObjectVersion;
 }

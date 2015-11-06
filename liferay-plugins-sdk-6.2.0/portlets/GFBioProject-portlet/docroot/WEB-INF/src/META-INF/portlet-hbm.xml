@@ -81,6 +81,7 @@
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_ResearchObjectPK">
 			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		</composite-id>
 	</class>
 	<class name="org.gfbio.model.impl.Project_UserImpl" table="gfbio_Project_User">
@@ -100,10 +101,10 @@
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="org.gfbio.model.impl.ResearchObjectImpl" table="gfbio_ResearchObject">
-		<id name="researchObjectID" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.ResearchObjectPK">
+			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		</composite-id>
 		<property name="parentResearchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -118,12 +119,12 @@
 			<key-property name="archive" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		</composite-id>
 		<property name="brokerSubmissionID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="archivePID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="archivePIDType" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="lastChanged" type="org.hibernate.type.TimestampType" />
+		<property name="archivePID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="archive_pid" />
+		<property name="archivePIDType" type="com.liferay.portal.dao.orm.hibernate.LongType" column="archive_pid_type" />
+		<property name="lastChanged" type="org.hibernate.type.TimestampType" column="last_changed" />
 		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="isPublic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="publicAfter" type="org.hibernate.type.TimestampType" />
+		<property name="isPublic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="is_public" />
+		<property name="publicAfter" type="org.hibernate.type.TimestampType" column="public_after" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.UserExtensionImpl" table="gfbio_UserExtension">

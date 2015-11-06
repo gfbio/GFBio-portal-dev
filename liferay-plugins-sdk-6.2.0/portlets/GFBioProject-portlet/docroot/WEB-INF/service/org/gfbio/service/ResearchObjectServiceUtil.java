@@ -63,39 +63,34 @@ public class ResearchObjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
-		long researchObjectId) {
-		return getService().getAllChildren(researchObjectId);
+	public static org.json.simple.JSONArray getResearchObjectAbsolutParent(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectAbsolutParent(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
-		org.json.simple.JSONObject json) {
-		return getService().getResearchObjectAbsolutParent(json);
+	public static org.json.simple.JSONArray getResearchObjectById(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectById(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectsByParent(
-		org.json.simple.JSONObject json) {
-		return getService().getResearchObjectsByParent(json);
+	public static org.json.simple.JSONArray getResearchObjectParent(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectParent(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectById(
-		long researchObjectId) {
-		return getService().getResearchObjectById(researchObjectId);
+	public static org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectsByParent(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectParent(
-		org.json.simple.JSONObject json) {
-		return getService().getResearchObjectParent(json);
+	public static org.json.simple.JSONArray createResearchObject(
+		org.json.simple.JSONArray requestJson) {
+		return getService().createResearchObject(requestJson);
 	}
 
-	public static org.json.simple.JSONObject createResearchObject(
-		org.json.simple.JSONObject json) {
-		return getService().createResearchObject(json);
-	}
-
-	public static org.json.simple.JSONObject updateResearchObject(
-		org.json.simple.JSONObject json) {
-		return getService().updateResearchObject(json);
+	public static org.json.simple.JSONArray updateResearchObject(
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateResearchObject(requestJson);
 	}
 
 	public static void clearService() {

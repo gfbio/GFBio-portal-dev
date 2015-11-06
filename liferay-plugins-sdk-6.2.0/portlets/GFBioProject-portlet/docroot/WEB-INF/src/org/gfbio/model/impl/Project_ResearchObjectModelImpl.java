@@ -61,12 +61,13 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 	public static final String TABLE_NAME = "gfbio_Project_ResearchObject";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "projectID", Types.BIGINT },
-			{ "researchObjectID", Types.BIGINT }
+			{ "researchObjectID", Types.BIGINT },
+			{ "researchObjectVersion", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_ResearchObject (projectID LONG not null,researchObjectID LONG not null,primary key (projectID, researchObjectID))";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_ResearchObject (projectID LONG not null,researchObjectID LONG not null,researchObjectVersion INTEGER not null,primary key (projectID, researchObjectID, researchObjectVersion))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Project_ResearchObject";
-	public static final String ORDER_BY_JPQL = " ORDER BY project_ResearchObject.id.projectID ASC, project_ResearchObject.id.researchObjectID ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project_ResearchObject.projectID ASC, gfbio_Project_ResearchObject.researchObjectID ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY project_ResearchObject.id.projectID ASC, project_ResearchObject.id.researchObjectID ASC, project_ResearchObject.id.researchObjectVersion ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project_ResearchObject.projectID ASC, gfbio_Project_ResearchObject.researchObjectID ASC, gfbio_Project_ResearchObject.researchObjectVersion ASC";
 	public static final String DATA_SOURCE = "gfbioDataSource";
 	public static final String SESSION_FACTORY = "gfbioSessionFactory";
 	public static final String TX_MANAGER = "gfbioTransactionManager";
@@ -81,6 +82,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 			true);
 	public static long PROJECTID_COLUMN_BITMASK = 1L;
 	public static long RESEARCHOBJECTID_COLUMN_BITMASK = 2L;
+	public static long RESEARCHOBJECTVERSION_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -98,6 +100,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		model.setProjectID(soapModel.getProjectID());
 		model.setResearchObjectID(soapModel.getResearchObjectID());
+		model.setResearchObjectVersion(soapModel.getResearchObjectVersion());
 
 		return model;
 	}
@@ -131,18 +134,21 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 	@Override
 	public Project_ResearchObjectPK getPrimaryKey() {
-		return new Project_ResearchObjectPK(_projectID, _researchObjectID);
+		return new Project_ResearchObjectPK(_projectID, _researchObjectID,
+			_researchObjectVersion);
 	}
 
 	@Override
 	public void setPrimaryKey(Project_ResearchObjectPK primaryKey) {
 		setProjectID(primaryKey.projectID);
 		setResearchObjectID(primaryKey.researchObjectID);
+		setResearchObjectVersion(primaryKey.researchObjectVersion);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return new Project_ResearchObjectPK(_projectID, _researchObjectID);
+		return new Project_ResearchObjectPK(_projectID, _researchObjectID,
+			_researchObjectVersion);
 	}
 
 	@Override
@@ -166,6 +172,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("researchObjectID", getResearchObjectID());
+		attributes.put("researchObjectVersion", getResearchObjectVersion());
 
 		return attributes;
 	}
@@ -182,6 +189,13 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		if (researchObjectID != null) {
 			setResearchObjectID(researchObjectID);
+		}
+
+		Integer researchObjectVersion = (Integer)attributes.get(
+				"researchObjectVersion");
+
+		if (researchObjectVersion != null) {
+			setResearchObjectVersion(researchObjectVersion);
 		}
 	}
 
@@ -231,6 +245,29 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 		return _originalResearchObjectID;
 	}
 
+	@JSON
+	@Override
+	public int getResearchObjectVersion() {
+		return _researchObjectVersion;
+	}
+
+	@Override
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_columnBitmask |= RESEARCHOBJECTVERSION_COLUMN_BITMASK;
+
+		if (!_setOriginalResearchObjectVersion) {
+			_setOriginalResearchObjectVersion = true;
+
+			_originalResearchObjectVersion = _researchObjectVersion;
+		}
+
+		_researchObjectVersion = researchObjectVersion;
+	}
+
+	public int getOriginalResearchObjectVersion() {
+		return _originalResearchObjectVersion;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -251,6 +288,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		project_ResearchObjectImpl.setProjectID(getProjectID());
 		project_ResearchObjectImpl.setResearchObjectID(getResearchObjectID());
+		project_ResearchObjectImpl.setResearchObjectVersion(getResearchObjectVersion());
 
 		project_ResearchObjectImpl.resetOriginalValues();
 
@@ -303,6 +341,10 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		project_ResearchObjectModelImpl._setOriginalResearchObjectID = false;
 
+		project_ResearchObjectModelImpl._originalResearchObjectVersion = project_ResearchObjectModelImpl._researchObjectVersion;
+
+		project_ResearchObjectModelImpl._setOriginalResearchObjectVersion = false;
+
 		project_ResearchObjectModelImpl._columnBitmask = 0;
 	}
 
@@ -314,17 +356,21 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 		project_ResearchObjectCacheModel.researchObjectID = getResearchObjectID();
 
+		project_ResearchObjectCacheModel.researchObjectVersion = getResearchObjectVersion();
+
 		return project_ResearchObjectCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
 		sb.append(", researchObjectID=");
 		sb.append(getResearchObjectID());
+		sb.append(", researchObjectVersion=");
+		sb.append(getResearchObjectVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -332,7 +378,7 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project_ResearchObject");
@@ -345,6 +391,10 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 		sb.append(
 			"<column><column-name>researchObjectID</column-name><column-value><![CDATA[");
 		sb.append(getResearchObjectID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>researchObjectVersion</column-name><column-value><![CDATA[");
+		sb.append(getResearchObjectVersion());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -362,6 +412,9 @@ public class Project_ResearchObjectModelImpl extends BaseModelImpl<Project_Resea
 	private long _researchObjectID;
 	private long _originalResearchObjectID;
 	private boolean _setOriginalResearchObjectID;
+	private int _researchObjectVersion;
+	private int _originalResearchObjectVersion;
+	private boolean _setOriginalResearchObjectVersion;
 	private long _columnBitmask;
 	private Project_ResearchObject _escapedModel;
 }

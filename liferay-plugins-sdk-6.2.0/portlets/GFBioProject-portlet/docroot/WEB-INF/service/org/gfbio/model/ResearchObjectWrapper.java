@@ -50,7 +50,7 @@ public class ResearchObjectWrapper implements ResearchObject,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("researchObjectID", getResearchObjectID());
-		attributes.put("version", getVersion());
+		attributes.put("researchObjectVersion", getResearchObjectVersion());
 		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
@@ -69,10 +69,11 @@ public class ResearchObjectWrapper implements ResearchObject,
 			setResearchObjectID(researchObjectID);
 		}
 
-		Integer version = (Integer)attributes.get("version");
+		Integer researchObjectVersion = (Integer)attributes.get(
+				"researchObjectVersion");
 
-		if (version != null) {
-			setVersion(version);
+		if (researchObjectVersion != null) {
+			setResearchObjectVersion(researchObjectVersion);
 		}
 
 		Long parentResearchObjectID = (Long)attributes.get(
@@ -119,7 +120,7 @@ public class ResearchObjectWrapper implements ResearchObject,
 	* @return the primary key of this research object
 	*/
 	@Override
-	public long getPrimaryKey() {
+	public org.gfbio.service.persistence.ResearchObjectPK getPrimaryKey() {
 		return _researchObject.getPrimaryKey();
 	}
 
@@ -129,7 +130,8 @@ public class ResearchObjectWrapper implements ResearchObject,
 	* @param primaryKey the primary key of this research object
 	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
+	public void setPrimaryKey(
+		org.gfbio.service.persistence.ResearchObjectPK primaryKey) {
 		_researchObject.setPrimaryKey(primaryKey);
 	}
 
@@ -154,23 +156,23 @@ public class ResearchObjectWrapper implements ResearchObject,
 	}
 
 	/**
-	* Returns the version of this research object.
+	* Returns the research object version of this research object.
 	*
-	* @return the version of this research object
+	* @return the research object version of this research object
 	*/
 	@Override
-	public int getVersion() {
-		return _researchObject.getVersion();
+	public int getResearchObjectVersion() {
+		return _researchObject.getResearchObjectVersion();
 	}
 
 	/**
-	* Sets the version of this research object.
+	* Sets the research object version of this research object.
 	*
-	* @param version the version of this research object
+	* @param researchObjectVersion the research object version of this research object
 	*/
 	@Override
-	public void setVersion(int version) {
-		_researchObject.setVersion(version);
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_researchObject.setResearchObjectVersion(researchObjectVersion);
 	}
 
 	/**

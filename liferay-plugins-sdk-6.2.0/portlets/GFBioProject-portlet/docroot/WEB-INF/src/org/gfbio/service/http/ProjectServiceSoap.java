@@ -62,42 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ProjectServiceSoap {
-	public static org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json) throws RemoteException {
+	public static org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = ProjectServiceUtil.getProjectById(json);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.gfbio.model.ProjectSoap[] getProjectListByUserId(
-		long userID) throws RemoteException {
-		try {
-			java.util.List<org.gfbio.model.Project> returnValue = ProjectServiceUtil.getProjectListByUserId(userID);
-
-			return org.gfbio.model.ProjectSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
-		throws RemoteException {
-		try {
-			long returnValue = ProjectServiceUtil.updateProject(projectID,
-					userID, name, label, description, startDate, endDate, status);
+			org.json.simple.JSONArray returnValue = ProjectServiceUtil.getProjectById(requestJson);
 
 			return returnValue;
 		}

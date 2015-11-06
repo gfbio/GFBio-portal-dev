@@ -298,11 +298,11 @@ public class Project_ResearchObjectLocalServiceWrapper
 
 	@Override
 	public long updateProjectResearchObject(long projectID,
-		long researchObjectID)
+		long researchObjectID, int researchObjectVersion)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
 		return _project_ResearchObjectLocalService.updateProjectResearchObject(projectID,
-			researchObjectID);
+			researchObjectID, researchObjectVersion);
 	}
 
 	/**

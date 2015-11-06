@@ -62,24 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ResearchObjectServiceSoap {
-	public static org.gfbio.model.ResearchObjectSoap[] getAllChildren(
-		long researchObjectId) throws RemoteException {
+	public static org.json.simple.JSONArray getResearchObjectAbsolutParent(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			java.util.List<org.gfbio.model.ResearchObject> returnValue = ResearchObjectServiceUtil.getAllChildren(researchObjectId);
-
-			return org.gfbio.model.ResearchObjectSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
-		org.json.simple.JSONObject json) throws RemoteException {
-		try {
-			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectAbsolutParent(json);
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectAbsolutParent(requestJson);
 
 			return returnValue;
 		}
@@ -90,10 +76,10 @@ public class ResearchObjectServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectsByParent(
-		org.json.simple.JSONObject json) throws RemoteException {
+	public static org.json.simple.JSONArray getResearchObjectById(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectsByParent(json);
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectById(requestJson);
 
 			return returnValue;
 		}
@@ -104,10 +90,10 @@ public class ResearchObjectServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectById(
-		long researchObjectId) throws RemoteException {
+	public static org.json.simple.JSONArray getResearchObjectParent(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectById(researchObjectId);
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectParent(requestJson);
 
 			return returnValue;
 		}
@@ -118,10 +104,10 @@ public class ResearchObjectServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectParent(
-		org.json.simple.JSONObject json) throws RemoteException {
+	public static org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectParent(json);
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectsByParent(requestJson);
 
 			return returnValue;
 		}
@@ -132,10 +118,10 @@ public class ResearchObjectServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject createResearchObject(
-		org.json.simple.JSONObject json) throws RemoteException {
+	public static org.json.simple.JSONArray createResearchObject(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.createResearchObject(json);
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.createResearchObject(requestJson);
 
 			return returnValue;
 		}
@@ -146,10 +132,10 @@ public class ResearchObjectServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject updateResearchObject(
-		org.json.simple.JSONObject json) throws RemoteException {
+	public static org.json.simple.JSONArray updateResearchObject(
+		org.json.simple.JSONArray requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.updateResearchObject(json);
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.updateResearchObject(requestJson);
 
 			return returnValue;
 		}

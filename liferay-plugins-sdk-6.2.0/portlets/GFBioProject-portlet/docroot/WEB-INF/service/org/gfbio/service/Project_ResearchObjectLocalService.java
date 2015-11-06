@@ -259,7 +259,7 @@ public interface Project_ResearchObjectLocalService extends BaseLocalService,
 		long projectID);
 
 	public long updateProjectResearchObject(long projectID,
-		long researchObjectID)
+		long researchObjectID, int researchObjectVersion)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException;
 }

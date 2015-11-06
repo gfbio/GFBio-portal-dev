@@ -31,6 +31,7 @@ import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -58,21 +59,23 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	//
 	@SuppressWarnings({ "unchecked"})
-	public JSONObject getProjectById (JSONObject json){
+	public JSONArray getProjectById (JSONArray requestJson){
 		
-		JSONObject responseJson = new JSONObject();
-		
-		if (json.containsKey("projectid")){
-			try {
-				responseJson = ProjectLocalServiceUtil.constructProjectAsJson(ProjectLocalServiceUtil.getProjectById((long)json.get("projectid")));
-			} catch (NoSuchProjectException | SystemException e) {
-				e.printStackTrace();
-				responseJson.put("ERROR", e);}
-
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++){
+			
+			JSONObject json = (JSONObject) requestJson.get(i);
+			if (json.containsKey("projectid")){
+				try {
+					responseJson = ProjectLocalServiceUtil.constructProjectAsJsonArray(ProjectLocalServiceUtil.getProjectById((long)json.get("projectid")));
+				} catch (NoSuchProjectException | SystemException e) {
+					e.printStackTrace();
+					responseJson.add(e);}
+			}
+			else
+				responseJson.add("ERRROR: No key 'projectid' exist.");
 		}
-		else
-			responseJson.put("ERROR", "No key 'projectid' exist.");
-		return responseJson;
+			return responseJson;
 	}
 	
 	
@@ -118,6 +121,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	@SuppressWarnings("unchecked")
 	public JSONObject constructProjectAsJson (Project project){
 		JSONObject json = new JSONObject();
+
 		json.put("projectid", project.getProjectID());
 		json.put("parentprojectid", project.getParentProjectID());
 		json.put("name", project.getName());
@@ -126,6 +130,25 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		json.put("startdate", project.getStartDate());	
 		json.put("enddate", project.getEndDate());
 		json.put("status", project.getStatus());
+		return json;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray constructProjectAsJsonArray (Project project){
+		JSONArray jsonArray = new JSONArray ();
+		jsonArray.add(constructProjectAsJson(project));
+		return jsonArray;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray constructProjectsAsJson (List <Project> projectList){
+		JSONArray json = new JSONArray();
+		for (int i =0; i < projectList.size();i++)
+			json.add(constructProjectAsJson(projectList.get(i)));
 		return json;
 	}
 	
@@ -168,17 +191,6 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			super.updateProject(project);
 		}
 		return project.getProjectID();
-	}
-	
-
-	@Override
-	//
-	public long updateProject(long projectID, String name, String description)
-			throws SystemException {
-
-		// TODO Auto-generated method stub
-
-		return 0;
 	}
 
 

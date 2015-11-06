@@ -60,69 +60,27 @@ public class SubmissionRegistryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getArchivepidsOfENA(
-		java.lang.String archivePId) {
-		return _submissionRegistryService.getArchivepidsOfENA(archivePId);
+	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONArray requestJson) {
+		return _submissionRegistryService.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getArchivepidsWithTypeSampleOfENA(
-		java.lang.String archivePId) {
-		return _submissionRegistryService.getArchivepidsWithTypeSampleOfENA(archivePId);
+	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONArray requestJson) {
+		return _submissionRegistryService.getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
 
 	@Override
-	public java.lang.String getArchivepidWithTypeStudyOfENA(
-		java.lang.String archivePId) {
-		return _submissionRegistryService.getArchivepidWithTypeStudyOfENA(archivePId);
+	public org.json.simple.JSONArray createSubmissionRegistry(
+		java.lang.String requestJson) {
+		return _submissionRegistryService.createSubmissionRegistry(requestJson);
 	}
 
 	@Override
-	public org.gfbio.model.SubmissionRegistry getLatestSubmissionByIds(
-		long researchObjectId, java.lang.String archive) {
-		return _submissionRegistryService.getLatestSubmissionByIds(researchObjectId,
-			archive);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByArchive(
-		java.lang.String archive) {
-		return _submissionRegistryService.getLatestSubmissionsByArchive(archive);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByResearchobjectid(
-		long researchObjectId) {
-		return _submissionRegistryService.getLatestSubmissionsByResearchobjectid(researchObjectId);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions() {
-		return _submissionRegistryService.getLatestSubmissions();
-	}
-
-	@Override
-	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject json) {
-		return _submissionRegistryService.getSubmissionRegistriesByBrokerSubmissionId(json);
-	}
-
-	@Override
-	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONObject json) {
-		return _submissionRegistryService.getSubmissionRegistriesByResearchObjectId(json);
-	}
-
-	@Override
-	public org.json.simple.JSONObject createSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return _submissionRegistryService.createSubmissionRegistry(json);
-	}
-
-	@Override
-	public org.json.simple.JSONObject updateSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return _submissionRegistryService.updateSubmissionRegistry(json);
+	public org.json.simple.JSONArray updateSubmissionRegistry(
+		java.lang.String requestJson) {
+		return _submissionRegistryService.updateSubmissionRegistry(requestJson);
 	}
 
 	/**

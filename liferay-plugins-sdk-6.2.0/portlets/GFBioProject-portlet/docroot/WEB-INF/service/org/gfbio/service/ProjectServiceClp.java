@@ -34,19 +34,7 @@ public class ProjectServiceClp implements ProjectService {
 
 		_methodName3 = "getProjectById";
 
-		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName4 = "getProjectListByUserId";
-
-		_methodParameterTypes4 = new String[] { "long" };
-
-		_methodName5 = "updateProject";
-
-		_methodParameterTypes5 = new String[] {
-				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "java.util.Date",
-				"java.lang.String"
-			};
+		_methodParameterTypes3 = new String[] { "org.json.simple.JSONArray" };
 	}
 
 	@Override
@@ -100,14 +88,14 @@ public class ProjectServiceClp implements ProjectService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName3,
 					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -121,89 +109,7 @@ public class ProjectServiceClp implements ProjectService {
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Project> getProjectListByUserId(
-		long userID)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] { userID });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.NoSuchModelException) {
-				throw (com.liferay.portal.NoSuchModelException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.Project>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
-					new Object[] {
-						projectID,
-						
-					userID,
-						
-					ClpSerializer.translateInput(name),
-						
-					ClpSerializer.translateInput(label),
-						
-					ClpSerializer.translateInput(description),
-						
-					ClpSerializer.translateInput(startDate),
-						
-					ClpSerializer.translateInput(endDate),
-						
-					ClpSerializer.translateInput(status)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Long)returnObj).longValue();
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableService _invokableService;
@@ -213,8 +119,4 @@ public class ProjectServiceClp implements ProjectService {
 	private String[] _methodParameterTypes1;
 	private String _methodName3;
 	private String[] _methodParameterTypes3;
-	private String _methodName4;
-	private String[] _methodParameterTypes4;
-	private String _methodName5;
-	private String[] _methodParameterTypes5;
 }

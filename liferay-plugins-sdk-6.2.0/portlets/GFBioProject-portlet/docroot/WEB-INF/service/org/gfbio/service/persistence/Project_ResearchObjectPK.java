@@ -27,13 +27,16 @@ public class Project_ResearchObjectPK implements Comparable<Project_ResearchObje
 	Serializable {
 	public long projectID;
 	public long researchObjectID;
+	public int researchObjectVersion;
 
 	public Project_ResearchObjectPK() {
 	}
 
-	public Project_ResearchObjectPK(long projectID, long researchObjectID) {
+	public Project_ResearchObjectPK(long projectID, long researchObjectID,
+		int researchObjectVersion) {
 		this.projectID = projectID;
 		this.researchObjectID = researchObjectID;
+		this.researchObjectVersion = researchObjectVersion;
 	}
 
 	public long getProjectID() {
@@ -50,6 +53,14 @@ public class Project_ResearchObjectPK implements Comparable<Project_ResearchObje
 
 	public void setResearchObjectID(long researchObjectID) {
 		this.researchObjectID = researchObjectID;
+	}
+
+	public int getResearchObjectVersion() {
+		return researchObjectVersion;
+	}
+
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		this.researchObjectVersion = researchObjectVersion;
 	}
 
 	@Override
@@ -88,6 +99,20 @@ public class Project_ResearchObjectPK implements Comparable<Project_ResearchObje
 			return value;
 		}
 
+		if (researchObjectVersion < pk.researchObjectVersion) {
+			value = -1;
+		}
+		else if (researchObjectVersion > pk.researchObjectVersion) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
+
 		return 0;
 	}
 
@@ -104,7 +129,8 @@ public class Project_ResearchObjectPK implements Comparable<Project_ResearchObje
 		Project_ResearchObjectPK pk = (Project_ResearchObjectPK)obj;
 
 		if ((projectID == pk.projectID) &&
-				(researchObjectID == pk.researchObjectID)) {
+				(researchObjectID == pk.researchObjectID) &&
+				(researchObjectVersion == pk.researchObjectVersion)) {
 			return true;
 		}
 		else {
@@ -114,12 +140,13 @@ public class Project_ResearchObjectPK implements Comparable<Project_ResearchObje
 
 	@Override
 	public int hashCode() {
-		return (String.valueOf(projectID) + String.valueOf(researchObjectID)).hashCode();
+		return (String.valueOf(projectID) + String.valueOf(researchObjectID) +
+		String.valueOf(researchObjectVersion)).hashCode();
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 
@@ -132,6 +159,12 @@ public class Project_ResearchObjectPK implements Comparable<Project_ResearchObje
 		sb.append("researchObjectID");
 		sb.append(StringPool.EQUAL);
 		sb.append(researchObjectID);
+
+		sb.append(StringPool.COMMA);
+		sb.append(StringPool.SPACE);
+		sb.append("researchObjectVersion");
+		sb.append(StringPool.EQUAL);
+		sb.append(researchObjectVersion);
 
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 

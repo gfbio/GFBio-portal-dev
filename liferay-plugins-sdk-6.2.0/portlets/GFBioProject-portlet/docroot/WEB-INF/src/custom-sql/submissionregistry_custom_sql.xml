@@ -134,6 +134,19 @@
 		]]>
     </sql>
     
+   <sql id="org.gfbio.service.persistence.SubmissionRegistryFinderImpl.getResearchObjectVersion">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_submissionregistry.researchobjectversion 
+			FROM 
+			  public.gfbio_submissionregistry 
+			WHERE 
+			  gfbio_submissionregistry.researchobjectid = ? AND
+			  gfbio_submissionregistry.archive = ? AND
+			  gfbio_submissionregistry.brokersubmissionid = ?
+		]]>
+    </sql>
+    
     <sql id="org.gfbio.service.persistence.SubmissionRegistryFinderImpl.getStatusByIds">
 	    <![CDATA[
 		    SELECT 

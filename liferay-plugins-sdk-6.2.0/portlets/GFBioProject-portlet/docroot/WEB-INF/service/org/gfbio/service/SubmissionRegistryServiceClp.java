@@ -32,49 +32,21 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getArchivepidsOfENA";
+		_methodName3 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes3 = new String[] { "java.lang.String" };
+		_methodParameterTypes3 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName4 = "getArchivepidsWithTypeSampleOfENA";
+		_methodName4 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes4 = new String[] { "java.lang.String" };
+		_methodParameterTypes4 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName5 = "getArchivepidWithTypeStudyOfENA";
+		_methodName5 = "createSubmissionRegistry";
 
 		_methodParameterTypes5 = new String[] { "java.lang.String" };
 
-		_methodName6 = "getLatestSubmissionByIds";
+		_methodName6 = "updateSubmissionRegistry";
 
-		_methodParameterTypes6 = new String[] { "long", "java.lang.String" };
-
-		_methodName7 = "getLatestSubmissionsByArchive";
-
-		_methodParameterTypes7 = new String[] { "java.lang.String" };
-
-		_methodName8 = "getLatestSubmissionsByResearchobjectid";
-
-		_methodParameterTypes8 = new String[] { "long" };
-
-		_methodName9 = "getLatestSubmissions";
-
-		_methodParameterTypes9 = new String[] {  };
-
-		_methodName10 = "getSubmissionRegistriesByBrokerSubmissionId";
-
-		_methodParameterTypes10 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName11 = "getSubmissionRegistriesByResearchObjectId";
-
-		_methodParameterTypes11 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName12 = "createSubmissionRegistry";
-
-		_methodParameterTypes12 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName13 = "updateSubmissionRegistry";
-
-		_methodParameterTypes13 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes6 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -128,14 +100,14 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getArchivepidsOfENA(
-		java.lang.String archivePId) {
+	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName3,
 					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(archivePId) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -149,18 +121,18 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (java.util.List<java.lang.String>)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getArchivepidsWithTypeSampleOfENA(
-		java.lang.String archivePId) {
+	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName4,
 					_methodParameterTypes4,
-					new Object[] { ClpSerializer.translateInput(archivePId) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -174,18 +146,18 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (java.util.List<java.lang.String>)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.lang.String getArchivepidWithTypeStudyOfENA(
-		java.lang.String archivePId) {
+	public org.json.simple.JSONArray createSubmissionRegistry(
+		java.lang.String requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName5,
 					_methodParameterTypes5,
-					new Object[] { ClpSerializer.translateInput(archivePId) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -199,22 +171,18 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public org.gfbio.model.SubmissionRegistry getLatestSubmissionByIds(
-		long researchObjectId, java.lang.String archive) {
+	public org.json.simple.JSONArray updateSubmissionRegistry(
+		java.lang.String requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName6,
 					_methodParameterTypes6,
-					new Object[] {
-						researchObjectId,
-						
-					ClpSerializer.translateInput(archive)
-					});
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -228,179 +196,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 			}
 		}
 
-		return (org.gfbio.model.SubmissionRegistry)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByArchive(
-		java.lang.String archive) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName7,
-					_methodParameterTypes7,
-					new Object[] { ClpSerializer.translateInput(archive) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.SubmissionRegistry>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByResearchobjectid(
-		long researchObjectId) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName8,
-					_methodParameterTypes8, new Object[] { researchObjectId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.SubmissionRegistry>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions() {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName9,
-					_methodParameterTypes9, new Object[] {  });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<org.gfbio.model.SubmissionRegistry>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject json) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName10,
-					_methodParameterTypes10,
-					new Object[] { ClpSerializer.translateInput(json) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONObject json) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName11,
-					_methodParameterTypes11,
-					new Object[] { ClpSerializer.translateInput(json) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public org.json.simple.JSONObject createSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName12,
-					_methodParameterTypes12,
-					new Object[] { ClpSerializer.translateInput(json) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public org.json.simple.JSONObject updateSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName13,
-					_methodParameterTypes13,
-					new Object[] { ClpSerializer.translateInput(json) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableService _invokableService;
@@ -416,18 +212,4 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
-	private String _methodName7;
-	private String[] _methodParameterTypes7;
-	private String _methodName8;
-	private String[] _methodParameterTypes8;
-	private String _methodName9;
-	private String[] _methodParameterTypes9;
-	private String _methodName10;
-	private String[] _methodParameterTypes10;
-	private String _methodName11;
-	private String[] _methodParameterTypes11;
-	private String _methodName12;
-	private String[] _methodParameterTypes12;
-	private String _methodName13;
-	private String[] _methodParameterTypes13;
 }

@@ -283,11 +283,12 @@ public class Project_ResearchObjectLocalServiceUtil {
 	}
 
 	public static long updateProjectResearchObject(long projectID,
-		long researchObjectID)
+		long researchObjectID, int researchObjectVersion)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
 		return getService()
-				   .updateProjectResearchObject(projectID, researchObjectID);
+				   .updateProjectResearchObject(projectID, researchObjectID,
+			researchObjectVersion);
 	}
 
 	public static void clearService() {

@@ -155,20 +155,23 @@ ALTER TABLE gfbio_project
   
 CREATE TABLE gfbio_researchobject
 (
-  researchobjectId bigserial NOT NULL,
+  researchobjectid bigserial NOT NULL,
   name character varying(75),
-  label character varying(75) NOT NULL UNIQUE,
+  label character varying(75) NOT NULL,
   metadata character varying(5000),
   formatmetadata character varying(5000),
-  researchobjectversion smallint NOT NULL DEFAULT 1 CHECK (researchobjectversion>0),
+  researchobjectversion smallint NOT NULL DEFAULT 1,
   researchobjecttype character varying(75) NOT NULL,
-  CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectId)
+  CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion),
+  CONSTRAINT gfbio_researchobject_label_key UNIQUE (label),
+  CONSTRAINT gfbio_researchobject_researchobjectversion_check CHECK (researchobjectversion > 0)
 )
 WITH (
   OIDS=FALSE
 );
 ALTER TABLE gfbio_researchobject
   OWNER TO liferay_gfbio;
+
   
   
 ------------------------------------- Submission Registry ------------------------------------- 
@@ -191,8 +194,11 @@ CREATE TABLE gfbio_submissionregistry
   CONSTRAINT gfbio_dataprovider_fkey FOREIGN KEY (archive)
       REFERENCES gfbio_dataprovider (label) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archive_pid_type)
-      REFERENCES gfbio_content (contentid) MATCH SIMPLE
+  --CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archive_pid_type)
+  --   REFERENCES gfbio_content (contentid) MATCH SIMPLE
+  --   ON UPDATE NO ACTION ON DELETE NO ACTION
+ CONSTRAINT gfbio_researchobject_fkey FOREIGN KEY (researchobjectid, researchobjectversion)
+      REFERENCES gfbio_researchobject (researchobjectid, researchobjectversion) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
@@ -233,16 +239,18 @@ ALTER TABLE gfbio_dataprovider_persistentidentifier
 ------------------------------- Project / Research Object -----------------------
   
   
+
 CREATE TABLE gfbio_project_researchobject
 (
-  projectId bigint NOT NULL,
-  researchobjectId bigint NOT NULL,
-  CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectId, researchobjectId),
-  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectId)
-      REFERENCES gfbio_project (projectId) MATCH SIMPLE
+  projectid bigint NOT NULL,
+  researchobjectid bigint NOT NULL,
+  researchobjectversion smallint NOT NULL,
+  CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectid, researchobjectid, researchobjectversion),
+  CONSTRAINT gfbio_project FOREIGN KEY (researchobjectid, researchobjectversion)
+      REFERENCES gfbio_researchobject (researchobjectid, researchobjectversion) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT gfbio_researchobject_fkey FOREIGN KEY (researchobjectId)
-      REFERENCES gfbio_researchobject (researchobjectId) MATCH SIMPLE
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
+      REFERENCES gfbio_project (projectid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (

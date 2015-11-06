@@ -52,6 +52,7 @@ public class Project_ResearchObjectWrapper implements Project_ResearchObject,
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("researchObjectID", getResearchObjectID());
+		attributes.put("researchObjectVersion", getResearchObjectVersion());
 
 		return attributes;
 	}
@@ -68,6 +69,13 @@ public class Project_ResearchObjectWrapper implements Project_ResearchObject,
 
 		if (researchObjectID != null) {
 			setResearchObjectID(researchObjectID);
+		}
+
+		Integer researchObjectVersion = (Integer)attributes.get(
+				"researchObjectVersion");
+
+		if (researchObjectVersion != null) {
+			setResearchObjectVersion(researchObjectVersion);
 		}
 	}
 
@@ -130,6 +138,26 @@ public class Project_ResearchObjectWrapper implements Project_ResearchObject,
 	@Override
 	public void setResearchObjectID(long researchObjectID) {
 		_project_ResearchObject.setResearchObjectID(researchObjectID);
+	}
+
+	/**
+	* Returns the research object version of this project_ research object.
+	*
+	* @return the research object version of this project_ research object
+	*/
+	@Override
+	public int getResearchObjectVersion() {
+		return _project_ResearchObject.getResearchObjectVersion();
+	}
+
+	/**
+	* Sets the research object version of this project_ research object.
+	*
+	* @param researchObjectVersion the research object version of this project_ research object
+	*/
+	@Override
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_project_ResearchObject.setResearchObjectVersion(researchObjectVersion);
 	}
 
 	@Override

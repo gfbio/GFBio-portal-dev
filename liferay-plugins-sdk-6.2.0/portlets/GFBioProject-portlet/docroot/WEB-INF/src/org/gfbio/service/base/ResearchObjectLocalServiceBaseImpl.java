@@ -50,6 +50,7 @@ import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.Project_User_PIPersistence;
 import org.gfbio.service.persistence.ResearchObjectFinder;
+import org.gfbio.service.persistence.ResearchObjectPK;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
 import org.gfbio.service.persistence.SubmissionRegistryFinder;
 import org.gfbio.service.persistence.SubmissionRegistryPersistence;
@@ -101,27 +102,29 @@ public abstract class ResearchObjectLocalServiceBaseImpl
 	/**
 	 * Creates a new research object with the primary key. Does not add the research object to the database.
 	 *
-	 * @param researchObjectID the primary key for the new research object
+	 * @param researchObjectPK the primary key for the new research object
 	 * @return the new research object
 	 */
 	@Override
-	public ResearchObject createResearchObject(long researchObjectID) {
-		return researchObjectPersistence.create(researchObjectID);
+	public ResearchObject createResearchObject(
+		ResearchObjectPK researchObjectPK) {
+		return researchObjectPersistence.create(researchObjectPK);
 	}
 
 	/**
 	 * Deletes the research object with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param researchObjectID the primary key of the research object
+	 * @param researchObjectPK the primary key of the research object
 	 * @return the research object that was removed
 	 * @throws PortalException if a research object with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ResearchObject deleteResearchObject(long researchObjectID)
+	public ResearchObject deleteResearchObject(
+		ResearchObjectPK researchObjectPK)
 		throws PortalException, SystemException {
-		return researchObjectPersistence.remove(researchObjectID);
+		return researchObjectPersistence.remove(researchObjectPK);
 	}
 
 	/**
@@ -232,23 +235,23 @@ public abstract class ResearchObjectLocalServiceBaseImpl
 	}
 
 	@Override
-	public ResearchObject fetchResearchObject(long researchObjectID)
+	public ResearchObject fetchResearchObject(ResearchObjectPK researchObjectPK)
 		throws SystemException {
-		return researchObjectPersistence.fetchByPrimaryKey(researchObjectID);
+		return researchObjectPersistence.fetchByPrimaryKey(researchObjectPK);
 	}
 
 	/**
 	 * Returns the research object with the primary key.
 	 *
-	 * @param researchObjectID the primary key of the research object
+	 * @param researchObjectPK the primary key of the research object
 	 * @return the research object
 	 * @throws PortalException if a research object with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ResearchObject getResearchObject(long researchObjectID)
+	public ResearchObject getResearchObject(ResearchObjectPK researchObjectPK)
 		throws PortalException, SystemException {
-		return researchObjectPersistence.findByPrimaryKey(researchObjectID);
+		return researchObjectPersistence.findByPrimaryKey(researchObjectPK);
 	}
 
 	@Override

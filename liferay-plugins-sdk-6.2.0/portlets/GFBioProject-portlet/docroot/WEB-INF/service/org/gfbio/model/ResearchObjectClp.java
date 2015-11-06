@@ -23,6 +23,7 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 
 import org.gfbio.service.ClpSerializer;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.persistence.ResearchObjectPK;
 
 import java.io.Serializable;
 
@@ -50,23 +51,24 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	}
 
 	@Override
-	public long getPrimaryKey() {
-		return _researchObjectID;
+	public ResearchObjectPK getPrimaryKey() {
+		return new ResearchObjectPK(_researchObjectID, _researchObjectVersion);
 	}
 
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		setResearchObjectID(primaryKey);
+	public void setPrimaryKey(ResearchObjectPK primaryKey) {
+		setResearchObjectID(primaryKey.researchObjectID);
+		setResearchObjectVersion(primaryKey.researchObjectVersion);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _researchObjectID;
+		return new ResearchObjectPK(_researchObjectID, _researchObjectVersion);
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		setPrimaryKey((ResearchObjectPK)primaryKeyObj);
 	}
 
 	@Override
@@ -74,7 +76,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("researchObjectID", getResearchObjectID());
-		attributes.put("version", getVersion());
+		attributes.put("researchObjectVersion", getResearchObjectVersion());
 		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
@@ -93,10 +95,11 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 			setResearchObjectID(researchObjectID);
 		}
 
-		Integer version = (Integer)attributes.get("version");
+		Integer researchObjectVersion = (Integer)attributes.get(
+				"researchObjectVersion");
 
-		if (version != null) {
-			setVersion(version);
+		if (researchObjectVersion != null) {
+			setResearchObjectVersion(researchObjectVersion);
 		}
 
 		Long parentResearchObjectID = (Long)attributes.get(
@@ -162,21 +165,22 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	}
 
 	@Override
-	public int getVersion() {
-		return _version;
+	public int getResearchObjectVersion() {
+		return _researchObjectVersion;
 	}
 
 	@Override
-	public void setVersion(int version) {
-		_version = version;
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_researchObjectVersion = researchObjectVersion;
 
 		if (_researchObjectRemoteModel != null) {
 			try {
 				Class<?> clazz = _researchObjectRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setVersion", int.class);
+				Method method = clazz.getMethod("setResearchObjectVersion",
+						int.class);
 
-				method.invoke(_researchObjectRemoteModel, version);
+				method.invoke(_researchObjectRemoteModel, researchObjectVersion);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -397,7 +401,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		ResearchObjectClp clone = new ResearchObjectClp();
 
 		clone.setResearchObjectID(getResearchObjectID());
-		clone.setVersion(getVersion());
+		clone.setResearchObjectVersion(getResearchObjectVersion());
 		clone.setParentResearchObjectID(getParentResearchObjectID());
 		clone.setName(getName());
 		clone.setLabel(getLabel());
@@ -433,9 +437,9 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 		ResearchObjectClp researchObject = (ResearchObjectClp)obj;
 
-		long primaryKey = researchObject.getPrimaryKey();
+		ResearchObjectPK primaryKey = researchObject.getPrimaryKey();
 
-		if (getPrimaryKey() == primaryKey) {
+		if (getPrimaryKey().equals(primaryKey)) {
 			return true;
 		}
 		else {
@@ -449,7 +453,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public int hashCode() {
-		return (int)getPrimaryKey();
+		return getPrimaryKey().hashCode();
 	}
 
 	@Override
@@ -458,8 +462,8 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
-		sb.append(", version=");
-		sb.append(getVersion());
+		sb.append(", researchObjectVersion=");
+		sb.append(getResearchObjectVersion());
 		sb.append(", parentResearchObjectID=");
 		sb.append(getParentResearchObjectID());
 		sb.append(", name=");
@@ -490,8 +494,8 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		sb.append(getResearchObjectID());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
+			"<column><column-name>researchObjectVersion</column-name><column-value><![CDATA[");
+		sb.append(getResearchObjectVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>parentResearchObjectID</column-name><column-value><![CDATA[");
@@ -524,7 +528,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	}
 
 	private long _researchObjectID;
-	private int _version;
+	private int _researchObjectVersion;
 	private long _parentResearchObjectID;
 	private String _name;
 	private String _label;

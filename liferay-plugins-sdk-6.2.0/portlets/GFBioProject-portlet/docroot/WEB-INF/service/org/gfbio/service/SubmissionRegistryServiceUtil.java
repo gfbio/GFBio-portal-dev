@@ -63,59 +63,26 @@ public class SubmissionRegistryServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static java.util.List<java.lang.String> getArchivepidsOfENA(
-		java.lang.String archivePId) {
-		return getService().getArchivepidsOfENA(archivePId);
-	}
-
-	public static java.util.List<java.lang.String> getArchivepidsWithTypeSampleOfENA(
-		java.lang.String archivePId) {
-		return getService().getArchivepidsWithTypeSampleOfENA(archivePId);
-	}
-
-	public static java.lang.String getArchivepidWithTypeStudyOfENA(
-		java.lang.String archivePId) {
-		return getService().getArchivepidWithTypeStudyOfENA(archivePId);
-	}
-
-	public static org.gfbio.model.SubmissionRegistry getLatestSubmissionByIds(
-		long researchObjectId, java.lang.String archive) {
-		return getService().getLatestSubmissionByIds(researchObjectId, archive);
-	}
-
-	public static java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByArchive(
-		java.lang.String archive) {
-		return getService().getLatestSubmissionsByArchive(archive);
-	}
-
-	public static java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissionsByResearchobjectid(
-		long researchObjectId) {
+	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+		org.json.simple.JSONArray requestJson) {
 		return getService()
-				   .getLatestSubmissionsByResearchobjectid(researchObjectId);
+				   .getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
-	public static java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions() {
-		return getService().getLatestSubmissions();
+	public static org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONArray requestJson) {
+		return getService()
+				   .getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject json) {
-		return getService().getSubmissionRegistriesByBrokerSubmissionId(json);
+	public static org.json.simple.JSONArray createSubmissionRegistry(
+		java.lang.String requestJson) {
+		return getService().createSubmissionRegistry(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONObject json) {
-		return getService().getSubmissionRegistriesByResearchObjectId(json);
-	}
-
-	public static org.json.simple.JSONObject createSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return getService().createSubmissionRegistry(json);
-	}
-
-	public static org.json.simple.JSONObject updateSubmissionRegistry(
-		org.json.simple.JSONObject json) {
-		return getService().updateSubmissionRegistry(json);
+	public static org.json.simple.JSONArray updateSubmissionRegistry(
+		java.lang.String requestJson) {
+		return getService().updateSubmissionRegistry(requestJson);
 	}
 
 	public static void clearService() {

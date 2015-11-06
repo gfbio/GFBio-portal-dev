@@ -130,7 +130,7 @@ public class Project_ResearchObjectLocalServiceClp
 
 		_methodName20 = "updateProjectResearchObject";
 
-		_methodParameterTypes20 = new String[] { "long", "long" };
+		_methodParameterTypes20 = new String[] { "long", "long", "int" };
 	}
 
 	@Override
@@ -727,7 +727,7 @@ public class Project_ResearchObjectLocalServiceClp
 
 	@Override
 	public long updateProjectResearchObject(long projectID,
-		long researchObjectID)
+		long researchObjectID, int researchObjectVersion)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
 		Object returnObj = null;
@@ -735,7 +735,13 @@ public class Project_ResearchObjectLocalServiceClp
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
-					new Object[] { projectID, researchObjectID });
+					new Object[] {
+						projectID,
+						
+					researchObjectID,
+						
+					researchObjectVersion
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

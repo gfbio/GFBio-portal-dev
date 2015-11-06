@@ -23,8 +23,10 @@ public class SubmissionRegistryFinderImpl  extends BasePersistenceImpl<Submissio
 	public static String GET_LATEST_SUBMISSIONS							= FINDER_CLASS_NAME_ENTITY + ".getLatestSubmissions";	
 	public static String GET_LATEST_SUBMISSIONS_BY_ARCHIVE				= FINDER_CLASS_NAME_ENTITY + ".getLatestSubmissionsByArchive";		
 	public static String GET_LATEST_SUBMISSIONS_BY_RESEARCHOBJECTID		= FINDER_CLASS_NAME_ENTITY + ".getLatestSubmissionsByResearchObjectId";			
-	public static String GET_SUBMISSION_REGISTRY						= FINDER_CLASS_NAME_ENTITY + ".getSubmissionRegistry";	
+	public static String GET_RESEARCHOBJECTVERSION						= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectVersion";	
 	public static String GET_STATUS_BY_IDS								= FINDER_CLASS_NAME_ENTITY + ".getStatusByIds";	
+	public static String GET_SUBMISSIONREGISTRY							= FINDER_CLASS_NAME_ENTITY + ".getSubmissionRegistry";	
+
 
 	
 	
@@ -140,7 +142,6 @@ public class SubmissionRegistryFinderImpl  extends BasePersistenceImpl<Submissio
 	@SuppressWarnings({  "unchecked" })
 	public List<SubmissionRegistry> getLatestSubmissionsByArchive(String archive) {
 		
-		System.out.println(" last:" +archive);
 		Session session = null;
 		try {
 		
@@ -193,16 +194,41 @@ public class SubmissionRegistryFinderImpl  extends BasePersistenceImpl<Submissio
 	
 	//
 	@SuppressWarnings({  "rawtypes" })
+	public List getResearchObjectVersion(long researchObjectId, String archive, String brokerSubmissionId) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_RESEARCHOBJECTVERSION);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("researchobjectversion", Type.INTEGER);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(researchObjectId);
+			qPos.add(archive);
+			qPos.add(brokerSubmissionId);
+			
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings({  "rawtypes" })
 	public List getStatusByIds(long researchObjectId, int researchObjectVersion, String archive) {
 		
 		Session session = null;
 		try {
 		
 			session = openSession();
-			System.out.println(GET_LATEST_SUBMISSIONS_BY_ARCHIVE);
-			System.out.println(GET_STATUS_BY_IDS);
 			String sql = CustomSQLUtil.get(GET_STATUS_BY_IDS);
-			System.out.println(sql);
 			
 			SQLQuery queryObject = session.createSQLQuery(sql);
 			queryObject.setCacheable(false);
@@ -231,10 +257,9 @@ public class SubmissionRegistryFinderImpl  extends BasePersistenceImpl<Submissio
 		try {
 		
 			session = openSession();
-			String sql = CustomSQLUtil.get(GET_SUBMISSION_REGISTRY);
+			String sql = CustomSQLUtil.get(GET_SUBMISSIONREGISTRY);
 			
 			SQLQuery queryObject = session.createSQLQuery(sql);
-			System.out.println(sql);
 			queryObject.setCacheable(false);
 			
 			queryObject.addEntity("SubmissionRegistry", SubmissionRegistryImpl.class);

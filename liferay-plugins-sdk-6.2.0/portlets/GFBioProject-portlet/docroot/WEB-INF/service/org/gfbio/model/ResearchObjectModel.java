@@ -21,6 +21,8 @@ import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
+import org.gfbio.service.persistence.ResearchObjectPK;
+
 import java.io.Serializable;
 
 /**
@@ -48,14 +50,14 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	 *
 	 * @return the primary key of this research object
 	 */
-	public long getPrimaryKey();
+	public ResearchObjectPK getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this research object.
 	 *
 	 * @param primaryKey the primary key of this research object
 	 */
-	public void setPrimaryKey(long primaryKey);
+	public void setPrimaryKey(ResearchObjectPK primaryKey);
 
 	/**
 	 * Returns the research object i d of this research object.
@@ -72,18 +74,18 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	public void setResearchObjectID(long researchObjectID);
 
 	/**
-	 * Returns the version of this research object.
+	 * Returns the research object version of this research object.
 	 *
-	 * @return the version of this research object
+	 * @return the research object version of this research object
 	 */
-	public int getVersion();
+	public int getResearchObjectVersion();
 
 	/**
-	 * Sets the version of this research object.
+	 * Sets the research object version of this research object.
 	 *
-	 * @param version the version of this research object
+	 * @param researchObjectVersion the research object version of this research object
 	 */
-	public void setVersion(int version);
+	public void setResearchObjectVersion(int researchObjectVersion);
 
 	/**
 	 * Returns the parent research object i d of this research object.

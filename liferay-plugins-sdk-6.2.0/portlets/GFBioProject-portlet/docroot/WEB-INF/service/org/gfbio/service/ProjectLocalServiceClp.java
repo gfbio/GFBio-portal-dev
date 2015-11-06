@@ -110,7 +110,7 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 
 		_methodName19 = "getProjectById";
 
-		_methodParameterTypes19 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes19 = new String[] { "org.json.simple.JSONArray" };
 
 		_methodName20 = "getProjectById";
 
@@ -128,18 +128,20 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 
 		_methodParameterTypes23 = new String[] { "org.gfbio.model.Project" };
 
-		_methodName24 = "updateProject";
+		_methodName24 = "constructProjectAsJsonArray";
 
-		_methodParameterTypes24 = new String[] {
+		_methodParameterTypes24 = new String[] { "org.gfbio.model.Project" };
+
+		_methodName25 = "constructProjectsAsJson";
+
+		_methodParameterTypes25 = new String[] { "java.util.List" };
+
+		_methodName26 = "updateProject";
+
+		_methodParameterTypes26 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.util.Date", "java.util.Date",
 				"java.lang.String"
-			};
-
-		_methodName25 = "updateProject";
-
-		_methodParameterTypes25 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
 			};
 	}
 
@@ -688,14 +690,14 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json) {
+	public org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
-					new Object[] { ClpSerializer.translateInput(json) });
+					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -709,7 +711,7 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 			}
 		}
 
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -838,6 +840,56 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
+	public org.json.simple.JSONArray constructProjectAsJsonArray(
+		org.gfbio.model.Project project) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] { ClpSerializer.translateInput(project) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONArray constructProjectsAsJson(
+		java.util.List<org.gfbio.model.Project> projectList) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
+					new Object[] { ClpSerializer.translateInput(projectList) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.util.Date startDate,
@@ -846,8 +898,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						projectID,
 						
@@ -864,42 +916,6 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 					ClpSerializer.translateInput(endDate),
 						
 					ClpSerializer.translateInput(status)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Long)returnObj).longValue();
-	}
-
-	@Override
-	public long updateProject(long projectID, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
-					new Object[] {
-						projectID,
-						
-					ClpSerializer.translateInput(name),
-						
-					ClpSerializer.translateInput(description)
 					});
 		}
 		catch (Throwable t) {
@@ -972,4 +988,6 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	private String[] _methodParameterTypes24;
 	private String _methodName25;
 	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
 }

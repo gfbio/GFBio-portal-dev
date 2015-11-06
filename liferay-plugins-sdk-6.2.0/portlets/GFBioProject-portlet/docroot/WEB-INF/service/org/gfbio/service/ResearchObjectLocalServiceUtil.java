@@ -55,27 +55,27 @@ public class ResearchObjectLocalServiceUtil {
 	/**
 	* Creates a new research object with the primary key. Does not add the research object to the database.
 	*
-	* @param researchObjectID the primary key for the new research object
+	* @param researchObjectPK the primary key for the new research object
 	* @return the new research object
 	*/
 	public static org.gfbio.model.ResearchObject createResearchObject(
-		long researchObjectID) {
-		return getService().createResearchObject(researchObjectID);
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK) {
+		return getService().createResearchObject(researchObjectPK);
 	}
 
 	/**
 	* Deletes the research object with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param researchObjectID the primary key of the research object
+	* @param researchObjectPK the primary key of the research object
 	* @return the research object that was removed
 	* @throws PortalException if a research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.ResearchObject deleteResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteResearchObject(researchObjectID);
+		return getService().deleteResearchObject(researchObjectPK);
 	}
 
 	/**
@@ -182,24 +182,24 @@ public class ResearchObjectLocalServiceUtil {
 	}
 
 	public static org.gfbio.model.ResearchObject fetchResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchResearchObject(researchObjectID);
+		return getService().fetchResearchObject(researchObjectPK);
 	}
 
 	/**
 	* Returns the research object with the primary key.
 	*
-	* @param researchObjectID the primary key of the research object
+	* @param researchObjectPK the primary key of the research object
 	* @return the research object
 	* @throws PortalException if a research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.ResearchObject getResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getResearchObject(researchObjectID);
+		return getService().getResearchObject(researchObjectPK);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -275,19 +275,24 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
-		org.json.simple.JSONObject json) {
-		return getService().getResearchObjectAbsolutParent(json);
+	public static org.json.simple.JSONArray getResearchObjectASJsonById(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectASJsonById(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectParent(
-		org.json.simple.JSONObject json) {
-		return getService().getResearchObjectParent(json);
+	public static org.json.simple.JSONArray getResearchObjectAbsolutParent(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectAbsolutParent(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectsByParent(
-		org.json.simple.JSONObject json) {
-		return getService().getResearchObjectsByParent(json);
+	public static org.json.simple.JSONArray getResearchObjectParent(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectParent(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectsByParent(requestJson);
 	}
 
 	public static java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
@@ -310,7 +315,14 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().getTopParent(researchObjectId);
 	}
 
-	public static org.gfbio.model.ResearchObject getResearchObjectById(
+	public static org.gfbio.model.ResearchObject IdAndVersion(
+		long researchObjectId, int researchObjectVersion)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		return getService().IdAndVersion(researchObjectId, researchObjectVersion);
+	}
+
+	public static java.util.List<org.gfbio.model.ResearchObject> getResearchObjectById(
 		long researchObjectId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchResearchObjectException {
@@ -318,8 +330,10 @@ public class ResearchObjectLocalServiceUtil {
 	}
 
 	public static org.json.simple.JSONObject getResearchObjectASJsonById(
-		long researchObjectId) {
-		return getService().getResearchObjectASJsonById(researchObjectId);
+		long researchObjectId, int researchObjectVersion) {
+		return getService()
+				   .getResearchObjectASJsonById(researchObjectId,
+			researchObjectVersion);
 	}
 
 	public static org.json.simple.JSONObject constructResearchObjectJson(
@@ -327,7 +341,7 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().constructResearchObjectJson(researchObject);
 	}
 
-	public static org.json.simple.JSONObject constructResearchObjectsJson(
+	public static org.json.simple.JSONArray constructResearchObjectsJson(
 		java.util.List<org.gfbio.model.ResearchObject> researchObjectList) {
 		return getService().constructResearchObjectsJson(researchObjectList);
 	}
@@ -342,14 +356,19 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().checkParentAttributById(researchObjectId);
 	}
 
-	public static org.json.simple.JSONObject createResearchObjectByJson(
-		org.json.simple.JSONObject json) {
-		return getService().createResearchObjectByJson(json);
+	public static org.json.simple.JSONArray createResearchObjectByJson(
+		org.json.simple.JSONArray requestJson) {
+		return getService().createResearchObjectByJson(requestJson);
 	}
 
-	public static org.json.simple.JSONObject updateResearchObjectByJson(
-		org.json.simple.JSONObject json) {
-		return getService().updateResearchObjectByJson(json);
+	public static org.json.simple.JSONObject createResearchObjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return getService().createResearchObjectByJson(requestJson);
+	}
+
+	public static org.json.simple.JSONArray updateResearchObjectByJson(
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateResearchObjectByJson(requestJson);
 	}
 
 	public static long createResearchObject(java.lang.String name,
@@ -371,10 +390,11 @@ public class ResearchObjectLocalServiceUtil {
 	}
 
 	public static long updateParentResearchObjectIdByIds(
-		long researchObjectId, long parentResearchObjectId) {
+		long researchObjectId, int researchObjectVersion,
+		long parentResearchObjectId) {
 		return getService()
 				   .updateParentResearchObjectIdByIds(researchObjectId,
-			parentResearchObjectId);
+			researchObjectVersion, parentResearchObjectId);
 	}
 
 	public static long updateResearchObject(long researchObjectId,
@@ -385,6 +405,13 @@ public class ResearchObjectLocalServiceUtil {
 				   .updateResearchObject(researchObjectId,
 			researchObjectVersion, name, label, metadata, formatmetadata,
 			researchObjectType);
+	}
+
+	public static int updateResearchObjectVersion(long researchObjectId,
+		int researchObjectVersion) {
+		return getService()
+				   .updateResearchObjectVersion(researchObjectId,
+			researchObjectVersion);
 	}
 
 	public static long updateResearchObjectWithProject(long projectId,

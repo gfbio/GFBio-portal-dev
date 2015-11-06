@@ -57,27 +57,9 @@ public class ProjectServiceWrapper implements ProjectService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject getProjectById(
-		org.json.simple.JSONObject json) {
-		return _projectService.getProjectById(json);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Project> getProjectListByUserId(
-		long userID)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _projectService.getProjectListByUserId(userID);
-	}
-
-	@Override
-	public long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _projectService.updateProject(projectID, userID, name, label,
-			description, startDate, endDate, status);
+	public org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONArray requestJson) {
+		return _projectService.getProjectById(requestJson);
 	}
 
 	/**
