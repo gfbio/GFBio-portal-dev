@@ -271,8 +271,18 @@ public class ProjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONArray getProjectById(
+	public static org.json.simple.JSONArray getCompleteProjectById(
 		org.json.simple.JSONArray requestJson) {
+		return getService().getCompleteProjectById(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getCompleteProjectById(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getCompleteProjectById(requestJson);
+	}
+
+	public static org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject requestJson) {
 		return getService().getProjectById(requestJson);
 	}
 

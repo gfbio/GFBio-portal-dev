@@ -67,11 +67,11 @@ public interface SubmissionRegistryService extends BaseService, InvokableService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson);
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson);
+		org.json.simple.JSONObject requestJson);
 
 	public org.json.simple.JSONArray createSubmissionRegistry(
 		java.lang.String requestJson);

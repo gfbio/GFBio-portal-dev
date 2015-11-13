@@ -126,11 +126,11 @@ public class SubmissionRegistryLocalServiceClp
 
 		_methodName19 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes19 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes19 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName20 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes20 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes20 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName21 = "getArchivePIdsOfENA";
 
@@ -872,7 +872,7 @@ public class SubmissionRegistryLocalServiceClp
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson)
+		org.json.simple.JSONObject requestJson)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -902,7 +902,7 @@ public class SubmissionRegistryLocalServiceClp
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -1190,8 +1190,7 @@ public class SubmissionRegistryLocalServiceClp
 
 	@Override
 	public int getResearchObjectVersion(long researchObjectId,
-		java.lang.String archive, java.lang.String brokerSubmissionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String archive, java.lang.String brokerSubmissionId) {
 		Object returnObj = null;
 
 		try {
@@ -1207,10 +1206,6 @@ public class SubmissionRegistryLocalServiceClp
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;

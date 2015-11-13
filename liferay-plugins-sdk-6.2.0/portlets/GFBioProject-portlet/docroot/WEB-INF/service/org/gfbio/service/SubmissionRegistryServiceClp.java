@@ -34,11 +34,11 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 
 		_methodName3 = "getSubmissionRegistriesByBrokerSubmissionId";
 
-		_methodParameterTypes3 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName4 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes4 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes4 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName5 = "createSubmissionRegistry";
 
@@ -101,7 +101,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -126,7 +126,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {

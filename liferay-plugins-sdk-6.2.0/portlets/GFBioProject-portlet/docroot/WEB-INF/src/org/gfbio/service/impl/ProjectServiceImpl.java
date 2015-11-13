@@ -18,6 +18,7 @@ package org.gfbio.service.impl;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the project remote service.
@@ -40,10 +41,30 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
+/*	//
+	public JSONArray getProjectById (String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		
+		JSONArray responseJson = new JSONArray();
+		responseJson = ProjectLocalServiceUtil.getCompleteProjectById(parseJson);
+		return responseJson;
+	}*/
+	
+	
 	//
-	public JSONArray getProjectById (JSONArray requestJson){
-		return ProjectLocalServiceUtil.getProjectById(requestJson);
+	public JSONArray getProjectById (JSONObject requestJson){
+
+		JSONArray responseJson = new JSONArray();
+		responseJson = ProjectLocalServiceUtil.getCompleteProjectById(requestJson);
+		System.out.println(responseJson);
+		return responseJson;
 	}
+	
+	
 	
 	
 /*	//

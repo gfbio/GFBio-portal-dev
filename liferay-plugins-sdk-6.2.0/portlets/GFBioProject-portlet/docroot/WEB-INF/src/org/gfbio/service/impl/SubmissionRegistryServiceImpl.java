@@ -17,8 +17,8 @@ package org.gfbio.service.impl;
 
 import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
 import org.gfbio.service.base.SubmissionRegistryServiceBaseImpl;
-
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -91,7 +91,7 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 	
 	
 	//
-	public JSONArray getSubmissionRegistriesByBrokerSubmissionId (JSONArray requestJson){
+	public JSONArray getSubmissionRegistriesByBrokerSubmissionId (JSONObject requestJson){
 		JSONArray responseJson = new JSONArray();
 		try {
 			responseJson =SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
@@ -101,7 +101,7 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 	
 	
 	//
-	public JSONArray getSubmissionRegistriesByResearchObjectId (JSONArray requestJson){
+	public JSONArray getSubmissionRegistriesByResearchObjectId (JSONObject requestJson){
 		return SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
 	

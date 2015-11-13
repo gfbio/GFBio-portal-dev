@@ -58,7 +58,7 @@ public class ProjectServiceWrapper implements ProjectService,
 
 	@Override
 	public org.json.simple.JSONArray getProjectById(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return _projectService.getProjectById(requestJson);
 	}
 

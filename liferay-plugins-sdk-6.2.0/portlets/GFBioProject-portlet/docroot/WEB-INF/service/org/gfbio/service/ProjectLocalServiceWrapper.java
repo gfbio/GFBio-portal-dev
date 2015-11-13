@@ -279,8 +279,20 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONArray getProjectById(
+	public org.json.simple.JSONArray getCompleteProjectById(
 		org.json.simple.JSONArray requestJson) {
+		return _projectLocalService.getCompleteProjectById(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getCompleteProjectById(
+		org.json.simple.JSONObject requestJson) {
+		return _projectLocalService.getCompleteProjectById(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject requestJson) {
 		return _projectLocalService.getProjectById(requestJson);
 	}
 

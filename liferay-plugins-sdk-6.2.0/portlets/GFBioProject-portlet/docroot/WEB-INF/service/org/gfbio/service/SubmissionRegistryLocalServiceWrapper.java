@@ -292,14 +292,14 @@ public class SubmissionRegistryLocalServiceWrapper
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson)
+		org.json.simple.JSONObject requestJson)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _submissionRegistryLocalService.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return _submissionRegistryLocalService.getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
 
@@ -367,8 +367,7 @@ public class SubmissionRegistryLocalServiceWrapper
 
 	@Override
 	public int getResearchObjectVersion(long researchObjectId,
-		java.lang.String archive, java.lang.String brokerSubmissionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String archive, java.lang.String brokerSubmissionId) {
 		return _submissionRegistryLocalService.getResearchObjectVersion(researchObjectId,
 			archive, brokerSubmissionId);
 	}

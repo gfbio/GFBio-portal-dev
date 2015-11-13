@@ -57,42 +57,37 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	
 	//
 	@SuppressWarnings({ "unchecked"})
-	public JSONArray getSubmissionRegistriesByBrokerSubmissionId (JSONArray requestJson) throws SystemException{
+	public JSONArray getSubmissionRegistriesByBrokerSubmissionId (JSONObject requestJson) throws SystemException{
 		
 		JSONArray responseJson = new JSONArray();
-		for (int i =0; i <requestJson.size();i++){
-			
-			JSONObject json = (JSONObject) requestJson.get(i);
-			if (json.containsKey("brokersubmissionid")){
-				responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((String)json.get("brokersubmissionid")));
-				if (responseJson.toString().equals("{}"))
-					responseJson.add("ERROR: Failed by response submission registry");
-			}
-			else
-				responseJson.add("ERROR: No key 'researchobjectid' exist.");
+
+		if (requestJson.containsKey("brokersubmissionid")){
+			responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((String)requestJson.get("brokersubmissionid")));
+			if (responseJson.toString().equals("[]"))
+				responseJson.add("ERROR: Failed by response submission registry");
 		}
+		else
+			responseJson.add("ERROR: No key 'researchobjectid' exist.");
 		return responseJson;
 	}
 	
 	
 	//
 	@SuppressWarnings({ "unchecked"})
-	public JSONArray getSubmissionRegistriesByResearchObjectId (JSONArray requestJson){
+	public JSONArray getSubmissionRegistriesByResearchObjectId (JSONObject requestJson){
 
 		JSONArray responseJson = new JSONArray();
-		for (int i =0; i <requestJson.size();i++){
-			
-			JSONObject json = (JSONObject) requestJson.get(i);
-			if (json.containsKey("researchobjectid")){
-				try {
-					responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((long)json.get("researchobjectid")));
-				} catch (SystemException e) {
-					e.printStackTrace();
-					responseJson.add(e);}
+
+		if (requestJson.containsKey("researchobjectid")){
+			try {
+				responseJson = SubmissionRegistryLocalServiceUtil.constructSubmissionRegistriesJson(SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByResearchObjectId((long)requestJson.get("researchobjectid")));
+			} catch (SystemException e) {
+				e.printStackTrace();
+				responseJson.add("ERROR: Build Array is failed.");}
 			}
 			else
 				responseJson.add("ERROR: No key 'researchobjectid' exist.");
-		}
+		
 		return responseJson;
 	}
 	
@@ -184,8 +179,13 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 
 	
 	//
+	@SuppressWarnings("rawtypes")
 	public int getResearchObjectVersion ( long researchObjectId, String archive, String brokerSubmissionId) {
-		return (int) SubmissionRegistryFinderUtil.getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId).get(0);
+		int researchObjectVersion = 0;
+		List versionList  = SubmissionRegistryFinderUtil.getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId);
+		if (versionList.size() >0)
+			researchObjectVersion = (int) SubmissionRegistryFinderUtil.getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId).get(0);
+		return researchObjectVersion;
 	}
 	
 		
@@ -219,10 +219,10 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray constructSubmissionRegistriesJson (List <SubmissionRegistry> submissionRegistryList){
-		JSONArray json = new JSONArray();
+		JSONArray responseJson = new JSONArray();
 		for (int i =0; i < submissionRegistryList.size();i++)
-			json.add(SubmissionRegistryLocalServiceUtil.constructSubmissionRegistryJson(submissionRegistryList.get(i)));
-		return json;
+			responseJson.add(SubmissionRegistryLocalServiceUtil.constructSubmissionRegistryJson(submissionRegistryList.get(i)));
+		return responseJson;
 	}
 	
 	
@@ -321,10 +321,10 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 					keyJson.put("ERROR","ERROR: Faile by create submission registry entry");
 			}
 			else
-				keyJson.put("ERROR","ERROR: One or more basic attributs are not correct");
+				keyJson.put("ERROR","ERROR: A entry already exists to this ResearchObject with this Version to this Archive.");
 		}
 		else
-			keyJson.put("ERROR","ERROR: A entry already exists to this ResearchObject with this Version to this Archive.");
+			keyJson.put("ERROR","ERROR: One or more basic attributs are not correct");
 
 		return keyJson;
 	}
@@ -334,9 +334,11 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	@SuppressWarnings("unchecked")
 	public JSONArray updateSubmissionRegistry (JSONArray requestJson){
 		
+		System.out.println(requestJson);
 		JSONArray responseJson = new JSONArray();
 		for (int i =0; i <requestJson.size();i++)
 			responseJson.add(updateSubmissionRegistry((JSONObject) requestJson.get(i)));
+		System.out.println(responseJson);
 		return responseJson;
 	}
 	
@@ -345,10 +347,10 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	@SuppressWarnings({ "unchecked"})
 	public JSONObject updateSubmissionRegistry (JSONObject requestJson){
 		
-		Boolean check = false;
-		JSONObject keyJson = new JSONObject();
-		SubmissionRegistry submissionRegistry = null;
 		System.out.println(requestJson);
+		Boolean check = false;
+		JSONObject responseJson = new JSONObject();
+		SubmissionRegistry submissionRegistry = null;
 			
 		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("archive") && requestJson.containsKey("archivepid") && requestJson.containsKey("brokersubmissionid")&& requestJson.containsKey("userid") ){
 	
@@ -384,20 +386,21 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 					check = SubmissionRegistryLocalServiceUtil.updatePublicAfter(researchObjectId, researchObjectVersion, archive, new Date ((long) requestJson.get("publicafter")));
 					
 				if (check == true){
-					keyJson.put("researchobjectid", researchObjectId);
-					keyJson.put("researchobjectversion", researchObjectVersion);
-					keyJson.put("archive", archive);
+					responseJson.put("researchobjectid", researchObjectId);
+					responseJson.put("researchobjectversion", researchObjectVersion);
+					responseJson.put("archive", archive);
 				}
 				else
-					keyJson.put("ERROR","ERROR: Faile by update submission registry entry");				
+					responseJson.put("ERROR","ERROR: Faile by update submission registry entry");				
 			}
 			else
-				keyJson = SubmissionRegistryLocalServiceUtil.createSubmissionRegistry(requestJson);
+				responseJson = SubmissionRegistryLocalServiceUtil.createSubmissionRegistry(requestJson);
 		}
 		else
-			keyJson.put("ERROR","ERROR: One or more mandatory attributes are not in the input");	
+			responseJson.put("ERROR","ERROR: One or more mandatory attributes are not in the input");	
 
-		return keyJson;
+		System.out.println(responseJson);
+		return responseJson;
 	}
 	
 	

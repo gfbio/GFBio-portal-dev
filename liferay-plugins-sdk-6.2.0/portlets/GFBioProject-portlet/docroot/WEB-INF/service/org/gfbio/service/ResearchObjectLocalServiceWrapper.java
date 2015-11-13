@@ -295,21 +295,27 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectAbsolutParent(
-		org.json.simple.JSONArray requestJson) {
+	public org.json.simple.JSONObject getResearchObjectASJsonById(
+		org.json.simple.JSONObject requestJson) {
+		return _researchObjectLocalService.getResearchObjectASJsonById(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) {
 		return _researchObjectLocalService.getResearchObjectAbsolutParent(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectParent(
-		org.json.simple.JSONArray requestJson) {
-		return _researchObjectLocalService.getResearchObjectParent(requestJson);
+	public org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONObject requestJson) {
+		return _researchObjectLocalService.getResearchObjectsByParent(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectsByParent(
-		org.json.simple.JSONArray requestJson) {
-		return _researchObjectLocalService.getResearchObjectsByParent(requestJson);
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) {
+		return _researchObjectLocalService.getResearchObjectParent(requestJson);
 	}
 
 	@Override
@@ -330,16 +336,20 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
-		return _researchObjectLocalService.getTopParent(researchObjectId);
+	public org.gfbio.model.ResearchObject getLatestResearchObjectById(
+		long researchObjectId) {
+		return _researchObjectLocalService.getLatestResearchObjectById(researchObjectId);
 	}
 
 	@Override
-	public org.gfbio.model.ResearchObject IdAndVersion(long researchObjectId,
-		int researchObjectVersion)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchResearchObjectException {
-		return _researchObjectLocalService.IdAndVersion(researchObjectId,
+	public int getLatestVersionById(long researchObjectId) {
+		return _researchObjectLocalService.getLatestVersionById(researchObjectId);
+	}
+
+	@Override
+	public long getProjectIdByIds(long researchObjectId,
+		int researchObjectVersion) {
+		return _researchObjectLocalService.getProjectIdByIds(researchObjectId,
 			researchObjectVersion);
 	}
 
@@ -352,10 +362,18 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectASJsonById(
-		long researchObjectId, int researchObjectVersion) {
-		return _researchObjectLocalService.getResearchObjectASJsonById(researchObjectId,
-			researchObjectVersion);
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId) {
+		return _researchObjectLocalService.getTopParent(researchObjectId);
+	}
+
+	@Override
+	public java.lang.Boolean checkParentAttributById(long researchObjectId) {
+		return _researchObjectLocalService.checkParentAttributById(researchObjectId);
+	}
+
+	@Override
+	public java.lang.Boolean checkResearchObjectId(long researchObjectId) {
+		return _researchObjectLocalService.checkResearchObjectId(researchObjectId);
 	}
 
 	@Override
@@ -373,11 +391,6 @@ public class ResearchObjectLocalServiceWrapper
 	@Override
 	public java.lang.String constructFormatMetadata(java.lang.String metadata) {
 		return _researchObjectLocalService.constructFormatMetadata(metadata);
-	}
-
-	@Override
-	public java.lang.Boolean checkParentAttributById(long researchObjectId) {
-		return _researchObjectLocalService.checkParentAttributById(researchObjectId);
 	}
 
 	@Override
@@ -399,6 +412,12 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return _researchObjectLocalService.updateResearchObjectByJson(requestJson);
+	}
+
+	@Override
 	public long createResearchObject(java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
 		java.lang.String researchObjectType)
@@ -408,36 +427,12 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public long createResearchObjectWithProject(long projectId,
-		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String researchObjectType)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _researchObjectLocalService.createResearchObjectWithProject(projectId,
-			name, label, metadata, researchObjectType);
-	}
-
-	@Override
-	public long updateParentResearchObjectIdByIds(long researchObjectId,
-		int researchObjectVersion, long parentResearchObjectId) {
-		return _researchObjectLocalService.updateParentResearchObjectIdByIds(researchObjectId,
-			researchObjectVersion, parentResearchObjectId);
-	}
-
-	@Override
 	public long updateResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
-		java.lang.String formatmetadata, java.lang.String researchObjectType) {
+		java.lang.String formatmetadata) {
 		return _researchObjectLocalService.updateResearchObject(researchObjectId,
-			researchObjectVersion, name, label, metadata, formatmetadata,
-			researchObjectType);
-	}
-
-	@Override
-	public int updateResearchObjectVersion(long researchObjectId,
-		int researchObjectVersion) {
-		return _researchObjectLocalService.updateResearchObjectVersion(researchObjectId,
-			researchObjectVersion);
+			researchObjectVersion, name, label, metadata, formatmetadata);
 	}
 
 	@Override
@@ -449,6 +444,28 @@ public class ResearchObjectLocalServiceWrapper
 		return _researchObjectLocalService.updateResearchObjectWithProject(projectId,
 			researchObjectId, researchObjectVersion, name, label, metadata,
 			formatmetadata, researchObjectType);
+	}
+
+	@Override
+	public java.lang.Boolean updateParentResearchObjectIdByIds(
+		long researchObjectId, int researchObjectVersion,
+		long parentResearchObjectId) {
+		return _researchObjectLocalService.updateParentResearchObjectIdByIds(researchObjectId,
+			researchObjectVersion, parentResearchObjectId);
+	}
+
+	@Override
+	public java.lang.Boolean updateResearchObjectType(long researchObjectId,
+		int researchObjectVersion, java.lang.String researchObjectType) {
+		return _researchObjectLocalService.updateResearchObjectType(researchObjectId,
+			researchObjectVersion, researchObjectType);
+	}
+
+	@Override
+	public int updateResearchObjectVersion(long researchObjectId,
+		int researchObjectVersion) {
+		return _researchObjectLocalService.updateResearchObjectVersion(researchObjectId,
+			researchObjectVersion);
 	}
 
 	/**

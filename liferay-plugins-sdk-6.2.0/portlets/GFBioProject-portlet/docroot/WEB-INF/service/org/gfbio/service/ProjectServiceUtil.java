@@ -64,7 +64,7 @@ public class ProjectServiceUtil {
 	}
 
 	public static org.json.simple.JSONArray getProjectById(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return getService().getProjectById(requestJson);
 	}
 

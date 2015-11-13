@@ -100,33 +100,33 @@ public class DataProviderLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.DataProvider" };
 
-		_methodName120 = "getBeanIdentifier";
+		_methodName122 = "getBeanIdentifier";
 
-		_methodParameterTypes120 = new String[] {  };
+		_methodParameterTypes122 = new String[] {  };
 
-		_methodName121 = "setBeanIdentifier";
+		_methodName123 = "setBeanIdentifier";
 
-		_methodParameterTypes121 = new String[] { "java.lang.String" };
+		_methodParameterTypes123 = new String[] { "java.lang.String" };
 
-		_methodName126 = "getDataProviderIdByLabel";
+		_methodName128 = "getDataProviderIdByLabel";
 
-		_methodParameterTypes126 = new String[] { "java.lang.String" };
+		_methodParameterTypes128 = new String[] { "java.lang.String" };
 
-		_methodName127 = "getDataProviderIds";
-
-		_methodParameterTypes127 = new String[] { "long" };
-
-		_methodName128 = "getLabelById";
-
-		_methodParameterTypes128 = new String[] { "long" };
-
-		_methodName129 = "getPersistentIdentiferIds";
+		_methodName129 = "getDataProviderIds";
 
 		_methodParameterTypes129 = new String[] { "long" };
 
-		_methodName130 = "updateDataProvider";
+		_methodName130 = "getLabelById";
 
-		_methodParameterTypes130 = new String[] {
+		_methodParameterTypes130 = new String[] { "long" };
+
+		_methodName131 = "getPersistentIdentiferIds";
+
+		_methodParameterTypes131 = new String[] { "long" };
+
+		_methodName132 = "updateDataProvider";
+
+		_methodParameterTypes132 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String"
@@ -222,40 +222,40 @@ public class DataProviderLocalServiceClpInvoker {
 			return DataProviderLocalServiceUtil.updateDataProvider((org.gfbio.model.DataProvider)arguments[0]);
 		}
 
-		if (_methodName120.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return DataProviderLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName121.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			DataProviderLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getDataProviderIdByLabel((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getDataProviderIds(((Long)arguments[0]).longValue());
-		}
-
 		if (_methodName128.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getLabelById(((Long)arguments[0]).longValue());
+			return DataProviderLocalServiceUtil.getDataProviderIdByLabel((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName129.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getPersistentIdentiferIds(((Long)arguments[0]).longValue());
+			return DataProviderLocalServiceUtil.getDataProviderIds(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName130.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+			return DataProviderLocalServiceUtil.getLabelById(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+			return DataProviderLocalServiceUtil.getPersistentIdentiferIds(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return DataProviderLocalServiceUtil.updateDataProvider(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -297,18 +297,18 @@ public class DataProviderLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName120;
-	private String[] _methodParameterTypes120;
-	private String _methodName121;
-	private String[] _methodParameterTypes121;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
 	private String _methodName128;
 	private String[] _methodParameterTypes128;
 	private String _methodName129;
 	private String[] _methodParameterTypes129;
 	private String _methodName130;
 	private String[] _methodParameterTypes130;
+	private String _methodName131;
+	private String[] _methodParameterTypes131;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
 }

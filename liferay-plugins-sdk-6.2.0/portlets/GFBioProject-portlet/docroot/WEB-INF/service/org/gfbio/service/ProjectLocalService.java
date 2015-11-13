@@ -249,8 +249,16 @@ public interface ProjectLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getProjectById(
+	public org.json.simple.JSONArray getCompleteProjectById(
 		org.json.simple.JSONArray requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getCompleteProjectById(
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.Project getProjectById(long projectId)

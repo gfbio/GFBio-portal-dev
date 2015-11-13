@@ -61,13 +61,13 @@ public class SubmissionRegistryServiceWrapper
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return _submissionRegistryService.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
 	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return _submissionRegistryService.getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
 

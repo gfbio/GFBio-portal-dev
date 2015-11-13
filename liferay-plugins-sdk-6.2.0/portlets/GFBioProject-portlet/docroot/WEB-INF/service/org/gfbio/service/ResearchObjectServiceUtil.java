@@ -63,33 +63,33 @@ public class ResearchObjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONArray getResearchObjectAbsolutParent(
-		org.json.simple.JSONArray requestJson) {
+	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) {
 		return getService().getResearchObjectAbsolutParent(requestJson);
 	}
 
 	public static org.json.simple.JSONArray getResearchObjectById(
-		org.json.simple.JSONArray requestJson) {
+		java.lang.String requestJson) {
 		return getService().getResearchObjectById(requestJson);
 	}
 
-	public static org.json.simple.JSONArray getResearchObjectParent(
-		org.json.simple.JSONArray requestJson) {
+	public static org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) {
 		return getService().getResearchObjectParent(requestJson);
 	}
 
 	public static org.json.simple.JSONArray getResearchObjectsByParent(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return getService().getResearchObjectsByParent(requestJson);
 	}
 
 	public static org.json.simple.JSONArray createResearchObject(
-		org.json.simple.JSONArray requestJson) {
+		java.lang.String requestJson) {
 		return getService().createResearchObject(requestJson);
 	}
 
 	public static org.json.simple.JSONArray updateResearchObject(
-		org.json.simple.JSONArray requestJson) {
+		java.lang.String requestJson) {
 		return getService().updateResearchObject(requestJson);
 	}
 

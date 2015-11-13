@@ -59,7 +59,7 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		
 		if (json.containsKey("userid")){
 			try {
-				responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(UserExtensionLocalServiceUtil.getUserById((long)json.get("userid")));
+				responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)json.get("userid")));
 			} catch (NoSuchUserException | SystemException e) {
 				e.printStackTrace();
 				responseJson.put("ERROR", e);}
@@ -75,11 +75,6 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
 	
-	//
-	public User getUserById(long userId) throws NoSuchUserException, SystemException{
-		return userPersistence.findByPrimaryKey(userId);
-	}
-	
 		
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
@@ -87,6 +82,7 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	//
 	@SuppressWarnings("unchecked")
 	public  JSONObject constructUserExtentionJsonById (User user) throws NoSuchUserException, SystemException {
+		System.out.println(user);
 		JSONObject json = new JSONObject();
 		json.put("userid", user.getUserId());
 		json.put("firstname", user.getFirstName());

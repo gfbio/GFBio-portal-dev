@@ -100,129 +100,129 @@ public class ContentLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Content" };
 
-		_methodName120 = "getBeanIdentifier";
+		_methodName122 = "getBeanIdentifier";
 
-		_methodParameterTypes120 = new String[] {  };
+		_methodParameterTypes122 = new String[] {  };
 
-		_methodName121 = "setBeanIdentifier";
+		_methodName123 = "setBeanIdentifier";
 
-		_methodParameterTypes121 = new String[] { "java.lang.String" };
+		_methodParameterTypes123 = new String[] { "java.lang.String" };
 
-		_methodName126 = "deleteContentsByColumnId";
-
-		_methodParameterTypes126 = new String[] { "long" };
-
-		_methodName127 = "deleteContentsByHeadId";
-
-		_methodParameterTypes127 = new String[] { "long" };
-
-		_methodName128 = "deleteContentsByRowId";
+		_methodName128 = "deleteContentsByColumnId";
 
 		_methodParameterTypes128 = new String[] { "long" };
 
-		_methodName129 = "getCellContentByContentId";
+		_methodName129 = "deleteContentsByHeadId";
 
 		_methodParameterTypes129 = new String[] { "long" };
 
-		_methodName130 = "getContentByTableIds";
+		_methodName130 = "deleteContentsByRowId";
 
-		_methodParameterTypes130 = new String[] { "long", "long" };
+		_methodParameterTypes130 = new String[] { "long" };
 
-		_methodName131 = "getContentIdByTableIds";
+		_methodName131 = "getCellContentByContentId";
 
-		_methodParameterTypes131 = new String[] { "long", "long" };
+		_methodParameterTypes131 = new String[] { "long" };
 
-		_methodName132 = "getContentIdsByRowId";
+		_methodName132 = "getContentByTableIds";
 
-		_methodParameterTypes132 = new String[] { "long" };
+		_methodParameterTypes132 = new String[] { "long", "long" };
 
-		_methodName133 = "getContentIdsWithoutRelationships";
+		_methodName133 = "getContentIdByTableIds";
 
-		_methodParameterTypes133 = new String[] {
+		_methodParameterTypes133 = new String[] { "long", "long" };
+
+		_methodName134 = "getContentIdsByRowId";
+
+		_methodParameterTypes134 = new String[] { "long" };
+
+		_methodName135 = "getContentIdsWithoutRelationships";
+
+		_methodParameterTypes135 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName134 = "getContentIdsWithRelationships";
+		_methodName136 = "getContentIdsWithRelationships";
 
-		_methodParameterTypes134 = new String[] {
+		_methodParameterTypes136 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName135 = "getContentInformationAsJSONByContentId";
-
-		_methodParameterTypes135 = new String[] { "long" };
-
-		_methodName136 = "getContentInformationAsJSONByRowId";
-
-		_methodParameterTypes136 = new String[] { "long" };
-
-		_methodName137 = "getFirstContentIdByRowId";
+		_methodName137 = "getContentInformationAsJSONByContentId";
 
 		_methodParameterTypes137 = new String[] { "long" };
 
-		_methodName138 = "getHeadIdById";
+		_methodName138 = "getContentInformationAsJSONByRowId";
 
 		_methodParameterTypes138 = new String[] { "long" };
 
-		_methodName139 = "getRowIdByCellContent";
+		_methodName139 = "getFirstContentIdByRowId";
 
-		_methodParameterTypes139 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
-			};
+		_methodParameterTypes139 = new String[] { "long" };
 
-		_methodName140 = "getContentsAsJSONByRowId";
+		_methodName140 = "getHeadIdById";
 
 		_methodParameterTypes140 = new String[] { "long" };
 
-		_methodName141 = "getCountOfColumns";
+		_methodName141 = "getRowIdByCellContent";
 
-		_methodParameterTypes141 = new String[] { "long" };
+		_methodParameterTypes141 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
-		_methodName142 = "getCountOfRows";
+		_methodName142 = "getContentsAsJSONByRowId";
 
 		_methodParameterTypes142 = new String[] { "long" };
 
-		_methodName143 = "getRowIds";
+		_methodName143 = "getCountOfColumns";
 
 		_methodParameterTypes143 = new String[] { "long" };
 
-		_methodName144 = "getColumnIdById";
+		_methodName144 = "getCountOfRows";
 
 		_methodParameterTypes144 = new String[] { "long" };
 
-		_methodName145 = "getRowIdById";
+		_methodName145 = "getRowIds";
 
 		_methodParameterTypes145 = new String[] { "long" };
 
-		_methodName146 = "getRowIdOfRelation";
+		_methodName146 = "getColumnIdById";
 
-		_methodParameterTypes146 = new String[] {
+		_methodParameterTypes146 = new String[] { "long" };
+
+		_methodName147 = "getRowIdById";
+
+		_methodParameterTypes147 = new String[] { "long" };
+
+		_methodName148 = "getRowIdOfRelation";
+
+		_methodParameterTypes148 = new String[] {
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName147 = "constructColumnJson";
-
-		_methodParameterTypes147 = new String[] {
-				"long", "long", "long", "long", "java.lang.String"
-			};
-
-		_methodName148 = "constructNewId";
-
-		_methodParameterTypes148 = new String[] {  };
-
-		_methodName149 = "updateContent";
+		_methodName149 = "constructColumnJson";
 
 		_methodParameterTypes149 = new String[] {
 				"long", "long", "long", "long", "java.lang.String"
 			};
 
-		_methodName150 = "updateContent";
+		_methodName150 = "constructNewId";
 
-		_methodParameterTypes150 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes150 = new String[] {  };
 
-		_methodName151 = "updateContent2";
+		_methodName151 = "updateContent";
 
-		_methodParameterTypes151 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes151 = new String[] {
+				"long", "long", "long", "long", "java.lang.String"
+			};
+
+		_methodName152 = "updateContent";
+
+		_methodParameterTypes152 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName153 = "updateContent2";
+
+		_methodParameterTypes153 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -314,151 +314,138 @@ public class ContentLocalServiceClpInvoker {
 			return ContentLocalServiceUtil.updateContent((org.gfbio.model.Content)arguments[0]);
 		}
 
-		if (_methodName120.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return ContentLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName121.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			ContentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			ContentLocalServiceUtil.deleteContentsByColumnId(((Long)arguments[0]).longValue());
-
-			return null;
-		}
-
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
-			ContentLocalServiceUtil.deleteContentsByHeadId(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
 		if (_methodName128.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
-			ContentLocalServiceUtil.deleteContentsByRowId(((Long)arguments[0]).longValue());
+			ContentLocalServiceUtil.deleteContentsByColumnId(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
 		if (_methodName129.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
-			return ContentLocalServiceUtil.getCellContentByContentId(((Long)arguments[0]).longValue());
+			ContentLocalServiceUtil.deleteContentsByHeadId(((Long)arguments[0]).longValue());
+
+			return null;
 		}
 
 		if (_methodName130.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentByTableIds(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			ContentLocalServiceUtil.deleteContentsByRowId(((Long)arguments[0]).longValue());
+
+			return null;
 		}
 
 		if (_methodName131.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentIdByTableIds(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return ContentLocalServiceUtil.getCellContentByContentId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName132.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentIdsByRowId(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentByTableIds(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName133.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentIdsWithoutRelationships(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+			return ContentLocalServiceUtil.getContentIdByTableIds(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName134.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentIdsWithRelationships(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+			return ContentLocalServiceUtil.getContentIdsByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName135.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentInformationAsJSONByContentId(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentIdsWithoutRelationships(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName136.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentInformationAsJSONByRowId(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentIdsWithRelationships(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName137.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
-			return ContentLocalServiceUtil.getFirstContentIdByRowId(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentInformationAsJSONByContentId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName138.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
-			return ContentLocalServiceUtil.getHeadIdById(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentInformationAsJSONByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName139.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
-			return ContentLocalServiceUtil.getRowIdByCellContent(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+			return ContentLocalServiceUtil.getFirstContentIdByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName140.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
-			return ContentLocalServiceUtil.getContentsAsJSONByRowId(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getHeadIdById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
-			return ContentLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getRowIdByCellContent(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName142.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
-			return ContentLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getContentsAsJSONByRowId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName143.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
-			return ContentLocalServiceUtil.getRowIds(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getCountOfColumns(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName144.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
-			return ContentLocalServiceUtil.getColumnIdById(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getCountOfRows(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName145.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
-			return ContentLocalServiceUtil.getRowIdById(((Long)arguments[0]).longValue());
+			return ContentLocalServiceUtil.getRowIds(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName146.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
-			return ContentLocalServiceUtil.getRowIdOfRelation((java.lang.String)arguments[0],
-				(java.lang.String)arguments[1]);
+			return ContentLocalServiceUtil.getColumnIdById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName147.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
-			return ContentLocalServiceUtil.constructColumnJson(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue(),
-				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
+			return ContentLocalServiceUtil.getRowIdById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName148.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
-			return ContentLocalServiceUtil.constructNewId();
+			return ContentLocalServiceUtil.getRowIdOfRelation((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName149.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
-			return ContentLocalServiceUtil.updateContent(((Long)arguments[0]).longValue(),
+			return ContentLocalServiceUtil.constructColumnJson(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
@@ -466,11 +453,24 @@ public class ContentLocalServiceClpInvoker {
 
 		if (_methodName150.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
-			return ContentLocalServiceUtil.updateContent((org.json.simple.JSONObject)arguments[0]);
+			return ContentLocalServiceUtil.constructNewId();
 		}
 
 		if (_methodName151.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+			return ContentLocalServiceUtil.updateContent(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue(),
+				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
+		}
+
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+			return ContentLocalServiceUtil.updateContent((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return ContentLocalServiceUtil.updateContent2((org.json.simple.JSONObject)arguments[0]);
 		}
 
@@ -509,14 +509,10 @@ public class ContentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName120;
-	private String[] _methodParameterTypes120;
-	private String _methodName121;
-	private String[] _methodParameterTypes121;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
 	private String _methodName128;
 	private String[] _methodParameterTypes128;
 	private String _methodName129;
@@ -565,4 +561,8 @@ public class ContentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
 }

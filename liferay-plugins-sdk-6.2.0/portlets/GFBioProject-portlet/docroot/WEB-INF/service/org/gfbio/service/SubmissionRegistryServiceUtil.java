@@ -64,13 +64,13 @@ public class SubmissionRegistryServiceUtil {
 	}
 
 	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return getService()
 				   .getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
 	public static org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return getService()
 				   .getSubmissionRegistriesByResearchObjectId(requestJson);
 	}

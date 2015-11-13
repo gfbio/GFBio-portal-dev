@@ -34,7 +34,7 @@ public class ProjectServiceClp implements ProjectService {
 
 		_methodName3 = "getProjectById";
 
-		_methodParameterTypes3 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class ProjectServiceClp implements ProjectService {
 
 	@Override
 	public org.json.simple.JSONArray getProjectById(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {

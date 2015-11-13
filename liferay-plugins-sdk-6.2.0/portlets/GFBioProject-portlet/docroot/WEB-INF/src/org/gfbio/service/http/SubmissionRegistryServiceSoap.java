@@ -63,7 +63,7 @@ import java.rmi.RemoteException;
  */
 public class SubmissionRegistryServiceSoap {
 	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
 			org.json.simple.JSONArray returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 
@@ -77,7 +77,7 @@ public class SubmissionRegistryServiceSoap {
 	}
 
 	public static org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
 			org.json.simple.JSONArray returnValue = SubmissionRegistryServiceUtil.getSubmissionRegistriesByResearchObjectId(requestJson);
 

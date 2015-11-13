@@ -259,16 +259,20 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		org.json.simple.JSONArray requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getResearchObjectAbsolutParent(
-		org.json.simple.JSONArray requestJson);
+	public org.json.simple.JSONObject getResearchObjectASJsonById(
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getResearchObjectParent(
-		org.json.simple.JSONArray requestJson);
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getResearchObjectsByParent(
-		org.json.simple.JSONArray requestJson);
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
@@ -282,12 +286,15 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId);
+	public org.gfbio.model.ResearchObject getLatestResearchObjectById(
+		long researchObjectId);
 
-	public org.gfbio.model.ResearchObject IdAndVersion(long researchObjectId,
-		int researchObjectVersion)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchResearchObjectException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLatestVersionById(long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getProjectIdByIds(long researchObjectId,
+		int researchObjectVersion);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectById(
@@ -296,8 +303,11 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 			org.gfbio.NoSuchResearchObjectException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getResearchObjectASJsonById(
-		long researchObjectId, int researchObjectVersion);
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId);
+
+	public java.lang.Boolean checkParentAttributById(long researchObjectId);
+
+	public java.lang.Boolean checkResearchObjectId(long researchObjectId);
 
 	public org.json.simple.JSONObject constructResearchObjectJson(
 		org.gfbio.model.ResearchObject researchObject);
@@ -306,8 +316,6 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		java.util.List<org.gfbio.model.ResearchObject> researchObjectList);
 
 	public java.lang.String constructFormatMetadata(java.lang.String metadata);
-
-	public java.lang.Boolean checkParentAttributById(long researchObjectId);
 
 	public org.json.simple.JSONArray createResearchObjectByJson(
 		org.json.simple.JSONArray requestJson);
@@ -318,30 +326,32 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	public org.json.simple.JSONArray updateResearchObjectByJson(
 		org.json.simple.JSONArray requestJson);
 
+	public org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject requestJson);
+
 	public long createResearchObject(java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
 		java.lang.String researchObjectType)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public long createResearchObjectWithProject(long projectId,
-		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String researchObjectType)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public long updateParentResearchObjectIdByIds(long researchObjectId,
-		int researchObjectVersion, long parentResearchObjectId);
-
 	public long updateResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
 		java.lang.String label, java.lang.String metadata,
-		java.lang.String formatmetadata, java.lang.String researchObjectType);
-
-	public int updateResearchObjectVersion(long researchObjectId,
-		int researchObjectVersion);
+		java.lang.String formatmetadata);
 
 	public long updateResearchObjectWithProject(long projectId,
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String name, java.lang.String label,
 		java.lang.String metadata, java.lang.String formatmetadata,
 		java.lang.String researchObjectType);
+
+	public java.lang.Boolean updateParentResearchObjectIdByIds(
+		long researchObjectId, int researchObjectVersion,
+		long parentResearchObjectId);
+
+	public java.lang.Boolean updateResearchObjectType(long researchObjectId,
+		int researchObjectVersion, java.lang.String researchObjectType);
+
+	public int updateResearchObjectVersion(long researchObjectId,
+		int researchObjectVersion);
 }

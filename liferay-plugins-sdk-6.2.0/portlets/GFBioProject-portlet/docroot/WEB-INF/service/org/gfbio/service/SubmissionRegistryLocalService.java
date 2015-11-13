@@ -256,12 +256,12 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson)
+		org.json.simple.JSONObject requestJson)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson);
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.String> getArchivePIdsOfENA(
@@ -304,8 +304,7 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getResearchObjectVersion(long researchObjectId,
-		java.lang.String archive, java.lang.String brokerSubmissionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String archive, java.lang.String brokerSubmissionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistriesByBrokerSubmissionId(

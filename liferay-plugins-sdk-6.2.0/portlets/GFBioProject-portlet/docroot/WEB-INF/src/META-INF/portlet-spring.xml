@@ -69,6 +69,10 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.persistence.Project_ResearchObjectFinder" class="org.gfbio.service.persistence.Project_ResearchObjectFinderImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.Project_UserLocalService" class="org.gfbio.service.impl.Project_UserLocalServiceImpl" />
 	<bean id="org.gfbio.service.Project_UserService" class="org.gfbio.service.impl.Project_UserServiceImpl" />
 	<bean id="org.gfbio.service.persistence.Project_UserPersistence" class="org.gfbio.service.persistence.Project_UserPersistenceImpl" parent="basePersistence">

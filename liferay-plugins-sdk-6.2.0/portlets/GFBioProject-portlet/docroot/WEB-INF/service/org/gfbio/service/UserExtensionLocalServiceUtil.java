@@ -276,12 +276,6 @@ public class UserExtensionLocalServiceUtil {
 		return getService().getUserExtentionById(json);
 	}
 
-	public static com.liferay.portal.model.User getUserById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserById(userId);
-	}
-
 	public static org.json.simple.JSONObject constructUserExtentionJsonById(
 		com.liferay.portal.model.User user)
 		throws com.liferay.portal.NoSuchUserException,

@@ -34,27 +34,27 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 
 		_methodName3 = "getResearchObjectAbsolutParent";
 
-		_methodParameterTypes3 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName4 = "getResearchObjectById";
 
-		_methodParameterTypes4 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes4 = new String[] { "java.lang.String" };
 
 		_methodName5 = "getResearchObjectParent";
 
-		_methodParameterTypes5 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes5 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName6 = "getResearchObjectsByParent";
 
-		_methodParameterTypes6 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes6 = new String[] { "org.json.simple.JSONObject" };
 
 		_methodName7 = "createResearchObject";
 
-		_methodParameterTypes7 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes7 = new String[] { "java.lang.String" };
 
 		_methodName8 = "updateResearchObject";
 
-		_methodParameterTypes8 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes8 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -108,8 +108,8 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectAbsolutParent(
-		org.json.simple.JSONArray requestJson) {
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -129,12 +129,12 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
 	public org.json.simple.JSONArray getResearchObjectById(
-		org.json.simple.JSONArray requestJson) {
+		java.lang.String requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -158,8 +158,8 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectParent(
-		org.json.simple.JSONArray requestJson) {
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -179,12 +179,12 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 			}
 		}
 
-		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
 	public org.json.simple.JSONArray getResearchObjectsByParent(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -209,7 +209,7 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 
 	@Override
 	public org.json.simple.JSONArray createResearchObject(
-		org.json.simple.JSONArray requestJson) {
+		java.lang.String requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -234,7 +234,7 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 
 	@Override
 	public org.json.simple.JSONArray updateResearchObject(
-		org.json.simple.JSONArray requestJson) {
+		java.lang.String requestJson) {
 		Object returnObj = null;
 
 		try {

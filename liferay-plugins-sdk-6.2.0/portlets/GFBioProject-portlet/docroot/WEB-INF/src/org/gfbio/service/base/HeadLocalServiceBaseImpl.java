@@ -46,6 +46,7 @@ import org.gfbio.service.persistence.DataProvider_PersistentIdentifierPersistenc
 import org.gfbio.service.persistence.HeadFinder;
 import org.gfbio.service.persistence.HeadPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
+import org.gfbio.service.persistence.Project_ResearchObjectFinder;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.Project_User_PIPersistence;
@@ -830,6 +831,25 @@ public abstract class HeadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the project_ research object finder.
+	 *
+	 * @return the project_ research object finder
+	 */
+	public Project_ResearchObjectFinder getProject_ResearchObjectFinder() {
+		return project_ResearchObjectFinder;
+	}
+
+	/**
+	 * Sets the project_ research object finder.
+	 *
+	 * @param project_ResearchObjectFinder the project_ research object finder
+	 */
+	public void setProject_ResearchObjectFinder(
+		Project_ResearchObjectFinder project_ResearchObjectFinder) {
+		this.project_ResearchObjectFinder = project_ResearchObjectFinder;
+	}
+
+	/**
 	 * Returns the project_ user local service.
 	 *
 	 * @return the project_ user local service
@@ -1386,6 +1406,8 @@ public abstract class HeadLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected org.gfbio.service.Project_ResearchObjectService project_ResearchObjectService;
 	@BeanReference(type = Project_ResearchObjectPersistence.class)
 	protected Project_ResearchObjectPersistence project_ResearchObjectPersistence;
+	@BeanReference(type = Project_ResearchObjectFinder.class)
+	protected Project_ResearchObjectFinder project_ResearchObjectFinder;
 	@BeanReference(type = org.gfbio.service.Project_UserLocalService.class)
 	protected org.gfbio.service.Project_UserLocalService project_UserLocalService;
 	@BeanReference(type = org.gfbio.service.Project_UserService.class)

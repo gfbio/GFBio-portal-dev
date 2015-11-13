@@ -28,4 +28,69 @@
 		]]>
     </sql>
     
+   <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfId">
+	    <![CDATA[
+			SELECT 
+				CASE WHEN iq.researchobjectid IS NULL THEN FALSE ELSE TRUE END AS check
+			FROM 
+			(
+			SELECT
+				distinct (researchobjectid)
+			FROM
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid =?)AS iq
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getLatestResearchObjectById">
+	    <![CDATA[
+			SELECT
+				* 
+			FROM
+				(
+				SELECT 
+				  *,
+				  rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
+				FROM 
+				  public.gfbio_researchobject
+				WHERE
+				  researchobjectid in(
+					SELECT 
+					  gfbio_researchobject.researchobjectid
+					FROM 
+					  public.gfbio_researchobject
+					WHERE
+					  gfbio_researchobject.researchobjectid = ?) 
+					  )AS iq
+			
+			WHERE pos=1
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getLatestVersionById">
+	    <![CDATA[
+			SELECT
+				researchobjectversion 
+			FROM
+				(
+				SELECT 
+				  *,
+				  rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
+				FROM 
+				  public.gfbio_researchobject
+				WHERE
+				  researchobjectid in(
+					SELECT 
+					  gfbio_researchobject.researchobjectid
+					FROM 
+					  public.gfbio_researchobject
+					WHERE
+					  gfbio_researchobject.researchobjectid = ?) 
+					  )AS iq
+			
+			WHERE pos=1
+		]]>
+    </sql>
+    
 </custom-sql>

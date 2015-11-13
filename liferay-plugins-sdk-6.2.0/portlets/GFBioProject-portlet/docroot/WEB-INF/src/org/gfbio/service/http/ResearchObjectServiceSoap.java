@@ -62,10 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ResearchObjectServiceSoap {
-	public static org.json.simple.JSONArray getResearchObjectAbsolutParent(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectAbsolutParent(requestJson);
+			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectAbsolutParent(requestJson);
 
 			return returnValue;
 		}
@@ -77,7 +77,7 @@ public class ResearchObjectServiceSoap {
 	}
 
 	public static org.json.simple.JSONArray getResearchObjectById(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+		java.lang.String requestJson) throws RemoteException {
 		try {
 			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectById(requestJson);
 
@@ -90,10 +90,10 @@ public class ResearchObjectServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONArray getResearchObjectParent(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+	public static org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectParent(requestJson);
+			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectParent(requestJson);
 
 			return returnValue;
 		}
@@ -105,7 +105,7 @@ public class ResearchObjectServiceSoap {
 	}
 
 	public static org.json.simple.JSONArray getResearchObjectsByParent(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
 			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectsByParent(requestJson);
 
@@ -119,7 +119,7 @@ public class ResearchObjectServiceSoap {
 	}
 
 	public static org.json.simple.JSONArray createResearchObject(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+		java.lang.String requestJson) throws RemoteException {
 		try {
 			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.createResearchObject(requestJson);
 
@@ -133,7 +133,7 @@ public class ResearchObjectServiceSoap {
 	}
 
 	public static org.json.simple.JSONArray updateResearchObject(
-		org.json.simple.JSONArray requestJson) throws RemoteException {
+		java.lang.String requestJson) throws RemoteException {
 		try {
 			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.updateResearchObject(requestJson);
 

@@ -276,14 +276,14 @@ public class SubmissionRegistryLocalServiceUtil {
 	}
 
 	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONArray requestJson)
+		org.json.simple.JSONObject requestJson)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
 	public static org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
-		org.json.simple.JSONArray requestJson) {
+		org.json.simple.JSONObject requestJson) {
 		return getService()
 				   .getSubmissionRegistriesByResearchObjectId(requestJson);
 	}
@@ -342,8 +342,7 @@ public class SubmissionRegistryLocalServiceUtil {
 	}
 
 	public static int getResearchObjectVersion(long researchObjectId,
-		java.lang.String archive, java.lang.String brokerSubmissionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String archive, java.lang.String brokerSubmissionId) {
 		return getService()
 				   .getResearchObjectVersion(researchObjectId, archive,
 			brokerSubmissionId);

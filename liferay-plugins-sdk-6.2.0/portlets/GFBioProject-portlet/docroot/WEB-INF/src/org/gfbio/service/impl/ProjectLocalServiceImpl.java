@@ -29,7 +29,9 @@ import org.gfbio.model.Project_ResearchObject;
 import org.gfbio.model.Project_User;
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
+import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -58,24 +60,60 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	@SuppressWarnings({ "unchecked"})
-	public JSONArray getProjectById (JSONArray requestJson){
+	@SuppressWarnings("unchecked")
+	public JSONArray getCompleteProjectById (JSONArray requestJson){
 		
 		JSONArray responseJson = new JSONArray();
-		for (int i =0; i <requestJson.size();i++){
-			
-			JSONObject json = (JSONObject) requestJson.get(i);
-			if (json.containsKey("projectid")){
-				try {
-					responseJson = ProjectLocalServiceUtil.constructProjectAsJsonArray(ProjectLocalServiceUtil.getProjectById((long)json.get("projectid")));
-				} catch (NoSuchProjectException | SystemException e) {
-					e.printStackTrace();
-					responseJson.add(e);}
+		for (int i =0; i <requestJson.size();i++)
+			responseJson.add(getCompleteProjectById((JSONObject) requestJson.get(i)));
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getCompleteProjectById (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		List <ResearchObject> researchObjectList = null;
+		
+		if (requestJson.containsKey("projectid")){
+			try {
+				responseJson.add(ProjectLocalServiceUtil.getProjectById((long) requestJson.get("projectid")));
+			} catch (NoSuchProjectException | SystemException e) {
+				e.printStackTrace();
+				JSONObject keyJson = new JSONObject();
+				keyJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+				responseJson.add(keyJson);
 			}
-			else
-				responseJson.add("ERRROR: No key 'projectid' exist.");
+			researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId((long) requestJson.get("projectid"));
+			for (int i =0; i< researchObjectList.size();i++)
+				responseJson.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+		}else{
+			JSONObject keyJson = new JSONObject();
+			keyJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+			responseJson.add( keyJson);
 		}
-			return responseJson;
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONObject getProjectById (JSONObject requestJson){
+		
+		JSONObject responseJson = new JSONObject();
+		
+		if (requestJson.containsKey("projectid"))
+			try {
+				responseJson = ProjectLocalServiceUtil.constructProjectAsJson(ProjectLocalServiceUtil.getProjectById((long)requestJson.get("projectid")));
+			} catch (NoSuchProjectException | SystemException e) {
+				e.printStackTrace();
+				responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
+		else
+			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+		
+		return responseJson;
 	}
 	
 	

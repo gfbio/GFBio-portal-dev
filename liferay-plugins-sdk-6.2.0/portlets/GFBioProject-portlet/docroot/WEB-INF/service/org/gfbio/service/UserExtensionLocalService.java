@@ -254,11 +254,6 @@ public interface UserExtensionLocalService extends BaseLocalService,
 	public org.json.simple.JSONObject getUserExtentionById(
 		org.json.simple.JSONObject json);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public org.json.simple.JSONObject constructUserExtentionJsonById(
 		com.liferay.portal.model.User user)
 		throws com.liferay.portal.NoSuchUserException,

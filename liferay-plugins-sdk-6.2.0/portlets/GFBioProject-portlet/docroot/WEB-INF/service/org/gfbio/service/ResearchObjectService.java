@@ -66,24 +66,24 @@ public interface ResearchObjectService extends BaseService, InvokableService {
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getResearchObjectAbsolutParent(
-		org.json.simple.JSONArray requestJson);
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getResearchObjectById(
-		org.json.simple.JSONArray requestJson);
+		java.lang.String requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getResearchObjectParent(
-		org.json.simple.JSONArray requestJson);
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getResearchObjectsByParent(
-		org.json.simple.JSONArray requestJson);
+		org.json.simple.JSONObject requestJson);
 
 	public org.json.simple.JSONArray createResearchObject(
-		org.json.simple.JSONArray requestJson);
+		java.lang.String requestJson);
 
 	public org.json.simple.JSONArray updateResearchObject(
-		org.json.simple.JSONArray requestJson);
+		java.lang.String requestJson);
 }

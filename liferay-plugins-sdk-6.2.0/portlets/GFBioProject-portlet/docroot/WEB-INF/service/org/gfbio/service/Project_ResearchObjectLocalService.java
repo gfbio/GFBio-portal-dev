@@ -258,8 +258,10 @@ public interface Project_ResearchObjectLocalService extends BaseLocalService,
 	public java.util.List<org.gfbio.model.Project_ResearchObject> getProjectIDList(
 		long projectID);
 
-	public long updateProjectResearchObject(long projectID,
-		long researchObjectID, int researchObjectVersion)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchProject_UserException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectsByProjectId(
+		long projectId);
+
+	public java.lang.Boolean updateProjectResearchObject(long projectID,
+		long researchObjectID, int researchObjectVersion);
 }

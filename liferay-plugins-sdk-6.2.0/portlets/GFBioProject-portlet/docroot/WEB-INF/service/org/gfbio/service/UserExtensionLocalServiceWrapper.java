@@ -291,13 +291,6 @@ public class UserExtensionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.model.User getUserById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userExtensionLocalService.getUserById(userId);
-	}
-
-	@Override
 	public org.json.simple.JSONObject constructUserExtentionJsonById(
 		com.liferay.portal.model.User user)
 		throws com.liferay.portal.NoSuchUserException,

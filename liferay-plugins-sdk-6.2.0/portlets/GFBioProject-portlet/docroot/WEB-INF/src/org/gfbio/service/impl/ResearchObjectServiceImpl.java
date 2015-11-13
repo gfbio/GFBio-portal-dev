@@ -18,6 +18,9 @@ package org.gfbio.service.impl;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 
@@ -49,25 +52,30 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	
 	
 	//
-	public JSONArray getResearchObjectAbsolutParent (JSONArray requestJson){
+	public JSONObject getResearchObjectAbsolutParent (JSONObject requestJson){
 		return ResearchObjectLocalServiceUtil.getResearchObjectAbsolutParent(requestJson);
 	}
 	
 
 	//
-	public JSONArray getResearchObjectById (JSONArray requestJson){
-		return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(requestJson);
+	public JSONArray getResearchObjectById (String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(parseJson);
 	}
 	
 	
 	//
-	public JSONArray getResearchObjectParent (JSONArray requestJson){
+	public JSONObject getResearchObjectParent (JSONObject requestJson){
 		return ResearchObjectLocalServiceUtil.getResearchObjectParent(requestJson);
 	}
 	
 	
 	//get all Child ResearchObjects of a ResearchObject by the ID of this. 
-	public JSONArray getResearchObjectsByParent (JSONArray requestJson){
+	public JSONArray getResearchObjectsByParent (JSONObject requestJson){
 		return ResearchObjectLocalServiceUtil.getResearchObjectsByParent(requestJson);
 	}
 	
@@ -77,14 +85,24 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	
 	
 	//
-	public JSONArray createResearchObject(JSONArray requestJson){
-		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(requestJson);
+	public JSONArray createResearchObject(String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
 	}
 	
 	
 	//
-	public JSONArray updateResearchObject(JSONArray requestJson){
-		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(requestJson);
+	public JSONArray updateResearchObject(String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(parseJson);
 	}
 	
 }

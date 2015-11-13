@@ -297,10 +297,14 @@ public class Project_ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public long updateProjectResearchObject(long projectID,
-		long researchObjectID, int researchObjectVersion)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchProject_UserException {
+	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectsByProjectId(
+		long projectId) {
+		return _project_ResearchObjectLocalService.getResearchObjectsByProjectId(projectId);
+	}
+
+	@Override
+	public java.lang.Boolean updateProjectResearchObject(long projectID,
+		long researchObjectID, int researchObjectVersion) {
 		return _project_ResearchObjectLocalService.updateProjectResearchObject(projectID,
 			researchObjectID, researchObjectVersion);
 	}

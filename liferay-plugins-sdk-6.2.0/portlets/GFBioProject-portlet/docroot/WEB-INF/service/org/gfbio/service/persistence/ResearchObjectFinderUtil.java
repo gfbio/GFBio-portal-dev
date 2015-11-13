@@ -26,9 +26,23 @@ public class ResearchObjectFinderUtil {
 		return getFinder().getCheckOfDirectParent(researchObjectId);
 	}
 
+	public static java.util.List<java.lang.Boolean> getCheckOfId(
+		long researchObjectId) {
+		return getFinder().getCheckOfId(researchObjectId);
+	}
+
 	public static java.util.List<org.gfbio.model.ResearchObject> getDirectParent(
 		long researchObjectId) {
 		return getFinder().getDirectParent(researchObjectId);
+	}
+
+	public static java.util.List<org.gfbio.model.ResearchObject> getLatestResearchObjectById(
+		long researchObjectId) {
+		return getFinder().getLatestResearchObjectById(researchObjectId);
+	}
+
+	public static java.util.List getLatestVersionById(long researchObjectId) {
+		return getFinder().getLatestVersionById(researchObjectId);
 	}
 
 	public static ResearchObjectFinder getFinder() {
