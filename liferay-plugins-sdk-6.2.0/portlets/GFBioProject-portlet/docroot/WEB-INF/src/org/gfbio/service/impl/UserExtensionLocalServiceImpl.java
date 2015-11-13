@@ -82,7 +82,6 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	//
 	@SuppressWarnings("unchecked")
 	public  JSONObject constructUserExtentionJsonById (User user) throws NoSuchUserException, SystemException {
-		System.out.println(user);
 		JSONObject json = new JSONObject();
 		json.put("userid", user.getUserId());
 		json.put("firstname", user.getFirstName());

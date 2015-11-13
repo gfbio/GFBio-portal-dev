@@ -133,7 +133,7 @@ ALTER TABLE gfbio_dataprovider
 
 CREATE TABLE gfbio_project
 (
-  projectId bigint NOT NULL,
+  projectid bigint NOT NULL,
   name varchar(75),
   label varchar(75),
   description text,
@@ -155,8 +155,7 @@ ALTER TABLE gfbio_project
   
 CREATE TABLE gfbio_researchobject
 (
---bigint
-  researchobjectid bigserial NOT NULL,
+  researchobjectid bigint NOT NULL,
   name character varying(75),
   label character varying(75) NOT NULL,
   metadata character varying(5000),
@@ -164,11 +163,9 @@ CREATE TABLE gfbio_researchobject
   researchobjectversion smallint NOT NULL DEFAULT 1,
   researchobjecttype character varying(75) NOT NULL,
   parentresearchobjectid bigint,
-  sourceresearchobjectid bigint,
-  sourceresearchobjectversion smallint,
-  CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion),
-  CONSTRAINT gfbio_researchobject_label_key UNIQUE (label),
-  CONSTRAINT gfbio_researchobject_researchobjectversion_check CHECK (researchobjectversion > 0)
+  --sourceresearchobjectid bigint,
+  --sourceresearchobjectversion smallint,
+  CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion)
 )
 WITH (
   OIDS=FALSE
@@ -198,15 +195,6 @@ CREATE TABLE gfbio_submissionregistry
   CONSTRAINT gfbio_dataprovider_fkey FOREIGN KEY (archive)
       REFERENCES gfbio_dataprovider (label) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  --CONSTRAINT gfbio_persistentidentifier_fkey FOREIGN KEY (archive_pid_type)
-  --   REFERENCES gfbio_content (contentid) MATCH SIMPLE
-  --   ON UPDATE NO ACTION ON DELETE NO ACTION
-  -- RO-FK
-  -- archive_pid Default = null
-  -- brokersubmissionid
-  -- status: send and archived
-  -- public_after: zu früh rüberkopiert: Default muss raus
-  -- unique Ding RO 
  CONSTRAINT gfbio_researchobject_fkey FOREIGN KEY (researchobjectid, researchobjectversion)
       REFERENCES gfbio_researchobject (researchobjectid, researchobjectversion) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
@@ -252,17 +240,16 @@ ALTER TABLE gfbio_dataprovider_persistentidentifier
 
 CREATE TABLE gfbio_project_researchobject
 (
-  researchobjectid bigserial NOT NULL,
-  name character varying(75),
-  label character varying(75) NOT NULL,
-  metadata character varying(5000),
-  formatmetadata character varying(5000),
-  researchobjectversion smallint NOT NULL DEFAULT 1,
-  researchobjecttype character varying(75) NOT NULL,
-  parentresearchobjectid bigint,
-  --sourceresearchobjectid bigint,
-  --sourceresearchobjectversion smallint,
-  CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion)
+  projectid bigint NOT NULL,
+  researchobjectid bigint NOT NULL,
+  researchobjectversion smallint NOT NULL,
+  CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectid, researchobjectid, researchobjectversion),
+  CONSTRAINT gfbio_project FOREIGN KEY (researchobjectid, researchobjectversion)
+      REFERENCES gfbio_researchobject (researchobjectid, researchobjectversion) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
+      REFERENCES gfbio_project (projectid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
