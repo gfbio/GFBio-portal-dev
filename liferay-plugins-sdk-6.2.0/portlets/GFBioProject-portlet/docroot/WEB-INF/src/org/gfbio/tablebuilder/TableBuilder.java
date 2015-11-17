@@ -1,10 +1,13 @@
 package org.gfbio.tablebuilder;
 
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -14,6 +17,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.NoSuchHeadException;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
@@ -21,12 +25,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class TableBuilder extends GenericPortlet {
 
+public class TableBuilder extends GenericPortlet {
+	
+	
+	///////////////////////////////////// Basic Portlet Functions ///////////////////////////////////////////////////
+
+	
 	protected String viewTemplate;
 	private static Log _log = LogFactoryUtil.getLog(TableBuilder.class);
 
 	
+	//
 	protected void include(String path, RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
 
 		PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(path);
@@ -39,62 +49,35 @@ public class TableBuilder extends GenericPortlet {
 	}
 	
 
+	//
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
-		
-/*		List<Head> headList=null;
-		try {
-			headList = HeadLocalServiceUtil.getHeadsByTableType("entity");
-		} catch (SystemException e) {e.printStackTrace();} 
-		for (int j =0;j < headList.size();j++){
-			String tableName = headList.get(j).getTable_name();
-			List withoutRelationList=null;
-			try {
-				withoutRelationList = ColumnLocalServiceUtil.getColumnIdsWithoutRelation(tableName);
-				for (int i=0; i <withoutRelationList.size();i++)
-					System.out.println(withoutRelationList.get(i).toString());
-			} catch (SystemException e) {e.printStackTrace();}
-			String name ="";
-			try {
-				name = HeadLocalServiceUtil.getTableName((long) withoutRelationList.get(0));
-			} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
-		}*/
-		
-
-/*
-		List<Head> headList = null;
-		try {
-			headList = HeadLocalServiceUtil.getHeadsByTableType("entity");
-		} catch (SystemException e) {e.printStackTrace();} 
-
-		System.out.println(headList.get(0).getTable_name());
-		List <Column> relationList = null;
-		try {
-			relationList = ColumnLocalServiceUtil.getColumnsOfRelationWith(headList.get(0).getTable_name());
-		} catch (SystemException e) {e.printStackTrace();}
-		if (relationList != null)
-			for (int i = 0; i <relationList.size();i++)
-				System.out.println(i+": "+relationList.get(i).getColumn_name());
-		else
-			System.out.println("relationList = null ");*/
-		
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 
+	
+	//
 	public void init() {
 		viewTemplate = getInitParameter("view-template");
 	}
 	
+	
+	
+	///////////////////////////////////// Request/Response Functions ///////////////////////////////////////////////////
 
+	
+	//-------------------------------- Manage Request/Response Functions ----------------------------------------------//
+	
+	
+	//main method of ResourceRequests. All Requests goes over this method. The method-String in responseTarget include the aim method
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
 		response.setContentType("text/html");
 		
 		if (request.getParameter("responseTarget") != null) {
-
 			
-/*			//choose Table
-			if ("chooseTable".toString().equals(request.getParameter("responseTarget").toString()))
-				chooseTable(request, response);*/
+			//choose Table
+			if ("chooseTableForRelationship".toString().equals(request.getParameter("responseTarget").toString()))
+				chooseTable(request, response);
 			
 			//add new Column to a Head
 			if ("addColumnToTable".toString().equals(request.getParameter("responseTarget").toString()))
@@ -108,10 +91,13 @@ public class TableBuilder extends GenericPortlet {
 			if ("deleteColumn".toString().equals(request.getParameter("responseTarget").toString()))
 				deleteColumn(request, response);
 			
-
 			//delete Table
 			if ("deleteTable".toString().equals(request.getParameter("responseTarget").toString()))
 				deleteTable(request, response);
+			
+			//delete Content of a relationship
+			if ("deleteRelationContent".toString().equals(request.getParameter("responseTarget").toString()))
+				deleteRelationContent(request, response);
 			
 			//new Table
 			if ("newTable".toString().equals(request.getParameter("responseTarget").toString()))
@@ -120,7 +106,11 @@ public class TableBuilder extends GenericPortlet {
 			//new Relationship between tables
 			if ("relationTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateRelationTable(request, response);
-									
+			
+			//new Relationship between contents
+			if ("relationContent".toString().equals(request.getParameter("responseTarget").toString()))
+				updateRelationContent(request, response);
+			
 			//new Content of a Table
 			if ("updateContent".toString().equals(request.getParameter("responseTarget").toString())) 
 				updateContent(request, response);
@@ -133,9 +123,89 @@ public class TableBuilder extends GenericPortlet {
 	}
 	
 	
-/*	// choose Row in Content
-	public void chooseRow(ResourceRequest request, ResourceResponse response) throws ValidatorException, IOException  {
+	//-------------------------------- Choose Functions ----------------------------------------------//
+	
+	
+	//choose Table
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void chooseTable(ResourceRequest request, ResourceResponse response) throws IOException {
+		
+		JSONParser parser = new JSONParser();
+		JSONObject requestJson = new JSONObject();
 
+		try {
+			requestJson = (JSONObject) parser.parse(request.getParameter("data"));
+		} catch (ParseException e1) {e1.printStackTrace();}
+		
+		long   rowId = (long) requestJson.get("rowid");
+		long   headId1 = (long) requestJson.get("headid1");
+		long   headId2 = extractLongOutOfString((String) requestJson.get("headid2"));
+
+		List withoutRelationIdList =null;
+		List withRelationIdList =null;
+		JSONObject withoutJson = new JSONObject();
+		JSONObject withJson = new JSONObject();
+
+		try {
+			withoutRelationIdList = ContentLocalServiceUtil.getContentIdsWithoutRelationships(rowId, HeadLocalServiceUtil.getTableNameById(headId1), HeadLocalServiceUtil.getTableNameById(headId2));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		try {
+			withRelationIdList = ContentLocalServiceUtil.getContentIdsWithRelationships(rowId, HeadLocalServiceUtil.getTableNameById(headId1), HeadLocalServiceUtil.getTableNameById(headId2));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+		if (withoutRelationIdList !=null)
+			for (int i=0;i<withoutRelationIdList.size();i++)
+				withoutJson.put(withoutRelationIdList.get(i), ContentLocalServiceUtil.getCellContentByContentId((long)withoutRelationIdList.get(i)) );
+		
+		if (withRelationIdList !=null)
+			for (int i=0;i<withRelationIdList.size();i++)
+				withJson.put(withRelationIdList.get(i), ContentLocalServiceUtil.getCellContentByContentId((long)withRelationIdList.get(i)) );
+			
+		JSONObject responseJson = new JSONObject();
+		responseJson.put("withoutRelationIdList", withoutRelationIdList);
+		responseJson.put("withRelationIdList", withRelationIdList);
+		responseJson.put("withoutJson", withoutJson);
+		responseJson.put("withJson", withJson);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(responseJson.toString());
+	}
+	
+	
+	//-------------------------------- Delete Functions ----------------------------------------------//	
+
+	
+	//delete a specific entry in HCC content by the row id
+	public void deleteContent (ResourceRequest request, ResourceResponse response){
+		ContentLocalServiceUtil.deleteContentsByRowId(Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue());
+	}
+	
+	
+	//delete a specific entry in HCC column and their entries in content by the column id
+	public void deleteColumn (ResourceRequest request, ResourceResponse response){
+		
+		long columnId = Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue();
+		ContentLocalServiceUtil.deleteContentsByColumnId(columnId);
+		try {
+			ColumnLocalServiceUtil.deleteColumn(columnId);
+		} catch (PortalException | SystemException e) {e.printStackTrace();} 
+	}
+	
+	
+	//delete all entries in head, column and content (also the complete HCC table) of a specific headid
+	public void deleteTable (ResourceRequest request, ResourceResponse response){
+		String headIdString = request.getParameter("data");
+		if(headIdString.charAt(0)=='"')
+			HeadLocalServiceUtil.deleteTableByHeadId(Long.valueOf(headIdString.substring(1,headIdString.length()-1)).longValue());
+		else
+			HeadLocalServiceUtil.deleteTableByHeadId(Long.valueOf(headIdString).longValue());
+	}
+	
+	
+	//delete a entry in a HCC relation table
+	public void deleteRelationContent (ResourceRequest request, ResourceResponse response){
+		
 		JSONParser parser = new JSONParser();
 		JSONObject json = new JSONObject();
 
@@ -143,72 +213,32 @@ public class TableBuilder extends GenericPortlet {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
 		
-		String name = (String) json.get("name");
-		long headID =(Long) json.get("id");
+		String cellContent1 = null;
+		String cellContent2 = null;
+		cellContent1 = Long.toString(ContentLocalServiceUtil.getRowIdById(ContentLocalServiceUtil.getFirstContentIdByRowId((long) json.get("rowid"))));
+		cellContent2 = Long.toString(ContentLocalServiceUtil.getRowIdById(Long.valueOf((String) json.get("contentid")).longValue()));
 		
-		Content position=null;
-		try {
-			position = ContentLocalServiceUtil.getContentByHeadIdAndName(headID, name);
-		} catch (SystemException e1) {e1.printStackTrace();}
-		PortletPreferences prefs = request.getPreferences();
-		if (name != null) {
-		try {
-			prefs.setValue("choRow", Long.toString(position.getContentID()));
-		} catch (ReadOnlyException e) {e.printStackTrace();	}
-		prefs.store();
-		}
-	}*/
-	
-/*	// choose Row in Head
-	public void chooseTable(ResourceRequest request, ResourceResponse response) throws IOException, ValidatorException {
-
-		String name = request.getParameter("data").substring(1, request.getParameter("data").length()-1);
-		System.out.println(name);
-		
-		        PrintWriter writer = response.getWriter();
-        writer.print(name);
-        
-		response.setContentType("text/html");
-		response.getWriter().println(name);
-		response.setProperty("chooseTable", name);
-		
-		PortletPreferences prefs = request.getPreferences();
-		
-
-		if (name != null) {
-		try {
-			prefs.setValue("choTab", Long.toString(HeadLocalServiceUtil.getHeadID(name)));
-		} catch (NoSuchHeadException | ReadOnlyException | SystemException e) {e.printStackTrace();	}
-		prefs.store();
-		}
-	}*/
-	
-	public void deleteContent (ResourceRequest request, ResourceResponse response){
-		
-		ContentLocalServiceUtil.deleteContentsByRowId(Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue());
-
+		long rowId = ContentLocalServiceUtil.getRowIdOfRelation(cellContent1, cellContent2);
+		ContentLocalServiceUtil.deleteContentsByRowId(rowId);
 	}
+
+
+	//-------------------------------- Helper Functions ----------------------------------------------//
 	
-	public void deleteColumn (ResourceRequest request, ResourceResponse response){
 		
-		long columnId = Long.valueOf(request.getParameter("data").substring(1, request.getParameter("data").length()-1)).longValue();
-		System.out.println(columnId);
-		ContentLocalServiceUtil.deleteContentsByColumnId(columnId);
-		ColumnLocalServiceUtil.deleteColumnById(columnId); 
+	//sometimes a String in the data object have more as one '' from a automatic build of the JSON string. This function extract the long out of this ''
+	private long extractLongOutOfString (String string){
+		
+		while (string.charAt(0)=='"')
+			string = string.substring(1, string.length()-1);
+		return Long.valueOf(string).longValue();
 	}
 	
 	
-	public void deleteTable (ResourceRequest request, ResourceResponse response){
-		System.out.println(request.getParameter("data"));
-		String headIdString = request.getParameter("data");
-		if(headIdString.charAt(0)=='"'){
-			System.out.println("true");
-			HeadLocalServiceUtil.deleteTableByHeadId(Long.valueOf(headIdString.substring(1,headIdString.length()-1)).longValue());
-		}else
-			HeadLocalServiceUtil.deleteTableByHeadId(Long.valueOf(headIdString).longValue());
-	}
+	//-------------------------------- Update Functions ----------------------------------------------//
 	
-
+	
+	//update a entry in content
 	@SuppressWarnings("unused")
 	public void updateContent(ResourceRequest request, ResourceResponse response)  {
 
@@ -221,10 +251,34 @@ public class TableBuilder extends GenericPortlet {
 		
 		Boolean check = false;
 		check = HeadLocalServiceUtil.updateHeadWithColumns(json);
-
 	}
 	
 	
+	//update a entry in relation table in content
+	public Boolean updateRelationContent(ResourceRequest request, ResourceResponse response){
+		
+		JSONParser parser = new JSONParser();
+		JSONObject json = new JSONObject();
+		
+		try {
+			json = (JSONObject) parser.parse(request.getParameter("data"));
+		} catch (ParseException e1) {e1.printStackTrace();}
+		
+		long headId1=0;
+		try {
+			headId1 = HeadLocalServiceUtil.getHeadIdByTableName((String) json.get("tablename"));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		long contentId1 = ContentLocalServiceUtil.getFirstContentIdByRowId((long) json.get("rowid"));
+		long contentId2 = Long.valueOf((String) json.get("contentid"));
+		long headId2 = ContentLocalServiceUtil.getHeadIdById(contentId2);
+		
+		return HeadLocalServiceUtil.updateRelationTableWithContent(headId1, headId2, contentId1, contentId2);
+		
+	}
+	
+	
+	//update head and columns in context of a relation table
+	@SuppressWarnings("unused")
 	public void updateRelationTable(ResourceRequest request, ResourceResponse response)  {
 	
 		JSONParser parser = new JSONParser();
@@ -234,33 +288,22 @@ public class TableBuilder extends GenericPortlet {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
 		
-		System.out.println("json: "+ (String) json.get("mtable")+ " |"+ (String) json.get("ntable"));
 		Boolean check;
 		check = HeadLocalServiceUtil.updateRelationTable(0, (String) json.get("mtable"), (String) json.get("ntable"));
-		System.out.println("new connection: "+check);
-
 	}
 	
 	
 
-
+	//update head and columns in context of a entity table
+	@SuppressWarnings("unused")
 	public void updateTable(ResourceRequest request, ResourceResponse response) {
 
 		JSONParser parser = new JSONParser();
 		JSONObject json = new JSONObject();
-
 		
 		try {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
-		System.out.println(json.toJSONString());
 		Boolean check = HeadLocalServiceUtil.updateHeadWithColumns(json);
-		System.out.println("update Table: "+check);
-
 	}
-
-
-
-
-
 }

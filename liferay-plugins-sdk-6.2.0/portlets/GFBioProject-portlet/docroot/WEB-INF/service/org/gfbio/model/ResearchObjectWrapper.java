@@ -50,10 +50,13 @@ public class ResearchObjectWrapper implements ResearchObject,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("researchObjectID", getResearchObjectID());
+		attributes.put("researchObjectVersion", getResearchObjectVersion());
+		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
 		attributes.put("formatmetadata", getFormatmetadata());
+		attributes.put("researchObjectType", getResearchObjectType());
 
 		return attributes;
 	}
@@ -64,6 +67,20 @@ public class ResearchObjectWrapper implements ResearchObject,
 
 		if (researchObjectID != null) {
 			setResearchObjectID(researchObjectID);
+		}
+
+		Integer researchObjectVersion = (Integer)attributes.get(
+				"researchObjectVersion");
+
+		if (researchObjectVersion != null) {
+			setResearchObjectVersion(researchObjectVersion);
+		}
+
+		Long parentResearchObjectID = (Long)attributes.get(
+				"parentResearchObjectID");
+
+		if (parentResearchObjectID != null) {
+			setParentResearchObjectID(parentResearchObjectID);
 		}
 
 		String name = (String)attributes.get("name");
@@ -89,6 +106,12 @@ public class ResearchObjectWrapper implements ResearchObject,
 		if (formatmetadata != null) {
 			setFormatmetadata(formatmetadata);
 		}
+
+		String researchObjectType = (String)attributes.get("researchObjectType");
+
+		if (researchObjectType != null) {
+			setResearchObjectType(researchObjectType);
+		}
 	}
 
 	/**
@@ -97,7 +120,7 @@ public class ResearchObjectWrapper implements ResearchObject,
 	* @return the primary key of this research object
 	*/
 	@Override
-	public long getPrimaryKey() {
+	public org.gfbio.service.persistence.ResearchObjectPK getPrimaryKey() {
 		return _researchObject.getPrimaryKey();
 	}
 
@@ -107,7 +130,8 @@ public class ResearchObjectWrapper implements ResearchObject,
 	* @param primaryKey the primary key of this research object
 	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
+	public void setPrimaryKey(
+		org.gfbio.service.persistence.ResearchObjectPK primaryKey) {
 		_researchObject.setPrimaryKey(primaryKey);
 	}
 
@@ -129,6 +153,46 @@ public class ResearchObjectWrapper implements ResearchObject,
 	@Override
 	public void setResearchObjectID(long researchObjectID) {
 		_researchObject.setResearchObjectID(researchObjectID);
+	}
+
+	/**
+	* Returns the research object version of this research object.
+	*
+	* @return the research object version of this research object
+	*/
+	@Override
+	public int getResearchObjectVersion() {
+		return _researchObject.getResearchObjectVersion();
+	}
+
+	/**
+	* Sets the research object version of this research object.
+	*
+	* @param researchObjectVersion the research object version of this research object
+	*/
+	@Override
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_researchObject.setResearchObjectVersion(researchObjectVersion);
+	}
+
+	/**
+	* Returns the parent research object i d of this research object.
+	*
+	* @return the parent research object i d of this research object
+	*/
+	@Override
+	public long getParentResearchObjectID() {
+		return _researchObject.getParentResearchObjectID();
+	}
+
+	/**
+	* Sets the parent research object i d of this research object.
+	*
+	* @param parentResearchObjectID the parent research object i d of this research object
+	*/
+	@Override
+	public void setParentResearchObjectID(long parentResearchObjectID) {
+		_researchObject.setParentResearchObjectID(parentResearchObjectID);
 	}
 
 	/**
@@ -209,6 +273,26 @@ public class ResearchObjectWrapper implements ResearchObject,
 	@Override
 	public void setFormatmetadata(java.lang.String formatmetadata) {
 		_researchObject.setFormatmetadata(formatmetadata);
+	}
+
+	/**
+	* Returns the research object type of this research object.
+	*
+	* @return the research object type of this research object
+	*/
+	@Override
+	public java.lang.String getResearchObjectType() {
+		return _researchObject.getResearchObjectType();
+	}
+
+	/**
+	* Sets the research object type of this research object.
+	*
+	* @param researchObjectType the research object type of this research object
+	*/
+	@Override
+	public void setResearchObjectType(java.lang.String researchObjectType) {
+		_researchObject.setResearchObjectType(researchObjectType);
 	}
 
 	@Override

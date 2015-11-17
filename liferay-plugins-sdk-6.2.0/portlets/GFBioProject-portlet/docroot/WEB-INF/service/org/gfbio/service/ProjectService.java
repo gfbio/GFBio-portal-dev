@@ -65,19 +65,7 @@ public interface ProjectService extends BaseService, InvokableService {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.sample.service.ProjectServiceUtil} to access the project remote service.
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONObject requestJson);
 }

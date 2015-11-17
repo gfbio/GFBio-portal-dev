@@ -2,58 +2,66 @@
 success = "x";
 
 
-
+//
 function pseudoaccordion(j) {
 	showhide(j);
 	changePlusMinus("h_".concat(j));
 }
 
+
+//
 function changePlusMinus(j) {
 	(document.getElementById(j).innerHTML== "-") ? changeToPlus(j) : changeToMinus(j);
 }
 
+
+//
 function changeToPlus(j) {
 	document.getElementById(j).innerHTML= "+";
 }
 
+
+//
 function changeToMinus(j) {
 	document.getElementById(j).innerHTML= "-";
 }
 
 
-
-
-
 /////////////////////////////////////////   hide/show scripts  //////////////////////////////////////////////
 
 
-
-
+//
 function iconshowhidesinmple(j, iconid){
 
-	console.log(j + " || "+ iconid);
 	showhide(j);
 	(document.getElementById(iconid).className=="icon-plus") ?document.getElementById(iconid).className = "icon-minus" : document.getElementById(iconid).className = "icon-plus";
 }
 
+
+//
 function iconshowhide(i,j, iconid){
 	
 	if(document.getElementById("hide_".concat(i)).className=="swHide" && document.getElementById("hide_".concat(j)).className=="swHide") visibleShow(i);
 	if(document.getElementById("hide_".concat(i)).className=="swMain" && document.getElementById("hide_".concat(j)).className=="swMain") visibleHide(i);
 	showhide(j);
-
 	(document.getElementById(iconid).className=="icon-plus") ?document.getElementById(iconid).className = "icon-minus" : document.getElementById(iconid).className = "icon-plus";
 }
 
+
+//
 function hideswitch(i,j) {
 	visibleStateChoose(i);
 	visibleStateChoose(j);
 };
 
+
+//
 function showhide(j) {
 	visibleStateChoose(j);
 };
 
+
+//
 function ENAradio(j){
 	//radiohide(j);
 	for (i = -20; i>-29;i--)
@@ -61,6 +69,8 @@ function ENAradio(j){
 	SubmitENA(j, "show");
 }
 
+
+//
 function radiohide(j) {
 	if (j != "none"){
 		if (j<=(-100)){
@@ -76,15 +86,19 @@ function radiohide(j) {
 };
 
 
+//
 function visibleStateChoose(j) {
 	(document.getElementById("hide_".concat(j)).className=="swHide") ? visibleShow(j) : visibleHide(j);
 }
 
 
+//
 function visibleShow(j) {
 	document.getElementById("hide_".concat(j)).className = "swMain";
 };
 
+
+//
 function visibleHide(j) {
 	document.getElementById("hide_".concat(j)).className = "swHide";
 };
@@ -129,8 +143,6 @@ function chooseProject2(archivingURL, method, id, name, j) {
 
 // Method for build a new Project
 function checkDate(name, size) {
-
-	console.log("check");
 	var check = true;
 	var numbers =['0','1','2','3','4','5','6','7','8','9' ];
 	var sign = ['-'];
@@ -163,12 +175,24 @@ function checkDate(name, size) {
 }
 
 
+//
+function deleteRelationContent(method, rowid, contentid, tab, path){
+	var data = {};
+	data["rowid"] = rowid;
+	data["contentid"] = contentid;
+	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
+	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
+}
+
+
+//
 function deleteContent(method, data, tab, path){
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }
 
 
+//
 function deleteColumn(method, data, tab1, path1,tab2,path2){
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
 	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
@@ -176,6 +200,7 @@ function deleteColumn(method, data, tab1, path1,tab2,path2){
 }
 
 
+//
 function deleteTable(method, data, tab1, path1,tab2,path2){
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
 	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
@@ -183,6 +208,7 @@ function deleteTable(method, data, tab1, path1,tab2,path2){
 }
 
 
+//
 function newProject(archivingURL, method, name, size, hide,  userID) {
 	var check = checkDate(name, size);
 	if (check == true) {
@@ -224,12 +250,40 @@ function updateProject (archivingURL, method, name, size, hide, userID) {
 
 //Method to update a RelationTable in Head
 function updateRelationTable (method, mtable, ntable,tab,  path) {
-	console.log(method+" | "+mtable+" | "+ntable+" | "+tab+" | "+path);
 	var data = {};
 	data["mtable"] = mtable;
 	data["ntable"] = ntable;
 	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
+}
+
+
+//
+function updateRelationContent(method, tablename, rowid,contentid, tab1,  path1, tab2,  path2) {
+	var data = {};
+	data["tablename"] = tablename;
+	data["rowid"] = rowid;
+	data["contentid"] = contentid;
+	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
+	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
+	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
+}
+
+
+//
+function chooseTableForRelationship(method, rowid, headid1, headid2, archivingURL, withoutRelationship, withRelationship){
+	resourceMethod_Choose(archivingURL, method, rowid, headid1, headid2, withoutRelationship, withRelationship,false);
+}
+
+
+//generally Methods
+function resourceMethod_Choose(archivingURL, method, rowid, headid1, headid2,withoutRelationship, withRelationship, async) {
+	
+	var data = {};
+	data["rowid"] = rowid;
+	data["headid1"] = headid1;
+	data["headid2"] = headid2;
+	ajaxActionRequest_Choose(archivingURL, method, data, withoutRelationship, withRelationship, async);
 }
 
 
@@ -239,8 +293,8 @@ function resourceMethod(archivingURL, method, data, async) {
 }
 
 
+//
 function resourceMethod_I_to(archivingURL, method, name, size, relationID, async, runningNumber) {
-	console.log(archivingURL+ " | "+method+ " | "+name+ " | "+size+ " | "+relationID+ " | "+async+ " | "+runningNumber);
 	var str ;
 	var headStr;
 	var data = {};
@@ -250,19 +304,11 @@ function resourceMethod_I_to(archivingURL, method, name, size, relationID, async
 		name ="dyta_".concat(runningNumber);
 	}
 	headStr = name.concat("_").concat("table_name");
-	console.log("1: "+'top'.concat(headStr)+ ": ");
-	console.log("2: "+headStr+ ": "+document.getElementById(headStr).value);
 	data = buildJsonHead(document.getElementById('top'.concat(headStr)).value,  document.getElementById(headStr).value, relationID);
 	if (method == 'addColumnToTable')
 		size=size-1;
 	for (var i = 0; i < size; i++) {
 		str = name.concat("_").concat(i);
-		console.log("- "+i+" -");
-		console.log('top'.concat(str));
-		console.log(document.getElementById('top'.concat(str)).value);
-		console.log(document.getElementById('top'.concat(headStr)).value);
-		console.log(document.getElementById(str).value);
-		console.log("-----");
 		var subdata = buildJsonColum(document.getElementById('top'.concat(str)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById(str).value);
 		if (method == 'updateContent')
 			data = addSubJsonToJson(data, addSubJsonToJson(subdata, buildJsonContent(document.getElementById("top".concat(contentName).concat("_").concat(i+1)).value, document.getElementById('top'.concat(headStr)).value, document.getElementById('top'.concat(str)).value, document.getElementById(contentName.concat("_rowID")).value, document.getElementById(contentName.concat("_").concat(i+1)).value),0), i);
@@ -272,16 +318,12 @@ function resourceMethod_I_to(archivingURL, method, name, size, relationID, async
 	if (method =='addColumnToTable'){
 		var subdata = buildJsonColum("0", document.getElementById('top'.concat(headStr)).value, "");
 		data = addSubJsonToJson(data, subdata, size);
-		console.log("::::::::::::::::::::::::");
-		console.log(data);
 	}
-	
-	
 	ajaxRequest(archivingURL, method, data, async);
 };
 
 
-
+//
 function resourceMethod_I(archivingURL, method, name, size, relationID, async) {
 	
 	var str ;
@@ -297,6 +339,7 @@ function resourceMethod_I(archivingURL, method, name, size, relationID, async) {
 };
 
 
+//
 function resourceMethod_JI(archivingURL, method, name, j, size, async) {
 	var str ;
 	var data = new Object() ;
@@ -308,49 +351,38 @@ function resourceMethod_JI(archivingURL, method, name, j, size, async) {
 	updateLaVaSet_JI(name, j, size);
 };
 
-/////////////////////////////////////////   build fields  //////////////////////////////////////////////
-
-
-
-
 
 /////////////////////////////////////////   build JSON  //////////////////////////////////////////////
 
 
 //build JSON of Column
 function buildJsonColum(columnId, headId, columnName){
-	console.log("column "+columnId+ " - "+ headId+ " - "+ columnName);
 	var json = {};
 	json["columnid"]=columnId;
 	json["headid"]=headId;
 	json["column_name"]=columnName;
-	console.log(json);
 	return json;
 }
 
 
 //build JSON of Content
 function buildJsonContent(contentId, headId, columnId, rowId, content){
-	console.log("content "+contentId+ " - "+ headId+ " - "+  columnId+ " - "+ rowId+ " - "+ content);
 	var json = {};
 	json["contentid"]=contentId;
 	json["headid"]=headId;
 	json["columnid"]=columnId;
 	json["rowid"]=rowId;
 	json["cellcontent"]=content;
-	console.log(json);
 	return json;
 }
 
 
 //build JSON of Head
 function buildJsonHead(headId, tableName, tableType){
-	console.log("head "+headId+ " - "+tableName+ " - "+tableType);
 	var json = {};
 	json["headid"]=headId;
 	json["table_name"]=tableName;
 	json["table_type"]=tableType;
-	console.log(json);
 	return json;
 }
 
@@ -358,48 +390,56 @@ function buildJsonHead(headId, tableName, tableType){
 //add a sub JSON to a JSON
 function addSubJsonToJson(json, subjson, key){
 	json[key] = subjson;
-	console.log(json);
 	return json;
 }
 
 
-
+//test function dcst portlet
+function getCategory(category) {
+	ajaxGetCategory(category);
+}
 
 //////////////////////////////////////////////////  update Label-Value-Data in the view ///////////////////////////////////////////////
 
 
-
+//
 function updateLaVaSet_I (name, size) {
 	for (var i = 0; i < size; i++){
 		updateLaVa_I(name, i);
 	}
 }
 
+
+//
 function updateLaVa_I(name, i) {
 	document.getElementById("lava".concat(name).concat("_").concat(i)).innerHTML= document.getElementById(name.concat("_").concat(i)).value;
 }
 
 
+//
 function updateLaVaSet_JI (name, j, size) {
 	for (var i = 1; i < size; i++)
 		 updateLaVa_JI(name, j, i);
 }
 
 
+//
 function updateLaVa_JI(name, j, i) {
 	document.getElementById("lava".concat(name).concat("_").concat(j).concat("_").concat(i)).innerHTML= document.getElementById(name.concat("_").concat(j).concat("_").concat(i)).value;
 }
 
 
-
 //////////////////////////////////////////////////  made the input-fields empty ////////////////////////////////////////////////////////
 
 
+//
 function cleanTextSet(name, size) {
 	for (var i = 1; i < size; i++)
 		cleanText(name, i);
 }
 
+
+//
 function cleanText(name, i) {
 	document.getElementById(name.concat("_").concat(i)).value= "";
 }
@@ -407,11 +447,15 @@ function cleanText(name, i) {
 
 /////////////////////////////////////////   ActionRequest  //////////////////////////////////////////////
 
+
+//
 function actionMethods(method) {
 	document.getElementById("<portlet:namespace/>".concat(method)).setAttribute('value',method);
 };
 
 
+
+//
 function actionMethod(method, addon) {
 	document.getElementById("<portlet:namespace/>".concat(method.concat(addon))).setAttribute('value',method);
 };
@@ -420,6 +464,7 @@ function actionMethod(method, addon) {
 ///////////////////////////////////////  reload page //////////////////////////////////////////////////////////////
 
 
+//
 function reload() {
 	window.location.reload(true);
 }
@@ -428,9 +473,7 @@ function reload() {
 /////////////////////////////////////////////////// tabs ////////////////////////////////////////////////////
 
 
-
-
-
+//
 $(document).ready(function(){
 	if ($('ul#verticalNav li a').length && $('div.section').length ) {
 		$('div.section').css( 'display', 'none' );
@@ -444,6 +487,8 @@ $(document).ready(function(){
 	}
 });
 
+
+//
 function showSection( sectionID ) {
 	$('div.section').css( 'display', 'none' );
 	$('div'+sectionID).css( 'display', 'block' );
@@ -451,17 +496,12 @@ function showSection( sectionID ) {
 	$('a#link'.concat(sectionID.substring(4))).addClass('active');
 }
 
+
+//
 function showDiv( sectionID, divID ) {
 	$('div.section').css( 'display', 'none' );
 	$('div'+sectionID).css( 'display', 'block' );
 	$('ul#verticalNav li a').removeClass('active');
 	$('a#link'.concat(sectionID.substring(4))).addClass('active');
 	pseudoaccordion(divID);
-
 }
-
-
-
-
-
-

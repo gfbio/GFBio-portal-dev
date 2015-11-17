@@ -6,7 +6,6 @@
 	<category name="category.sample">
 		<portlet id="archiving"></portlet>
 		<portlet id="project-profile"></portlet>
-		<portlet id="test"></portlet>
 		<portlet id="table-builder"></portlet>
 		<portlet id="dcst"></portlet>
 	</category>

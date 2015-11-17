@@ -30,13 +30,21 @@ import org.gfbio.service.persistence.ColumnFinder;
 import org.gfbio.service.persistence.ColumnPersistence;
 import org.gfbio.service.persistence.ContentFinder;
 import org.gfbio.service.persistence.ContentPersistence;
+import org.gfbio.service.persistence.DataProviderFinder;
+import org.gfbio.service.persistence.DataProviderPersistence;
+import org.gfbio.service.persistence.DataProvider_PersistentIdentifierFinder;
+import org.gfbio.service.persistence.DataProvider_PersistentIdentifierPersistence;
 import org.gfbio.service.persistence.HeadFinder;
 import org.gfbio.service.persistence.HeadPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
+import org.gfbio.service.persistence.Project_ResearchObjectFinder;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.Project_User_PIPersistence;
+import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
+import org.gfbio.service.persistence.SubmissionRegistryFinder;
+import org.gfbio.service.persistence.SubmissionRegistryPersistence;
 import org.gfbio.service.persistence.UserExtensionPersistence;
 
 import javax.sql.DataSource;
@@ -264,6 +272,157 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the data provider local service.
+	 *
+	 * @return the data provider local service
+	 */
+	public org.gfbio.service.DataProviderLocalService getDataProviderLocalService() {
+		return dataProviderLocalService;
+	}
+
+	/**
+	 * Sets the data provider local service.
+	 *
+	 * @param dataProviderLocalService the data provider local service
+	 */
+	public void setDataProviderLocalService(
+		org.gfbio.service.DataProviderLocalService dataProviderLocalService) {
+		this.dataProviderLocalService = dataProviderLocalService;
+	}
+
+	/**
+	 * Returns the data provider remote service.
+	 *
+	 * @return the data provider remote service
+	 */
+	public org.gfbio.service.DataProviderService getDataProviderService() {
+		return dataProviderService;
+	}
+
+	/**
+	 * Sets the data provider remote service.
+	 *
+	 * @param dataProviderService the data provider remote service
+	 */
+	public void setDataProviderService(
+		org.gfbio.service.DataProviderService dataProviderService) {
+		this.dataProviderService = dataProviderService;
+	}
+
+	/**
+	 * Returns the data provider persistence.
+	 *
+	 * @return the data provider persistence
+	 */
+	public DataProviderPersistence getDataProviderPersistence() {
+		return dataProviderPersistence;
+	}
+
+	/**
+	 * Sets the data provider persistence.
+	 *
+	 * @param dataProviderPersistence the data provider persistence
+	 */
+	public void setDataProviderPersistence(
+		DataProviderPersistence dataProviderPersistence) {
+		this.dataProviderPersistence = dataProviderPersistence;
+	}
+
+	/**
+	 * Returns the data provider finder.
+	 *
+	 * @return the data provider finder
+	 */
+	public DataProviderFinder getDataProviderFinder() {
+		return dataProviderFinder;
+	}
+
+	/**
+	 * Sets the data provider finder.
+	 *
+	 * @param dataProviderFinder the data provider finder
+	 */
+	public void setDataProviderFinder(DataProviderFinder dataProviderFinder) {
+		this.dataProviderFinder = dataProviderFinder;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier local service.
+	 *
+	 * @return the data provider_ persistent identifier local service
+	 */
+	public org.gfbio.service.DataProvider_PersistentIdentifierLocalService getDataProvider_PersistentIdentifierLocalService() {
+		return dataProvider_PersistentIdentifierLocalService;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier local service.
+	 *
+	 * @param dataProvider_PersistentIdentifierLocalService the data provider_ persistent identifier local service
+	 */
+	public void setDataProvider_PersistentIdentifierLocalService(
+		org.gfbio.service.DataProvider_PersistentIdentifierLocalService dataProvider_PersistentIdentifierLocalService) {
+		this.dataProvider_PersistentIdentifierLocalService = dataProvider_PersistentIdentifierLocalService;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier remote service.
+	 *
+	 * @return the data provider_ persistent identifier remote service
+	 */
+	public org.gfbio.service.DataProvider_PersistentIdentifierService getDataProvider_PersistentIdentifierService() {
+		return dataProvider_PersistentIdentifierService;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier remote service.
+	 *
+	 * @param dataProvider_PersistentIdentifierService the data provider_ persistent identifier remote service
+	 */
+	public void setDataProvider_PersistentIdentifierService(
+		org.gfbio.service.DataProvider_PersistentIdentifierService dataProvider_PersistentIdentifierService) {
+		this.dataProvider_PersistentIdentifierService = dataProvider_PersistentIdentifierService;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier persistence.
+	 *
+	 * @return the data provider_ persistent identifier persistence
+	 */
+	public DataProvider_PersistentIdentifierPersistence getDataProvider_PersistentIdentifierPersistence() {
+		return dataProvider_PersistentIdentifierPersistence;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier persistence.
+	 *
+	 * @param dataProvider_PersistentIdentifierPersistence the data provider_ persistent identifier persistence
+	 */
+	public void setDataProvider_PersistentIdentifierPersistence(
+		DataProvider_PersistentIdentifierPersistence dataProvider_PersistentIdentifierPersistence) {
+		this.dataProvider_PersistentIdentifierPersistence = dataProvider_PersistentIdentifierPersistence;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier finder.
+	 *
+	 * @return the data provider_ persistent identifier finder
+	 */
+	public DataProvider_PersistentIdentifierFinder getDataProvider_PersistentIdentifierFinder() {
+		return dataProvider_PersistentIdentifierFinder;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier finder.
+	 *
+	 * @param dataProvider_PersistentIdentifierFinder the data provider_ persistent identifier finder
+	 */
+	public void setDataProvider_PersistentIdentifierFinder(
+		DataProvider_PersistentIdentifierFinder dataProvider_PersistentIdentifierFinder) {
+		this.dataProvider_PersistentIdentifierFinder = dataProvider_PersistentIdentifierFinder;
+	}
+
+	/**
 	 * Returns the head local service.
 	 *
 	 * @return the head local service
@@ -450,6 +609,25 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the project_ research object finder.
+	 *
+	 * @return the project_ research object finder
+	 */
+	public Project_ResearchObjectFinder getProject_ResearchObjectFinder() {
+		return project_ResearchObjectFinder;
+	}
+
+	/**
+	 * Sets the project_ research object finder.
+	 *
+	 * @param project_ResearchObjectFinder the project_ research object finder
+	 */
+	public void setProject_ResearchObjectFinder(
+		Project_ResearchObjectFinder project_ResearchObjectFinder) {
+		this.project_ResearchObjectFinder = project_ResearchObjectFinder;
+	}
+
+	/**
 	 * Returns the project_ user local service.
 	 *
 	 * @return the project_ user local service
@@ -618,6 +796,101 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	public void setResearchObjectPersistence(
 		ResearchObjectPersistence researchObjectPersistence) {
 		this.researchObjectPersistence = researchObjectPersistence;
+	}
+
+	/**
+	 * Returns the research object finder.
+	 *
+	 * @return the research object finder
+	 */
+	public ResearchObjectFinder getResearchObjectFinder() {
+		return researchObjectFinder;
+	}
+
+	/**
+	 * Sets the research object finder.
+	 *
+	 * @param researchObjectFinder the research object finder
+	 */
+	public void setResearchObjectFinder(
+		ResearchObjectFinder researchObjectFinder) {
+		this.researchObjectFinder = researchObjectFinder;
+	}
+
+	/**
+	 * Returns the submission registry local service.
+	 *
+	 * @return the submission registry local service
+	 */
+	public org.gfbio.service.SubmissionRegistryLocalService getSubmissionRegistryLocalService() {
+		return submissionRegistryLocalService;
+	}
+
+	/**
+	 * Sets the submission registry local service.
+	 *
+	 * @param submissionRegistryLocalService the submission registry local service
+	 */
+	public void setSubmissionRegistryLocalService(
+		org.gfbio.service.SubmissionRegistryLocalService submissionRegistryLocalService) {
+		this.submissionRegistryLocalService = submissionRegistryLocalService;
+	}
+
+	/**
+	 * Returns the submission registry remote service.
+	 *
+	 * @return the submission registry remote service
+	 */
+	public org.gfbio.service.SubmissionRegistryService getSubmissionRegistryService() {
+		return submissionRegistryService;
+	}
+
+	/**
+	 * Sets the submission registry remote service.
+	 *
+	 * @param submissionRegistryService the submission registry remote service
+	 */
+	public void setSubmissionRegistryService(
+		org.gfbio.service.SubmissionRegistryService submissionRegistryService) {
+		this.submissionRegistryService = submissionRegistryService;
+	}
+
+	/**
+	 * Returns the submission registry persistence.
+	 *
+	 * @return the submission registry persistence
+	 */
+	public SubmissionRegistryPersistence getSubmissionRegistryPersistence() {
+		return submissionRegistryPersistence;
+	}
+
+	/**
+	 * Sets the submission registry persistence.
+	 *
+	 * @param submissionRegistryPersistence the submission registry persistence
+	 */
+	public void setSubmissionRegistryPersistence(
+		SubmissionRegistryPersistence submissionRegistryPersistence) {
+		this.submissionRegistryPersistence = submissionRegistryPersistence;
+	}
+
+	/**
+	 * Returns the submission registry finder.
+	 *
+	 * @return the submission registry finder
+	 */
+	public SubmissionRegistryFinder getSubmissionRegistryFinder() {
+		return submissionRegistryFinder;
+	}
+
+	/**
+	 * Sets the submission registry finder.
+	 *
+	 * @param submissionRegistryFinder the submission registry finder
+	 */
+	public void setSubmissionRegistryFinder(
+		SubmissionRegistryFinder submissionRegistryFinder) {
+		this.submissionRegistryFinder = submissionRegistryFinder;
 	}
 
 	/**
@@ -870,6 +1143,22 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	protected ContentPersistence contentPersistence;
 	@BeanReference(type = ContentFinder.class)
 	protected ContentFinder contentFinder;
+	@BeanReference(type = org.gfbio.service.DataProviderLocalService.class)
+	protected org.gfbio.service.DataProviderLocalService dataProviderLocalService;
+	@BeanReference(type = org.gfbio.service.DataProviderService.class)
+	protected org.gfbio.service.DataProviderService dataProviderService;
+	@BeanReference(type = DataProviderPersistence.class)
+	protected DataProviderPersistence dataProviderPersistence;
+	@BeanReference(type = DataProviderFinder.class)
+	protected DataProviderFinder dataProviderFinder;
+	@BeanReference(type = org.gfbio.service.DataProvider_PersistentIdentifierLocalService.class)
+	protected org.gfbio.service.DataProvider_PersistentIdentifierLocalService dataProvider_PersistentIdentifierLocalService;
+	@BeanReference(type = org.gfbio.service.DataProvider_PersistentIdentifierService.class)
+	protected org.gfbio.service.DataProvider_PersistentIdentifierService dataProvider_PersistentIdentifierService;
+	@BeanReference(type = DataProvider_PersistentIdentifierPersistence.class)
+	protected DataProvider_PersistentIdentifierPersistence dataProvider_PersistentIdentifierPersistence;
+	@BeanReference(type = DataProvider_PersistentIdentifierFinder.class)
+	protected DataProvider_PersistentIdentifierFinder dataProvider_PersistentIdentifierFinder;
 	@BeanReference(type = org.gfbio.service.HeadLocalService.class)
 	protected org.gfbio.service.HeadLocalService headLocalService;
 	@BeanReference(type = org.gfbio.service.HeadService.class)
@@ -890,6 +1179,8 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.Project_ResearchObjectService project_ResearchObjectService;
 	@BeanReference(type = Project_ResearchObjectPersistence.class)
 	protected Project_ResearchObjectPersistence project_ResearchObjectPersistence;
+	@BeanReference(type = Project_ResearchObjectFinder.class)
+	protected Project_ResearchObjectFinder project_ResearchObjectFinder;
 	@BeanReference(type = org.gfbio.service.Project_UserLocalService.class)
 	protected org.gfbio.service.Project_UserLocalService project_UserLocalService;
 	@BeanReference(type = org.gfbio.service.Project_UserService.class)
@@ -908,6 +1199,16 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.ResearchObjectService researchObjectService;
 	@BeanReference(type = ResearchObjectPersistence.class)
 	protected ResearchObjectPersistence researchObjectPersistence;
+	@BeanReference(type = ResearchObjectFinder.class)
+	protected ResearchObjectFinder researchObjectFinder;
+	@BeanReference(type = org.gfbio.service.SubmissionRegistryLocalService.class)
+	protected org.gfbio.service.SubmissionRegistryLocalService submissionRegistryLocalService;
+	@BeanReference(type = org.gfbio.service.SubmissionRegistryService.class)
+	protected org.gfbio.service.SubmissionRegistryService submissionRegistryService;
+	@BeanReference(type = SubmissionRegistryPersistence.class)
+	protected SubmissionRegistryPersistence submissionRegistryPersistence;
+	@BeanReference(type = SubmissionRegistryFinder.class)
+	protected SubmissionRegistryFinder submissionRegistryFinder;
 	@BeanReference(type = org.gfbio.service.UserExtensionLocalService.class)
 	protected org.gfbio.service.UserExtensionLocalService userExtensionLocalService;
 	@BeanReference(type = org.gfbio.service.UserExtensionService.class)

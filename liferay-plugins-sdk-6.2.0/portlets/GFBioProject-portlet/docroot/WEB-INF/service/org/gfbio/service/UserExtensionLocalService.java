@@ -251,18 +251,11 @@ public interface UserExtensionLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.UserExtension getUserExtensionById(
-		long userExtensionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchUserExtensionException;
+	public org.json.simple.JSONObject getUserExtentionById(
+		org.json.simple.JSONObject json);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getUserAsJsonById(long userId)
+	public org.json.simple.JSONObject constructUserExtentionJsonById(
+		com.liferay.portal.model.User user)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

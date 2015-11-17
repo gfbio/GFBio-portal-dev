@@ -271,6 +271,27 @@ public class ProjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONArray getCompleteProjectById(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getCompleteProjectById(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getCompleteProjectById(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getCompleteProjectById(requestJson);
+	}
+
+	public static org.json.simple.JSONObject getProjectById(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getProjectById(requestJson);
+	}
+
+	public static org.gfbio.model.Project getProjectById(long projectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProjectException {
+		return getService().getProjectById(projectId);
+	}
+
 	public static java.util.List<org.gfbio.model.Project> getProjectList(
 		long userID)
 		throws com.liferay.portal.NoSuchModelException,
@@ -285,6 +306,21 @@ public class ProjectLocalServiceUtil {
 		return getService().getResearchObjectList(projectID, userID);
 	}
 
+	public static org.json.simple.JSONObject constructProjectAsJson(
+		org.gfbio.model.Project project) {
+		return getService().constructProjectAsJson(project);
+	}
+
+	public static org.json.simple.JSONArray constructProjectAsJsonArray(
+		org.gfbio.model.Project project) {
+		return getService().constructProjectAsJsonArray(project);
+	}
+
+	public static org.json.simple.JSONArray constructProjectsAsJson(
+		java.util.List<org.gfbio.model.Project> projectList) {
+		return getService().constructProjectsAsJson(projectList);
+	}
+
 	public static long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.util.Date startDate,
@@ -293,12 +329,6 @@ public class ProjectLocalServiceUtil {
 		return getService()
 				   .updateProject(projectID, userID, name, label, description,
 			startDate, endDate, status);
-	}
-
-	public static long updateProject(long projectID, java.lang.String name,
-		java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateProject(projectID, name, description);
 	}
 
 	public static void clearService() {

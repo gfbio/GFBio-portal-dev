@@ -22,14 +22,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
-import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import org.gfbio.model.ResearchObject;
 import org.gfbio.model.ResearchObjectModel;
 import org.gfbio.model.ResearchObjectSoap;
+
+import org.gfbio.service.persistence.ResearchObjectPK;
 
 import java.io.Serializable;
 
@@ -64,12 +62,15 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	public static final String TABLE_NAME = "gfbio_ResearchObject";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "researchObjectID", Types.BIGINT },
+			{ "researchObjectVersion", Types.INTEGER },
+			{ "parentResearchObjectID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "label", Types.VARCHAR },
 			{ "metadata", Types.VARCHAR },
-			{ "formatmetadata", Types.VARCHAR }
+			{ "formatmetadata", Types.VARCHAR },
+			{ "researchObjectType", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null primary key,name VARCHAR(75) null,label VARCHAR(75) null,metadata VARCHAR(75) null,formatmetadata VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null,researchObjectVersion INTEGER not null,parentResearchObjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,metadata VARCHAR(75) null,formatmetadata VARCHAR(75) null,researchObjectType VARCHAR(75) null,primary key (researchObjectID, researchObjectVersion))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_ResearchObject";
 	public static final String ORDER_BY_JPQL = " ORDER BY researchObject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_ResearchObject.name ASC";
@@ -87,7 +88,9 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			true);
 	public static long LABEL_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long RESEARCHOBJECTID_COLUMN_BITMASK = 4L;
+	public static long PARENTRESEARCHOBJECTID_COLUMN_BITMASK = 4L;
+	public static long RESEARCHOBJECTID_COLUMN_BITMASK = 8L;
+	public static long RESEARCHOBJECTVERSION_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -103,10 +106,13 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		ResearchObject model = new ResearchObjectImpl();
 
 		model.setResearchObjectID(soapModel.getResearchObjectID());
+		model.setResearchObjectVersion(soapModel.getResearchObjectVersion());
+		model.setParentResearchObjectID(soapModel.getParentResearchObjectID());
 		model.setName(soapModel.getName());
 		model.setLabel(soapModel.getLabel());
 		model.setMetadata(soapModel.getMetadata());
 		model.setFormatmetadata(soapModel.getFormatmetadata());
+		model.setResearchObjectType(soapModel.getResearchObjectType());
 
 		return model;
 	}
@@ -138,23 +144,24 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	}
 
 	@Override
-	public long getPrimaryKey() {
-		return _researchObjectID;
+	public ResearchObjectPK getPrimaryKey() {
+		return new ResearchObjectPK(_researchObjectID, _researchObjectVersion);
 	}
 
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		setResearchObjectID(primaryKey);
+	public void setPrimaryKey(ResearchObjectPK primaryKey) {
+		setResearchObjectID(primaryKey.researchObjectID);
+		setResearchObjectVersion(primaryKey.researchObjectVersion);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _researchObjectID;
+		return new ResearchObjectPK(_researchObjectID, _researchObjectVersion);
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Long)primaryKeyObj).longValue());
+		setPrimaryKey((ResearchObjectPK)primaryKeyObj);
 	}
 
 	@Override
@@ -172,10 +179,13 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("researchObjectID", getResearchObjectID());
+		attributes.put("researchObjectVersion", getResearchObjectVersion());
+		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("metadata", getMetadata());
 		attributes.put("formatmetadata", getFormatmetadata());
+		attributes.put("researchObjectType", getResearchObjectType());
 
 		return attributes;
 	}
@@ -186,6 +196,20 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		if (researchObjectID != null) {
 			setResearchObjectID(researchObjectID);
+		}
+
+		Integer researchObjectVersion = (Integer)attributes.get(
+				"researchObjectVersion");
+
+		if (researchObjectVersion != null) {
+			setResearchObjectVersion(researchObjectVersion);
+		}
+
+		Long parentResearchObjectID = (Long)attributes.get(
+				"parentResearchObjectID");
+
+		if (parentResearchObjectID != null) {
+			setParentResearchObjectID(parentResearchObjectID);
 		}
 
 		String name = (String)attributes.get("name");
@@ -211,6 +235,12 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		if (formatmetadata != null) {
 			setFormatmetadata(formatmetadata);
 		}
+
+		String researchObjectType = (String)attributes.get("researchObjectType");
+
+		if (researchObjectType != null) {
+			setResearchObjectType(researchObjectType);
+		}
 	}
 
 	@JSON
@@ -234,6 +264,52 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	public long getOriginalResearchObjectID() {
 		return _originalResearchObjectID;
+	}
+
+	@JSON
+	@Override
+	public int getResearchObjectVersion() {
+		return _researchObjectVersion;
+	}
+
+	@Override
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_columnBitmask |= RESEARCHOBJECTVERSION_COLUMN_BITMASK;
+
+		if (!_setOriginalResearchObjectVersion) {
+			_setOriginalResearchObjectVersion = true;
+
+			_originalResearchObjectVersion = _researchObjectVersion;
+		}
+
+		_researchObjectVersion = researchObjectVersion;
+	}
+
+	public int getOriginalResearchObjectVersion() {
+		return _originalResearchObjectVersion;
+	}
+
+	@JSON
+	@Override
+	public long getParentResearchObjectID() {
+		return _parentResearchObjectID;
+	}
+
+	@Override
+	public void setParentResearchObjectID(long parentResearchObjectID) {
+		_columnBitmask |= PARENTRESEARCHOBJECTID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentResearchObjectID) {
+			_setOriginalParentResearchObjectID = true;
+
+			_originalParentResearchObjectID = _parentResearchObjectID;
+		}
+
+		_parentResearchObjectID = parentResearchObjectID;
+	}
+
+	public long getOriginalParentResearchObjectID() {
+		return _originalParentResearchObjectID;
 	}
 
 	@JSON
@@ -320,21 +396,24 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		_formatmetadata = formatmetadata;
 	}
 
+	@JSON
+	@Override
+	public String getResearchObjectType() {
+		if (_researchObjectType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _researchObjectType;
+		}
+	}
+
+	@Override
+	public void setResearchObjectType(String researchObjectType) {
+		_researchObjectType = researchObjectType;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			ResearchObject.class.getName(), getPrimaryKey());
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -352,10 +431,13 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		ResearchObjectImpl researchObjectImpl = new ResearchObjectImpl();
 
 		researchObjectImpl.setResearchObjectID(getResearchObjectID());
+		researchObjectImpl.setResearchObjectVersion(getResearchObjectVersion());
+		researchObjectImpl.setParentResearchObjectID(getParentResearchObjectID());
 		researchObjectImpl.setName(getName());
 		researchObjectImpl.setLabel(getLabel());
 		researchObjectImpl.setMetadata(getMetadata());
 		researchObjectImpl.setFormatmetadata(getFormatmetadata());
+		researchObjectImpl.setResearchObjectType(getResearchObjectType());
 
 		researchObjectImpl.resetOriginalValues();
 
@@ -387,9 +469,9 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		ResearchObject researchObject = (ResearchObject)obj;
 
-		long primaryKey = researchObject.getPrimaryKey();
+		ResearchObjectPK primaryKey = researchObject.getPrimaryKey();
 
-		if (getPrimaryKey() == primaryKey) {
+		if (getPrimaryKey().equals(primaryKey)) {
 			return true;
 		}
 		else {
@@ -399,7 +481,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public int hashCode() {
-		return (int)getPrimaryKey();
+		return getPrimaryKey().hashCode();
 	}
 
 	@Override
@@ -409,6 +491,14 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		researchObjectModelImpl._originalResearchObjectID = researchObjectModelImpl._researchObjectID;
 
 		researchObjectModelImpl._setOriginalResearchObjectID = false;
+
+		researchObjectModelImpl._originalResearchObjectVersion = researchObjectModelImpl._researchObjectVersion;
+
+		researchObjectModelImpl._setOriginalResearchObjectVersion = false;
+
+		researchObjectModelImpl._originalParentResearchObjectID = researchObjectModelImpl._parentResearchObjectID;
+
+		researchObjectModelImpl._setOriginalParentResearchObjectID = false;
 
 		researchObjectModelImpl._originalName = researchObjectModelImpl._name;
 
@@ -422,6 +512,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		ResearchObjectCacheModel researchObjectCacheModel = new ResearchObjectCacheModel();
 
 		researchObjectCacheModel.researchObjectID = getResearchObjectID();
+
+		researchObjectCacheModel.researchObjectVersion = getResearchObjectVersion();
+
+		researchObjectCacheModel.parentResearchObjectID = getParentResearchObjectID();
 
 		researchObjectCacheModel.name = getName();
 
@@ -455,15 +549,27 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			researchObjectCacheModel.formatmetadata = null;
 		}
 
+		researchObjectCacheModel.researchObjectType = getResearchObjectType();
+
+		String researchObjectType = researchObjectCacheModel.researchObjectType;
+
+		if ((researchObjectType != null) && (researchObjectType.length() == 0)) {
+			researchObjectCacheModel.researchObjectType = null;
+		}
+
 		return researchObjectCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
+		sb.append(", researchObjectVersion=");
+		sb.append(getResearchObjectVersion());
+		sb.append(", parentResearchObjectID=");
+		sb.append(getParentResearchObjectID());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", label=");
@@ -472,6 +578,8 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		sb.append(getMetadata());
 		sb.append(", formatmetadata=");
 		sb.append(getFormatmetadata());
+		sb.append(", researchObjectType=");
+		sb.append(getResearchObjectType());
 		sb.append("}");
 
 		return sb.toString();
@@ -479,7 +587,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.ResearchObject");
@@ -488,6 +596,14 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		sb.append(
 			"<column><column-name>researchObjectID</column-name><column-value><![CDATA[");
 		sb.append(getResearchObjectID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>researchObjectVersion</column-name><column-value><![CDATA[");
+		sb.append(getResearchObjectVersion());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>parentResearchObjectID</column-name><column-value><![CDATA[");
+		sb.append(getParentResearchObjectID());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -505,6 +621,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			"<column><column-name>formatmetadata</column-name><column-value><![CDATA[");
 		sb.append(getFormatmetadata());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>researchObjectType</column-name><column-value><![CDATA[");
+		sb.append(getResearchObjectType());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -518,12 +638,19 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	private long _researchObjectID;
 	private long _originalResearchObjectID;
 	private boolean _setOriginalResearchObjectID;
+	private int _researchObjectVersion;
+	private int _originalResearchObjectVersion;
+	private boolean _setOriginalResearchObjectVersion;
+	private long _parentResearchObjectID;
+	private long _originalParentResearchObjectID;
+	private boolean _setOriginalParentResearchObjectID;
 	private String _name;
 	private String _originalName;
 	private String _label;
 	private String _originalLabel;
 	private String _metadata;
 	private String _formatmetadata;
+	private String _researchObjectType;
 	private long _columnBitmask;
 	private ResearchObject _escapedModel;
 }

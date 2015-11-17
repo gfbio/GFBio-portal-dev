@@ -24,6 +24,10 @@ import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ColumnServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.ContentServiceUtil;
+import org.gfbio.service.DataProviderLocalServiceUtil;
+import org.gfbio.service.DataProviderServiceUtil;
+import org.gfbio.service.DataProvider_PersistentIdentifierLocalServiceUtil;
+import org.gfbio.service.DataProvider_PersistentIdentifierServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.HeadServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
@@ -36,6 +40,8 @@ import org.gfbio.service.Project_User_PILocalServiceUtil;
 import org.gfbio.service.Project_User_PIServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectServiceUtil;
+import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
+import org.gfbio.service.SubmissionRegistryServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.UserExtensionServiceUtil;
 
@@ -63,6 +69,12 @@ public class ClpMessageListener extends BaseMessageListener {
 			ContentLocalServiceUtil.clearService();
 
 			ContentServiceUtil.clearService();
+			DataProviderLocalServiceUtil.clearService();
+
+			DataProviderServiceUtil.clearService();
+			DataProvider_PersistentIdentifierLocalServiceUtil.clearService();
+
+			DataProvider_PersistentIdentifierServiceUtil.clearService();
 			HeadLocalServiceUtil.clearService();
 
 			HeadServiceUtil.clearService();
@@ -81,6 +93,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			ResearchObjectLocalServiceUtil.clearService();
 
 			ResearchObjectServiceUtil.clearService();
+			SubmissionRegistryLocalServiceUtil.clearService();
+
+			SubmissionRegistryServiceUtil.clearService();
 			UserExtensionLocalServiceUtil.clearService();
 
 			UserExtensionServiceUtil.clearService();

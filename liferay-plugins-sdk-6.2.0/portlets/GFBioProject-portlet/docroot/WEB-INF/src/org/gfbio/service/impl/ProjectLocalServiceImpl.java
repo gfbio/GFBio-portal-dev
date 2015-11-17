@@ -28,8 +28,13 @@ import org.gfbio.model.Project;
 import org.gfbio.model.Project_ResearchObject;
 import org.gfbio.model.Project_User;
 import org.gfbio.model.ResearchObject;
+import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
+import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the project local service.
@@ -41,14 +46,87 @@ import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.ProjectLocalServiceBaseImpl
  * @see org.gfbio.service.ProjectLocalServiceUtil
  */
 public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getCompleteProjectById (JSONArray requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++)
+			responseJson.add(getCompleteProjectById((JSONObject) requestJson.get(i)));
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getCompleteProjectById (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		List <ResearchObject> researchObjectList = null;
+		
+		if (requestJson.containsKey("projectid")){
+			try {
+				responseJson.add(ProjectLocalServiceUtil.getProjectById((long) requestJson.get("projectid")));
+			} catch (NoSuchProjectException | SystemException e) {
+				e.printStackTrace();
+				JSONObject keyJson = new JSONObject();
+				keyJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+				responseJson.add(keyJson);
+			}
+			researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId((long) requestJson.get("projectid"));
+			for (int i =0; i< researchObjectList.size();i++)
+				responseJson.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+		}else{
+			JSONObject keyJson = new JSONObject();
+			keyJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+			responseJson.add( keyJson);
+		}
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONObject getProjectById (JSONObject requestJson){
+		
+		JSONObject responseJson = new JSONObject();
+		
+		if (requestJson.containsKey("projectid"))
+			try {
+				responseJson = ProjectLocalServiceUtil.constructProjectAsJson(ProjectLocalServiceUtil.getProjectById((long)requestJson.get("projectid")));
+			} catch (NoSuchProjectException | SystemException e) {
+				e.printStackTrace();
+				responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
+		else
+			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+		
+		return responseJson;
+	}
+	
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+	//
+	public Project getProjectById (long projectId) throws NoSuchProjectException, SystemException{
+		return projectPersistence.findByPrimaryKey(projectId);
+	}
+	
+	
 	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
-
 	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 
 		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIDList(userID);
@@ -61,8 +139,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return projectList;
 	}
 
+	
 	// get list of all Research Objects of a specific project
-
 	public List<ResearchObject> getResearchObjectList(long projectID, long userID) throws NoSuchModelException, SystemException {
 
 		List<Project_ResearchObject> idList = project_ResearchObjectPersistence.findByProjectID(projectID);
@@ -73,8 +151,50 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return researchObjectList;
 	}
 
-	// update or create a new project
+	
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructProjectAsJson (Project project){
+		JSONObject json = new JSONObject();
 
+		json.put("projectid", project.getProjectID());
+		json.put("parentprojectid", project.getParentProjectID());
+		json.put("name", project.getName());
+		json.put("label", project.getLabel());
+		json.put("description", project.getDescription());
+		json.put("startdate", project.getStartDate());	
+		json.put("enddate", project.getEndDate());
+		json.put("status", project.getStatus());
+		return json;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray constructProjectAsJsonArray (Project project){
+		JSONArray jsonArray = new JSONArray ();
+		jsonArray.add(constructProjectAsJson(project));
+		return jsonArray;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray constructProjectsAsJson (List <Project> projectList){
+		JSONArray json = new JSONArray();
+		for (int i =0; i < projectList.size();i++)
+			json.add(constructProjectAsJson(projectList.get(i)));
+		return json;
+	}
+	
+
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
+	
+	
+	//
 	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
 
 		Project project = null;
@@ -93,10 +213,11 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			project.setStatus(status);
 			super.updateProject(project);
 			try {
+				@SuppressWarnings("unused")
 				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
-				System.out.println(foobar);
 			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
 		}
+		
 		//update project
 		else {
 			project.setName(name);
@@ -110,18 +231,5 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return project.getProjectID();
 	}
 
-	@Override
-	public long updateProject(long projectID, String name, String description)
-			throws SystemException {
 
-		// TODO Auto-generated method stub
-
-		return 0;
-	}
-
-//	public int getProjectSize(long projectID) {
-//		int size = 0;
-//		Project project = null;
-//		size = project. //		return size;
-//	}
 }

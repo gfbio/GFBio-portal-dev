@@ -62,33 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ProjectServiceSoap {
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.sample.service.ProjectServiceUtil} to access the project remote service.
-	*/
-	public static org.gfbio.model.ProjectSoap[] getProjectList(long userID)
-		throws RemoteException {
+	public static org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
-			java.util.List<org.gfbio.model.Project> returnValue = ProjectServiceUtil.getProjectList(userID);
-
-			return org.gfbio.model.ProjectSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
-		throws RemoteException {
-		try {
-			long returnValue = ProjectServiceUtil.updateProject(projectID,
-					userID, name, label, description, startDate, endDate, status);
+			org.json.simple.JSONArray returnValue = ProjectServiceUtil.getProjectById(requestJson);
 
 			return returnValue;
 		}

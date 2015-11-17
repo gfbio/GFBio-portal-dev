@@ -14,9 +14,9 @@
 
 package org.gfbio.service.impl;
 
-import org.gfbio.service.ContentLocalServiceUtil;
+
 import org.gfbio.service.base.ContentServiceBaseImpl;
-import org.json.simple.JSONObject;
+
 
 /**
  * The implementation of the content remote service.

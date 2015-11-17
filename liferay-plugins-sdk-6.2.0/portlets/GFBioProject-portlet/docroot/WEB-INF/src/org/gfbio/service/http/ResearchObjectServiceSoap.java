@@ -62,13 +62,80 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ResearchObjectServiceSoap {
-	public static long updateResearchObject(long projectID,
-		long researchObjectID, java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
-		throws RemoteException {
+	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
-			long returnValue = ResearchObjectServiceUtil.updateResearchObject(projectID,
-					researchObjectID, name, label, metadata, formatmetadata);
+			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectAbsolutParent(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.json.simple.JSONArray getResearchObjectById(
+		java.lang.String requestJson) throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectById(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
+		try {
+			org.json.simple.JSONObject returnValue = ResearchObjectServiceUtil.getResearchObjectParent(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.getResearchObjectsByParent(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.json.simple.JSONArray createResearchObject(
+		java.lang.String requestJson) throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.createResearchObject(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.json.simple.JSONArray updateResearchObject(
+		java.lang.String requestJson) throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = ResearchObjectServiceUtil.updateResearchObject(requestJson);
 
 			return returnValue;
 		}

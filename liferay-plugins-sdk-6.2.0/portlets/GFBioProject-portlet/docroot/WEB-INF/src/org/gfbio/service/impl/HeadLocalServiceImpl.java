@@ -51,24 +51,34 @@ import org.json.simple.JSONObject;
 public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 	
+	///////////////////////////////////// Delete Functions ///////////////////////////////////////////////////
 	
-	//construt a JSON with  the head attributs
-	@SuppressWarnings("unchecked")
-	public JSONObject constructHeadJson(long headId, String tableName, String tableType){
-		JSONObject json = new JSONObject();
-		json.put("headid", Long.toString(headId));
-		json.put("table_name", tableName);
-		json.put("table_type", tableType);
-		return json;
-	}
 	
-
-	//ColumnLocalServiceUtil.deleteColumnsByHeadId ( headId);
-	public void deleteHeadByHeadId(long headId) throws SystemException, PortalException{
-		HeadLocalServiceUtil.deleteHead(headId);
-	}
-	
+	//delete a table/entity (head, column and content) an their relations
+	@SuppressWarnings("rawtypes")
 	public void deleteTableByHeadId(long headId){
+		
+		Boolean check=false;
+		try {
+			check = ColumnLocalServiceUtil.checkHaveTableRelationsById(headId);
+		} catch (NoSuchHeadException | SystemException e2) {e2.printStackTrace();}
+		
+		if (check){
+			String tableName="";
+			try {
+				tableName = HeadLocalServiceUtil.getTableNameById(headId);
+			} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+			List relationList = ColumnLocalServiceUtil.getHeadIdsByColumnName(tableName);
+			for (int i=0; i <relationList.size();i++)
+				HeadLocalServiceUtil.deleteTableByHeadIdWithoutCheck((long)relationList.get(i));
+		}
+		HeadLocalServiceUtil.deleteTableByHeadIdWithoutCheck(headId);
+	}
+	
+	
+	//delete a table/entity (head, column and content) 
+	public void deleteTableByHeadIdWithoutCheck(long headId){
+		
 		try {
 			ContentLocalServiceUtil.deleteContentsByHeadId(headId);
 		} catch (SystemException e1) {e1.printStackTrace();	}
@@ -78,14 +88,16 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		} catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+		
 		
 	//get Table_names of a List of heads selected by TableType
 	public String[] getArrayOfTableNames(String tableType){
 		
 		List <Head> headList = null;
 		String[] names =null;
-		
-		try {
+			try {
 			headList = HeadLocalServiceUtil.getHeadsByTableType(tableType);
 		} catch (SystemException e) {e.printStackTrace();}
 		if (headList != null){
@@ -93,7 +105,6 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 			for (int i=0;i<headList.size();i++)
 				names[i] = headList.get(i).getTable_name();
 		}
-
 		return names;
 	}
 	
@@ -104,7 +115,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		int count =0;
 		List <Content> contentList = null;
 		try {
-			contentList = ContentLocalServiceUtil.getContentsByHeadId(headId);
+			contentList = contentPersistence.findByHeadId(headId);
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null){
@@ -121,46 +132,21 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	}
 	
 	
-	//get the count of rows of a specific head
-	public int getCountOfRows(long headId) throws SystemException{
-		return ContentLocalServiceUtil.getContentsByHeadId(headId).size();
-	}
-	
-	
 	//get the Entities that have a relation to a specific headId
+	@SuppressWarnings("rawtypes")
 	public List getEntitiesByHeadId(long headId) {
 		return HeadFinderUtil.getEntitiesByHeadId(headId);
 	}
 	
 
-	
-	//it's a common sql query test method
-	public List<Head> getHeadBetweenHeadId(int start, int end) {
-		return HeadFinderUtil.getHeadBetweenHeadIds(start, end);
-	}
-	
-		
-	//get head by headID
-	public Head getHeadById(long headId) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByHeadId(headId);
-	}
-	
-	
-	//get head by tableName of the table
-	public Head getHeadByTableName(String tableName) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByTableName(tableName);
-	}
-
-	
 	//get ID of a head by tableName
+	@SuppressWarnings("rawtypes")
 	public Long getHeadIdByTableName(String tableName) throws NoSuchHeadException, SystemException {
-		return HeadLocalServiceUtil.getHeadByTableName(tableName).getHeadID();
-	}
-	
-		
-	//get all heads
-	public List<Head> getHeads() throws SystemException {
-		return headPersistence.findAll();
+		Long headId =(long) 0;
+		List headIdList = HeadFinderUtil.getHeadIdByTableName(tableName);
+		if (headIdList.size() >0)
+			headId = (Long) headIdList.get(0);
+		return headId;
 	}
 	
 	
@@ -169,32 +155,9 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return headPersistence.findByTableType(tableType);
 	}
 	
-/*	
-	//get the Head with all Cells as JSON
-	public JSONObject getHeadAsJSONById (long headId){
 	
-		JSONObject json = new JSONObject();
-		Head head = null;
-		
-	try {
-		head = HeadLocalServiceUtil.getHead(headId);
-	} catch (PortalException | SystemException e) {e.printStackTrace();}
-		
-		if (head != null){
-			json.put("headId", head.getHeadID());
-			json.put("tableName", head.getTable_name());
-			json.put("table_type", head.getTable_type());
-			try {
-				for (int i =0; i < HeadLocalServiceUtil.getColumnCount(headId);i++)
-					json.put(new Integer(i).toString(), CellLocalServiceUtil.getCell(Cell_HeadLocalServiceUtil.getCellId(headId, i)));
-			} catch (SystemException | PortalException e) {e.printStackTrace();	}
-		}
-		return json;
-	}*/
-	
-	
-	
-	//get Entities of a specific head in a TableArray
+	//get content of a specific entity in a TableArray
+	@SuppressWarnings("rawtypes")
 	public long[][] getIdTableAsArray(long headId){
 		
 		long[][] table = null;
@@ -206,7 +169,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		table[0][0]= headId;
 		List<Column> columnList = null;
 		try {
-			columnList = ColumnLocalServiceUtil.getColumnsByHeadId(headId);
+			columnList = columnPersistence.findByHeadId(headId);
 		} catch (SystemException e1) {e1.printStackTrace();}
 		
 		for (int x =0; x < columnList.size();x++)
@@ -225,39 +188,41 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return table;
 	}
 	
+	
+	//get IDs  of a specific entity in a TableArray
 	public String[][] getTableAsArray(long headId){
 		
 		long [][] idTable = HeadLocalServiceUtil.getIdTableAsArray(headId);
 		String[][] returnTable = new String[idTable.length][idTable[0].length];
 		
 		try {
-			returnTable[0][0] = HeadLocalServiceUtil.getTableName(headId);
+			returnTable[0][0] = HeadLocalServiceUtil.getTableNameById(headId);
 		} catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
-		
+
 		for (int y = 1; y < idTable[0].length;y++)
 			returnTable[0][y]=Long.toString(idTable[0][y]);
 		
 		for (int x =1;x< idTable.length;x++)
-			try {
-				returnTable[x][0]= ColumnLocalServiceUtil.getColumn(idTable[x][0]).getColumn_name();
-			} catch (PortalException | SystemException e) {e.printStackTrace();}
+			returnTable[x][0]= ColumnLocalServiceUtil.getColumnNameById(idTable[x][0]);
 		
-		for (int y = 1; y < idTable[0].length;y++){
+		for (int y = 1; y < idTable[0].length;y++)
 			for (int x =1;x< idTable.length;x++)
 				try {
-					returnTable[x][y]= ContentLocalServiceUtil.getContentById(idTable[x][y]).getCellContent();
+					returnTable[x][y]= contentPersistence.findByContentId(idTable[x][y]).getCellContent();
 				} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
-		}
-		
+			
 		return returnTable;
 	}
 	
-	
-	
-	
-	//get tableName of a specific head
-	public String getTableName(long headId) throws NoSuchHeadException, SystemException {
-		return headPersistence.findByHeadId(headId).getTable_name();
+		
+	//get tableName of a specific head  
+	@SuppressWarnings("rawtypes")
+	public String getTableNameById(long headId) throws NoSuchHeadException, SystemException {
+		String name ="";
+		List nameList =  HeadFinderUtil.getTableNameById(headId);
+		if (nameList.size()>0)
+			name =  (String) nameList.get(0);
+		return name;
 	}
 	
 	
@@ -288,10 +253,41 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return tableNames;
 	}
 	
+		
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//construt a JSON with  the head attributs
+	@SuppressWarnings("unchecked")
+	public JSONObject constructHeadJson(long headId, String tableName, String tableType){
+		JSONObject json = new JSONObject();
+		json.put("headid", Long.toString(headId));
+		json.put("table_name", tableName);
+		json.put("table_type", tableType);
+		return json;
+	}
+	
+	
+	//construct the relation name (String) of two entity names
+	public String constructRelationName(String mtable, String ntable){
+		mtable = mtable.trim();
+		ntable = ntable.trim();
+		List <String> tableNames = new ArrayList<String>();
+		tableNames.add(mtable);
+		tableNames.add(ntable);
+		Collections.sort(tableNames);
+		mtable = tableNames.get(0).substring(6);
+		ntable = tableNames.get(1).substring(6);
+		
+		return "gfbio_".concat(mtable).concat("_").concat(ntable);
+	}
+	
+
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
+	
 	
 	//update or build a new the head
 	public Boolean updateHead (long headId, String tableName, String tableType){
-		System.out.println("updateHead2: "+headId+ " | "+tableName+ " | "+tableType);
 		Boolean check = false;
 		Head head = null;
 		try {
@@ -299,15 +295,12 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		} catch (PortalException | SystemException e1) {e1.printStackTrace();}
 
 		if (head == null){
-			System.out.println("big null");
 			try {
-				head = HeadLocalServiceUtil.getHeadByTableName(tableName);
+				head = headPersistence.findByTableName(tableName);
 			} catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
-			System.out.println("null or not null");
 			
 			// the tableName of a table must be unique
 			if (head == null){
-				System.out.println("small null");
 				try {
 					head = headPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 					head.setTable_name(tableName);
@@ -317,6 +310,11 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 						check = true;
 					} catch (SystemException e) {e.printStackTrace();}
 				} catch (SystemException e) {e.printStackTrace();}
+				
+				if(tableType.equals("entity")){
+					ColumnLocalServiceUtil.updateColumn(0,head.getHeadID(),"id");
+				}
+				
 			}else 
 				check = false;
 		}else{
@@ -330,7 +328,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				//check to test, that the new table name is unique
 				Head headCheck = null;
 				try {
-					headCheck = HeadLocalServiceUtil.getHeadByTableName(tableName);
+					headCheck = headPersistence.findByTableName(tableName);
 				} catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
 				if (headCheck == null){
 					head.setTable_name(tableName);
@@ -350,19 +348,15 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 	//update or build a new the head
 	public Boolean updateHead (JSONObject json){
-		System.out.println("updateHead: " +json);
 		Boolean check = false;
 		String headKey ="headid";
 		String tableNameKey = "table_name";
 		String tableTypeKey = "table_type";
-		if (json.containsKey(headKey) && json.containsKey(tableNameKey) && json.containsKey(tableTypeKey)){
-			System.out.println("checker");
+		if (json.containsKey(headKey) && json.containsKey(tableNameKey) && json.containsKey(tableTypeKey))
 			check = HeadLocalServiceUtil.updateHead(Long.valueOf((String) json.get(headKey)).longValue(), (String) json.get(tableNameKey), (String) json.get(tableTypeKey));
-		}
-		else
-			System.out.println("noChecker");
 		return check;
 	}
+	
 	
 	//update or build a new the head
 	public long updateHeadWithLongRequest (JSONObject json){
@@ -373,7 +367,6 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		String tableTypeKey = "table_type";
 		if (json.containsKey(headKey) && json.containsKey(tableNameKey) && json.containsKey(tableTypeKey))
 			headid = HeadLocalServiceUtil.updateHeadWithLongRequest(Long.valueOf((String) json.get(headKey)).longValue(), (String) json.get(tableNameKey), (String) json.get(tableTypeKey));
-		System.out.println("updateHeadWithLongRequest 1 "+headid);
 		return headid;
 	}
 	
@@ -387,15 +380,12 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		} catch (PortalException | SystemException e1) {e1.printStackTrace();}
 
 		if (head == null){
-			System.out.println("big null");
 			try {
-				head = HeadLocalServiceUtil.getHeadByTableName(tableName);
+				head = headPersistence.findByTableName(tableName);
 			} catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
-			System.out.println("null or not null");
 			
 			// the tableName of a table must be unique
 			if (head == null){
-				System.out.println("small null");
 				try {
 					head = headPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 					head.setTable_name(tableName);
@@ -418,7 +408,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				//check to test, that the new table name is unique
 				Head headCheck = null;
 				try {
-					headCheck = HeadLocalServiceUtil.getHeadByTableName(tableName);
+					headCheck = headPersistence.findByTableName(tableName);
 				} catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
 				if (headCheck == null){
 					head.setTable_name(tableName);
@@ -432,32 +422,36 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				}
 			}
 		}
-		if (head != null) id = head.getHeadID(); 
-		System.out.println("updateHeadWithLongRequest 2"+id);
+		if (head != null) 
+			id = head.getHeadID(); 
+
 		return id;
 	}
 	
 	
-	//update or build a new head and their columns
+	//update or build a new head and their columns and contents
 	@SuppressWarnings("unchecked")
 	public Boolean updateHeadWithColumns (JSONObject json){
-		System.out.println("json: "+ json);
+
 		Boolean check = HeadLocalServiceUtil.updateHead(json);
 		long headid = HeadLocalServiceUtil.updateHeadWithLongRequest(json);
 		int i=0;
 		long rowId = 0;
-		System.out.println("json2: "+ json + " ||||| "+headid+ " | "+json.containsKey(i));
+
 		while (json.containsKey(new Integer (i).toString())){
 			JSONObject columnjson = (JSONObject) json.get(new Integer (i).toString());
 			columnjson.remove("headid");
 			columnjson.put("headid", Long.toString(headid));
-			System.out.println("columjson: "+columnjson);
+
 			if (columnjson.containsKey("0")){
 				JSONObject contentjson = (JSONObject) columnjson.get("0");
 				if (rowId==0){
-					try {
-						rowId= ContentLocalServiceUtil.constructNewId();
-					} catch (SystemException e1) {e1.printStackTrace();}
+					if (((String)contentjson.get("rowid")).equals("0"))
+						try {
+							rowId= ContentLocalServiceUtil.constructNewId();
+						} catch (SystemException e) {e.printStackTrace();}
+					else
+						rowId = Long.valueOf((String)contentjson.get("rowid"));
 				}
 				contentjson.remove("rowid");
 				contentjson.put("rowid", Long.toString(rowId));
@@ -466,7 +460,6 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				columnjson.remove("0");
 				columnjson.put("0", contentjson);
 			}
-			System.out.println(i+" | "+columnjson);
 			check = ColumnLocalServiceUtil.updateColumnWithContents(columnjson);
 			i++;
 		}
@@ -474,9 +467,48 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	}
 	
 	
+	//update or build a new head and their columns and contents
+	@SuppressWarnings("unchecked")
+	public Boolean updateHeadWithColumns2 (JSONObject json){
+
+		Boolean check = HeadLocalServiceUtil.updateHead(json);
+		long headid = HeadLocalServiceUtil.updateHeadWithLongRequest(json);
+		int i=0;
+		long rowId = 0;
+
+
+		while (json.containsKey(new Integer (i).toString())){
+			JSONObject columnjson = (JSONObject) json.get(new Integer (i).toString());
+			columnjson.remove("headid");
+			columnjson.put("headid", Long.toString(headid));
+
+			if (columnjson.containsKey("0")){
+				JSONObject contentjson = (JSONObject) columnjson.get("0");
+				if (rowId==0){
+					if (((long)contentjson.get("rowid"))==0)
+						try {
+							rowId= ContentLocalServiceUtil.constructNewId();
+						} catch (SystemException e) {e.printStackTrace();}
+					else
+						rowId = (long)contentjson.get("rowid");
+				}
+				contentjson.remove("rowid");
+				contentjson.put("rowid", Long.toString(rowId));
+				contentjson.remove("headid");
+				contentjson.put("headid", Long.toString(headid));
+				columnjson.remove("0");
+				columnjson.put("0", contentjson);
+			}
+			check = ColumnLocalServiceUtil.updateColumnWithContents2(columnjson);
+			i++;
+		}
+		return check;
+	}
+	
+	
 	//update or build a relation table 
+	@SuppressWarnings("unchecked")
 	public Boolean updateRelationTable(long headId, String mtable, String ntable){
-		System.out.println("basis: "+headId+ " | "+ mtable+ " | "+ntable);
 
 		Boolean check = true;
 		if (headId == 0){
@@ -485,22 +517,14 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 			ntable = ntable.trim();
 			List <String> tableNames = new ArrayList<String>();
 			
-			if (mtable.equals(ntable))
-				check = false;
-			else{
-				//sort table tableNames
-				tableNames.add(mtable);
-				tableNames.add(ntable);
-				Collections.sort(tableNames);
-				mtable = tableNames.get(0).substring(6);
-				ntable = tableNames.get(1).substring(6);
-				System.out.println(mtable);
-			}
+			tableNames.add(mtable);
+			tableNames.add(ntable);
+			Collections.sort(tableNames);
+			
 				
-			JSONObject json = HeadLocalServiceUtil.constructHeadJson(headId, "gfbio_".concat(mtable).concat("_").concat(ntable), "relationship");
-			for (int i =0; i < 2 ;i++){
+			JSONObject json = HeadLocalServiceUtil.constructHeadJson(headId, HeadLocalServiceUtil.constructRelationName(mtable, ntable), "relationship");
+			for (int i =0; i < 2 ;i++)
 				json.put(new Integer (i).toString(), ColumnLocalServiceUtil.constructColumnJson(0, headId, tableNames.get(i)));
-			}
 			check =HeadLocalServiceUtil.updateHeadWithColumns(json);
 		}else
 			check = false;
@@ -508,19 +532,54 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return check;
 	}
 	
-	public String constructRelationName(String mtable, String ntable){
-		mtable = mtable.trim();
-		ntable = ntable.trim();
-		List <String> tableNames = new ArrayList<String>();
-		tableNames.add(mtable);
-		tableNames.add(ntable);
-		Collections.sort(tableNames);
-		mtable = tableNames.get(0).substring(6);
-		ntable = tableNames.get(1).substring(6);
+	
+	
+	//update or build a relation table with content -> build a relationship
+	@SuppressWarnings("unchecked")
+	public Boolean updateRelationTableWithContent(long headId1, long headId2, long contentId1, long contentId2){
 		
-		return "gfbio_".concat(mtable).concat("_").concat(ntable);
+		Boolean check = true;
+		long headId =0;
+		String tableName="";
+
+		try {
+			tableName = constructRelationName(HeadLocalServiceUtil.getTableNameById(headId1), HeadLocalServiceUtil.getTableNameById(headId2));
+		} catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
+
+		try {
+			headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		
+		JSONObject json = HeadLocalServiceUtil.constructHeadJson(headId, tableName, "relationship");
+		JSONObject jsonColumn1 = null;
+		JSONObject jsonColumn2 = null;
+		JSONObject jsonContent1 = null;
+		JSONObject jsonContent2 = null;
+		
+		try {
+			jsonColumn1 = ColumnLocalServiceUtil.constructColumnJson(columnPersistence.findByHeadIdAndColumnName(headId, HeadLocalServiceUtil.getTableNameById(headId1)).get(0).getColumnID(), headId, HeadLocalServiceUtil.getTableNameById(headId1));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		try {
+			jsonColumn2 = ColumnLocalServiceUtil.constructColumnJson(columnPersistence.findByHeadIdAndColumnName(headId, HeadLocalServiceUtil.getTableNameById(headId2)).get(0).getColumnID(), headId, HeadLocalServiceUtil.getTableNameById(headId2));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+
+		try {
+			jsonContent1 = ContentLocalServiceUtil.constructColumnJson(0, headId1, columnPersistence.findByHeadIdAndColumnName(headId, HeadLocalServiceUtil.getTableNameById(headId1)).get(0).getColumnID(), 0, Long.toString(ContentLocalServiceUtil.getRowIdById(contentId1)));
+		} catch (SystemException | PortalException e) {e.printStackTrace();	}
+		
+		try {
+			jsonContent2 = ContentLocalServiceUtil.constructColumnJson(0, headId2, columnPersistence.findByHeadIdAndColumnName(headId, HeadLocalServiceUtil.getTableNameById(headId2)).get(0).getColumnID(), 0, Long.toString(ContentLocalServiceUtil.getRowIdById(contentId2)));
+		} catch (SystemException | PortalException e) {e.printStackTrace();	}
+
+		jsonColumn1.put("0", jsonContent1);
+		jsonColumn2.put("0", jsonContent2);
+		json.put("0", jsonColumn1);
+		json.put("1", jsonColumn2);
+		
+		check =HeadLocalServiceUtil.updateHeadWithColumns2(json);
+		
+		return check;
 	}
-		
 
 	
 	//update or build a new head with their columns and their contents

@@ -56,26 +56,10 @@ public class ProjectServiceWrapper implements ProjectService,
 		return _projectService.invokeMethod(name, parameterTypes, arguments);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.sample.service.ProjectServiceUtil} to access the project remote service.
-	*/
 	@Override
-	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
-		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _projectService.getProjectList(userID);
-	}
-
-	@Override
-	public long updateProject(long projectID, long userID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _projectService.updateProject(projectID, userID, name, label,
-			description, startDate, endDate, status);
+	public org.json.simple.JSONArray getProjectById(
+		org.json.simple.JSONObject requestJson) {
+		return _projectService.getProjectById(requestJson);
 	}
 
 	/**

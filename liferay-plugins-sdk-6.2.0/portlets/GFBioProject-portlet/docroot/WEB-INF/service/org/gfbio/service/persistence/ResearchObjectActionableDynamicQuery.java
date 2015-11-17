@@ -33,6 +33,6 @@ public abstract class ResearchObjectActionableDynamicQuery
 
 		setClassLoader(org.gfbio.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("researchObjectID");
+		setPrimaryKeyPropertyName("primaryKey.researchObjectID");
 	}
 }

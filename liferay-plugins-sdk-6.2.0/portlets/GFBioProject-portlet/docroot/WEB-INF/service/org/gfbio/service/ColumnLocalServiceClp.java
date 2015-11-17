@@ -108,53 +108,51 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "constructColumnJson";
+		_methodName19 = "deleteColumnsByHeadId";
 
-		_methodParameterTypes19 = new String[] {
-				"long", "long", "java.lang.String"
-			};
+		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "deleteColumnById";
+		_methodName20 = "getColumnNameById";
 
 		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "deleteColumnsByHeadId";
+		_methodName21 = "getColumnIdsWithoutRelation";
 
-		_methodParameterTypes21 = new String[] { "long" };
+		_methodParameterTypes21 = new String[] { "java.lang.String" };
 
-		_methodName22 = "getColumnById";
+		_methodName22 = "getColumnsByHeadId";
 
 		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName23 = "getColumnsByHeadId";
+		_methodName23 = "getColumnsWithRelation";
 
-		_methodParameterTypes23 = new String[] { "long" };
+		_methodParameterTypes23 = new String[] { "java.lang.String" };
 
-		_methodName24 = "getColumnsByHeadIdAndName";
+		_methodName24 = "getCountofColumns";
 
-		_methodParameterTypes24 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "getColumnsWithRelation";
+		_methodName25 = "getHeadIdById";
 
-		_methodParameterTypes25 = new String[] { "java.lang.String" };
+		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "getColumnIdsWithoutRelation";
+		_methodName26 = "getHeadIdsByColumnName";
 
 		_methodParameterTypes26 = new String[] { "java.lang.String" };
 
-		_methodName27 = "getCountofColumns";
+		_methodName27 = "getMaxCountofColumns";
 
-		_methodParameterTypes27 = new String[] { "long" };
+		_methodParameterTypes27 = new String[] { "java.util.List" };
 
-		_methodName28 = "getHeadIdById";
+		_methodName28 = "checkHaveTableRelationsById";
 
 		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName29 = "getMaxCountofColumns";
+		_methodName29 = "checkHaveTableRelationsByName";
 
-		_methodParameterTypes29 = new String[] { "java.util.List" };
+		_methodParameterTypes29 = new String[] { "java.lang.String" };
 
-		_methodName30 = "updateColumn";
+		_methodName30 = "constructColumnJson";
 
 		_methodParameterTypes30 = new String[] {
 				"long", "long", "java.lang.String"
@@ -162,11 +160,21 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 
 		_methodName31 = "updateColumn";
 
-		_methodParameterTypes31 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes31 = new String[] {
+				"long", "long", "java.lang.String"
+			};
 
-		_methodName32 = "updateColumnWithContents";
+		_methodName32 = "updateColumn";
 
 		_methodParameterTypes32 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName33 = "updateColumnWithContents";
+
+		_methodParameterTypes33 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName34 = "updateColumnWithContents2";
+
+		_methodParameterTypes34 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -712,60 +720,10 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject constructColumnJson(long columnId,
-		long headId, java.lang.String columnName) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19,
-					new Object[] {
-						columnId,
-						
-					headId,
-						
-					ClpSerializer.translateInput(columnName)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public void deleteColumnById(long columnId) {
-		try {
-			_invokableLocalService.invokeMethod(_methodName20,
-				_methodParameterTypes20, new Object[] { columnId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-	}
-
-	@Override
 	public void deleteColumnsByHeadId(long headId) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName21,
-				_methodParameterTypes21, new Object[] { headId });
+			_invokableLocalService.invokeMethod(_methodName19,
+				_methodParameterTypes19, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -781,12 +739,12 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	}
 
 	@Override
-	public org.gfbio.model.Column getColumnById(long columnId) {
+	public java.lang.String getColumnNameById(long columnId) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -800,17 +758,19 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 			}
 		}
 
-		return (org.gfbio.model.Column)ClpSerializer.translateOutput(returnObj);
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Column> getColumnsByHeadId(
-		long headId) throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List getColumnIdsWithoutRelation(
+		java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] { ClpSerializer.translateInput(columnName) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -828,23 +788,17 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 			}
 		}
 
-		return (java.util.List<org.gfbio.model.Column>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Column> getColumnsByHeadIdAndName(
-		long headId, java.lang.String columnName)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<org.gfbio.model.Column> getColumnsByHeadId(
+		long headId) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
-					new Object[] {
-						headId,
-						
-					ClpSerializer.translateInput(columnName)
-					});
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -872,8 +826,8 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { ClpSerializer.translateInput(columnName) });
 		}
 		catch (Throwable t) {
@@ -896,43 +850,13 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	}
 
 	@Override
-	public java.util.List getColumnIdsWithoutRelation(
-		java.lang.String columnName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
-					new Object[] { ClpSerializer.translateInput(columnName) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public int getCountofColumns(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { headId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { headId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -960,8 +884,8 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] { columnId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { columnId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -987,14 +911,38 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	}
 
 	@Override
+	public java.util.List getHeadIdsByColumnName(java.lang.String columnName) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] { ClpSerializer.translateInput(columnName) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int getMaxCountofColumns(
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] { ClpSerializer.translateInput(headList) });
 		}
 		catch (Throwable t) {
@@ -1017,13 +965,102 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	}
 
 	@Override
-	public java.lang.Boolean updateColumn(long columnId, long headId,
-		java.lang.String content) {
+	public java.lang.Boolean checkHaveTableRelationsById(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { headId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchHeadException) {
+				throw (org.gfbio.NoSuchHeadException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean checkHaveTableRelationsByName(
+		java.lang.String tableName) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
+					new Object[] { ClpSerializer.translateInput(tableName) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructColumnJson(long columnId,
+		long headId, java.lang.String columnName) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName30,
 					_methodParameterTypes30,
+					new Object[] {
+						columnId,
+						
+					headId,
+						
+					ClpSerializer.translateInput(columnName)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateColumn(long columnId, long headId,
+		java.lang.String content) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						columnId,
 						
@@ -1052,8 +1089,8 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1077,8 +1114,33 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateColumnWithContents2(
+		org.json.simple.JSONObject json) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1161,4 +1223,8 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	private String[] _methodParameterTypes31;
 	private String _methodName32;
 	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
+	private String _methodName34;
+	private String[] _methodParameterTypes34;
 }

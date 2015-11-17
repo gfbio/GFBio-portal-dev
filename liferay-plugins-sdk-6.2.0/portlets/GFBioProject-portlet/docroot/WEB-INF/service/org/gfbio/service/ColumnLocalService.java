@@ -246,32 +246,22 @@ public interface ColumnLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public org.json.simple.JSONObject constructColumnJson(long columnId,
-		long headId, java.lang.String columnName);
-
-	public void deleteColumnById(long columnId);
-
 	public void deleteColumnsByHeadId(long headId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.gfbio.model.Column getColumnById(long columnId);
+	public java.lang.String getColumnNameById(long columnId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getColumnIdsWithoutRelation(
+		java.lang.String columnName)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Column> getColumnsByHeadId(
 		long headId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<org.gfbio.model.Column> getColumnsByHeadIdAndName(
-		long headId, java.lang.String columnName)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
-		java.lang.String columnName)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List getColumnIdsWithoutRelation(
 		java.lang.String columnName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -285,9 +275,22 @@ public interface ColumnLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getHeadIdsByColumnName(java.lang.String columnName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMaxCountofColumns(
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.Boolean checkHaveTableRelationsById(long headId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException;
+
+	public java.lang.Boolean checkHaveTableRelationsByName(
+		java.lang.String tableName);
+
+	public org.json.simple.JSONObject constructColumnJson(long columnId,
+		long headId, java.lang.String columnName);
 
 	public java.lang.Boolean updateColumn(long columnId, long headId,
 		java.lang.String content);
@@ -295,5 +298,8 @@ public interface ColumnLocalService extends BaseLocalService,
 	public java.lang.Boolean updateColumn(org.json.simple.JSONObject json);
 
 	public java.lang.Boolean updateColumnWithContents(
+		org.json.simple.JSONObject json);
+
+	public java.lang.Boolean updateColumnWithContents2(
 		org.json.simple.JSONObject json);
 }

@@ -267,19 +267,12 @@ public class HeadLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONObject constructHeadJson(long headId,
-		java.lang.String tableName, java.lang.String tableType) {
-		return getService().constructHeadJson(headId, tableName, tableType);
-	}
-
-	public static void deleteHeadByHeadId(long headId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteHeadByHeadId(headId);
-	}
-
 	public static void deleteTableByHeadId(long headId) {
 		getService().deleteTableByHeadId(headId);
+	}
+
+	public static void deleteTableByHeadIdWithoutCheck(long headId) {
+		getService().deleteTableByHeadIdWithoutCheck(headId);
 	}
 
 	public static java.lang.String[] getArrayOfTableNames(
@@ -291,31 +284,8 @@ public class HeadLocalServiceUtil {
 		return getService().getCountOfColumns(headId);
 	}
 
-	public static int getCountOfRows(long headId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCountOfRows(headId);
-	}
-
 	public static java.util.List getEntitiesByHeadId(long headId) {
 		return getService().getEntitiesByHeadId(headId);
-	}
-
-	public static java.util.List<org.gfbio.model.Head> getHeadBetweenHeadId(
-		int start, int end) {
-		return getService().getHeadBetweenHeadId(start, end);
-	}
-
-	public static org.gfbio.model.Head getHeadById(long headId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return getService().getHeadById(headId);
-	}
-
-	public static org.gfbio.model.Head getHeadByTableName(
-		java.lang.String tableName)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return getService().getHeadByTableName(tableName);
 	}
 
 	public static java.lang.Long getHeadIdByTableName(
@@ -323,11 +293,6 @@ public class HeadLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
 		return getService().getHeadIdByTableName(tableName);
-	}
-
-	public static java.util.List<org.gfbio.model.Head> getHeads()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getHeads();
 	}
 
 	public static java.util.List<org.gfbio.model.Head> getHeadsByTableType(
@@ -344,10 +309,10 @@ public class HeadLocalServiceUtil {
 		return getService().getTableAsArray(headId);
 	}
 
-	public static java.lang.String getTableName(long headId)
+	public static java.lang.String getTableNameById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return getService().getTableName(headId);
+		return getService().getTableNameById(headId);
 	}
 
 	public static java.lang.String[] getTableNameArray(
@@ -360,6 +325,16 @@ public class HeadLocalServiceUtil {
 		java.util.List<org.gfbio.model.Head> headList)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTableNameArray(headList);
+	}
+
+	public static org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return getService().constructHeadJson(headId, tableName, tableType);
+	}
+
+	public static java.lang.String constructRelationName(
+		java.lang.String mtable, java.lang.String ntable) {
+		return getService().constructRelationName(mtable, ntable);
 	}
 
 	public static java.lang.Boolean updateHead(long headId,
@@ -387,14 +362,21 @@ public class HeadLocalServiceUtil {
 		return getService().updateHeadWithColumns(json);
 	}
 
+	public static java.lang.Boolean updateHeadWithColumns2(
+		org.json.simple.JSONObject json) {
+		return getService().updateHeadWithColumns2(json);
+	}
+
 	public static java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable) {
 		return getService().updateRelationTable(headId, mtable, ntable);
 	}
 
-	public static java.lang.String constructRelationName(
-		java.lang.String mtable, java.lang.String ntable) {
-		return getService().constructRelationName(mtable, ntable);
+	public static java.lang.Boolean updateRelationTableWithContent(
+		long headId1, long headId2, long contentId1, long contentId2) {
+		return getService()
+				   .updateRelationTableWithContent(headId1, headId2,
+			contentId1, contentId2);
 	}
 
 	public static java.lang.Boolean updateTable(org.json.simple.JSONObject json) {

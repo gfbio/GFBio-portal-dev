@@ -7,7 +7,7 @@
 		revision="working@froemm-PC"
 		conf="default"
 		confs="default"
-		date="20150604134013"/>
+		date="20151015113132"/>
 	<dependencies>
 		<module organisation="xerces" name="xercesImpl">
 			<revision name="2.10.0" status="release" pubdate="20110816003238" resolver="maven2" artresolver="default" homepage="https://xerces.apache.org/xerces2-j/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="27">

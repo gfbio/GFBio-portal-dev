@@ -52,18 +52,21 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 	@Override
 	public Project_ResearchObjectPK getPrimaryKey() {
-		return new Project_ResearchObjectPK(_projectID, _researchObjectID);
+		return new Project_ResearchObjectPK(_projectID, _researchObjectID,
+			_researchObjectVersion);
 	}
 
 	@Override
 	public void setPrimaryKey(Project_ResearchObjectPK primaryKey) {
 		setProjectID(primaryKey.projectID);
 		setResearchObjectID(primaryKey.researchObjectID);
+		setResearchObjectVersion(primaryKey.researchObjectVersion);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return new Project_ResearchObjectPK(_projectID, _researchObjectID);
+		return new Project_ResearchObjectPK(_projectID, _researchObjectID,
+			_researchObjectVersion);
 	}
 
 	@Override
@@ -77,6 +80,7 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("researchObjectID", getResearchObjectID());
+		attributes.put("researchObjectVersion", getResearchObjectVersion());
 
 		return attributes;
 	}
@@ -93,6 +97,13 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 		if (researchObjectID != null) {
 			setResearchObjectID(researchObjectID);
+		}
+
+		Integer researchObjectVersion = (Integer)attributes.get(
+				"researchObjectVersion");
+
+		if (researchObjectVersion != null) {
+			setResearchObjectVersion(researchObjectVersion);
 		}
 	}
 
@@ -137,6 +148,31 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 				method.invoke(_project_ResearchObjectRemoteModel,
 					researchObjectID);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public int getResearchObjectVersion() {
+		return _researchObjectVersion;
+	}
+
+	@Override
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_researchObjectVersion = researchObjectVersion;
+
+		if (_project_ResearchObjectRemoteModel != null) {
+			try {
+				Class<?> clazz = _project_ResearchObjectRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setResearchObjectVersion",
+						int.class);
+
+				method.invoke(_project_ResearchObjectRemoteModel,
+					researchObjectVersion);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -217,6 +253,7 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 		clone.setProjectID(getProjectID());
 		clone.setResearchObjectID(getResearchObjectID());
+		clone.setResearchObjectVersion(getResearchObjectVersion());
 
 		return clone;
 	}
@@ -261,12 +298,14 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
 		sb.append(", researchObjectID=");
 		sb.append(getResearchObjectID());
+		sb.append(", researchObjectVersion=");
+		sb.append(getResearchObjectVersion());
 		sb.append("}");
 
 		return sb.toString();
@@ -274,7 +313,7 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project_ResearchObject");
@@ -288,6 +327,10 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 			"<column><column-name>researchObjectID</column-name><column-value><![CDATA[");
 		sb.append(getResearchObjectID());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>researchObjectVersion</column-name><column-value><![CDATA[");
+		sb.append(getResearchObjectVersion());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -296,6 +339,7 @@ public class Project_ResearchObjectClp extends BaseModelImpl<Project_ResearchObj
 
 	private long _projectID;
 	private long _researchObjectID;
+	private int _researchObjectVersion;
 	private BaseModel<?> _project_ResearchObjectRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }
