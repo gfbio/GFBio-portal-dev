@@ -84,7 +84,7 @@
 					//console.log(':Search: receive facet filter - '+JSON.stringify(facetFilters));
 					for (var i = 0; i < facetFilters.length; i++) {
 						var facetFilter = facetFilters[i];
-						if ((facetFilter.facetCat =="citation.yearFacet")&&(facetFilter.facetTerm.indexOf(" - ") >0))
+						if ((facetFilter.facetCat =="citation_yearFacet")&&(facetFilter.facetTerm.indexOf(" - ") >0))
 						{
 							yearRange = facetFilter.facetTerm;
 						}

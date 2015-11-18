@@ -66,8 +66,8 @@
 							var max = ui.values[1];
 							$( "#amount" ).val(min + " - " + max);
 							//TODO: remove previous range filter
-							removeByFacetCatBasket("citation.yearFacet");
-							addToFacetBasket("citation.yearFacet", min + " - " + max);
+							removeByFacetCatBasket("citation_yearFacet");
+							addToFacetBasket("citation_yearFacet", min + " - " + max);
 						  }
 						});
 						$( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
@@ -218,9 +218,9 @@
 
 							displayHTML += "<ol id='facet-tree'>";
 							
-							displayHTML += writeListFacet('citation.authorFacet', 'Author', authorFacet, 'author');
+							displayHTML += writeListFacet('citation_authorFacet', 'Author', authorFacet, 'author');
 
-							displayHTML += writeListFacet('citation.yearFacet', 'Publication Year', yearFacet, 'year');
+							displayHTML += writeListFacet('citation_yearFacet', 'Publication Year', yearFacet, 'year');
 
 							displayHTML += writeListFacet('regionFacet', 'Geographical Region', regionFacet, 'region');
 
