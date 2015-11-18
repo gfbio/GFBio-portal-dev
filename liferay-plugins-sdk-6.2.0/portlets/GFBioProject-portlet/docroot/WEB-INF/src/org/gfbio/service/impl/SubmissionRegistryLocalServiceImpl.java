@@ -168,7 +168,7 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 		
 	//
 	public String getStatus(long researchObjectId, int researchObjectVersion, String archive, String archivePId){
-		String status ="";
+		String status ="send";
 		
 		if (archivePId != null && !(archivePId.equals("")))
 			status = "archived";
@@ -334,11 +334,9 @@ public class SubmissionRegistryLocalServiceImpl	extends SubmissionRegistryLocalS
 	@SuppressWarnings("unchecked")
 	public JSONArray updateSubmissionRegistry (JSONArray requestJson){
 		
-		System.out.println(requestJson);
 		JSONArray responseJson = new JSONArray();
 		for (int i =0; i <requestJson.size();i++)
 			responseJson.add(updateSubmissionRegistry((JSONObject) requestJson.get(i)));
-		System.out.println(responseJson);
 		return responseJson;
 	}
 	

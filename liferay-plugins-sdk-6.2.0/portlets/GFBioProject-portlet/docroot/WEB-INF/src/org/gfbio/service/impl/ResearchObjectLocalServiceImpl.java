@@ -391,10 +391,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					String metadata = requestJson.get("metadata").toString();
 					String formatmetadata = ResearchObjectLocalServiceUtil.constructFormatMetadata(metadata);
 					
-					if (!(name.equals(researchObject.getName()) && label.equals(researchObject.getLabel()) && metadata.equals(researchObject.getMetadata()))){
+					if (!(metadata.equals(researchObject.getMetadata()))){
 						researchObjectVersion = ResearchObjectLocalServiceUtil.updateResearchObjectVersion(researchObjectId, researchObjectVersion);
-						researchObjectId = updateResearchObject(researchObjectId, researchObjectVersion, name, label, metadata, formatmetadata);
 					}
+					
+					researchObjectId = updateResearchObject(researchObjectId, researchObjectVersion, name, label, metadata, formatmetadata);
 					
 					responseJson.put("researchobjectid", researchObjectId);
 					responseJson.put("researchobjectversion", researchObjectVersion);

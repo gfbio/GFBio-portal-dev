@@ -60,7 +60,6 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 
 		JSONArray responseJson = new JSONArray();
 		responseJson = ProjectLocalServiceUtil.getCompleteProjectById(requestJson);
-		System.out.println(responseJson);
 		return responseJson;
 	}
 	
