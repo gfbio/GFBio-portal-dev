@@ -65,6 +65,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 	public static final String TABLE_NAME = "gfbio_Project";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "projectID", Types.BIGINT },
+			{ "parentProjectID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "label", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
@@ -72,7 +73,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 			{ "endDate", Types.TIMESTAMP },
 			{ "status", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Project (projectID LONG not null primary key,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,status VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Project (projectID LONG not null primary key,parentProjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,status VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Project";
 	public static final String ORDER_BY_JPQL = " ORDER BY project.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project.name ASC";
@@ -90,7 +91,8 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 			true);
 	public static long LABEL_COLUMN_BITMASK = 1L;
 	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long PROJECTID_COLUMN_BITMASK = 4L;
+	public static long PARENTPROJECTID_COLUMN_BITMASK = 4L;
+	public static long PROJECTID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -106,6 +108,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		Project model = new ProjectImpl();
 
 		model.setProjectID(soapModel.getProjectID());
+		model.setParentProjectID(soapModel.getParentProjectID());
 		model.setName(soapModel.getName());
 		model.setLabel(soapModel.getLabel());
 		model.setDescription(soapModel.getDescription());
@@ -177,6 +180,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("projectID", getProjectID());
+		attributes.put("parentProjectID", getParentProjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("description", getDescription());
@@ -193,6 +197,12 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		if (projectID != null) {
 			setProjectID(projectID);
+		}
+
+		Long parentProjectID = (Long)attributes.get("parentProjectID");
+
+		if (parentProjectID != null) {
+			setParentProjectID(parentProjectID);
 		}
 
 		String name = (String)attributes.get("name");
@@ -253,6 +263,29 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	public long getOriginalProjectID() {
 		return _originalProjectID;
+	}
+
+	@JSON
+	@Override
+	public long getParentProjectID() {
+		return _parentProjectID;
+	}
+
+	@Override
+	public void setParentProjectID(long parentProjectID) {
+		_columnBitmask |= PARENTPROJECTID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentProjectID) {
+			_setOriginalParentProjectID = true;
+
+			_originalParentProjectID = _parentProjectID;
+		}
+
+		_parentProjectID = parentProjectID;
+	}
+
+	public long getOriginalParentProjectID() {
+		return _originalParentProjectID;
 	}
 
 	@JSON
@@ -393,6 +426,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		ProjectImpl projectImpl = new ProjectImpl();
 
 		projectImpl.setProjectID(getProjectID());
+		projectImpl.setParentProjectID(getParentProjectID());
 		projectImpl.setName(getName());
 		projectImpl.setLabel(getLabel());
 		projectImpl.setDescription(getDescription());
@@ -453,6 +487,10 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		projectModelImpl._setOriginalProjectID = false;
 
+		projectModelImpl._originalParentProjectID = projectModelImpl._parentProjectID;
+
+		projectModelImpl._setOriginalParentProjectID = false;
+
 		projectModelImpl._originalName = projectModelImpl._name;
 
 		projectModelImpl._originalLabel = projectModelImpl._label;
@@ -465,6 +503,8 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		ProjectCacheModel projectCacheModel = new ProjectCacheModel();
 
 		projectCacheModel.projectID = getProjectID();
+
+		projectCacheModel.parentProjectID = getParentProjectID();
 
 		projectCacheModel.name = getName();
 
@@ -521,10 +561,12 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
+		sb.append(", parentProjectID=");
+		sb.append(getParentProjectID());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", label=");
@@ -544,7 +586,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project");
@@ -553,6 +595,10 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		sb.append(
 			"<column><column-name>projectID</column-name><column-value><![CDATA[");
 		sb.append(getProjectID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>parentProjectID</column-name><column-value><![CDATA[");
+		sb.append(getParentProjectID());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -591,6 +637,9 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 	private long _projectID;
 	private long _originalProjectID;
 	private boolean _setOriginalProjectID;
+	private long _parentProjectID;
+	private long _originalParentProjectID;
+	private boolean _setOriginalParentProjectID;
 	private String _name;
 	private String _originalName;
 	private String _label;

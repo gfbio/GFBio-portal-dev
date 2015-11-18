@@ -2,7 +2,6 @@ package org.gfbio.archiving;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -88,23 +87,21 @@ public class ArchivingPortlet extends GenericPortlet {
 
 
 	public void newResearchObject(ResourceRequest request, ResourceResponse response) {
+		long researchObjectID = 0;
+		long projectID = Long.valueOf(request.getParameter("projId")).longValue();
+
+		JSONParser parser = new JSONParser();
+		JSONObject json = new JSONObject();
 		try {
-			long researchObjectID = 0;
-			long projectID = Long.valueOf(request.getParameter("projId")).longValue();
+			json = (JSONObject) parser.parse(request.getParameter("data"));
+		} catch (ParseException e1) {e1.printStackTrace();}
 
-			JSONParser parser = new JSONParser();
-			JSONObject json = new JSONObject();
-			try {
-				json = (JSONObject) parser.parse(request.getParameter("data"));
-			} catch (ParseException e1) {e1.printStackTrace();}
+		String name = (String) json.get("project_name");
+		String label = (String) json.get("project_name");
+		String data = json.toString();
+		String formatdata = unpackJSON(data);
 
-			String name = (String) json.get("project_name");
-			String label = (String) json.get("project_name");
-			String data = json.toString();
-			String formatdata = unpackJSON(data);
-
-			researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, name, label, data, formatdata);
-		} catch (SystemException e1) {e1.printStackTrace();	}
+		researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObjectWithProject(projectID, researchObjectID, 1, name, label, data, formatdata, "test");
 	}
 
 

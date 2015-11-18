@@ -26,16 +26,25 @@ import org.gfbio.model.ResearchObject;
 
 import org.gfbio.service.ResearchObjectService;
 import org.gfbio.service.persistence.BasketPersistence;
-import org.gfbio.service.persistence.CellPersistence;
-import org.gfbio.service.persistence.Cell_HeadPersistence;
-import org.gfbio.service.persistence.Cell_PositionPersistence;
+import org.gfbio.service.persistence.ColumnFinder;
+import org.gfbio.service.persistence.ColumnPersistence;
+import org.gfbio.service.persistence.ContentFinder;
+import org.gfbio.service.persistence.ContentPersistence;
+import org.gfbio.service.persistence.DataProviderFinder;
+import org.gfbio.service.persistence.DataProviderPersistence;
+import org.gfbio.service.persistence.DataProvider_PersistentIdentifierFinder;
+import org.gfbio.service.persistence.DataProvider_PersistentIdentifierPersistence;
+import org.gfbio.service.persistence.HeadFinder;
 import org.gfbio.service.persistence.HeadPersistence;
-import org.gfbio.service.persistence.PositionPersistence;
 import org.gfbio.service.persistence.ProjectPersistence;
+import org.gfbio.service.persistence.Project_ResearchObjectFinder;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.Project_User_PIPersistence;
+import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
+import org.gfbio.service.persistence.SubmissionRegistryFinder;
+import org.gfbio.service.persistence.SubmissionRegistryPersistence;
 import org.gfbio.service.persistence.UserExtensionPersistence;
 
 import javax.sql.DataSource;
@@ -116,172 +125,301 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the cell local service.
+	 * Returns the column local service.
 	 *
-	 * @return the cell local service
+	 * @return the column local service
 	 */
-	public org.gfbio.service.CellLocalService getCellLocalService() {
-		return cellLocalService;
+	public org.gfbio.service.ColumnLocalService getColumnLocalService() {
+		return columnLocalService;
 	}
 
 	/**
-	 * Sets the cell local service.
+	 * Sets the column local service.
 	 *
-	 * @param cellLocalService the cell local service
+	 * @param columnLocalService the column local service
 	 */
-	public void setCellLocalService(
-		org.gfbio.service.CellLocalService cellLocalService) {
-		this.cellLocalService = cellLocalService;
+	public void setColumnLocalService(
+		org.gfbio.service.ColumnLocalService columnLocalService) {
+		this.columnLocalService = columnLocalService;
 	}
 
 	/**
-	 * Returns the cell remote service.
+	 * Returns the column remote service.
 	 *
-	 * @return the cell remote service
+	 * @return the column remote service
 	 */
-	public org.gfbio.service.CellService getCellService() {
-		return cellService;
+	public org.gfbio.service.ColumnService getColumnService() {
+		return columnService;
 	}
 
 	/**
-	 * Sets the cell remote service.
+	 * Sets the column remote service.
 	 *
-	 * @param cellService the cell remote service
+	 * @param columnService the column remote service
 	 */
-	public void setCellService(org.gfbio.service.CellService cellService) {
-		this.cellService = cellService;
+	public void setColumnService(org.gfbio.service.ColumnService columnService) {
+		this.columnService = columnService;
 	}
 
 	/**
-	 * Returns the cell persistence.
+	 * Returns the column persistence.
 	 *
-	 * @return the cell persistence
+	 * @return the column persistence
 	 */
-	public CellPersistence getCellPersistence() {
-		return cellPersistence;
+	public ColumnPersistence getColumnPersistence() {
+		return columnPersistence;
 	}
 
 	/**
-	 * Sets the cell persistence.
+	 * Sets the column persistence.
 	 *
-	 * @param cellPersistence the cell persistence
+	 * @param columnPersistence the column persistence
 	 */
-	public void setCellPersistence(CellPersistence cellPersistence) {
-		this.cellPersistence = cellPersistence;
+	public void setColumnPersistence(ColumnPersistence columnPersistence) {
+		this.columnPersistence = columnPersistence;
 	}
 
 	/**
-	 * Returns the cell_ head local service.
+	 * Returns the column finder.
 	 *
-	 * @return the cell_ head local service
+	 * @return the column finder
 	 */
-	public org.gfbio.service.Cell_HeadLocalService getCell_HeadLocalService() {
-		return cell_HeadLocalService;
+	public ColumnFinder getColumnFinder() {
+		return columnFinder;
 	}
 
 	/**
-	 * Sets the cell_ head local service.
+	 * Sets the column finder.
 	 *
-	 * @param cell_HeadLocalService the cell_ head local service
+	 * @param columnFinder the column finder
 	 */
-	public void setCell_HeadLocalService(
-		org.gfbio.service.Cell_HeadLocalService cell_HeadLocalService) {
-		this.cell_HeadLocalService = cell_HeadLocalService;
+	public void setColumnFinder(ColumnFinder columnFinder) {
+		this.columnFinder = columnFinder;
 	}
 
 	/**
-	 * Returns the cell_ head remote service.
+	 * Returns the content local service.
 	 *
-	 * @return the cell_ head remote service
+	 * @return the content local service
 	 */
-	public org.gfbio.service.Cell_HeadService getCell_HeadService() {
-		return cell_HeadService;
+	public org.gfbio.service.ContentLocalService getContentLocalService() {
+		return contentLocalService;
 	}
 
 	/**
-	 * Sets the cell_ head remote service.
+	 * Sets the content local service.
 	 *
-	 * @param cell_HeadService the cell_ head remote service
+	 * @param contentLocalService the content local service
 	 */
-	public void setCell_HeadService(
-		org.gfbio.service.Cell_HeadService cell_HeadService) {
-		this.cell_HeadService = cell_HeadService;
+	public void setContentLocalService(
+		org.gfbio.service.ContentLocalService contentLocalService) {
+		this.contentLocalService = contentLocalService;
 	}
 
 	/**
-	 * Returns the cell_ head persistence.
+	 * Returns the content remote service.
 	 *
-	 * @return the cell_ head persistence
+	 * @return the content remote service
 	 */
-	public Cell_HeadPersistence getCell_HeadPersistence() {
-		return cell_HeadPersistence;
+	public org.gfbio.service.ContentService getContentService() {
+		return contentService;
 	}
 
 	/**
-	 * Sets the cell_ head persistence.
+	 * Sets the content remote service.
 	 *
-	 * @param cell_HeadPersistence the cell_ head persistence
+	 * @param contentService the content remote service
 	 */
-	public void setCell_HeadPersistence(
-		Cell_HeadPersistence cell_HeadPersistence) {
-		this.cell_HeadPersistence = cell_HeadPersistence;
+	public void setContentService(
+		org.gfbio.service.ContentService contentService) {
+		this.contentService = contentService;
 	}
 
 	/**
-	 * Returns the cell_ position local service.
+	 * Returns the content persistence.
 	 *
-	 * @return the cell_ position local service
+	 * @return the content persistence
 	 */
-	public org.gfbio.service.Cell_PositionLocalService getCell_PositionLocalService() {
-		return cell_PositionLocalService;
+	public ContentPersistence getContentPersistence() {
+		return contentPersistence;
 	}
 
 	/**
-	 * Sets the cell_ position local service.
+	 * Sets the content persistence.
 	 *
-	 * @param cell_PositionLocalService the cell_ position local service
+	 * @param contentPersistence the content persistence
 	 */
-	public void setCell_PositionLocalService(
-		org.gfbio.service.Cell_PositionLocalService cell_PositionLocalService) {
-		this.cell_PositionLocalService = cell_PositionLocalService;
+	public void setContentPersistence(ContentPersistence contentPersistence) {
+		this.contentPersistence = contentPersistence;
 	}
 
 	/**
-	 * Returns the cell_ position remote service.
+	 * Returns the content finder.
 	 *
-	 * @return the cell_ position remote service
+	 * @return the content finder
 	 */
-	public org.gfbio.service.Cell_PositionService getCell_PositionService() {
-		return cell_PositionService;
+	public ContentFinder getContentFinder() {
+		return contentFinder;
 	}
 
 	/**
-	 * Sets the cell_ position remote service.
+	 * Sets the content finder.
 	 *
-	 * @param cell_PositionService the cell_ position remote service
+	 * @param contentFinder the content finder
 	 */
-	public void setCell_PositionService(
-		org.gfbio.service.Cell_PositionService cell_PositionService) {
-		this.cell_PositionService = cell_PositionService;
+	public void setContentFinder(ContentFinder contentFinder) {
+		this.contentFinder = contentFinder;
 	}
 
 	/**
-	 * Returns the cell_ position persistence.
+	 * Returns the data provider local service.
 	 *
-	 * @return the cell_ position persistence
+	 * @return the data provider local service
 	 */
-	public Cell_PositionPersistence getCell_PositionPersistence() {
-		return cell_PositionPersistence;
+	public org.gfbio.service.DataProviderLocalService getDataProviderLocalService() {
+		return dataProviderLocalService;
 	}
 
 	/**
-	 * Sets the cell_ position persistence.
+	 * Sets the data provider local service.
 	 *
-	 * @param cell_PositionPersistence the cell_ position persistence
+	 * @param dataProviderLocalService the data provider local service
 	 */
-	public void setCell_PositionPersistence(
-		Cell_PositionPersistence cell_PositionPersistence) {
-		this.cell_PositionPersistence = cell_PositionPersistence;
+	public void setDataProviderLocalService(
+		org.gfbio.service.DataProviderLocalService dataProviderLocalService) {
+		this.dataProviderLocalService = dataProviderLocalService;
+	}
+
+	/**
+	 * Returns the data provider remote service.
+	 *
+	 * @return the data provider remote service
+	 */
+	public org.gfbio.service.DataProviderService getDataProviderService() {
+		return dataProviderService;
+	}
+
+	/**
+	 * Sets the data provider remote service.
+	 *
+	 * @param dataProviderService the data provider remote service
+	 */
+	public void setDataProviderService(
+		org.gfbio.service.DataProviderService dataProviderService) {
+		this.dataProviderService = dataProviderService;
+	}
+
+	/**
+	 * Returns the data provider persistence.
+	 *
+	 * @return the data provider persistence
+	 */
+	public DataProviderPersistence getDataProviderPersistence() {
+		return dataProviderPersistence;
+	}
+
+	/**
+	 * Sets the data provider persistence.
+	 *
+	 * @param dataProviderPersistence the data provider persistence
+	 */
+	public void setDataProviderPersistence(
+		DataProviderPersistence dataProviderPersistence) {
+		this.dataProviderPersistence = dataProviderPersistence;
+	}
+
+	/**
+	 * Returns the data provider finder.
+	 *
+	 * @return the data provider finder
+	 */
+	public DataProviderFinder getDataProviderFinder() {
+		return dataProviderFinder;
+	}
+
+	/**
+	 * Sets the data provider finder.
+	 *
+	 * @param dataProviderFinder the data provider finder
+	 */
+	public void setDataProviderFinder(DataProviderFinder dataProviderFinder) {
+		this.dataProviderFinder = dataProviderFinder;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier local service.
+	 *
+	 * @return the data provider_ persistent identifier local service
+	 */
+	public org.gfbio.service.DataProvider_PersistentIdentifierLocalService getDataProvider_PersistentIdentifierLocalService() {
+		return dataProvider_PersistentIdentifierLocalService;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier local service.
+	 *
+	 * @param dataProvider_PersistentIdentifierLocalService the data provider_ persistent identifier local service
+	 */
+	public void setDataProvider_PersistentIdentifierLocalService(
+		org.gfbio.service.DataProvider_PersistentIdentifierLocalService dataProvider_PersistentIdentifierLocalService) {
+		this.dataProvider_PersistentIdentifierLocalService = dataProvider_PersistentIdentifierLocalService;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier remote service.
+	 *
+	 * @return the data provider_ persistent identifier remote service
+	 */
+	public org.gfbio.service.DataProvider_PersistentIdentifierService getDataProvider_PersistentIdentifierService() {
+		return dataProvider_PersistentIdentifierService;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier remote service.
+	 *
+	 * @param dataProvider_PersistentIdentifierService the data provider_ persistent identifier remote service
+	 */
+	public void setDataProvider_PersistentIdentifierService(
+		org.gfbio.service.DataProvider_PersistentIdentifierService dataProvider_PersistentIdentifierService) {
+		this.dataProvider_PersistentIdentifierService = dataProvider_PersistentIdentifierService;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier persistence.
+	 *
+	 * @return the data provider_ persistent identifier persistence
+	 */
+	public DataProvider_PersistentIdentifierPersistence getDataProvider_PersistentIdentifierPersistence() {
+		return dataProvider_PersistentIdentifierPersistence;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier persistence.
+	 *
+	 * @param dataProvider_PersistentIdentifierPersistence the data provider_ persistent identifier persistence
+	 */
+	public void setDataProvider_PersistentIdentifierPersistence(
+		DataProvider_PersistentIdentifierPersistence dataProvider_PersistentIdentifierPersistence) {
+		this.dataProvider_PersistentIdentifierPersistence = dataProvider_PersistentIdentifierPersistence;
+	}
+
+	/**
+	 * Returns the data provider_ persistent identifier finder.
+	 *
+	 * @return the data provider_ persistent identifier finder
+	 */
+	public DataProvider_PersistentIdentifierFinder getDataProvider_PersistentIdentifierFinder() {
+		return dataProvider_PersistentIdentifierFinder;
+	}
+
+	/**
+	 * Sets the data provider_ persistent identifier finder.
+	 *
+	 * @param dataProvider_PersistentIdentifierFinder the data provider_ persistent identifier finder
+	 */
+	public void setDataProvider_PersistentIdentifierFinder(
+		DataProvider_PersistentIdentifierFinder dataProvider_PersistentIdentifierFinder) {
+		this.dataProvider_PersistentIdentifierFinder = dataProvider_PersistentIdentifierFinder;
 	}
 
 	/**
@@ -340,59 +478,21 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the position local service.
+	 * Returns the head finder.
 	 *
-	 * @return the position local service
+	 * @return the head finder
 	 */
-	public org.gfbio.service.PositionLocalService getPositionLocalService() {
-		return positionLocalService;
+	public HeadFinder getHeadFinder() {
+		return headFinder;
 	}
 
 	/**
-	 * Sets the position local service.
+	 * Sets the head finder.
 	 *
-	 * @param positionLocalService the position local service
+	 * @param headFinder the head finder
 	 */
-	public void setPositionLocalService(
-		org.gfbio.service.PositionLocalService positionLocalService) {
-		this.positionLocalService = positionLocalService;
-	}
-
-	/**
-	 * Returns the position remote service.
-	 *
-	 * @return the position remote service
-	 */
-	public org.gfbio.service.PositionService getPositionService() {
-		return positionService;
-	}
-
-	/**
-	 * Sets the position remote service.
-	 *
-	 * @param positionService the position remote service
-	 */
-	public void setPositionService(
-		org.gfbio.service.PositionService positionService) {
-		this.positionService = positionService;
-	}
-
-	/**
-	 * Returns the position persistence.
-	 *
-	 * @return the position persistence
-	 */
-	public PositionPersistence getPositionPersistence() {
-		return positionPersistence;
-	}
-
-	/**
-	 * Sets the position persistence.
-	 *
-	 * @param positionPersistence the position persistence
-	 */
-	public void setPositionPersistence(PositionPersistence positionPersistence) {
-		this.positionPersistence = positionPersistence;
+	public void setHeadFinder(HeadFinder headFinder) {
+		this.headFinder = headFinder;
 	}
 
 	/**
@@ -506,6 +606,25 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	public void setProject_ResearchObjectPersistence(
 		Project_ResearchObjectPersistence project_ResearchObjectPersistence) {
 		this.project_ResearchObjectPersistence = project_ResearchObjectPersistence;
+	}
+
+	/**
+	 * Returns the project_ research object finder.
+	 *
+	 * @return the project_ research object finder
+	 */
+	public Project_ResearchObjectFinder getProject_ResearchObjectFinder() {
+		return project_ResearchObjectFinder;
+	}
+
+	/**
+	 * Sets the project_ research object finder.
+	 *
+	 * @param project_ResearchObjectFinder the project_ research object finder
+	 */
+	public void setProject_ResearchObjectFinder(
+		Project_ResearchObjectFinder project_ResearchObjectFinder) {
+		this.project_ResearchObjectFinder = project_ResearchObjectFinder;
 	}
 
 	/**
@@ -677,6 +796,101 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	public void setResearchObjectPersistence(
 		ResearchObjectPersistence researchObjectPersistence) {
 		this.researchObjectPersistence = researchObjectPersistence;
+	}
+
+	/**
+	 * Returns the research object finder.
+	 *
+	 * @return the research object finder
+	 */
+	public ResearchObjectFinder getResearchObjectFinder() {
+		return researchObjectFinder;
+	}
+
+	/**
+	 * Sets the research object finder.
+	 *
+	 * @param researchObjectFinder the research object finder
+	 */
+	public void setResearchObjectFinder(
+		ResearchObjectFinder researchObjectFinder) {
+		this.researchObjectFinder = researchObjectFinder;
+	}
+
+	/**
+	 * Returns the submission registry local service.
+	 *
+	 * @return the submission registry local service
+	 */
+	public org.gfbio.service.SubmissionRegistryLocalService getSubmissionRegistryLocalService() {
+		return submissionRegistryLocalService;
+	}
+
+	/**
+	 * Sets the submission registry local service.
+	 *
+	 * @param submissionRegistryLocalService the submission registry local service
+	 */
+	public void setSubmissionRegistryLocalService(
+		org.gfbio.service.SubmissionRegistryLocalService submissionRegistryLocalService) {
+		this.submissionRegistryLocalService = submissionRegistryLocalService;
+	}
+
+	/**
+	 * Returns the submission registry remote service.
+	 *
+	 * @return the submission registry remote service
+	 */
+	public org.gfbio.service.SubmissionRegistryService getSubmissionRegistryService() {
+		return submissionRegistryService;
+	}
+
+	/**
+	 * Sets the submission registry remote service.
+	 *
+	 * @param submissionRegistryService the submission registry remote service
+	 */
+	public void setSubmissionRegistryService(
+		org.gfbio.service.SubmissionRegistryService submissionRegistryService) {
+		this.submissionRegistryService = submissionRegistryService;
+	}
+
+	/**
+	 * Returns the submission registry persistence.
+	 *
+	 * @return the submission registry persistence
+	 */
+	public SubmissionRegistryPersistence getSubmissionRegistryPersistence() {
+		return submissionRegistryPersistence;
+	}
+
+	/**
+	 * Sets the submission registry persistence.
+	 *
+	 * @param submissionRegistryPersistence the submission registry persistence
+	 */
+	public void setSubmissionRegistryPersistence(
+		SubmissionRegistryPersistence submissionRegistryPersistence) {
+		this.submissionRegistryPersistence = submissionRegistryPersistence;
+	}
+
+	/**
+	 * Returns the submission registry finder.
+	 *
+	 * @return the submission registry finder
+	 */
+	public SubmissionRegistryFinder getSubmissionRegistryFinder() {
+		return submissionRegistryFinder;
+	}
+
+	/**
+	 * Sets the submission registry finder.
+	 *
+	 * @param submissionRegistryFinder the submission registry finder
+	 */
+	public void setSubmissionRegistryFinder(
+		SubmissionRegistryFinder submissionRegistryFinder) {
+		this.submissionRegistryFinder = submissionRegistryFinder;
 	}
 
 	/**
@@ -913,36 +1127,46 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.BasketService basketService;
 	@BeanReference(type = BasketPersistence.class)
 	protected BasketPersistence basketPersistence;
-	@BeanReference(type = org.gfbio.service.CellLocalService.class)
-	protected org.gfbio.service.CellLocalService cellLocalService;
-	@BeanReference(type = org.gfbio.service.CellService.class)
-	protected org.gfbio.service.CellService cellService;
-	@BeanReference(type = CellPersistence.class)
-	protected CellPersistence cellPersistence;
-	@BeanReference(type = org.gfbio.service.Cell_HeadLocalService.class)
-	protected org.gfbio.service.Cell_HeadLocalService cell_HeadLocalService;
-	@BeanReference(type = org.gfbio.service.Cell_HeadService.class)
-	protected org.gfbio.service.Cell_HeadService cell_HeadService;
-	@BeanReference(type = Cell_HeadPersistence.class)
-	protected Cell_HeadPersistence cell_HeadPersistence;
-	@BeanReference(type = org.gfbio.service.Cell_PositionLocalService.class)
-	protected org.gfbio.service.Cell_PositionLocalService cell_PositionLocalService;
-	@BeanReference(type = org.gfbio.service.Cell_PositionService.class)
-	protected org.gfbio.service.Cell_PositionService cell_PositionService;
-	@BeanReference(type = Cell_PositionPersistence.class)
-	protected Cell_PositionPersistence cell_PositionPersistence;
+	@BeanReference(type = org.gfbio.service.ColumnLocalService.class)
+	protected org.gfbio.service.ColumnLocalService columnLocalService;
+	@BeanReference(type = org.gfbio.service.ColumnService.class)
+	protected org.gfbio.service.ColumnService columnService;
+	@BeanReference(type = ColumnPersistence.class)
+	protected ColumnPersistence columnPersistence;
+	@BeanReference(type = ColumnFinder.class)
+	protected ColumnFinder columnFinder;
+	@BeanReference(type = org.gfbio.service.ContentLocalService.class)
+	protected org.gfbio.service.ContentLocalService contentLocalService;
+	@BeanReference(type = org.gfbio.service.ContentService.class)
+	protected org.gfbio.service.ContentService contentService;
+	@BeanReference(type = ContentPersistence.class)
+	protected ContentPersistence contentPersistence;
+	@BeanReference(type = ContentFinder.class)
+	protected ContentFinder contentFinder;
+	@BeanReference(type = org.gfbio.service.DataProviderLocalService.class)
+	protected org.gfbio.service.DataProviderLocalService dataProviderLocalService;
+	@BeanReference(type = org.gfbio.service.DataProviderService.class)
+	protected org.gfbio.service.DataProviderService dataProviderService;
+	@BeanReference(type = DataProviderPersistence.class)
+	protected DataProviderPersistence dataProviderPersistence;
+	@BeanReference(type = DataProviderFinder.class)
+	protected DataProviderFinder dataProviderFinder;
+	@BeanReference(type = org.gfbio.service.DataProvider_PersistentIdentifierLocalService.class)
+	protected org.gfbio.service.DataProvider_PersistentIdentifierLocalService dataProvider_PersistentIdentifierLocalService;
+	@BeanReference(type = org.gfbio.service.DataProvider_PersistentIdentifierService.class)
+	protected org.gfbio.service.DataProvider_PersistentIdentifierService dataProvider_PersistentIdentifierService;
+	@BeanReference(type = DataProvider_PersistentIdentifierPersistence.class)
+	protected DataProvider_PersistentIdentifierPersistence dataProvider_PersistentIdentifierPersistence;
+	@BeanReference(type = DataProvider_PersistentIdentifierFinder.class)
+	protected DataProvider_PersistentIdentifierFinder dataProvider_PersistentIdentifierFinder;
 	@BeanReference(type = org.gfbio.service.HeadLocalService.class)
 	protected org.gfbio.service.HeadLocalService headLocalService;
 	@BeanReference(type = org.gfbio.service.HeadService.class)
 	protected org.gfbio.service.HeadService headService;
 	@BeanReference(type = HeadPersistence.class)
 	protected HeadPersistence headPersistence;
-	@BeanReference(type = org.gfbio.service.PositionLocalService.class)
-	protected org.gfbio.service.PositionLocalService positionLocalService;
-	@BeanReference(type = org.gfbio.service.PositionService.class)
-	protected org.gfbio.service.PositionService positionService;
-	@BeanReference(type = PositionPersistence.class)
-	protected PositionPersistence positionPersistence;
+	@BeanReference(type = HeadFinder.class)
+	protected HeadFinder headFinder;
 	@BeanReference(type = org.gfbio.service.ProjectLocalService.class)
 	protected org.gfbio.service.ProjectLocalService projectLocalService;
 	@BeanReference(type = org.gfbio.service.ProjectService.class)
@@ -955,6 +1179,8 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.Project_ResearchObjectService project_ResearchObjectService;
 	@BeanReference(type = Project_ResearchObjectPersistence.class)
 	protected Project_ResearchObjectPersistence project_ResearchObjectPersistence;
+	@BeanReference(type = Project_ResearchObjectFinder.class)
+	protected Project_ResearchObjectFinder project_ResearchObjectFinder;
 	@BeanReference(type = org.gfbio.service.Project_UserLocalService.class)
 	protected org.gfbio.service.Project_UserLocalService project_UserLocalService;
 	@BeanReference(type = org.gfbio.service.Project_UserService.class)
@@ -973,6 +1199,16 @@ public abstract class ResearchObjectServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.ResearchObjectService researchObjectService;
 	@BeanReference(type = ResearchObjectPersistence.class)
 	protected ResearchObjectPersistence researchObjectPersistence;
+	@BeanReference(type = ResearchObjectFinder.class)
+	protected ResearchObjectFinder researchObjectFinder;
+	@BeanReference(type = org.gfbio.service.SubmissionRegistryLocalService.class)
+	protected org.gfbio.service.SubmissionRegistryLocalService submissionRegistryLocalService;
+	@BeanReference(type = org.gfbio.service.SubmissionRegistryService.class)
+	protected org.gfbio.service.SubmissionRegistryService submissionRegistryService;
+	@BeanReference(type = SubmissionRegistryPersistence.class)
+	protected SubmissionRegistryPersistence submissionRegistryPersistence;
+	@BeanReference(type = SubmissionRegistryFinder.class)
+	protected SubmissionRegistryFinder submissionRegistryFinder;
 	@BeanReference(type = org.gfbio.service.UserExtensionLocalService.class)
 	protected org.gfbio.service.UserExtensionLocalService userExtensionLocalService;
 	@BeanReference(type = org.gfbio.service.UserExtensionService.class)

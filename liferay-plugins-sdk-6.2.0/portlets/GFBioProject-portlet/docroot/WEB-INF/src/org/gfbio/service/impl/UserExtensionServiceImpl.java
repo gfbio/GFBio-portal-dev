@@ -20,9 +20,7 @@ import org.gfbio.service.base.UserExtensionServiceBaseImpl;
 import org.json.simple.JSONObject;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.User;
 
 /**
  * The implementation of the user extension remote service.
@@ -40,12 +38,18 @@ import com.liferay.portal.model.User;
  */
 public class UserExtensionServiceImpl extends UserExtensionServiceBaseImpl {
 
-	public User getUserById(long userId) throws NoSuchModelException, SystemException {
-		return UserExtensionLocalServiceUtil.getUserById(userId);
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	/**
+	 *@param test
+	 *@JSONWebService tester
+	 */
+	public JSONObject getUserById(JSONObject json) throws NoSuchModelException, SystemException {
+		return UserExtensionLocalServiceUtil.getUserExtentionById(json);
 	}
 	
-	public JSONObject getUserAsJsonById(long userId) throws NoSuchUserException, SystemException{
-		return UserExtensionLocalServiceUtil.getUserAsJsonById(userId);
-	}
 	
 }

@@ -17,7 +17,7 @@ package org.gfbio;
 import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  */
 public class NoSuchProjectException extends NoSuchModelException {
 

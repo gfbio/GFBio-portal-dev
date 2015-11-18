@@ -14,6 +14,8 @@
 
 package org.gfbio.model;
 
+import org.gfbio.service.persistence.ResearchObjectPK;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -31,10 +33,13 @@ public class ResearchObjectSoap implements Serializable {
 		ResearchObjectSoap soapModel = new ResearchObjectSoap();
 
 		soapModel.setResearchObjectID(model.getResearchObjectID());
+		soapModel.setResearchObjectVersion(model.getResearchObjectVersion());
+		soapModel.setParentResearchObjectID(model.getParentResearchObjectID());
 		soapModel.setName(model.getName());
 		soapModel.setLabel(model.getLabel());
 		soapModel.setMetadata(model.getMetadata());
 		soapModel.setFormatmetadata(model.getFormatmetadata());
+		soapModel.setResearchObjectType(model.getResearchObjectType());
 
 		return soapModel;
 	}
@@ -79,12 +84,13 @@ public class ResearchObjectSoap implements Serializable {
 	public ResearchObjectSoap() {
 	}
 
-	public long getPrimaryKey() {
-		return _researchObjectID;
+	public ResearchObjectPK getPrimaryKey() {
+		return new ResearchObjectPK(_researchObjectID, _researchObjectVersion);
 	}
 
-	public void setPrimaryKey(long pk) {
-		setResearchObjectID(pk);
+	public void setPrimaryKey(ResearchObjectPK pk) {
+		setResearchObjectID(pk.researchObjectID);
+		setResearchObjectVersion(pk.researchObjectVersion);
 	}
 
 	public long getResearchObjectID() {
@@ -93,6 +99,22 @@ public class ResearchObjectSoap implements Serializable {
 
 	public void setResearchObjectID(long researchObjectID) {
 		_researchObjectID = researchObjectID;
+	}
+
+	public int getResearchObjectVersion() {
+		return _researchObjectVersion;
+	}
+
+	public void setResearchObjectVersion(int researchObjectVersion) {
+		_researchObjectVersion = researchObjectVersion;
+	}
+
+	public long getParentResearchObjectID() {
+		return _parentResearchObjectID;
+	}
+
+	public void setParentResearchObjectID(long parentResearchObjectID) {
+		_parentResearchObjectID = parentResearchObjectID;
 	}
 
 	public String getName() {
@@ -127,9 +149,20 @@ public class ResearchObjectSoap implements Serializable {
 		_formatmetadata = formatmetadata;
 	}
 
+	public String getResearchObjectType() {
+		return _researchObjectType;
+	}
+
+	public void setResearchObjectType(String researchObjectType) {
+		_researchObjectType = researchObjectType;
+	}
+
 	private long _researchObjectID;
+	private int _researchObjectVersion;
+	private long _parentResearchObjectID;
 	private String _name;
 	private String _label;
 	private String _metadata;
 	private String _formatmetadata;
+	private String _researchObjectType;
 }

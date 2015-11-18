@@ -65,13 +65,13 @@ public interface UserExtensionService extends BaseService, InvokableService {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* @param test
+	* @JSONWebService tester
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.User getUserById(long userId)
+	public org.json.simple.JSONObject getUserById(
+		org.json.simple.JSONObject json)
 		throws com.liferay.portal.NoSuchModelException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getUserAsJsonById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

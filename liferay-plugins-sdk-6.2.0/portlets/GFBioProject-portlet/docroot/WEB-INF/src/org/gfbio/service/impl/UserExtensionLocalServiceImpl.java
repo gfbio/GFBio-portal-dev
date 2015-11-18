@@ -14,8 +14,7 @@
 
 package org.gfbio.service.impl;
 
-import org.gfbio.NoSuchUserExtensionException;
-import org.gfbio.model.UserExtension;
+import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
 
@@ -39,24 +38,52 @@ import com.liferay.portal.model.User;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.UserExtensionLocalServiceBaseImpl
  * @see org.gfbio.service.UserExtensionLocalServiceUtil
  */
 public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBaseImpl {
 	
-	public UserExtension getUserExtensionById(long userExtensionId) throws NoSuchUserExtensionException, SystemException  {
-		return userExtensionPersistence.findByUserID(userExtensionId);
-	}
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONObject getUserExtentionById(JSONObject json){
+		
+		JSONObject responseJson = new JSONObject();
+		
+		if (json.containsKey("userid")){
+			try {
+				responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)json.get("userid")));
+			} catch (NoSuchUserException | SystemException e) {
+				e.printStackTrace();
+				responseJson.put("ERROR", e);}
+		}
+		else
+			responseJson.put("ERROR", "No key 'userid' exist.");
 
-	public User getUserById(long userId) throws NoSuchUserException, SystemException{
-		return userPersistence.findByPrimaryKey(userId);
+		
+		return responseJson;
 	}
 	
-	public  JSONObject getUserAsJsonById (long userId) throws NoSuchUserException, SystemException {
-		User user = userPersistence.findByPrimaryKey(userId);
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+		
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public  JSONObject constructUserExtentionJsonById (User user) throws NoSuchUserException, SystemException {
 		JSONObject json = new JSONObject();
-		json.put("userId", user.getUserId());
+		json.put("userid", user.getUserId());
 		json.put("firstname", user.getFirstName());
 		json.put("middlename", user.getMiddleName());
 		json.put("lastname", user.getLastName());

@@ -26,12 +26,12 @@ import org.gfbio.service.base.HeadServiceBaseImpl;
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.HeadServiceBaseImpl
  * @see org.gfbio.service.HeadServiceUtil
  */
 public class HeadServiceImpl extends HeadServiceBaseImpl {
-	/**
+	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link org.gfbio.service.HeadServiceUtil} to access the head remote service.

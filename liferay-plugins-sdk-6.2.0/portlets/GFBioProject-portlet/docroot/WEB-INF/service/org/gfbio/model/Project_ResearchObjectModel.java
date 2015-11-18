@@ -86,6 +86,20 @@ public interface Project_ResearchObjectModel extends BaseModel<Project_ResearchO
 	 */
 	public void setResearchObjectID(long researchObjectID);
 
+	/**
+	 * Returns the research object version of this project_ research object.
+	 *
+	 * @return the research object version of this project_ research object
+	 */
+	public int getResearchObjectVersion();
+
+	/**
+	 * Sets the research object version of this project_ research object.
+	 *
+	 * @param researchObjectVersion the research object version of this project_ research object
+	 */
+	public void setResearchObjectVersion(int researchObjectVersion);
+
 	@Override
 	public boolean isNew();
 

@@ -39,10 +39,10 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 
 		sb.append("{headID=");
 		sb.append(headID);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", task=");
-		sb.append(task);
+		sb.append(", table_name=");
+		sb.append(table_name);
+		sb.append(", table_type=");
+		sb.append(table_type);
 		sb.append("}");
 
 		return sb.toString();
@@ -54,18 +54,18 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 
 		headImpl.setHeadID(headID);
 
-		if (name == null) {
-			headImpl.setName(StringPool.BLANK);
+		if (table_name == null) {
+			headImpl.setTable_name(StringPool.BLANK);
 		}
 		else {
-			headImpl.setName(name);
+			headImpl.setTable_name(table_name);
 		}
 
-		if (task == null) {
-			headImpl.setTask(StringPool.BLANK);
+		if (table_type == null) {
+			headImpl.setTable_type(StringPool.BLANK);
 		}
 		else {
-			headImpl.setTask(task);
+			headImpl.setTable_type(table_type);
 		}
 
 		headImpl.resetOriginalValues();
@@ -76,8 +76,8 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		headID = objectInput.readLong();
-		name = objectInput.readUTF();
-		task = objectInput.readUTF();
+		table_name = objectInput.readUTF();
+		table_type = objectInput.readUTF();
 	}
 
 	@Override
@@ -85,22 +85,22 @@ public class HeadCacheModel implements CacheModel<Head>, Externalizable {
 		throws IOException {
 		objectOutput.writeLong(headID);
 
-		if (name == null) {
+		if (table_name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(name);
+			objectOutput.writeUTF(table_name);
 		}
 
-		if (task == null) {
+		if (table_type == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(task);
+			objectOutput.writeUTF(table_type);
 		}
 	}
 
 	public long headID;
-	public String name;
-	public String task;
+	public String table_name;
+	public String table_type;
 }

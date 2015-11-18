@@ -37,10 +37,12 @@ import java.util.Date;
 public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{projectID=");
 		sb.append(projectID);
+		sb.append(", parentProjectID=");
+		sb.append(parentProjectID);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", label=");
@@ -63,6 +65,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		ProjectImpl projectImpl = new ProjectImpl();
 
 		projectImpl.setProjectID(projectID);
+		projectImpl.setParentProjectID(parentProjectID);
 
 		if (name == null) {
 			projectImpl.setName(StringPool.BLANK);
@@ -114,6 +117,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		projectID = objectInput.readLong();
+		parentProjectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		label = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -126,6 +130,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(projectID);
+		objectOutput.writeLong(parentProjectID);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -160,6 +165,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	}
 
 	public long projectID;
+	public long parentProjectID;
 	public String name;
 	public String label;
 	public String description;

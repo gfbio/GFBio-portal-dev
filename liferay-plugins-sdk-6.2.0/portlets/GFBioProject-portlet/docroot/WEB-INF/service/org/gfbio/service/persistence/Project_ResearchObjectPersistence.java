@@ -177,13 +177,164 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the project_ research objects where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @return the matching project_ research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID(
+		long researchObjectID, int researchObjectVersion)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the project_ research objects where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.Project_ResearchObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @param start the lower bound of the range of project_ research objects
+	* @param end the upper bound of the range of project_ research objects (not inclusive)
+	* @return the range of matching project_ research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID(
+		long researchObjectID, int researchObjectVersion, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the project_ research objects where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.Project_ResearchObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @param start the lower bound of the range of project_ research objects
+	* @param end the upper bound of the range of project_ research objects (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching project_ research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID(
+		long researchObjectID, int researchObjectVersion, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first project_ research object in the ordered set where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching project_ research object
+	* @throws org.gfbio.NoSuchProject_ResearchObjectException if a matching project_ research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Project_ResearchObject findByResearchObjectID_First(
+		long researchObjectID, int researchObjectVersion,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProject_ResearchObjectException;
+
+	/**
+	* Returns the first project_ research object in the ordered set where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching project_ research object, or <code>null</code> if a matching project_ research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Project_ResearchObject fetchByResearchObjectID_First(
+		long researchObjectID, int researchObjectVersion,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last project_ research object in the ordered set where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching project_ research object
+	* @throws org.gfbio.NoSuchProject_ResearchObjectException if a matching project_ research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Project_ResearchObject findByResearchObjectID_Last(
+		long researchObjectID, int researchObjectVersion,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProject_ResearchObjectException;
+
+	/**
+	* Returns the last project_ research object in the ordered set where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching project_ research object, or <code>null</code> if a matching project_ research object could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Project_ResearchObject fetchByResearchObjectID_Last(
+		long researchObjectID, int researchObjectVersion,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the project_ research objects before and after the current project_ research object in the ordered set where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* @param project_ResearchObjectPK the primary key of the current project_ research object
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next project_ research object
+	* @throws org.gfbio.NoSuchProject_ResearchObjectException if a project_ research object with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public org.gfbio.model.Project_ResearchObject[] findByResearchObjectID_PrevAndNext(
+		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK,
+		long researchObjectID, int researchObjectVersion,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProject_ResearchObjectException;
+
+	/**
+	* Removes all the project_ research objects where researchObjectID = &#63; and researchObjectVersion = &#63; from the database.
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByResearchObjectID(long researchObjectID,
+		int researchObjectVersion)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of project_ research objects where researchObjectID = &#63; and researchObjectVersion = &#63;.
+	*
+	* @param researchObjectID the research object i d
+	* @param researchObjectVersion the research object version
+	* @return the number of matching project_ research objects
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByResearchObjectID(long researchObjectID,
+		int researchObjectVersion)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the project_ research objects where researchObjectID = &#63;.
 	*
 	* @param researchObjectID the research object i d
 	* @return the matching project_ research objects
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID(
+	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID2(
 		long researchObjectID)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -200,7 +351,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @return the range of matching project_ research objects
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID(
+	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID2(
 		long researchObjectID, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -218,7 +369,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @return the ordered range of matching project_ research objects
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID(
+	public java.util.List<org.gfbio.model.Project_ResearchObject> findByResearchObjectID2(
 		long researchObjectID, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -232,7 +383,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @throws org.gfbio.NoSuchProject_ResearchObjectException if a matching project_ research object could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Project_ResearchObject findByResearchObjectID_First(
+	public org.gfbio.model.Project_ResearchObject findByResearchObjectID2_First(
 		long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -246,7 +397,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @return the first matching project_ research object, or <code>null</code> if a matching project_ research object could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Project_ResearchObject fetchByResearchObjectID_First(
+	public org.gfbio.model.Project_ResearchObject fetchByResearchObjectID2_First(
 		long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -260,7 +411,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @throws org.gfbio.NoSuchProject_ResearchObjectException if a matching project_ research object could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Project_ResearchObject findByResearchObjectID_Last(
+	public org.gfbio.model.Project_ResearchObject findByResearchObjectID2_Last(
 		long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -274,7 +425,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @return the last matching project_ research object, or <code>null</code> if a matching project_ research object could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Project_ResearchObject fetchByResearchObjectID_Last(
+	public org.gfbio.model.Project_ResearchObject fetchByResearchObjectID2_Last(
 		long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -289,7 +440,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @throws org.gfbio.NoSuchProject_ResearchObjectException if a project_ research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Project_ResearchObject[] findByResearchObjectID_PrevAndNext(
+	public org.gfbio.model.Project_ResearchObject[] findByResearchObjectID2_PrevAndNext(
 		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK,
 		long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
@@ -302,7 +453,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @param researchObjectID the research object i d
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByResearchObjectID(long researchObjectID)
+	public void removeByResearchObjectID2(long researchObjectID)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -312,7 +463,7 @@ public interface Project_ResearchObjectPersistence extends BasePersistence<Proje
 	* @return the number of matching project_ research objects
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByResearchObjectID(long researchObjectID)
+	public int countByResearchObjectID2(long researchObjectID)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

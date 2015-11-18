@@ -35,12 +35,14 @@ public class Project_ResearchObjectCacheModel implements CacheModel<Project_Rese
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{projectID=");
 		sb.append(projectID);
 		sb.append(", researchObjectID=");
 		sb.append(researchObjectID);
+		sb.append(", researchObjectVersion=");
+		sb.append(researchObjectVersion);
 		sb.append("}");
 
 		return sb.toString();
@@ -52,6 +54,7 @@ public class Project_ResearchObjectCacheModel implements CacheModel<Project_Rese
 
 		project_ResearchObjectImpl.setProjectID(projectID);
 		project_ResearchObjectImpl.setResearchObjectID(researchObjectID);
+		project_ResearchObjectImpl.setResearchObjectVersion(researchObjectVersion);
 
 		project_ResearchObjectImpl.resetOriginalValues();
 
@@ -62,6 +65,7 @@ public class Project_ResearchObjectCacheModel implements CacheModel<Project_Rese
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		projectID = objectInput.readLong();
 		researchObjectID = objectInput.readLong();
+		researchObjectVersion = objectInput.readInt();
 	}
 
 	@Override
@@ -69,8 +73,10 @@ public class Project_ResearchObjectCacheModel implements CacheModel<Project_Rese
 		throws IOException {
 		objectOutput.writeLong(projectID);
 		objectOutput.writeLong(researchObjectID);
+		objectOutput.writeInt(researchObjectVersion);
 	}
 
 	public long projectID;
 	public long researchObjectID;
+	public int researchObjectVersion;
 }

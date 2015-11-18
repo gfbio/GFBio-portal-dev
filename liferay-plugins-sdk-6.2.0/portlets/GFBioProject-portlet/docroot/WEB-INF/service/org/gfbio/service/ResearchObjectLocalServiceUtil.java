@@ -55,27 +55,27 @@ public class ResearchObjectLocalServiceUtil {
 	/**
 	* Creates a new research object with the primary key. Does not add the research object to the database.
 	*
-	* @param researchObjectID the primary key for the new research object
+	* @param researchObjectPK the primary key for the new research object
 	* @return the new research object
 	*/
 	public static org.gfbio.model.ResearchObject createResearchObject(
-		long researchObjectID) {
-		return getService().createResearchObject(researchObjectID);
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK) {
+		return getService().createResearchObject(researchObjectPK);
 	}
 
 	/**
 	* Deletes the research object with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param researchObjectID the primary key of the research object
+	* @param researchObjectPK the primary key of the research object
 	* @return the research object that was removed
 	* @throws PortalException if a research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.ResearchObject deleteResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteResearchObject(researchObjectID);
+		return getService().deleteResearchObject(researchObjectPK);
 	}
 
 	/**
@@ -182,24 +182,24 @@ public class ResearchObjectLocalServiceUtil {
 	}
 
 	public static org.gfbio.model.ResearchObject fetchResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchResearchObject(researchObjectID);
+		return getService().fetchResearchObject(researchObjectPK);
 	}
 
 	/**
 	* Returns the research object with the primary key.
 	*
-	* @param researchObjectID the primary key of the research object
+	* @param researchObjectPK the primary key of the research object
 	* @return the research object
 	* @throws PortalException if a research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.ResearchObject getResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getResearchObject(researchObjectID);
+		return getService().getResearchObject(researchObjectPK);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -275,13 +275,167 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static long updateResearchObject(long projectID,
-		long researchObjectID, java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
+	public static org.json.simple.JSONArray getResearchObjectASJsonById(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getResearchObjectASJsonById(requestJson);
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectASJsonById(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getResearchObjectASJsonById(requestJson);
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getResearchObjectAbsolutParent(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getResearchObjectsByParent(requestJson);
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getResearchObjectParent(requestJson);
+	}
+
+	public static java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId) {
+		return getService().getAllChildren(researchObjectId);
+	}
+
+	public static java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId) {
+		return getService().getDirectChildren(researchObjectId);
+	}
+
+	public static org.gfbio.model.ResearchObject getDirectParent(
+		long researchObjectId) {
+		return getService().getDirectParent(researchObjectId);
+	}
+
+	public static org.gfbio.model.ResearchObject getLatestResearchObjectById(
+		long researchObjectId) {
+		return getService().getLatestResearchObjectById(researchObjectId);
+	}
+
+	public static int getLatestVersionById(long researchObjectId) {
+		return getService().getLatestVersionById(researchObjectId);
+	}
+
+	public static long getProjectIdByIds(long researchObjectId,
+		int researchObjectVersion) {
+		return getService()
+				   .getProjectIdByIds(researchObjectId, researchObjectVersion);
+	}
+
+	public static java.util.List<org.gfbio.model.ResearchObject> getResearchObjectById(
+		long researchObjectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException {
+		return getService().getResearchObjectById(researchObjectId);
+	}
+
+	public static org.gfbio.model.ResearchObject getTopParent(
+		long researchObjectId) {
+		return getService().getTopParent(researchObjectId);
+	}
+
+	public static java.lang.Boolean checkParentAttributById(
+		long researchObjectId) {
+		return getService().checkParentAttributById(researchObjectId);
+	}
+
+	public static java.lang.Boolean checkResearchObjectId(long researchObjectId) {
+		return getService().checkResearchObjectId(researchObjectId);
+	}
+
+	public static org.json.simple.JSONObject constructResearchObjectJson(
+		org.gfbio.model.ResearchObject researchObject) {
+		return getService().constructResearchObjectJson(researchObject);
+	}
+
+	public static org.json.simple.JSONArray constructResearchObjectsJson(
+		java.util.List<org.gfbio.model.ResearchObject> researchObjectList) {
+		return getService().constructResearchObjectsJson(researchObjectList);
+	}
+
+	public static java.lang.String constructFormatMetadata(
+		java.lang.String metadata) {
+		return getService().constructFormatMetadata(metadata);
+	}
+
+	public static org.json.simple.JSONArray createResearchObjectByJson(
+		org.json.simple.JSONArray requestJson) {
+		return getService().createResearchObjectByJson(requestJson);
+	}
+
+	public static org.json.simple.JSONObject createResearchObjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return getService().createResearchObjectByJson(requestJson);
+	}
+
+	public static org.json.simple.JSONArray updateResearchObjectByJson(
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateResearchObjectByJson(requestJson);
+	}
+
+	public static org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return getService().updateResearchObjectByJson(requestJson);
+	}
+
+	public static long createResearchObject(java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String researchObjectType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateResearchObject(projectID, researchObjectID, name,
-			label, metadata, formatmetadata);
+				   .createResearchObject(name, label, metadata,
+			researchObjectType);
+	}
+
+	public static long updateResearchObject(long researchObjectId,
+		int researchObjectVersion, java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String formatmetadata) {
+		return getService()
+				   .updateResearchObject(researchObjectId,
+			researchObjectVersion, name, label, metadata, formatmetadata);
+	}
+
+	public static long updateResearchObjectWithProject(long projectId,
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata,
+		java.lang.String researchObjectType) {
+		return getService()
+				   .updateResearchObjectWithProject(projectId,
+			researchObjectId, researchObjectVersion, name, label, metadata,
+			formatmetadata, researchObjectType);
+	}
+
+	public static java.lang.Boolean updateParentResearchObjectIdByIds(
+		long researchObjectId, int researchObjectVersion,
+		long parentResearchObjectId) {
+		return getService()
+				   .updateParentResearchObjectIdByIds(researchObjectId,
+			researchObjectVersion, parentResearchObjectId);
+	}
+
+	public static java.lang.Boolean updateResearchObjectType(
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String researchObjectType) {
+		return getService()
+				   .updateResearchObjectType(researchObjectId,
+			researchObjectVersion, researchObjectType);
+	}
+
+	public static int updateResearchObjectVersion(long researchObjectId,
+		int researchObjectVersion) {
+		return getService()
+				   .updateResearchObjectVersion(researchObjectId,
+			researchObjectVersion);
 	}
 
 	public static void clearService() {

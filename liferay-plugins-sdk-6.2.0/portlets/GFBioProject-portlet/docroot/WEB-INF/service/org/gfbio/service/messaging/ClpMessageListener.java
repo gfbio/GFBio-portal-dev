@@ -19,17 +19,17 @@ import com.liferay.portal.kernel.messaging.Message;
 
 import org.gfbio.service.BasketLocalServiceUtil;
 import org.gfbio.service.BasketServiceUtil;
-import org.gfbio.service.CellLocalServiceUtil;
-import org.gfbio.service.CellServiceUtil;
-import org.gfbio.service.Cell_HeadLocalServiceUtil;
-import org.gfbio.service.Cell_HeadServiceUtil;
-import org.gfbio.service.Cell_PositionLocalServiceUtil;
-import org.gfbio.service.Cell_PositionServiceUtil;
 import org.gfbio.service.ClpSerializer;
+import org.gfbio.service.ColumnLocalServiceUtil;
+import org.gfbio.service.ColumnServiceUtil;
+import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.ContentServiceUtil;
+import org.gfbio.service.DataProviderLocalServiceUtil;
+import org.gfbio.service.DataProviderServiceUtil;
+import org.gfbio.service.DataProvider_PersistentIdentifierLocalServiceUtil;
+import org.gfbio.service.DataProvider_PersistentIdentifierServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.HeadServiceUtil;
-import org.gfbio.service.PositionLocalServiceUtil;
-import org.gfbio.service.PositionServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ProjectServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
@@ -40,6 +40,8 @@ import org.gfbio.service.Project_User_PILocalServiceUtil;
 import org.gfbio.service.Project_User_PIServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectServiceUtil;
+import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
+import org.gfbio.service.SubmissionRegistryServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.UserExtensionServiceUtil;
 
@@ -61,21 +63,21 @@ public class ClpMessageListener extends BaseMessageListener {
 			BasketLocalServiceUtil.clearService();
 
 			BasketServiceUtil.clearService();
-			CellLocalServiceUtil.clearService();
+			ColumnLocalServiceUtil.clearService();
 
-			CellServiceUtil.clearService();
-			Cell_HeadLocalServiceUtil.clearService();
+			ColumnServiceUtil.clearService();
+			ContentLocalServiceUtil.clearService();
 
-			Cell_HeadServiceUtil.clearService();
-			Cell_PositionLocalServiceUtil.clearService();
+			ContentServiceUtil.clearService();
+			DataProviderLocalServiceUtil.clearService();
 
-			Cell_PositionServiceUtil.clearService();
+			DataProviderServiceUtil.clearService();
+			DataProvider_PersistentIdentifierLocalServiceUtil.clearService();
+
+			DataProvider_PersistentIdentifierServiceUtil.clearService();
 			HeadLocalServiceUtil.clearService();
 
 			HeadServiceUtil.clearService();
-			PositionLocalServiceUtil.clearService();
-
-			PositionServiceUtil.clearService();
 			ProjectLocalServiceUtil.clearService();
 
 			ProjectServiceUtil.clearService();
@@ -91,6 +93,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			ResearchObjectLocalServiceUtil.clearService();
 
 			ResearchObjectServiceUtil.clearService();
+			SubmissionRegistryLocalServiceUtil.clearService();
+
+			SubmissionRegistryServiceUtil.clearService();
 			UserExtensionLocalServiceUtil.clearService();
 
 			UserExtensionServiceUtil.clearService();

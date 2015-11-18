@@ -20,11 +20,12 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="javax.portlet.RenderResponse" %>
 
 <%@ page import="org.gfbio.model.Head" %>
-<%@ page import="org.gfbio.model.Position" %>
+<%@ page import="org.gfbio.model.Content" %>
+<%@ page import="org.gfbio.model.Column" %>
 <%@ page import="org.gfbio.model.Project" %>
 <%@ page import="org.gfbio.model.ResearchObject" %>
+<%@ page import="org.gfbio.service.ColumnLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.HeadLocalServiceUtil" %>
-<%@ page import="org.gfbio.service.PositionLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
 
 <%@ page import="org.json.simple.JSONObject" %>
@@ -48,11 +49,13 @@ page import="com.liferay.portal.util.PortalUtil" %>
 
 	/////////////////////////////////////////   GCDJ Widget  //////////////////////////////////////////////
 
+	
 	//hide GCDJ Widget
 	function hideSubmission(hidecode) {
 		var toHide = { "hidecode" : hidecode };
 		Liferay.fire('gadget:gfbio.archiving.submit', toHide);
 	}
+	
 
 	//GCDJ Widget Publish
 	function SubmitGCDJ(hidecode, showhide) {
@@ -64,6 +67,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
 	
+	
 	//ENA Widget Publish
 	function SubmitENA(hidecode, showhide) {
 		var toSubmit = {
@@ -72,6 +76,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 			   };
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
+	
 
 	//GCDJ Submit Answer
 	$(document).ready(function() {
@@ -81,7 +86,9 @@ page import="com.liferay.portal.util.PortalUtil" %>
 				submitAnswer(data);
 		});
 	});
+	
 
+	//
 	function submitAnswer(data) {
 		$.ajax({
 			"type" : "POST",
@@ -100,7 +107,9 @@ page import="com.liferay.portal.util.PortalUtil" %>
 
 
 	/////////////////////////////////////////   ResourceRequest  //////////////////////////////////////////////
-
+	
+	
+	//
 	function ajaxRequest(archivingURL, method, data, as) {
 		$.ajax({
 			"type" : "POST",
@@ -115,6 +124,8 @@ page import="com.liferay.portal.util.PortalUtil" %>
 		});
 	}
 
+	
+	//
 	function ajaxValueResponse(archivingURL, method, data) {
 		
 		$.ajax({
@@ -130,9 +141,42 @@ page import="com.liferay.portal.util.PortalUtil" %>
 			}
 		});
 	}
+	
+	
+	/////////////////////////////////////////   ActionRequest  //////////////////////////////////////////////
 
-	//////////////////////////////////////// content //////////////////////////////////////////////////////////
+	
+	//
+	function ajaxActionRequest_Choose(archivingURL, method, data, withoutRelationship, withRelationship, as) {
+ 		$.ajax({
+			"type" : "POST",
+			"url": archivingURL.concat("/GFBioArchiving"),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : method
+			},
+			async: as,
+			success : function(data) {
+				
+				var withoutRelation = data.withoutRelationIdList;
+				var withoutSelect = $("#".concat(withoutRelationship));  
+				withoutSelect.empty();
+				
+				var withRelation = data.withRelationIdList;
+				var withSelect = $("#".concat(withRelationship));   
+				withSelect.empty();
+				
+				for (y = 0; y < withoutRelation.length; y++){
+					withoutSelect.append("<option value='" + withoutRelation[y]+ "'>" + data.withoutJson[withoutRelation[y]] + "</option>");
+				}
 
+				for (y = 0; y < withRelation.length; y++){
+					withSelect.append("<option value='" + withRelation[y]+ "'>" + data.withJson[withRelation[y]] + "</option>");
+				}
+					
+			}
+		});
+	}
 
 
 </script>

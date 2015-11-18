@@ -63,13 +63,34 @@ public class ResearchObjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static long updateResearchObject(long projectID,
-		long researchObjectID, java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .updateResearchObject(projectID, researchObjectID, name,
-			label, metadata, formatmetadata);
+	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getResearchObjectAbsolutParent(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getResearchObjectById(
+		java.lang.String requestJson) {
+		return getService().getResearchObjectById(requestJson);
+	}
+
+	public static org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getResearchObjectParent(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getResearchObjectsByParent(requestJson);
+	}
+
+	public static org.json.simple.JSONArray createResearchObject(
+		java.lang.String requestJson) {
+		return getService().createResearchObject(requestJson);
+	}
+
+	public static org.json.simple.JSONArray updateResearchObject(
+		java.lang.String requestJson) {
+		return getService().updateResearchObject(requestJson);
 	}
 
 	public static void clearService() {

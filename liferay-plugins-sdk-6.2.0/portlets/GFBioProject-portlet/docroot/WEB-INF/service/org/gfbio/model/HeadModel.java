@@ -72,34 +72,34 @@ public interface HeadModel extends BaseModel<Head> {
 	public void setHeadID(long headID);
 
 	/**
-	 * Returns the name of this head.
+	 * Returns the table_name of this head.
 	 *
-	 * @return the name of this head
+	 * @return the table_name of this head
 	 */
 	@AutoEscape
-	public String getName();
+	public String getTable_name();
 
 	/**
-	 * Sets the name of this head.
+	 * Sets the table_name of this head.
 	 *
-	 * @param name the name of this head
+	 * @param table_name the table_name of this head
 	 */
-	public void setName(String name);
+	public void setTable_name(String table_name);
 
 	/**
-	 * Returns the task of this head.
+	 * Returns the table_type of this head.
 	 *
-	 * @return the task of this head
+	 * @return the table_type of this head
 	 */
 	@AutoEscape
-	public String getTask();
+	public String getTable_type();
 
 	/**
-	 * Sets the task of this head.
+	 * Sets the table_type of this head.
 	 *
-	 * @param task the task of this head
+	 * @param table_type the table_type of this head
 	 */
-	public void setTask(String task);
+	public void setTable_type(String table_type);
 
 	@Override
 	public boolean isNew();

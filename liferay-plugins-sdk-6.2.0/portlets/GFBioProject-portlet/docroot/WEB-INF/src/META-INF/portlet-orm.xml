@@ -22,37 +22,51 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.CellModelImpl">
+	<mapped-superclass class="org.gfbio.model.impl.ColumnModelImpl">
 		<attributes>
-			<id name="cellID" />
-			<basic name="content" />
-			<basic name="task" />
+			<id name="columnID" />
+			<basic name="headID" />
+			<basic name="column_name" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.Cell_HeadModelImpl">
-		<id-class class="org.gfbio.service.persistence.Cell_HeadPK" />
+	<mapped-superclass class="org.gfbio.model.impl.ContentModelImpl">
 		<attributes>
-			<id name="cellID" />
-			<id name="headID" />
-			<basic name="column">
-				<column name="COLUMN_" />
-			</basic>
+			<id name="contentID" />
+			<basic name="headID" />
+			<basic name="columnID" />
+			<basic name="rowID" />
+			<basic name="cellContent" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.Cell_PositionModelImpl">
-		<id-class class="org.gfbio.service.persistence.Cell_PositionPK" />
+	<mapped-superclass class="org.gfbio.model.impl.DataProviderModelImpl">
 		<attributes>
-			<id name="cellID" />
-			<id name="positionID" />
-			<basic name="column">
-				<column name="COLUMN_" />
-			</basic>
+			<id name="dataProviderID" />
+			<basic name="name" />
+			<basic name="label" />
+			<basic name="description" />
+			<basic name="address" />
+			<basic name="website" />
+			<basic name="training" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.DataProvider_PersistentIdentifierModelImpl">
+		<id-class class="org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK" />
+		<attributes>
+			<id name="gfbioDataProvider">
+				<column name="GFBIO_DATAPROVIDER" />
+			</id>
+			<id name="gfbioPersistentIdentifier">
+				<column name="GFBIO_PERSISTENTIDENTIFIER" />
+			</id>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -61,17 +75,8 @@
 	<mapped-superclass class="org.gfbio.model.impl.HeadModelImpl">
 		<attributes>
 			<id name="headID" />
-			<basic name="name" />
-			<basic name="task" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.PositionModelImpl">
-		<attributes>
-			<id name="positionID" />
-			<basic name="headID" />
+			<basic name="table_name" />
+			<basic name="table_type" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -80,6 +85,7 @@
 	<mapped-superclass class="org.gfbio.model.impl.ProjectModelImpl">
 		<attributes>
 			<id name="projectID" />
+			<basic name="parentProjectID" />
 			<basic name="name" />
 			<basic name="label" />
 			<basic name="description" />
@@ -100,6 +106,7 @@
 		<attributes>
 			<id name="projectID" />
 			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -138,12 +145,47 @@
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.ResearchObjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.ResearchObjectPK" />
 		<attributes>
 			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
+			<basic name="parentResearchObjectID" />
 			<basic name="name" />
 			<basic name="label" />
 			<basic name="metadata" />
 			<basic name="formatmetadata" />
+			<basic name="researchObjectType" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.SubmissionRegistryModelImpl">
+		<id-class class="org.gfbio.service.persistence.SubmissionRegistryPK" />
+		<attributes>
+			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
+			<id name="archive" />
+			<basic name="brokerSubmissionID" />
+			<basic name="archivePID">
+				<column name="ARCHIVE_PID" />
+			</basic>
+			<basic name="archivePIDType">
+				<column name="ARCHIVE_PID_TYPE" />
+			</basic>
+			<basic name="lastChanged">
+				<column name="LAST_CHANGED" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="userID" />
+			<basic name="isPublic">
+				<column name="IS_PUBLIC" />
+			</basic>
+			<basic name="publicAfter">
+				<column name="PUBLIC_AFTER" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -161,24 +203,24 @@
 		<table name="gfbio_Basket" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.CellImpl" name="Cell">
-		<table name="gfbio_Cell" />
+	<entity class="org.gfbio.model.impl.ColumnImpl" name="Column">
+		<table name="gfbio_Column" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.Cell_HeadImpl" name="Cell_Head">
-		<table name="gfbio_Cell_Head" />
+	<entity class="org.gfbio.model.impl.ContentImpl" name="Content">
+		<table name="gfbio_Content" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.Cell_PositionImpl" name="Cell_Position">
-		<table name="gfbio_Cell_Position" />
+	<entity class="org.gfbio.model.impl.DataProviderImpl" name="DataProvider">
+		<table name="gfbio_DataProvider" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" name="DataProvider_PersistentIdentifier">
+		<table name="gfbio_DataProvider_PersistentIdentifier" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.HeadImpl" name="Head">
 		<table name="gfbio_Head" />
-		<attributes />
-	</entity>
-	<entity class="org.gfbio.model.impl.PositionImpl" name="Position">
-		<table name="gfbio_Position" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.ProjectImpl" name="Project">
@@ -199,6 +241,10 @@
 	</entity>
 	<entity class="org.gfbio.model.impl.ResearchObjectImpl" name="ResearchObject">
 		<table name="gfbio_ResearchObject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.SubmissionRegistryImpl" name="SubmissionRegistry">
+		<table name="gfbio_SubmissionRegistry" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.UserExtensionImpl" name="UserExtension">

@@ -63,13 +63,13 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	public static final String TABLE_NAME = "gfbio_Head";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "headID", Types.BIGINT },
-			{ "name", Types.VARCHAR },
-			{ "task", Types.VARCHAR }
+			{ "table_name", Types.VARCHAR },
+			{ "table_type", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Head (headID LONG not null primary key,name VARCHAR(75) null,task VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Head (headID LONG not null primary key,table_name VARCHAR(75) null,table_type VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Head";
-	public static final String ORDER_BY_JPQL = " ORDER BY head.name ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Head.name ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY head.table_name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Head.table_name ASC";
 	public static final String DATA_SOURCE = "gfbioDataSource";
 	public static final String SESSION_FACTORY = "gfbioSessionFactory";
 	public static final String TX_MANAGER = "gfbioTransactionManager";
@@ -81,8 +81,8 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 				"value.object.column.bitmask.enabled.org.gfbio.model.Head"),
 			true);
 	public static long HEADID_COLUMN_BITMASK = 1L;
-	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long TASK_COLUMN_BITMASK = 4L;
+	public static long TABLE_NAME_COLUMN_BITMASK = 2L;
+	public static long TABLE_TYPE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -98,8 +98,8 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		Head model = new HeadImpl();
 
 		model.setHeadID(soapModel.getHeadID());
-		model.setName(soapModel.getName());
-		model.setTask(soapModel.getTask());
+		model.setTable_name(soapModel.getTable_name());
+		model.setTable_type(soapModel.getTable_type());
 
 		return model;
 	}
@@ -165,8 +165,8 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("headID", getHeadID());
-		attributes.put("name", getName());
-		attributes.put("task", getTask());
+		attributes.put("table_name", getTable_name());
+		attributes.put("table_type", getTable_type());
 
 		return attributes;
 	}
@@ -179,16 +179,16 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 			setHeadID(headID);
 		}
 
-		String name = (String)attributes.get("name");
+		String table_name = (String)attributes.get("table_name");
 
-		if (name != null) {
-			setName(name);
+		if (table_name != null) {
+			setTable_name(table_name);
 		}
 
-		String task = (String)attributes.get("task");
+		String table_type = (String)attributes.get("table_type");
 
-		if (task != null) {
-			setTask(task);
+		if (table_type != null) {
+			setTable_type(table_type);
 		}
 	}
 
@@ -217,54 +217,54 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
+	public String getTable_name() {
+		if (_table_name == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _name;
+			return _table_name;
 		}
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setTable_name(String table_name) {
 		_columnBitmask = -1L;
 
-		if (_originalName == null) {
-			_originalName = _name;
+		if (_originalTable_name == null) {
+			_originalTable_name = _table_name;
 		}
 
-		_name = name;
+		_table_name = table_name;
 	}
 
-	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+	public String getOriginalTable_name() {
+		return GetterUtil.getString(_originalTable_name);
 	}
 
 	@JSON
 	@Override
-	public String getTask() {
-		if (_task == null) {
+	public String getTable_type() {
+		if (_table_type == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _task;
+			return _table_type;
 		}
 	}
 
 	@Override
-	public void setTask(String task) {
-		_columnBitmask |= TASK_COLUMN_BITMASK;
+	public void setTable_type(String table_type) {
+		_columnBitmask |= TABLE_TYPE_COLUMN_BITMASK;
 
-		if (_originalTask == null) {
-			_originalTask = _task;
+		if (_originalTable_type == null) {
+			_originalTable_type = _table_type;
 		}
 
-		_task = task;
+		_table_type = table_type;
 	}
 
-	public String getOriginalTask() {
-		return GetterUtil.getString(_originalTask);
+	public String getOriginalTable_type() {
+		return GetterUtil.getString(_originalTable_type);
 	}
 
 	public long getColumnBitmask() {
@@ -299,8 +299,8 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		HeadImpl headImpl = new HeadImpl();
 
 		headImpl.setHeadID(getHeadID());
-		headImpl.setName(getName());
-		headImpl.setTask(getTask());
+		headImpl.setTable_name(getTable_name());
+		headImpl.setTable_type(getTable_type());
 
 		headImpl.resetOriginalValues();
 
@@ -311,7 +311,7 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	public int compareTo(Head head) {
 		int value = 0;
 
-		value = getName().compareTo(head.getName());
+		value = getTable_name().compareTo(head.getTable_name());
 
 		if (value != 0) {
 			return value;
@@ -355,9 +355,9 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		headModelImpl._setOriginalHeadID = false;
 
-		headModelImpl._originalName = headModelImpl._name;
+		headModelImpl._originalTable_name = headModelImpl._table_name;
 
-		headModelImpl._originalTask = headModelImpl._task;
+		headModelImpl._originalTable_type = headModelImpl._table_type;
 
 		headModelImpl._columnBitmask = 0;
 	}
@@ -368,20 +368,20 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		headCacheModel.headID = getHeadID();
 
-		headCacheModel.name = getName();
+		headCacheModel.table_name = getTable_name();
 
-		String name = headCacheModel.name;
+		String table_name = headCacheModel.table_name;
 
-		if ((name != null) && (name.length() == 0)) {
-			headCacheModel.name = null;
+		if ((table_name != null) && (table_name.length() == 0)) {
+			headCacheModel.table_name = null;
 		}
 
-		headCacheModel.task = getTask();
+		headCacheModel.table_type = getTable_type();
 
-		String task = headCacheModel.task;
+		String table_type = headCacheModel.table_type;
 
-		if ((task != null) && (task.length() == 0)) {
-			headCacheModel.task = null;
+		if ((table_type != null) && (table_type.length() == 0)) {
+			headCacheModel.table_type = null;
 		}
 
 		return headCacheModel;
@@ -393,10 +393,10 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 
 		sb.append("{headID=");
 		sb.append(getHeadID());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", task=");
-		sb.append(getTask());
+		sb.append(", table_name=");
+		sb.append(getTable_name());
+		sb.append(", table_type=");
+		sb.append(getTable_type());
 		sb.append("}");
 
 		return sb.toString();
@@ -415,12 +415,12 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 		sb.append(getHeadID());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
+			"<column><column-name>table_name</column-name><column-value><![CDATA[");
+		sb.append(getTable_name());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>task</column-name><column-value><![CDATA[");
-		sb.append(getTask());
+			"<column><column-name>table_type</column-name><column-value><![CDATA[");
+		sb.append(getTable_type());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -433,10 +433,10 @@ public class HeadModelImpl extends BaseModelImpl<Head> implements HeadModel {
 	private long _headID;
 	private long _originalHeadID;
 	private boolean _setOriginalHeadID;
-	private String _name;
-	private String _originalName;
-	private String _task;
-	private String _originalTask;
+	private String _table_name;
+	private String _originalTable_name;
+	private String _table_type;
+	private String _originalTable_type;
 	private long _columnBitmask;
 	private Head _escapedModel;
 }

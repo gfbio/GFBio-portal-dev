@@ -285,25 +285,17 @@ public class UserExtensionLocalServiceWrapper
 	}
 
 	@Override
-	public org.gfbio.model.UserExtension getUserExtensionById(
-		long userExtensionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchUserExtensionException {
-		return _userExtensionLocalService.getUserExtensionById(userExtensionId);
+	public org.json.simple.JSONObject getUserExtentionById(
+		org.json.simple.JSONObject json) {
+		return _userExtensionLocalService.getUserExtentionById(json);
 	}
 
 	@Override
-	public com.liferay.portal.model.User getUserById(long userId)
+	public org.json.simple.JSONObject constructUserExtentionJsonById(
+		com.liferay.portal.model.User user)
 		throws com.liferay.portal.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userExtensionLocalService.getUserById(userId);
-	}
-
-	@Override
-	public org.json.simple.JSONObject getUserAsJsonById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userExtensionLocalService.getUserAsJsonById(userId);
+		return _userExtensionLocalService.constructUserExtentionJsonById(user);
 	}
 
 	/**

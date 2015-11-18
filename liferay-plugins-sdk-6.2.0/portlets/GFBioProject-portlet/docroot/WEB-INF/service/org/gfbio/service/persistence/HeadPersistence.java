@@ -93,192 +93,196 @@ public interface HeadPersistence extends BasePersistence<Head> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the head where name = &#63; or throws a {@link org.gfbio.NoSuchHeadException} if it could not be found.
+	* Returns the head where table_name = &#63; or throws a {@link org.gfbio.NoSuchHeadException} if it could not be found.
 	*
-	* @param name the name
+	* @param table_name the table_name
 	* @return the matching head
 	* @throws org.gfbio.NoSuchHeadException if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head findByName(java.lang.String name)
+	public org.gfbio.model.Head findByTableName(java.lang.String table_name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
-	* Returns the head where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the head where table_name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param name the name
+	* @param table_name the table_name
 	* @return the matching head, or <code>null</code> if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head fetchByName(java.lang.String name)
+	public org.gfbio.model.Head fetchByTableName(java.lang.String table_name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the head where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the head where table_name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param name the name
+	* @param table_name the table_name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching head, or <code>null</code> if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head fetchByName(java.lang.String name,
+	public org.gfbio.model.Head fetchByTableName(java.lang.String table_name,
 		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the head where name = &#63; from the database.
+	* Removes the head where table_name = &#63; from the database.
 	*
-	* @param name the name
+	* @param table_name the table_name
 	* @return the head that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head removeByName(java.lang.String name)
+	public org.gfbio.model.Head removeByTableName(java.lang.String table_name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
-	* Returns the number of heads where name = &#63;.
+	* Returns the number of heads where table_name = &#63;.
 	*
-	* @param name the name
+	* @param table_name the table_name
 	* @return the number of matching heads
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByName(java.lang.String name)
+	public int countByTableName(java.lang.String table_name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the heads where task = &#63;.
+	* Returns all the heads where table_type = &#63;.
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @return the matching heads
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.Head> findByTask(
-		java.lang.String task)
+	public java.util.List<org.gfbio.model.Head> findByTableType(
+		java.lang.String table_type)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the heads where task = &#63;.
+	* Returns a range of all the heads where table_type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.HeadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @param start the lower bound of the range of heads
 	* @param end the upper bound of the range of heads (not inclusive)
 	* @return the range of matching heads
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.Head> findByTask(
-		java.lang.String task, int start, int end)
+	public java.util.List<org.gfbio.model.Head> findByTableType(
+		java.lang.String table_type, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the heads where task = &#63;.
+	* Returns an ordered range of all the heads where table_type = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link org.gfbio.model.impl.HeadModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @param start the lower bound of the range of heads
 	* @param end the upper bound of the range of heads (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching heads
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<org.gfbio.model.Head> findByTask(
-		java.lang.String task, int start, int end,
+	public java.util.List<org.gfbio.model.Head> findByTableType(
+		java.lang.String table_type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first head in the ordered set where task = &#63;.
+	* Returns the first head in the ordered set where table_type = &#63;.
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching head
 	* @throws org.gfbio.NoSuchHeadException if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head findByTask_First(java.lang.String task,
+	public org.gfbio.model.Head findByTableType_First(
+		java.lang.String table_type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
-	* Returns the first head in the ordered set where task = &#63;.
+	* Returns the first head in the ordered set where table_type = &#63;.
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching head, or <code>null</code> if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head fetchByTask_First(java.lang.String task,
+	public org.gfbio.model.Head fetchByTableType_First(
+		java.lang.String table_type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last head in the ordered set where task = &#63;.
+	* Returns the last head in the ordered set where table_type = &#63;.
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching head
 	* @throws org.gfbio.NoSuchHeadException if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head findByTask_Last(java.lang.String task,
+	public org.gfbio.model.Head findByTableType_Last(
+		java.lang.String table_type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
-	* Returns the last head in the ordered set where task = &#63;.
+	* Returns the last head in the ordered set where table_type = &#63;.
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching head, or <code>null</code> if a matching head could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head fetchByTask_Last(java.lang.String task,
+	public org.gfbio.model.Head fetchByTableType_Last(
+		java.lang.String table_type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the heads before and after the current head in the ordered set where task = &#63;.
+	* Returns the heads before and after the current head in the ordered set where table_type = &#63;.
 	*
 	* @param headID the primary key of the current head
-	* @param task the task
+	* @param table_type the table_type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next head
 	* @throws org.gfbio.NoSuchHeadException if a head with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Head[] findByTask_PrevAndNext(long headID,
-		java.lang.String task,
+	public org.gfbio.model.Head[] findByTableType_PrevAndNext(long headID,
+		java.lang.String table_type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException;
 
 	/**
-	* Removes all the heads where task = &#63; from the database.
+	* Removes all the heads where table_type = &#63; from the database.
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByTask(java.lang.String task)
+	public void removeByTableType(java.lang.String table_type)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of heads where task = &#63;.
+	* Returns the number of heads where table_type = &#63;.
 	*
-	* @param task the task
+	* @param table_type the table_type
 	* @return the number of matching heads
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByTask(java.lang.String task)
+	public int countByTableType(java.lang.String table_type)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

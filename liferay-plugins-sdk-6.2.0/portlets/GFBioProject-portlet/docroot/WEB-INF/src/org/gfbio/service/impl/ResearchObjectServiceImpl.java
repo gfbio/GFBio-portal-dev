@@ -17,9 +17,13 @@ package org.gfbio.service.impl;
 
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
-import com.liferay.portal.kernel.exception.SystemException;
+
 
 /**
  * The implementation of the research object remote service.
@@ -31,14 +35,74 @@ import com.liferay.portal.kernel.exception.SystemException;
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author froemm
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.ResearchObjectServiceBaseImpl
  * @see org.gfbio.service.ResearchObjectServiceUtil
  */
 public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
-	
-	public long updateResearchObject(long projectID, long researchObjectID, String name, String label, String metadata, String formatmetadata) throws SystemException {
 
-		return ResearchObjectLocalServiceUtil.updateResearchObject(projectID, researchObjectID, name, label, metadata, formatmetadata);
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+
+
+	//
+/*	public List <ResearchObject> getAllChildren (long researchObjectId){
+		return ResearchObjectLocalServiceUtil.getAllChildren(researchObjectId);
+	}*/
+	
+	
+	//
+	public JSONObject getResearchObjectAbsolutParent (JSONObject requestJson){
+		return ResearchObjectLocalServiceUtil.getResearchObjectAbsolutParent(requestJson);
 	}
+	
+
+	//
+	public JSONArray getResearchObjectById (String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(parseJson);
+	}
+	
+	
+	//
+	public JSONObject getResearchObjectParent (JSONObject requestJson){
+		return ResearchObjectLocalServiceUtil.getResearchObjectParent(requestJson);
+	}
+	
+	
+	//get all Child ResearchObjects of a ResearchObject by the ID of this. 
+	public JSONArray getResearchObjectsByParent (JSONObject requestJson){
+		return ResearchObjectLocalServiceUtil.getResearchObjectsByParent(requestJson);
+	}
+	
+	
+		
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public JSONArray createResearchObject(String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
+	}
+	
+	
+	//
+	public JSONArray updateResearchObject(String requestJson){
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {
+			parseJson = (JSONArray) parser.parse(requestJson);
+		} catch (ParseException e) {e.printStackTrace();}
+		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(parseJson);
+	}
+	
 }

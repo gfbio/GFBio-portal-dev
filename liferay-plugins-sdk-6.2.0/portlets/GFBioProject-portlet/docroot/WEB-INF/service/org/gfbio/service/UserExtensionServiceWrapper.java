@@ -58,18 +58,16 @@ public class UserExtensionServiceWrapper implements UserExtensionService,
 			arguments);
 	}
 
+	/**
+	* @param test
+	* @JSONWebService tester
+	*/
 	@Override
-	public com.liferay.portal.model.User getUserById(long userId)
+	public org.json.simple.JSONObject getUserById(
+		org.json.simple.JSONObject json)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userExtensionService.getUserById(userId);
-	}
-
-	@Override
-	public org.json.simple.JSONObject getUserAsJsonById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userExtensionService.getUserAsJsonById(userId);
+		return _userExtensionService.getUserById(json);
 	}
 
 	/**

@@ -59,12 +59,39 @@ public class ResearchObjectServiceWrapper implements ResearchObjectService,
 	}
 
 	@Override
-	public long updateResearchObject(long projectID, long researchObjectID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _researchObjectService.updateResearchObject(projectID,
-			researchObjectID, name, label, metadata, formatmetadata);
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson) {
+		return _researchObjectService.getResearchObjectAbsolutParent(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getResearchObjectById(
+		java.lang.String requestJson) {
+		return _researchObjectService.getResearchObjectById(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson) {
+		return _researchObjectService.getResearchObjectParent(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONObject requestJson) {
+		return _researchObjectService.getResearchObjectsByParent(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray createResearchObject(
+		java.lang.String requestJson) {
+		return _researchObjectService.createResearchObject(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray updateResearchObject(
+		java.lang.String requestJson) {
+		return _researchObjectService.updateResearchObject(requestJson);
 	}
 
 	/**

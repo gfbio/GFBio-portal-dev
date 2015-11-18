@@ -19,9 +19,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import java.util.List;
 
 import org.gfbio.NoSuchProject_ResearchObjectException;
-import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.model.Project_ResearchObject;
+import org.gfbio.model.ResearchObject;
 import org.gfbio.service.base.Project_ResearchObjectLocalServiceBaseImpl;
+import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.Project_ResearchObjectPK;
 
 /**
@@ -40,48 +41,49 @@ import org.gfbio.service.persistence.Project_ResearchObjectPK;
  */
 public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObjectLocalServiceBaseImpl {
 
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
 	//get a ID-List (Project_ResearchObject-Object) of all Research Objects of a specific Project
 	public List<Project_ResearchObject> getProjectIDList(long projectID) {
 		List<Project_ResearchObject> idList = null;
 		try {
 			idList = project_ResearchObjectPersistence.findByProjectID(projectID);
-		} catch (SystemException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
-
+		} catch (SystemException e) {e.printStackTrace();}
 		return idList;
 	}
+	
+	
+	//
+	public List <ResearchObject> getResearchObjectsByProjectId (long projectId){
+		return Project_ResearchObjectFinderUtil.getResearchObjectsByProjectId(projectId);
+	}
+	
+	
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 
+	
 	//update or create a new Relationship between a Project and a Research Object
-	public long updateProjectResearchObject(long projectID, long researchObjectID) throws NoSuchProject_UserException, SystemException {
+	public Boolean updateProjectResearchObject(long projectID, long researchObjectID, int researchObjectVersion) {
 
+		Boolean check = false;
 		Project_ResearchObject relation = null;
-		Project_ResearchObjectPK pk = new Project_ResearchObjectPK(projectID, researchObjectID);
+		Project_ResearchObjectPK pk = new Project_ResearchObjectPK(projectID, researchObjectID, researchObjectVersion);
 
 		try {
 			relation = project_ResearchObjectPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchProject_ResearchObjectException e) {
+		} catch (NoSuchProject_ResearchObjectException | SystemException e) {System.out.println("no enitity with pk: "+pk+" is found");	}
 
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
-
-		//create new project
-
-		if (relation == null) {
+		if (relation == null) 
 			relation = project_ResearchObjectPersistence.create(pk);
-		}
-		//update project
-		else {
-			//exception-option or for mar relation-Attributs
-		}
 
-		super.updateProject_ResearchObject(relation);
-		return relation.getProjectID() + relation.getResearchObjectID();
+		try {
+			super.updateProject_ResearchObject(relation);
+			check = true;
+		} catch (SystemException e) {e.printStackTrace();}
+
+		return check;
 	}
 
 }

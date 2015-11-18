@@ -61,23 +61,23 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	/**
 	* Creates a new research object with the primary key. Does not add the research object to the database.
 	*
-	* @param researchObjectID the primary key for the new research object
+	* @param researchObjectPK the primary key for the new research object
 	* @return the new research object
 	*/
 	public org.gfbio.model.ResearchObject createResearchObject(
-		long researchObjectID);
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK);
 
 	/**
 	* Deletes the research object with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param researchObjectID the primary key of the research object
+	* @param researchObjectPK the primary key of the research object
 	* @return the research object that was removed
 	* @throws PortalException if a research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.ResearchObject deleteResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -172,20 +172,20 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.ResearchObject fetchResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the research object with the primary key.
 	*
-	* @param researchObjectID the primary key of the research object
+	* @param researchObjectPK the primary key of the research object
 	* @return the research object
 	* @throws PortalException if a research object with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.ResearchObject getResearchObject(
-		long researchObjectID)
+		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -254,8 +254,104 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public long updateResearchObject(long projectID, long researchObjectID,
-		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getResearchObjectASJsonById(
+		org.json.simple.JSONArray requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getResearchObjectASJsonById(
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getResearchObjectAbsolutParent(
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getResearchObjectsByParent(
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getResearchObjectParent(
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.ResearchObject> getAllChildren(
+		long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.ResearchObject> getDirectChildren(
+		long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.ResearchObject getDirectParent(long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.ResearchObject getLatestResearchObjectById(
+		long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLatestVersionById(long researchObjectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getProjectIdByIds(long researchObjectId,
+		int researchObjectVersion);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectById(
+		long researchObjectId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchResearchObjectException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId);
+
+	public java.lang.Boolean checkParentAttributById(long researchObjectId);
+
+	public java.lang.Boolean checkResearchObjectId(long researchObjectId);
+
+	public org.json.simple.JSONObject constructResearchObjectJson(
+		org.gfbio.model.ResearchObject researchObject);
+
+	public org.json.simple.JSONArray constructResearchObjectsJson(
+		java.util.List<org.gfbio.model.ResearchObject> researchObjectList);
+
+	public java.lang.String constructFormatMetadata(java.lang.String metadata);
+
+	public org.json.simple.JSONArray createResearchObjectByJson(
+		org.json.simple.JSONArray requestJson);
+
+	public org.json.simple.JSONObject createResearchObjectByJson(
+		org.json.simple.JSONObject requestJson);
+
+	public org.json.simple.JSONArray updateResearchObjectByJson(
+		org.json.simple.JSONArray requestJson);
+
+	public org.json.simple.JSONObject updateResearchObjectByJson(
+		org.json.simple.JSONObject requestJson);
+
+	public long createResearchObject(java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String researchObjectType)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public long updateResearchObject(long researchObjectId,
+		int researchObjectVersion, java.lang.String name,
+		java.lang.String label, java.lang.String metadata,
+		java.lang.String formatmetadata);
+
+	public long updateResearchObjectWithProject(long projectId,
+		long researchObjectId, int researchObjectVersion,
+		java.lang.String name, java.lang.String label,
+		java.lang.String metadata, java.lang.String formatmetadata,
+		java.lang.String researchObjectType);
+
+	public java.lang.Boolean updateParentResearchObjectIdByIds(
+		long researchObjectId, int researchObjectVersion,
+		long parentResearchObjectId);
+
+	public java.lang.Boolean updateResearchObjectType(long researchObjectId,
+		int researchObjectVersion, java.lang.String researchObjectType);
+
+	public int updateResearchObjectVersion(long researchObjectId,
+		int researchObjectVersion);
 }

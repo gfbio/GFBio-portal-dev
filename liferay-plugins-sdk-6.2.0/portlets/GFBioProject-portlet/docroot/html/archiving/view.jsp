@@ -76,15 +76,15 @@
 			<form action="select.htm">
 				<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 					<option selected value="none"> </option>
-					<option value="-10">BGBM </option>
-					<option value="-10">DSMZ </option>
-					<option value="-11" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
-					<option value="-10">MfN </option>
-					<option value="-10">PANGAEA </option>
-					<option value="-10">SGN </option>
-					<option value="-10">SMNS </option>
-					<option value="-10">SNSB </option>
-					<option value="-10">ZFMK </option>
+					<option value="-20">BGBM </option>
+					<option value="-23">DSMZ </option>
+					<option value="-21" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
+					<option value="-24">MfN </option>
+					<option value="-22">PANGAEA </option>
+					<option value="-25">SGN </option>
+					<option value="-26">SMNS </option>
+					<option value="-27">SNSB </option>
+					<option value="-28">ZFMK </option>
 				</select>
 			</form>
 			<br>

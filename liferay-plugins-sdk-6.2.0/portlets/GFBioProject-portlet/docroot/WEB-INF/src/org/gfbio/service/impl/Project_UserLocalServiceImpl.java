@@ -34,12 +34,16 @@ import org.gfbio.service.persistence.Project_UserPK;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Felicitas Loeffler
+ * @author Marcel Froemming
  * @see org.gfbio.service.base.Project_UserLocalServiceBaseImpl
  * @see org.gfbio.service.Project_UserLocalServiceUtil
  */
 public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseImpl {
 
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
 	//get a ID-List (Project_User-Object) of all project of a specific user
 	public List<Project_User> getProjectIDList(long userID) {
 		List<Project_User> idList = null;
@@ -54,6 +58,11 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 
 		return idList;
 	}
+	
+	
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////	
+	
+	
 	//update or create a Project and set the relationship to User
 	public long updateProjectUser(long projectID, long userID, Date startDate, Date endDate) throws NoSuchProject_UserException, SystemException {
 
@@ -62,12 +71,7 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 
 		try {
 			relation = project_UserPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchProject_UserException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
+		} catch (NoSuchProject_UserException e) {e.printStackTrace();}
 
 		//create new relationship between project and user
 

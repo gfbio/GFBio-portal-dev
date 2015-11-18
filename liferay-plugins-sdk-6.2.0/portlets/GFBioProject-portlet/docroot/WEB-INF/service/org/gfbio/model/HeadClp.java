@@ -73,8 +73,8 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("headID", getHeadID());
-		attributes.put("name", getName());
-		attributes.put("task", getTask());
+		attributes.put("table_name", getTable_name());
+		attributes.put("table_type", getTable_type());
 
 		return attributes;
 	}
@@ -87,16 +87,16 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 			setHeadID(headID);
 		}
 
-		String name = (String)attributes.get("name");
+		String table_name = (String)attributes.get("table_name");
 
-		if (name != null) {
-			setName(name);
+		if (table_name != null) {
+			setTable_name(table_name);
 		}
 
-		String task = (String)attributes.get("task");
+		String table_type = (String)attributes.get("table_type");
 
-		if (task != null) {
-			setTask(task);
+		if (table_type != null) {
+			setTable_type(table_type);
 		}
 	}
 
@@ -124,21 +124,21 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 	}
 
 	@Override
-	public String getName() {
-		return _name;
+	public String getTable_name() {
+		return _table_name;
 	}
 
 	@Override
-	public void setName(String name) {
-		_name = name;
+	public void setTable_name(String table_name) {
+		_table_name = table_name;
 
 		if (_headRemoteModel != null) {
 			try {
 				Class<?> clazz = _headRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setName", String.class);
+				Method method = clazz.getMethod("setTable_name", String.class);
 
-				method.invoke(_headRemoteModel, name);
+				method.invoke(_headRemoteModel, table_name);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -147,21 +147,21 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 	}
 
 	@Override
-	public String getTask() {
-		return _task;
+	public String getTable_type() {
+		return _table_type;
 	}
 
 	@Override
-	public void setTask(String task) {
-		_task = task;
+	public void setTable_type(String table_type) {
+		_table_type = table_type;
 
 		if (_headRemoteModel != null) {
 			try {
 				Class<?> clazz = _headRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setTask", String.class);
+				Method method = clazz.getMethod("setTable_type", String.class);
 
-				method.invoke(_headRemoteModel, task);
+				method.invoke(_headRemoteModel, table_type);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -239,8 +239,8 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 		HeadClp clone = new HeadClp();
 
 		clone.setHeadID(getHeadID());
-		clone.setName(getName());
-		clone.setTask(getTask());
+		clone.setTable_name(getTable_name());
+		clone.setTable_type(getTable_type());
 
 		return clone;
 	}
@@ -249,7 +249,7 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 	public int compareTo(Head head) {
 		int value = 0;
 
-		value = getName().compareTo(head.getName());
+		value = getTable_name().compareTo(head.getTable_name());
 
 		if (value != 0) {
 			return value;
@@ -295,10 +295,10 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 
 		sb.append("{headID=");
 		sb.append(getHeadID());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", task=");
-		sb.append(getTask());
+		sb.append(", table_name=");
+		sb.append(getTable_name());
+		sb.append(", table_type=");
+		sb.append(getTable_type());
 		sb.append("}");
 
 		return sb.toString();
@@ -317,12 +317,12 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 		sb.append(getHeadID());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
+			"<column><column-name>table_name</column-name><column-value><![CDATA[");
+		sb.append(getTable_name());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>task</column-name><column-value><![CDATA[");
-		sb.append(getTask());
+			"<column><column-name>table_type</column-name><column-value><![CDATA[");
+		sb.append(getTable_type());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -331,8 +331,8 @@ public class HeadClp extends BaseModelImpl<Head> implements Head {
 	}
 
 	private long _headID;
-	private String _name;
-	private String _task;
+	private String _table_name;
+	private String _table_type;
 	private BaseModel<?> _headRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

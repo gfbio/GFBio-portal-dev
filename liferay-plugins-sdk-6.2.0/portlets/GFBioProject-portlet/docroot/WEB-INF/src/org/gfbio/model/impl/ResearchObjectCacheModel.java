@@ -36,10 +36,14 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{researchObjectID=");
 		sb.append(researchObjectID);
+		sb.append(", researchObjectVersion=");
+		sb.append(researchObjectVersion);
+		sb.append(", parentResearchObjectID=");
+		sb.append(parentResearchObjectID);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", label=");
@@ -48,6 +52,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		sb.append(metadata);
 		sb.append(", formatmetadata=");
 		sb.append(formatmetadata);
+		sb.append(", researchObjectType=");
+		sb.append(researchObjectType);
 		sb.append("}");
 
 		return sb.toString();
@@ -58,6 +64,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		ResearchObjectImpl researchObjectImpl = new ResearchObjectImpl();
 
 		researchObjectImpl.setResearchObjectID(researchObjectID);
+		researchObjectImpl.setResearchObjectVersion(researchObjectVersion);
+		researchObjectImpl.setParentResearchObjectID(parentResearchObjectID);
 
 		if (name == null) {
 			researchObjectImpl.setName(StringPool.BLANK);
@@ -87,6 +95,13 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			researchObjectImpl.setFormatmetadata(formatmetadata);
 		}
 
+		if (researchObjectType == null) {
+			researchObjectImpl.setResearchObjectType(StringPool.BLANK);
+		}
+		else {
+			researchObjectImpl.setResearchObjectType(researchObjectType);
+		}
+
 		researchObjectImpl.resetOriginalValues();
 
 		return researchObjectImpl;
@@ -95,16 +110,21 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		researchObjectID = objectInput.readLong();
+		researchObjectVersion = objectInput.readInt();
+		parentResearchObjectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		label = objectInput.readUTF();
 		metadata = objectInput.readUTF();
 		formatmetadata = objectInput.readUTF();
+		researchObjectType = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(researchObjectID);
+		objectOutput.writeInt(researchObjectVersion);
+		objectOutput.writeLong(parentResearchObjectID);
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -133,11 +153,21 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		else {
 			objectOutput.writeUTF(formatmetadata);
 		}
+
+		if (researchObjectType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(researchObjectType);
+		}
 	}
 
 	public long researchObjectID;
+	public int researchObjectVersion;
+	public long parentResearchObjectID;
 	public String name;
 	public String label;
 	public String metadata;
 	public String formatmetadata;
+	public String researchObjectType;
 }

@@ -21,6 +21,8 @@ import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
+import org.gfbio.service.persistence.ResearchObjectPK;
+
 import java.io.Serializable;
 
 /**
@@ -48,14 +50,14 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	 *
 	 * @return the primary key of this research object
 	 */
-	public long getPrimaryKey();
+	public ResearchObjectPK getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this research object.
 	 *
 	 * @param primaryKey the primary key of this research object
 	 */
-	public void setPrimaryKey(long primaryKey);
+	public void setPrimaryKey(ResearchObjectPK primaryKey);
 
 	/**
 	 * Returns the research object i d of this research object.
@@ -70,6 +72,34 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	 * @param researchObjectID the research object i d of this research object
 	 */
 	public void setResearchObjectID(long researchObjectID);
+
+	/**
+	 * Returns the research object version of this research object.
+	 *
+	 * @return the research object version of this research object
+	 */
+	public int getResearchObjectVersion();
+
+	/**
+	 * Sets the research object version of this research object.
+	 *
+	 * @param researchObjectVersion the research object version of this research object
+	 */
+	public void setResearchObjectVersion(int researchObjectVersion);
+
+	/**
+	 * Returns the parent research object i d of this research object.
+	 *
+	 * @return the parent research object i d of this research object
+	 */
+	public long getParentResearchObjectID();
+
+	/**
+	 * Sets the parent research object i d of this research object.
+	 *
+	 * @param parentResearchObjectID the parent research object i d of this research object
+	 */
+	public void setParentResearchObjectID(long parentResearchObjectID);
 
 	/**
 	 * Returns the name of this research object.
@@ -130,6 +160,21 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	 * @param formatmetadata the formatmetadata of this research object
 	 */
 	public void setFormatmetadata(String formatmetadata);
+
+	/**
+	 * Returns the research object type of this research object.
+	 *
+	 * @return the research object type of this research object
+	 */
+	@AutoEscape
+	public String getResearchObjectType();
+
+	/**
+	 * Sets the research object type of this research object.
+	 *
+	 * @param researchObjectType the research object type of this research object
+	 */
+	public void setResearchObjectType(String researchObjectType);
 
 	@Override
 	public boolean isNew();

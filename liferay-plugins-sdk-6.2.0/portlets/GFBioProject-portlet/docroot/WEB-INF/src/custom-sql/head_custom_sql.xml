@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="org.gfbio.service.persistence.HeadFinderImpl.getEntitiesByHeadId">
+	    <![CDATA[
+			SELECT 
+			 *
+			FROM 
+			  public.gfbio_column,
+			  public.gfbio_head,
+			  public.gfbio_content 
+			WHERE 
+			  gfbio_head.headid = ? AND
+			  gfbio_head.headid = gfbio_column.headid AND
+			  gfbio_column.columnid = gfbio_content.columnid 
+		]]>
+    </sql>
+    <sql id="org.gfbio.service.persistence.HeadFinderImpl.getHeadBetweenHeadIds">
+	    <![CDATA[
+		  SELECT
+		  	*
+		  FROM
+		  	public.gfbio_head
+		  WHERE
+		  	gfbio_head.headid between ? AND ?
+		]]>
+    </sql>
+    <sql id="org.gfbio.service.persistence.HeadFinderImpl.getHeadIdByTableName">
+	    <![CDATA[
+		    SELECT 
+			  gfbio_head.headid
+			FROM 
+			  public.gfbio_head
+			WHERE
+			  gfbio_head.table_name = ?
+		]]>
+    </sql>
+        <sql id="org.gfbio.service.persistence.HeadFinderImpl.getTableNameById">
+	    <![CDATA[
+			SELECT 
+			  gfbio_head.table_name
+			FROM 
+			  public.gfbio_head
+			WHERE
+			  gfbio_head.headid = ?
+		]]>
+    </sql>
+
+</custom-sql>
+
+

@@ -49,8 +49,8 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("headID", getHeadID());
-		attributes.put("name", getName());
-		attributes.put("task", getTask());
+		attributes.put("table_name", getTable_name());
+		attributes.put("table_type", getTable_type());
 
 		return attributes;
 	}
@@ -63,16 +63,16 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 			setHeadID(headID);
 		}
 
-		String name = (String)attributes.get("name");
+		String table_name = (String)attributes.get("table_name");
 
-		if (name != null) {
-			setName(name);
+		if (table_name != null) {
+			setTable_name(table_name);
 		}
 
-		String task = (String)attributes.get("task");
+		String table_type = (String)attributes.get("table_type");
 
-		if (task != null) {
-			setTask(task);
+		if (table_type != null) {
+			setTable_type(table_type);
 		}
 	}
 
@@ -117,43 +117,43 @@ public class HeadWrapper implements Head, ModelWrapper<Head> {
 	}
 
 	/**
-	* Returns the name of this head.
+	* Returns the table_name of this head.
 	*
-	* @return the name of this head
+	* @return the table_name of this head
 	*/
 	@Override
-	public java.lang.String getName() {
-		return _head.getName();
+	public java.lang.String getTable_name() {
+		return _head.getTable_name();
 	}
 
 	/**
-	* Sets the name of this head.
+	* Sets the table_name of this head.
 	*
-	* @param name the name of this head
+	* @param table_name the table_name of this head
 	*/
 	@Override
-	public void setName(java.lang.String name) {
-		_head.setName(name);
+	public void setTable_name(java.lang.String table_name) {
+		_head.setTable_name(table_name);
 	}
 
 	/**
-	* Returns the task of this head.
+	* Returns the table_type of this head.
 	*
-	* @return the task of this head
+	* @return the table_type of this head
 	*/
 	@Override
-	public java.lang.String getTask() {
-		return _head.getTask();
+	public java.lang.String getTable_type() {
+		return _head.getTable_type();
 	}
 
 	/**
-	* Sets the task of this head.
+	* Sets the table_type of this head.
 	*
-	* @param task the task of this head
+	* @param table_type the table_type of this head
 	*/
 	@Override
-	public void setTask(java.lang.String task) {
-		_head.setTask(task);
+	public void setTable_type(java.lang.String table_type) {
+		_head.setTable_type(table_type);
 	}
 
 	@Override

@@ -277,44 +277,137 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public java.lang.Long getHeadId(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getHeadId(name);
+	public void deleteTableByHeadId(long headId) {
+		_headLocalService.deleteTableByHeadId(headId);
 	}
 
 	@Override
-	public org.gfbio.model.Head getHeadById(long headId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getHeadById(headId);
+	public void deleteTableByHeadIdWithoutCheck(long headId) {
+		_headLocalService.deleteTableByHeadIdWithoutCheck(headId);
 	}
 
 	@Override
-	public org.gfbio.model.Head getHeadByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getHeadByName(name);
+	public java.lang.String[] getArrayOfTableNames(java.lang.String tableType) {
+		return _headLocalService.getArrayOfTableNames(tableType);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Head> getHeads()
+	public int getCountOfColumns(long headId) {
+		return _headLocalService.getCountOfColumns(headId);
+	}
+
+	@Override
+	public java.util.List getEntitiesByHeadId(long headId) {
+		return _headLocalService.getEntitiesByHeadId(headId);
+	}
+
+	@Override
+	public java.lang.Long getHeadIdByTableName(java.lang.String tableName)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchHeadException {
+		return _headLocalService.getHeadIdByTableName(tableName);
+	}
+
+	@Override
+	public java.util.List<org.gfbio.model.Head> getHeadsByTableType(
+		java.lang.String tableType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.getHeads();
+		return _headLocalService.getHeadsByTableType(tableType);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Head> getHeadsByTask(
-		java.lang.String task)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _headLocalService.getHeadsByTask(task);
+	public long[][] getIdTableAsArray(long headId) {
+		return _headLocalService.getIdTableAsArray(headId);
 	}
 
 	@Override
-	public java.lang.String getName(long headId)
+	public java.lang.String[][] getTableAsArray(long headId) {
+		return _headLocalService.getTableAsArray(headId);
+	}
+
+	@Override
+	public java.lang.String getTableNameById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
-		return _headLocalService.getName(headId);
+		return _headLocalService.getTableNameById(headId);
+	}
+
+	@Override
+	public java.lang.String[] getTableNameArray(java.lang.String tableType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _headLocalService.getTableNameArray(tableType);
+	}
+
+	@Override
+	public java.lang.String[] getTableNameArray(
+		java.util.List<org.gfbio.model.Head> headList)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _headLocalService.getTableNameArray(headList);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructHeadJson(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return _headLocalService.constructHeadJson(headId, tableName, tableType);
+	}
+
+	@Override
+	public java.lang.String constructRelationName(java.lang.String mtable,
+		java.lang.String ntable) {
+		return _headLocalService.constructRelationName(mtable, ntable);
+	}
+
+	@Override
+	public java.lang.Boolean updateHead(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return _headLocalService.updateHead(headId, tableName, tableType);
+	}
+
+	@Override
+	public java.lang.Boolean updateHead(org.json.simple.JSONObject json) {
+		return _headLocalService.updateHead(json);
+	}
+
+	@Override
+	public long updateHeadWithLongRequest(org.json.simple.JSONObject json) {
+		return _headLocalService.updateHeadWithLongRequest(json);
+	}
+
+	@Override
+	public long updateHeadWithLongRequest(long headId,
+		java.lang.String tableName, java.lang.String tableType) {
+		return _headLocalService.updateHeadWithLongRequest(headId, tableName,
+			tableType);
+	}
+
+	@Override
+	public java.lang.Boolean updateHeadWithColumns(
+		org.json.simple.JSONObject json) {
+		return _headLocalService.updateHeadWithColumns(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateHeadWithColumns2(
+		org.json.simple.JSONObject json) {
+		return _headLocalService.updateHeadWithColumns2(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateRelationTable(long headId,
+		java.lang.String mtable, java.lang.String ntable) {
+		return _headLocalService.updateRelationTable(headId, mtable, ntable);
+	}
+
+	@Override
+	public java.lang.Boolean updateRelationTableWithContent(long headId1,
+		long headId2, long contentId1, long contentId2) {
+		return _headLocalService.updateRelationTableWithContent(headId1,
+			headId2, contentId1, contentId2);
+	}
+
+	@Override
+	public java.lang.Boolean updateTable(org.json.simple.JSONObject json) {
+		return _headLocalService.updateTable(json);
 	}
 
 	/**

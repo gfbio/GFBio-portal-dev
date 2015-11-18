@@ -63,16 +63,15 @@ public class UserExtensionServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static com.liferay.portal.model.User getUserById(long userId)
+	/**
+	* @param test
+	* @JSONWebService tester
+	*/
+	public static org.json.simple.JSONObject getUserById(
+		org.json.simple.JSONObject json)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserById(userId);
-	}
-
-	public static org.json.simple.JSONObject getUserAsJsonById(long userId)
-		throws com.liferay.portal.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserAsJsonById(userId);
+		return getService().getUserById(json);
 	}
 
 	public static void clearService() {

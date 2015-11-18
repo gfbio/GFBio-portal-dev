@@ -128,9 +128,13 @@ public class Project_ResearchObjectLocalServiceClp
 
 		_methodParameterTypes19 = new String[] { "long" };
 
-		_methodName20 = "updateProjectResearchObject";
+		_methodName20 = "getResearchObjectsByProjectId";
 
-		_methodParameterTypes20 = new String[] { "long", "long" };
+		_methodParameterTypes20 = new String[] { "long" };
+
+		_methodName21 = "updateProjectResearchObject";
+
+		_methodParameterTypes21 = new String[] { "long", "long", "int" };
 	}
 
 	@Override
@@ -726,27 +730,16 @@ public class Project_ResearchObjectLocalServiceClp
 	}
 
 	@Override
-	public long updateProjectResearchObject(long projectID,
-		long researchObjectID)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchProject_UserException {
+	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectsByProjectId(
+		long projectId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
-					new Object[] { projectID, researchObjectID });
+					_methodParameterTypes20, new Object[] { projectId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof org.gfbio.NoSuchProject_UserException) {
-				throw (org.gfbio.NoSuchProject_UserException)t;
-			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -757,7 +750,38 @@ public class Project_ResearchObjectLocalServiceClp
 			}
 		}
 
-		return ((Long)returnObj).longValue();
+		return (java.util.List<org.gfbio.model.ResearchObject>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateProjectResearchObject(long projectID,
+		long researchObjectID, int researchObjectVersion) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
+					new Object[] {
+						projectID,
+						
+					researchObjectID,
+						
+					researchObjectVersion
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -801,4 +825,6 @@ public class Project_ResearchObjectLocalServiceClp
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
+	private String _methodName21;
+	private String[] _methodParameterTypes21;
 }

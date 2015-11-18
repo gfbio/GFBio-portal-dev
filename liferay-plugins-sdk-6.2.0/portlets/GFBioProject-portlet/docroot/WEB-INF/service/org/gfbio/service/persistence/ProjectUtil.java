@@ -493,6 +493,75 @@ public class ProjectUtil {
 	}
 
 	/**
+	* Returns the project where parentProjectID = &#63; or throws a {@link org.gfbio.NoSuchProjectException} if it could not be found.
+	*
+	* @param parentProjectID the parent project i d
+	* @return the matching project
+	* @throws org.gfbio.NoSuchProjectException if a matching project could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Project findByParentProjectID(
+		long parentProjectID)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProjectException {
+		return getPersistence().findByParentProjectID(parentProjectID);
+	}
+
+	/**
+	* Returns the project where parentProjectID = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param parentProjectID the parent project i d
+	* @return the matching project, or <code>null</code> if a matching project could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Project fetchByParentProjectID(
+		long parentProjectID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByParentProjectID(parentProjectID);
+	}
+
+	/**
+	* Returns the project where parentProjectID = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param parentProjectID the parent project i d
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching project, or <code>null</code> if a matching project could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Project fetchByParentProjectID(
+		long parentProjectID, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByParentProjectID(parentProjectID, retrieveFromCache);
+	}
+
+	/**
+	* Removes the project where parentProjectID = &#63; from the database.
+	*
+	* @param parentProjectID the parent project i d
+	* @return the project that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static org.gfbio.model.Project removeByParentProjectID(
+		long parentProjectID)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProjectException {
+		return getPersistence().removeByParentProjectID(parentProjectID);
+	}
+
+	/**
+	* Returns the number of projects where parentProjectID = &#63;.
+	*
+	* @param parentProjectID the parent project i d
+	* @return the number of matching projects
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByParentProjectID(long parentProjectID)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByParentProjectID(parentProjectID);
+	}
+
+	/**
 	* Caches the project in the entity cache if it is enabled.
 	*
 	* @param project the project

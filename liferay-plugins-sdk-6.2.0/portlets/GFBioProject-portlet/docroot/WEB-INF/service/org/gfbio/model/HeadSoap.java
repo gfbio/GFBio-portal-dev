@@ -31,8 +31,8 @@ public class HeadSoap implements Serializable {
 		HeadSoap soapModel = new HeadSoap();
 
 		soapModel.setHeadID(model.getHeadID());
-		soapModel.setName(model.getName());
-		soapModel.setTask(model.getTask());
+		soapModel.setTable_name(model.getTable_name());
+		soapModel.setTable_type(model.getTable_type());
 
 		return soapModel;
 	}
@@ -93,23 +93,23 @@ public class HeadSoap implements Serializable {
 		_headID = headID;
 	}
 
-	public String getName() {
-		return _name;
+	public String getTable_name() {
+		return _table_name;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setTable_name(String table_name) {
+		_table_name = table_name;
 	}
 
-	public String getTask() {
-		return _task;
+	public String getTable_type() {
+		return _table_type;
 	}
 
-	public void setTask(String task) {
-		_task = task;
+	public void setTable_type(String table_type) {
+		_table_type = table_type;
 	}
 
 	private long _headID;
-	private String _name;
-	private String _task;
+	private String _table_name;
+	private String _table_type;
 }
