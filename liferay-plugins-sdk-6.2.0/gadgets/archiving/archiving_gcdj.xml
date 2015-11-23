@@ -82,6 +82,7 @@
 		            
 		            
 		            function visibleShow(j) {
+		                console.log("hide_".concat(j));
 		                document.getElementById("hide_".concat(j)).className = "swMain";
 	                };
 	                
@@ -119,7 +120,7 @@
                 </script>
             </head>
             
-				<div id="hide_-21" class="swMain">
+				<div id="hide_-21" class="swHide">
 
 				    <div id="target_1"></div>
 	            </div>
