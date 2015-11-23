@@ -32,7 +32,7 @@
 
 				function callback(topic, data, subscriberData) {
 					TMS.performSearch(data);
-					console.log('search ausgeführt');
+					console.log('search ausgefuehrt');
 				    //adjust();
 			    }
 				
@@ -54,7 +54,7 @@
 		    function adjust() {
 		        var height = $('#search_results').height()+20;
 			    gadgets.window.adjustHeight(height);
-			    console.log('adjust ausgeführt ' + height);
+			    console.log('adjust ausgefuehrt ' + height);
 			}
 			
 			</script>
