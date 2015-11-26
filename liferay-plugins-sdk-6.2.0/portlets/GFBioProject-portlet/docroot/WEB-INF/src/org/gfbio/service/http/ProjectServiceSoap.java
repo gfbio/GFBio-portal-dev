@@ -76,5 +76,19 @@ public class ProjectServiceSoap {
 		}
 	}
 
+	public static org.json.simple.JSONArray getProjectById1()
+		throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = ProjectServiceUtil.getProjectById1();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ProjectServiceSoap.class);
 }

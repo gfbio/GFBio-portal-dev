@@ -68,6 +68,10 @@ public class ProjectServiceUtil {
 		return getService().getProjectById(requestJson);
 	}
 
+	public static org.json.simple.JSONArray getProjectById1() {
+		return getService().getProjectById1();
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
