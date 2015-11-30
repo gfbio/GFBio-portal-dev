@@ -65,6 +65,21 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	
 	
 	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getProjectById1 (){
+
+		JSONObject requestJson = new JSONObject();
+		long a = 1;
+		requestJson.put("projectid", a);
+		System.out.println(requestJson);
+		JSONArray responseJson = new JSONArray();
+		responseJson = ProjectLocalServiceUtil.getCompleteProjectById(requestJson);
+		return responseJson;
+	}
+	
+	
+	
 	
 /*	//
 	public List<Project> getProjectListByUserId(long userID) throws NoSuchModelException, SystemException {

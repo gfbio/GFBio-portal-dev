@@ -68,4 +68,7 @@ public interface ProjectService extends BaseService, InvokableService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getProjectById(
 		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getProjectById1();
 }
