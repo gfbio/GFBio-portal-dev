@@ -1,4 +1,4 @@
-
+				
 function updateVisualisation() {
 	var jsonData = getSelectedResult();
 	// Add query message in JSON format 
@@ -50,8 +50,8 @@ function newQuery(clearBasket) {
 	$('#gfbioSearchInput').autocomplete('close');
 	
 	getSearchResult(keyword,filter,"");
-	// clear visualBasket
 	var visualBasket = document.getElementById("visualBasket");
+	// clear visualBasket if the clearBasket flag is true
 	if (clearBasket) visualBasket.value = "";
 	updateVisualisation();
 }
@@ -68,6 +68,7 @@ function filterQuery(filter,yearRange) {
 function getSearchResult(keyword,filter,yearRange) {
 	//console.log(':Search: getSearchResult: '+keyword);
 	if (gadgets.Hub.isConnected() && (keyword != "")){
+		// prevent calling ts when keyword box is empty
 		gadgets.Hub.publish('gfbio.search.ts', keyword);
 	}
 	writeResultTable();
@@ -119,6 +120,7 @@ function getSearchResult(keyword,filter,yearRange) {
 							"sLengthMenu": "Show _MENU_ entries per page"
 						}
 				} );
+	// activate the row click event
 	onRowClick();
 
 }
@@ -130,7 +132,7 @@ function fnServerObjectToArray(keyword,filterArray,yearRange){
 			var iDisplayLength = getValueByAttribute(aoData,"name","iDisplayLength");
 			// Construct query message in JSON format
 			var queryfield = createQueryFieldArray();
-		var filteredQuery = getFilteredQuery(keyword,filterArray,yearRange);
+			var filteredQuery = getFilteredQuery(keyword,filterArray,yearRange);
 			var boostedQuery = applyBoost(filteredQuery);
 			var completeQuery = getCompleteQuery(boostedQuery,iDisplayStart,iDisplayLength,queryfield);
 			// Store query string for sending to VAT
@@ -152,10 +154,7 @@ function fnServerObjectToArray(keyword,filterArray,yearRange){
 					else {
 						if (gadgets.Hub.isConnected())gadgets.Hub.publish('gfbio.search.facet', '');
 					}
-				var res = parseReturnedJSONfromSearch(datasrc);
-						
-						
-						
+					var res = parseReturnedJSONfromSearch(datasrc);
 					json.iTotalRecords = json.hits.total;
 					json.iTotalDisplayRecords = json.hits.total;
 					json.data = res;
@@ -204,10 +203,12 @@ function onRowClick() {
 		
 		row.toggleClass('selected');
 		
+		// get Element visual basket for updating
 		var basket = document.getElementById("visualBasket");
 		var basketStr = basket.value;
 		var jsonData = {};
 		var selected = [];
+		// toggle basket
 		if (row.hasClass('selected')) {
 			$(this).attr('class','cart_selected');
 			$($(".sp-replacer")[irow]).removeClass("invisible");
@@ -222,6 +223,7 @@ function onRowClick() {
 			var tRows = $('#tableId').DataTable().rows();
 			var resultArray = createResultArray(nRow,tRows);
 			jsonData.selected.push(resultArray);
+			// store basket in string format
 			basket.value = JSON.stringify(jsonData);
 		}else {
 			$(this).attr('class','cart_unselected');
@@ -233,6 +235,8 @@ function onRowClick() {
 				var nRow = row[0];
 				var tRows = $('#tableId').DataTable().rows();
 				var resultArray = createResultArray(nRow,tRows);
+				// metadataLink is supposed to be unique for each dataset,
+				// so I use it as an id for each row.
 				jsonData.selected = JSONfindAndRemove(jsonData.selected,'metadataLink',resultArray.metadataLink);
 				basket.value = JSON.stringify(jsonData);
 			}
@@ -293,9 +297,11 @@ function getSelectedResult() {
 	var selected = [];
 	var basket = document.getElementById("visualBasket");
 	var basketStr = basket.value;
+	// if nothing selected, return empty array []
 	if (basketStr=="") {
 		jsonData.selected = selected;
 	}else {
+		// convert basketStr to JSON object
 		jsonData = JSON.parse(basketStr);
 	}
 
@@ -334,7 +340,8 @@ function createQueryFieldArray() {
 		//jArr.push("taxonomy");
 		//jArr.push("datalink");
 		jArr.push("metadatalink");
-				jArr.push("html-1");
+		jArr.push("html-1");
+		jArr.push("xml");
 	return jArr;
 }
 function getFilteredQuery(keyword,filterArray,yearRange){
@@ -439,7 +446,8 @@ function createResultArray(nRow,tRows) {
 	"title": value.title,
 	"authors": value.authors,
 	"description": value.description,
-	"dataCenter": value.dataCenter};
+	"dataCenter": value.dataCenter,
+	"xml":value.xml};
 	return result;
 }
 
@@ -449,6 +457,7 @@ function parseReturnedJSONfromSearch(datasrc){
 		var inner = new Object();
 		var score = datasrc[i]._score;
 		var sourceObj = datasrc[i].fields;
+		//console.log('parseReturnedJSONfromSearch');
 		//console.log(sourceObj);
 		inner.score  = score;
 		if (sourceObj["citation.title"] !== undefined)
@@ -509,6 +518,15 @@ function parseReturnedJSONfromSearch(datasrc){
 			inner.html = html.replace("@target@","_blank").replace("<table","<table class=\"html-1\"");
 		}
 		else inner.html = "";
+		
+		if (sourceObj["xml"]){
+			var xml = sourceObj["xml"];
+			// creates object instantce of XMLtoJSON
+			var xml2json = new XMLtoJSON();
+			var json = xml2json.fromStr(xml);
+			inner.xml = json;//JSON.stringify(json);
+		}
+		else inner.xml = "";
 		
 		res.push(inner);
 	}
@@ -653,7 +671,13 @@ function addColorPicker() {
 	  );
 	$(".sp-replacer").addClass("invisible").attr("title","Select color to display on VAT (for registered user).");
 }
-				
+
+/*
+* Description: Convert RGB code to Hex number 
+* Usage: Color for each item in basket
+* Parameter: RGB code
+* Return: Hexadecimal value
+*/				
 function rgbToHex(rgb) {
 	var rgbRegex = /^rgb\(\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*,\s*(-?\d+)(%?)\s*\)$/;
 	var result;
@@ -682,22 +706,116 @@ function getStyle(x,styleProp)
 
 function tog(v){return v?'addClass':'removeClass';} 
 
+/*
+* Description: Adjust gadget's height according to the content
+* Parameter: nRow - row number of search result, aData - json data of that row of search result
+* Return: -
+* Effect: Cart icon will appear for each search result if they have geological data
+*/	
 function showCartIcon(nRow,aData){
+	// show the cart icon only if the geological data is provided
 	if (((aData.maxLatitude!=undefined)||(aData.minLatitude!=undefined))&&
 	((aData.maxLongitude!=undefined)||(aData.minLongitude!=undefined))){
+		// read the current row number and get a div for the cart
 		var elmRow = $(nRow);
 		var elmTD = $(elmRow[0].lastElementChild);
 		var elmDiv = $(elmTD[0].lastElementChild); 
+		// show the cart's div
 		elmDiv.removeClass('invisible');
 	}
 }
-				
+
+/*
+* Description: Adjust gadget's height according to the content
+* Parameter: -
+* Return: -
+* Effect: Gadget's height is automatically adjusted
+*/	
 function adjust() {
    //console.log('auto adjust height');
+   // use the height of search_gadget div + offset
    var height = $('#search_gadget').height()+20;
+   // keep minimum height to 350
    if (height < 350){ 
 		height = 350;
    }
 	gadgets.window.adjustHeight(height);
 }
-				
+				function XMLtoJSON() {
+  var me = this;      // stores the object instantce
+
+  // gets the content of an xml file and returns it in 
+  me.fromFile = function(xml, rstr) {
+    // Cretes a instantce of XMLHttpRequest object
+    var xhttp = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+    // sets and sends the request for calling "xml"
+    xhttp.open("GET", xml ,false);
+    xhttp.send(null);
+
+    // gets the JSON string
+    var json_str = jsontoStr(setJsonObj(xhttp.responseXML));
+
+    // sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
+    return (typeof(rstr) == 'undefined') ? JSON.parse(json_str) : json_str;
+  }
+
+  // returns XML DOM from string with xml content
+  me.fromStr = function(xml, rstr) {
+    // for non IE browsers
+    if(window.DOMParser) {
+      var getxml = new DOMParser();
+      var xmlDoc = getxml.parseFromString(xml,"text/xml");
+    }
+    else {
+      // for Internet Explorer
+      var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+      xmlDoc.async = "false";
+    }
+
+    // gets the JSON string
+    var json_str = jsontoStr(setJsonObj(xmlDoc));
+
+    // sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
+    return (typeof(rstr) == 'undefined') ? JSON.parse(json_str) : json_str;
+  }
+
+  // receives XML DOM object, returns converted JSON object
+  var setJsonObj = function(xml) {
+    var js_obj = {};
+    if (xml.nodeType == 1) {
+      if (xml.attributes.length > 0) {
+        js_obj["@attributes"] = {};
+        for (var j = 0; j < xml.attributes.length; j++) {
+          var attribute = xml.attributes.item(j);
+          js_obj["@attributes"][attribute.nodeName] = attribute.value;
+        }
+      }
+    } else if (xml.nodeType == 3) {
+      js_obj = xml.nodeValue;
+    }            
+    if (xml.hasChildNodes()) {
+      for (var i = 0; i < xml.childNodes.length; i++) {
+        var item = xml.childNodes.item(i);
+        var nodeName = item.nodeName;
+        if (typeof(js_obj[nodeName]) == "undefined") {
+          js_obj[nodeName] = setJsonObj(item);
+        } else {
+          if (typeof(js_obj[nodeName].push) == "undefined") {
+            var old = js_obj[nodeName];
+            js_obj[nodeName] = [];
+            js_obj[nodeName].push(old);
+          }
+          js_obj[nodeName].push(setJsonObj(item));
+        }
+      }
+    }
+    return js_obj;
+  }
+
+  // converts JSON object to string (human readablle).
+  // Removes '\t\r\n', rows with multiples '""', multiple empty rows, '  "",', and "  ",; replace empty [] with ""
+  var jsontoStr = function(js_obj) {
+    var rejsn = JSON.stringify(js_obj, undefined, 2).replace(/(\\t|\\r|\\n)/g, '').replace(/"",[\n\t\r\s]+""[,]*/g, '').replace(/(\n[\t\s\r]*\n)/g, '').replace(/[\s\t]{2,}""[,]{0,1}/g, '').replace(/"[\s\t]{1,}"[,]{0,1}/g, '').replace(/\[[\t\s]*\]/g, '""');
+    return (rejsn.indexOf('"parsererror": {') == -1) ? rejsn : 'Invalid XML format';
+  }
+};

@@ -228,7 +228,7 @@
 
 							displayHTML += "</ol>";							
 						}
-						console.log(displayHTML);
+						//console.log(displayHTML);
     					var facetfield = document.getElementById("search_facet_tree");
     					facetfield.innerHTML = displayHTML;
 						$('#facet-tree').bonsai({expandAll: true})
