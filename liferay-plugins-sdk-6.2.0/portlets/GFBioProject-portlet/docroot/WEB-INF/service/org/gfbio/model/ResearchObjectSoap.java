@@ -37,8 +37,7 @@ public class ResearchObjectSoap implements Serializable {
 		soapModel.setParentResearchObjectID(model.getParentResearchObjectID());
 		soapModel.setName(model.getName());
 		soapModel.setLabel(model.getLabel());
-		soapModel.setMetadata(model.getMetadata());
-		soapModel.setFormatmetadata(model.getFormatmetadata());
+		soapModel.setExtendeddata(model.getExtendeddata());
 		soapModel.setResearchObjectType(model.getResearchObjectType());
 
 		return soapModel;
@@ -133,20 +132,12 @@ public class ResearchObjectSoap implements Serializable {
 		_label = label;
 	}
 
-	public String getMetadata() {
-		return _metadata;
+	public String getExtendeddata() {
+		return _extendeddata;
 	}
 
-	public void setMetadata(String metadata) {
-		_metadata = metadata;
-	}
-
-	public String getFormatmetadata() {
-		return _formatmetadata;
-	}
-
-	public void setFormatmetadata(String formatmetadata) {
-		_formatmetadata = formatmetadata;
+	public void setExtendeddata(String extendeddata) {
+		_extendeddata = extendeddata;
 	}
 
 	public String getResearchObjectType() {
@@ -162,7 +153,6 @@ public class ResearchObjectSoap implements Serializable {
 	private long _parentResearchObjectID;
 	private String _name;
 	private String _label;
-	private String _metadata;
-	private String _formatmetadata;
+	private String _extendeddata;
 	private String _researchObjectType;
 }

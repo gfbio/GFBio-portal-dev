@@ -1938,6 +1938,7 @@ public class ProjectPersistenceImpl extends BasePersistenceImpl<Project>
 		projectImpl.setParentProjectID(project.getParentProjectID());
 		projectImpl.setName(project.getName());
 		projectImpl.setLabel(project.getLabel());
+		projectImpl.setExtendeddata(project.getExtendeddata());
 		projectImpl.setDescription(project.getDescription());
 		projectImpl.setStartDate(project.getStartDate());
 		projectImpl.setEndDate(project.getEndDate());

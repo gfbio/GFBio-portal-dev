@@ -50,6 +50,7 @@ public class SubmissionRegistryWrapper implements SubmissionRegistry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("submissionID", getSubmissionID());
 		attributes.put("researchObjectID", getResearchObjectID());
 		attributes.put("researchObjectVersion", getResearchObjectVersion());
 		attributes.put("archive", getArchive());
@@ -67,6 +68,12 @@ public class SubmissionRegistryWrapper implements SubmissionRegistry,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long submissionID = (Long)attributes.get("submissionID");
+
+		if (submissionID != null) {
+			setSubmissionID(submissionID);
+		}
+
 		Long researchObjectID = (Long)attributes.get("researchObjectID");
 
 		if (researchObjectID != null) {
@@ -141,7 +148,7 @@ public class SubmissionRegistryWrapper implements SubmissionRegistry,
 	* @return the primary key of this submission registry
 	*/
 	@Override
-	public org.gfbio.service.persistence.SubmissionRegistryPK getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _submissionRegistry.getPrimaryKey();
 	}
 
@@ -151,9 +158,28 @@ public class SubmissionRegistryWrapper implements SubmissionRegistry,
 	* @param primaryKey the primary key of this submission registry
 	*/
 	@Override
-	public void setPrimaryKey(
-		org.gfbio.service.persistence.SubmissionRegistryPK primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		_submissionRegistry.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the submission i d of this submission registry.
+	*
+	* @return the submission i d of this submission registry
+	*/
+	@Override
+	public long getSubmissionID() {
+		return _submissionRegistry.getSubmissionID();
+	}
+
+	/**
+	* Sets the submission i d of this submission registry.
+	*
+	* @param submissionID the submission i d of this submission registry
+	*/
+	@Override
+	public void setSubmissionID(long submissionID) {
+		_submissionRegistry.setSubmissionID(submissionID);
 	}
 
 	/**

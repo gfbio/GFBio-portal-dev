@@ -21,7 +21,7 @@ public interface ColumnFinder {
 	public java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
 		java.lang.String columnName);
 
-	public java.util.List getColumnIdsWithoutRelation(
+	public java.util.List getHeadIdsWithoutRelationshipsByColumnName(
 		java.lang.String columnName);
 
 	public java.util.List getColumnNameById(long columnid);

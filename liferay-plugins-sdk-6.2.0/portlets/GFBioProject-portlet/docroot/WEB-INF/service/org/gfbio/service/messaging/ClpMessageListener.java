@@ -40,8 +40,8 @@ import org.gfbio.service.Project_User_PILocalServiceUtil;
 import org.gfbio.service.Project_User_PIServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectServiceUtil;
-import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
-import org.gfbio.service.SubmissionRegistryServiceUtil;
+import org.gfbio.service.SubmissionLocalServiceUtil;
+import org.gfbio.service.SubmissionServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.UserExtensionServiceUtil;
 
@@ -93,9 +93,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			ResearchObjectLocalServiceUtil.clearService();
 
 			ResearchObjectServiceUtil.clearService();
-			SubmissionRegistryLocalServiceUtil.clearService();
+			SubmissionLocalServiceUtil.clearService();
 
-			SubmissionRegistryServiceUtil.clearService();
+			SubmissionServiceUtil.clearService();
 			UserExtensionLocalServiceUtil.clearService();
 
 			UserExtensionServiceUtil.clearService();

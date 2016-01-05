@@ -156,7 +156,7 @@
 				<%
 					String tableName = headList.get(y).getTable_name();
 					List <Column> withRelationList = ColumnLocalServiceUtil.getColumnsWithRelation(tableName);
-					List  withoutRelationList = ColumnLocalServiceUtil.getColumnIdsWithoutRelation(tableName);
+					List  withoutRelationList = ColumnLocalServiceUtil.getHeadIdsWithoutRelationshipsByColumnName(tableName);
 				%>
 				<div class="row" >
 					<div class="dynamicTable1st">&nbsp;	</div>

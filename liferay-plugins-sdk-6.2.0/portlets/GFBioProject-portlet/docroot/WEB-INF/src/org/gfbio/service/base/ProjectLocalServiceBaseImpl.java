@@ -52,8 +52,8 @@ import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.Project_User_PIPersistence;
 import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
-import org.gfbio.service.persistence.SubmissionRegistryFinder;
-import org.gfbio.service.persistence.SubmissionRegistryPersistence;
+import org.gfbio.service.persistence.SubmissionFinder;
+import org.gfbio.service.persistence.SubmissionPersistence;
 import org.gfbio.service.persistence.UserExtensionPersistence;
 
 import java.io.Serializable;
@@ -1043,79 +1043,78 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the submission registry local service.
+	 * Returns the submission local service.
 	 *
-	 * @return the submission registry local service
+	 * @return the submission local service
 	 */
-	public org.gfbio.service.SubmissionRegistryLocalService getSubmissionRegistryLocalService() {
-		return submissionRegistryLocalService;
+	public org.gfbio.service.SubmissionLocalService getSubmissionLocalService() {
+		return submissionLocalService;
 	}
 
 	/**
-	 * Sets the submission registry local service.
+	 * Sets the submission local service.
 	 *
-	 * @param submissionRegistryLocalService the submission registry local service
+	 * @param submissionLocalService the submission local service
 	 */
-	public void setSubmissionRegistryLocalService(
-		org.gfbio.service.SubmissionRegistryLocalService submissionRegistryLocalService) {
-		this.submissionRegistryLocalService = submissionRegistryLocalService;
+	public void setSubmissionLocalService(
+		org.gfbio.service.SubmissionLocalService submissionLocalService) {
+		this.submissionLocalService = submissionLocalService;
 	}
 
 	/**
-	 * Returns the submission registry remote service.
+	 * Returns the submission remote service.
 	 *
-	 * @return the submission registry remote service
+	 * @return the submission remote service
 	 */
-	public org.gfbio.service.SubmissionRegistryService getSubmissionRegistryService() {
-		return submissionRegistryService;
+	public org.gfbio.service.SubmissionService getSubmissionService() {
+		return submissionService;
 	}
 
 	/**
-	 * Sets the submission registry remote service.
+	 * Sets the submission remote service.
 	 *
-	 * @param submissionRegistryService the submission registry remote service
+	 * @param submissionService the submission remote service
 	 */
-	public void setSubmissionRegistryService(
-		org.gfbio.service.SubmissionRegistryService submissionRegistryService) {
-		this.submissionRegistryService = submissionRegistryService;
+	public void setSubmissionService(
+		org.gfbio.service.SubmissionService submissionService) {
+		this.submissionService = submissionService;
 	}
 
 	/**
-	 * Returns the submission registry persistence.
+	 * Returns the submission persistence.
 	 *
-	 * @return the submission registry persistence
+	 * @return the submission persistence
 	 */
-	public SubmissionRegistryPersistence getSubmissionRegistryPersistence() {
-		return submissionRegistryPersistence;
+	public SubmissionPersistence getSubmissionPersistence() {
+		return submissionPersistence;
 	}
 
 	/**
-	 * Sets the submission registry persistence.
+	 * Sets the submission persistence.
 	 *
-	 * @param submissionRegistryPersistence the submission registry persistence
+	 * @param submissionPersistence the submission persistence
 	 */
-	public void setSubmissionRegistryPersistence(
-		SubmissionRegistryPersistence submissionRegistryPersistence) {
-		this.submissionRegistryPersistence = submissionRegistryPersistence;
+	public void setSubmissionPersistence(
+		SubmissionPersistence submissionPersistence) {
+		this.submissionPersistence = submissionPersistence;
 	}
 
 	/**
-	 * Returns the submission registry finder.
+	 * Returns the submission finder.
 	 *
-	 * @return the submission registry finder
+	 * @return the submission finder
 	 */
-	public SubmissionRegistryFinder getSubmissionRegistryFinder() {
-		return submissionRegistryFinder;
+	public SubmissionFinder getSubmissionFinder() {
+		return submissionFinder;
 	}
 
 	/**
-	 * Sets the submission registry finder.
+	 * Sets the submission finder.
 	 *
-	 * @param submissionRegistryFinder the submission registry finder
+	 * @param submissionFinder the submission finder
 	 */
-	public void setSubmissionRegistryFinder(
-		SubmissionRegistryFinder submissionRegistryFinder) {
-		this.submissionRegistryFinder = submissionRegistryFinder;
+	public void setSubmissionFinder(SubmissionFinder submissionFinder) {
+		this.submissionFinder = submissionFinder;
 	}
 
 	/**
@@ -1431,14 +1430,14 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected ResearchObjectPersistence researchObjectPersistence;
 	@BeanReference(type = ResearchObjectFinder.class)
 	protected ResearchObjectFinder researchObjectFinder;
-	@BeanReference(type = org.gfbio.service.SubmissionRegistryLocalService.class)
-	protected org.gfbio.service.SubmissionRegistryLocalService submissionRegistryLocalService;
-	@BeanReference(type = org.gfbio.service.SubmissionRegistryService.class)
-	protected org.gfbio.service.SubmissionRegistryService submissionRegistryService;
-	@BeanReference(type = SubmissionRegistryPersistence.class)
-	protected SubmissionRegistryPersistence submissionRegistryPersistence;
-	@BeanReference(type = SubmissionRegistryFinder.class)
-	protected SubmissionRegistryFinder submissionRegistryFinder;
+	@BeanReference(type = org.gfbio.service.SubmissionLocalService.class)
+	protected org.gfbio.service.SubmissionLocalService submissionLocalService;
+	@BeanReference(type = org.gfbio.service.SubmissionService.class)
+	protected org.gfbio.service.SubmissionService submissionService;
+	@BeanReference(type = SubmissionPersistence.class)
+	protected SubmissionPersistence submissionPersistence;
+	@BeanReference(type = SubmissionFinder.class)
+	protected SubmissionFinder submissionFinder;
 	@BeanReference(type = org.gfbio.service.UserExtensionLocalService.class)
 	protected org.gfbio.service.UserExtensionLocalService userExtensionLocalService;
 	@BeanReference(type = org.gfbio.service.UserExtensionService.class)

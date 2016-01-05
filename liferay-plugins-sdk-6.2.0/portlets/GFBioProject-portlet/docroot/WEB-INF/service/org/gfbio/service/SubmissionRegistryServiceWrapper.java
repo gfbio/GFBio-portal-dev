@@ -60,6 +60,12 @@ public class SubmissionRegistryServiceWrapper
 	}
 
 	@Override
+	public org.json.simple.JSONArray getLatestPublicSubmissions(
+		org.json.simple.JSONObject requestJson) {
+		return _submissionRegistryService.getLatestPublicSubmissions(requestJson);
+	}
+
+	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) {
 		return _submissionRegistryService.getSubmissionRegistriesByBrokerSubmissionId(requestJson);

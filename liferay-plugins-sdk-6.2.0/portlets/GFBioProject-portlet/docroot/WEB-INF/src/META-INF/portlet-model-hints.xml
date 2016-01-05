@@ -44,6 +44,7 @@
 		<field name="parentProjectID" type="long" />
 		<field name="name" type="String" />
 		<field name="label" type="String" />
+		<field name="extendeddata" type="String" />
 		<field name="description" type="String" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
@@ -72,11 +73,11 @@
 		<field name="parentResearchObjectID" type="long" />
 		<field name="name" type="String" />
 		<field name="label" type="String" />
-		<field name="metadata" type="String" />
-		<field name="formatmetadata" type="String" />
+		<field name="extendeddata" type="String" />
 		<field name="researchObjectType" type="String" />
 	</model>
-	<model name="org.gfbio.model.SubmissionRegistry">
+	<model name="org.gfbio.model.Submission">
+		<field name="submissionID" type="long" />
 		<field name="researchObjectID" type="long" />
 		<field name="researchObjectVersion" type="long" />
 		<field name="archive" type="String" />

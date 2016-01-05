@@ -14,6 +14,9 @@
 
 package org.gfbio.service.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
@@ -21,11 +24,6 @@ import org.json.simple.JSONObject;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
-
-
-
-
-
 
 
 /**
@@ -53,20 +51,22 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	
 	//
 	@SuppressWarnings({ "unchecked"})
-	public JSONObject getUserExtentionById(JSONObject json){
+	public JSONObject getUserExtentionById(JSONObject requestJson){
 		
 		JSONObject responseJson = new JSONObject();
+		Set<String> set = new HashSet<String>();
+		set.add("userid");
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
-		if (json.containsKey("userid")){
+		if (requestJson.containsKey("userid"))
 			try {
-				responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)json.get("userid")));
-			} catch (NoSuchUserException | SystemException e) {
-				e.printStackTrace();
-				responseJson.put("ERROR", e);}
-		}
+				responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)requestJson.get("userid")));
+			} catch (NoSuchUserException | SystemException e) {e.printStackTrace();	responseJson.put("ERROR", e);}
 		else
 			responseJson.put("ERROR", "No key 'userid' exist.");
-
+		
+		if (!ignoreParameter.equals(""))
+			responseJson.put("WARNING",ignoreParameter);
 		
 		return responseJson;
 	}
@@ -77,6 +77,24 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	
 		
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
+
+		String ignoredParameter = "WARNING:";
+		Boolean check = false;
+		for (int i =0; i < objects.length;i++)
+			if (!keyList.contains((objects[i]))){
+				ignoredParameter = ignoredParameter.concat(" ").concat(objects[i].toString()).concat(",");
+				check = true;
+			}
+		if (check == true)
+			ignoredParameter = ignoredParameter.substring(0, ignoredParameter.length()-1).concat(" are not parameters of this method.");
+		else
+			ignoredParameter ="";
+		return ignoredParameter;
+	}
 	
 	
 	//

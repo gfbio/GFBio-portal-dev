@@ -168,9 +168,9 @@ public class ProjectProfile extends GenericPortlet {
 		} catch (java.text.ParseException e1) {e1.printStackTrace();}
 
 		String status = (String) json.get("status");
-
+		String extendedData = "";
 		try {
-			projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, startDate, endDate, status);
+			projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, extendedData, startDate, endDate, status);
 		} catch (SystemException e) {e.printStackTrace();}
 	}
 

@@ -112,9 +112,15 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		_methodParameterTypes128 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName129 = "constructUserExtentionJsonById";
+		_methodName129 = "checkForIgnoredParameter";
 
-		_methodParameterTypes129 = new String[] { "com.liferay.portal.model.User" };
+		_methodParameterTypes129 = new String[] {
+				"java.lang.Object[][]", "java.util.Set"
+			};
+
+		_methodName130 = "constructUserExtentionJsonById";
+
+		_methodParameterTypes130 = new String[] { "com.liferay.portal.model.User" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -225,6 +231,12 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		if (_methodName129.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+			return UserExtensionLocalServiceUtil.checkForIgnoredParameter((java.lang.Object[])arguments[0],
+				(java.util.Set<java.lang.String>)arguments[1]);
+		}
+
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.constructUserExtentionJsonById((com.liferay.portal.model.User)arguments[0]);
 		}
 
@@ -271,4 +283,6 @@ public class UserExtensionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes128;
 	private String _methodName129;
 	private String[] _methodParameterTypes129;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
 }

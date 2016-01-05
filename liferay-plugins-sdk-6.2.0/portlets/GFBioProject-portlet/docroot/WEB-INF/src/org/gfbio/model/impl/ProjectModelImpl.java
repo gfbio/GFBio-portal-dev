@@ -68,12 +68,13 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 			{ "parentProjectID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "label", Types.VARCHAR },
+			{ "extendeddata", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP },
 			{ "status", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Project (projectID LONG not null primary key,parentProjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,status VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Project (projectID LONG not null primary key,parentProjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,extendeddata VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,status VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Project";
 	public static final String ORDER_BY_JPQL = " ORDER BY project.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project.name ASC";
@@ -111,6 +112,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		model.setParentProjectID(soapModel.getParentProjectID());
 		model.setName(soapModel.getName());
 		model.setLabel(soapModel.getLabel());
+		model.setExtendeddata(soapModel.getExtendeddata());
 		model.setDescription(soapModel.getDescription());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
@@ -183,6 +185,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		attributes.put("parentProjectID", getParentProjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
+		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
@@ -215,6 +218,12 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 		if (label != null) {
 			setLabel(label);
+		}
+
+		String extendeddata = (String)attributes.get("extendeddata");
+
+		if (extendeddata != null) {
+			setExtendeddata(extendeddata);
 		}
 
 		String description = (String)attributes.get("description");
@@ -342,6 +351,22 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	@JSON
 	@Override
+	public String getExtendeddata() {
+		if (_extendeddata == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _extendeddata;
+		}
+	}
+
+	@Override
+	public void setExtendeddata(String extendeddata) {
+		_extendeddata = extendeddata;
+	}
+
+	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -429,6 +454,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		projectImpl.setParentProjectID(getParentProjectID());
 		projectImpl.setName(getName());
 		projectImpl.setLabel(getLabel());
+		projectImpl.setExtendeddata(getExtendeddata());
 		projectImpl.setDescription(getDescription());
 		projectImpl.setStartDate(getStartDate());
 		projectImpl.setEndDate(getEndDate());
@@ -522,6 +548,14 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 			projectCacheModel.label = null;
 		}
 
+		projectCacheModel.extendeddata = getExtendeddata();
+
+		String extendeddata = projectCacheModel.extendeddata;
+
+		if ((extendeddata != null) && (extendeddata.length() == 0)) {
+			projectCacheModel.extendeddata = null;
+		}
+
 		projectCacheModel.description = getDescription();
 
 		String description = projectCacheModel.description;
@@ -561,7 +595,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
@@ -571,6 +605,8 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		sb.append(getName());
 		sb.append(", label=");
 		sb.append(getLabel());
+		sb.append(", extendeddata=");
+		sb.append(getExtendeddata());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", startDate=");
@@ -586,7 +622,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project");
@@ -607,6 +643,10 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 		sb.append(
 			"<column><column-name>label</column-name><column-value><![CDATA[");
 		sb.append(getLabel());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>extendeddata</column-name><column-value><![CDATA[");
+		sb.append(getExtendeddata());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
@@ -644,6 +684,7 @@ public class ProjectModelImpl extends BaseModelImpl<Project>
 	private String _originalName;
 	private String _label;
 	private String _originalLabel;
+	private String _extendeddata;
 	private String _description;
 	private Date _startDate;
 	private Date _endDate;

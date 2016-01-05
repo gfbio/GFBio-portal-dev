@@ -17,7 +17,6 @@ package org.gfbio.service.impl;
 
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -56,28 +55,12 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	
 	
 	//
-	public JSONArray getProjectById (JSONObject requestJson){
+	public JSONObject getProjectById (JSONObject requestJson){
 
-		JSONArray responseJson = new JSONArray();
+		JSONObject responseJson = new JSONObject();
 		responseJson = ProjectLocalServiceUtil.getCompleteProjectById(requestJson);
 		return responseJson;
 	}
-	
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public JSONArray getProjectById1 (){
-
-		JSONObject requestJson = new JSONObject();
-		long a = 1;
-		requestJson.put("projectid", a);
-		System.out.println(requestJson);
-		JSONArray responseJson = new JSONArray();
-		responseJson = ProjectLocalServiceUtil.getCompleteProjectById(requestJson);
-		return responseJson;
-	}
-	
 	
 	
 	

@@ -8,5 +8,5 @@
     <sql file="custom-sql/head_custom_sql.xml"/>
     <sql file="custom-sql/project_researchobject_custom_sql.xml"/>
     <sql file="custom-sql/researchobject_custom_sql.xml"/>
-    <sql file="custom-sql/submissionregistry_custom_sql.xml"/>
+    <sql file="custom-sql/submission_custom_sql.xml"/>
 </custom-sql>

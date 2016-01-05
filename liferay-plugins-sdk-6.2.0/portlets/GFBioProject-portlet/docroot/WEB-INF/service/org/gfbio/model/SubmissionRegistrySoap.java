@@ -14,8 +14,6 @@
 
 package org.gfbio.model;
 
-import org.gfbio.service.persistence.SubmissionRegistryPK;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -33,6 +31,7 @@ public class SubmissionRegistrySoap implements Serializable {
 	public static SubmissionRegistrySoap toSoapModel(SubmissionRegistry model) {
 		SubmissionRegistrySoap soapModel = new SubmissionRegistrySoap();
 
+		soapModel.setSubmissionID(model.getSubmissionID());
 		soapModel.setResearchObjectID(model.getResearchObjectID());
 		soapModel.setResearchObjectVersion(model.getResearchObjectVersion());
 		soapModel.setArchive(model.getArchive());
@@ -91,15 +90,20 @@ public class SubmissionRegistrySoap implements Serializable {
 	public SubmissionRegistrySoap() {
 	}
 
-	public SubmissionRegistryPK getPrimaryKey() {
-		return new SubmissionRegistryPK(_researchObjectID,
-			_researchObjectVersion, _archive);
+	public long getPrimaryKey() {
+		return _submissionID;
 	}
 
-	public void setPrimaryKey(SubmissionRegistryPK pk) {
-		setResearchObjectID(pk.researchObjectID);
-		setResearchObjectVersion(pk.researchObjectVersion);
-		setArchive(pk.archive);
+	public void setPrimaryKey(long pk) {
+		setSubmissionID(pk);
+	}
+
+	public long getSubmissionID() {
+		return _submissionID;
+	}
+
+	public void setSubmissionID(long submissionID) {
+		_submissionID = submissionID;
 	}
 
 	public long getResearchObjectID() {
@@ -194,6 +198,7 @@ public class SubmissionRegistrySoap implements Serializable {
 		_status = status;
 	}
 
+	private long _submissionID;
 	private long _researchObjectID;
 	private long _researchObjectVersion;
 	private String _archive;

@@ -116,7 +116,7 @@ public class ColumnLocalServiceClpInvoker {
 
 		_methodParameterTypes129 = new String[] { "long" };
 
-		_methodName130 = "getColumnIdsWithoutRelation";
+		_methodName130 = "getHeadIdsWithoutRelationshipsByColumnName";
 
 		_methodParameterTypes130 = new String[] { "java.lang.String" };
 
@@ -292,7 +292,7 @@ public class ColumnLocalServiceClpInvoker {
 
 		if (_methodName130.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
-			return ColumnLocalServiceUtil.getColumnIdsWithoutRelation((java.lang.String)arguments[0]);
+			return ColumnLocalServiceUtil.getHeadIdsWithoutRelationshipsByColumnName((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName131.equals(name) &&

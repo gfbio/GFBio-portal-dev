@@ -53,6 +53,7 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 		attributes.put("parentProjectID", getParentProjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
+		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
@@ -85,6 +86,12 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 
 		if (label != null) {
 			setLabel(label);
+		}
+
+		String extendeddata = (String)attributes.get("extendeddata");
+
+		if (extendeddata != null) {
+			setExtendeddata(extendeddata);
 		}
 
 		String description = (String)attributes.get("description");
@@ -210,6 +217,26 @@ public class ProjectWrapper implements Project, ModelWrapper<Project> {
 	@Override
 	public void setLabel(java.lang.String label) {
 		_project.setLabel(label);
+	}
+
+	/**
+	* Returns the extendeddata of this project.
+	*
+	* @return the extendeddata of this project
+	*/
+	@Override
+	public java.lang.String getExtendeddata() {
+		return _project.getExtendeddata();
+	}
+
+	/**
+	* Sets the extendeddata of this project.
+	*
+	* @param extendeddata the extendeddata of this project
+	*/
+	@Override
+	public void setExtendeddata(java.lang.String extendeddata) {
+		_project.setExtendeddata(extendeddata);
 	}
 
 	/**

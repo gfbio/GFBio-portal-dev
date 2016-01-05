@@ -32,21 +32,25 @@ public class SubmissionRegistryServiceClpInvoker {
 
 		_methodParameterTypes107 = new String[] { "java.lang.String" };
 
-		_methodName112 = "getSubmissionRegistriesByBrokerSubmissionId";
+		_methodName112 = "getLatestPublicSubmissions";
 
 		_methodParameterTypes112 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName113 = "getSubmissionRegistriesByResearchObjectId";
+		_methodName113 = "getSubmissionRegistriesByBrokerSubmissionId";
 
 		_methodParameterTypes113 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName114 = "createSubmissionRegistry";
+		_methodName114 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes114 = new String[] { "java.lang.String" };
+		_methodParameterTypes114 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName115 = "updateSubmissionRegistry";
+		_methodName115 = "createSubmissionRegistry";
 
 		_methodParameterTypes115 = new String[] { "java.lang.String" };
+
+		_methodName116 = "updateSubmissionRegistry";
+
+		_methodParameterTypes116 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -65,21 +69,26 @@ public class SubmissionRegistryServiceClpInvoker {
 
 		if (_methodName112.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryServiceUtil.getLatestPublicSubmissions((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName113.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.getSubmissionRegistriesByResearchObjectId((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionRegistryServiceUtil.getSubmissionRegistriesByBrokerSubmissionId((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName114.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
-			return SubmissionRegistryServiceUtil.createSubmissionRegistry((java.lang.String)arguments[0]);
+			return SubmissionRegistryServiceUtil.getSubmissionRegistriesByResearchObjectId((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName115.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
+			return SubmissionRegistryServiceUtil.createSubmissionRegistry((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			return SubmissionRegistryServiceUtil.updateSubmissionRegistry((java.lang.String)arguments[0]);
 		}
 
@@ -98,4 +107,6 @@ public class SubmissionRegistryServiceClpInvoker {
 	private String[] _methodParameterTypes114;
 	private String _methodName115;
 	private String[] _methodParameterTypes115;
+	private String _methodName116;
+	private String[] _methodParameterTypes116;
 }

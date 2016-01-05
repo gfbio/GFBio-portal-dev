@@ -242,7 +242,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where researchObjectID = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param researchObjectID the research object i d
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -250,13 +250,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByResearchObjectID_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		long researchObjectID,
+		long submissionID, long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByResearchObjectID_PrevAndNext(submissionRegistryPK,
+				   .findByResearchObjectID_PrevAndNext(submissionID,
 			researchObjectID, orderByComparator);
 	}
 
@@ -424,7 +423,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where researchObjectID = &#63; and researchObjectVersion = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param researchObjectID the research object i d
 	* @param researchObjectVersion the research object version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -433,13 +432,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByResearchObjectIDWithVersion_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		long researchObjectID, long researchObjectVersion,
+		long submissionID, long researchObjectID, long researchObjectVersion,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByResearchObjectIDWithVersion_PrevAndNext(submissionRegistryPK,
+				   .findByResearchObjectIDWithVersion_PrevAndNext(submissionID,
 			researchObjectID, researchObjectVersion, orderByComparator);
 	}
 
@@ -680,7 +678,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where archive = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param archive the archive
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -688,13 +686,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByArchive_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		java.lang.String archive,
+		long submissionID, java.lang.String archive,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByArchive_PrevAndNext(submissionRegistryPK, archive,
+				   .findByArchive_PrevAndNext(submissionID, archive,
 			orderByComparator);
 	}
 
@@ -852,7 +849,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where brokerSubmissionID = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param brokerSubmissionID the broker submission i d
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -860,13 +857,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByBrokerSubmissionID_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		java.lang.String brokerSubmissionID,
+		long submissionID, java.lang.String brokerSubmissionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByBrokerSubmissionID_PrevAndNext(submissionRegistryPK,
+				   .findByBrokerSubmissionID_PrevAndNext(submissionID,
 			brokerSubmissionID, orderByComparator);
 	}
 
@@ -1111,7 +1107,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where archivePID = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param archivePID the archive p i d
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -1119,13 +1115,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByPersistentIdentifierID_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		java.lang.String archivePID,
+		long submissionID, java.lang.String archivePID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByPersistentIdentifierID_PrevAndNext(submissionRegistryPK,
+				   .findByPersistentIdentifierID_PrevAndNext(submissionID,
 			archivePID, orderByComparator);
 	}
 
@@ -1284,7 +1279,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where archivePIDType = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param archivePIDType the archive p i d type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -1292,13 +1287,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByPersistentIdentifierTypeID_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		long archivePIDType,
+		long submissionID, long archivePIDType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByPersistentIdentifierTypeID_PrevAndNext(submissionRegistryPK,
+				   .findByPersistentIdentifierTypeID_PrevAndNext(submissionID,
 			archivePIDType, orderByComparator);
 	}
 
@@ -1445,7 +1439,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where userID = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param userID the user i d
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -1453,13 +1447,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByUserID_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		long userID,
+		long submissionID, long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByUserID_PrevAndNext(submissionRegistryPK, userID,
+				   .findByUserID_PrevAndNext(submissionID, userID,
 			orderByComparator);
 	}
 
@@ -1608,7 +1601,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where isPublic = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param isPublic the is public
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -1616,13 +1609,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByIsPublic_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		boolean isPublic,
+		long submissionID, boolean isPublic,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByIsPublic_PrevAndNext(submissionRegistryPK, isPublic,
+				   .findByIsPublic_PrevAndNext(submissionID, isPublic,
 			orderByComparator);
 	}
 
@@ -1770,7 +1762,7 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registries before and after the current submission registry in the ordered set where status = &#63;.
 	*
-	* @param submissionRegistryPK the primary key of the current submission registry
+	* @param submissionID the primary key of the current submission registry
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next submission registry
@@ -1778,13 +1770,12 @@ public class SubmissionRegistryUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry[] findByStatus_PrevAndNext(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK,
-		java.lang.String status,
+		long submissionID, java.lang.String status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
 		return getPersistence()
-				   .findByStatus_PrevAndNext(submissionRegistryPK, status,
+				   .findByStatus_PrevAndNext(submissionID, status,
 			orderByComparator);
 	}
 
@@ -1834,27 +1825,25 @@ public class SubmissionRegistryUtil {
 	/**
 	* Creates a new submission registry with the primary key. Does not add the submission registry to the database.
 	*
-	* @param submissionRegistryPK the primary key for the new submission registry
+	* @param submissionID the primary key for the new submission registry
 	* @return the new submission registry
 	*/
-	public static org.gfbio.model.SubmissionRegistry create(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK) {
-		return getPersistence().create(submissionRegistryPK);
+	public static org.gfbio.model.SubmissionRegistry create(long submissionID) {
+		return getPersistence().create(submissionID);
 	}
 
 	/**
 	* Removes the submission registry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param submissionRegistryPK the primary key of the submission registry
+	* @param submissionID the primary key of the submission registry
 	* @return the submission registry that was removed
 	* @throws org.gfbio.NoSuchSubmissionRegistryException if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static org.gfbio.model.SubmissionRegistry remove(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+	public static org.gfbio.model.SubmissionRegistry remove(long submissionID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
-		return getPersistence().remove(submissionRegistryPK);
+		return getPersistence().remove(submissionID);
 	}
 
 	public static org.gfbio.model.SubmissionRegistry updateImpl(
@@ -1866,29 +1855,29 @@ public class SubmissionRegistryUtil {
 	/**
 	* Returns the submission registry with the primary key or throws a {@link org.gfbio.NoSuchSubmissionRegistryException} if it could not be found.
 	*
-	* @param submissionRegistryPK the primary key of the submission registry
+	* @param submissionID the primary key of the submission registry
 	* @return the submission registry
 	* @throws org.gfbio.NoSuchSubmissionRegistryException if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry findByPrimaryKey(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchSubmissionRegistryException {
-		return getPersistence().findByPrimaryKey(submissionRegistryPK);
+		return getPersistence().findByPrimaryKey(submissionID);
 	}
 
 	/**
 	* Returns the submission registry with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param submissionRegistryPK the primary key of the submission registry
+	* @param submissionID the primary key of the submission registry
 	* @return the submission registry, or <code>null</code> if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.SubmissionRegistry fetchByPrimaryKey(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(submissionRegistryPK);
+		return getPersistence().fetchByPrimaryKey(submissionID);
 	}
 
 	/**

@@ -132,34 +132,19 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	public void setLabel(String label);
 
 	/**
-	 * Returns the metadata of this research object.
+	 * Returns the extendeddata of this research object.
 	 *
-	 * @return the metadata of this research object
+	 * @return the extendeddata of this research object
 	 */
 	@AutoEscape
-	public String getMetadata();
+	public String getExtendeddata();
 
 	/**
-	 * Sets the metadata of this research object.
+	 * Sets the extendeddata of this research object.
 	 *
-	 * @param metadata the metadata of this research object
+	 * @param extendeddata the extendeddata of this research object
 	 */
-	public void setMetadata(String metadata);
-
-	/**
-	 * Returns the formatmetadata of this research object.
-	 *
-	 * @return the formatmetadata of this research object
-	 */
-	@AutoEscape
-	public String getFormatmetadata();
-
-	/**
-	 * Sets the formatmetadata of this research object.
-	 *
-	 * @param formatmetadata the formatmetadata of this research object
-	 */
-	public void setFormatmetadata(String formatmetadata);
+	public void setExtendeddata(String extendeddata);
 
 	/**
 	 * Returns the research object type of this research object.

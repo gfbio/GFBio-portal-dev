@@ -276,7 +276,7 @@ public class ProjectLocalServiceUtil {
 		return getService().getCompleteProjectById(requestJson);
 	}
 
-	public static org.json.simple.JSONArray getCompleteProjectById(
+	public static org.json.simple.JSONObject getCompleteProjectById(
 		org.json.simple.JSONObject requestJson) {
 		return getService().getCompleteProjectById(requestJson);
 	}
@@ -284,12 +284,6 @@ public class ProjectLocalServiceUtil {
 	public static org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject requestJson) {
 		return getService().getProjectById(requestJson);
-	}
-
-	public static org.gfbio.model.Project getProjectById(long projectId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchProjectException {
-		return getService().getProjectById(projectId);
 	}
 
 	public static java.util.List<org.gfbio.model.Project> getProjectList(
@@ -304,6 +298,11 @@ public class ProjectLocalServiceUtil {
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getResearchObjectList(projectID, userID);
+	}
+
+	public static java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return getService().checkForIgnoredParameter(objects, keyList);
 	}
 
 	public static org.json.simple.JSONObject constructProjectAsJson(
@@ -323,12 +322,13 @@ public class ProjectLocalServiceUtil {
 
 	public static long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
+		java.lang.String description, java.lang.String extendedData,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateProject(projectID, userID, name, label, description,
-			startDate, endDate, status);
+			extendedData, startDate, endDate, status);
 	}
 
 	public static void clearService() {

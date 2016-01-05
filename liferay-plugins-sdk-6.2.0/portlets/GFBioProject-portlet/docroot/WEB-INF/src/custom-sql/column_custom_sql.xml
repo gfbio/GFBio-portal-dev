@@ -24,7 +24,7 @@
 		]]>
     </sql>
     
-    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnIdsWithoutRelation">
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getHeadIdsWithoutRelationshipsByColumnName">
 	    <![CDATA[
 			SELECT
 				public.gfbio_head.headid

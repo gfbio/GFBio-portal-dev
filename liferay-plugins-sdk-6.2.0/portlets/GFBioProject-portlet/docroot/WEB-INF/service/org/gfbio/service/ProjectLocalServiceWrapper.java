@@ -285,7 +285,7 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONArray getCompleteProjectById(
+	public org.json.simple.JSONObject getCompleteProjectById(
 		org.json.simple.JSONObject requestJson) {
 		return _projectLocalService.getCompleteProjectById(requestJson);
 	}
@@ -294,13 +294,6 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	public org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject requestJson) {
 		return _projectLocalService.getProjectById(requestJson);
-	}
-
-	@Override
-	public org.gfbio.model.Project getProjectById(long projectId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchProjectException {
-		return _projectLocalService.getProjectById(projectId);
 	}
 
 	@Override
@@ -316,6 +309,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _projectLocalService.getResearchObjectList(projectID, userID);
+	}
+
+	@Override
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return _projectLocalService.checkForIgnoredParameter(objects, keyList);
 	}
 
 	@Override
@@ -339,11 +338,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	@Override
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
-		java.lang.String description, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String status)
+		java.lang.String description, java.lang.String extendedData,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _projectLocalService.updateProject(projectID, userID, name,
-			label, description, startDate, endDate, status);
+			label, description, extendedData, startDate, endDate, status);
 	}
 
 	/**

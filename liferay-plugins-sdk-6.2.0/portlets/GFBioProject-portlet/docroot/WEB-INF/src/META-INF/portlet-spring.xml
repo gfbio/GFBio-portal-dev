@@ -95,13 +95,13 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
-	<bean id="org.gfbio.service.SubmissionRegistryLocalService" class="org.gfbio.service.impl.SubmissionRegistryLocalServiceImpl" />
-	<bean id="org.gfbio.service.SubmissionRegistryService" class="org.gfbio.service.impl.SubmissionRegistryServiceImpl" />
-	<bean id="org.gfbio.service.persistence.SubmissionRegistryPersistence" class="org.gfbio.service.persistence.SubmissionRegistryPersistenceImpl" parent="basePersistence">
+	<bean id="org.gfbio.service.SubmissionLocalService" class="org.gfbio.service.impl.SubmissionLocalServiceImpl" />
+	<bean id="org.gfbio.service.SubmissionService" class="org.gfbio.service.impl.SubmissionServiceImpl" />
+	<bean id="org.gfbio.service.persistence.SubmissionPersistence" class="org.gfbio.service.persistence.SubmissionPersistenceImpl" parent="basePersistence">
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
-	<bean id="org.gfbio.service.persistence.SubmissionRegistryFinder" class="org.gfbio.service.persistence.SubmissionRegistryFinderImpl" parent="basePersistence">
+	<bean id="org.gfbio.service.persistence.SubmissionFinder" class="org.gfbio.service.persistence.SubmissionFinderImpl" parent="basePersistence">
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>

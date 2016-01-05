@@ -36,7 +36,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{researchObjectID=");
 		sb.append(researchObjectID);
@@ -48,10 +48,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		sb.append(name);
 		sb.append(", label=");
 		sb.append(label);
-		sb.append(", metadata=");
-		sb.append(metadata);
-		sb.append(", formatmetadata=");
-		sb.append(formatmetadata);
+		sb.append(", extendeddata=");
+		sb.append(extendeddata);
 		sb.append(", researchObjectType=");
 		sb.append(researchObjectType);
 		sb.append("}");
@@ -81,18 +79,11 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			researchObjectImpl.setLabel(label);
 		}
 
-		if (metadata == null) {
-			researchObjectImpl.setMetadata(StringPool.BLANK);
+		if (extendeddata == null) {
+			researchObjectImpl.setExtendeddata(StringPool.BLANK);
 		}
 		else {
-			researchObjectImpl.setMetadata(metadata);
-		}
-
-		if (formatmetadata == null) {
-			researchObjectImpl.setFormatmetadata(StringPool.BLANK);
-		}
-		else {
-			researchObjectImpl.setFormatmetadata(formatmetadata);
+			researchObjectImpl.setExtendeddata(extendeddata);
 		}
 
 		if (researchObjectType == null) {
@@ -114,8 +105,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		parentResearchObjectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		label = objectInput.readUTF();
-		metadata = objectInput.readUTF();
-		formatmetadata = objectInput.readUTF();
+		extendeddata = objectInput.readUTF();
 		researchObjectType = objectInput.readUTF();
 	}
 
@@ -140,18 +130,11 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			objectOutput.writeUTF(label);
 		}
 
-		if (metadata == null) {
+		if (extendeddata == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(metadata);
-		}
-
-		if (formatmetadata == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(formatmetadata);
+			objectOutput.writeUTF(extendeddata);
 		}
 
 		if (researchObjectType == null) {
@@ -167,7 +150,6 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	public long parentResearchObjectID;
 	public String name;
 	public String label;
-	public String metadata;
-	public String formatmetadata;
+	public String extendeddata;
 	public String researchObjectType;
 }

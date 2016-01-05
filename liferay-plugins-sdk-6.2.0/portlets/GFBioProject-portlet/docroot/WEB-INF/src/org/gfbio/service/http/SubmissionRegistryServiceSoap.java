@@ -62,6 +62,20 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class SubmissionRegistryServiceSoap {
+	public static org.json.simple.JSONArray getLatestPublicSubmissions(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = SubmissionRegistryServiceUtil.getLatestPublicSubmissions(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {

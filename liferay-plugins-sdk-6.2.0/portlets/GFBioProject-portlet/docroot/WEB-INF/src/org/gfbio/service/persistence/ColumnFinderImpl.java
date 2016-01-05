@@ -20,7 +20,7 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 
 	public static String FINDER_CLASS_NAME_ENTITY = ColumnFinderImpl.class.getName();
 	public static String GET_COLUMNS_WITH_RELATION = FINDER_CLASS_NAME_ENTITY + ".getColumnsWithRelation";
-	public static String GET_COLUMNIDS_WITHOUT_RELATION = FINDER_CLASS_NAME_ENTITY + ".getColumnIdsWithoutRelation";
+	public static String GET_HEADIDS_WITHOUT_RELATIONSHIPS_BY_COLUMNNAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdsWithoutRelationshipsByColumnName";
 	public static String GET_COLUMNNAME_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getColumnNameById";	
 	public static String GET_COUNT_OF_COLUMNS = FINDER_CLASS_NAME_ENTITY + ".getCountofColumns";	
 	public static String GET_HEADIDS_BY_COLUMNNAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdsByColumnName";
@@ -54,11 +54,11 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 	
 	////get all IDs Columns that have the specific same name
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List getColumnIdsWithoutRelation(String columnName) {
+	public List getHeadIdsWithoutRelationshipsByColumnName(String columnName) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = CustomSQLUtil.get(GET_COLUMNIDS_WITHOUT_RELATION);
+			String sql = CustomSQLUtil.get(GET_HEADIDS_WITHOUT_RELATIONSHIPS_BY_COLUMNNAME);
 
 			SQLQuery queryObject = session.createSQLQuery(sql);
 

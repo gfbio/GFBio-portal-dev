@@ -88,6 +88,7 @@
 			<basic name="parentProjectID" />
 			<basic name="name" />
 			<basic name="label" />
+			<basic name="extendeddata" />
 			<basic name="description" />
 			<basic name="startDate">
 				<temporal>TIMESTAMP</temporal>
@@ -152,20 +153,19 @@
 			<basic name="parentResearchObjectID" />
 			<basic name="name" />
 			<basic name="label" />
-			<basic name="metadata" />
-			<basic name="formatmetadata" />
+			<basic name="extendeddata" />
 			<basic name="researchObjectType" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.SubmissionRegistryModelImpl">
-		<id-class class="org.gfbio.service.persistence.SubmissionRegistryPK" />
+	<mapped-superclass class="org.gfbio.model.impl.SubmissionModelImpl">
 		<attributes>
-			<id name="researchObjectID" />
-			<id name="researchObjectVersion" />
-			<id name="archive" />
+			<id name="submissionID" />
+			<basic name="researchObjectID" />
+			<basic name="researchObjectVersion" />
+			<basic name="archive" />
 			<basic name="brokerSubmissionID" />
 			<basic name="archivePID">
 				<column name="ARCHIVE_PID" />
@@ -243,8 +243,8 @@
 		<table name="gfbio_ResearchObject" />
 		<attributes />
 	</entity>
-	<entity class="org.gfbio.model.impl.SubmissionRegistryImpl" name="SubmissionRegistry">
-		<table name="gfbio_SubmissionRegistry" />
+	<entity class="org.gfbio.model.impl.SubmissionImpl" name="Submission">
+		<table name="gfbio_Submission" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.UserExtensionImpl" name="UserExtension">

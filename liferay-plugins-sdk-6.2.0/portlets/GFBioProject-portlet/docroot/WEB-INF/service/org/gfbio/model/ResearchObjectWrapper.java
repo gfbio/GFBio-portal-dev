@@ -54,8 +54,7 @@ public class ResearchObjectWrapper implements ResearchObject,
 		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
-		attributes.put("metadata", getMetadata());
-		attributes.put("formatmetadata", getFormatmetadata());
+		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("researchObjectType", getResearchObjectType());
 
 		return attributes;
@@ -95,16 +94,10 @@ public class ResearchObjectWrapper implements ResearchObject,
 			setLabel(label);
 		}
 
-		String metadata = (String)attributes.get("metadata");
+		String extendeddata = (String)attributes.get("extendeddata");
 
-		if (metadata != null) {
-			setMetadata(metadata);
-		}
-
-		String formatmetadata = (String)attributes.get("formatmetadata");
-
-		if (formatmetadata != null) {
-			setFormatmetadata(formatmetadata);
+		if (extendeddata != null) {
+			setExtendeddata(extendeddata);
 		}
 
 		String researchObjectType = (String)attributes.get("researchObjectType");
@@ -236,43 +229,23 @@ public class ResearchObjectWrapper implements ResearchObject,
 	}
 
 	/**
-	* Returns the metadata of this research object.
+	* Returns the extendeddata of this research object.
 	*
-	* @return the metadata of this research object
+	* @return the extendeddata of this research object
 	*/
 	@Override
-	public java.lang.String getMetadata() {
-		return _researchObject.getMetadata();
+	public java.lang.String getExtendeddata() {
+		return _researchObject.getExtendeddata();
 	}
 
 	/**
-	* Sets the metadata of this research object.
+	* Sets the extendeddata of this research object.
 	*
-	* @param metadata the metadata of this research object
+	* @param extendeddata the extendeddata of this research object
 	*/
 	@Override
-	public void setMetadata(java.lang.String metadata) {
-		_researchObject.setMetadata(metadata);
-	}
-
-	/**
-	* Returns the formatmetadata of this research object.
-	*
-	* @return the formatmetadata of this research object
-	*/
-	@Override
-	public java.lang.String getFormatmetadata() {
-		return _researchObject.getFormatmetadata();
-	}
-
-	/**
-	* Sets the formatmetadata of this research object.
-	*
-	* @param formatmetadata the formatmetadata of this research object
-	*/
-	@Override
-	public void setFormatmetadata(java.lang.String formatmetadata) {
-		_researchObject.setFormatmetadata(formatmetadata);
+	public void setExtendeddata(java.lang.String extendeddata) {
+		_researchObject.setExtendeddata(extendeddata);
 	}
 
 	/**

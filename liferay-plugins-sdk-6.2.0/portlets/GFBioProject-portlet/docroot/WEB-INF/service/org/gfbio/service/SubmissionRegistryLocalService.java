@@ -61,23 +61,23 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 	/**
 	* Creates a new submission registry with the primary key. Does not add the submission registry to the database.
 	*
-	* @param submissionRegistryPK the primary key for the new submission registry
+	* @param submissionID the primary key for the new submission registry
 	* @return the new submission registry
 	*/
 	public org.gfbio.model.SubmissionRegistry createSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK);
+		long submissionID);
 
 	/**
 	* Deletes the submission registry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param submissionRegistryPK the primary key of the submission registry
+	* @param submissionID the primary key of the submission registry
 	* @return the submission registry that was removed
 	* @throws PortalException if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.SubmissionRegistry deleteSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -172,20 +172,20 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.SubmissionRegistry fetchSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the submission registry with the primary key.
 	*
-	* @param submissionRegistryPK the primary key of the submission registry
+	* @param submissionID the primary key of the submission registry
 	* @return the submission registry
 	* @throws PortalException if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -255,9 +255,12 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getLatestXPublicSubmissionsByX(
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject requestJson)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
@@ -298,6 +301,10 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestSubmissions();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestXPublicSubmissionsByX(
+		int latestX);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getStatus(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive,
 		java.lang.String archivePId);
@@ -320,9 +327,16 @@ public interface SubmissionRegistryLocalService extends BaseLocalService,
 		int ResearchObjectVersion, java.lang.String archive);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getSubmissionIdByIds(long researchObjectId,
+		int ResearchObjectVersion, java.lang.String archive);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String archive);
+
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList);
 
 	public org.json.simple.JSONArray constructSubmissionRegistriesJson(
 		java.util.List<org.gfbio.model.SubmissionRegistry> submissionRegistryList);

@@ -33,6 +33,6 @@ public abstract class SubmissionRegistryActionableDynamicQuery
 
 		setClassLoader(org.gfbio.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("primaryKey.researchObjectID");
+		setPrimaryKeyPropertyName("submissionID");
 	}
 }

@@ -367,8 +367,21 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return _researchObjectLocalService.checkForIgnoredParameter(objects,
+			keyList);
+	}
+
+	@Override
 	public java.lang.Boolean checkParentAttributById(long researchObjectId) {
 		return _researchObjectLocalService.checkParentAttributById(researchObjectId);
+	}
+
+	@Override
+	public org.json.simple.JSONObject checkNullParent(
+		org.json.simple.JSONObject json) {
+		return _researchObjectLocalService.checkNullParent(json);
 	}
 
 	@Override
@@ -386,11 +399,6 @@ public class ResearchObjectLocalServiceWrapper
 	public org.json.simple.JSONArray constructResearchObjectsJson(
 		java.util.List<org.gfbio.model.ResearchObject> researchObjectList) {
 		return _researchObjectLocalService.constructResearchObjectsJson(researchObjectList);
-	}
-
-	@Override
-	public java.lang.String constructFormatMetadata(java.lang.String metadata) {
-		return _researchObjectLocalService.constructFormatMetadata(metadata);
 	}
 
 	@Override
@@ -419,31 +427,29 @@ public class ResearchObjectLocalServiceWrapper
 
 	@Override
 	public long createResearchObject(java.lang.String name,
-		java.lang.String label, java.lang.String metadata,
+		java.lang.String label, java.lang.String extendedData,
 		java.lang.String researchObjectType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _researchObjectLocalService.createResearchObject(name, label,
-			metadata, researchObjectType);
+			extendedData, researchObjectType);
 	}
 
 	@Override
 	public long updateResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
-		java.lang.String label, java.lang.String metadata,
-		java.lang.String formatmetadata) {
+		java.lang.String label, java.lang.String extendedData) {
 		return _researchObjectLocalService.updateResearchObject(researchObjectId,
-			researchObjectVersion, name, label, metadata, formatmetadata);
+			researchObjectVersion, name, label, extendedData);
 	}
 
 	@Override
 	public long updateResearchObjectWithProject(long projectId,
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata,
-		java.lang.String researchObjectType) {
+		java.lang.String extendedData, java.lang.String researchObjectType) {
 		return _researchObjectLocalService.updateResearchObjectWithProject(projectId,
-			researchObjectId, researchObjectVersion, name, label, metadata,
-			formatmetadata, researchObjectType);
+			researchObjectId, researchObjectVersion, name, label, extendedData,
+			researchObjectType);
 	}
 
 	@Override

@@ -246,20 +246,49 @@ public interface ColumnLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	/**
+	* Delete all column entries of a specific head.
+	*
+	* @param headId        from type long, is the PK of entity gfbio_head
+	*/
 	public void deleteColumnsByHeadId(long headId);
 
+	/**
+	* Returns the name of a column entry.
+	*
+	* @param columnId    from type long, is the PK of entity gfbio_column
+	* @returns name        from type String, is the content of attribute 'column_name' of entity gfbio_column
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getColumnNameById(long columnId);
 
+	/**
+	* Returns all head id's of entries of entity gfbio_head, that have no table type 'relationship' (table type is a attribute in entity gfbio_head) and have a column with a specific name
+	*
+	* @param columnName    from type String, is a specific content of attribute 'column_name' of entity gfbio_content
+	* @return List from type long, consists of head id's
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List getColumnIdsWithoutRelation(
+	public java.util.List getHeadIdsWithoutRelationshipsByColumnName(
 		java.lang.String columnName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns all column entries, that have a specific content of attribute 'headid' of entity gfbio_column
+	*
+	* @param headId    from type long, is a foreign key of entity gfbio_column to entity gfbio_head
+	* @return List from type Column, consists of all column entries with a specific HeadID
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Column> getColumnsByHeadId(
 		long headId) throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* Returns all column entries, that have table type 'relationship' (table type is a attribute in entity gfbio_head) and a specific content of attribute 'column_name' of entity gfbio_column. This method was written to find specific columns per 'table_names' (attribute in gfbio_head, that is the column name in relationship tables)
+	*
+	* @param columnName    from type String, is a specific content of attribute 'column_name' of entity content
+	* @return List from type Column, consists of all columns, that have table type 'relationship' and the parameter columnName are equal to the content of attribute 'column_name' of entity gfbio_column
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
 		java.lang.String columnName)

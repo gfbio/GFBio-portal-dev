@@ -272,8 +272,13 @@ public class UserExtensionLocalServiceUtil {
 	}
 
 	public static org.json.simple.JSONObject getUserExtentionById(
-		org.json.simple.JSONObject json) {
-		return getService().getUserExtentionById(json);
+		org.json.simple.JSONObject requestJson) {
+		return getService().getUserExtentionById(requestJson);
+	}
+
+	public static java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return getService().checkForIgnoredParameter(objects, keyList);
 	}
 
 	public static org.json.simple.JSONObject constructUserExtentionJsonById(

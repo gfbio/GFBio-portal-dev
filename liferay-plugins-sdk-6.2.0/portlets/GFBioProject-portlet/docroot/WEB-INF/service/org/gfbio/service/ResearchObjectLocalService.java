@@ -305,7 +305,13 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.ResearchObject getTopParent(long researchObjectId);
 
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList);
+
 	public java.lang.Boolean checkParentAttributById(long researchObjectId);
+
+	public org.json.simple.JSONObject checkNullParent(
+		org.json.simple.JSONObject json);
 
 	public java.lang.Boolean checkResearchObjectId(long researchObjectId);
 
@@ -314,8 +320,6 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 
 	public org.json.simple.JSONArray constructResearchObjectsJson(
 		java.util.List<org.gfbio.model.ResearchObject> researchObjectList);
-
-	public java.lang.String constructFormatMetadata(java.lang.String metadata);
 
 	public org.json.simple.JSONArray createResearchObjectByJson(
 		org.json.simple.JSONArray requestJson);
@@ -330,20 +334,18 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		org.json.simple.JSONObject requestJson);
 
 	public long createResearchObject(java.lang.String name,
-		java.lang.String label, java.lang.String metadata,
+		java.lang.String label, java.lang.String extendedData,
 		java.lang.String researchObjectType)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public long updateResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
-		java.lang.String label, java.lang.String metadata,
-		java.lang.String formatmetadata);
+		java.lang.String label, java.lang.String extendedData);
 
 	public long updateResearchObjectWithProject(long projectId,
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String name, java.lang.String label,
-		java.lang.String metadata, java.lang.String formatmetadata,
-		java.lang.String researchObjectType);
+		java.lang.String extendedData, java.lang.String researchObjectType);
 
 	public java.lang.Boolean updateParentResearchObjectIdByIds(
 		long researchObjectId, int researchObjectVersion,

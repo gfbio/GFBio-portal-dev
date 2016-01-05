@@ -23,7 +23,6 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 
 import org.gfbio.service.ClpSerializer;
 import org.gfbio.service.SubmissionRegistryLocalServiceUtil;
-import org.gfbio.service.persistence.SubmissionRegistryPK;
 
 import java.io.Serializable;
 
@@ -52,33 +51,30 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 	}
 
 	@Override
-	public SubmissionRegistryPK getPrimaryKey() {
-		return new SubmissionRegistryPK(_researchObjectID,
-			_researchObjectVersion, _archive);
+	public long getPrimaryKey() {
+		return _submissionID;
 	}
 
 	@Override
-	public void setPrimaryKey(SubmissionRegistryPK primaryKey) {
-		setResearchObjectID(primaryKey.researchObjectID);
-		setResearchObjectVersion(primaryKey.researchObjectVersion);
-		setArchive(primaryKey.archive);
+	public void setPrimaryKey(long primaryKey) {
+		setSubmissionID(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return new SubmissionRegistryPK(_researchObjectID,
-			_researchObjectVersion, _archive);
+		return _submissionID;
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey((SubmissionRegistryPK)primaryKeyObj);
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("submissionID", getSubmissionID());
 		attributes.put("researchObjectID", getResearchObjectID());
 		attributes.put("researchObjectVersion", getResearchObjectVersion());
 		attributes.put("archive", getArchive());
@@ -96,6 +92,12 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long submissionID = (Long)attributes.get("submissionID");
+
+		if (submissionID != null) {
+			setSubmissionID(submissionID);
+		}
+
 		Long researchObjectID = (Long)attributes.get("researchObjectID");
 
 		if (researchObjectID != null) {
@@ -161,6 +163,29 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 
 		if (status != null) {
 			setStatus(status);
+		}
+	}
+
+	@Override
+	public long getSubmissionID() {
+		return _submissionID;
+	}
+
+	@Override
+	public void setSubmissionID(long submissionID) {
+		_submissionID = submissionID;
+
+		if (_submissionRegistryRemoteModel != null) {
+			try {
+				Class<?> clazz = _submissionRegistryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setSubmissionID", long.class);
+
+				method.invoke(_submissionRegistryRemoteModel, submissionID);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
 		}
 	}
 
@@ -497,6 +522,7 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 	public Object clone() {
 		SubmissionRegistryClp clone = new SubmissionRegistryClp();
 
+		clone.setSubmissionID(getSubmissionID());
 		clone.setResearchObjectID(getResearchObjectID());
 		clone.setResearchObjectVersion(getResearchObjectVersion());
 		clone.setArchive(getArchive());
@@ -545,9 +571,9 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 
 		SubmissionRegistryClp submissionRegistry = (SubmissionRegistryClp)obj;
 
-		SubmissionRegistryPK primaryKey = submissionRegistry.getPrimaryKey();
+		long primaryKey = submissionRegistry.getPrimaryKey();
 
-		if (getPrimaryKey().equals(primaryKey)) {
+		if (getPrimaryKey() == primaryKey) {
 			return true;
 		}
 		else {
@@ -561,14 +587,16 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey().hashCode();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{researchObjectID=");
+		sb.append("{submissionID=");
+		sb.append(getSubmissionID());
+		sb.append(", researchObjectID=");
 		sb.append(getResearchObjectID());
 		sb.append(", researchObjectVersion=");
 		sb.append(getResearchObjectVersion());
@@ -597,12 +625,16 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.SubmissionRegistry");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>submissionID</column-name><column-value><![CDATA[");
+		sb.append(getSubmissionID());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>researchObjectID</column-name><column-value><![CDATA[");
 		sb.append(getResearchObjectID());
@@ -653,6 +685,7 @@ public class SubmissionRegistryClp extends BaseModelImpl<SubmissionRegistry>
 		return sb.toString();
 	}
 
+	private long _submissionID;
 	private long _researchObjectID;
 	private long _researchObjectVersion;
 	private String _archive;

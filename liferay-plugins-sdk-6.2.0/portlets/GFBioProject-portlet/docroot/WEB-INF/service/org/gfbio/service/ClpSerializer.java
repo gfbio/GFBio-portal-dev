@@ -36,7 +36,7 @@ import org.gfbio.model.Project_ResearchObjectClp;
 import org.gfbio.model.Project_UserClp;
 import org.gfbio.model.Project_User_PIClp;
 import org.gfbio.model.ResearchObjectClp;
-import org.gfbio.model.SubmissionRegistryClp;
+import org.gfbio.model.SubmissionClp;
 import org.gfbio.model.UserExtensionClp;
 
 import java.io.ObjectInputStream;
@@ -159,8 +159,8 @@ public class ClpSerializer {
 			return translateInputResearchObject(oldModel);
 		}
 
-		if (oldModelClassName.equals(SubmissionRegistryClp.class.getName())) {
-			return translateInputSubmissionRegistry(oldModel);
+		if (oldModelClassName.equals(SubmissionClp.class.getName())) {
+			return translateInputSubmission(oldModel);
 		}
 
 		if (oldModelClassName.equals(UserExtensionClp.class.getName())) {
@@ -294,10 +294,10 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputSubmissionRegistry(BaseModel<?> oldModel) {
-		SubmissionRegistryClp oldClpModel = (SubmissionRegistryClp)oldModel;
+	public static Object translateInputSubmission(BaseModel<?> oldModel) {
+		SubmissionClp oldClpModel = (SubmissionClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getSubmissionRegistryRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getSubmissionRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -729,9 +729,8 @@ public class ClpSerializer {
 			}
 		}
 
-		if (oldModelClassName.equals(
-					"org.gfbio.model.impl.SubmissionRegistryImpl")) {
-			return translateOutputSubmissionRegistry(oldModel);
+		if (oldModelClassName.equals("org.gfbio.model.impl.SubmissionImpl")) {
+			return translateOutputSubmission(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -927,8 +926,8 @@ public class ClpSerializer {
 			return new org.gfbio.NoSuchResearchObjectException();
 		}
 
-		if (className.equals("org.gfbio.NoSuchSubmissionRegistryException")) {
-			return new org.gfbio.NoSuchSubmissionRegistryException();
+		if (className.equals("org.gfbio.NoSuchSubmissionException")) {
+			return new org.gfbio.NoSuchSubmissionException();
 		}
 
 		if (className.equals("org.gfbio.NoSuchUserExtensionException")) {
@@ -1050,13 +1049,12 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputSubmissionRegistry(
-		BaseModel<?> oldModel) {
-		SubmissionRegistryClp newModel = new SubmissionRegistryClp();
+	public static Object translateOutputSubmission(BaseModel<?> oldModel) {
+		SubmissionClp newModel = new SubmissionClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setSubmissionRegistryRemoteModel(oldModel);
+		newModel.setSubmissionRemoteModel(oldModel);
 
 		return newModel;
 	}

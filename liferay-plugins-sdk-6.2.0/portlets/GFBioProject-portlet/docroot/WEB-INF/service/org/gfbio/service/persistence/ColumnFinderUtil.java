@@ -26,9 +26,9 @@ public class ColumnFinderUtil {
 		return getFinder().getColumnsWithRelation(columnName);
 	}
 
-	public static java.util.List getColumnIdsWithoutRelation(
+	public static java.util.List getHeadIdsWithoutRelationshipsByColumnName(
 		java.lang.String columnName) {
-		return getFinder().getColumnIdsWithoutRelation(columnName);
+		return getFinder().getHeadIdsWithoutRelationshipsByColumnName(columnName);
 	}
 
 	public static java.util.List getColumnNameById(long columnid) {
