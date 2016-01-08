@@ -31,6 +31,7 @@
 					function getUserList(){
 						var currentUID = parent.Liferay.ThemeDisplay.getUserId();
 						var currentUName =	parent.Liferay.ThemeDisplay.getUserName();	
+						// TODO: update the return value to JSON
 						parent.Liferay.Service(
 						  '/GFBioProject-portlet.basket/get-basket-users-ids',
 						  {
@@ -70,6 +71,7 @@
 					function getBaskets(){
 						var uID = document.getElementById('userSelect').value;
 						var period = document.getElementById('periodSelect').value;
+						// TODO: update the return value to JSON
 						parent.Liferay.Service(
 						'/GFBioProject-portlet.basket/get-baskets-by-user-and-period',
 						  {
