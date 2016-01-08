@@ -62,24 +62,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class ProjectServiceSoap {
-	public static org.json.simple.JSONArray getProjectById(
+	public static org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONArray returnValue = ProjectServiceUtil.getProjectById(requestJson);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.json.simple.JSONArray getProjectById1()
-		throws RemoteException {
-		try {
-			org.json.simple.JSONArray returnValue = ProjectServiceUtil.getProjectById1();
+			org.json.simple.JSONObject returnValue = ProjectServiceUtil.getProjectById(requestJson);
 
 			return returnValue;
 		}

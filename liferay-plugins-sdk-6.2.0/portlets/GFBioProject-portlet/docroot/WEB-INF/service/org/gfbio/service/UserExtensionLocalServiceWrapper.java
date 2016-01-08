@@ -286,8 +286,15 @@ public class UserExtensionLocalServiceWrapper
 
 	@Override
 	public org.json.simple.JSONObject getUserExtentionById(
-		org.json.simple.JSONObject json) {
-		return _userExtensionLocalService.getUserExtentionById(json);
+		org.json.simple.JSONObject requestJson) {
+		return _userExtensionLocalService.getUserExtentionById(requestJson);
+	}
+
+	@Override
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return _userExtensionLocalService.checkForIgnoredParameter(objects,
+			keyList);
 	}
 
 	@Override

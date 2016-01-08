@@ -20,7 +20,7 @@
 	<sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfDirectParent">
 	    <![CDATA[
 			SELECT 
-				CASE WHEN gfbio_researchobject.parentresearchobjectid IS NULL THEN FALSE ELSE TRUE END AS check
+				CASE WHEN gfbio_researchobject.parentresearchobjectid IS NULL OR gfbio_researchobject.parentresearchobjectid = 0 THEN FALSE ELSE TRUE END AS check
 			FROM 
 				public.gfbio_researchobject
 			WHERE

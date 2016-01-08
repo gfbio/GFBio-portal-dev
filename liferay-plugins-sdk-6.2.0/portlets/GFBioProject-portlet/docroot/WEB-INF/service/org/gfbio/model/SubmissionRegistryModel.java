@@ -21,8 +21,6 @@ import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
-import org.gfbio.service.persistence.SubmissionRegistryPK;
-
 import java.io.Serializable;
 
 import java.util.Date;
@@ -52,14 +50,28 @@ public interface SubmissionRegistryModel extends BaseModel<SubmissionRegistry> {
 	 *
 	 * @return the primary key of this submission registry
 	 */
-	public SubmissionRegistryPK getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this submission registry.
 	 *
 	 * @param primaryKey the primary key of this submission registry
 	 */
-	public void setPrimaryKey(SubmissionRegistryPK primaryKey);
+	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the submission i d of this submission registry.
+	 *
+	 * @return the submission i d of this submission registry
+	 */
+	public long getSubmissionID();
+
+	/**
+	 * Sets the submission i d of this submission registry.
+	 *
+	 * @param submissionID the submission i d of this submission registry
+	 */
+	public void setSubmissionID(long submissionID);
 
 	/**
 	 * Returns the research object i d of this submission registry.

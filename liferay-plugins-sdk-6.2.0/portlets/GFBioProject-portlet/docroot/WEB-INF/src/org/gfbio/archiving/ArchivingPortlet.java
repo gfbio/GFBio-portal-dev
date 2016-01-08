@@ -99,9 +99,8 @@ public class ArchivingPortlet extends GenericPortlet {
 		String name = (String) json.get("project_name");
 		String label = (String) json.get("project_name");
 		String data = json.toString();
-		String formatdata = unpackJSON(data);
 
-		researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObjectWithProject(projectID, researchObjectID, 1, name, label, data, formatdata, "test");
+		researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObjectWithProject(projectID, researchObjectID, 1, name, label, data, "test");
 	}
 
 

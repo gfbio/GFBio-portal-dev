@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gfbio.NoSuchProjectException;
 import org.gfbio.NoSuchProject_UserException;
@@ -28,7 +30,6 @@ import org.gfbio.model.Project;
 import org.gfbio.model.Project_ResearchObject;
 import org.gfbio.model.Project_User;
 import org.gfbio.model.ResearchObject;
-import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
@@ -71,29 +72,37 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	@SuppressWarnings("unchecked")
-	public JSONArray getCompleteProjectById (JSONObject requestJson){
-		
-		JSONArray responseJson = new JSONArray();
+	@SuppressWarnings({ "unchecked", "null" })
+	public JSONObject getCompleteProjectById (JSONObject requestJson){
+
+		JSONObject responseJson = null;
 		List <ResearchObject> researchObjectList = null;
+		Set<String> set = new HashSet<String>();
+		set.add("projectid");
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
 		if (requestJson.containsKey("projectid")){
 			try {
-				responseJson.add(ProjectLocalServiceUtil.getProjectById((long) requestJson.get("projectid")));
+				responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey((long) requestJson.get("projectid")));
 			} catch (NoSuchProjectException | SystemException e) {
-				e.printStackTrace();
-				JSONObject keyJson = new JSONObject();
-				keyJson.put("ERROR", "ERROR: No key 'projectid' exist.");
-				responseJson.add(keyJson);
+				responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
 			}
-			researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId((long) requestJson.get("projectid"));
-			for (int i =0; i< researchObjectList.size();i++)
-				responseJson.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
-		}else{
-			JSONObject keyJson = new JSONObject();
-			keyJson.put("ERROR", "ERROR: No key 'projectid' exist.");
-			responseJson.add( keyJson);
+			if (responseJson != null){
+				researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId((long) requestJson.get("projectid"));
+				if (researchObjectList.size() >0){
+					JSONArray researchObjectJSON = new JSONArray();
+					for (int i =0; i< researchObjectList.size();i++)
+						researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+					responseJson.put("researchobjects", researchObjectJSON);
+				}
+			}
 		}
+		else{
+			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+		}
+		if (!ignoreParameter.equals(""))
+			responseJson.put("WARNING", ignoreParameter);
+		
 		return responseJson;
 	}
 	
@@ -103,10 +112,9 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	public JSONObject getProjectById (JSONObject requestJson){
 		
 		JSONObject responseJson = new JSONObject();
-		
 		if (requestJson.containsKey("projectid"))
 			try {
-				responseJson = ProjectLocalServiceUtil.constructProjectAsJson(ProjectLocalServiceUtil.getProjectById((long)requestJson.get("projectid")));
+				responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey((long)requestJson.get("projectid")));
 			} catch (NoSuchProjectException | SystemException e) {
 				e.printStackTrace();
 				responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
@@ -120,22 +128,13 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
 	
-	//
-	public Project getProjectById (long projectId) throws NoSuchProjectException, SystemException{
-		return projectPersistence.findByPrimaryKey(projectId);
-	}
-	
-	
 	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
 	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 
 		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIDList(userID);
 		List<Project> projectList = new ArrayList<Project>();
-
-		for (int i = 0; i<idList.size(); i++) {
+		for (int i = 0; i<idList.size(); i++) 
 			projectList.add(projectPersistence.findByPrimaryKey(idList.get(i).getProjectID()));
-		}
-
 		return projectList;
 	}
 
@@ -145,7 +144,6 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 		List<Project_ResearchObject> idList = project_ResearchObjectPersistence.findByProjectID(projectID);
 		List<ResearchObject> researchObjectList = new ArrayList<ResearchObject>();
-
 		for (int i = 0; i<idList.size(); i++)
 			researchObjectList.add(researchObjectPersistence.findByPrimaryKey(idList.get(i).getResearchObjectID()));
 		return researchObjectList;
@@ -156,17 +154,42 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
+	public String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
+
+		String ignoredParameter = "WARNING:";
+		Boolean check = false;
+		for (int i =0; i < objects.length;i++)
+			if (!keyList.contains((objects[i]))){
+				ignoredParameter = ignoredParameter.concat(" ").concat(objects[i].toString()).concat(",");
+				check = true;
+			}
+		if (check == true)
+			ignoredParameter = ignoredParameter.substring(0, ignoredParameter.length()-1).concat(" are not parameters of this method.");
+		else
+			ignoredParameter ="";
+		return ignoredParameter;
+	}
+	
+	
+	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructProjectAsJson (Project project){
-		JSONObject json = new JSONObject();
 
+		JSONObject json = new JSONObject();
 		json.put("projectid", project.getProjectID());
 		json.put("parentprojectid", project.getParentProjectID());
 		json.put("name", project.getName());
 		json.put("label", project.getLabel());
 		json.put("description", project.getDescription());
-		json.put("startdate", project.getStartDate());	
-		json.put("enddate", project.getEndDate());
+		json.put("extendeddata", project.getExtendeddata());
+		if (project.getStartDate() != null)
+			json.put("startdate", project.getStartDate().toString());
+		else
+			json.put("startdate", "");
+		if (project.getEndDate() != null)
+			json.put("enddate", project.getEndDate().toString());
+		else
+			json.put("enddate", "");			
 		json.put("status", project.getStatus());
 		return json;
 	}
@@ -175,6 +198,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray constructProjectAsJsonArray (Project project){
+		
 		JSONArray jsonArray = new JSONArray ();
 		jsonArray.add(constructProjectAsJson(project));
 		return jsonArray;
@@ -184,6 +208,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray constructProjectsAsJson (List <Project> projectList){
+		
 		JSONArray json = new JSONArray();
 		for (int i =0; i < projectList.size();i++)
 			json.add(constructProjectAsJson(projectList.get(i)));
@@ -194,8 +219,17 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	
+	
+	//-------------------------------- Update Functions ----------------------------------------------//
+	
+	
 	//
-	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
+	@SuppressWarnings("unused")
+	public long updateProject(long projectID, long userID, String name, String label, String description, String extendedData, Date startDate, Date endDate, String status) throws SystemException {
 
 		Project project = null;
 		try {
@@ -208,12 +242,12 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			project.setName(name);
 			project.setLabel(label);
 			project.setDescription(description);
+			project.setExtendeddata(extendedData);
 			project.setStartDate(startDate);
 			project.setEndDate(endDate);
 			project.setStatus(status);
 			super.updateProject(project);
 			try {
-				@SuppressWarnings("unused")
 				Long foobar = Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate);
 			} catch (NoSuchProject_UserException e) {e.printStackTrace();}
 		}
@@ -223,6 +257,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			project.setName(name);
 			project.setLabel(label);
 			project.setDescription(description);
+			project.setExtendeddata(extendedData);
 			project.setStartDate(startDate);
 			project.setEndDate(endDate);
 			project.setStatus(status);

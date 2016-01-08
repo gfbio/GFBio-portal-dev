@@ -116,7 +116,7 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 
 		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "getColumnIdsWithoutRelation";
+		_methodName21 = "getHeadIdsWithoutRelationshipsByColumnName";
 
 		_methodParameterTypes21 = new String[] { "java.lang.String" };
 
@@ -762,7 +762,7 @@ public class ColumnLocalServiceClp implements ColumnLocalService {
 	}
 
 	@Override
-	public java.util.List getColumnIdsWithoutRelation(
+	public java.util.List getHeadIdsWithoutRelationshipsByColumnName(
 		java.lang.String columnName)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

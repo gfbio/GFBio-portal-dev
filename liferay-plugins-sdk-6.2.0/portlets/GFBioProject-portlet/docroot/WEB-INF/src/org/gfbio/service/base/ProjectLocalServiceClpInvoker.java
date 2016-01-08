@@ -120,17 +120,19 @@ public class ProjectLocalServiceClpInvoker {
 
 		_methodParameterTypes130 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName131 = "getProjectById";
+		_methodName131 = "getProjectList";
 
 		_methodParameterTypes131 = new String[] { "long" };
 
-		_methodName132 = "getProjectList";
+		_methodName132 = "getResearchObjectList";
 
-		_methodParameterTypes132 = new String[] { "long" };
+		_methodParameterTypes132 = new String[] { "long", "long" };
 
-		_methodName133 = "getResearchObjectList";
+		_methodName133 = "checkForIgnoredParameter";
 
-		_methodParameterTypes133 = new String[] { "long", "long" };
+		_methodParameterTypes133 = new String[] {
+				"java.lang.Object[][]", "java.util.Set"
+			};
 
 		_methodName134 = "constructProjectAsJson";
 
@@ -148,8 +150,8 @@ public class ProjectLocalServiceClpInvoker {
 
 		_methodParameterTypes137 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
-				"java.lang.String", "java.util.Date", "java.util.Date",
-				"java.lang.String"
+				"java.lang.String", "java.lang.String", "java.util.Date",
+				"java.util.Date", "java.lang.String"
 			};
 	}
 
@@ -271,18 +273,19 @@ public class ProjectLocalServiceClpInvoker {
 
 		if (_methodName131.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
-			return ProjectLocalServiceUtil.getProjectById(((Long)arguments[0]).longValue());
+			return ProjectLocalServiceUtil.getProjectList(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName132.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
-			return ProjectLocalServiceUtil.getProjectList(((Long)arguments[0]).longValue());
+			return ProjectLocalServiceUtil.getResearchObjectList(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName133.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
-			return ProjectLocalServiceUtil.getResearchObjectList(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return ProjectLocalServiceUtil.checkForIgnoredParameter((java.lang.Object[])arguments[0],
+				(java.util.Set<java.lang.String>)arguments[1]);
 		}
 
 		if (_methodName134.equals(name) &&
@@ -305,8 +308,9 @@ public class ProjectLocalServiceClpInvoker {
 			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
-				(java.lang.String)arguments[4], (java.util.Date)arguments[5],
-				(java.util.Date)arguments[6], (java.lang.String)arguments[7]);
+				(java.lang.String)arguments[4], (java.lang.String)arguments[5],
+				(java.util.Date)arguments[6], (java.util.Date)arguments[7],
+				(java.lang.String)arguments[8]);
 		}
 
 		throw new UnsupportedOperationException();

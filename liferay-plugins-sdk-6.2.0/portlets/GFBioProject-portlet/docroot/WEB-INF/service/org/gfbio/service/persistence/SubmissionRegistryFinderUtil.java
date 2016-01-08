@@ -52,6 +52,11 @@ public class SubmissionRegistryFinderUtil {
 				   .getLatestSubmissionsByResearchObjectId(researchObjectId);
 	}
 
+	public static java.util.List<org.gfbio.model.SubmissionRegistry> getLatestXPublicSubmissionsByX(
+		int latestX) {
+		return getFinder().getLatestXPublicSubmissionsByX(latestX);
+	}
+
 	public static java.util.List getResearchObjectVersion(
 		long researchObjectId, java.lang.String archive,
 		java.lang.String brokerSubmissionId) {
@@ -65,6 +70,13 @@ public class SubmissionRegistryFinderUtil {
 		return getFinder()
 				   .getStatusByIds(researchObjectId, researchObjectVersion,
 			archive);
+	}
+
+	public static java.util.List getSubmissionIdByIds(long researchObjectId,
+		int researchObjectVersion, java.lang.String archive) {
+		return getFinder()
+				   .getSubmissionIdByIds(researchObjectId,
+			researchObjectVersion, archive);
 	}
 
 	public static java.util.List<org.gfbio.model.SubmissionRegistry> getSubmissionRegistry(

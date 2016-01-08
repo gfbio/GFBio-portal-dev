@@ -22,9 +22,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
-
 
 
 /**
@@ -89,13 +86,18 @@ public class SubmissionRegistryServiceImpl	extends SubmissionRegistryServiceBase
 		return SubmissionRegistryLocalServiceUtil.getLatestSubmissions();
 	}*/
 	
+
+	
+	//
+	public JSONArray getLatestPublicSubmissions  (JSONObject requestJson){
+		return SubmissionRegistryLocalServiceUtil.getLatestXPublicSubmissionsByX(requestJson);
+	}
+	
 	
 	//
 	public JSONArray getSubmissionRegistriesByBrokerSubmissionId (JSONObject requestJson){
 		JSONArray responseJson = new JSONArray();
-		try {
-			responseJson =SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
-		} catch (SystemException e) {e.printStackTrace();}
+		responseJson =SubmissionRegistryLocalServiceUtil.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 		return responseJson;
 	}
 	

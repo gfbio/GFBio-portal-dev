@@ -38,9 +38,11 @@ public class SubmissionRegistryCacheModel implements CacheModel<SubmissionRegist
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{researchObjectID=");
+		sb.append("{submissionID=");
+		sb.append(submissionID);
+		sb.append(", researchObjectID=");
 		sb.append(researchObjectID);
 		sb.append(", researchObjectVersion=");
 		sb.append(researchObjectVersion);
@@ -71,6 +73,7 @@ public class SubmissionRegistryCacheModel implements CacheModel<SubmissionRegist
 	public SubmissionRegistry toEntityModel() {
 		SubmissionRegistryImpl submissionRegistryImpl = new SubmissionRegistryImpl();
 
+		submissionRegistryImpl.setSubmissionID(submissionID);
 		submissionRegistryImpl.setResearchObjectID(researchObjectID);
 		submissionRegistryImpl.setResearchObjectVersion(researchObjectVersion);
 
@@ -128,6 +131,7 @@ public class SubmissionRegistryCacheModel implements CacheModel<SubmissionRegist
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		submissionID = objectInput.readLong();
 		researchObjectID = objectInput.readLong();
 		researchObjectVersion = objectInput.readLong();
 		archive = objectInput.readUTF();
@@ -144,6 +148,7 @@ public class SubmissionRegistryCacheModel implements CacheModel<SubmissionRegist
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		objectOutput.writeLong(submissionID);
 		objectOutput.writeLong(researchObjectID);
 		objectOutput.writeLong(researchObjectVersion);
 
@@ -182,6 +187,7 @@ public class SubmissionRegistryCacheModel implements CacheModel<SubmissionRegist
 		}
 	}
 
+	public long submissionID;
 	public long researchObjectID;
 	public long researchObjectVersion;
 	public String archive;

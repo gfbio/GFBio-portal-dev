@@ -66,6 +66,10 @@ public interface SubmissionRegistryService extends BaseService, InvokableService
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getLatestPublicSubmissions(
+		org.json.simple.JSONObject requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson);
 

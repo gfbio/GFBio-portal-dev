@@ -35,10 +35,6 @@ public class ProjectServiceClp implements ProjectService {
 		_methodName3 = "getProjectById";
 
 		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName4 = "getProjectById1";
-
-		_methodParameterTypes4 = new String[] {  };
 	}
 
 	@Override
@@ -92,7 +88,7 @@ public class ProjectServiceClp implements ProjectService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray getProjectById(
+	public org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
@@ -113,30 +109,7 @@ public class ProjectServiceClp implements ProjectService {
 			}
 		}
 
-		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public org.json.simple.JSONArray getProjectById1() {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] {  });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableService _invokableService;
@@ -146,6 +119,4 @@ public class ProjectServiceClp implements ProjectService {
 	private String[] _methodParameterTypes1;
 	private String _methodName3;
 	private String[] _methodParameterTypes3;
-	private String _methodName4;
-	private String[] _methodParameterTypes4;
 }

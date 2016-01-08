@@ -118,6 +118,21 @@ public interface ProjectModel extends BaseModel<Project> {
 	public void setLabel(String label);
 
 	/**
+	 * Returns the extendeddata of this project.
+	 *
+	 * @return the extendeddata of this project
+	 */
+	@AutoEscape
+	public String getExtendeddata();
+
+	/**
+	 * Sets the extendeddata of this project.
+	 *
+	 * @param extendeddata the extendeddata of this project
+	 */
+	public void setExtendeddata(String extendeddata);
+
+	/**
 	 * Returns the description of this project.
 	 *
 	 * @return the description of this project

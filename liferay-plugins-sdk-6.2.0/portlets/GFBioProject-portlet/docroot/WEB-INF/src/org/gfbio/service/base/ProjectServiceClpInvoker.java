@@ -35,10 +35,6 @@ public class ProjectServiceClpInvoker {
 		_methodName112 = "getProjectById";
 
 		_methodParameterTypes112 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName113 = "getProjectById1";
-
-		_methodParameterTypes113 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -60,11 +56,6 @@ public class ProjectServiceClpInvoker {
 			return ProjectServiceUtil.getProjectById((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName113.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
-			return ProjectServiceUtil.getProjectById1();
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -74,6 +65,4 @@ public class ProjectServiceClpInvoker {
 	private String[] _methodParameterTypes107;
 	private String _methodName112;
 	private String[] _methodParameterTypes112;
-	private String _methodName113;
-	private String[] _methodParameterTypes113;
 }

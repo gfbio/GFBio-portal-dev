@@ -48,29 +48,29 @@ public class SubmissionRegistryLocalServiceWrapper
 	/**
 	* Creates a new submission registry with the primary key. Does not add the submission registry to the database.
 	*
-	* @param submissionRegistryPK the primary key for the new submission registry
+	* @param submissionID the primary key for the new submission registry
 	* @return the new submission registry
 	*/
 	@Override
 	public org.gfbio.model.SubmissionRegistry createSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK) {
-		return _submissionRegistryLocalService.createSubmissionRegistry(submissionRegistryPK);
+		long submissionID) {
+		return _submissionRegistryLocalService.createSubmissionRegistry(submissionID);
 	}
 
 	/**
 	* Deletes the submission registry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param submissionRegistryPK the primary key of the submission registry
+	* @param submissionID the primary key of the submission registry
 	* @return the submission registry that was removed
 	* @throws PortalException if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public org.gfbio.model.SubmissionRegistry deleteSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _submissionRegistryLocalService.deleteSubmissionRegistry(submissionRegistryPK);
+		return _submissionRegistryLocalService.deleteSubmissionRegistry(submissionID);
 	}
 
 	/**
@@ -187,25 +187,25 @@ public class SubmissionRegistryLocalServiceWrapper
 
 	@Override
 	public org.gfbio.model.SubmissionRegistry fetchSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _submissionRegistryLocalService.fetchSubmissionRegistry(submissionRegistryPK);
+		return _submissionRegistryLocalService.fetchSubmissionRegistry(submissionID);
 	}
 
 	/**
 	* Returns the submission registry with the primary key.
 	*
-	* @param submissionRegistryPK the primary key of the submission registry
+	* @param submissionID the primary key of the submission registry
 	* @return the submission registry
 	* @throws PortalException if a submission registry with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
-		org.gfbio.service.persistence.SubmissionRegistryPK submissionRegistryPK)
+		long submissionID)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _submissionRegistryLocalService.getSubmissionRegistry(submissionRegistryPK);
+		return _submissionRegistryLocalService.getSubmissionRegistry(submissionID);
 	}
 
 	@Override
@@ -291,9 +291,14 @@ public class SubmissionRegistryLocalServiceWrapper
 	}
 
 	@Override
+	public org.json.simple.JSONArray getLatestXPublicSubmissionsByX(
+		org.json.simple.JSONObject requestJson) {
+		return _submissionRegistryLocalService.getLatestXPublicSubmissionsByX(requestJson);
+	}
+
+	@Override
 	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
-		org.json.simple.JSONObject requestJson)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		org.json.simple.JSONObject requestJson) {
 		return _submissionRegistryLocalService.getSubmissionRegistriesByBrokerSubmissionId(requestJson);
 	}
 
@@ -358,6 +363,12 @@ public class SubmissionRegistryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.SubmissionRegistry> getLatestXPublicSubmissionsByX(
+		int latestX) {
+		return _submissionRegistryLocalService.getLatestXPublicSubmissionsByX(latestX);
+	}
+
+	@Override
 	public java.lang.String getStatus(long researchObjectId,
 		int researchObjectVersion, java.lang.String archive,
 		java.lang.String archivePId) {
@@ -394,11 +405,25 @@ public class SubmissionRegistryLocalServiceWrapper
 	}
 
 	@Override
+	public long getSubmissionIdByIds(long researchObjectId,
+		int ResearchObjectVersion, java.lang.String archive) {
+		return _submissionRegistryLocalService.getSubmissionIdByIds(researchObjectId,
+			ResearchObjectVersion, archive);
+	}
+
+	@Override
 	public org.gfbio.model.SubmissionRegistry getSubmissionRegistry(
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String archive) {
 		return _submissionRegistryLocalService.getSubmissionRegistry(researchObjectId,
 			researchObjectVersion, archive);
+	}
+
+	@Override
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return _submissionRegistryLocalService.checkForIgnoredParameter(objects,
+			keyList);
 	}
 
 	@Override

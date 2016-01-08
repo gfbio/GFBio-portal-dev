@@ -13,7 +13,7 @@
 	<import class="org.gfbio.model.Project_User" />
 	<import class="org.gfbio.model.Project_User_PI" />
 	<import class="org.gfbio.model.ResearchObject" />
-	<import class="org.gfbio.model.SubmissionRegistry" />
+	<import class="org.gfbio.model.Submission" />
 	<import class="org.gfbio.model.UserExtension" />
 	<class name="org.gfbio.model.impl.BasketImpl" table="gfbio_Basket">
 		<id name="basketID" type="long">
@@ -72,6 +72,7 @@
 		<property name="parentProjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="extendeddata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
@@ -108,16 +109,16 @@
 		<property name="parentResearchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="metadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="formatmetadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="extendeddata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="researchObjectType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="org.gfbio.model.impl.SubmissionRegistryImpl" table="gfbio_SubmissionRegistry">
-		<composite-id name="primaryKey" class="org.gfbio.service.persistence.SubmissionRegistryPK">
-			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="archive" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		</composite-id>
+	<class name="org.gfbio.model.impl.SubmissionImpl" table="gfbio_Submission">
+		<id name="submissionID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="archive" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="brokerSubmissionID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="archivePID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="archive_pid" />
 		<property name="archivePIDType" type="com.liferay.portal.dao.orm.hibernate.LongType" column="archive_pid_type" />

@@ -37,7 +37,7 @@ import java.util.Date;
 public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{projectID=");
 		sb.append(projectID);
@@ -47,6 +47,8 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		sb.append(name);
 		sb.append(", label=");
 		sb.append(label);
+		sb.append(", extendeddata=");
+		sb.append(extendeddata);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", startDate=");
@@ -79,6 +81,13 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		}
 		else {
 			projectImpl.setLabel(label);
+		}
+
+		if (extendeddata == null) {
+			projectImpl.setExtendeddata(StringPool.BLANK);
+		}
+		else {
+			projectImpl.setExtendeddata(extendeddata);
 		}
 
 		if (description == null) {
@@ -120,6 +129,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 		parentProjectID = objectInput.readLong();
 		name = objectInput.readUTF();
 		label = objectInput.readUTF();
+		extendeddata = objectInput.readUTF();
 		description = objectInput.readUTF();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
@@ -146,6 +156,13 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 			objectOutput.writeUTF(label);
 		}
 
+		if (extendeddata == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(extendeddata);
+		}
+
 		if (description == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -168,6 +185,7 @@ public class ProjectCacheModel implements CacheModel<Project>, Externalizable {
 	public long parentProjectID;
 	public String name;
 	public String label;
+	public String extendeddata;
 	public String description;
 	public long startDate;
 	public long endDate;

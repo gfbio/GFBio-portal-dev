@@ -53,7 +53,6 @@ import org.gfbio.service.persistence.Project_User_PIPersistence;
 import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
 import org.gfbio.service.persistence.SubmissionRegistryFinder;
-import org.gfbio.service.persistence.SubmissionRegistryPK;
 import org.gfbio.service.persistence.SubmissionRegistryPersistence;
 import org.gfbio.service.persistence.UserExtensionPersistence;
 
@@ -103,29 +102,27 @@ public abstract class SubmissionRegistryLocalServiceBaseImpl
 	/**
 	 * Creates a new submission registry with the primary key. Does not add the submission registry to the database.
 	 *
-	 * @param submissionRegistryPK the primary key for the new submission registry
+	 * @param submissionID the primary key for the new submission registry
 	 * @return the new submission registry
 	 */
 	@Override
-	public SubmissionRegistry createSubmissionRegistry(
-		SubmissionRegistryPK submissionRegistryPK) {
-		return submissionRegistryPersistence.create(submissionRegistryPK);
+	public SubmissionRegistry createSubmissionRegistry(long submissionID) {
+		return submissionRegistryPersistence.create(submissionID);
 	}
 
 	/**
 	 * Deletes the submission registry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param submissionRegistryPK the primary key of the submission registry
+	 * @param submissionID the primary key of the submission registry
 	 * @return the submission registry that was removed
 	 * @throws PortalException if a submission registry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public SubmissionRegistry deleteSubmissionRegistry(
-		SubmissionRegistryPK submissionRegistryPK)
+	public SubmissionRegistry deleteSubmissionRegistry(long submissionID)
 		throws PortalException, SystemException {
-		return submissionRegistryPersistence.remove(submissionRegistryPK);
+		return submissionRegistryPersistence.remove(submissionID);
 	}
 
 	/**
@@ -236,24 +233,23 @@ public abstract class SubmissionRegistryLocalServiceBaseImpl
 	}
 
 	@Override
-	public SubmissionRegistry fetchSubmissionRegistry(
-		SubmissionRegistryPK submissionRegistryPK) throws SystemException {
-		return submissionRegistryPersistence.fetchByPrimaryKey(submissionRegistryPK);
+	public SubmissionRegistry fetchSubmissionRegistry(long submissionID)
+		throws SystemException {
+		return submissionRegistryPersistence.fetchByPrimaryKey(submissionID);
 	}
 
 	/**
 	 * Returns the submission registry with the primary key.
 	 *
-	 * @param submissionRegistryPK the primary key of the submission registry
+	 * @param submissionID the primary key of the submission registry
 	 * @return the submission registry
 	 * @throws PortalException if a submission registry with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SubmissionRegistry getSubmissionRegistry(
-		SubmissionRegistryPK submissionRegistryPK)
+	public SubmissionRegistry getSubmissionRegistry(long submissionID)
 		throws PortalException, SystemException {
-		return submissionRegistryPersistence.findByPrimaryKey(submissionRegistryPK);
+		return submissionRegistryPersistence.findByPrimaryKey(submissionID);
 	}
 
 	@Override

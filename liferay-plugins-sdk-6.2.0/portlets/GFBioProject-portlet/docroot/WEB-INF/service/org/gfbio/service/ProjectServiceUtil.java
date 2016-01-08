@@ -63,13 +63,9 @@ public class ProjectServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONArray getProjectById(
+	public static org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject requestJson) {
 		return getService().getProjectById(requestJson);
-	}
-
-	public static org.json.simple.JSONArray getProjectById1() {
-		return getService().getProjectById1();
 	}
 
 	public static void clearService() {

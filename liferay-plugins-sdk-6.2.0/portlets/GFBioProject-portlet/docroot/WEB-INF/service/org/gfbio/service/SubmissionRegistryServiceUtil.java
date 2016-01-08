@@ -63,6 +63,11 @@ public class SubmissionRegistryServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONArray getLatestPublicSubmissions(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getLatestPublicSubmissions(requestJson);
+	}
+
 	public static org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) {
 		return getService()

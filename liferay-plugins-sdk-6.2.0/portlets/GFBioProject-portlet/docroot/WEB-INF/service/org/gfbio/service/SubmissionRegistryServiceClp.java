@@ -32,21 +32,25 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
 
-		_methodName3 = "getSubmissionRegistriesByBrokerSubmissionId";
+		_methodName3 = "getLatestPublicSubmissions";
 
 		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName4 = "getSubmissionRegistriesByResearchObjectId";
+		_methodName4 = "getSubmissionRegistriesByBrokerSubmissionId";
 
 		_methodParameterTypes4 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName5 = "createSubmissionRegistry";
+		_methodName5 = "getSubmissionRegistriesByResearchObjectId";
 
-		_methodParameterTypes5 = new String[] { "java.lang.String" };
+		_methodParameterTypes5 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName6 = "updateSubmissionRegistry";
+		_methodName6 = "createSubmissionRegistry";
 
 		_methodParameterTypes6 = new String[] { "java.lang.String" };
+
+		_methodName7 = "updateSubmissionRegistry";
+
+		_methodParameterTypes7 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -100,7 +104,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
+	public org.json.simple.JSONArray getLatestPublicSubmissions(
 		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
@@ -125,7 +129,7 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+	public org.json.simple.JSONArray getSubmissionRegistriesByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
@@ -150,8 +154,8 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray createSubmissionRegistry(
-		java.lang.String requestJson) {
+	public org.json.simple.JSONArray getSubmissionRegistriesByResearchObjectId(
+		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
 		try {
@@ -175,13 +179,38 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray updateSubmissionRegistry(
+	public org.json.simple.JSONArray createSubmissionRegistry(
 		java.lang.String requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName6,
 					_methodParameterTypes6,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONArray updateSubmissionRegistry(
+		java.lang.String requestJson) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
 					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
@@ -212,4 +241,6 @@ public class SubmissionRegistryServiceClp implements SubmissionRegistryService {
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
 }

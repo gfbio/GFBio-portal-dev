@@ -35,15 +35,7 @@
 				<form action="select.htm">
 					<select  style="width:50%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 						<option selected value="none"> </option>
-						<option value="-1010">BGBM </option>
-						<option value="-1010">DSMZ </option>
-						<option value="-1011" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
-						<option value="-1010">MfN </option>
-						<option value="-1010">PANGAEA </option>
-						<option value="-1010">SGN </option>
-						<option value="-1010">SMNS </option>
-						<option value="-1010">SNSB </option>
-						<option value="-1010">ZFMK </option>
+						<option value="-1011">Molecular Sequence Data</option>
 					</select>
 				</form>
 
@@ -76,15 +68,7 @@
 			<form action="select.htm">
 				<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onchange="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
 					<option selected value="none"> </option>
-					<option value="-20">BGBM </option>
-					<option value="-23">DSMZ </option>
-					<option value="-21" style="color: black; font-weight:bold">ENA (molecular sequence data) </option>
-					<option value="-24">MfN </option>
-					<option value="-22">PANGAEA </option>
-					<option value="-25">SGN </option>
-					<option value="-26">SMNS </option>
-					<option value="-27">SNSB </option>
-					<option value="-28">ZFMK </option>
+					<option value="-21">Molecular Sequence Data</option>
 				</select>
 			</form>
 			<br>

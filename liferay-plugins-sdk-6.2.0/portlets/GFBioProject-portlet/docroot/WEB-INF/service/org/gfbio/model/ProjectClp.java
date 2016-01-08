@@ -77,6 +77,7 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		attributes.put("parentProjectID", getParentProjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
+		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
@@ -109,6 +110,12 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 
 		if (label != null) {
 			setLabel(label);
+		}
+
+		String extendeddata = (String)attributes.get("extendeddata");
+
+		if (extendeddata != null) {
+			setExtendeddata(extendeddata);
 		}
 
 		String description = (String)attributes.get("description");
@@ -221,6 +228,29 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 				Method method = clazz.getMethod("setLabel", String.class);
 
 				method.invoke(_projectRemoteModel, label);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getExtendeddata() {
+		return _extendeddata;
+	}
+
+	@Override
+	public void setExtendeddata(String extendeddata) {
+		_extendeddata = extendeddata;
+
+		if (_projectRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setExtendeddata", String.class);
+
+				method.invoke(_projectRemoteModel, extendeddata);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -393,6 +423,7 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		clone.setParentProjectID(getParentProjectID());
 		clone.setName(getName());
 		clone.setLabel(getLabel());
+		clone.setExtendeddata(getExtendeddata());
 		clone.setDescription(getDescription());
 		clone.setStartDate(getStartDate());
 		clone.setEndDate(getEndDate());
@@ -447,7 +478,7 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
@@ -457,6 +488,8 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		sb.append(getName());
 		sb.append(", label=");
 		sb.append(getLabel());
+		sb.append(", extendeddata=");
+		sb.append(getExtendeddata());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", startDate=");
@@ -472,7 +505,7 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project");
@@ -493,6 +526,10 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 		sb.append(
 			"<column><column-name>label</column-name><column-value><![CDATA[");
 		sb.append(getLabel());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>extendeddata</column-name><column-value><![CDATA[");
+		sb.append(getExtendeddata());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
@@ -520,6 +557,7 @@ public class ProjectClp extends BaseModelImpl<Project> implements Project {
 	private long _parentProjectID;
 	private String _name;
 	private String _label;
+	private String _extendeddata;
 	private String _description;
 	private Date _startDate;
 	private Date _endDate;
