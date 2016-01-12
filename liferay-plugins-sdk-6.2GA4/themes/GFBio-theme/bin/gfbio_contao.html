@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Home - gfbio</title>
+  <base href="http://tmp.gfbio.org/">
+
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="generator" content="Contao Open Source CMS">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style>#right{width:330px}#container{padding-right:330px}</style>
+  <link rel="stylesheet" href="assets/css/bf80a29907df.css">
+    <script src="assets/js/854dce4ea467.js"></script>
+  <!--[if lt IE 9]><script src="assets/html5shiv/3.6.2/html5shiv.js"></script><![endif]-->
+
+  <style type="text/css">
+/* <![CDATA[ */
+@import url(http://yui.yahooapis.com/combo?2.9.0/build/assets/skins/sam/calendar.css&2.9.0/build/assets/skins/sam/button.css);
+
+#cal_mindate_menu { position: absolute; z-index: 9060; font-size: 8pt; }
+#cal_maxdate_menu { position: absolute; z-index: 9065; font-size: 8pt; }
+#cal_mindate button,#cal_maxdate button { background: url(/shared/pics/calendar.gif) center center no-repeat; white-space: nowrap; height:2em; }
+#cal_mindate,#cal_maxdate { font-size: 8pt; }
+
+div.yuimenu .bd { zoom: normal; }
+
+.input{font-site:10pt;height:11pt}
+.acInput { position:relative; display:block; width:100%; }
+.acQueryDiv { position:relative; width:100%; margin:0; height:0; z-index:9049; }/* set width of widget here */   
+.acDropdown { position:absolute; width:100%; font-size:85%; }
+.acDropdown .yui-ac-content { position:absolute; width:100%; border:1px solid #2C3539; background:white; overflow:hidden; z-index:9050; }   
+.acDropdown ul { position:relative; width:100%; list-style:none; cursor:default; padding:0; margin:0; }
+.acDropdown li { white-space:nowrap; display:list-item; cursor:default; padding:0 4px; margin:0; }
+.acDropdown li.yui-ac-highlight { background:#4274B9; color:#FFF; }
+
+#yschfrm hr {clear: both; border: 0; border-top: 1px dashed #a8cefa; height: 1px; margin: 5px 0 5px 20%; padding: 0;}
+/* ]]> */
+</style>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.9.0/build/yahoo-dom-event/yahoo-dom-event.js&amp;2.9.0/build/calendar/calendar-min.js&amp;2.9.0/build/container/container_core-min.js&amp;2.9.0/build/element/element-min.js&amp;2.9.0/build/button/button-min.js&amp;2.9.0/build/connection/connection-min.js&amp;2.9.0/build/datasource/datasource-min.js&amp;2.9.0/build/autocomplete/autocomplete-min.js"></script>
+<script type="text/javascript" src="/shared/js/yui-ext/calendarpopup-min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+
+function toggleAssi() {
+	var style=document.getElementById('assistant').style;
+	style.display=(style.display=='none')?'block':'none';
+}
+
+function clearArea() {
+    with (document.forms.portalForm) {
+        minlat.value=''; maxlat.value=''; minlon.value=''; maxlon.value='';
+    }
+}
+
+function setArea(pminlat,pminlon,pmaxlat,pmaxlon) {
+    with (document.forms.portalForm) {
+        maxlat.value=pmaxlat;
+        minlat.value=pminlat;
+        minlon.value=pminlon;
+        maxlon.value=pmaxlon;
+    }
+}
+
+function clearDateTime() {
+    with (document.forms.portalForm) {
+        mindate.value=''; maxdate.value='';
+    }
+}
+
+function openHelp() {
+    window.open('../shared/help/help.php/portal/index.html','pangaea_help','status=1,resizable=1,scrollbars=1,width=640,height=480');
+}
+
+function decodeAutoCompFunction(oResultItem, sQuery) {
+	return oResultItem[1];
+};
+
+function addAutocompleteField(field) {
+	var oACDS=new YAHOO.util.XHRDataSource('/shared/php/portalsuggest.php');
+	oACDS.responseType=YAHOO.util.XHRDataSource.TYPE_TEXT;
+	oACDS.responseSchema={ recordDelim: '\n',fieldDelim:'\t'};
+	oACDS.maxCacheEntries=100;
+	oACDS.scriptQueryParam='query';
+	var qa='index=dataportal-komfor';
+	if (field!='') qa+='&field='+encodeURIComponent(field);
+	oACDS.scriptQueryAppend=qa;
+	var oAutoComp=new YAHOO.widget.AutoComplete('acQueryInput_'+field,'acQueryContainer_'+field,oACDS);
+	oAutoComp.animHoriz=false;
+	oAutoComp.animVert=false;
+	oAutoComp.useShadow=false;
+	oAutoComp.maxResultsDisplayed=12;
+	oAutoComp.queryDelay=0;
+	oAutoComp.useIFrame=true;
+	oAutoComp.typeAhead=false;
+	oAutoComp.formatResult=decodeAutoCompFunction;
+}
+
+function doInit() {
+	addAutocompleteField('');
+	addAutocompleteField('citation');
+	addAutocompleteField('investigator');
+	addAutocompleteField('parameter');
+	addAutocompleteField('method');
+    if(document.forms.portalForm&&document.forms.portalForm.mindate&&document.forms.portalForm.maxdate){
+		addCalendar('cal_mindate','container_mindate','control_mindate');
+		addCalendar('cal_maxdate','container_maxdate','control_maxdate');
+     }
+}
+YAHOO.util.Event.addListener(this,'load',doInit);
+
+/* ]]> */
+</script>
+</head>
+<body id="top" class="win firefox gecko fx27 im-menue-verstecken">
+
+  <img src="files/gfbio/layout/gf_bio_body_bg.jpg" style="width:100%; position:fixed; z-index:-1000;">
+  <div id="header-bg"></div>
+
+  <div id="OwnHeader">
+    
+<div id="Own-Header">
+
+<div class="header-suchfeld" id="header-suchfeld">
+  <form action="data-portal.html" method="GET" name="portalForm" id="header-suchfeld" class="header-suchfeld">
+    <input type="hidden" name="formtype" value="simple" /><label for="acQueryInput_">Find Data</label>
+    <input type="text" name="q_" id="acQueryInput_" class="text" value="" autocomplete="off">
+    <div id="acQueryContainer_" class="acDropdown"></div>
+    <div class="submit_container">
+      <input type="image" src="files/gfbio/layout/lupe.png" class="submit find-lupe" title="Search" alt="Search">
+    </div>
+  </form>
+</div>
+<!-- indexer::stop -->
+
+<div class="ce_pageimages header-page-images block" id="header-page-images">
+
+<figure class="image_container">
+<img src="files/gfbio/layout/header-page-images/header-image-start.png" width="1020" height="320" alt="header-image-start">
+</figure></div>
+
+<!-- indexer::continue -->
+
+
+<a id="logo-gfbio-link" href="/"><img id="logo-gfbio" src="files/gfbio/layout/gfbiologo-transparent.png"></a>
+<!-- indexer::stop -->
+<nav class="mod_customnav header-menue block" id="header-menue">
+
+  
+  <a href="#skipNavigation9" class="invisible">Skip navigation</a>
+
+  
+<ul class="level_1">
+            <li class="active active im-menue-verstecken first"><a href="" title="Home" class=" active active im-menue-verstecken first">Home</a></li>
+                <li class="im-menue-verstecken"><a href="imprint.html" title="Imprint" class="im-menue-verstecken">Imprint</a></li>
+                <li class="im-menue-verstecken last"><a href="contact.html" title="Contact" class="im-menue-verstecken last">Contact</a></li>
+      </ul>
+
+  <a id="skipNavigation9" class="invisible">&nbsp;</a>
+
+</nav>
+<!-- indexer::continue -->
+
+<!-- indexer::stop -->
+<nav class="mod_navigation superfish-menue block" id="superfish-menue">
+
+  
+  <a href="#skipNavigation18" class="invisible">Skip navigation</a>
+
+  
+<ul class="level_1 sf-menu">
+            <li class="active im-menue-verstecken first"><span class="active im-menue-verstecken first">Home</span></li>
+                <li class="submenu sibling"><a href="data-management-wizard.html" title="Create &amp; Manage Data" class="submenu sibling">Create &amp; Manage Data</a>
+<ul class="level_2">
+            <li class="first"><a href="data-management-wizard.html" title="Data Management Wizard" class="first">Data Management Wizard</a></li>
+                <li><a href="data-management-plan.html" title="Data Management Plan">Data Management Plan</a></li>
+                <li><a href="data-and-metadata.html" title="Data &amp; Metadata">Data &amp; Metadata</a></li>
+                <li><a href="costs-and-benefits.html" title="Costs &amp; Benefits">Costs &amp; Benefits</a></li>
+                <li class="last"><a href="more-resources.html" title="More Resources" class="last">More Resources</a></li>
+      </ul>
+</li>
+                <li class="submenu sibling"><a href="publishing-data.html" title="Publish Data" class="submenu sibling">Publish Data</a>
+<ul class="level_2">
+            <li class="first"><a href="submit-data.html" title="Submit Data" class="first">Submit Data</a></li>
+                <li><a href="register-data.html" title="Register Data">Register Data</a></li>
+                <li><a href="publish-data.html" title="Publish Data">Publish Data</a></li>
+                <li class="last"><a href="data-protection-and-licenses.html" title="Data Protaction &amp; Licenses" class="last">Data Protection &amp; Licenses</a></li>
+      </ul>
+</li>
+                <li class="submenu sibling"><a href="data-portal.html" title="Find &amp; Use Data" class="submenu sibling">Find &amp; Use Data</a>
+<ul class="level_2">
+            <li class="data-portal first"><a href="data-portal.html" title="Data Portal" class="data-portal first" rel="nofollow">Data Portal</a></li>
+                <li><a href="tools-support.html" title="Tools &amp; Support">Tools &amp; Support</a></li>
+                <li><a href="cite-data.html" title="Cite Data">Cite Data</a></li>
+                <li class="last"><a href="more-services.html" title="More Services" class="last">More Services</a></li>
+      </ul>
+</li>
+                <li class="sibling"><a href="news-and-events.html" title="News &amp; Events" class="sibling">News &amp; Events</a></li>
+                <li class="submenu im-menue-verstecken sibling"><a href="about.html" title="About" class="submenu im-menue-verstecken sibling">About</a>
+<ul class="level_2">
+            <li class="first"><a href="members.html" title="Members" class="first">Members</a></li>
+                <li><a href="communities-and-networks.html" title="Communities &amp; Networks">Communities &amp; Networks</a></li>
+                <li class="last"><a href="goals-and-objectives.html" title="Goals &amp; Objectives" class="last">Goals &amp; Objectives</a></li>
+      </ul>
+</li>
+                <li class="submenu im-menue-verstecken sibling"><a href="faqs.html" title="Support" class="submenu im-menue-verstecken sibling">Support</a>
+<ul class="level_2">
+            <li class="first last"><a href="faqs.html" title="FAQs" class="first last">FAQs</a></li>
+      </ul>
+</li>
+                <li class="submenu im-menue-verstecken sibling"><a href="best-practices.html" title="Best Practices" class="submenu im-menue-verstecken sibling">Best Practices</a>
+<ul class="level_2">
+            <li class="first"><a href="data-publishing.html" title="Data Publishing" class="first">Data Publishing</a></li>
+                <li class="last"><a href="policies.html" title="Policies" class="last">Policies</a></li>
+      </ul>
+</li>
+                <li class="im-menue-verstecken sibling"><a href="imprint.html" title="Imprint" class="im-menue-verstecken sibling">Imprint</a></li>
+                <li class="im-menue-verstecken sibling last"><a href="contact.html" title="Contact" class="im-menue-verstecken sibling last">Contact</a></li>
+      </ul>
+
+  <a id="skipNavigation18" class="invisible">&nbsp;</a>
+
+</nav>
+<!-- indexer::continue -->
+
+</div>
+  </div>
+
+  <div id="wrapper">
+
+    
+    
+    <div id="container">
+      <div id="main">
+        <div class="inside">
+          
+<div id="menue-toggle-button"></div>
+<!-- indexer::stop -->
+<nav class="mod_navigation rwd-menue block" id="rwd-menue">
+
+  
+  <a href="#skipNavigation13" class="invisible">Skip navigation</a>
+
+  
+<ul class="level_1">
+            <li class="active active im-menue-verstecken first"><a href="" title="Home" class=" active active im-menue-verstecken first">Home</a></li>
+                <li class="submenu sibling"><a href="data-management-wizard.html" title="Create &amp; Manage Data" class="submenu sibling">Create &amp; Manage Data</a>
+<ul class="level_2">
+            <li class="first"><a href="data-management-wizard.html" title="Data Management Wizard" class="first">Data Management Wizard</a></li>
+                <li><a href="data-management-plan.html" title="Data Management Plan">Data Management Plan</a></li>
+                <li><a href="data-and-metadata.html" title="Data &amp; Metadata">Data &amp; Metadata</a></li>
+                <li><a href="costs-and-benefits.html" title="Costs &amp; Benefits">Costs &amp; Benefits</a></li>
+                <li class="last"><a href="more-resources.html" title="More Resources" class="last">More Resources</a></li>
+      </ul>
+</li>
+                <li class="submenu sibling"><a href="publishing-data.html" title="Publish Data" class="submenu sibling">Publish Data</a>
+<ul class="level_2">
+            <li class="first"><a href="submit-data.html" title="Submit Data" class="first">Submit Data</a></li>
+                <li><a href="register-data.html" title="Register Data">Register Data</a></li>
+                <li><a href="publish-data.html" title="Publish Data">Publish Data</a></li>
+                <li class="last"><a href="data-protection-and-licenses.html" title="Data Protaction &amp; Licenses" class="last">Data Protection &amp; Licenses</a></li>
+      </ul>
+</li>
+                <li class="submenu sibling"><a href="data-portal.html" title="Find &amp; Use Data" class="submenu sibling">Find &amp; Use Data</a>
+<ul class="level_2">
+            <li class="data-portal first"><a href="data-portal.html" title="Data Portal" class="data-portal first" rel="nofollow">Data Portal</a></li>
+                <li><a href="tools-support.html" title="Tools &amp; Support">Tools &amp; Support</a></li>
+                <li><a href="cite-data.html" title="Cite Data">Cite Data</a></li>
+                <li class="last"><a href="more-services.html" title="More Services" class="last">More Services</a></li>
+      </ul>
+</li>
+                <li class="sibling"><a href="news-and-events.html" title="News &amp; Events" class="sibling">News &amp; Events</a></li>
+                <li class="submenu im-menue-verstecken sibling"><a href="about.html" title="About" class="submenu im-menue-verstecken sibling">About</a>
+<ul class="level_2">
+            <li class="first"><a href="members.html" title="Members" class="first">Members</a></li>
+                <li><a href="communities-and-networks.html" title="Communities &amp; Networks">Communities &amp; Networks</a></li>
+                <li class="last"><a href="goals-and-objectives.html" title="Goals &amp; Objectives" class="last">Goals &amp; Objectives</a></li>
+      </ul>
+</li>
+                <li class="submenu im-menue-verstecken sibling"><a href="faqs.html" title="Support" class="submenu im-menue-verstecken sibling">Support</a>
+<ul class="level_2">
+            <li class="first last"><a href="faqs.html" title="FAQs" class="first last">FAQs</a></li>
+      </ul>
+</li>
+                <li class="submenu im-menue-verstecken sibling"><a href="best-practices.html" title="Best Practices" class="submenu im-menue-verstecken sibling">Best Practices</a>
+<ul class="level_2">
+            <li class="first"><a href="data-publishing.html" title="Data Publishing" class="first">Data Publishing</a></li>
+                <li class="last"><a href="policies.html" title="Policies" class="last">Policies</a></li>
+      </ul>
+</li>
+                <li class="im-menue-verstecken sibling"><a href="imprint.html" title="Imprint" class="im-menue-verstecken sibling">Imprint</a></li>
+                <li class="im-menue-verstecken sibling last"><a href="contact.html" title="Contact" class="im-menue-verstecken sibling last">Contact</a></li>
+      </ul>
+
+  <a id="skipNavigation13" class="invisible">&nbsp;</a>
+
+</nav>
+<!-- indexer::continue -->
+
+<div class="mod_article block" id="welcome">
+
+  
+  
+<h1 class="ce_headline">
+  Data management services as an  integral part of science</h1>
+
+<div class="ce_text block">
+
+  
+      <p>Environmental and biological research is becoming central to major societal challenges related to the Earth’s ecosystems and climate dynamics.</p>
+<p>To handle the scale and complexity of the scientific questions being addressed, there is a strong need to integrate knowledge because biological data are currently scattered and difficult to share. We propose here a coherent infrastructure to improve scientific data integration and preservation.</p>
+<p>The proposal brings together national key players providing environmentally related biological data and services to develop the ‘German Federation for the Curation of Biological Data’ (GFBio). The overall goal is to provide a sustainable, service oriented, national data infrastructure facilitating data sharing and stimulating data intensive science in the fields of biological and environmental research. The federation will build on proven data archiving infrastructures and workflows such as those of PANGAEA for environmental data and the resources of Germany's major natural history collection data repositories. The new infrastructure will improve and integrate these existing components within a common technological and organizational framework.</p>
+<p>The planned infrastructure will address data management requirements of a large range of stakeholders including individual scientists, natural history collections as well as larger research networks. It will be capable to handle highly interdisciplinary heterogeneous data. Within the current proposal, special consideration will be given to genome data, ecological and environmental data as well as collection related data. Services provided by the GFBio will cover the full life cycle of research data from field or real time data acquisition to long term archiving and publication as well as analysis and re-use of these data.</p>  
+  
+  
+</div>
+
+  
+</div>
+        </div>
+              </div>
+
+      
+              <aside id="right">
+          <div class="inside">
+            
+<!-- indexer::stop -->
+<div class="mod_eventlist news-events-liste block" id="news-events-liste">
+
+      <h2>News &amp; Events</h2>
+  
+  
+<div class="event-block">
+	
+	<div class="kalender-blatt">
+					<div class="header even first">
+			</div>
+				
+		<div class="kalender-tag">
+			<a href="news-and-events-details/rda-third-plenary-meeting.html" title="Read the article: RDA Third Plenary Meeting">
+				26			</a>
+		</div>
+	
+		<div class="kalender-monat">
+			Mar		</div>
+	</div>
+
+
+
+
+<div class="kalender-datum-zeile">
+	<a href="news-and-events-details/rda-third-plenary-meeting.html" title="Read the article: RDA Third Plenary Meeting">
+		Mar 26, 2014	</a>
+</div>
+
+<div class="event layout_teaser upcoming even first last cal_3">
+
+
+    <h2>RDA Third Plenary Meeting</h2>
+
+	<div class="teaser">
+		<p>The 3rd Plenary focuses on the theme ‘The Data Sharing Community: Playing YOUR Part’ and is about exploiting RDA’s work to date to its full potential.&nbsp;</p>	</div>
+
+      <p class="more"><a href="news-and-events-details/rda-third-plenary-meeting.html" title="Read the article: RDA Third Plenary Meeting">Read more … <span class="invisible">RDA Third Plenary Meeting</span></a></p>
+  
+</div>
+</div>
+<div style="clear:both;"></div>
+
+<div class="event-block">
+	
+	<div class="kalender-blatt">
+					<div class="header odd">
+			</div>
+				
+		<div class="kalender-tag">
+			<a href="news-and-events-details/bringing-digital-science-deep-inside-the-scientific-article-the-elsevier-article-of-the-future-project.html" title="Read the article: &quot;Bringing Digital Science Deep Inside the Scientific Article: The Elsevier Article of the Future Project.&quot;">
+				24			</a>
+		</div>
+	
+		<div class="kalender-monat">
+			Jan		</div>
+	</div>
+
+
+
+
+<div class="kalender-datum-zeile">
+	<a href="news-and-events-details/bringing-digital-science-deep-inside-the-scientific-article-the-elsevier-article-of-the-future-project.html" title="Read the article: &quot;Bringing Digital Science Deep Inside the Scientific Article: The Elsevier Article of the Future Project.&quot;">
+		Jan 24, 2014	</a>
+</div>
+
+<div class="event layout_teaser bygone even first last cal_3">
+
+
+    <h2>&quot;Bringing Digital Science Deep Inside the Scientific Article: The Elsevier Article of the Future Project.&quot;</h2>
+
+	<div class="teaser">
+		<p><span>The&nbsp;</span><em>LIBER Quarterly</em><span>&nbsp;has released a future article: "</span>Bringing Digital Science Deep Inside the Scientific Article: The Elsevier Article of the Future Project<span>."&nbsp;</span></p>	</div>
+
+      <p class="more"><a href="news-and-events-details/bringing-digital-science-deep-inside-the-scientific-article-the-elsevier-article-of-the-future-project.html" title="Read the article: &quot;Bringing Digital Science Deep Inside the Scientific Article: The Elsevier Article of the Future Project.&quot;">Read more … <span class="invisible">"Bringing Digital Science Deep Inside the Scientific Article: The Elsevier Article of the Future Project."</span></a></p>
+  
+</div>
+</div>
+<div style="clear:both;"></div>
+
+<div class="event-block">
+	
+	<div class="kalender-blatt">
+					<div class="header even last">
+			</div>
+				
+		<div class="kalender-tag">
+			<a href="news-and-events-details/codata-and-the-geo-data-sharing-working-group.html" title="Read the article: CODATA and the GEO Data Sharing Working Group">
+				13			</a>
+		</div>
+	
+		<div class="kalender-monat">
+			Jan		</div>
+	</div>
+
+
+
+
+<div class="kalender-datum-zeile">
+	<a href="news-and-events-details/codata-and-the-geo-data-sharing-working-group.html" title="Read the article: CODATA and the GEO Data Sharing Working Group">
+		Jan 13, 2014	</a>
+</div>
+
+<div class="event layout_teaser bygone even first last cal_3">
+
+
+    <h2>CODATA and the GEO Data Sharing Working Group</h2>
+
+	<div class="teaser">
+		<p><span>Representatives of more than 80 governments and 100 participating organizations are gathering in Geneva this week to renew their commitment to&nbsp;</span>GEO, the Group on Earth Observations<span>, a voluntary intergovernmental initiative launched in 2005, and to agree on plans for the next decade.&nbsp;</span></p>	</div>
+
+      <p class="more"><a href="news-and-events-details/codata-and-the-geo-data-sharing-working-group.html" title="Read the article: CODATA and the GEO Data Sharing Working Group">Read more … <span class="invisible">CODATA and the GEO Data Sharing Working Group</span></a></p>
+  
+</div>
+</div>
+<div style="clear:both;"></div>
+
+  
+</div>
+<!-- indexer::continue -->
+          </div>
+        </aside>
+          </div>
+
+    
+    
+  </div>
+
+
+  <div id="SubMenueBoxes">
+    
+<div id="Submenue-Boxes">
+
+<div class="submenue-box"><div class="ce_text block">
+
+  
+      <p><a title="About" href="about.html"><img title="gfbio About" src="files/gfbio/layout/submenue-boxes/submenu-box-image-about.png" alt="gfbio About" width="294" height="110"></a></p>
+<p><code><!-- indexer::stop -->
+<nav class="mod_backboneit_navigation_menu mod_navigation block">
+
+<a href="#skipNavigation24" class="invisible">Skip navigation</a>
+<ul class="level_1">
+            <li class="regular leaf first"><a href="members.html" title="Members" class="regular leaf first">Members</a></li>
+                <li class="regular leaf"><a href="communities-and-networks.html" title="Communities &amp; Networks" class="regular leaf">Communities & Networks</a></li>
+                <li class="regular leaf last"><a href="goals-and-objectives.html" title="Goals &amp; Objectives" class="regular leaf last">Goals & Objectives</a></li>
+      </ul> 
+<a name="skipNavigation24" id="skipNavigation24" class="invisible">&nbsp;</a>
+
+</nav>
+<!-- indexer::continue --></code></p>  
+  
+  
+</div>
+</div>
+<div class="submenue-box"><div class="ce_text block">
+
+  
+      <p><a title="Support" href="faqs.html"><img title="gfbio Support" src="files/gfbio/layout/submenue-boxes/submenu-box-image-support.png" alt="gfbio Support" width="288" height="125"></a></p>
+<p><code><!-- indexer::stop -->
+<nav class="mod_backboneit_navigation_menu mod_navigation block">
+
+<a href="#skipNavigation23" class="invisible">Skip navigation</a>
+<ul class="level_1">
+            <li class="regular leaf first last"><a href="faqs.html" title="FAQs" class="regular leaf first last">FAQs</a></li>
+      </ul> 
+<a name="skipNavigation23" id="skipNavigation23" class="invisible">&nbsp;</a>
+
+</nav>
+<!-- indexer::continue --></code></p>  
+  
+  
+</div>
+</div>
+<div class="submenue-box"><div class="ce_text block">
+
+  
+      <p><a title="Best Practices" href="best-practices.html"><img title="gfbio Best Practices" src="files/gfbio/layout/submenue-boxes/submenu-box-image-best-practices.png.png" alt="gfbio Best Practices" width="294" height="110"></a></p>
+<p><code><!-- indexer::stop -->
+<nav class="mod_backboneit_navigation_menu mod_navigation block">
+
+<a href="#skipNavigation22" class="invisible">Skip navigation</a>
+<ul class="level_1">
+            <li class="regular leaf first"><a href="data-publishing.html" title="Data Publishing" class="regular leaf first">Data Publishing</a></li>
+                <li class="regular leaf last"><a href="policies.html" title="Policies" class="regular leaf last">Policies</a></li>
+      </ul> 
+<a name="skipNavigation22" id="skipNavigation22" class="invisible">&nbsp;</a>
+
+</nav>
+<!-- indexer::continue --></code></p>  
+  
+  
+</div>
+</div>
+</div>
+  </div>
+
+  <div id="OurPartners">
+    
+<div id="Our-Partners">
+
+<div id="our-partners-box"><h2 class="ce_headline">
+  Our Partners</h2>
+
+<div class="ce_text partners-list-link block" id="partners-list-link">
+
+  
+      <h3><a title="Members" href="members.html">&gt;&gt; See the complete list</a></h3>  
+  
+  
+</div>
+
+<div class="ce_text partners-logo-bar block" id="partners-logo-bar">
+
+  
+      <p><a title="Members" href="members.html"><img title="Our Partners" src="files/gfbio/layout/our-partners/our-partners-logo-bar.png" alt="Our Partners Logo Bar" width="960" height="100"></a></p>  
+  
+  
+</div>
+</div>
+</div>
+  </div>
+
+  <div id="FullwidthFooter">
+    
+<div id="Fullwidth-Footer">
+
+<div id="footer-content"><div class="ce_text footer-copyright block" id="footer-copyright">
+
+  
+      <p>© 2010-<span>2014 GFBio</span>- All Rights reserved.</p>  
+  
+  
+</div>
+</div>
+</div>
+  </div>
+
+  
+<script src="assets/jquery/ui/1.10.2/jquery-ui.min.js"></script>
+<script>
+  (function($) {
+    $(document).ready(function() {
+      $(document).accordion({
+        // Put custom options here
+        heightStyle: 'content',
+        header: 'div.toggler',
+        collapsible: true
+      });
+      var activate = function(tog) {
+        var tgs = $('div.toggler');
+        tgs.removeClass('active');
+        tog.addClass('active');
+        tgs.next('div.accordion').attr('aria-hidden', 'true');
+        tog.next('div.accordion').attr('aria-hidden', 'false');
+      };
+      $('div.toggler').focus(function(e) {
+        $('div.toggler').attr('tabindex', 0);
+        $(this).attr('tabindex', -1);
+      }).blur(function() {
+        $(this).attr('tabindex', 0);
+      }).click(function() {
+        activate($(this));
+      }).keypress(function(event) {
+        if (event.keyCode == 13) activate($(this));
+      });
+    });
+  })(jQuery);
+</script>
+
+<script src="assets/jquery/colorbox/1.4.11/js/colorbox.min.js"></script>
+<script>
+  (function($) {
+    $(document).ready(function() {
+      $('a[data-lightbox]').map(function() {
+        $(this).colorbox({
+          // Put custom options here
+          loop: false,
+          rel: $(this).attr('data-lightbox'),
+          maxWidth: '95%',
+          maxHeight: '95%'
+        });
+      });
+    });
+  })(jQuery);
+</script>
+
+<script src="assets/jquery/mediaelement/2.11.3/js/mediaelement-and-player.min.js"></script>
+<script>
+  (function($) {
+    $(document).ready(function() {
+      $('video,audio').mediaelementplayer({
+        // Put custom options here
+        pluginPath: '/assets/jquery/mediaelement/2.11.3/',
+        flashName: 'legacy/flashmediaelement.swf',
+        silverlightName: 'legacy/silverlightmediaelement.xap'
+      });
+    });
+  })(jQuery);
+</script>
+
+<script src="assets/swipe/2.0/js/swipe.min.js"></script>
+<script>
+  (function($) {
+    $(document).ready(function() {
+      $('.ce_sliderStart').each(function(i, cte) {
+        var s = $('.content-slider', cte)[0],
+            c = s.getAttribute('data-config').split(',');
+        new Swipe(s, {
+          // Put custom options here
+          'auto': parseInt(c[0]),
+          'speed': parseInt(c[1]),
+          'startSlide': parseInt(c[2]),
+          'continuous': parseInt(c[3]),
+          'menu': $('.slider-control', cte)[0]
+        });
+      });
+    });
+  })(jQuery);
+</script>
+
+<script src="assets/jquery/tablesorter/2.0.5/js/tablesorter.js"></script>
+<script>
+  (function($) {
+    $(document).ready(function() {
+      $('.ce_table .sortable').each(function(i, table) {
+        $(table).tablesorter();
+      });
+    });
+  })(jQuery);
+</script>
+
+<script src="system/modules/superfish/assets/js/hoverIntent.js"></script>
+<script src="system/modules/superfish/assets/js/superfish.js"></script>
+<script src="system/modules/superfish/assets/js/supersubs.js"></script>
+<script>
+                    (function($) { 
+                        $("ul.sf-menu").supersubs({ 
+                                minWidth: 12,
+                                maxWidth: 27,
+                                extraWidth: 1
+                            }).superfish({
+hoverClass: 'sfHover',
+delay: 200,
+animation: {height:'show'},
+animationOut: {height:'hide'},
+speed: 'fast',
+speedOut: 'fast',
+disableHI: true });
+                        })(jQuery);
+                </script>
+
+<script>
+	$('#menue-toggle-button').click
+	(
+		function()
+		{
+			$('div#main nav#rwd-menue').fadeToggle();
+		}
+	);
+
+$(window).resize(function()
+{
+	if($(window).width() > 959)
+	{
+		$('div#main nav#rwd-menue').hide();
+	}// end if
+});
+</script>
+
+  
+</body>
+</html>
