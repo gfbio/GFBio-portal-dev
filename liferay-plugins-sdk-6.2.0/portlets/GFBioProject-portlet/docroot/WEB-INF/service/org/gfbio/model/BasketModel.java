@@ -183,19 +183,19 @@ public interface BasketModel extends BaseModel<Basket> {
 	public Object clone();
 
 	@Override
-	public int compareTo(Basket basket);
+	public int compareTo(org.gfbio.model.Basket basket);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Basket> toCacheModel();
+	public CacheModel<org.gfbio.model.Basket> toCacheModel();
 
 	@Override
-	public Basket toEscapedModel();
+	public org.gfbio.model.Basket toEscapedModel();
 
 	@Override
-	public Basket toUnescapedModel();
+	public org.gfbio.model.Basket toUnescapedModel();
 
 	@Override
 	public String toString();

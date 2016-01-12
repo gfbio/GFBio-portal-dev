@@ -137,19 +137,20 @@ public interface Project_ResearchObjectModel extends BaseModel<Project_ResearchO
 	public Object clone();
 
 	@Override
-	public int compareTo(Project_ResearchObject project_ResearchObject);
+	public int compareTo(
+		org.gfbio.model.Project_ResearchObject project_ResearchObject);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Project_ResearchObject> toCacheModel();
+	public CacheModel<org.gfbio.model.Project_ResearchObject> toCacheModel();
 
 	@Override
-	public Project_ResearchObject toEscapedModel();
+	public org.gfbio.model.Project_ResearchObject toEscapedModel();
 
 	@Override
-	public Project_ResearchObject toUnescapedModel();
+	public org.gfbio.model.Project_ResearchObject toUnescapedModel();
 
 	@Override
 	public String toString();

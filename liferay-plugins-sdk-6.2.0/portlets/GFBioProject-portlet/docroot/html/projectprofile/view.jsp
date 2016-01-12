@@ -278,7 +278,7 @@
 									JSONParser parser = new JSONParser();
 										JSONObject metadata = new JSONObject();
 										try {
-											metadata = (JSONObject) parser.parse(researchObject.getFormatmetadata());
+											metadata = (JSONObject) parser.parse(researchObject.getExtendeddata());
 										} catch (ParseException e1) {
 											e1.printStackTrace();
 										}

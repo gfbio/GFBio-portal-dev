@@ -153,19 +153,19 @@ public interface Project_User_PIModel extends BaseModel<Project_User_PI> {
 	public Object clone();
 
 	@Override
-	public int compareTo(Project_User_PI project_User_PI);
+	public int compareTo(org.gfbio.model.Project_User_PI project_User_PI);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Project_User_PI> toCacheModel();
+	public CacheModel<org.gfbio.model.Project_User_PI> toCacheModel();
 
 	@Override
-	public Project_User_PI toEscapedModel();
+	public org.gfbio.model.Project_User_PI toEscapedModel();
 
 	@Override
-	public Project_User_PI toUnescapedModel();
+	public org.gfbio.model.Project_User_PI toUnescapedModel();
 
 	@Override
 	public String toString();

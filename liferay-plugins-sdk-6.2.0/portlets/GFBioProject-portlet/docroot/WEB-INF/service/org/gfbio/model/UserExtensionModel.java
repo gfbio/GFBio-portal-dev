@@ -107,19 +107,19 @@ public interface UserExtensionModel extends BaseModel<UserExtension> {
 	public Object clone();
 
 	@Override
-	public int compareTo(UserExtension userExtension);
+	public int compareTo(org.gfbio.model.UserExtension userExtension);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UserExtension> toCacheModel();
+	public CacheModel<org.gfbio.model.UserExtension> toCacheModel();
 
 	@Override
-	public UserExtension toEscapedModel();
+	public org.gfbio.model.UserExtension toEscapedModel();
 
 	@Override
-	public UserExtension toUnescapedModel();
+	public org.gfbio.model.UserExtension toUnescapedModel();
 
 	@Override
 	public String toString();
