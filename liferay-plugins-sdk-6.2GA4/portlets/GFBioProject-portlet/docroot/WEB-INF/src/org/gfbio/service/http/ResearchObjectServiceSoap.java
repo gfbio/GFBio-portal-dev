@@ -132,6 +132,34 @@ public class ResearchObjectServiceSoap {
 		}
 	}
 
+	public static java.lang.String getTest(java.lang.String requestJson)
+		throws RemoteException {
+		try {
+			java.lang.String returnValue = ResearchObjectServiceUtil.getTest(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String createTest(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
+		try {
+			java.lang.String returnValue = ResearchObjectServiceUtil.createTest(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static org.json.simple.JSONArray updateResearchObject(
 		java.lang.String requestJson) throws RemoteException {
 		try {

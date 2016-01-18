@@ -96,6 +96,28 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	
 	
 	//
+	@SuppressWarnings("unchecked")
+	public String getTest(String requestJson){
+		String requestString = "test: ".concat(requestJson);
+		JSONArray requestArray = new JSONArray();
+		requestArray.add(requestString);
+		System.out.println("foo".concat(requestJson.toString()));
+		return requestString;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public String createTest(JSONObject requestJson){
+		String requestString = "test: ".concat(requestJson.toString());
+		JSONArray requestArray = new JSONArray();
+		requestArray.add(requestString);
+		System.out.println("foo");
+		return requestString;
+	}
+	
+	
+	//
 	public JSONArray updateResearchObject(String requestJson){
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
