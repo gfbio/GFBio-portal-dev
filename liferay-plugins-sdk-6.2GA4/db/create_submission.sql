@@ -1,3 +1,8 @@
+------------------------------- Submission -----------------------
+
+DROP TABLE IF EXISTS
+     gfbio_submission;
+
 ﻿CREATE TABLE gfbio_submission
 (
   researchobjectid bigint NOT NULL,

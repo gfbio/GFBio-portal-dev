@@ -1,6 +1,7 @@
-
 ------------------------------------- Head  -------------------------------------
 
+DROP TABLE IF EXISTS
+     gfbio_head;
 
 CREATE TABLE gfbio_head
 (

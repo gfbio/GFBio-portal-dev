@@ -1,5 +1,7 @@
 ------------------------------------- Project ------------------------------------- 
-  
+
+DROP TABLE IF EXISTS
+     gfbio_project;
 
 CREATE TABLE gfbio_project
 (

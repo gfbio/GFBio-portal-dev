@@ -1,6 +1,7 @@
-
 ------------------------------------- Data Provider ------------------------------------- 
 
+DROP TABLE IF EXISTS
+     gfbio_dataprovider;
 
 CREATE TABLE gfbio_dataprovider
 (

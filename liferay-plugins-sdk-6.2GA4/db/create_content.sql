@@ -1,7 +1,8 @@
-  
 ------------------------------------- Content  ------------------------------------- 
-  
-  
+
+DROP TABLE IF EXISTS
+     gfbio_content;
+
 CREATE TABLE gfbio_content
 (
   contentid bigint NOT NULL,
