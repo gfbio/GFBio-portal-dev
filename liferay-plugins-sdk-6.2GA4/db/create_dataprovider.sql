@@ -1,7 +1,7 @@
 ------------------------------------- Data Provider ------------------------------------- 
 
 DROP TABLE IF EXISTS
-     gfbio_dataprovider;
+     gfbio_dataprovider CASCADE;
 
 CREATE TABLE gfbio_dataprovider
 (
