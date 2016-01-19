@@ -13,7 +13,7 @@ CREATE TABLE gfbio_dataprovider
   website character(150),
   training text,
   CONSTRAINT gfbio_dataprovider_pkey PRIMARY KEY (dataproviderid),
-  CONSTRAINT gfbio_dataprovider_label_key UNIQUE (label),
+  CONSTRAINT gfbio_dataprovider_label_key UNIQUE (label)
 )
 WITH (
   OIDS=FALSE
