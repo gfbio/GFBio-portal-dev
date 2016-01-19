@@ -1,7 +1,7 @@
 ------------------------------------- Project ------------------------------------- 
 
-DROP TABLE IF EXISTS
-     gfbio_project;
+DROP TABLE IF EXISTS 
+     gfbio_project CASCADE;
 
 CREATE TABLE gfbio_project
 (
