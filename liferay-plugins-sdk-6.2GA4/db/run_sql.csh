@@ -21,7 +21,7 @@ $command create_dataprovider_persistentidentifiert.sql
 
 
 
-$command insert_gfbio_catagory_type.sql
+$command insert_gfbio_category_type.sql
 $command insert_gfbio_category.sql
 $command insert_gfbio_category_dataprovider.sql
 $command insert_gfbio_category_researchfield.sql
