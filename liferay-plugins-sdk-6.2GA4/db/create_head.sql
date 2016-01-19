@@ -1,7 +1,7 @@
 ------------------------------------- Head  -------------------------------------
 
 DROP TABLE IF EXISTS
-     gfbio_head;
+     gfbio_column,gfbio_content,gfbio_head;
 
 CREATE TABLE gfbio_head
 (
