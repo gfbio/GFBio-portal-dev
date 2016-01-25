@@ -1,4 +1,9 @@
-﻿CREATE TABLE gfbio_submission
+------------------------------- Submission -----------------------
+
+DROP TABLE IF EXISTS
+     gfbio_submission CASCADE;
+
+CREATE TABLE gfbio_submission
 (
   researchobjectid bigint NOT NULL,
   researchobjectversion smallint NOT NULL,

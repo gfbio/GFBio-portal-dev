@@ -1,6 +1,7 @@
-
 ------------------------------------- Column   ------------------------------------- 
 
+DROP TABLE IF EXISTS
+     gfbio_column;
 
 CREATE TABLE gfbio_column
 (

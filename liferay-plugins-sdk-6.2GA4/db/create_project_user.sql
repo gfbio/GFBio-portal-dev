@@ -1,6 +1,7 @@
- 
 ------------------------------- Project / User -----------------------
 
+DROP TABLE IF EXISTS
+     gfbio_project_user;
 
 CREATE TABLE gfbio_project_user
 (

@@ -1,6 +1,7 @@
- 
 ------------------------------- Project / Research Object -----------------------
-  
+
+DROP TABLE IF EXISTS
+     gfbio_project_researchobject;
 
 CREATE TABLE gfbio_project_researchobject
 (

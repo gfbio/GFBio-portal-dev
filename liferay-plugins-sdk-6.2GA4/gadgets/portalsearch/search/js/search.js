@@ -805,6 +805,7 @@
 
 					// gets the content of an xml file and returns it in
 					me.fromFile = function (xml, rstr) {
+						console.log('XMLtoJSON-fromFile');
 						// Cretes a instantce of XMLHttpRequest object
 						var xhttp = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 						// sets and sends the request for calling "xml"
@@ -820,6 +821,7 @@
 
 					// returns XML DOM from string with xml content
 					me.fromStr = function (xml, rstr) {
+						console.log('XMLtoJSON-fromStr');
 						// for non IE browsers
 						if (window.DOMParser) {
 							var getxml = new DOMParser();
@@ -839,24 +841,30 @@
 
 					// receives XML DOM object, returns converted JSON object
 					var setJsonObj = function (xml) {
+						//console.log('XMLtoJSON-setJsonObj');
 						var js_obj = {};
-						if (xml.nodeType == 1) {
+						if (xml.nodeType == 1) {// element
 							if (xml.attributes.length > 0) {
-								js_obj["@attributes"] = {};
+								//js_obj["@attributes"] = {};
 								for (var j = 0; j < xml.attributes.length; j++) {
 									var attribute = xml.attributes.item(j);
-									js_obj["@attributes"][attribute.nodeName] = attribute.value;
+									//js_obj["@attributes"][attribute.nodeName] = attribute.value;
+									js_obj[attribute.nodeName] = attribute.value;
+									//console.log('XMLtoJSON-nodeType-element:'+attribute.nodeName+" : "+attribute.value);
 								}
 							}
-						} else if (xml.nodeType == 3) {
+						} else if (xml.nodeType == 3) {// text
 							js_obj = xml.nodeValue;
+							//console.log('XMLtoJSON-nodeType-text:'+xml.nodeValue);
 						}
+						// do children
 						if (xml.hasChildNodes()) {
 							for (var i = 0; i < xml.childNodes.length; i++) {
 								var item = xml.childNodes.item(i);
 								var nodeName = item.nodeName;
 								if (typeof(js_obj[nodeName]) == "undefined") {
-									js_obj[nodeName] = setJsonObj(item);
+									if (nodeName == "#text") js_obj = item.textContent;
+									else js_obj[nodeName] = setJsonObj(item);
 								} else {
 									if (typeof(js_obj[nodeName].push) == "undefined") {
 										var old = js_obj[nodeName];

@@ -1,6 +1,7 @@
-
 ------------------------------- Data Provider / Persistent Identifier -----------------------
- 
+
+DROP TABLE IF EXISTS
+     gfbio_dataprovider_persistentidentifier;
 
 CREATE TABLE gfbio_dataprovider_persistentidentifier
 (

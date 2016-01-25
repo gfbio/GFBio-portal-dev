@@ -1,11 +1,14 @@
 ------------------------------------- Project ------------------------------------- 
-  
+
+DROP TABLE IF EXISTS 
+     gfbio_project CASCADE;
 
 CREATE TABLE gfbio_project
 (
   projectid bigint NOT NULL,
   name varchar(75),
   label varchar(75),
+  extendeddata text,
   description text,
   startdate timestamp without time zone,
   enddate timestamp without time zone,

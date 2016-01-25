@@ -1,4 +1,4 @@
-<style type="text/css">
+
 	#usersTable td{width:150px;font-size: 12px;	font-weight: bold;}
 	#tabTableMenu{width:5500px;}
 	#tabContentMenu{width:5500px;}
@@ -36,9 +36,5 @@
 	.navigator .tabs a {text-decoration:none;floar:left;margin-rigth:5px;border:1px solid #c8c8c8;border-bottom: none;padding:2px 5px;width:150px;text-align:center;display:inline-block;}
 	.navigator .tabs a.active {	color:#000;	border-bottom: 1px solid #ffffff}
 
-	div .section {display: 'none'}
-	div .section .active {display: 'block'}
-
-
-
-</style>
+	div .section {display: none}
+	div .section .active {display: block}
