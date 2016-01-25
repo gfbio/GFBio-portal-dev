@@ -11,7 +11,6 @@
 	<import class="org.gfbio.model.Project" />
 	<import class="org.gfbio.model.Project_ResearchObject" />
 	<import class="org.gfbio.model.Project_User" />
-	<import class="org.gfbio.model.Project_User_PI" />
 	<import class="org.gfbio.model.ResearchObject" />
 	<import class="org.gfbio.model.Submission" />
 	<import class="org.gfbio.model.UserExtension" />
@@ -90,14 +89,7 @@
 			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
-		<property name="startDate" type="org.hibernate.type.TimestampType" />
-		<property name="endDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="org.gfbio.model.impl.Project_User_PIImpl" table="gfbio_Project_User_PI">
-		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_User_PIPK">
-			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		</composite-id>
+		<property name="usertype" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 	</class>

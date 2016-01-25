@@ -11,6 +11,7 @@
 				gfbio_content.headid =? AND
 				gfbio_content.rowid= ? AND
 				gfbio_content.columnid= ?
+			ORDER BY gfbio_content.cellcontent
 		]]>
     </sql>
     
@@ -22,6 +23,7 @@
 	 			public.gfbio_content
 			 WHERE
 	 			public.gfbio_content.contentid =?
+	 		ORDER BY gfbio_content.cellcontent
 		]]>
     </sql>
     
@@ -33,6 +35,7 @@
 			  public.gfbio_content
 			WHERE
 			  gfbio_content.contentid =  ? 
+			ORDER BY gfbio_content.columnid
 		]]>
     </sql>
 
@@ -44,6 +47,7 @@
 				public.gfbio_head,
 				public.gfbio_content
 			WHERE
+				CAST(contentid as text) = cellcontent AND
 				CAST(gfbio_content.rowid AS text) not in (
 				SELECT
 						public.gfbio_content.cellcontent
@@ -70,6 +74,7 @@
 						)AND
 			gfbio_content.headid = gfbio_head.headid AND
 			gfbio_head.table_name =?
+			ORDER BY gfbio_content.contentid
 		]]>
     </sql>
     
@@ -80,6 +85,7 @@
 			FROM 
 				public.gfbio_content
 			WHERE
+				CAST(contentid as text) = cellcontent AND
 				CAST(gfbio_content.rowid AS text)  in (
 					SELECT
 						public.gfbio_content.cellcontent
@@ -113,6 +119,7 @@
 							gfbio_column.column_name = ?
 						)
 				)
+			ORDER BY gfbio_content.contentid
 		]]>
     </sql>
     
@@ -124,6 +131,7 @@
 			  public.gfbio_content
 			WHERE
 			  rowId = ?
+			ORDER BY gfbio_content.columnid
 		]]>
     </sql>
            
@@ -135,6 +143,7 @@
 			  public.gfbio_content
 			WHERE
 			  contentId = ?
+			ORDER BY gfbio_content.headid
 		]]>
     </sql>
         
@@ -146,6 +155,7 @@
 				public.gfbio_content
 			WHERE 
 				gfbio_content.headid = ? 
+			ORDER BY gfbio_content.rowid
 		]]>
     </sql>
     
@@ -167,6 +177,7 @@
 						column_name = ?
 				) = gfbio_content.columnid AND
 				cellcontent = ?
+			ORDER BY gfbio_content.rowid
 		]]>
     </sql>
     
@@ -178,23 +189,26 @@
 				public.gfbio_content
 			WHERE
 				contentid=?
+			ORDER BY gfbio_content.rowid
 		]]>
     </sql>
     
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdOfRelation">
 	    <![CDATA[
-			Select rowid 
-			From 
+			SELECT
+				rowid 
+			FROM 
 			  public.gfbio_content
-			where
+			WHERE
 				rowid in (
 					SELECT 
 				  		rowid 
 					FROM 
 						public.gfbio_content
-					where
-						cellcontent = ?)	AND
-				cellcontent = ?
+					WHERE
+						cellcontent = ?)
+				AND	cellcontent = ?
+			ORDER BY gfbio_content.rowid
 		]]>
     </sql>
     

@@ -114,25 +114,25 @@ public class Project_ResearchObjectLocalServiceClpInvoker {
 				"org.gfbio.model.Project_ResearchObject"
 			};
 
-		_methodName122 = "getBeanIdentifier";
+		_methodName116 = "getBeanIdentifier";
 
-		_methodParameterTypes122 = new String[] {  };
+		_methodParameterTypes116 = new String[] {  };
 
-		_methodName123 = "setBeanIdentifier";
+		_methodName117 = "setBeanIdentifier";
 
-		_methodParameterTypes123 = new String[] { "java.lang.String" };
+		_methodParameterTypes117 = new String[] { "java.lang.String" };
 
-		_methodName128 = "getProjectIDList";
+		_methodName122 = "getProjectIDList";
 
-		_methodParameterTypes128 = new String[] { "long" };
+		_methodParameterTypes122 = new String[] { "long" };
 
-		_methodName129 = "getResearchObjectsByProjectId";
+		_methodName123 = "getResearchObjectsByProjectId";
 
-		_methodParameterTypes129 = new String[] { "long" };
+		_methodParameterTypes123 = new String[] { "long" };
 
-		_methodName130 = "updateProjectResearchObject";
+		_methodName124 = "updateProjectResearchObject";
 
-		_methodParameterTypes130 = new String[] { "long", "long", "int" };
+		_methodParameterTypes124 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -224,30 +224,30 @@ public class Project_ResearchObjectLocalServiceClpInvoker {
 			return Project_ResearchObjectLocalServiceUtil.updateProject_ResearchObject((org.gfbio.model.Project_ResearchObject)arguments[0]);
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			Project_ResearchObjectLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.getProjectIDList(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
@@ -288,14 +288,14 @@ public class Project_ResearchObjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName116;
+	private String[] _methodParameterTypes116;
+	private String _methodName117;
+	private String[] _methodParameterTypes117;
 	private String _methodName122;
 	private String[] _methodParameterTypes122;
 	private String _methodName123;
 	private String[] _methodParameterTypes123;
-	private String _methodName128;
-	private String[] _methodParameterTypes128;
-	private String _methodName129;
-	private String[] _methodParameterTypes129;
-	private String _methodName130;
-	private String[] _methodParameterTypes130;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
 }

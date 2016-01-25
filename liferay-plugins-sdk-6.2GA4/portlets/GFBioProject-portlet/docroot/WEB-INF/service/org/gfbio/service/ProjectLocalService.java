@@ -283,10 +283,35 @@ public interface ProjectLocalService extends BaseLocalService,
 	public org.json.simple.JSONArray constructProjectsAsJson(
 		java.util.List<org.gfbio.model.Project> projectList);
 
+	public org.json.simple.JSONObject createProjectByJson(
+		org.json.simple.JSONObject requestJson);
+
+	public long createProject(long userId, java.lang.String name,
+		java.lang.String label, java.lang.String description)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public long updateProject(long projectId, java.lang.String name,
+		java.lang.String label, java.lang.String description);
+
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.lang.String extendedData,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.Boolean updateEndDate(long projectId,
+		java.util.Date endDate);
+
+	public java.lang.Boolean updateExtendedData(long projectId,
+		java.lang.String extendedData);
+
+	public java.lang.Boolean updateParentProjectByIds(long projectId,
+		long parentProjectId);
+
+	public java.lang.Boolean updateStartDate(long projectId,
+		java.util.Date startDate);
+
+	public java.lang.Boolean updateStatus(long projectId,
+		java.lang.String status);
 }

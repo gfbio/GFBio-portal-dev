@@ -8,5 +8,6 @@
 		<portlet id="project-profile"></portlet>
 		<portlet id="table-builder"></portlet>
 		<portlet id="dcst"></portlet>
+		<portlet id="new-project"></portlet>
 	</category>
 </display>

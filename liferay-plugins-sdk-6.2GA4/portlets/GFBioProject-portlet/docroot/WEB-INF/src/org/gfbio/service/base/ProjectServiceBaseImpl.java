@@ -40,7 +40,6 @@ import org.gfbio.service.persistence.ProjectPersistence;
 import org.gfbio.service.persistence.Project_ResearchObjectFinder;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
 import org.gfbio.service.persistence.Project_UserPersistence;
-import org.gfbio.service.persistence.Project_User_PIPersistence;
 import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
 import org.gfbio.service.persistence.SubmissionFinder;
@@ -685,63 +684,6 @@ public abstract class ProjectServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the project_ user_ p i local service.
-	 *
-	 * @return the project_ user_ p i local service
-	 */
-	public org.gfbio.service.Project_User_PILocalService getProject_User_PILocalService() {
-		return project_User_PILocalService;
-	}
-
-	/**
-	 * Sets the project_ user_ p i local service.
-	 *
-	 * @param project_User_PILocalService the project_ user_ p i local service
-	 */
-	public void setProject_User_PILocalService(
-		org.gfbio.service.Project_User_PILocalService project_User_PILocalService) {
-		this.project_User_PILocalService = project_User_PILocalService;
-	}
-
-	/**
-	 * Returns the project_ user_ p i remote service.
-	 *
-	 * @return the project_ user_ p i remote service
-	 */
-	public org.gfbio.service.Project_User_PIService getProject_User_PIService() {
-		return project_User_PIService;
-	}
-
-	/**
-	 * Sets the project_ user_ p i remote service.
-	 *
-	 * @param project_User_PIService the project_ user_ p i remote service
-	 */
-	public void setProject_User_PIService(
-		org.gfbio.service.Project_User_PIService project_User_PIService) {
-		this.project_User_PIService = project_User_PIService;
-	}
-
-	/**
-	 * Returns the project_ user_ p i persistence.
-	 *
-	 * @return the project_ user_ p i persistence
-	 */
-	public Project_User_PIPersistence getProject_User_PIPersistence() {
-		return project_User_PIPersistence;
-	}
-
-	/**
-	 * Sets the project_ user_ p i persistence.
-	 *
-	 * @param project_User_PIPersistence the project_ user_ p i persistence
-	 */
-	public void setProject_User_PIPersistence(
-		Project_User_PIPersistence project_User_PIPersistence) {
-		this.project_User_PIPersistence = project_User_PIPersistence;
-	}
-
-	/**
 	 * Returns the research object local service.
 	 *
 	 * @return the research object local service
@@ -1186,12 +1128,6 @@ public abstract class ProjectServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.Project_UserService project_UserService;
 	@BeanReference(type = Project_UserPersistence.class)
 	protected Project_UserPersistence project_UserPersistence;
-	@BeanReference(type = org.gfbio.service.Project_User_PILocalService.class)
-	protected org.gfbio.service.Project_User_PILocalService project_User_PILocalService;
-	@BeanReference(type = org.gfbio.service.Project_User_PIService.class)
-	protected org.gfbio.service.Project_User_PIService project_User_PIService;
-	@BeanReference(type = Project_User_PIPersistence.class)
-	protected Project_User_PIPersistence project_User_PIPersistence;
 	@BeanReference(type = org.gfbio.service.ResearchObjectLocalService.class)
 	protected org.gfbio.service.ResearchObjectLocalService researchObjectLocalService;
 	@BeanReference(type = org.gfbio.service.ResearchObjectService.class)

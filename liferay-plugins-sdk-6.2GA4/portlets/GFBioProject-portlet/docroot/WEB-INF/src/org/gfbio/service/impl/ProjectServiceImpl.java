@@ -74,9 +74,12 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	
 
 	//
-/*	public long updateProject(long projectID, long userID, String name, String label, String description, Date startDate, Date endDate, String status) throws SystemException {
-		return ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, startDate, endDate, status);
-	}*/
+	public JSONObject createProject(JSONObject requestJson) {
+
+		JSONObject responseJson = new JSONObject();
+		responseJson = ProjectLocalServiceUtil.createProjectByJson(requestJson);
+		return responseJson;
+	}
 	
 
 }

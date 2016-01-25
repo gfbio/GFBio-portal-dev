@@ -6,8 +6,9 @@ CREATE TABLE gfbio_project_user
 (
   projectId bigint NOT NULL,
   userId bigint NOT NULL,
-  startdate timestamp without time zone,
-  enddate timestamp without time zone,
+  startdate timestamp with time zone,
+  enddate timestamp with time zone,
+  usertype character(40) NOT NULL,
   CONSTRAINT gfbio_project_user_pkey PRIMARY KEY (projectId, userId),
   CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectId)
       REFERENCES gfbio_project (projectId) MATCH SIMPLE
@@ -18,3 +19,4 @@ WITH (
 );
 ALTER TABLE gfbio_project_user
   OWNER TO liferay_gfbio;
+ 

@@ -114,25 +114,25 @@ public class DataProvider_PersistentIdentifierLocalServiceClpInvoker {
 				"org.gfbio.model.DataProvider_PersistentIdentifier"
 			};
 
-		_methodName122 = "getBeanIdentifier";
+		_methodName116 = "getBeanIdentifier";
 
-		_methodParameterTypes122 = new String[] {  };
+		_methodParameterTypes116 = new String[] {  };
 
-		_methodName123 = "setBeanIdentifier";
+		_methodName117 = "setBeanIdentifier";
 
-		_methodParameterTypes123 = new String[] { "java.lang.String" };
+		_methodParameterTypes117 = new String[] { "java.lang.String" };
 
-		_methodName128 = "getDataProviderIds";
+		_methodName122 = "getDataProviderIds";
 
-		_methodParameterTypes128 = new String[] { "long" };
+		_methodParameterTypes122 = new String[] { "long" };
 
-		_methodName129 = "getPersistentIdentiferIds";
+		_methodName123 = "getPersistentIdentiferIds";
 
-		_methodParameterTypes129 = new String[] { "long" };
+		_methodParameterTypes123 = new String[] { "long" };
 
-		_methodName130 = "updateDataProvider_PersistentIdentifier";
+		_methodName124 = "updateDataProvider_PersistentIdentifier";
 
-		_methodParameterTypes130 = new String[] { "long", "long" };
+		_methodParameterTypes124 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -224,30 +224,30 @@ public class DataProvider_PersistentIdentifierLocalServiceClpInvoker {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.updateDataProvider_PersistentIdentifier((org.gfbio.model.DataProvider_PersistentIdentifier)arguments[0]);
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			DataProvider_PersistentIdentifierLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.getDataProviderIds(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.getPersistentIdentiferIds(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.updateDataProvider_PersistentIdentifier(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
@@ -287,14 +287,14 @@ public class DataProvider_PersistentIdentifierLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
+	private String _methodName116;
+	private String[] _methodParameterTypes116;
+	private String _methodName117;
+	private String[] _methodParameterTypes117;
 	private String _methodName122;
 	private String[] _methodParameterTypes122;
 	private String _methodName123;
 	private String[] _methodParameterTypes123;
-	private String _methodName128;
-	private String[] _methodParameterTypes128;
-	private String _methodName129;
-	private String[] _methodParameterTypes129;
-	private String _methodName130;
-	private String[] _methodParameterTypes130;
+	private String _methodName124;
+	private String[] _methodParameterTypes124;
 }

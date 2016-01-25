@@ -275,9 +275,9 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONArray getResearchObjectASJsonById(
+	public static org.json.simple.JSONArray getResearchObjectAsJsonById(
 		org.json.simple.JSONArray requestJson) {
-		return getService().getResearchObjectASJsonById(requestJson);
+		return getService().getResearchObjectAsJsonById(requestJson);
 	}
 
 	public static org.json.simple.JSONObject getResearchObjectASJsonById(

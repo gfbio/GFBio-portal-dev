@@ -409,15 +409,15 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 					else
 						check = updateIsPublic(researchObjectId, researchObjectVersion, archive, false);
 					
-					if (requestJson.containsKey("publicafter")){
-						if (((String) requestJson.get("publicafter")).substring(4, 4).equals("-"))
+					
+					if (requestJson.containsKey("publicafter"))
+						if (requestJson.get("publicafter").getClass().toString().equals("class java.lang.String"))
 							try {
-								DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+								DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
 								check = updatePublicAfter(researchObjectId, researchObjectVersion, archive, dateFormat.parse((String) requestJson.get("publicafter")));	
 							} catch (ParseException e) {e.printStackTrace();}
 						else
 							check = updatePublicAfter(researchObjectId, researchObjectVersion, archive, new Date ((long) requestJson.get("publicafter")));
-					}
 					
 					if (check){
 						keyJson.put("researchobjectid", researchObjectId);

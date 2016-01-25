@@ -149,7 +149,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			content = contentPersistence.findByContentId(contentId);
 		} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 		if (content != null)
-			json = ContentLocalServiceUtil.constructColumnJson(content.getContentID(), content.getHeadID(), content.getColumnID(), content.getRowID(), content.getCellContent());
+			json = constructContentJson(content.getContentID(), content.getHeadID(), content.getColumnID(), content.getRowID(), content.getCellContent());
 		return json;
 	}
 	
@@ -285,9 +285,9 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
 	
-	//build a column entry to a JSON
+	//build a content entry to a JSON
 	@SuppressWarnings("unchecked")
-	public JSONObject constructColumnJson(long contentId, long headId, long columnId, long rowId, String cellContent){
+	public JSONObject constructContentJson(long contentId, long headId, long columnId, long rowId, String cellContent){
 		JSONObject json = new JSONObject();
 		json.put("contentid", contentId);
 		json.put("headid", headId);

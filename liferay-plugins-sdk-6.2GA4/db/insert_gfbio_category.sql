@@ -381,7 +381,7 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('271','1','1','91','271');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('272','1','2','91','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('273','1','3','91','Tissue collection');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1365','1','22','1','');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1365','1','22','91','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('274','1','1','92','274');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('275','1','2','92','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('276','1','3','92','Trait data');

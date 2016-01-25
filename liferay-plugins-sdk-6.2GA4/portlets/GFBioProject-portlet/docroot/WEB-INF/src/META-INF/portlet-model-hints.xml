@@ -58,12 +58,7 @@
 	<model name="org.gfbio.model.Project_User">
 		<field name="projectID" type="long" />
 		<field name="userID" type="long" />
-		<field name="startDate" type="Date" />
-		<field name="endDate" type="Date" />
-	</model>
-	<model name="org.gfbio.model.Project_User_PI">
-		<field name="projectID" type="long" />
-		<field name="userID" type="long" />
+		<field name="usertype" type="String" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 	</model>

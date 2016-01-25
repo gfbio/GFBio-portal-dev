@@ -258,8 +258,10 @@ public interface Project_UserLocalService extends BaseLocalService,
 	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
 		long userID);
 
-	public long updateProjectUser(long projectID, long userID,
-		java.util.Date startDate, java.util.Date endDate)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchProject_UserException;
+	public java.lang.Boolean updateProjectUser(long projectId, long userId,
+		java.lang.String userType);
+
+	public java.lang.Boolean updateProjectUser(long projectID, long userID,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String userType);
 }

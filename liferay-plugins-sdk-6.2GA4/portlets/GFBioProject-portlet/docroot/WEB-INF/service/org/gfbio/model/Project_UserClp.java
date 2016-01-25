@@ -78,6 +78,7 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("userID", getUserID());
+		attributes.put("usertype", getUsertype());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 
@@ -96,6 +97,12 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 		if (userID != null) {
 			setUserID(userID);
+		}
+
+		String usertype = (String)attributes.get("usertype");
+
+		if (usertype != null) {
+			setUsertype(usertype);
 		}
 
 		Date startDate = (Date)attributes.get("startDate");
@@ -150,6 +157,29 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 				Method method = clazz.getMethod("setUserID", long.class);
 
 				method.invoke(_project_UserRemoteModel, userID);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getUsertype() {
+		return _usertype;
+	}
+
+	@Override
+	public void setUsertype(String usertype) {
+		_usertype = usertype;
+
+		if (_project_UserRemoteModel != null) {
+			try {
+				Class<?> clazz = _project_UserRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUsertype", String.class);
+
+				method.invoke(_project_UserRemoteModel, usertype);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -274,6 +304,7 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 		clone.setProjectID(getProjectID());
 		clone.setUserID(getUserID());
+		clone.setUsertype(getUsertype());
 		clone.setStartDate(getStartDate());
 		clone.setEndDate(getEndDate());
 
@@ -320,12 +351,14 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
 		sb.append(", userID=");
 		sb.append(getUserID());
+		sb.append(", usertype=");
+		sb.append(getUsertype());
 		sb.append(", startDate=");
 		sb.append(getStartDate());
 		sb.append(", endDate=");
@@ -337,7 +370,7 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project_User");
@@ -350,6 +383,10 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 		sb.append(
 			"<column><column-name>userID</column-name><column-value><![CDATA[");
 		sb.append(getUserID());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>usertype</column-name><column-value><![CDATA[");
+		sb.append(getUsertype());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>startDate</column-name><column-value><![CDATA[");
@@ -367,6 +404,7 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 	private long _projectID;
 	private long _userID;
+	private String _usertype;
 	private Date _startDate;
 	private Date _endDate;
 	private BaseModel<?> _project_UserRemoteModel;

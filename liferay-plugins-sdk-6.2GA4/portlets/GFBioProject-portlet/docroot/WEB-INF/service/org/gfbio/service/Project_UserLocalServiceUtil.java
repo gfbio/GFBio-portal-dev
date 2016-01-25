@@ -280,12 +280,17 @@ public class Project_UserLocalServiceUtil {
 		return getService().getProjectIDList(userID);
 	}
 
-	public static long updateProjectUser(long projectID, long userID,
-		java.util.Date startDate, java.util.Date endDate)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			org.gfbio.NoSuchProject_UserException {
+	public static java.lang.Boolean updateProjectUser(long projectId,
+		long userId, java.lang.String userType) {
+		return getService().updateProjectUser(projectId, userId, userType);
+	}
+
+	public static java.lang.Boolean updateProjectUser(long projectID,
+		long userID, java.util.Date startDate, java.util.Date endDate,
+		java.lang.String userType) {
 		return getService()
-				   .updateProjectUser(projectID, userID, startDate, endDate);
+				   .updateProjectUser(projectID, userID, startDate, endDate,
+			userType);
 	}
 
 	public static void clearService() {

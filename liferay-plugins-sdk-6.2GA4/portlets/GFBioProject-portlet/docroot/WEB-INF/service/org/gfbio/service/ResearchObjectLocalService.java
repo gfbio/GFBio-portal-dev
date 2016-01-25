@@ -255,7 +255,7 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getResearchObjectASJsonById(
+	public org.json.simple.JSONArray getResearchObjectAsJsonById(
 		org.json.simple.JSONArray requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

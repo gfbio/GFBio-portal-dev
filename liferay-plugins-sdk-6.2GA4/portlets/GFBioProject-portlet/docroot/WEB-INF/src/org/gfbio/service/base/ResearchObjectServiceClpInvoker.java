@@ -24,122 +24,122 @@ import java.util.Arrays;
  */
 public class ResearchObjectServiceClpInvoker {
 	public ResearchObjectServiceClpInvoker() {
-		_methodName106 = "getBeanIdentifier";
+		_methodName100 = "getBeanIdentifier";
 
-		_methodParameterTypes106 = new String[] {  };
+		_methodParameterTypes100 = new String[] {  };
 
-		_methodName107 = "setBeanIdentifier";
+		_methodName101 = "setBeanIdentifier";
+
+		_methodParameterTypes101 = new String[] { "java.lang.String" };
+
+		_methodName106 = "getResearchObjectAbsolutParent";
+
+		_methodParameterTypes106 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName107 = "getResearchObjectById";
 
 		_methodParameterTypes107 = new String[] { "java.lang.String" };
 
-		_methodName112 = "getResearchObjectAbsolutParent";
+		_methodName108 = "getResearchObjectParent";
+
+		_methodParameterTypes108 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName109 = "getResearchObjectsByParent";
+
+		_methodParameterTypes109 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName110 = "createResearchObject";
+
+		_methodParameterTypes110 = new String[] { "java.lang.String" };
+
+		_methodName111 = "getTest";
+
+		_methodParameterTypes111 = new String[] { "java.lang.String" };
+
+		_methodName112 = "createTest";
 
 		_methodParameterTypes112 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName113 = "getResearchObjectById";
+		_methodName113 = "updateResearchObject";
 
 		_methodParameterTypes113 = new String[] { "java.lang.String" };
-
-		_methodName114 = "getResearchObjectParent";
-
-		_methodParameterTypes114 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName115 = "getResearchObjectsByParent";
-
-		_methodParameterTypes115 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName116 = "createResearchObject";
-
-		_methodParameterTypes116 = new String[] { "java.lang.String" };
-
-		_methodName117 = "getTest";
-
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
-
-		_methodName118 = "createTest";
-
-		_methodParameterTypes118 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName119 = "updateResearchObject";
-
-		_methodParameterTypes119 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName106.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
+		if (_methodName100.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
 			return ResearchObjectServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName107.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
+		if (_methodName101.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
 			ResearchObjectServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
+		if (_methodName106.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
+			return ResearchObjectServiceUtil.getResearchObjectAbsolutParent((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName107.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
+			return ResearchObjectServiceUtil.getResearchObjectById((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName108.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
+			return ResearchObjectServiceUtil.getResearchObjectParent((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName109.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
+			return ResearchObjectServiceUtil.getResearchObjectsByParent((org.json.simple.JSONObject)arguments[0]);
+		}
+
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+			return ResearchObjectServiceUtil.createResearchObject((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+			return ResearchObjectServiceUtil.getTest((java.lang.String)arguments[0]);
+		}
+
 		if (_methodName112.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
-			return ResearchObjectServiceUtil.getResearchObjectAbsolutParent((org.json.simple.JSONObject)arguments[0]);
+			return ResearchObjectServiceUtil.createTest((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName113.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
-			return ResearchObjectServiceUtil.getResearchObjectById((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName114.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
-			return ResearchObjectServiceUtil.getResearchObjectParent((org.json.simple.JSONObject)arguments[0]);
-		}
-
-		if (_methodName115.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
-			return ResearchObjectServiceUtil.getResearchObjectsByParent((org.json.simple.JSONObject)arguments[0]);
-		}
-
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
-			return ResearchObjectServiceUtil.createResearchObject((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
-			return ResearchObjectServiceUtil.getTest((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
-			return ResearchObjectServiceUtil.createTest((org.json.simple.JSONObject)arguments[0]);
-		}
-
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return ResearchObjectServiceUtil.updateResearchObject((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
+	private String _methodName100;
+	private String[] _methodParameterTypes100;
+	private String _methodName101;
+	private String[] _methodParameterTypes101;
 	private String _methodName106;
 	private String[] _methodParameterTypes106;
 	private String _methodName107;
 	private String[] _methodParameterTypes107;
+	private String _methodName108;
+	private String[] _methodParameterTypes108;
+	private String _methodName109;
+	private String[] _methodParameterTypes109;
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
 	private String _methodName112;
 	private String[] _methodParameterTypes112;
 	private String _methodName113;
 	private String[] _methodParameterTypes113;
-	private String _methodName114;
-	private String[] _methodParameterTypes114;
-	private String _methodName115;
-	private String[] _methodParameterTypes115;
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName118;
-	private String[] _methodParameterTypes118;
-	private String _methodName119;
-	private String[] _methodParameterTypes119;
 }

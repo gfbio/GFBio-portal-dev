@@ -26,6 +26,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
+
 public class TableBuilder extends GenericPortlet {
 	
 	
@@ -51,6 +52,21 @@ public class TableBuilder extends GenericPortlet {
 
 	//
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
+		
+		
+/*		Boolean check;
+		check = HeadLocalServiceUtil.updateParentRelationTable(0, "gfbio_type");
+		System.out.println(check);*/
+		
+		
+/*		long headId = 1;
+		long contentId1 = 1;
+		long contentId2 = 40;
+		
+		HeadLocalServiceUtil.updateParentRelationTableWithContent(headId, contentId1, contentId2);
+		
+		*/
+	
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 
@@ -99,6 +115,7 @@ public class TableBuilder extends GenericPortlet {
 			if ("deleteRelationContent".toString().equals(request.getParameter("responseTarget").toString()))
 				deleteRelationContent(request, response);
 			
+
 			//new Table
 			if ("newTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateTable(request, response);		
@@ -107,9 +124,17 @@ public class TableBuilder extends GenericPortlet {
 			if ("relationTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateRelationTable(request, response);
 			
+			//new Relationship between tables
+			if ("parentRelationTable".toString().equals(request.getParameter("responseTarget").toString()))
+				updateParentRelationTable(request, response);
+			
 			//new Relationship between contents
 			if ("relationContent".toString().equals(request.getParameter("responseTarget").toString()))
 				updateRelationContent(request, response);
+			
+			//new Relationship between contents
+			if ("parentRelationContent".toString().equals(request.getParameter("responseTarget").toString()))
+				updateParentRelationContent(request, response);
 			
 			//new Content of a Table
 			if ("updateContent".toString().equals(request.getParameter("responseTarget").toString())) 
@@ -251,6 +276,45 @@ public class TableBuilder extends GenericPortlet {
 		
 		Boolean check = false;
 		check = HeadLocalServiceUtil.updateHeadWithColumns(json);
+	}
+	
+	
+	//update a entry in relation table in content
+	public Boolean updateParentRelationContent(ResourceRequest request, ResourceResponse response){
+		
+		JSONParser parser = new JSONParser();
+		JSONObject json = new JSONObject();
+		
+		try {
+			json = (JSONObject) parser.parse(request.getParameter("data"));
+		} catch (ParseException e1) {e1.printStackTrace();}
+		
+		long headId=0;
+		try {
+			headId = HeadLocalServiceUtil.getHeadIdByTableName((String) json.get("tablename"));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+		long contentId1 = ContentLocalServiceUtil.getFirstContentIdByRowId((long) json.get("rowid"));
+		long contentId2 = Long.valueOf((String) json.get("contentid"));
+		
+		return HeadLocalServiceUtil.updateParentRelationTableWithContent(headId, contentId1, contentId2);
+		
+	}
+	
+	
+	//update head and columns in context of a relation table
+	@SuppressWarnings("unused")
+	public void updateParentRelationTable(ResourceRequest request, ResourceResponse response)  {
+	
+		JSONParser parser = new JSONParser();
+		JSONObject json = new JSONObject();
+
+		try {
+			json = (JSONObject) parser.parse(request.getParameter("data"));
+		} catch (ParseException e1) {e1.printStackTrace();}
+		
+		Boolean check;
+		check = HeadLocalServiceUtil.updateParentRelationTable(0, (String) json.get("tablename"));
 	}
 	
 	

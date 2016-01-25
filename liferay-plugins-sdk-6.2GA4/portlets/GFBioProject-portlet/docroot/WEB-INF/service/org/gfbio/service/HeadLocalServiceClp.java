@@ -196,19 +196,27 @@ public class HeadLocalServiceClp implements HeadLocalService {
 
 		_methodParameterTypes38 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName39 = "updateRelationTable";
+		_methodName39 = "updateParentRelationTable";
 
-		_methodParameterTypes39 = new String[] {
+		_methodParameterTypes39 = new String[] { "long", "java.lang.String" };
+
+		_methodName40 = "updateParentRelationTableWithContent";
+
+		_methodParameterTypes40 = new String[] { "long", "long", "long" };
+
+		_methodName41 = "updateRelationTable";
+
+		_methodParameterTypes41 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName40 = "updateRelationTableWithContent";
+		_methodName42 = "updateRelationTableWithContent";
 
-		_methodParameterTypes40 = new String[] { "long", "long", "long", "long" };
+		_methodParameterTypes42 = new String[] { "long", "long", "long", "long" };
 
-		_methodName41 = "updateTable";
+		_methodName43 = "updateTable";
 
-		_methodParameterTypes41 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes43 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -1284,13 +1292,64 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	}
 
 	@Override
-	public java.lang.Boolean updateRelationTable(long headId,
-		java.lang.String mtable, java.lang.String ntable) {
+	public java.lang.Boolean updateParentRelationTable(long headId,
+		java.lang.String tableName) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName39,
 					_methodParameterTypes39,
+					new Object[] { headId, ClpSerializer.translateInput(
+							tableName) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateParentRelationTableWithContent(
+		long headIdOfColumn, long contentId1, long contentId2) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
+					new Object[] { headIdOfColumn, contentId1, contentId2 });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateRelationTable(long headId,
+		java.lang.String mtable, java.lang.String ntable) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
 					new Object[] {
 						headId,
 						
@@ -1320,8 +1379,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] { headId1, headId2, contentId1, contentId2 });
 		}
 		catch (Throwable t) {
@@ -1344,8 +1403,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] { ClpSerializer.translateInput(json) });
 		}
 		catch (Throwable t) {
@@ -1446,4 +1505,8 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	private String[] _methodParameterTypes40;
 	private String _methodName41;
 	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
 }

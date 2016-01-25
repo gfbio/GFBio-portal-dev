@@ -311,6 +311,12 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 	public java.lang.Boolean updateHeadWithColumns2(
 		org.json.simple.JSONObject json);
 
+	public java.lang.Boolean updateParentRelationTable(long headId,
+		java.lang.String tableName);
+
+	public java.lang.Boolean updateParentRelationTableWithContent(
+		long headIdOfColumn, long contentId1, long contentId2);
+
 	public java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable);
 

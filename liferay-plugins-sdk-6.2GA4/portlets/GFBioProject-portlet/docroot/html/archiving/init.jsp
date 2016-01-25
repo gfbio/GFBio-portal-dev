@@ -111,7 +111,8 @@ page import="com.liferay.portal.util.PortalUtil" %>
 	
 	//
 	function ajaxRequest(archivingURL, method, data, as) {
-		$.ajax({
+		console.log("ajaxRequest: "+archivingURL+" | "+ method+" | "+JSON.stringify(data)+" | "+as);
+ 		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
 			"data" : {
@@ -177,6 +178,16 @@ page import="com.liferay.portal.util.PortalUtil" %>
 			}
 		});
 	}
+	
+	
+
+ 	
+	
+
+
+
+
+	
 
 
 </script>

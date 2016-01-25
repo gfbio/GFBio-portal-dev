@@ -52,6 +52,7 @@ public class Project_UserWrapper implements Project_User,
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("userID", getUserID());
+		attributes.put("usertype", getUsertype());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 
@@ -70,6 +71,12 @@ public class Project_UserWrapper implements Project_User,
 
 		if (userID != null) {
 			setUserID(userID);
+		}
+
+		String usertype = (String)attributes.get("usertype");
+
+		if (usertype != null) {
+			setUsertype(usertype);
 		}
 
 		Date startDate = (Date)attributes.get("startDate");
@@ -144,6 +151,26 @@ public class Project_UserWrapper implements Project_User,
 	@Override
 	public void setUserID(long userID) {
 		_project_User.setUserID(userID);
+	}
+
+	/**
+	* Returns the usertype of this project_ user.
+	*
+	* @return the usertype of this project_ user
+	*/
+	@Override
+	public java.lang.String getUsertype() {
+		return _project_User.getUsertype();
+	}
+
+	/**
+	* Sets the usertype of this project_ user.
+	*
+	* @param usertype the usertype of this project_ user
+	*/
+	@Override
+	public void setUsertype(java.lang.String usertype) {
+		_project_User.setUsertype(usertype);
 	}
 
 	/**

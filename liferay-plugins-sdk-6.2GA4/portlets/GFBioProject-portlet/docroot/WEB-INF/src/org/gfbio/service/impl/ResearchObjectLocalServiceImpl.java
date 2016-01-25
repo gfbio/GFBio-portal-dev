@@ -61,7 +61,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONArray getResearchObjectASJsonById(JSONArray requestJson){
+	public JSONArray getResearchObjectAsJsonById(JSONArray requestJson){
 		
 		JSONArray responseJson = new JSONArray();
 		for (int i =0; i <requestJson.size();i++)

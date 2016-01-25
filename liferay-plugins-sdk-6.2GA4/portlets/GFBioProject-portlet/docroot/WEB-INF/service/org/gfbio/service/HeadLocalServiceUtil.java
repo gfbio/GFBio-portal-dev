@@ -367,6 +367,18 @@ public class HeadLocalServiceUtil {
 		return getService().updateHeadWithColumns2(json);
 	}
 
+	public static java.lang.Boolean updateParentRelationTable(long headId,
+		java.lang.String tableName) {
+		return getService().updateParentRelationTable(headId, tableName);
+	}
+
+	public static java.lang.Boolean updateParentRelationTableWithContent(
+		long headIdOfColumn, long contentId1, long contentId2) {
+		return getService()
+				   .updateParentRelationTableWithContent(headIdOfColumn,
+			contentId1, contentId2);
+	}
+
 	public static java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable) {
 		return getService().updateRelationTable(headId, mtable, ntable);
