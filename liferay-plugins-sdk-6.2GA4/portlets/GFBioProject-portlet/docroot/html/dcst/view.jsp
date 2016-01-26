@@ -75,3 +75,4 @@ Es gibt <%=projectList.size() %> Projekte.
 	<liferay-ui:search-iterator />
 	
 </liferay-ui:search-container>
+

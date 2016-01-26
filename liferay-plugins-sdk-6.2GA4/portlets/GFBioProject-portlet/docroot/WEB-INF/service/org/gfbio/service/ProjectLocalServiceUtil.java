@@ -336,6 +336,11 @@ public class ProjectLocalServiceUtil {
 		return getService().updateProject(projectId, name, label, description);
 	}
 
+	public static java.util.List<org.gfbio.model.Project> getProjects()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getProjects();
+	}
+
 	public static long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.lang.String extendedData,

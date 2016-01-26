@@ -293,6 +293,10 @@ public interface ProjectLocalService extends BaseLocalService,
 	public long updateProject(long projectId, java.lang.String name,
 		java.lang.String label, java.lang.String description);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.gfbio.model.Project> getProjects()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.lang.String extendedData,

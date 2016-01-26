@@ -164,33 +164,37 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 				"java.lang.String"
 			};
 
-		_methodName31 = "updateProject";
+		_methodName31 = "getProjects";
 
-		_methodParameterTypes31 = new String[] {
+		_methodParameterTypes31 = new String[] {  };
+
+		_methodName32 = "updateProject";
+
+		_methodParameterTypes32 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.util.Date", "java.lang.String"
 			};
 
-		_methodName32 = "updateEndDate";
+		_methodName33 = "updateEndDate";
 
-		_methodParameterTypes32 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes33 = new String[] { "long", "java.util.Date" };
 
-		_methodName33 = "updateExtendedData";
+		_methodName34 = "updateExtendedData";
 
-		_methodParameterTypes33 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes34 = new String[] { "long", "java.lang.String" };
 
-		_methodName34 = "updateParentProjectByIds";
+		_methodName35 = "updateParentProjectByIds";
 
-		_methodParameterTypes34 = new String[] { "long", "long" };
+		_methodParameterTypes35 = new String[] { "long", "long" };
 
-		_methodName35 = "updateStartDate";
+		_methodName36 = "updateStartDate";
 
-		_methodParameterTypes35 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes36 = new String[] { "long", "java.util.Date" };
 
-		_methodName36 = "updateStatus";
+		_methodName37 = "updateStatus";
 
-		_methodParameterTypes36 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes37 = new String[] { "long", "java.lang.String" };
 	}
 
 	@Override
@@ -1080,6 +1084,34 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Project> getProjects()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<org.gfbio.model.Project>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.lang.String extendedData,
@@ -1089,8 +1121,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						projectID,
 						
@@ -1136,8 +1168,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						projectId,
 						
@@ -1165,8 +1197,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						projectId,
 						
@@ -1194,8 +1226,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] { projectId, parentProjectId });
 		}
 		catch (Throwable t) {
@@ -1219,8 +1251,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						projectId,
 						
@@ -1248,8 +1280,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] { projectId, ClpSerializer.translateInput(
 							status) });
 		}
@@ -1341,4 +1373,6 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	private String[] _methodParameterTypes35;
 	private String _methodName36;
 	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
 }

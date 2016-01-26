@@ -23,6 +23,7 @@
 <%@ page import="org.json.simple.parser.JSONParser" %>
 <%@ page import="org.json.simple.parser.ParseException" %>
 
+
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
