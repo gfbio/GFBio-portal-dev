@@ -60,12 +60,12 @@ function createSubmissionRegistry (roId, divId){
 					"</div>"+
  					
  					"<div class='row'>"+
-						"<div class='rowLato'> GFBio ID of research object</div>"+
+						"<div class='rowLato'> GFBio ID of this research object</div>"+
 						"<div class='rowField'>"+ obj[i].researchobjectid+"</div>"+
 					"</div>"+
 					
  					"<div class='row'>"+
-						"<div class='rowLato'> version of research object </div>"+
+						"<div class='rowLato'> version of this research object </div>"+
 						"<div class='rowField'>"+ obj[i].researchobjectversion+"</div>"+
 					"</div>"+
 					

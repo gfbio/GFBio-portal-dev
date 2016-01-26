@@ -33,6 +33,10 @@
 						"<h3> basic data </h3>"+
 						
 							"<div class='row'>"+
+								"<div class='rowLato'> GFBio ID of this project</div>"+
+								"<div class='rowField'>" + data.projectid + "</div>"+
+							"</div>"+
+							"<div class='row'>"+
 								"<div class='rowLato'> name</div>"+
 								"<div class='rowField'>" + data.name + "</div>"+
 							"</div>"+
@@ -130,6 +134,11 @@
 							
 							"<h4> basic data </h4>"+
 							
+
+								"<div class='row'>"+
+									"<div class='rowLato'> GFBio ID of this research object</div>"+
+									"<div class='rowField'>" + data.researchobjectid + "</div>"+
+								"</div>"+
 								"<div class='row'>"+
 									"<div class='rowLato'> name</div>"+
 									"<div class='rowField'>" + data.name + "</div>"+
