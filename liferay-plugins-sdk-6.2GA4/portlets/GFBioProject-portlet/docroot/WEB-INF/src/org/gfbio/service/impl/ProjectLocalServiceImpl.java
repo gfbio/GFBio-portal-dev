@@ -354,6 +354,10 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		
 	}
 	
+	public List<Project> getProjects() throws SystemException {
+		return projectPersistence.findAll();
+	}
+	
 	//
 	public long updateProject(long projectID, long userID, String name, String label, String description, String extendedData, Date startDate, Date endDate, String status) throws SystemException {
 
