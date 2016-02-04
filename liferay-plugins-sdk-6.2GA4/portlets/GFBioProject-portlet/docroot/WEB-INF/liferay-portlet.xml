@@ -12,47 +12,15 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
 	</portlet>
+	<portlet>
 
-	<portlet>
-		<portlet-name>project-profile</portlet-name>
+	<portlet-name>back-to-su-ma</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
-		<css-class-wrapper>
-			project-profile-portlet
-		</css-class-wrapper>
-	</portlet>
-
-	<portlet>
-		<portlet-name>dcst</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>dcst-portlet</css-class-wrapper>
-     </portlet>
-
-	<portlet>
-		<portlet-name>table-builder</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>table-builder-portlet</css-class-wrapper>
-	</portlet>
-	
-	<portlet>
-		<portlet-name>new-project</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>new-project-portlet</css-class-wrapper>
+		<css-class-wrapper>back-to-su-ma-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>data-provider-managment</portlet-name>
@@ -67,6 +35,38 @@
 	</portlet>
 
 	<portlet>
+		<portlet-name>dcst</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>dcst-portlet</css-class-wrapper>
+     </portlet>
+	
+	<portlet>
+		<portlet-name>new-project</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>new-project-portlet</css-class-wrapper>
+	</portlet>
+
+	<portlet>
+		<portlet-name>project-profile</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>
+			project-profile-portlet
+		</css-class-wrapper>
+	</portlet>
+
+	<portlet>
 		<portlet-name>submission-manager</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -77,15 +77,15 @@
 			submission-manager-portlet
 		</css-class-wrapper>
 	</portlet>
-	<portlet>
 
-	<portlet-name>back-to-su-ma</portlet-name>
+	<portlet>
+		<portlet-name>table-builder</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
-		<css-class-wrapper>back-to-su-ma-portlet</css-class-wrapper>
+		<css-class-wrapper>table-builder-portlet</css-class-wrapper>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

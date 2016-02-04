@@ -17,7 +17,7 @@
 		<portlet-info>
 			<title>Archiving</title>
 			<short-title>Archiving</short-title>
-			<keywords/>
+			<keywords />
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>
@@ -32,14 +32,14 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
-	
+
 	<portlet>
-		<portlet-name>dcst</portlet-name>
-		<display-name>DataCenterSelectionTool</display-name>
-		<portlet-class>org.gfbio.idmg.dcst.DCSTPortlet</portlet-class>
+		<portlet-name>back-to-su-ma</portlet-name>
+		<display-name>GFBio Back To Su Ma</display-name>
+		<portlet-class>org.gfbio.backtosuma.BackToSuMa</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/html/dcst/view.jsp</value>
+			<value>/html/backtosuma/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -47,104 +47,8 @@
 			<portlet-mode>view</portlet-mode>
 		</supports>
 		<portlet-info>
-			<title>DataCenterSelectionTool</title>
-			<short-title>DCST</short-title>
-			<keywords/>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet> <!--End DCST Portlet  -->
-	
-	<portlet>
-		<portlet-name>project-profile</portlet-name>
-		<display-name>GFBio Project Profile</display-name>
-		<portlet-class>org.gfbio.projectprofile.ProjectProfile</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/projectprofile/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>ProjectProfile</title>
-			<short-title>Project Profile</short-title>
-			<keywords/>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	
-	<portlet>
-		<portlet-name>table-builder</portlet-name>
-		<display-name>GFBio Table Builder</display-name>
-		<portlet-class>org.gfbio.tablebuilder.TableBuilder</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/tablebuilder/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Table Builder</title>
-			<short-title>Table Builder</short-title>
-			<keywords/>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	
-	<portlet>
-		<portlet-name>new-project</portlet-name>
-		<display-name>GFBio New Project</display-name>
-		<portlet-class>org.gfbio.newproject.NewProject</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/newproject/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>New Project</title>
-			<short-title>New Project</short-title>
+			<title>Back To Su Ma</title>
+			<short-title>Back To Su Ma</short-title>
 			<keywords></keywords>
 		</portlet-info>
 		<security-role-ref>
@@ -195,6 +99,102 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	
+	<portlet>
+		<portlet-name>dcst</portlet-name>
+		<display-name>DataCenterSelectionTool</display-name>
+		<portlet-class>org.gfbio.idmg.dcst.DCSTPortlet</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/dcst/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>DataCenterSelectionTool</title>
+			<short-title>DCST</short-title>
+			<keywords/>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet> <!--End DCST Portlet  -->
+	
+	<portlet>
+		<portlet-name>new-project</portlet-name>
+		<display-name>GFBio New Project</display-name>
+		<portlet-class>org.gfbio.newproject.NewProject</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/newproject/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>New Project</title>
+			<short-title>New Project</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+		<portlet-name>project-profile</portlet-name>
+		<display-name>GFBio Project Profile</display-name>
+		<portlet-class>org.gfbio.projectprofile.ProjectProfile</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/projectprofile/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>ProjectProfile</title>
+			<short-title>Project Profile</short-title>
+			<keywords/>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
 
 	<portlet>
 		<portlet-name>submission-manager</portlet-name>
@@ -227,14 +227,14 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
-
+	
 	<portlet>
-		<portlet-name>back-to-su-ma</portlet-name>
-		<display-name>GFBio Back To Su Ma</display-name>
-		<portlet-class>org.gfbio.backtosuma.BackToSuMa</portlet-class>
+		<portlet-name>table-builder</portlet-name>
+		<display-name>GFBio Table Builder</display-name>
+		<portlet-class>org.gfbio.tablebuilder.TableBuilder</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/html/backtosuma/view.jsp</value>
+			<value>/html/tablebuilder/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -242,9 +242,9 @@
 			<portlet-mode>view</portlet-mode>
 		</supports>
 		<portlet-info>
-			<title>Back To Su Ma</title>
-			<short-title>Back To Su Ma</short-title>
-			<keywords></keywords>
+			<title>Table Builder</title>
+			<short-title>Table Builder</short-title>
+			<keywords/>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>
