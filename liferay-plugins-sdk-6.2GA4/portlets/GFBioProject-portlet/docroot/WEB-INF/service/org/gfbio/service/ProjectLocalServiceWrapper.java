@@ -304,6 +304,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Project> getProjects()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _projectLocalService.getProjects();
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectList(
 		long projectID, long userID)
 		throws com.liferay.portal.NoSuchModelException,
@@ -354,12 +360,6 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 		java.lang.String label, java.lang.String description) {
 		return _projectLocalService.updateProject(projectId, name, label,
 			description);
-	}
-
-	@Override
-	public java.util.List<org.gfbio.model.Project> getProjects()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _projectLocalService.getProjects();
 	}
 
 	@Override
