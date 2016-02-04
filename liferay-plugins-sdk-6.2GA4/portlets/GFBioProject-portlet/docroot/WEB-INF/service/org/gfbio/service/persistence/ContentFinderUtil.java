@@ -37,6 +37,14 @@ public class ContentFinderUtil {
 			columnName2);
 	}
 
+	public static java.util.List getContentIdsWithNormalTableRelationships(
+		long rowId, java.lang.String tableName, java.lang.String columnName1,
+		java.lang.String columnName2) {
+		return getFinder()
+				   .getContentIdsWithNormalTableRelationships(rowId, tableName,
+			columnName1, columnName2);
+	}
+
 	public static java.util.List getContentIdsWithRelationships(long rowId,
 		java.lang.String columnName1, java.lang.String columnName2) {
 		return getFinder()
@@ -46,6 +54,14 @@ public class ContentFinderUtil {
 
 	public static java.util.List getColumnIdById(long contentId) {
 		return getFinder().getColumnIdById(contentId);
+	}
+
+	public static java.util.List getContentIdsByRowId(long rowId) {
+		return getFinder().getContentIdsByRowId(rowId);
+	}
+
+	public static java.util.List getHeadIdById(long contentId) {
+		return getFinder().getHeadIdById(contentId);
 	}
 
 	public static java.util.List getRowIds(long headId) {
@@ -61,17 +77,13 @@ public class ContentFinderUtil {
 		return getFinder().getRowIdByContentId(contentId);
 	}
 
-	public static java.util.List getHeadIdById(long contentId) {
-		return getFinder().getHeadIdById(contentId);
-	}
-
-	public static java.util.List getContentIdsByRowId(long rowId) {
-		return getFinder().getContentIdsByRowId(rowId);
-	}
-
 	public static java.util.List getRowIdOfRelation(
 		java.lang.String cellContent1, java.lang.String cellContent2) {
 		return getFinder().getRowIdOfRelation(cellContent1, cellContent2);
+	}
+
+	public static java.util.List getRowInformationByContentId(long contentId) {
+		return getFinder().getRowInformationByContentId(contentId);
 	}
 
 	public static ContentFinder getFinder() {

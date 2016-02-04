@@ -21,4 +21,6 @@ public interface DataProviderFinder {
 	public java.util.List getDataProviderIdByLabel(java.lang.String label);
 
 	public java.util.List getLabelById(long dataProviderId);
+
+	public java.util.List getLabels();
 }

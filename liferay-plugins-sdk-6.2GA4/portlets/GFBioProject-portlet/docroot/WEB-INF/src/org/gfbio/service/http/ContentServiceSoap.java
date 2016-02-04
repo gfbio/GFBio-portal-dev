@@ -14,6 +14,13 @@
 
 package org.gfbio.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import org.gfbio.service.ContentServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link org.gfbio.service.ContentServiceUtil} service utility. The
@@ -55,4 +62,67 @@ package org.gfbio.service.http;
  * @generated
  */
 public class ContentServiceSoap {
+	public static java.lang.String getContentIdsWithRelationships(long rowId,
+		java.lang.String tableName1, java.lang.String tableName2)
+		throws RemoteException {
+		try {
+			java.lang.String returnValue = ContentServiceUtil.getContentIdsWithRelationships(rowId,
+					tableName1, tableName2);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getContentIdsWithNormalTableRelationships(
+		long rowId, java.lang.String tableName, java.lang.String columnName1,
+		java.lang.String columnName2) throws RemoteException {
+		try {
+			java.lang.String returnValue = ContentServiceUtil.getContentIdsWithNormalTableRelationships(rowId,
+					tableName, columnName1, columnName2);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.json.simple.JSONObject getRowInformationByContentId(
+		long contentId) throws RemoteException {
+		try {
+			org.json.simple.JSONObject returnValue = ContentServiceUtil.getRowInformationByContentId(contentId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static org.json.simple.JSONArray getRowInformationOfRelationByContentId(
+		long contentId, java.lang.String tableName1, java.lang.String tableName2)
+		throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = ContentServiceUtil.getRowInformationOfRelationByContentId(contentId,
+					tableName1, tableName2);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ContentServiceSoap.class);
 }

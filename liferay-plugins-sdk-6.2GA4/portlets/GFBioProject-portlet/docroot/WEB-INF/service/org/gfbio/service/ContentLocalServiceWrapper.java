@@ -300,6 +300,13 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public long getColumnIdById(long contentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _contentLocalService.getColumnIdById(contentId);
+	}
+
+	@Override
 	public org.gfbio.model.Content getContentByTableIds(long rowId,
 		long columnId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -334,6 +341,14 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public java.util.List getContentIdsWithNormalTableRelationships(
+		long rowId, java.lang.String tableName, java.lang.String columnName1,
+		java.lang.String columnName2) {
+		return _contentLocalService.getContentIdsWithNormalTableRelationships(rowId,
+			tableName, columnName1, columnName2);
+	}
+
+	@Override
 	public org.json.simple.JSONObject getContentInformationAsJSONByContentId(
 		long contentId) {
 		return _contentLocalService.getContentInformationAsJSONByContentId(contentId);
@@ -343,23 +358,6 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	public org.json.simple.JSONObject getContentInformationAsJSONByRowId(
 		long rowId) {
 		return _contentLocalService.getContentInformationAsJSONByRowId(rowId);
-	}
-
-	@Override
-	public long getFirstContentIdByRowId(long rowId) {
-		return _contentLocalService.getFirstContentIdByRowId(rowId);
-	}
-
-	@Override
-	public long getHeadIdById(long contentId) {
-		return _contentLocalService.getHeadIdById(contentId);
-	}
-
-	@Override
-	public long getRowIdByCellContent(long headId, java.lang.String columnName,
-		java.lang.String cellContent) {
-		return _contentLocalService.getRowIdByCellContent(headId, columnName,
-			cellContent);
 	}
 
 	@Override
@@ -380,15 +378,20 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public java.util.List getRowIds(long headId) {
-		return _contentLocalService.getRowIds(headId);
+	public long getFirstContentIdByRowId(long rowId) {
+		return _contentLocalService.getFirstContentIdByRowId(rowId);
 	}
 
 	@Override
-	public long getColumnIdById(long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _contentLocalService.getColumnIdById(contentId);
+	public long getHeadIdById(long contentId) {
+		return _contentLocalService.getHeadIdById(contentId);
+	}
+
+	@Override
+	public long getRowIdByCellContent(long headId, java.lang.String columnName,
+		java.lang.String cellContent) {
+		return _contentLocalService.getRowIdByCellContent(headId, columnName,
+			cellContent);
 	}
 
 	@Override
@@ -401,6 +404,24 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 		java.lang.String cellContent2) {
 		return _contentLocalService.getRowIdOfRelation(cellContent1,
 			cellContent2);
+	}
+
+	@Override
+	public java.util.List getRowIds(long headId) {
+		return _contentLocalService.getRowIds(headId);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getRowInformationByContentId(
+		long contentId) {
+		return _contentLocalService.getRowInformationByContentId(contentId);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getRowInformationOfRelationByContentId(
+		long contentId, java.lang.String tableName1, java.lang.String tableName2) {
+		return _contentLocalService.getRowInformationOfRelationByContentId(contentId,
+			tableName1, tableName2);
 	}
 
 	@Override

@@ -160,4 +160,39 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	<portlet>
+		<portlet-name>data-provider-managment</portlet-name>
+		<display-name>
+			Gfbio TableBuilder Data Provider Managment
+		</display-name>
+		<portlet-class>
+			org.gfbio.dataprovidermanagment.DataProviderManagment
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/dataprovidermanagment/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>Data Provider Managment</title>
+			<short-title>Data Provider Managment</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
 </portlet-app>

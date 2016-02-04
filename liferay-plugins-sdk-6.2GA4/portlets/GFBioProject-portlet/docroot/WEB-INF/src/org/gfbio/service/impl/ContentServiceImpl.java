@@ -15,7 +15,11 @@
 package org.gfbio.service.impl;
 
 
+import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.ContentServiceBaseImpl;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 
 
 /**
@@ -34,7 +38,29 @@ import org.gfbio.service.base.ContentServiceBaseImpl;
  */
 public class ContentServiceImpl extends ContentServiceBaseImpl {
 
-
 	
+	//
+	public  String getContentIdsWithRelationships(long rowId, String tableName1, String tableName2){
+		return ContentLocalServiceUtil.getContentIdsWithRelationships(rowId, tableName1, tableName2).toString();
+	}
+	
+	
+	//get List of content IDs, with content of relationship tables between a HCC and a normal table
+	public  String getContentIdsWithNormalTableRelationships(long rowId, String tableName, String columnName1, String columnName2) {
+		String response =  ContentLocalServiceUtil.getContentIdsWithNormalTableRelationships(rowId, tableName, columnName1, columnName2).toString();
+		return response.substring(1, response.length()-1);
+	}
+	
+	
+	//get a row as JSON
+	public JSONObject  getRowInformationByContentId (long contentId){
+		return ContentLocalServiceUtil.getRowInformationByContentId(contentId);
+	}
+	
+	
+	//
+	public JSONArray  getRowInformationOfRelationByContentId (long contentId, String tableName1, String tableName2){
+		return  ContentLocalServiceUtil.getRowInformationOfRelationByContentId (contentId, tableName1,  tableName2);
+	}
 	
 }

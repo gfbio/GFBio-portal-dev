@@ -251,16 +251,29 @@ public interface DataProviderLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getDataProviderById(long dataProviderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONObject getDataProviderByLabel(
+		java.lang.String label);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getDataProviderIdByLabel(java.lang.String label);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getDataProviderIds(long persistentIdentiferId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getLabels();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getLabelById(long dataProviderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getPersistentIdentiferIds(long dataProviderId);
+
+	public org.json.simple.JSONObject constructDataProviderAsJson(
+		org.gfbio.model.DataProvider dataProvider);
 
 	public java.lang.Boolean updateDataProvider(long dataProviderId,
 		java.lang.String name, java.lang.String label,

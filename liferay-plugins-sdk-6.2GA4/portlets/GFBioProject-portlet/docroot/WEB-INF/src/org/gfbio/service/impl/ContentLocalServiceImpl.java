@@ -14,6 +14,7 @@
 
 package org.gfbio.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gfbio.NoSuchContentException;
@@ -23,6 +24,7 @@ import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.ContentLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ContentFinderUtil;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -100,6 +102,12 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return ContentFinderUtil.getCellContentByContentId(contentId);
 	}
 	
+	
+	// get the columnId of a specific content.
+	public long getColumnIdById(long contentId) throws SystemException, PortalException{
+		return (long) ContentFinderUtil.getColumnIdById(contentId).get(0);
+	}
+	
 
 	//get Content of  a specific row and column
 	public Content getContentByTableIds(long rowId, long columnId) throws NoSuchContentException, SystemException  {
@@ -138,7 +146,14 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public  List getContentIdsWithRelationships(long rowId, String tableName1, String tableName2) {
 		return ContentFinderUtil.getContentIdsWithRelationships(rowId, tableName1, tableName2);
 	}
-
+	
+	
+	//get List of content IDs, with content of relationship tables between a HCC and a normal table
+	@SuppressWarnings("rawtypes")
+	public  List getContentIdsWithNormalTableRelationships(long rowId, String tableName, String columnName1, String columnName2) {
+		return ContentFinderUtil.getContentIdsWithNormalTableRelationships(rowId, tableName, columnName1, columnName2);
+	}
+	
 
 	//get a Content Entry as JSON
 	public JSONObject getContentInformationAsJSONByContentId (long contentId){
@@ -168,39 +183,6 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 				json.put(Long.toString(contentList.get(i).getColumnID()), Long.toString(contentList.get(i).getContentID()));
 
 		return json;
-	}
-	
-	
-	//get the first element of a list of contentId to a specific rowId
-	@SuppressWarnings("rawtypes")
-	public long getFirstContentIdByRowId (long rowId){
-		long contentId =0;
-		List contentIdList = (List) ContentFinderUtil.getContentIdsByRowId(rowId);
-		if (contentIdList.size() >0)
-			contentId = (long) contentIdList.get(0);
-		return contentId;
-	}
-
-	
-	//get the headId to a content entry
-	@SuppressWarnings("rawtypes")
-	public long getHeadIdById(long contentId){
-		long headId =0;
-		List headIdList = (List) ContentFinderUtil.getHeadIdById(contentId);
-		if (headIdList.size() >0)
-			headId = (long) headIdList.get(0);
-		return headId;
-	}
-	
-
-	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
-	@SuppressWarnings("rawtypes")
-	public long getRowIdByCellContent(long headId, String columnName, String cellContent){
-		long rowId =0;
-		List rowIdList = (List)  ContentFinderUtil.getRowIdByCellContent(headId, columnName, cellContent);
-		if (rowIdList.size() >0)
-			rowId = (long) rowIdList.get(0);
-		return rowId;
 	}
 	
 	
@@ -247,19 +229,38 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 	
 	
-	//get a List of rowIds of specific head
+	//get the first element of a list of contentId to a specific rowId
 	@SuppressWarnings("rawtypes")
-	public List  getRowIds (long headId){
-		return ContentFinderUtil.getRowIds(headId);
+	public long getFirstContentIdByRowId (long rowId){
+		long contentId =0;
+		List contentIdList = (List) ContentFinderUtil.getContentIdsByRowId(rowId);
+		if (contentIdList.size() >0)
+			contentId = (long) contentIdList.get(0);
+		return contentId;
+	}
+
+	
+	//get the headId to a content entry
+	@SuppressWarnings("rawtypes")
+	public long getHeadIdById(long contentId){
+		long headId =0;
+		List headIdList = (List) ContentFinderUtil.getHeadIdById(contentId);
+		if (headIdList.size() >0)
+			headId = (long) headIdList.get(0);
+		return headId;
 	}
 	
-		
-	// get the columnId of a specific content.
-	public long getColumnIdById(long contentId) throws SystemException, PortalException{
-		return (long) ContentFinderUtil.getColumnIdById(contentId).get(0);
+
+	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
+	@SuppressWarnings("rawtypes")
+	public long getRowIdByCellContent(long headId, String columnName, String cellContent){
+		long rowId =0;
+		List rowIdList = (List)  ContentFinderUtil.getRowIdByCellContent(headId, columnName, cellContent);
+		if (rowIdList.size() >0)
+			rowId = (long) rowIdList.get(0);
+		return rowId;
 	}
-	
-	
+
 	// get the columnId of a specific content.
 	@SuppressWarnings("rawtypes")
 	public long getRowIdById(long contentId) {
@@ -279,6 +280,44 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		if (rowIdList.size() >0)
 			rowId = (long) rowIdList.get(0);
 		return rowId;
+	}
+	
+	
+	//get a List of rowIds of specific head
+	@SuppressWarnings("rawtypes")
+	public List  getRowIds (long headId){
+		return ContentFinderUtil.getRowIds(headId);
+	}
+	
+	
+	//get a List of rowIds of specific head
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public JSONObject  getRowInformationByContentId (long contentId){
+
+		 JSONObject responseJson = new JSONObject();
+		 List response =  (ArrayList) ContentFinderUtil.getRowInformationByContentId (contentId);
+		 for(Object object:response){
+			 Object[] arrayobject=(Object[])object;
+			 responseJson.put((String)arrayobject[0], (String)arrayobject[1]);
+		 }
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked" })
+	public JSONArray  getRowInformationOfRelationByContentId (long contentId, String tableName1, String tableName2){
+		JSONArray responseArray = new JSONArray();
+		JSONObject contentJson = new JSONObject();
+		JSONObject  otherContentJson = new JSONObject();
+		contentJson = getRowInformationByContentId (contentId);
+		long rowId = getRowIdById(contentId);
+		long  otherContentId = (long) ContentFinderUtil.getContentIdsWithRelationships(rowId, tableName1, tableName2).get(0);
+		otherContentJson  = getRowInformationByContentId (otherContentId);
+		responseArray.add(contentJson);
+		responseArray.add(otherContentJson);
+
+		return responseArray;
 	}
 	
 	

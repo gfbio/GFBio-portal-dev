@@ -56,6 +56,34 @@ public class ContentServiceWrapper implements ContentService,
 		return _contentService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public java.lang.String getContentIdsWithRelationships(long rowId,
+		java.lang.String tableName1, java.lang.String tableName2) {
+		return _contentService.getContentIdsWithRelationships(rowId,
+			tableName1, tableName2);
+	}
+
+	@Override
+	public java.lang.String getContentIdsWithNormalTableRelationships(
+		long rowId, java.lang.String tableName, java.lang.String columnName1,
+		java.lang.String columnName2) {
+		return _contentService.getContentIdsWithNormalTableRelationships(rowId,
+			tableName, columnName1, columnName2);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getRowInformationByContentId(
+		long contentId) {
+		return _contentService.getRowInformationByContentId(contentId);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getRowInformationOfRelationByContentId(
+		long contentId, java.lang.String tableName1, java.lang.String tableName2) {
+		return _contentService.getRowInformationOfRelationByContentId(contentId,
+			tableName1, tableName2);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
