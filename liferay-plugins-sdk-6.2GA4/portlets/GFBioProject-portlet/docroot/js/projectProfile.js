@@ -1,37 +1,21 @@
 
 
 //
-function chooseProject(method, project  ,id){
+function chooseProjProProject(method, projectId  ,divId){
 	projectProfileURL = document.getElementById('projectprofileurl').value;
-	resourceMethod_ChooseProject(projectProfileURL, method, project,  id,false);
-}
-
-
-//generally Methods
-function resourceMethod_ChooseProject(projectProfileURL, method, projectId,  divId,async) {
 	var data = {};
 	data["projectid"] = projectId;
-	ajaxActionRequest_ChooseProject(projectProfileURL, method, data, divId,async);
+	ajaxActionRequest_ChooseProjProProject(projectProfileURL, method, data, divId,false);
 }
-
-
 
 
 
 //
 function chooseROX(method, researchobjectId  , divId){
 	projectProfileURL = document.getElementById('projectprofileurl').value;
-	resourceMethod_ChooseResearchObjectX(projectProfileURL, method, researchobjectId,  divId,false);
-}
-
-
-
-
-//generally Methods
-function resourceMethod_ChooseResearchObjectX(projectProfileURL, method, researchobjectId,  divId,async) {
 	var data = {};
 	data["researchobjectid"] = researchobjectId;
-	ajaxActionRequest_ChooseResearchObject(projectProfileURL, method, data, divId,async);
+	ajaxActionRequest_ChooseResearchObject(projectProfileURL, method, data, divId,false);
 }
 
 	

@@ -180,6 +180,34 @@ page import="com.liferay.portal.util.PortalUtil" %>
 		});
 	}
 	
+/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
+	
+	
+	//Message from hide managment
+	$(document).ready(function() {
+		Liferay.on('gadget:gfbio.submissionmanager.hidemanagment', function(data) {
+			
+			if (data == undefined){}
+			else{
+				var dataSubmission =   $("#dataSubmission");
+				dataSubmission.attr("class", data.view);			
+			}
+		});
+	});
+	
+	
+	//Message from Submission Manager
+	$(document).ready(function() {
+		Liferay.on('gadget:gfbio.submissionmanager.datasubmission', function(data) {
+			
+			if (data == undefined){}
+			else{
+				var dataSubmission =   $("#dataSubmission");
+				dataSubmission.attr("class", data.view);	
+			}
+		});
+	});
+	
 	
 
  	
