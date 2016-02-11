@@ -834,9 +834,20 @@
 
 						// gets the JSON string
 						var json_str = jsontoStr(setJsonObj(xmlDoc));
+						json_str = json_str.replace('\n','');
 
 						// sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
-						return (typeof(rstr) == 'undefined') ? JSON.parse(json_str) : json_str;
+						if (typeof(rstr) == 'undefined') {
+							try{ 
+								return JSON.parse(json_str)
+							}
+							catch(e){
+								console.log(e); //error in the above string(in this case,yes)!
+								return ''
+							} 
+						}else {
+							return json_str;
+						}
 					}
 
 					// receives XML DOM object, returns converted JSON object
