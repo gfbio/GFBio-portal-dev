@@ -288,6 +288,12 @@ public class ContentLocalServiceUtil {
 		return getService().getCellContentByContentId(contentId);
 	}
 
+	public static long getColumnIdById(long contentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getColumnIdById(contentId);
+	}
+
 	public static org.gfbio.model.Content getContentByTableIds(long rowId,
 		long columnId)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -318,6 +324,14 @@ public class ContentLocalServiceUtil {
 				   .getContentIdsWithRelationships(rowId, tableName1, tableName2);
 	}
 
+	public static java.util.List getContentIdsWithNormalTableRelationships(
+		long rowId, java.lang.String tableName, java.lang.String columnName1,
+		java.lang.String columnName2) {
+		return getService()
+				   .getContentIdsWithNormalTableRelationships(rowId, tableName,
+			columnName1, columnName2);
+	}
+
 	public static org.json.simple.JSONObject getContentInformationAsJSONByContentId(
 		long contentId) {
 		return getService().getContentInformationAsJSONByContentId(contentId);
@@ -326,20 +340,6 @@ public class ContentLocalServiceUtil {
 	public static org.json.simple.JSONObject getContentInformationAsJSONByRowId(
 		long rowId) {
 		return getService().getContentInformationAsJSONByRowId(rowId);
-	}
-
-	public static long getFirstContentIdByRowId(long rowId) {
-		return getService().getFirstContentIdByRowId(rowId);
-	}
-
-	public static long getHeadIdById(long contentId) {
-		return getService().getHeadIdById(contentId);
-	}
-
-	public static long getRowIdByCellContent(long headId,
-		java.lang.String columnName, java.lang.String cellContent) {
-		return getService()
-				   .getRowIdByCellContent(headId, columnName, cellContent);
 	}
 
 	public static org.json.simple.JSONObject getContentsAsJSONByRowId(
@@ -357,14 +357,18 @@ public class ContentLocalServiceUtil {
 		return getService().getCountOfRows(headId);
 	}
 
-	public static java.util.List getRowIds(long headId) {
-		return getService().getRowIds(headId);
+	public static long getFirstContentIdByRowId(long rowId) {
+		return getService().getFirstContentIdByRowId(rowId);
 	}
 
-	public static long getColumnIdById(long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getColumnIdById(contentId);
+	public static long getHeadIdById(long contentId) {
+		return getService().getHeadIdById(contentId);
+	}
+
+	public static long getRowIdByCellContent(long headId,
+		java.lang.String columnName, java.lang.String cellContent) {
+		return getService()
+				   .getRowIdByCellContent(headId, columnName, cellContent);
 	}
 
 	public static long getRowIdById(long contentId) {
@@ -374,6 +378,22 @@ public class ContentLocalServiceUtil {
 	public static long getRowIdOfRelation(java.lang.String cellContent1,
 		java.lang.String cellContent2) {
 		return getService().getRowIdOfRelation(cellContent1, cellContent2);
+	}
+
+	public static java.util.List getRowIds(long headId) {
+		return getService().getRowIds(headId);
+	}
+
+	public static org.json.simple.JSONObject getRowInformationByContentId(
+		long contentId) {
+		return getService().getRowInformationByContentId(contentId);
+	}
+
+	public static org.json.simple.JSONArray getRowInformationOfRelationByContentId(
+		long contentId, java.lang.String tableName1, java.lang.String tableName2) {
+		return getService()
+				   .getRowInformationOfRelationByContentId(contentId,
+			tableName1, tableName2);
 	}
 
 	public static org.json.simple.JSONObject constructContentJson(

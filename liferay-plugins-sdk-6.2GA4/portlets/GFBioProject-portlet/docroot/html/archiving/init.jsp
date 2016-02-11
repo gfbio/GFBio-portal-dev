@@ -25,6 +25,7 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="org.gfbio.model.Project" %>
 <%@ page import="org.gfbio.model.ResearchObject" %>
 <%@ page import="org.gfbio.service.ColumnLocalServiceUtil" %>
+<%@ page import="org.gfbio.service.DataProviderLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.HeadLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
 
@@ -178,6 +179,34 @@ page import="com.liferay.portal.util.PortalUtil" %>
 			}
 		});
 	}
+	
+/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
+	
+	
+	//Message from hide managment
+	$(document).ready(function() {
+		Liferay.on('gadget:gfbio.submissionmanager.hidemanagment', function(data) {
+			
+			if (data == undefined){}
+			else{
+				var dataSubmission =   $("#dataSubmission");
+				dataSubmission.attr("class", data.view);			
+			}
+		});
+	});
+	
+	
+	//Message from Submission Manager
+	$(document).ready(function() {
+		Liferay.on('gadget:gfbio.submissionmanager.datasubmission', function(data) {
+			
+			if (data == undefined){}
+			else{
+				var dataSubmission =   $("#dataSubmission");
+				dataSubmission.attr("class", data.view);	
+			}
+		});
+	});
 	
 	
 

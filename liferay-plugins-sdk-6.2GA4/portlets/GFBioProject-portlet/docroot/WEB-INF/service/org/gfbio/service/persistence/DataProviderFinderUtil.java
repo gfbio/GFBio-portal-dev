@@ -30,6 +30,10 @@ public class DataProviderFinderUtil {
 		return getFinder().getLabelById(dataProviderId);
 	}
 
+	public static java.util.List getLabels() {
+		return getFinder().getLabels();
+	}
+
 	public static DataProviderFinder getFinder() {
 		if (_finder == null) {
 			_finder = (DataProviderFinder)PortletBeanLocatorUtil.locate(org.gfbio.service.ClpSerializer.getServletContextName(),

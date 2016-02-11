@@ -16,10 +16,10 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 public class DataProviderFinderImpl extends BasePersistenceImpl<DataProvider> implements DataProviderFinder {
 	
-	public static String FINDER_CLASS_NAME_ENTITY = DataProviderFinderImpl.class.getName();
-	public static String GET_DATAPROVIDERID_BY_LABEL = FINDER_CLASS_NAME_ENTITY + ".getDataProviderIdByLabel";
-	public static String GET_LABBEL_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getLabelById";
-
+	public static String FINDER_CLASS_NAME_ENTITY 		= DataProviderFinderImpl.class.getName();
+	public static String GET_DATAPROVIDERID_BY_LABEL 	= FINDER_CLASS_NAME_ENTITY + ".getDataProviderIdByLabel";
+	public static String GET_LABEL_BY_ID 				= FINDER_CLASS_NAME_ENTITY + ".getLabelById";
+	public static String GET_LABELS 					= FINDER_CLASS_NAME_ENTITY + ".getLabels";
 
 	//
 	@SuppressWarnings({ "rawtypes" })
@@ -53,7 +53,7 @@ public class DataProviderFinderImpl extends BasePersistenceImpl<DataProvider> im
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = CustomSQLUtil.get(GET_DATAPROVIDERID_BY_LABEL);
+			String sql = CustomSQLUtil.get(GET_LABEL_BY_ID);
 
 			SQLQuery queryObject = session.createSQLQuery(sql);
 
@@ -62,6 +62,31 @@ public class DataProviderFinderImpl extends BasePersistenceImpl<DataProvider> im
 
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(dataProviderId);
+			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "rawtypes" })
+	public List getLabels() {
+
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_LABELS);
+
+			SQLQuery queryObject = session.createSQLQuery(sql);
+
+			queryObject.setCacheable(false);
+			queryObject.addScalar("label", Type.STRING);
+
+			//QueryPos qPos = QueryPos.getInstance(queryObject);
+
 			return (List) queryObject.list();
 		} catch (Exception e) {e.printStackTrace();}
 		finally {

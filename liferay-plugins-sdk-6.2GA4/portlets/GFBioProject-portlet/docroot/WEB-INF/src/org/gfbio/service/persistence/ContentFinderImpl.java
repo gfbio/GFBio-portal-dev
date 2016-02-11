@@ -14,18 +14,22 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements ContentFinder{
 	
-	public static String FINDER_CLASS_NAME_ENTITY = ContentFinderImpl.class.getName();
-	public static String GET_CELL_CONTENT = FINDER_CLASS_NAME_ENTITY + ".getCellContent";
-	public static String GET_CELL_CONTENT_BY_CONTENTID = FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
-	public static String GET_COLUMNID_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
-	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS = FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
-	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS = FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
-	public static String GET_COUNT_OF_ROW = FINDER_CLASS_NAME_ENTITY + ".getRowIds";
-	public static String GET_ROWID_BY_CELLCONTENT = FINDER_CLASS_NAME_ENTITY + ".getRowIdByCellContent";
-	public static String GET_HEADID_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getHeadIdById";
-	public static String GET_CONTENTIDS_BY_ROWID = FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
-	public static String GET_ROWID_BY_CONTENTID = FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
-	public static String GET_ROWID_OF_RELATION = FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
+	public static String FINDER_CLASS_NAME_ENTITY 							= ContentFinderImpl.class.getName();
+	public static String GET_CELL_CONTENT 									= FINDER_CLASS_NAME_ENTITY + ".getCellContent";
+	public static String GET_CELL_CONTENT_BY_CONTENTID 						= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
+	public static String GET_COLUMNID_BY_ID 								= FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
+	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS 				= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
+	public static String GET_CONTENTIDS_WITH_NORMAL_TABLE_RELATIONSHIPS 	= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithNormalTableRelationships";
+	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS 					= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
+	public static String GET_COUNT_OF_ROW 									= FINDER_CLASS_NAME_ENTITY + ".getRowIds";
+	public static String GET_ROWID_BY_CELLCONTENT 							= FINDER_CLASS_NAME_ENTITY + ".getRowIdByCellContent";
+	public static String GET_HEADID_BY_ID 									= FINDER_CLASS_NAME_ENTITY + ".getHeadIdById";
+	public static String GET_CONTENTIDS_BY_ROWID 							= FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
+	public static String GET_ROWID_BY_CONTENTID								= FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
+	public static String GET_ROWID_OF_RELATION 								= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
+	public static String GET_ROW_INFORMATION_BY_CONTENTID					= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
+	
+	
 	
 	
 
@@ -113,6 +117,35 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	
 	//get List of content IDs, with content of relationship tables
 	@SuppressWarnings("rawtypes")
+	public  List getContentIdsWithNormalTableRelationships(long rowId, String tableName, String columnName1, String columnName2) {
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CONTENTIDS_WITH_NORMAL_TABLE_RELATIONSHIPS);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("contentID", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(columnName1);
+			qPos.add(tableName);
+			qPos.add(Long.toString(rowId));
+			qPos.add(columnName2);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get List of content IDs, with content of relationship tables
+	@SuppressWarnings("rawtypes")
 	public  List getContentIdsWithRelationships(long rowId, String columnName1, String columnName2) {
 		
 		Session session = null;
@@ -160,6 +193,62 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 			
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(contentId);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get all IDs of cells in a specific row
+	@SuppressWarnings("rawtypes")
+	public  List getContentIdsByRowId(long rowId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CONTENTIDS_BY_ROWID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("contentID", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(rowId);
+
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get the ID of a table that include a cell with a specific ID
+	@SuppressWarnings("rawtypes")
+	public  List getHeadIdById(long contentId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_HEADID_BY_ID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("headID", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(contentId);
+
 			return (List) queryObject.list();
 			
 		} catch (Exception e) {e.printStackTrace();}
@@ -255,62 +344,6 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	//get the ID of a table that include a cell with a specific ID
-	@SuppressWarnings("rawtypes")
-	public  List getHeadIdById(long contentId) {
-		
-		Session session = null;
-		try {
-		
-			session = openSession();
-			String sql = CustomSQLUtil.get(GET_HEADID_BY_ID);
-			
-			SQLQuery queryObject = session.createSQLQuery(sql);
-			queryObject.setCacheable(false);
-			
-			queryObject.addScalar("headID", Type.LONG);
-			
-			QueryPos qPos = QueryPos.getInstance(queryObject);
-			qPos.add(contentId);
-
-			return (List) queryObject.list();
-			
-		} catch (Exception e) {e.printStackTrace();}
-		finally {
-			closeSession(session);
-		}
-		return null;
-	}
-	
-	
-	//get all IDs of cells in a specific row
-	@SuppressWarnings("rawtypes")
-	public  List getContentIdsByRowId(long rowId) {
-		
-		Session session = null;
-		try {
-		
-			session = openSession();
-			String sql = CustomSQLUtil.get(GET_CONTENTIDS_BY_ROWID);
-			
-			SQLQuery queryObject = session.createSQLQuery(sql);
-			queryObject.setCacheable(false);
-			
-			queryObject.addScalar("contentID", Type.LONG);
-			
-			QueryPos qPos = QueryPos.getInstance(queryObject);
-			qPos.add(rowId);
-
-			return (List) queryObject.list();
-			
-		} catch (Exception e) {e.printStackTrace();}
-		finally {
-			closeSession(session);
-		}
-		return null;
-	}
-	
-	
 	//get the ID of a row in a relation table with specific content
 	@SuppressWarnings("rawtypes")
 	public  List getRowIdOfRelation(String cellContent1, String cellContent2) {
@@ -339,6 +372,34 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 		return null;
 	}
 	
+	
+	//get ID of a row that are in a specific table and column and content in the cell of column in table
+	@SuppressWarnings("rawtypes")
+	public  List getRowInformationByContentId(long contentId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_ROW_INFORMATION_BY_CONTENTID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("column", Type.STRING);
+			queryObject.addScalar("content", Type.STRING);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(contentId);
+			
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
 	
 	
 }
