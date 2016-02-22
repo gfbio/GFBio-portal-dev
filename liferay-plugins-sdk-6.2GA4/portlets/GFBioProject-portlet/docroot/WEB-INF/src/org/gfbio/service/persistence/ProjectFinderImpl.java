@@ -1,0 +1,48 @@
+package org.gfbio.service.persistence;
+
+
+import java.util.List;
+
+import org.gfbio.model.Project;
+
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.util.dao.orm.CustomSQLUtil;
+ 
+
+
+public class ProjectFinderImpl extends BasePersistenceImpl<Project> implements ProjectFinder {
+
+	public static String FINDER_CLASS_NAME_ENTITY 		= ProjectFinderImpl.class.getName();
+	public static String CHECK_PROJECT_ON_SUBMISSIONS 	= FINDER_CLASS_NAME_ENTITY + ".checkProjectOnSubmissions";
+	
+	
+	//
+	@SuppressWarnings({ "rawtypes" })
+	public List checkProjectOnSubmissions(long projectId) {
+
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(CHECK_PROJECT_ON_SUBMISSIONS);
+
+			SQLQuery queryObject = session.createSQLQuery(sql);
+
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(projectId);
+			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+
+	
+}

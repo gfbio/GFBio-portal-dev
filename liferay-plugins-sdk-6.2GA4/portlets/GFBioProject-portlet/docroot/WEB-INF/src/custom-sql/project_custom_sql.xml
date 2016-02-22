@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    
+   <sql id="org.gfbio.service.persistence.ProjectFinderImpl.checkProjectOnSubmissions">
+	    <![CDATA[
+			SELECT 
+				 (CASE WHEN sum(gfbio_project_researchobject.projectid) >0 THEN true ELSE false END ) as check  
+			FROM 
+			  	public.gfbio_submission, 
+			 	public.gfbio_project_researchobject
+			WHERE 
+			  	gfbio_project_researchobject.researchobjectversion = gfbio_submission.researchobjectversion AND
+			  	gfbio_project_researchobject.researchobjectid = gfbio_submission.researchobjectid AND
+			  	gfbio_project_researchobject.projectid = ?
+		]]>
+    </sql>
+  
+    
+</custom-sql>

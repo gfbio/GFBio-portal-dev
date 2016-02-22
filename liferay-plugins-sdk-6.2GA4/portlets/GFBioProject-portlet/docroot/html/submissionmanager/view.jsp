@@ -46,8 +46,9 @@
 									</select>
 								</form>
 							</div>
-							<div id="suma_Helpdesk"   class="button_top_green" onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_Helpdesk.svg')"   onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Helpdesk</div>
-							<div id="suma_newProject" class="button_top_grey"  onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_newProject.svg')" onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')" onclick="startNewProject()">New Project</div>
+							<div id="suma_Helpdesk"   		class="button_top_WIP" 	 onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_Helpdesk.svg')"   	onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Helpdesk</div>
+							<div id="suma_curatorContact" 	class="button_top_grey"  onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_curatorContact.svg')" onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')" >Contact to Curator</div>
+							<div id="suma_newProject" 		class="button_top_grey"  onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_newProject.svg')" 	onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')" >New Project</div>
 						</div>
 					</div>
 				<%} else {%>
@@ -77,8 +78,9 @@
 									</select>
 								</form>
 							</div>
-							<div id="suma_Helpdesk"   class="button_top_green"  onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_Helpdesk.svg')"   onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Helpdesk</div>
-							<div id="suma_newProject" class="button_top_green"  onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_newProject.svg')" onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">New Project</div>
+							<div id="suma_Helpdesk"   		class="button_top_WIP"  	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_Helpdesk.svg')"   		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Helpdesk</div>
+							<div id="suma_curatorContact" 	class="button_top_WIP"  	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_curatorContact.svg')" 	onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')" >Contact to Curator</div>
+							<div id="suma_newProject" 		class="button_top_green"  	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_newProject.svg')" 		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')" onclick="startNewProject()">New Project</div>
 						</div>
 					</div>
 				<%} %>
@@ -86,17 +88,30 @@
 					<img id="suma_left_botton_img" src="${pageContext.request.contextPath}/html/submissionmanager/img_suma_default.svg" style="width:100%; position:relative;" />
 				</div>
 			</div>
+			
 			<div id="suma_rigth">
 				<div id="suma_rigth_top" style="margin-top:40px">
 					<div id="suma_projectProfile" 			class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/', 'img_suma_projectProfile.svg')" 	onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Project Profile</div>
 					<div id="suma_changeProject" 			class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/', 'img_suma_changeProject.svg')"		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Change Project Information</div>
 					<div id="suma_newRO"					class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_newRO.svg')" 				onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">New Research Object</div>
+					<div id="suma_changeRO" 				class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/', 'img_suma_changeRO.svg')"			onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Change Research Object <br> Information</div>
+					<div id="suma_uploadFile"				class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_uploadFile.svg')" 			onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">upload Example File</div>
 				</div>
-				<div id="suma_rigth_botton">
-						<div id="suma_managmentPlan"		class="button_right_WIP" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_managmentPlan.svg')" 		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Managment Plan  <br/>(without project context)</div>
-						<div id="suma_DCRT"					class="button_right_WIP" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_DCRT.svg')" 				onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">DataCenter Recommendation Tool  <br/>(without project context)</div>
-						<div id="suma_dataSubmission"		class="button_right_WIP" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_dataSubmission.svg')" 		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Data Submission <br/>(without project context))</div>
-				</div>
+				<%if (PortalUtil.getUser(request)==null){ %>
+					<div id="suma_rigth_botton">
+							<div id="suma_managmentPlan"		class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_managmentPlan.svg')" 		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Managment Plan</div>
+							<div id="suma_DCRT"					class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_DCRT.svg')" 				onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">DataCenter Recommendation Tool </div>
+							<div id="suma_dataSubmission"		class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_dataSubmission.svg')" 		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Data Submission </div>
+							<div id="suma_submissionRegistry"	class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_submissionRegistry.svg')" 	onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Submission Registry</div>
+					</div>
+				<%} else {%>
+					<div id="suma_rigth_botton">
+							<div id="suma_managmentPlan"		class="button_right_WIP" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_managmentPlan.svg')" 		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Managment Plan  <br/>(without project context)</div>
+							<div id="suma_DCRT"					class="button_right_WIP" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_DCRT.svg')" 				onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">DataCenter Recommendation Tool  <br/>(without project context)</div>
+							<div id="suma_dataSubmission"		class="button_right_WIP" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_dataSubmission.svg')" 		onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Data Submission <br/>(without project context))</div>
+							<div id="suma_submissionRegistry"	class="button_right_grey" 	onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_submissionRegistry.svg')" 	onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">Submission Registry</div>
+					</div>
+				<%} %>
 			</div>
 		</div>
 	</div>

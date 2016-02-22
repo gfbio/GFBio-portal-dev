@@ -12,6 +12,47 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
 	</portlet>
+	<portlet>
+
+	<portlet-name>back-to-su-ma</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>back-to-su-ma-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>data-provider-managment</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>
+			data-provider-managment-portlet
+		</css-class-wrapper>
+	</portlet>
+
+	<portlet>
+		<portlet-name>dcst</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>dcst-portlet</css-class-wrapper>
+     </portlet>
+	
+	<portlet>
+		<portlet-name>new-project</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>new-project-portlet</css-class-wrapper>
+	</portlet>
 
 	<portlet>
 		<portlet-name>project-profile</portlet-name>
@@ -26,14 +67,16 @@
 	</portlet>
 
 	<portlet>
-		<portlet-name>dcst</portlet-name>
+		<portlet-name>submission-manager</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
-		<css-class-wrapper>dcst-portlet</css-class-wrapper>
-     </portlet>
+		<css-class-wrapper>
+			submission-manager-portlet
+		</css-class-wrapper>
+	</portlet>
 
 	<portlet>
 		<portlet-name>table-builder</portlet-name>
@@ -43,16 +86,6 @@
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>table-builder-portlet</css-class-wrapper>
-	</portlet>
-	
-	<portlet>
-		<portlet-name>new-project</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>new-project-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>submission-manager</portlet-name>
