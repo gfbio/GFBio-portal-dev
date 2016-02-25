@@ -324,7 +324,7 @@ public interface SubmissionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getSubmissionIdByIds(long researchObjectId,
-		int ResearchObjectVersion, java.lang.String archive);
+		int researchObjectVersion, java.lang.String archive);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.gfbio.model.Submission getSubmission(long researchObjectId,

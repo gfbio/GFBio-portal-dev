@@ -214,11 +214,10 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		_methodName42 = "createResearchObject";
 
 		_methodParameterTypes42 = new String[] {
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String"
+				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName43 = "updateResearchObject";
+		_methodName43 = "updateKernelResearchObject";
 
 		_methodParameterTypes43 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
@@ -1382,8 +1381,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 	@Override
 	public long createResearchObject(java.lang.String name,
-		java.lang.String label, java.lang.String extendedData,
-		java.lang.String researchObjectType)
+		java.lang.String label, java.lang.String extendedData)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -1395,9 +1393,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 						
 					ClpSerializer.translateInput(label),
 						
-					ClpSerializer.translateInput(extendedData),
-						
-					ClpSerializer.translateInput(researchObjectType)
+					ClpSerializer.translateInput(extendedData)
 					});
 		}
 		catch (Throwable t) {
@@ -1420,7 +1416,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public long updateResearchObject(long researchObjectId,
+	public long updateKernelResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
 		java.lang.String label, java.lang.String extendedData) {
 		Object returnObj = null;

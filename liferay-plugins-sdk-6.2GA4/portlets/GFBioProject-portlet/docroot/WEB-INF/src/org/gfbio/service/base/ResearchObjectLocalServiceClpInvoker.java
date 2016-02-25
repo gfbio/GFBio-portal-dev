@@ -213,11 +213,10 @@ public class ResearchObjectLocalServiceClpInvoker {
 		_methodName147 = "createResearchObject";
 
 		_methodParameterTypes147 = new String[] {
-				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String"
+				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName148 = "updateResearchObject";
+		_methodName148 = "updateKernelResearchObject";
 
 		_methodParameterTypes148 = new String[] {
 				"long", "int", "java.lang.String", "java.lang.String",
@@ -467,13 +466,12 @@ public class ResearchObjectLocalServiceClpInvoker {
 		if (_methodName147.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.createResearchObject((java.lang.String)arguments[0],
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				(java.lang.String)arguments[3]);
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName148.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateResearchObject(((Long)arguments[0]).longValue(),
+			return ResearchObjectLocalServiceUtil.updateKernelResearchObject(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(java.lang.String)arguments[4]);
