@@ -72,7 +72,6 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 		try {
 			parseJson = (JSONArray) parser.parse(requestJson);
 		} catch (ParseException e) {e.printStackTrace();}
-		System.out.println(parseJson.toString());
 		return SubmissionLocalServiceUtil.createSubmission (parseJson);
 	}
 	
