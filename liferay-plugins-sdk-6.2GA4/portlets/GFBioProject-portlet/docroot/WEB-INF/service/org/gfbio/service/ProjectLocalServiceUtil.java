@@ -305,6 +305,10 @@ public class ProjectLocalServiceUtil {
 		return getService().getResearchObjectList(projectID, userID);
 	}
 
+	public static java.lang.Boolean checkProjectOnSubmissions(long projectId) {
+		return getService().checkProjectOnSubmissions(projectId);
+	}
+
 	public static java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
 		return getService().checkForIgnoredParameter(objects, keyList);

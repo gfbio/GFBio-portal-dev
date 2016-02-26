@@ -68,6 +68,10 @@ public class ProjectServiceUtil {
 		return getService().getProjectById(requestJson);
 	}
 
+	public static java.lang.Boolean checkProjectOnSubmissions(long projectId) {
+		return getService().checkProjectOnSubmissions(projectId);
+	}
+
 	public static org.json.simple.JSONObject createProject(
 		org.json.simple.JSONObject requestJson) {
 		return getService().createProject(requestJson);

@@ -275,6 +275,8 @@ public interface ProjectLocalService extends BaseLocalService,
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.Boolean checkProjectOnSubmissions(long projectId);
+
 	public java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList);
 

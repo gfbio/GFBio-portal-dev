@@ -246,7 +246,14 @@
 								
 								"<div class='row'>"+
 									"<div class='rowLato'> [ToDo]</div>"+
+								"</div>"+
+							
+							"<h4> submission package leaflet information </h4>"+
+								
+								"<div class='row'>"+
+									"<div class='rowLato'> [ToDo]</div>"+
 								"</div>"
+									
 					);
 					//Submissionregistry
 					createSubmissionRegistry(data.researchobjectid, divId);

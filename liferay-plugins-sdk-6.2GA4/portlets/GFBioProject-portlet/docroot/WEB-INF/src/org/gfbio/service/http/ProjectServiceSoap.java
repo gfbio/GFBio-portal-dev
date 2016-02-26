@@ -76,6 +76,20 @@ public class ProjectServiceSoap {
 		}
 	}
 
+	public static java.lang.Boolean checkProjectOnSubmissions(long projectId)
+		throws RemoteException {
+		try {
+			java.lang.Boolean returnValue = ProjectServiceUtil.checkProjectOnSubmissions(projectId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static org.json.simple.JSONObject createProject(
 		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
