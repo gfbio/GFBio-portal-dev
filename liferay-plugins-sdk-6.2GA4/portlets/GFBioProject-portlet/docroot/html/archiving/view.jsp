@@ -35,8 +35,10 @@
 				<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 				<input id="submissionCheck" type="hidden" value="true">
 	
+				
+	
 				<form action="select.htm">
-					<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onclick="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value)">
+					<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onclick="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value, <%=PortalUtil.getUser(request).getUserId()%>)">
 						<option selected value="none"> </option>
 						<option value="-21">Molecular Sequence Data</option>
 					</select>

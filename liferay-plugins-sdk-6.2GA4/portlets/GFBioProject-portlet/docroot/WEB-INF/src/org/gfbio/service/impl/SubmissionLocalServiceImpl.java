@@ -25,6 +25,7 @@ import java.util.Set;
 
 import org.gfbio.model.Submission;
 import org.gfbio.service.DataProviderLocalServiceUtil;
+import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.base.SubmissionLocalServiceBaseImpl;
 import org.gfbio.service.persistence.SubmissionFinderUtil;
 
@@ -262,9 +263,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 	//
 	@SuppressWarnings("rawtypes")
-	public long getSubmissionIdByIds(long researchObjectId, int ResearchObjectVersion, String archive) {
+	public long getSubmissionIdByIds(long researchObjectId, int researchObjectVersion, String archive) {
 		long submissionid =0;
-		List submissionIdList = SubmissionFinderUtil.getSubmissionIdByIds(researchObjectId, ResearchObjectVersion, archive);
+		List submissionIdList = SubmissionFinderUtil.getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		if (submissionIdList.size()>0)
 			submissionid = (long) submissionIdList.get(0);
 		return submissionid;
@@ -352,7 +353,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		for (int i =0; i <requestJson.size();i++)
 			responseJson.add(createSubmission((JSONObject) requestJson.get(i)));
-		
+
 		return responseJson;
 	}
 
@@ -384,11 +385,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				} catch (SystemException | NoSuchModelException e) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
 			
 			if (submission==null){
-				
+
 				check = updateKernelSubmission (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, userId);
 				
 				if (check){
-
+					
 					if (requestJson.containsKey("status"))
 						check = updateStatus(researchObjectId, researchObjectVersion, archive, (String) requestJson.get("status"));
 					else if (!(requestJson.containsKey("status")) && requestJson.containsKey("archivepidtype"))	
@@ -400,20 +401,19 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 						check = updateArchivePIdType(researchObjectId, researchObjectVersion, archive, (long) requestJson.get("archivepidtype") );
 					else if (getArchivePIdType(archive) !=0)
 						check = updateArchivePIdType(researchObjectId, researchObjectVersion, archive, getArchivePIdType(archive));
-						
+					
 					if (requestJson.containsKey("archivepid"))
 						check = updateArchivePId(researchObjectId, researchObjectVersion, archive, ((String)requestJson.get("archivepid")).trim());
-							
+					
 					if (requestJson.containsKey("ispublic"))
 						check = updateIsPublic(researchObjectId, researchObjectVersion, archive, (Boolean) requestJson.get("ispublic"));
 					else
 						check = updateIsPublic(researchObjectId, researchObjectVersion, archive, false);
 					
-					
 					if (requestJson.containsKey("publicafter"))
 						if (requestJson.get("publicafter").getClass().toString().equals("class java.lang.String"))
 							try {
-								DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
+								DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 								check = updatePublicAfter(researchObjectId, researchObjectVersion, archive, dateFormat.parse((String) requestJson.get("publicafter")));	
 							} catch (ParseException e) {e.printStackTrace();}
 						else
@@ -481,18 +481,15 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			
 		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("archive") && requestJson.containsKey("archivepid") && requestJson.containsKey("brokersubmissionid")&& requestJson.containsKey("userid") ){
 	
-			long researchObjectId =(long)requestJson.get("researchobjectid");
+			
 			String archive = ((String)requestJson.get("archive")).trim();
 			String brokerSubmissionId = ((String)requestJson.get("brokersubmissionid")).trim();
 			long userId = (long)requestJson.get("userid");
-			int researchObjectVersion = getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId);
+			long researchObjectId =(long)requestJson.get("researchobjectid");
+			int  researchObjectVersion = getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId);
 
-			long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
-			if (submissionid !=0)
-				try {
-					submission = submissionPersistence.findByPrimaryKey(submissionid);
-				} catch (SystemException | NoSuchModelException e) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
-		
+			submission = SubmissionLocalServiceUtil.getSubmission(researchObjectId, researchObjectVersion, archive);
+			
 			if (submission != null){
 				
 				check = updateKernelSubmission (researchObjectId, researchObjectVersion, archive, brokerSubmissionId, userId);
@@ -515,7 +512,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				if (requestJson.containsKey("publicafter"))
 					if (requestJson.get("publicafter").getClass().toString().equals("class java.lang.String"))
 						try {
-							DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
+							DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 							check = updatePublicAfter(researchObjectId, researchObjectVersion, archive, dateFormat.parse((String) requestJson.get("publicafter")));	
 						} catch (ParseException e) {e.printStackTrace();}
 					else
@@ -573,16 +570,17 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				submission = submissionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 				submission.setResearchObjectID(researchObjectId);
 				submission.setResearchObjectVersion(researchObjectVersion);
-				submission.setArchive(archive);
+				submission.setArchive(archive.trim());
 			}catch (SystemException e) {e.printStackTrace();}
 		submission.setBrokerSubmissionID(brokerSubmissionId);
 		submission.setUserID(userId);
 		submission.setLastChanged(new Timestamp(new Date().getTime()));
+
 		try {
 			super.updateSubmission(submission);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
-		
+
 		return check;
 	}
 	
@@ -603,14 +601,14 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				submission = submissionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 				submission.setResearchObjectID(researchObjectId);
 				submission.setResearchObjectVersion(researchObjectVersion);
-				submission.setArchive(archive);
+				submission.setArchive(archive.trim());
 			} catch (SystemException e) {e.printStackTrace();}
 		submission.setBrokerSubmissionID(brokerSubmissionId);
-		submission.setArchivePID(archivePId);
+		submission.setArchivePID(archivePId.trim());
 		submission.setArchivePIDType(archivePIdType);
 		submission.setLastChanged(lastChanged);
 		submission.setUserID(userId);
-		submission.setStatus(status);
+		submission.setStatus(status.trim());
 
 		try {
 			super.updateSubmission(submission);
@@ -650,12 +648,12 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				submission = submissionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 				submission.setResearchObjectID(researchObjectId);
 				submission.setResearchObjectVersion(researchObjectVersion);
-				submission.setArchive(archive);
+				submission.setArchive(archive.trim());
 			} catch (SystemException e) {e.printStackTrace();}
 		submission.setBrokerSubmissionID(brokerSubmissionId);
 		submission.setLastChanged(lastChanged);
 		submission.setUserID(userID);
-		submission.setStatus(status);
+		submission.setStatus(status.trim());
 		
 		try {
 			super.updateSubmission(submission);
@@ -673,12 +671,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateArchivePId(long researchObjectId, int researchObjectVersion, String archive, String archivePId){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 
 		if (submission != null)
 			try {
@@ -695,12 +689,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateArchivePIdType(long researchObjectId, int researchObjectVersion, String archive, long archivePIdType){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 		
 		if (submission != null)
 			try {
@@ -717,12 +707,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateBrokerSubmissionId(long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 		
 		if (submission != null)
 			try {
@@ -739,12 +725,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateIsPublic(long researchObjectId, int researchObjectVersion, String archive, Boolean isPublic){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 		
 		if (submission != null)
 			try {
@@ -761,12 +743,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateLastChanged(long researchObjectId, int researchObjectVersion, String archive, Date lastChanged){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 
 		if (submission != null)
 			try {
@@ -783,12 +761,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updatePublicAfter(long researchObjectId, int researchObjectVersion, String archive, Date publicAfter){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 		
 		if (submission != null)
 			try {
@@ -796,7 +770,6 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
-		
 		return check;
 	}
 	
@@ -805,12 +778,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateStatus (long researchObjectId, int researchObjectVersion, String archive, String status){
 
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 
 		if (submission != null)
 			try {
@@ -827,12 +796,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateUserId (long researchObjectId, int researchObjectVersion, String archive, long userId){
 
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		Submission submission = null;
-		if (submissionid !=0)
-			try {
-				submission = getSubmission(submissionid);
-			} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 		
 		if (submission != null)
 			try {

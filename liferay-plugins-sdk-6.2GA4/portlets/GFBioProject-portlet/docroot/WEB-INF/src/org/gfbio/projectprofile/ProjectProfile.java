@@ -34,6 +34,7 @@ public class ProjectProfile extends GenericPortlet {
 	private static Log _log = LogFactoryUtil.getLog(ProjectProfile.class);
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+		
 		CacheRegistryUtil.clear();
 		MultiVMPoolUtil.clear();
 		WebCachePoolUtil.clear();
