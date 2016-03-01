@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import org.gfbio.NoSuchResearchObjectException;
 import org.gfbio.model.ResearchObject;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
-import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
@@ -383,7 +382,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype"};
+		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype", "brokerobjectid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -413,6 +412,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			if (check){
 				responseJson.put("researchobjectid", researchObjectId);
 				responseJson.put("researchobjectversion", researchObjectVersion);
+				if (requestJson.containsKey("brokerobjectid")) 
+					responseJson.put("brokerobjectid", requestJson.get("brokerobjectid"));
 			}else
 				responseJson.put("ERROR:", "ERROR: create research object is failed.");
 		}else{
