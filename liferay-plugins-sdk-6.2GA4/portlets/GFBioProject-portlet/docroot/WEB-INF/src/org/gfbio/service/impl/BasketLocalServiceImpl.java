@@ -18,6 +18,11 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+// important!! JSONArray and JSONObject must be from liferay lib
+// if using org.json, the response message in liferay webservice will be incomplete 
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -56,41 +61,47 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// get a basket from basket's Id
 
-	public Basket getBasketById(long basketId) throws SystemException,
+	public JSONArray getBasketById(long basketId) throws SystemException,
 			NoSuchModelException {
-		Basket basket = null;
+		JSONArray jBasket = JSONFactoryUtil.createJSONArray();
 		try {
-			basket = basketPersistence.findByBasketId(basketId);
+
+			Basket basket = this.basketPersistence.findByBasketId(basketId);
+			JSONObject jObj = convertBasketToJSONObject(basket);
+			jBasket.put(jObj);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
-
-		return basket;
+		return jBasket;
 	}
 
 	// get baskets from baskets' Ids
 
-	public List<Basket> getBasketsByIds(long[] basketIds)
+	public JSONArray getBasketsByIds(long[] basketIds)
 			throws NoSuchModelException, SystemException {
-		List<Basket> basketList = null;
+		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
 		try {
-			basketList = basketPersistence.findByBasketIds(basketIds);
+			;
+			List<Basket> basketList = this.basketPersistence
+					.findByBasketIds(basketIds);
+			jBasketList = convertBasketListToJSONArray(basketList);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 
-		return basketList;
+		return jBasketList;
 	}
 
 	// get list of all baskets of a specific user updated within a specific
 	// period
 
-	public List<Basket> getBasketsByUserAndPeriod(long userId, int period)
+	public JSONArray getBasketsByUserAndPeriod(long userId, int period)
 			throws NoSuchModelException, SystemException {
-		List<Basket> basketList = null;
+		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
 		try {
+			List<Basket> basketList = null;
 			if (period == 0)
 				basketList = basketPersistence.findByUserId(userId);
 			else {
@@ -98,38 +109,40 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basketList = basketPersistence.findByUserIdSince(userId,
 						startDate);
 			}
+			jBasketList = convertBasketListToJSONArray(basketList);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 
-		return basketList;
+		return jBasketList;
 	}
 
 	// get list of all baskets of a specific user
 
-	public List<Basket> getBasketsByUserId(long userId) throws SystemException,
+	public JSONArray getBasketsByUserId(long userId) throws SystemException,
 			NoSuchModelException {
 
-		List<Basket> basketList = null;
+		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
 		try {
-			basketList = basketPersistence.findByUserId(userId);
+			List<Basket> basketList = basketPersistence.findByUserId(userId);
+			jBasketList = convertBasketListToJSONArray(basketList);
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 
-		return basketList;
+		return jBasketList;
 	}
 
 	// get list of all baskets' Ids of a specific user updated within a specific
 	// period
 
-	public List<Long> getBasketsIdByUserAndPeriod(long userId, int period)
+	public JSONArray getBasketsIdByUserAndPeriod(long userId, int period)
 			throws NoSuchModelException, SystemException {
-		List<Basket> basketList = new ArrayList<Basket>();
-		List<Long> basketIdList = new ArrayList<Long>();
+		JSONArray jBasketIdList = JSONFactoryUtil.createJSONArray();
 		try {
+			List<Basket> basketList = new ArrayList<Basket>();
 			if (period == 0)
 				basketList = basketPersistence.findByUserId(userId);
 			else {
@@ -139,34 +152,40 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			}
 
 			for (int i = 0; i < basketList.size(); i++) {
-				basketIdList.add(basketList.get(i).getBasketID());
+				long basketID = ((Basket) basketList.get(i)).getBasketID();
+				JSONObject jObj = JSONFactoryUtil.createJSONObject();
+				jObj.put("id", Long.valueOf(basketID));
+				jBasketIdList.put(jObj);
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 
-		return basketIdList;
+		return jBasketIdList;
 	}
 
 	// get list of all baskets' Id of a specific user
 
-	public List<Long> getBasketsIdByUserId(long userId) throws SystemException,
+	public JSONArray getBasketsIdByUserId(long userId) throws SystemException,
 			NoSuchModelException {
 
-		List<Long> basketIdList = new ArrayList<Long>();
+		JSONArray jBasketIdList = JSONFactoryUtil.createJSONArray();
 		try {
 			List<Basket> basketList = basketPersistence.findByUserId(userId);
 
 			for (int i = 0; i < basketList.size(); i++) {
-				basketIdList.add(basketList.get(i).getBasketID());
+				long basketID = ((Basket) basketList.get(i)).getBasketID();
+				JSONObject jObj = JSONFactoryUtil.createJSONObject();
+				jObj.put("id", Long.valueOf(basketID));
+				jBasketIdList.put(jObj);
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 
-		return basketIdList;
+		return jBasketIdList;
 	}
 
 	// update or create a new project
@@ -303,22 +322,56 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return isAdmin;
 	}
 
-	public Map<Long,String> getBasketUsersIds(long userId) throws Exception {
-		Map<Long,String> users = new HashMap<Long,String>();
+	public Map<Long, String> getBasketUsersIds(long userId) throws Exception {
+		Map<Long, String> users = new HashMap<Long, String>();
 		if (isUserAdmin(userId)) {
 			List<User> user_list = UserLocalServiceUtil.getUsers(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			for (User user : user_list) {
 				long uId = user.getUserId();
-				String uName = user.getFullName(); 
-				// check if this user has basket 
-				//if (getBasketsByUserId(uId).size() > 0) {
-				users.put(uId,uName);
-				//}
+				String uName = user.getFullName();
+				// check if this user has basket
+				// if (getBasketsByUserId(uId).size() > 0) {
+				users.put(uId, uName);
+				// }
 			}
 		} else {
 			System.out.println("No admin rights. Operation aborted.");
 		}
 		return users;
+	}
+
+	private JSONObject convertBasketToJSONObject(Basket basket) {
+		JSONObject jObj = JSONFactoryUtil.createJSONObject();
+		try {
+			if (basket != null) {
+				jObj.put("basketID", Long.valueOf(basket.getBasketID()));
+				jObj.put("userID", Long.valueOf(basket.getUserID()));
+				jObj.put("name", basket.getName());
+				jObj.put("lastModifiedDate", basket.getLastModifiedDate());
+
+				String strBasket = basket.getBasketJSON();
+				JSONObject jBasket = JSONFactoryUtil
+						.createJSONObject(strBasket);
+				jObj.put("basketJSON", jBasket);
+				JSONObject jQuery = JSONFactoryUtil.createJSONObject(basket
+						.getQueryJSON());
+				jObj.put("queryJSON", jQuery);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return jObj;
+	}
+
+	private JSONArray convertBasketListToJSONArray(List<Basket> basketList) {
+		JSONArray jArr = JSONFactoryUtil.createJSONArray();
+		for (int iBasket = 0; iBasket < basketList.size(); iBasket++) {
+			Basket basket = (Basket) basketList.get(iBasket);
+			JSONObject jBasket = convertBasketToJSONObject(basket);
+			jArr.put(jBasket);
+		}
+		return jArr;
 	}
 }
