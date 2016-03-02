@@ -70,10 +70,11 @@ page import="com.liferay.portal.util.PortalUtil" %>
 	
 	
 	//ENA Widget Publish
-	function SubmitENA(hidecode, showhide) {
+	function SubmitENA(hidecode, showhide, userId) {
 		var toSubmit = {
 			     "hidecode" : hidecode,
 			     "showhide" : showhide,
+			     "userid" : userId,
 			   };
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}

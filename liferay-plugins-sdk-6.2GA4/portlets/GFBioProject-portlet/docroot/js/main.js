@@ -62,11 +62,11 @@ function showhide(j) {
 
 
 //
-function ENAradio(j){
+function ENAradio(workflow, userId){
 	//radiohide(j);
 	for (i = -20; i>-29;i--)
-		SubmitENA(i, "hide");
-	SubmitENA(j, "show");
+		SubmitENA(i, "hide", userId);
+	SubmitENA(workflow, "show", userId);
 }
 
 
