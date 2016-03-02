@@ -16,8 +16,8 @@ package org.gfbio.service.impl;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
 
-import java.util.List;
 import java.util.Map;
 
 import org.gfbio.model.Basket;
@@ -39,17 +39,18 @@ import org.gfbio.service.base.BasketServiceBaseImpl;
  * @see org.gfbio.service.BasketServiceUtil
  */
 public class BasketServiceImpl extends BasketServiceBaseImpl {
-	public Basket getBasketById(long basketId) throws SystemException {
+	public JSONArray getBasketById(long basketId) throws SystemException {
 		try {
 			return BasketLocalServiceUtil.getBasketById(basketId);
 		} catch (NoSuchModelException e) {
+			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 
 		return null;
 	}
 
-	public List<Basket> getBasketsByIds(long[] basketIds) throws SystemException {
+	public JSONArray getBasketsByIds(long[] basketIds) throws SystemException {
 		try {
 			return BasketLocalServiceUtil.getBasketsByIds(basketIds);
 		} catch (NoSuchModelException e) {
@@ -59,7 +60,7 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return null;
 	}
 
-	public List<Basket> getBasketsByUserAndPeriod(long userId, int period) throws SystemException {
+	public JSONArray getBasketsByUserAndPeriod(long userId, int period) throws SystemException {
 		try {
 			return BasketLocalServiceUtil.getBasketsByUserAndPeriod(userId, period);
 		} catch (NoSuchModelException e) {
@@ -69,7 +70,7 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return null;
 	}
 
-	public List<Basket> getBasketsByUserId(long userId) throws SystemException {
+	public JSONArray getBasketsByUserId(long userId) throws SystemException {
 		try {
 			return BasketLocalServiceUtil.getBasketsByUserId(userId);
 		} catch (NoSuchModelException e) {
@@ -79,7 +80,7 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return null;
 	}
 
-	public List<Long> getBasketsIdByUserAndPeriod(long userId, int period) throws SystemException {
+	public JSONArray getBasketsIdByUserAndPeriod(long userId, int period) throws SystemException {
 		try {
 			return BasketLocalServiceUtil.getBasketsIdByUserAndPeriod(userId, period);
 		} catch (NoSuchModelException e) {
@@ -89,7 +90,7 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return null;
 	}
 
-	public List<Long> getBasketsIdByUserId(long userId) throws SystemException {
+	public JSONArray getBasketsIdByUserId(long userId) throws SystemException {
 		try {
 			return BasketLocalServiceUtil.getBasketsIdByUserId(userId);
 		} catch (NoSuchModelException e) {
