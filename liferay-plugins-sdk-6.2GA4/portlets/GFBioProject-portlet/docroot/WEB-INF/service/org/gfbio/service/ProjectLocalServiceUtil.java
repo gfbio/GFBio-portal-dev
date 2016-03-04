@@ -293,11 +293,20 @@ public class ProjectLocalServiceUtil {
 		return getService().getProjectList(userID);
 	}
 
+	public static java.util.List<org.gfbio.model.Project> getProjects()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getProjects();
+	}
+
 	public static java.util.List<org.gfbio.model.ResearchObject> getResearchObjectList(
 		long projectID, long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getResearchObjectList(projectID, userID);
+	}
+
+	public static java.lang.Boolean checkProjectOnSubmissions(long projectId) {
+		return getService().checkProjectOnSubmissions(projectId);
 	}
 
 	public static java.lang.String checkForIgnoredParameter(

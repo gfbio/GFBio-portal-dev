@@ -284,6 +284,17 @@ public class DataProviderLocalServiceWrapper implements DataProviderLocalService
 	}
 
 	@Override
+	public org.json.simple.JSONObject getDataProviderById(long dataProviderId) {
+		return _dataProviderLocalService.getDataProviderById(dataProviderId);
+	}
+
+	@Override
+	public org.json.simple.JSONObject getDataProviderByLabel(
+		java.lang.String label) {
+		return _dataProviderLocalService.getDataProviderByLabel(label);
+	}
+
+	@Override
 	public long getDataProviderIdByLabel(java.lang.String label) {
 		return _dataProviderLocalService.getDataProviderIdByLabel(label);
 	}
@@ -294,6 +305,11 @@ public class DataProviderLocalServiceWrapper implements DataProviderLocalService
 	}
 
 	@Override
+	public java.util.List getLabels() {
+		return _dataProviderLocalService.getLabels();
+	}
+
+	@Override
 	public java.lang.String getLabelById(long dataProviderId) {
 		return _dataProviderLocalService.getLabelById(dataProviderId);
 	}
@@ -301,6 +317,12 @@ public class DataProviderLocalServiceWrapper implements DataProviderLocalService
 	@Override
 	public java.util.List getPersistentIdentiferIds(long dataProviderId) {
 		return _dataProviderLocalService.getPersistentIdentiferIds(dataProviderId);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructDataProviderAsJson(
+		org.gfbio.model.DataProvider dataProvider) {
+		return _dataProviderLocalService.constructDataProviderAsJson(dataProvider);
 	}
 
 	@Override

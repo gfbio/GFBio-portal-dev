@@ -63,6 +63,32 @@ public class ContentServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.lang.String getContentIdsWithRelationships(long rowId,
+		java.lang.String tableName1, java.lang.String tableName2) {
+		return getService()
+				   .getContentIdsWithRelationships(rowId, tableName1, tableName2);
+	}
+
+	public static java.lang.String getContentIdsWithNormalTableRelationships(
+		long rowId, java.lang.String tableName, java.lang.String columnName1,
+		java.lang.String columnName2) {
+		return getService()
+				   .getContentIdsWithNormalTableRelationships(rowId, tableName,
+			columnName1, columnName2);
+	}
+
+	public static org.json.simple.JSONObject getRowInformationByContentId(
+		long contentId) {
+		return getService().getRowInformationByContentId(contentId);
+	}
+
+	public static org.json.simple.JSONArray getRowInformationOfRelationByContentId(
+		long contentId, java.lang.String tableName1, java.lang.String tableName2) {
+		return getService()
+				   .getRowInformationOfRelationByContentId(contentId,
+			tableName1, tableName2);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

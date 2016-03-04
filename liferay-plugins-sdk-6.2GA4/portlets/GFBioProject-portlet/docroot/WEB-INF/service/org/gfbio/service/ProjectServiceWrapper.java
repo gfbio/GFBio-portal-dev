@@ -63,6 +63,11 @@ public class ProjectServiceWrapper implements ProjectService,
 	}
 
 	@Override
+	public java.lang.Boolean checkProjectOnSubmissions(long projectId) {
+		return _projectService.checkProjectOnSubmissions(projectId);
+	}
+
+	@Override
 	public org.json.simple.JSONObject createProject(
 		org.json.simple.JSONObject requestJson) {
 		return _projectService.createProject(requestJson);

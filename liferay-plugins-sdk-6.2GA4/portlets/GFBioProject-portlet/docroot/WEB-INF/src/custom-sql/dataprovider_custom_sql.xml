@@ -22,5 +22,15 @@
 			  public.gfbio_dataprovider.dataproviderid =   ?
 		]]>
     </sql>
+     
+	<sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getLabels">
+	    <![CDATA[
+			SELECT 
+				gfbio_dataprovider.label
+			FROM 
+				public.gfbio_dataprovider
+			ORDER BY gfbio_dataprovider.label
+		]]>
+    </sql>
  
 </custom-sql>

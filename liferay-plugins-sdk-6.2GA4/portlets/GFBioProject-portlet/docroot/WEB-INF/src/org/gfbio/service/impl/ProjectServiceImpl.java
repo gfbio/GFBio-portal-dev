@@ -40,20 +40,6 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
-/*	//
-	public JSONArray getProjectById (String requestJson){
-		JSONParser parser = new JSONParser();
-		JSONArray parseJson = new JSONArray();
-		try {
-			parseJson = (JSONArray) parser.parse(requestJson);
-		} catch (ParseException e) {e.printStackTrace();}
-		
-		JSONArray responseJson = new JSONArray();
-		responseJson = ProjectLocalServiceUtil.getCompleteProjectById(parseJson);
-		return responseJson;
-	}*/
-	
-	
 	//
 	public JSONObject getProjectById (JSONObject requestJson){
 
@@ -63,11 +49,14 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	}
 	
 	
+	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
-/*	//
-	public List<Project> getProjectListByUserId(long userID) throws NoSuchModelException, SystemException {
-		return ProjectLocalServiceUtil.getProjectList(userID);
-	}*/
+	
+	//
+	public Boolean checkProjectOnSubmissions(long projectId){
+		return ProjectLocalServiceUtil.checkProjectOnSubmissions(projectId);
+	}
+	
 	
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////

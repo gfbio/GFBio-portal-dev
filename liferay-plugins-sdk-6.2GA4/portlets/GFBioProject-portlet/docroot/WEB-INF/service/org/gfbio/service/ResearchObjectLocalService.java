@@ -334,11 +334,10 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		org.json.simple.JSONObject requestJson);
 
 	public long createResearchObject(java.lang.String name,
-		java.lang.String label, java.lang.String extendedData,
-		java.lang.String researchObjectType)
+		java.lang.String label, java.lang.String extendedData)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public long updateResearchObject(long researchObjectId,
+	public long updateKernelResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
 		java.lang.String label, java.lang.String extendedData);
 
