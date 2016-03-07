@@ -331,14 +331,9 @@
 							  // When the removed tag is a year range, then reset the slider
 							  if (result[property] == 'citation_yearFacet'){
 								tagLabel = result['facetTerm'];
-							  console.log('*****************');
-							  console.log(tagLabel);
-							  console.log('*****************');
 							  
 							    var first = tagLabel.substring(0,4);
 							    var last = tagLabel.substring(7,11);
-							    console.log(first);
-							    console.log(last);
 							    if (isNumeric(first) && isNumeric(last) && (tagLabel.indexOf(' - ') ==4)){
 								  $("#facetTags").tagit("removeTagByLabel", tagLabel);
 								  //var minYear = getMinYear(yearFacet);
@@ -373,6 +368,7 @@
 						});
 					   return resultArray;
 				};
+				
 				function getFacetBasketJSON() {
 					var jsonData = {};
 					var selected = [];

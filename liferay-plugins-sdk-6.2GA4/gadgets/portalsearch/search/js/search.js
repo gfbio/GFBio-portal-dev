@@ -1,4 +1,5 @@
 
+			
 				function updateVisualisation() {
 					var jsonData = getSelectedResult();
 					// Add query message in JSON format
@@ -105,8 +106,9 @@
 								if (!$(".dataTables_empty")[0]) {
 									addColorPicker();
 									setSelectedRowStyle();
-									//adjust();
-								}
+									// activate parameter show/hide event
+									toggleParametersField()
+								}					
 							},
 							"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
 								showCartIcon(nRow, aData);
@@ -117,7 +119,6 @@
 						});
 					// activate the row click event
 					onRowClick();
-
 				}
 
 				function fnServerObjectToArray(keyword, filterArray, yearRange) {
@@ -538,7 +539,8 @@
 
 						if (sourceObj["html-1"]) { // this field is used only for displaying data
 							var html = sourceObj["html-1"][0];
-							inner.html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
+							html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
+							inner.html = writeShowHideParameterField(html);
 						} else
 							inner.html = "";
 
@@ -556,6 +558,33 @@
 					return res;
 				}
 
+				function writeShowHideParameterField(orgHTML){
+					var d = document.createElement('div');
+					d.innerHTML = orgHTML;
+					var elms = d.getElementsByClassName('desc-right');
+					$.each(elms, function(index,elm){
+						var descLeft = elm.previousElementSibling;
+						var field = descLeft.childNodes[0].nodeValue;
+						
+						if (field.startsWith('Parameters')){
+							var paramStr = elm.textContent;
+							var limitLen = 180;
+							if ((paramStr.length > limitLen)&&(paramStr.length > limitLen+5)){
+								// set two length to prevent the expansion for less than 5 characters
+								var trimmedContent = paramStr.substring(0,limitLen);
+								var shortenedParam = '<span class="paramExpanded">'+paramStr
+												+'</span>'
+												+'<span class="paramCollapsed">'+trimmedContent
+												+'...</span>'
+												+'<a href="javascript:void(0)" class="paramCollapsed">(+)</a>'
+												+'<a href="javascript:void(0)" class="paramExpanded">(-)</a>';
+								d.innerHTML = d.innerHTML.replace(paramStr,shortenedParam);
+							}
+						}
+					});
+					return d.innerHTML;
+				}
+				
 				function writeResultTable() {
 					var displaytext = "<table style='border: 0; cellpadding: 0; cellspacing: 0;' id='tableId' class='display'>";
 					var div = document.getElementById('search_result_table');
@@ -895,4 +924,12 @@
 						var rejsn = JSON.stringify(js_obj, undefined, 2).replace(/(\\t|\\r|\\n)/g, '').replace(/"",[\n\t\r\s]+""[,]*/g, '').replace(/(\n[\t\s\r]*\n)/g, '').replace(/[\s\t]{2,}""[,]{0,1}/g, '').replace(/"[\s\t]{1,}"[,]{0,1}/g, '').replace(/\[[\t\s]*\]/g, '""');
 						return (rejsn.indexOf('"parsererror": {') == -1) ? rejsn : 'Invalid XML format';
 					}
+				};
+				
+				function toggleParametersField(){
+					$(".paramExpanded").hide();	
+					$(".paramExpanded, .paramCollapsed").click(function() {
+						$(this).parent().children(".paramExpanded, .paramCollapsed").toggle();
+						adjust();
+					});
 				};
