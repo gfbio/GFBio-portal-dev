@@ -303,7 +303,7 @@
 						var basketStr = basket.value;
 						if (basketStr!="") {
 							jsonData = JSON.parse(basketStr);
-							jsonData.filtered = JSONfindAndRemoveWithTagRemove(jsonData.filtered,'facetCat',filterCat);
+							jsonData.filtered = JSONfindAndRemove(jsonData.filtered,'facetCat',filterCat);
 							basket.value = JSON.stringify(jsonData);
 						}
 					}
@@ -325,21 +325,28 @@
 						  if (result[property] == value) {
 							  // Remove from array is not working I don't know why,
 							  // just do it another way round
-			  
+							
+							  var tagLabel = result[property];
 							  // -----------------------------------------
 							  // When the removed tag is a year range, then reset the slider
-							  var tagLabel = result[property];
-							  var first = tagLabel.substring(0,4);
-							  var last = tagLabel.substring(7,4);
-							  console.log(first);
-							  console.log(last);
-							  if (isNumeric(first) && isNumeric(last) && (tagLabel.indexOf(' - ') ==4)){
-								$("#facetTags").tagit("removeTagByLabel", tagLabel);
-								var minYear = getMinYear(yearFacet);
-								var maxYear = getMaxYear(yearFacet);
-								var slider = document.getElementById("slider-range");
-								slider.slider("option", 'min', minYear*1);
-								slider.slider("option", 'max', maxYear*1);
+							  if (result[property] == 'citation_yearFacet'){
+								tagLabel = result['facetTerm'];
+							  console.log('*****************');
+							  console.log(tagLabel);
+							  console.log('*****************');
+							  
+							    var first = tagLabel.substring(0,4);
+							    var last = tagLabel.substring(7,11);
+							    console.log(first);
+							    console.log(last);
+							    if (isNumeric(first) && isNumeric(last) && (tagLabel.indexOf(' - ') ==4)){
+								  $("#facetTags").tagit("removeTagByLabel", tagLabel);
+								  //var minYear = getMinYear(yearFacet);
+								  //var maxYear = getMaxYear(yearFacet);
+								  //var slider = document.getElementById("slider-range");
+								  //slider.slider("option", 'min', minYear*1);
+								  //slider.slider("option", 'max', maxYear*1);
+							    }
 							  }
 							  // -----------------------------------------
 						  }    else {
