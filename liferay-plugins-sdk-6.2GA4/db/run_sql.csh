@@ -16,7 +16,6 @@ $command create_researchobject.sql
 $command create_submission.sql
 $command create_project_researchobject.sql
 $command create_project_user.sql
-$command create_project_user_pi.sql
 $command create_dataprovider_persistentidentifiert.sql
 
 
