@@ -25,7 +25,7 @@
 							basketID : basketid,
 							userID : uid,
 							name : uid + '_basket',
-							basketJSON : val,
+							basketContent : val,
 							queryJSON : query
 						},
 							function (obj) {

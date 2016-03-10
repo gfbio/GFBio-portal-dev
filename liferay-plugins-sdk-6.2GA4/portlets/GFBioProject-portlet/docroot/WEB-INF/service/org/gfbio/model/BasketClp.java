@@ -78,7 +78,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
 		attributes.put("lastModifiedDate", getLastModifiedDate());
-		attributes.put("basketJSON", getBasketJSON());
+		attributes.put("basketContent", getBasketContent());
 		attributes.put("queryJSON", getQueryJSON());
 
 		return attributes;
@@ -110,10 +110,10 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 			setLastModifiedDate(lastModifiedDate);
 		}
 
-		String basketJSON = (String)attributes.get("basketJSON");
+		String basketContent = (String)attributes.get("basketContent");
 
-		if (basketJSON != null) {
-			setBasketJSON(basketJSON);
+		if (basketContent != null) {
+			setBasketContent(basketContent);
 		}
 
 		String queryJSON = (String)attributes.get("queryJSON");
@@ -217,21 +217,21 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 	}
 
 	@Override
-	public String getBasketJSON() {
-		return _basketJSON;
+	public String getBasketContent() {
+		return _basketContent;
 	}
 
 	@Override
-	public void setBasketJSON(String basketJSON) {
-		_basketJSON = basketJSON;
+	public void setBasketContent(String basketContent) {
+		_basketContent = basketContent;
 
 		if (_basketRemoteModel != null) {
 			try {
 				Class<?> clazz = _basketRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setBasketJSON", String.class);
+				Method method = clazz.getMethod("setBasketContent", String.class);
 
-				method.invoke(_basketRemoteModel, basketJSON);
+				method.invoke(_basketRemoteModel, basketContent);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -335,7 +335,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		clone.setUserID(getUserID());
 		clone.setName(getName());
 		clone.setLastModifiedDate(getLastModifiedDate());
-		clone.setBasketJSON(getBasketJSON());
+		clone.setBasketContent(getBasketContent());
 		clone.setQueryJSON(getQueryJSON());
 
 		return clone;
@@ -400,8 +400,8 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		sb.append(getName());
 		sb.append(", lastModifiedDate=");
 		sb.append(getLastModifiedDate());
-		sb.append(", basketJSON=");
-		sb.append(getBasketJSON());
+		sb.append(", basketContent=");
+		sb.append(getBasketContent());
 		sb.append(", queryJSON=");
 		sb.append(getQueryJSON());
 		sb.append("}");
@@ -434,8 +434,8 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 		sb.append(getLastModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>basketJSON</column-name><column-value><![CDATA[");
-		sb.append(getBasketJSON());
+			"<column><column-name>basketContent</column-name><column-value><![CDATA[");
+		sb.append(getBasketContent());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>queryJSON</column-name><column-value><![CDATA[");
@@ -451,7 +451,7 @@ public class BasketClp extends BaseModelImpl<Basket> implements Basket {
 	private long _userID;
 	private String _name;
 	private Date _lastModifiedDate;
-	private String _basketJSON;
+	private String _basketContent;
 	private String _queryJSON;
 	private BaseModel<?> _basketRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;

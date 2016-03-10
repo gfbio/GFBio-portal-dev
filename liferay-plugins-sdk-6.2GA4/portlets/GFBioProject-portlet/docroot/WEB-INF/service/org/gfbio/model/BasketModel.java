@@ -117,19 +117,19 @@ public interface BasketModel extends BaseModel<Basket> {
 	public void setLastModifiedDate(Date lastModifiedDate);
 
 	/**
-	 * Returns the basket j s o n of this basket.
+	 * Returns the basket content of this basket.
 	 *
-	 * @return the basket j s o n of this basket
+	 * @return the basket content of this basket
 	 */
 	@AutoEscape
-	public String getBasketJSON();
+	public String getBasketContent();
 
 	/**
-	 * Sets the basket j s o n of this basket.
+	 * Sets the basket content of this basket.
 	 *
-	 * @param basketJSON the basket j s o n of this basket
+	 * @param basketContent the basket content of this basket
 	 */
-	public void setBasketJSON(String basketJSON);
+	public void setBasketContent(String basketContent);
 
 	/**
 	 * Returns the query j s o n of this basket.

@@ -69,10 +69,10 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 			{ "userID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "lastModifiedDate", Types.TIMESTAMP },
-			{ "basketJSON", Types.VARCHAR },
+			{ "basketContent", Types.VARCHAR },
 			{ "queryJSON", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Basket (basketID LONG not null primary key,userID LONG,name VARCHAR(75) null,lastModifiedDate DATE null,basketJSON VARCHAR(75) null,queryJSON VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Basket (basketID LONG not null primary key,userID LONG,name VARCHAR(75) null,lastModifiedDate DATE null,basketContent VARCHAR(75) null,queryJSON VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Basket";
 	public static final String ORDER_BY_JPQL = " ORDER BY basket.lastModifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Basket.lastModifiedDate DESC";
@@ -109,7 +109,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		model.setUserID(soapModel.getUserID());
 		model.setName(soapModel.getName());
 		model.setLastModifiedDate(soapModel.getLastModifiedDate());
-		model.setBasketJSON(soapModel.getBasketJSON());
+		model.setBasketContent(soapModel.getBasketContent());
 		model.setQueryJSON(soapModel.getQueryJSON());
 
 		return model;
@@ -179,7 +179,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
 		attributes.put("lastModifiedDate", getLastModifiedDate());
-		attributes.put("basketJSON", getBasketJSON());
+		attributes.put("basketContent", getBasketContent());
 		attributes.put("queryJSON", getQueryJSON());
 
 		return attributes;
@@ -211,10 +211,10 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 			setLastModifiedDate(lastModifiedDate);
 		}
 
-		String basketJSON = (String)attributes.get("basketJSON");
+		String basketContent = (String)attributes.get("basketContent");
 
-		if (basketJSON != null) {
-			setBasketJSON(basketJSON);
+		if (basketContent != null) {
+			setBasketContent(basketContent);
 		}
 
 		String queryJSON = (String)attributes.get("queryJSON");
@@ -309,18 +309,18 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 
 	@JSON
 	@Override
-	public String getBasketJSON() {
-		if (_basketJSON == null) {
+	public String getBasketContent() {
+		if (_basketContent == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _basketJSON;
+			return _basketContent;
 		}
 	}
 
 	@Override
-	public void setBasketJSON(String basketJSON) {
-		_basketJSON = basketJSON;
+	public void setBasketContent(String basketContent) {
+		_basketContent = basketContent;
 	}
 
 	@JSON
@@ -374,7 +374,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		basketImpl.setUserID(getUserID());
 		basketImpl.setName(getName());
 		basketImpl.setLastModifiedDate(getLastModifiedDate());
-		basketImpl.setBasketJSON(getBasketJSON());
+		basketImpl.setBasketContent(getBasketContent());
 		basketImpl.setQueryJSON(getQueryJSON());
 
 		basketImpl.resetOriginalValues();
@@ -467,12 +467,12 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 			basketCacheModel.lastModifiedDate = Long.MIN_VALUE;
 		}
 
-		basketCacheModel.basketJSON = getBasketJSON();
+		basketCacheModel.basketContent = getBasketContent();
 
-		String basketJSON = basketCacheModel.basketJSON;
+		String basketContent = basketCacheModel.basketContent;
 
-		if ((basketJSON != null) && (basketJSON.length() == 0)) {
-			basketCacheModel.basketJSON = null;
+		if ((basketContent != null) && (basketContent.length() == 0)) {
+			basketCacheModel.basketContent = null;
 		}
 
 		basketCacheModel.queryJSON = getQueryJSON();
@@ -498,8 +498,8 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		sb.append(getName());
 		sb.append(", lastModifiedDate=");
 		sb.append(getLastModifiedDate());
-		sb.append(", basketJSON=");
-		sb.append(getBasketJSON());
+		sb.append(", basketContent=");
+		sb.append(getBasketContent());
 		sb.append(", queryJSON=");
 		sb.append(getQueryJSON());
 		sb.append("}");
@@ -532,8 +532,8 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 		sb.append(getLastModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>basketJSON</column-name><column-value><![CDATA[");
-		sb.append(getBasketJSON());
+			"<column><column-name>basketContent</column-name><column-value><![CDATA[");
+		sb.append(getBasketContent());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>queryJSON</column-name><column-value><![CDATA[");
@@ -556,7 +556,7 @@ public class BasketModelImpl extends BaseModelImpl<Basket>
 	private String _name;
 	private Date _lastModifiedDate;
 	private Date _originalLastModifiedDate;
-	private String _basketJSON;
+	private String _basketContent;
 	private String _queryJSON;
 	private long _columnBitmask;
 	private Basket _escapedModel;

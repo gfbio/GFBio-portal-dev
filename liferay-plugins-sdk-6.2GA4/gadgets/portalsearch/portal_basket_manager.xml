@@ -13,15 +13,14 @@
 	</ModulePrefs>
 	<Content type="html">
 			<![CDATA[
-	<!DOCTYPE html>
 		<html style="min-height: 350px;">
 			<head  lang="en">
 				<meta charset="UTF-8">
 				<title>GFBio Basket Manager</title>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/jquery-1.10.2.js"	type="text/javascript"></script>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
-				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/jquery-ui.css" />
-				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/basketmanager.css" />
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery-ui.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/basketmanager.css" />
 				<script>
 					$(function() {
 						getUserList();
@@ -78,7 +77,7 @@
 							userId: uID,
 							period: period
 						  },
-						  function(obj) {
+						  function(obj) { // return obj is JSONArray
 							var basketsHTML = "";
 							for(var key in obj){
 								//console.log(obj[key]);
@@ -129,7 +128,7 @@
 									var bID = evt.substring(5);
 									document.getElementById('selectedBasketID').value = bID;
 									var basketName = document.getElementById(bID+'.name').value;
-									var bJSON = document.getElementById(bID+'.basketJSON').value;
+									var bJSON = document.getElementById(bID+'.basketContent').value;
 									var qJSON = document.getElementById(bID+'.queryJSON').value;
 									parent.Liferay.Service(
 									  '/GFBioProject-portlet.basket/update-basket',
@@ -137,7 +136,7 @@
 										basketID: bID,
 										userID: uID,
 										name: basketName,
-										basketJSON: JSON.stringify(JSON.parse(bJSON)),
+										basketContent: JSON.stringify(JSON.parse(bJSON)),
 										queryJSON: JSON.stringify(JSON.parse(qJSON))
 									  },
 									  function(obj){
@@ -148,11 +147,11 @@
 								}
 								else if (evt.indexOf('load')==0){
 									var bID = evt.substring(5);
-									var bJSON = document.getElementById(bID+'.basketJSON').value;
+									var bJSON = document.getElementById(bID+'.basketContent').value;
 									var qJSON = document.getElementById(bID+'.queryJSON').value;
 									var jsonData = {};
 									jsonData.basketID = bID;
-									jsonData.basketJSON = bJSON;
+									jsonData.basketContent = bJSON;
 									jsonData.query = qJSON;
 									if (gadgets.Hub.isConnected()){
 										gadgets.Hub.publish('gfbio.search.basketData', jsonData);
@@ -181,9 +180,9 @@
 						basketsHTML += "</td></tr>";
 						
 						var timestamp = basket.lastModifiedDate;
-						var mod = new Date(timestamp)
+						//var mod = new Date(timestamp)
 						
-						basketsHTML += "<tr><td width='10%'>Last Modified:</td><td>"+mod;
+						basketsHTML += "<tr><td width='10%'>Last Modified:</td><td>"+timestamp;
 						basketsHTML += "</td></tr>";
 						
 						basketsHTML += "<tr><td width='10%'>Name:</td><td>"+
@@ -191,15 +190,15 @@
 								"style='width:100%' value='"+basket.name+"'/>";
 						basketsHTML += "</td></tr>";
 						
-						var basketObj = JSON.parse(basket.basketJSON);
+						var basketObj = basket.basketContent;
 						basketsHTML += "<tr><td width='10%'>JSON:</td><td></td></tr>"+
 										"<tr><td colspan='2'>"+
-										"<textarea id='"+basket.basketID+".basketJSON' "+
+										"<textarea id='"+basket.basketID+".basketContent' "+
 										"style='width:100%' rows='6'>"+
 										JSON.stringify(basketObj,null,4)+"</textarea>";
 						basketsHTML += "</td></tr>";
 						
-						var queryObj = JSON.parse(basket.queryJSON);
+						var queryObj = basket.queryJSON;
 						basketsHTML += "<tr><td width='10%'>Query:</td><td></td></tr>"+
 										"<tr><td colspan='2'>"+
 										"<textarea id='"+basket.basketID+".queryJSON' "+
