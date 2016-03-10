@@ -282,7 +282,7 @@
 					};
 					
 					function fireFacetData(){
-						var jsonData = getFacetBasketJSON();
+						var jsonData = getFacetBasketContent();
 						console.log(':Facet: fire facet basket data: '+JSON.stringify(jsonData));
 					    gadgets.Hub.publish('gfbio.search.facetfilter', jsonData);
 					}
@@ -369,7 +369,7 @@
 					   return resultArray;
 				};
 				
-				function getFacetBasketJSON() {
+				function getFacetBasketContent() {
 					var jsonData = {};
 					var selected = [];
 					var basket = document.getElementById("facetBasket");

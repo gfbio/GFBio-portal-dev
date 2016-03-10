@@ -64,10 +64,10 @@
 				};
 				function loadBasket(topic, data, subscriberData){
 					//console.log(data.basketID);
-					//console.log(JSON.parse(data.basketJSON));
+					//console.log(data.basketContent);
 					//console.log(data.query);
 					document.getElementById("basketID").value = data.basketID;
-					document.getElementById("visualBasket").value = data.basketJSON
+					document.getElementById("visualBasket").value = data.basketContent
 					var query = JSON.parse(data.query);
 					//console.log(query);
 					var queryStr = query.query.function_score.query.filtered.query.simple_query_string.query;

@@ -76,7 +76,7 @@
 		<column name="userID" 				type="long" />
 		<column name="name" 				type="String" />
 		<column name="lastModifiedDate" 	type="Date" />
-		<column name="basketJSON" 			type="String" />
+		<column name="basketContent" 		type="String" />
 		<column name="queryJSON" 			type="String" />
 
 		<order by="desc">		<order-column name="lastModifiedDate" />		</order>

@@ -204,7 +204,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basket.setName(name);
 				Date now = new java.util.Date();
 				basket.setLastModifiedDate(now);
-				basket.setBasketJSON(basketJSON);
+				basket.setBasketContent(basketJSON);
 				basket.setQueryJSON(queryJSON);
 				super.updateBasket(basket);
 			} else {
@@ -221,7 +221,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			basket.setName(name);
 			Date now = new java.util.Date();
 			basket.setLastModifiedDate(now);
-			basket.setBasketJSON(basketJSON);
+			basket.setBasketContent(basketJSON);
 			basket.setQueryJSON(queryJSON);
 			super.updateBasket(basket);
 			e.printStackTrace();
@@ -350,7 +350,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				jObj.put("name", basket.getName());
 				jObj.put("lastModifiedDate", basket.getLastModifiedDate());
 
-				String strBasket = basket.getBasketJSON();
+				String strBasket = basket.getBasketContent();
 				JSONObject jBasket = JSONFactoryUtil
 						.createJSONObject(strBasket);
 				jObj.put("basketJSON", jBasket);

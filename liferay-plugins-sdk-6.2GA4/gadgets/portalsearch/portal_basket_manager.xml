@@ -129,7 +129,7 @@
 									var bID = evt.substring(5);
 									document.getElementById('selectedBasketID').value = bID;
 									var basketName = document.getElementById(bID+'.name').value;
-									var bJSON = document.getElementById(bID+'.basketJSON').value;
+									var bJSON = document.getElementById(bID+'.basketContent').value;
 									var qJSON = document.getElementById(bID+'.queryJSON').value;
 									parent.Liferay.Service(
 									  '/GFBioProject-portlet.basket/update-basket',
@@ -137,7 +137,7 @@
 										basketID: bID,
 										userID: uID,
 										name: basketName,
-										basketJSON: JSON.stringify(JSON.parse(bJSON)),
+										basketContent: JSON.stringify(JSON.parse(bJSON)),
 										queryJSON: JSON.stringify(JSON.parse(qJSON))
 									  },
 									  function(obj){
@@ -148,11 +148,11 @@
 								}
 								else if (evt.indexOf('load')==0){
 									var bID = evt.substring(5);
-									var bJSON = document.getElementById(bID+'.basketJSON').value;
+									var bJSON = document.getElementById(bID+'.basketContent').value;
 									var qJSON = document.getElementById(bID+'.queryJSON').value;
 									var jsonData = {};
 									jsonData.basketID = bID;
-									jsonData.basketJSON = bJSON;
+									jsonData.basketContent = bJSON;
 									jsonData.query = qJSON;
 									if (gadgets.Hub.isConnected()){
 										gadgets.Hub.publish('gfbio.search.basketData', jsonData);
@@ -191,15 +191,15 @@
 								"style='width:100%' value='"+basket.name+"'/>";
 						basketsHTML += "</td></tr>";
 						
-						var basketObj = JSON.parse(basket.basketJSON);
+						var basketObj = basket.basketContent;
 						basketsHTML += "<tr><td width='10%'>JSON:</td><td></td></tr>"+
 										"<tr><td colspan='2'>"+
-										"<textarea id='"+basket.basketID+".basketJSON' "+
+										"<textarea id='"+basket.basketID+".basketContent' "+
 										"style='width:100%' rows='6'>"+
 										JSON.stringify(basketObj,null,4)+"</textarea>";
 						basketsHTML += "</td></tr>";
 						
-						var queryObj = JSON.parse(basket.queryJSON);
+						var queryObj = basket.queryJSON;
 						basketsHTML += "<tr><td width='10%'>Query:</td><td></td></tr>"+
 										"<tr><td colspan='2'>"+
 										"<textarea id='"+basket.basketID+".queryJSON' "+
