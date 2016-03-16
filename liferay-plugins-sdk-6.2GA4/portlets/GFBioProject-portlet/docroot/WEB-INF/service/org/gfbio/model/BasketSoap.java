@@ -35,7 +35,7 @@ public class BasketSoap implements Serializable {
 		soapModel.setUserID(model.getUserID());
 		soapModel.setName(model.getName());
 		soapModel.setLastModifiedDate(model.getLastModifiedDate());
-		soapModel.setBasketJSON(model.getBasketJSON());
+		soapModel.setBasketContent(model.getBasketContent());
 		soapModel.setQueryJSON(model.getQueryJSON());
 
 		return soapModel;
@@ -121,12 +121,12 @@ public class BasketSoap implements Serializable {
 		_lastModifiedDate = lastModifiedDate;
 	}
 
-	public String getBasketJSON() {
-		return _basketJSON;
+	public String getBasketContent() {
+		return _basketContent;
 	}
 
-	public void setBasketJSON(String basketJSON) {
-		_basketJSON = basketJSON;
+	public void setBasketContent(String basketContent) {
+		_basketContent = basketContent;
 	}
 
 	public String getQueryJSON() {
@@ -141,6 +141,6 @@ public class BasketSoap implements Serializable {
 	private long _userID;
 	private String _name;
 	private Date _lastModifiedDate;
-	private String _basketJSON;
+	private String _basketContent;
 	private String _queryJSON;
 }

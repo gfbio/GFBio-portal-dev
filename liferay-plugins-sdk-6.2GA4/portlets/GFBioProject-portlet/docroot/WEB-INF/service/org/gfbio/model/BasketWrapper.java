@@ -53,7 +53,7 @@ public class BasketWrapper implements Basket, ModelWrapper<Basket> {
 		attributes.put("userID", getUserID());
 		attributes.put("name", getName());
 		attributes.put("lastModifiedDate", getLastModifiedDate());
-		attributes.put("basketJSON", getBasketJSON());
+		attributes.put("basketContent", getBasketContent());
 		attributes.put("queryJSON", getQueryJSON());
 
 		return attributes;
@@ -85,10 +85,10 @@ public class BasketWrapper implements Basket, ModelWrapper<Basket> {
 			setLastModifiedDate(lastModifiedDate);
 		}
 
-		String basketJSON = (String)attributes.get("basketJSON");
+		String basketContent = (String)attributes.get("basketContent");
 
-		if (basketJSON != null) {
-			setBasketJSON(basketJSON);
+		if (basketContent != null) {
+			setBasketContent(basketContent);
 		}
 
 		String queryJSON = (String)attributes.get("queryJSON");
@@ -199,23 +199,23 @@ public class BasketWrapper implements Basket, ModelWrapper<Basket> {
 	}
 
 	/**
-	* Returns the basket j s o n of this basket.
+	* Returns the basket content of this basket.
 	*
-	* @return the basket j s o n of this basket
+	* @return the basket content of this basket
 	*/
 	@Override
-	public java.lang.String getBasketJSON() {
-		return _basket.getBasketJSON();
+	public java.lang.String getBasketContent() {
+		return _basket.getBasketContent();
 	}
 
 	/**
-	* Sets the basket j s o n of this basket.
+	* Sets the basket content of this basket.
 	*
-	* @param basketJSON the basket j s o n of this basket
+	* @param basketContent the basket content of this basket
 	*/
 	@Override
-	public void setBasketJSON(java.lang.String basketJSON) {
-		_basket.setBasketJSON(basketJSON);
+	public void setBasketContent(java.lang.String basketContent) {
+		_basket.setBasketContent(basketContent);
 	}
 
 	/**

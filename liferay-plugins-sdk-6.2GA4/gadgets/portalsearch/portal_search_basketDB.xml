@@ -13,22 +13,21 @@
 	</ModulePrefs>
 	<Content type="html">
 		<![CDATA[
-	<!DOCTYPE html>
 		<html style="min-height: 350px;">
 			<head  lang="en">
 				<meta charset="UTF-8">
 				<title>GFBio Search widget</title>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/jquery-1.10.2.js"	type="text/javascript"></script>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/search.js?r=123" type="text/javascript"></script>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/jquery.dataTables.js"	type="text/javascript"></script>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/js/spectrum.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery.dataTables.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/search.js?r=123"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/spectrum.js"	type="text/javascript"></script>
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/esTSSearch/TMS.js" type="text/javascript"></script>
-				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/search.css" />
-				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/spectrum.css" />
-				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/dataTables.jqueryui.css" />
-				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/jquery.dataTables.css" />
-				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/search/css/jquery-ui.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/search.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/spectrum.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/dataTables.jqueryui.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery.dataTables.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery-ui.css" />
 			</head>
 			<body style="min-height:350px;">
 				<div id="search_gadget">
@@ -64,10 +63,10 @@
 				};
 				function loadBasket(topic, data, subscriberData){
 					//console.log(data.basketID);
-					//console.log(JSON.parse(data.basketJSON));
+					//console.log(data.basketContent);
 					//console.log(data.query);
 					document.getElementById("basketID").value = data.basketID;
-					document.getElementById("visualBasket").value = data.basketJSON
+					document.getElementById("visualBasket").value = data.basketContent
 					var query = JSON.parse(data.query);
 					//console.log(query);
 					var queryStr = query.query.function_score.query.filtered.query.simple_query_string.query;
@@ -105,7 +104,6 @@
 				$( document ).ajaxComplete(function( event, xhr, settings ) {
 					adjust();
 				});
-			
 			</script>
 		</html>
 	]]>

@@ -47,8 +47,8 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 		sb.append(name);
 		sb.append(", lastModifiedDate=");
 		sb.append(lastModifiedDate);
-		sb.append(", basketJSON=");
-		sb.append(basketJSON);
+		sb.append(", basketContent=");
+		sb.append(basketContent);
 		sb.append(", queryJSON=");
 		sb.append(queryJSON);
 		sb.append("}");
@@ -77,11 +77,11 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 			basketImpl.setLastModifiedDate(new Date(lastModifiedDate));
 		}
 
-		if (basketJSON == null) {
-			basketImpl.setBasketJSON(StringPool.BLANK);
+		if (basketContent == null) {
+			basketImpl.setBasketContent(StringPool.BLANK);
 		}
 		else {
-			basketImpl.setBasketJSON(basketJSON);
+			basketImpl.setBasketContent(basketContent);
 		}
 
 		if (queryJSON == null) {
@@ -102,7 +102,7 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 		userID = objectInput.readLong();
 		name = objectInput.readUTF();
 		lastModifiedDate = objectInput.readLong();
-		basketJSON = objectInput.readUTF();
+		basketContent = objectInput.readUTF();
 		queryJSON = objectInput.readUTF();
 	}
 
@@ -121,11 +121,11 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 
 		objectOutput.writeLong(lastModifiedDate);
 
-		if (basketJSON == null) {
+		if (basketContent == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(basketJSON);
+			objectOutput.writeUTF(basketContent);
 		}
 
 		if (queryJSON == null) {
@@ -140,6 +140,6 @@ public class BasketCacheModel implements CacheModel<Basket>, Externalizable {
 	public long userID;
 	public String name;
 	public long lastModifiedDate;
-	public String basketJSON;
+	public String basketContent;
 	public String queryJSON;
 }
