@@ -28,7 +28,7 @@
 		<%if (PortalUtil.getUser(request)==null){ %>
 	
 			<div class="portlet-msg-alert">
-				Please sign in to use the project profile.
+				Only logged in users get access to the different submission workflows. Please <span style="color:#006400;">sign in</span> to continue the process. 
 			</div>
 	
 		<%}else { %>
