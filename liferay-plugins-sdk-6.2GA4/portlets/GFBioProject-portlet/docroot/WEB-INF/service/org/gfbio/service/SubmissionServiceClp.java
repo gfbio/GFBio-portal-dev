@@ -36,19 +36,19 @@ public class SubmissionServiceClp implements SubmissionService {
 
 		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName4 = "getSubmisionsByBrokerSubmissionId";
+		_methodName4 = "getSubmissionsByBrokerSubmissionId";
 
 		_methodParameterTypes4 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName5 = "getSubmisionsByResearchObjectId";
+		_methodName5 = "getSubmissionsByResearchObjectId";
 
 		_methodParameterTypes5 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName6 = "createSubmision";
+		_methodName6 = "createSubmission";
 
 		_methodParameterTypes6 = new String[] { "java.lang.String" };
 
-		_methodName7 = "updateSubmision";
+		_methodName7 = "updateSubmission";
 
 		_methodParameterTypes7 = new String[] { "java.lang.String" };
 	}
@@ -129,7 +129,7 @@ public class SubmissionServiceClp implements SubmissionService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray getSubmisionsByBrokerSubmissionId(
+	public org.json.simple.JSONArray getSubmissionsByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
@@ -154,7 +154,7 @@ public class SubmissionServiceClp implements SubmissionService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray getSubmisionsByResearchObjectId(
+	public org.json.simple.JSONArray getSubmissionsByResearchObjectId(
 		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 
@@ -179,7 +179,7 @@ public class SubmissionServiceClp implements SubmissionService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray createSubmision(
+	public org.json.simple.JSONArray createSubmission(
 		java.lang.String requestJson) {
 		Object returnObj = null;
 
@@ -204,7 +204,7 @@ public class SubmissionServiceClp implements SubmissionService {
 	}
 
 	@Override
-	public org.json.simple.JSONArray updateSubmision(
+	public org.json.simple.JSONArray updateSubmission(
 		java.lang.String requestJson) {
 		Object returnObj = null;
 

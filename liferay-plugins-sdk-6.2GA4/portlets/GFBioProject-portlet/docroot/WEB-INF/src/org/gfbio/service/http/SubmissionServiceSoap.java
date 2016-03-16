@@ -76,10 +76,10 @@ public class SubmissionServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONArray getSubmisionsByBrokerSubmissionId(
+	public static org.json.simple.JSONArray getSubmissionsByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.getSubmisionsByBrokerSubmissionId(requestJson);
+			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.getSubmissionsByBrokerSubmissionId(requestJson);
 
 			return returnValue;
 		}
@@ -90,10 +90,10 @@ public class SubmissionServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONArray getSubmisionsByResearchObjectId(
+	public static org.json.simple.JSONArray getSubmissionsByResearchObjectId(
 		org.json.simple.JSONObject requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.getSubmisionsByResearchObjectId(requestJson);
+			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.getSubmissionsByResearchObjectId(requestJson);
 
 			return returnValue;
 		}
@@ -104,10 +104,10 @@ public class SubmissionServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONArray createSubmision(
+	public static org.json.simple.JSONArray createSubmission(
 		java.lang.String requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.createSubmision(requestJson);
+			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.createSubmission(requestJson);
 
 			return returnValue;
 		}
@@ -118,10 +118,10 @@ public class SubmissionServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONArray updateSubmision(
+	public static org.json.simple.JSONArray updateSubmission(
 		java.lang.String requestJson) throws RemoteException {
 		try {
-			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.updateSubmision(requestJson);
+			org.json.simple.JSONArray returnValue = SubmissionServiceUtil.updateSubmission(requestJson);
 
 			return returnValue;
 		}

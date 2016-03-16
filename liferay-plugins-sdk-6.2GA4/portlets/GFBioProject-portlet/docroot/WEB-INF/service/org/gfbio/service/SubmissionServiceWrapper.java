@@ -63,27 +63,27 @@ public class SubmissionServiceWrapper implements SubmissionService,
 	}
 
 	@Override
-	public org.json.simple.JSONArray getSubmisionsByBrokerSubmissionId(
+	public org.json.simple.JSONArray getSubmissionsByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) {
-		return _submissionService.getSubmisionsByBrokerSubmissionId(requestJson);
+		return _submissionService.getSubmissionsByBrokerSubmissionId(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONArray getSubmisionsByResearchObjectId(
+	public org.json.simple.JSONArray getSubmissionsByResearchObjectId(
 		org.json.simple.JSONObject requestJson) {
-		return _submissionService.getSubmisionsByResearchObjectId(requestJson);
+		return _submissionService.getSubmissionsByResearchObjectId(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONArray createSubmision(
+	public org.json.simple.JSONArray createSubmission(
 		java.lang.String requestJson) {
-		return _submissionService.createSubmision(requestJson);
+		return _submissionService.createSubmission(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONArray updateSubmision(
+	public org.json.simple.JSONArray updateSubmission(
 		java.lang.String requestJson) {
-		return _submissionService.updateSubmision(requestJson);
+		return _submissionService.updateSubmission(requestJson);
 	}
 
 	/**

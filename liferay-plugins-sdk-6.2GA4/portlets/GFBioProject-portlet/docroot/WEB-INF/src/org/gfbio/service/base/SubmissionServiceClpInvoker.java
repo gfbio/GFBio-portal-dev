@@ -36,19 +36,19 @@ public class SubmissionServiceClpInvoker {
 
 		_methodParameterTypes108 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName109 = "getSubmisionsByBrokerSubmissionId";
+		_methodName109 = "getSubmissionsByBrokerSubmissionId";
 
 		_methodParameterTypes109 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName110 = "getSubmisionsByResearchObjectId";
+		_methodName110 = "getSubmissionsByResearchObjectId";
 
 		_methodParameterTypes110 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName111 = "createSubmision";
+		_methodName111 = "createSubmission";
 
 		_methodParameterTypes111 = new String[] { "java.lang.String" };
 
-		_methodName112 = "updateSubmision";
+		_methodName112 = "updateSubmission";
 
 		_methodParameterTypes112 = new String[] { "java.lang.String" };
 	}
@@ -74,22 +74,22 @@ public class SubmissionServiceClpInvoker {
 
 		if (_methodName109.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
-			return SubmissionServiceUtil.getSubmisionsByBrokerSubmissionId((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionServiceUtil.getSubmissionsByBrokerSubmissionId((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName110.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
-			return SubmissionServiceUtil.getSubmisionsByResearchObjectId((org.json.simple.JSONObject)arguments[0]);
+			return SubmissionServiceUtil.getSubmissionsByResearchObjectId((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName111.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
-			return SubmissionServiceUtil.createSubmision((java.lang.String)arguments[0]);
+			return SubmissionServiceUtil.createSubmission((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName112.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
-			return SubmissionServiceUtil.updateSubmision((java.lang.String)arguments[0]);
+			return SubmissionServiceUtil.updateSubmission((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();

@@ -70,16 +70,16 @@ public interface SubmissionService extends BaseService, InvokableService {
 		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getSubmisionsByBrokerSubmissionId(
+	public org.json.simple.JSONArray getSubmissionsByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getSubmisionsByResearchObjectId(
+	public org.json.simple.JSONArray getSubmissionsByResearchObjectId(
 		org.json.simple.JSONObject requestJson);
 
-	public org.json.simple.JSONArray createSubmision(
+	public org.json.simple.JSONArray createSubmission(
 		java.lang.String requestJson);
 
-	public org.json.simple.JSONArray updateSubmision(
+	public org.json.simple.JSONArray updateSubmission(
 		java.lang.String requestJson);
 }

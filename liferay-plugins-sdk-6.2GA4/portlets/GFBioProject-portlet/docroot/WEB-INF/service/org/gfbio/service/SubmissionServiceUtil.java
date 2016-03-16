@@ -68,24 +68,24 @@ public class SubmissionServiceUtil {
 		return getService().getLatestPublicSubmissions(requestJson);
 	}
 
-	public static org.json.simple.JSONArray getSubmisionsByBrokerSubmissionId(
+	public static org.json.simple.JSONArray getSubmissionsByBrokerSubmissionId(
 		org.json.simple.JSONObject requestJson) {
-		return getService().getSubmisionsByBrokerSubmissionId(requestJson);
+		return getService().getSubmissionsByBrokerSubmissionId(requestJson);
 	}
 
-	public static org.json.simple.JSONArray getSubmisionsByResearchObjectId(
+	public static org.json.simple.JSONArray getSubmissionsByResearchObjectId(
 		org.json.simple.JSONObject requestJson) {
-		return getService().getSubmisionsByResearchObjectId(requestJson);
+		return getService().getSubmissionsByResearchObjectId(requestJson);
 	}
 
-	public static org.json.simple.JSONArray createSubmision(
+	public static org.json.simple.JSONArray createSubmission(
 		java.lang.String requestJson) {
-		return getService().createSubmision(requestJson);
+		return getService().createSubmission(requestJson);
 	}
 
-	public static org.json.simple.JSONArray updateSubmision(
+	public static org.json.simple.JSONArray updateSubmission(
 		java.lang.String requestJson) {
-		return getService().updateSubmision(requestJson);
+		return getService().updateSubmission(requestJson);
 	}
 
 	public static void clearService() {
