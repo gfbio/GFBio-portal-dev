@@ -18,6 +18,9 @@ package org.gfbio.service.persistence;
  * @author Marcel Froemming
  */
 public interface DataProviderFinder {
+	public java.util.List<java.lang.Boolean> getCheckOfLabel(
+		java.lang.String archiv);
+
 	public java.util.List getDataProviderIdByLabel(java.lang.String label);
 
 	public java.util.List getLabelById(long dataProviderId);

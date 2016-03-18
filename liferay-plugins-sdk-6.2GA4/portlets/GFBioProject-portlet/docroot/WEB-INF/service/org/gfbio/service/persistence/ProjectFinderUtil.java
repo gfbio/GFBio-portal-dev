@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class ProjectFinderUtil {
+	public static java.util.List<java.lang.Boolean> getCheckOnId(long projectId) {
+		return getFinder().getCheckOnId(projectId);
+	}
+
 	public static java.util.List checkProjectOnSubmissions(long projectId) {
 		return getFinder().checkProjectOnSubmissions(projectId);
 	}

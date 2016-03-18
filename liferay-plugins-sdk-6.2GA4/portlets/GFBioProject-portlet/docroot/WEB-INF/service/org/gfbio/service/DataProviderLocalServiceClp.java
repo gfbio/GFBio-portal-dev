@@ -137,13 +137,17 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "constructDataProviderAsJson";
+		_methodName26 = "checkDataProviderLabel";
 
-		_methodParameterTypes26 = new String[] { "org.gfbio.model.DataProvider" };
+		_methodParameterTypes26 = new String[] { "java.lang.String" };
 
-		_methodName27 = "updateDataProvider";
+		_methodName27 = "constructDataProviderAsJson";
 
-		_methodParameterTypes27 = new String[] {
+		_methodParameterTypes27 = new String[] { "org.gfbio.model.DataProvider" };
+
+		_methodName28 = "updateDataProvider";
+
+		_methodParameterTypes28 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String"
@@ -862,13 +866,37 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 	}
 
 	@Override
-	public org.json.simple.JSONObject constructDataProviderAsJson(
-		org.gfbio.model.DataProvider dataProvider) {
+	public java.lang.Boolean checkDataProviderLabel(java.lang.String archive) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName26,
 					_methodParameterTypes26,
+					new Object[] { ClpSerializer.translateInput(archive) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject constructDataProviderAsJson(
+		org.gfbio.model.DataProvider dataProvider) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] { ClpSerializer.translateInput(dataProvider) });
 		}
 		catch (Throwable t) {
@@ -894,8 +922,8 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						dataProviderId,
 						
@@ -982,4 +1010,6 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

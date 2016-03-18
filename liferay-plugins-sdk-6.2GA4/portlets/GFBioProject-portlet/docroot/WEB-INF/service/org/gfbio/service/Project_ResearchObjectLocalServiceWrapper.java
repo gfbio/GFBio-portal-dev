@@ -303,6 +303,13 @@ public class Project_ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return _project_ResearchObjectLocalService.checkResearchObjectIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
+	@Override
 	public java.lang.Boolean updateProjectResearchObject(long projectID,
 		long researchObjectID, int researchObjectVersion) {
 		return _project_ResearchObjectLocalService.updateProjectResearchObject(projectID,

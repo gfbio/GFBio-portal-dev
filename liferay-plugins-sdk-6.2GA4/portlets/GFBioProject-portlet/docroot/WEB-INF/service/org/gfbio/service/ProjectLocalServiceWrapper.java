@@ -318,6 +318,11 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public java.lang.Boolean checkProjectOnId(long projectId) {
+		return _projectLocalService.checkProjectOnId(projectId);
+	}
+
+	@Override
 	public java.lang.Boolean checkProjectOnSubmissions(long projectId) {
 		return _projectLocalService.checkProjectOnSubmissions(projectId);
 	}

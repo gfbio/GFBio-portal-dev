@@ -305,6 +305,11 @@ public class DataProviderLocalServiceUtil {
 		return getService().getPersistentIdentiferIds(dataProviderId);
 	}
 
+	public static java.lang.Boolean checkDataProviderLabel(
+		java.lang.String archive) {
+		return getService().checkDataProviderLabel(archive);
+	}
+
 	public static org.json.simple.JSONObject constructDataProviderAsJson(
 		org.gfbio.model.DataProvider dataProvider) {
 		return getService().constructDataProviderAsJson(dataProvider);

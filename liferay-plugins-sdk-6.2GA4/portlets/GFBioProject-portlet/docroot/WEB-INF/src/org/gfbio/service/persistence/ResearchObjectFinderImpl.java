@@ -17,12 +17,13 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObject> implements ResearchObjectFinder{
 
 	
-	public static String FINDER_CLASS_NAME_ENTITY = ResearchObjectFinderImpl.class.getName();
-	public static String GET_CHECK_OF_DIRECT_PARENT = FINDER_CLASS_NAME_ENTITY + ".getCheckOfDirectParent";	
-	public static String GET_CHECK_OF_ID = FINDER_CLASS_NAME_ENTITY + ".getCheckOfId";	
-	public static String GET_DIRECT_PARENT = FINDER_CLASS_NAME_ENTITY + ".getDirectParent";
-	public static String GET_LATEST_RESEARCHOBJECT_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getLatestResearchObjectById";
-	public static String GET_LATEST_VERSION_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getLatestVersionById";	
+	public static String FINDER_CLASS_NAME_ENTITY 			= ResearchObjectFinderImpl.class.getName();
+	public static String GET_CHECK_OF_DIRECT_PARENT 		= FINDER_CLASS_NAME_ENTITY + ".getCheckOfDirectParent";	
+	public static String GET_CHECK_OF_ID 					= FINDER_CLASS_NAME_ENTITY + ".getCheckOfId";	
+	public static String GET_CHECK_OF_ID_AND_VERSION 		= FINDER_CLASS_NAME_ENTITY + ".getCheckOfIdAndVersion";
+	public static String GET_DIRECT_PARENT 					= FINDER_CLASS_NAME_ENTITY + ".getDirectParent";
+	public static String GET_LATEST_RESEARCHOBJECT_BY_ID 	= FINDER_CLASS_NAME_ENTITY + ".getLatestResearchObjectById";
+	public static String GET_LATEST_VERSION_BY_ID 			= FINDER_CLASS_NAME_ENTITY + ".getLatestVersionById";	
 	
 	
 
@@ -62,6 +63,29 @@ public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObjec
 			queryObject.addScalar("check", Type.BOOLEAN);
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(researchObjectId);
+			return (List<Boolean>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings({  "unchecked" })
+	public List<Boolean> getCheckOfIdAndVersion(long researchObjectId, int researchObjectVersion) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CHECK_OF_ID_AND_VERSION);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(researchObjectId);
+			qPos.add(researchObjectVersion);
 			return (List<Boolean>) queryObject.list();
 		} catch (Exception e) {e.printStackTrace();}
 		finally {

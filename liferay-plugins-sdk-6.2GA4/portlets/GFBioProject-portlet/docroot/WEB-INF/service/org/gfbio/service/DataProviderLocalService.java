@@ -272,6 +272,8 @@ public interface DataProviderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getPersistentIdentiferIds(long dataProviderId);
 
+	public java.lang.Boolean checkDataProviderLabel(java.lang.String archive);
+
 	public org.json.simple.JSONObject constructDataProviderAsJson(
 		org.gfbio.model.DataProvider dataProvider);
 

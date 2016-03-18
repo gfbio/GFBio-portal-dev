@@ -25,6 +25,7 @@ import org.gfbio.service.base.Project_ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.Project_ResearchObjectPK;
 
+
 /**
  * The implementation of the project_ research object local service.
  *
@@ -60,6 +61,19 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 		return Project_ResearchObjectFinderUtil.getResearchObjectsByProjectId(projectId);
 	}
 	
+	
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public Boolean checkResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  Project_ResearchObjectFinderUtil.getCheckOfResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
+	}
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 

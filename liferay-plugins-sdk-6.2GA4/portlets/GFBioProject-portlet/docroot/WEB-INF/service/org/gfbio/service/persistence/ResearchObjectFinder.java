@@ -23,6 +23,9 @@ public interface ResearchObjectFinder {
 
 	public java.util.List<java.lang.Boolean> getCheckOfId(long researchObjectId);
 
+	public java.util.List<java.lang.Boolean> getCheckOfIdAndVersion(
+		long researchObjectId, int researchObjectVersion);
+
 	public java.util.List<org.gfbio.model.ResearchObject> getDirectParent(
 		long researchObjectId);
 

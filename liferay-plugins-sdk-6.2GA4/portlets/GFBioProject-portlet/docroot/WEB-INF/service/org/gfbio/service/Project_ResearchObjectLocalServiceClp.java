@@ -132,9 +132,13 @@ public class Project_ResearchObjectLocalServiceClp
 
 		_methodParameterTypes20 = new String[] { "long" };
 
-		_methodName21 = "updateProjectResearchObject";
+		_methodName21 = "checkResearchObjectIdAndVersion";
 
-		_methodParameterTypes21 = new String[] { "long", "long", "int" };
+		_methodParameterTypes21 = new String[] { "long", "int" };
+
+		_methodName22 = "updateProjectResearchObject";
+
+		_methodParameterTypes22 = new String[] { "long", "long", "int" };
 	}
 
 	@Override
@@ -754,13 +758,38 @@ public class Project_ResearchObjectLocalServiceClp
 	}
 
 	@Override
-	public java.lang.Boolean updateProjectResearchObject(long projectID,
-		long researchObjectID, int researchObjectVersion) {
+	public java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
+					new Object[] { researchObjectId, researchObjectVersion });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateProjectResearchObject(long projectID,
+		long researchObjectID, int researchObjectVersion) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] {
 						projectID,
 						
@@ -827,4 +856,6 @@ public class Project_ResearchObjectLocalServiceClp
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

@@ -75,37 +75,43 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({ "unchecked"})
 	public JSONObject getCompleteProjectById (JSONObject requestJson){
-
-		JSONObject responseJson = null;
+		
+		JSONObject responseJson = new JSONObject();
 		List <ResearchObject> researchObjectList = null;
 		Set<String> set = new HashSet<String>();
 		set.add("projectid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
-		
+
 		if (requestJson.containsKey("projectid")){
-			try {
-				responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey((long) requestJson.get("projectid")));
-			} catch (NoSuchProjectException | SystemException e) {
-				responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
-			}
-			if (responseJson != null){
-				researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId((long) requestJson.get("projectid"));
-				if (researchObjectList.size() >0){
-					JSONArray researchObjectJSON = new JSONArray();
-					for (int i =0; i< researchObjectList.size();i++)
-						researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
-					responseJson.put("researchobjects", researchObjectJSON);
+
+			long projectId = (long)requestJson.get("projectid");
+			if (checkProjectOnId(projectId)){
+				try {
+					responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey((long) requestJson.get("projectid")));
+				} catch (NoSuchProjectException | SystemException e) {
+					responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+				}
+				if (responseJson != null){
+					researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId((long) requestJson.get("projectid"));
+					if (researchObjectList.size() >0){
+						JSONArray researchObjectJSON = new JSONArray();
+						for (int i =0; i< researchObjectList.size();i++)
+							researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+						responseJson.put("researchobjects", researchObjectJSON);
+					}
 				}
 			}
+			else
+				responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
 		}
-		else{
+		else
 			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
-		}
+
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING", ignoreParameter);
-		
+
 		return responseJson;
 	}
 	
@@ -115,12 +121,18 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	public JSONObject getProjectById (JSONObject requestJson){
 		
 		JSONObject responseJson = new JSONObject();
-		if (requestJson.containsKey("projectid"))
-			try {
-				responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey((long)requestJson.get("projectid")));
-			} catch (NoSuchProjectException | SystemException e) {
-				e.printStackTrace();
-				responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
+		if (requestJson.containsKey("projectid")){
+			long projectId = (long)requestJson.get("projectid");
+			if (checkProjectOnId(projectId)){
+				try {
+					responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey(projectId));
+				} catch (NoSuchProjectException | SystemException e) {
+					e.printStackTrace();
+					responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
+			}
+			else
+				responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
+		}
 		else
 			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
 		
@@ -160,6 +172,17 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public Boolean checkProjectOnId(long projectId) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  ProjectFinderUtil.getCheckOnId(projectId);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
+	}
 	
 	
 	//

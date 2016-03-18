@@ -262,6 +262,9 @@ public interface Project_ResearchObjectLocalService extends BaseLocalService,
 	public java.util.List<org.gfbio.model.ResearchObject> getResearchObjectsByProjectId(
 		long projectId);
 
+	public java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion);
+
 	public java.lang.Boolean updateProjectResearchObject(long projectID,
 		long researchObjectID, int researchObjectVersion);
 }
