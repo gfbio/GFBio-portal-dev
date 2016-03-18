@@ -18,5 +18,7 @@ package org.gfbio.service.persistence;
  * @author Marcel Froemming
  */
 public interface ProjectFinder {
+	public java.util.List<java.lang.Boolean> getCheckOnId(long projectId);
+
 	public java.util.List checkProjectOnSubmissions(long projectId);
 }

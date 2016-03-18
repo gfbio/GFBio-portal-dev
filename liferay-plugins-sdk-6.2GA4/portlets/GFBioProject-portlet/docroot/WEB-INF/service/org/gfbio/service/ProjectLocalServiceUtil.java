@@ -305,6 +305,10 @@ public class ProjectLocalServiceUtil {
 		return getService().getResearchObjectList(projectID, userID);
 	}
 
+	public static java.lang.Boolean checkProjectOnId(long projectId) {
+		return getService().checkProjectOnId(projectId);
+	}
+
 	public static java.lang.Boolean checkProjectOnSubmissions(long projectId) {
 		return getService().checkProjectOnSubmissions(projectId);
 	}

@@ -493,15 +493,26 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					String label = ((String) requestJson.get("label")).trim();
 					String extendedData = requestJson.get("extendeddata").toString();
 						
-					if (!(extendedData.equals(researchObject.getExtendeddata()))){
+					if (!(name.equals(researchObject.getName())) || !(label.equals(researchObject.getLabel())) || !(extendedData.equals(researchObject.getExtendeddata()))){
 						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion);
 					}
 					
 					researchObjectId = updateKernelResearchObject(researchObjectId, researchObjectVersion, name, label, extendedData);
 					
-					responseJson.put("researchobjectid", researchObjectId);
-					responseJson.put("researchobjectversion", researchObjectVersion);
-		
+					if (researchObjectId>0){
+						
+						check = updateResearchObjectType(researchObjectId, researchObjectVersion,researchObject.getResearchObjectType());
+						
+						if (check)
+							check = updateParentResearchObjectIdByIds (researchObjectId, researchObjectVersion,researchObject.getParentResearchObjectID());
+						
+						if (check){
+							responseJson.put("researchobjectid", researchObjectId);
+							responseJson.put("researchobjectversion", researchObjectVersion);
+						}else
+							responseJson.put("ERROR:", "ERROR: The update Research Object with ID "+ researchObjectId +" is not fully completed");
+					}else
+						responseJson.put("ERROR:", "ERROR: The update Research Object with ID "+ researchObjectId +" failed");
 				}else
 					responseJson.put("ERROR:", "ERROR: Research Object ID "+ researchObjectId +" has no entry in the database");
 			}else{
