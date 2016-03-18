@@ -287,6 +287,13 @@ public class Project_ResearchObjectLocalServiceUtil {
 		return getService().getResearchObjectsByProjectId(projectId);
 	}
 
+	public static java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return getService()
+				   .checkResearchObjectIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
 	public static java.lang.Boolean updateProjectResearchObject(
 		long projectID, long researchObjectID, int researchObjectVersion) {
 		return getService()

@@ -315,6 +315,9 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 
 	public java.lang.Boolean checkResearchObjectId(long researchObjectId);
 
+	public java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion);
+
 	public org.json.simple.JSONObject constructResearchObjectJson(
 		org.gfbio.model.ResearchObject researchObject);
 

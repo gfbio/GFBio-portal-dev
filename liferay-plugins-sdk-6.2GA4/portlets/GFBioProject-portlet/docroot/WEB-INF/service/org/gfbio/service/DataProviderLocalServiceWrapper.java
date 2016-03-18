@@ -320,6 +320,11 @@ public class DataProviderLocalServiceWrapper implements DataProviderLocalService
 	}
 
 	@Override
+	public java.lang.Boolean checkDataProviderLabel(java.lang.String archive) {
+		return _dataProviderLocalService.checkDataProviderLabel(archive);
+	}
+
+	@Override
 	public org.json.simple.JSONObject constructDataProviderAsJson(
 		org.gfbio.model.DataProvider dataProvider) {
 		return _dataProviderLocalService.constructDataProviderAsJson(dataProvider);

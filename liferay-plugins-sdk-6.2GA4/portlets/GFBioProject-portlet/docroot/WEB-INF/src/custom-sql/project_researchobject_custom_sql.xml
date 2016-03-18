@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+   <sql id="org.gfbio.service.persistence.Project_ResearchObjectFinderImpl.getCheckOfResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_project_researchobject
+			 WHERE
+			 researchobjectid = ? AND
+			 researchobjectversion = ?
+		]]>
+    </sql>
+
+
     <sql id="org.gfbio.service.persistence.Project_ResearchObjectFinderImpl.getResearchObjectsByProjectId">
 	    <![CDATA[
 			SELECT

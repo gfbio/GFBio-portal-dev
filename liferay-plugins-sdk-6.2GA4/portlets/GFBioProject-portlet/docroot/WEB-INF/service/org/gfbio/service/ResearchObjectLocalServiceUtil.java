@@ -361,6 +361,13 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().checkResearchObjectId(researchObjectId);
 	}
 
+	public static java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return getService()
+				   .checkResearchObjectIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
 	public static org.json.simple.JSONObject constructResearchObjectJson(
 		org.gfbio.model.ResearchObject researchObject) {
 		return getService().constructResearchObjectJson(researchObject);

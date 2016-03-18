@@ -136,13 +136,17 @@ public class DataProviderLocalServiceClpInvoker {
 
 		_methodParameterTypes130 = new String[] { "long" };
 
-		_methodName131 = "constructDataProviderAsJson";
+		_methodName131 = "checkDataProviderLabel";
 
-		_methodParameterTypes131 = new String[] { "org.gfbio.model.DataProvider" };
+		_methodParameterTypes131 = new String[] { "java.lang.String" };
 
-		_methodName132 = "updateDataProvider";
+		_methodName132 = "constructDataProviderAsJson";
 
-		_methodParameterTypes132 = new String[] {
+		_methodParameterTypes132 = new String[] { "org.gfbio.model.DataProvider" };
+
+		_methodName133 = "updateDataProvider";
+
+		_methodParameterTypes133 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String"
@@ -287,11 +291,16 @@ public class DataProviderLocalServiceClpInvoker {
 
 		if (_methodName131.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
-			return DataProviderLocalServiceUtil.constructDataProviderAsJson((org.gfbio.model.DataProvider)arguments[0]);
+			return DataProviderLocalServiceUtil.checkDataProviderLabel((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName132.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+			return DataProviderLocalServiceUtil.constructDataProviderAsJson((org.gfbio.model.DataProvider)arguments[0]);
+		}
+
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			return DataProviderLocalServiceUtil.updateDataProvider(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -355,4 +364,6 @@ public class DataProviderLocalServiceClpInvoker {
 	private String[] _methodParameterTypes131;
 	private String _methodName132;
 	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }

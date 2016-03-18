@@ -18,6 +18,9 @@ package org.gfbio.service.persistence;
  * @author Marcel Froemming
  */
 public interface Project_ResearchObjectFinder {
+	public java.util.List<java.lang.Boolean> getCheckOfResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion);
+
 	public java.util.List getProjectIdByResearchObjectIdAndVersion(
 		long researchObjectId, int researchObjectVersion);
 

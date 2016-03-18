@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
-    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getDirectParent">
-	    <![CDATA[
-			SELECT
-				*
-			FROM
-				public.gfbio_researchobject
-			WHERE researchobjectid =(
-				SELECT 
-				  parentresearchobjectid 
-				FROM 
-				  public.gfbio_researchobject
-				where
-				  researchobjectid=?)
-		]]>
-    </sql>
-    
 	<sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfDirectParent">
 	    <![CDATA[
 			SELECT 
@@ -40,6 +24,37 @@
 				public.gfbio_researchobject
 			WHERE
 				researchobjectid =?)AS iq
+		]]>
+    </sql>
+    
+    
+        <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfIdAndVersion">
+	    <![CDATA[
+			SELECT 
+				(CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			
+			FROM 
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid = ? AND
+				researchobjectversion = ?
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getDirectParent">
+	    <![CDATA[
+			SELECT
+				*
+			FROM
+				public.gfbio_researchobject
+			WHERE researchobjectid =(
+				SELECT 
+				  parentresearchobjectid 
+				FROM 
+				  public.gfbio_researchobject
+				where
+				  researchobjectid=?)
 		]]>
     </sql>
     

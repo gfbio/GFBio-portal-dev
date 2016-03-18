@@ -390,6 +390,13 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return _researchObjectLocalService.checkResearchObjectIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
+	@Override
 	public org.json.simple.JSONObject constructResearchObjectJson(
 		org.gfbio.model.ResearchObject researchObject) {
 		return _researchObjectLocalService.constructResearchObjectJson(researchObject);

@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class DataProviderFinderUtil {
+	public static java.util.List<java.lang.Boolean> getCheckOfLabel(
+		java.lang.String archiv) {
+		return getFinder().getCheckOfLabel(archiv);
+	}
+
 	public static java.util.List getDataProviderIdByLabel(
 		java.lang.String label) {
 		return getFinder().getDataProviderIdByLabel(label);

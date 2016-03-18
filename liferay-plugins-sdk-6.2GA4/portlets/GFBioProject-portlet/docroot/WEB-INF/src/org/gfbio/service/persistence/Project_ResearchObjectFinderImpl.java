@@ -17,10 +17,32 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class Project_ResearchObjectFinderImpl extends BasePersistenceImpl<Project_ResearchObject> implements Project_ResearchObjectFinder {
 
 	
-	public static String FINDER_CLASS_NAME_ENTITY = Project_ResearchObjectFinderImpl.class.getName();
-	public static String GET_PROJECTID_BY_RESEARCHOBJECTID_AND_VERSION = FINDER_CLASS_NAME_ENTITY + ".getProjectIdByResearchObjectIdAndVersion";
-	public static String GET_RESEARCHOBJECTS_BY_PROJECTID = FINDER_CLASS_NAME_ENTITY + ".getResearchObjectsByProjectId";
+	public static String FINDER_CLASS_NAME_ENTITY							 = Project_ResearchObjectFinderImpl.class.getName();
+	public static String GET_CHECK_OF_RESEARCHOBJECTID_AND_VERSION 			= FINDER_CLASS_NAME_ENTITY + ".getCheckOfResearchObjectIdAndVersion";
+	public static String GET_PROJECTID_BY_RESEARCHOBJECTID_AND_VERSION 		= FINDER_CLASS_NAME_ENTITY + ".getProjectIdByResearchObjectIdAndVersion";
+	public static String GET_RESEARCHOBJECTS_BY_PROJECTID 					= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectsByProjectId";
 
+	//
+	@SuppressWarnings({  "unchecked" })
+	public List<Boolean> getCheckOfResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CHECK_OF_RESEARCHOBJECTID_AND_VERSION);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(researchObjectId);
+			qPos.add(researchObjectVersion);
+			return (List<Boolean>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
 	
 	
 	//

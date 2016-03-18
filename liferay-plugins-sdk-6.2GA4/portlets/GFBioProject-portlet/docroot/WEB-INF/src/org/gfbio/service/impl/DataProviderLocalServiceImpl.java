@@ -98,6 +98,18 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
+	
+	//
+	public Boolean checkDataProviderLabel(String archive) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  DataProviderFinderUtil.getCheckOfLabel(archive);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
+	}
+	
+	
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructDataProviderAsJson (DataProvider dataProvider){
