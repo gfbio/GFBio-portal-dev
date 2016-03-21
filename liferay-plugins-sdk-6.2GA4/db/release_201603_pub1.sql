@@ -1754,6 +1754,9 @@ ADD extendeddata text;
 ALTER TABLE gfbio_project_user
 ADD usertype character(40);
 
+------------------------------- Basket -----------------------
+ALTER TABLE gfbio_basket 
+RENAME COLUMN basketJSON TO basketContent;
 
 
 
