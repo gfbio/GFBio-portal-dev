@@ -275,6 +275,16 @@ public class DataProviderLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static org.json.simple.JSONObject getDataProviderById(
+		long dataProviderId) {
+		return getService().getDataProviderById(dataProviderId);
+	}
+
+	public static org.json.simple.JSONObject getDataProviderByLabel(
+		java.lang.String label) {
+		return getService().getDataProviderByLabel(label);
+	}
+
 	public static long getDataProviderIdByLabel(java.lang.String label) {
 		return getService().getDataProviderIdByLabel(label);
 	}
@@ -283,12 +293,26 @@ public class DataProviderLocalServiceUtil {
 		return getService().getDataProviderIds(persistentIdentiferId);
 	}
 
+	public static java.util.List getLabels() {
+		return getService().getLabels();
+	}
+
 	public static java.lang.String getLabelById(long dataProviderId) {
 		return getService().getLabelById(dataProviderId);
 	}
 
 	public static java.util.List getPersistentIdentiferIds(long dataProviderId) {
 		return getService().getPersistentIdentiferIds(dataProviderId);
+	}
+
+	public static java.lang.Boolean checkDataProviderLabel(
+		java.lang.String archive) {
+		return getService().checkDataProviderLabel(archive);
+	}
+
+	public static org.json.simple.JSONObject constructDataProviderAsJson(
+		org.gfbio.model.DataProvider dataProvider) {
+		return getService().constructDataProviderAsJson(dataProvider);
 	}
 
 	public static java.lang.Boolean updateDataProvider(long dataProviderId,

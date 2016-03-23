@@ -218,7 +218,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public ResearchObject getDirectParent(long researchObjectId) {
 		
 		ResearchObject researchObject = null;
-		if (ResearchObjectLocalServiceUtil.checkParentAttributById(researchObjectId))
+		if (checkParentAttributById(researchObjectId))
 			researchObject = (ResearchObject) ResearchObjectFinderUtil.getDirectParent(researchObjectId).get(0) ;
 		return researchObject;
 	}
@@ -228,7 +228,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public ResearchObject getLatestResearchObjectById(long researchObjectId) {
 		
 		ResearchObject researchObject = null;
-		if (ResearchObjectLocalServiceUtil.checkResearchObjectId(researchObjectId))
+		if (checkResearchObjectId(researchObjectId))
 			researchObject = (ResearchObject) ResearchObjectFinderUtil.getLatestResearchObjectById(researchObjectId).get(0) ;
 		return researchObject;
 	}
@@ -238,7 +238,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public int getLatestVersionById (long researchObjectId){
 		
 		int researvchObjectVersion =0;
-		if (ResearchObjectLocalServiceUtil.checkResearchObjectId(researchObjectId))
+		if (checkResearchObjectId(researchObjectId))
 			researvchObjectVersion = (int) ResearchObjectFinderUtil.getLatestVersionById(researchObjectId).get(0);
 		return researvchObjectVersion;
 	}
@@ -248,7 +248,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public long getProjectIdByIds (long researchObjectId, int researchObjectVersion){
 		
 		long projectId =0;
-		if (ResearchObjectLocalServiceUtil.checkResearchObjectId(researchObjectId))
+		if (checkResearchObjectId(researchObjectId))
 			projectId = (long) Project_ResearchObjectFinderUtil.getProjectIdByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion).get(0);
 		return projectId;
 	}
@@ -264,9 +264,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public ResearchObject getTopParent(long researchObjectId) {
 		
 		ResearchObject researchobject = null;
-		researchobject = ResearchObjectLocalServiceUtil.getDirectParent(researchObjectId);
+		researchobject = getDirectParent(researchObjectId);
 		while (researchobject != null && (researchobject.getParentResearchObjectID()!=0 ) )
-			researchobject = ResearchObjectLocalServiceUtil.getDirectParent(researchobject.getResearchObjectID());
+			researchobject = getDirectParent(researchobject.getResearchObjectID());
 		return researchobject;
 	}
 	
@@ -328,6 +328,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
+	public Boolean checkResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  ResearchObjectFinderUtil.getCheckOfIdAndVersion(researchObjectId, researchObjectVersion);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
+	}
+	
+	
+	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructResearchObjectJson (ResearchObject researchObject){
 		
@@ -352,7 +363,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		JSONArray json = new JSONArray();
 		if (researchObjectList.size()>0)
 			for (int i =0; i < researchObjectList.size();i++)
-				json.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+				json.add(constructResearchObjectJson(researchObjectList.get(i)));
 		return json;
 	}
 	
@@ -383,7 +394,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype"};
+		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype", "brokerobjectid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -393,23 +404,28 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			String name = ((String) requestJson.get("name")).trim();
 			String label = ((String) requestJson.get("label")).trim();
 			String extendedData = requestJson.get("extendeddata").toString();
-			String researchObjectType = ((String) requestJson.get("researchobjecttype")).trim();
 			
 			try {
-				researchObjectId = ResearchObjectLocalServiceUtil.createResearchObject(name, label, extendedData, researchObjectType);
+				researchObjectId = createResearchObject(name, label, extendedData);
 				if (researchObjectId !=0)
 					check = true;
 			} catch (SystemException e) {e.printStackTrace();}
+			
+			
+			if(requestJson.containsKey("researchobjecttype") && check)
+				check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
 			
 			if (requestJson.containsKey("projectid") && check)
 				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
 	
 			if (requestJson.containsKey("parentresearchobjectid") && check)
-				check = ResearchObjectLocalServiceUtil.updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, (long) requestJson.get("parentresearchobjectid"));
+				check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, (long) requestJson.get("parentresearchobjectid"));
 				
 			if (check){
 				responseJson.put("researchobjectid", researchObjectId);
 				responseJson.put("researchobjectversion", researchObjectVersion);
+				if (requestJson.containsKey("brokerobjectid")) 
+					responseJson.put("brokerobjectid", requestJson.get("brokerobjectid"));
 			}else
 				responseJson.put("ERROR:", "ERROR: create research object is failed.");
 		}else{
@@ -457,33 +473,46 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 		if (requestJson.containsKey("researchobjectid")){
 	
-			Boolean check = false;
-			Boolean changeCheck = false;
-			long researchObjectId = (long) requestJson.get("researchobjectid");
-			int researchObjectVersion = getLatestVersionById(researchObjectId);
-			
 			if (requestJson.containsKey("name") && requestJson.containsKey("label") && requestJson.containsKey("extendeddata")){
 				
-				ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
-				ResearchObject researchObject = null;
-				try {
-					researchObject = researchObjectPersistence.findByPrimaryKey(pk);
-				} catch (NoSuchResearchObjectException | SystemException e) {e.printStackTrace();}
+				long researchObjectId = (long) requestJson.get("researchobjectid");
+				int researchObjectVersion = getLatestVersionById(researchObjectId);
 				
-				if (researchObject!= null){
+				if (ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
+					
+					Boolean check = false;
+					Boolean changeCheck = false;
+					ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+					ResearchObject researchObject = null;
+
+					try {
+						researchObject = researchObjectPersistence.findByPrimaryKey(pk);
+					} catch (NoSuchResearchObjectException | SystemException e) {e.printStackTrace();}
+					
 					String name = ((String) requestJson.get("name")).trim();
 					String label = ((String) requestJson.get("label")).trim();
 					String extendedData = requestJson.get("extendeddata").toString();
-										
-					if (!(extendedData.equals(researchObject.getExtendeddata()))){
+						
+					if (!(name.equals(researchObject.getName())) || !(label.equals(researchObject.getLabel())) || !(extendedData.equals(researchObject.getExtendeddata()))){
 						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion);
 					}
 					
-					researchObjectId = updateResearchObject(researchObjectId, researchObjectVersion, name, label, extendedData);
+					researchObjectId = updateKernelResearchObject(researchObjectId, researchObjectVersion, name, label, extendedData);
 					
-					responseJson.put("researchobjectid", researchObjectId);
-					responseJson.put("researchobjectversion", researchObjectVersion);
-					
+					if (researchObjectId>0){
+						
+						check = updateResearchObjectType(researchObjectId, researchObjectVersion,researchObject.getResearchObjectType());
+						
+						if (check)
+							check = updateParentResearchObjectIdByIds (researchObjectId, researchObjectVersion,researchObject.getParentResearchObjectID());
+						
+						if (check){
+							responseJson.put("researchobjectid", researchObjectId);
+							responseJson.put("researchobjectversion", researchObjectVersion);
+						}else
+							responseJson.put("ERROR:", "ERROR: The update Research Object with ID "+ researchObjectId +" is not fully completed");
+					}else
+						responseJson.put("ERROR:", "ERROR: The update Research Object with ID "+ researchObjectId +" failed");
 				}else
 					responseJson.put("ERROR:", "ERROR: Research Object ID "+ researchObjectId +" has no entry in the database");
 			}else{
@@ -525,17 +554,19 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 	
 	//
-	public long createResearchObject (String name, String label, String extendedData, String researchObjectType) throws SystemException{
+	public long createResearchObject (String name, String label, String extendedData) throws SystemException{
+
 		long researchObjectId = 0;
 		int researchObjectVersion = 1;
-		researchObjectId =  updateResearchObject(researchObjectId, researchObjectVersion, name, label, extendedData) ;
-		ResearchObjectLocalServiceUtil.updateResearchObjectType(researchObjectId, researchObjectVersion, researchObjectType);
+		
+		researchObjectId =  updateKernelResearchObject(researchObjectId, researchObjectVersion, name, label, extendedData) ;
+		
 		return researchObjectId;
 	}
 	
 	
 	//
-	public long updateResearchObject(long researchObjectId, int researchObjectVersion, String name, String label, String extendedData)  {
+	public long updateKernelResearchObject(long researchObjectId, int researchObjectVersion, String name, String label, String extendedData)  {
 
 		ResearchObject researchObject = null;
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
@@ -568,11 +599,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		long checkId = 0;
 		Boolean check2 =false;
 
-		checkId = updateResearchObject(researchObjectId, researchObjectVersion, name, label, extendedData);
+		checkId = updateKernelResearchObject(researchObjectId, researchObjectVersion, name, label, extendedData);
 			if (checkId !=0) 
 				check2=true;
 			if (check2)
-				check2 = ResearchObjectLocalServiceUtil.updateResearchObjectType(researchObjectId, researchObjectVersion, researchObjectType);
+				check2 = updateResearchObjectType(researchObjectId, researchObjectVersion, researchObjectType);
 			if (check2)
 				check2 = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(projectId, checkId, researchObjectVersion);
 		return checkId;
@@ -612,7 +643,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 
 		try {
-			researchObject = ResearchObjectLocalServiceUtil.getResearchObject(pk);
+			researchObject = getResearchObject(pk);
 		} catch (PortalException | SystemException e1) {e1.printStackTrace();}
 
 		if (researchObject!=null){
@@ -630,28 +661,34 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	@SuppressWarnings("unused")
 	public int updateResearchObjectVersion (long researchObjectId, int researchObjectVersion){
 
-		Boolean check = false;
-		ResearchObject researchObject = null;
-		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
-		researchObject = researchObjectPersistence.create(pk);
-		long projectId = getProjectIdByIds(researchObjectId, researchObjectVersion);
+		if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
+		
+			Boolean check = false;
+			ResearchObject researchObject = null;
+			ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+			researchObject = researchObjectPersistence.create(pk);
+			
+			long projectId =0;
+			if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+				projectId = getProjectIdByIds(researchObjectId, researchObjectVersion);
+			
+			if(researchObject != null){
 	
-		if(researchObject != null){
-
-			researchObjectVersion = researchObjectVersion+1;
-			pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
-			ResearchObject newResearchObject = researchObjectPersistence.create(pk);
-			newResearchObject.setName(researchObject.getName());
-			newResearchObject.setLabel(researchObject.getLabel());
-			newResearchObject.setExtendeddata(researchObject.getExtendeddata());
-			
-			try {
-				super.updateResearchObject(newResearchObject);
-				check = true;
-			} catch (SystemException e) {e.printStackTrace();}
-			
-			if (projectId !=0)
-				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(projectId, researchObjectId, researchObjectVersion);
+				researchObjectVersion = researchObjectVersion+1;
+				pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+				ResearchObject newResearchObject = researchObjectPersistence.create(pk);
+				newResearchObject.setName(researchObject.getName());
+				newResearchObject.setLabel(researchObject.getLabel());
+				newResearchObject.setExtendeddata(researchObject.getExtendeddata());
+				
+				try {
+					super.updateResearchObject(newResearchObject);
+					check = true;
+				} catch (SystemException e) {e.printStackTrace();}
+				
+				if (projectId !=0)
+					check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(projectId, researchObjectId, researchObjectVersion);
+			}
 		}
 		return researchObjectVersion;
 	}

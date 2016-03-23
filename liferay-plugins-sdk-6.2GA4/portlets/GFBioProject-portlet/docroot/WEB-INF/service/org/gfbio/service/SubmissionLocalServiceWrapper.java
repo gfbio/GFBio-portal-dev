@@ -399,9 +399,9 @@ public class SubmissionLocalServiceWrapper implements SubmissionLocalService,
 
 	@Override
 	public long getSubmissionIdByIds(long researchObjectId,
-		int ResearchObjectVersion, java.lang.String archive) {
+		int researchObjectVersion, java.lang.String archive) {
 		return _submissionLocalService.getSubmissionIdByIds(researchObjectId,
-			ResearchObjectVersion, archive);
+			researchObjectVersion, archive);
 	}
 
 	@Override

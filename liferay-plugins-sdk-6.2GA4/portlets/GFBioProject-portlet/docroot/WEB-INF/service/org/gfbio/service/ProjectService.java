@@ -69,6 +69,8 @@ public interface ProjectService extends BaseService, InvokableService {
 	public org.json.simple.JSONObject getProjectById(
 		org.json.simple.JSONObject requestJson);
 
+	public java.lang.Boolean checkProjectOnSubmissions(long projectId);
+
 	public org.json.simple.JSONObject createProject(
 		org.json.simple.JSONObject requestJson);
 }

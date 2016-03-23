@@ -14,7 +14,7 @@ CREATE TABLE gfbio_submission
   last_changed timestamp with time zone NOT NULL DEFAULT now(),
   userid bigint NOT NULL,
   is_public boolean NOT NULL DEFAULT false,
-  public_after time with time zone DEFAULT NULL,
+  public_after timestamp with time zone DEFAULT NULL,
   status text NOT NULL,
   submissionid bigint NOT NULL,
   CONSTRAINT gfbio_submission_pkey PRIMARY KEY (submissionid),

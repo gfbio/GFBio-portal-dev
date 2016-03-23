@@ -372,10 +372,10 @@ public class SubmissionLocalServiceUtil {
 	}
 
 	public static long getSubmissionIdByIds(long researchObjectId,
-		int ResearchObjectVersion, java.lang.String archive) {
+		int researchObjectVersion, java.lang.String archive) {
 		return getService()
 				   .getSubmissionIdByIds(researchObjectId,
-			ResearchObjectVersion, archive);
+			researchObjectVersion, archive);
 	}
 
 	public static org.gfbio.model.Submission getSubmission(

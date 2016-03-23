@@ -33,27 +33,26 @@
 		</responseFlow>
 	</transport>
 	<service name="Plugin_gfbio_BasketService" provider="java:RPC" style="rpc" use="encoded">
-		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://model.gfbio.org" qname="ns:ArrayOf_tns2_BasketSoap" type="java:org.gfbio.model.BasketSoap[]" innerType="cmp-ns:BasketSoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:BasketSoap" type="java:org.gfbio.model.BasketSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="getBasketById" qname="operNS:getBasketById" returnQName="getBasketByIdReturn" returnType="rtns:BasketSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getBasketById" qname="operNS:getBasketById" returnQName="getBasketByIdReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getBasketsByIds" qname="operNS:getBasketsByIds" returnQName="getBasketsByIdsReturn" returnType="rtns:ArrayOf_tns2_BasketSoap" returnItemType="tns2:BasketSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getBasketsByIds" qname="operNS:getBasketsByIds" returnQName="getBasketsByIdsReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="urn:http.service.gfbio.org" qname="basketIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getBasketsByUserAndPeriod" qname="operNS:getBasketsByUserAndPeriod" returnQName="getBasketsByUserAndPeriodReturn" returnType="rtns:ArrayOf_tns2_BasketSoap" returnItemType="tns2:BasketSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getBasketsByUserAndPeriod" qname="operNS:getBasketsByUserAndPeriod" returnQName="getBasketsByUserAndPeriodReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="period" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://model.gfbio.org" name="getBasketsByUserId" qname="operNS:getBasketsByUserId" returnQName="getBasketsByUserIdReturn" returnType="rtns:ArrayOf_tns2_BasketSoap" returnItemType="tns2:BasketSoap" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getBasketsByUserId" qname="operNS:getBasketsByUserId" returnQName="getBasketsByUserIdReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getBasketsIdByUserAndPeriod" qname="operNS:getBasketsIdByUserAndPeriod" returnQName="getBasketsIdByUserAndPeriodReturn" returnType="rtns:ArrayOf_xsd_long" returnItemType="tns2:long" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getBasketsIdByUserAndPeriod" qname="operNS:getBasketsIdByUserAndPeriod" returnQName="getBasketsIdByUserAndPeriodReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="period" type="tns:int"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getBasketsIdByUserId" qname="operNS:getBasketsIdByUserId" returnQName="getBasketsIdByUserIdReturn" returnType="rtns:ArrayOf_xsd_long" returnItemType="tns2:long" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getBasketsIdByUserId" qname="operNS:getBasketsIdByUserId" returnQName="getBasketsIdByUserIdReturn" returnType="rtns:string" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="removeBasket" qname="operNS:removeBasket" returnQName="removeBasketReturn" returnType="rtns:BasketSoap" soapAction="">
@@ -113,8 +112,29 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
 	<service name="Plugin_gfbio_ContentService" provider="java:RPC" style="rpc" use="encoded">
-		<parameter name="allowedMethods" value="*" />
+		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getContentIdsWithNormalTableRelationships" qname="operNS:getContentIdsWithNormalTableRelationships" returnQName="getContentIdsWithNormalTableRelationshipsReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="rowId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tableName" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="columnName1" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="columnName2" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getContentIdsWithRelationships" qname="operNS:getContentIdsWithRelationships" returnQName="getContentIdsWithRelationshipsReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="rowId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tableName1" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tableName2" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getRowInformationByContentId" qname="operNS:getRowInformationByContentId" returnQName="getRowInformationByContentIdReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="contentId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getRowInformationOfRelationByContentId" qname="operNS:getRowInformationOfRelationByContentId" returnQName="getRowInformationOfRelationByContentIdReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="contentId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tableName1" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tableName2" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getContentIdsWithNormalTableRelationships getContentIdsWithRelationships getRowInformationByContentId getRowInformationOfRelationByContentId" />
 		<parameter name="className" value="org.gfbio.service.http.ContentServiceSoap" />
+		<parameter name="schemaUnqualified" value="urn:http.service.gfbio.org" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ContentServiceSoap" />
 		<parameter name="wsdlServiceElement" value="ContentServiceSoapService" />
@@ -158,10 +178,16 @@
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
 	</service>
 	<service name="Plugin_gfbio_ProjectService" provider="java:RPC" style="rpc" use="encoded">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="checkProjectOnSubmissions" qname="operNS:checkProjectOnSubmissions" returnQName="checkProjectOnSubmissionsReturn" returnType="rtns:boolean" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="projectId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createProject" qname="operNS:createProject" returnQName="createProjectReturn" returnType="rtns:anyType" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="requestJson" type="tns:anyType"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getProjectById" qname="operNS:getProjectById" returnQName="getProjectByIdReturn" returnType="rtns:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="requestJson" type="tns:anyType"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="getProjectById" />
+		<parameter name="allowedMethods" value="checkProjectOnSubmissions createProject getProjectById" />
 		<parameter name="className" value="org.gfbio.service.http.ProjectServiceSoap" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="ProjectServiceSoap" />

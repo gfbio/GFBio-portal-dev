@@ -21,6 +21,13 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class Project_ResearchObjectFinderUtil {
+	public static java.util.List<java.lang.Boolean> getCheckOfResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return getFinder()
+				   .getCheckOfResearchObjectIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
 	public static java.util.List getProjectIdByResearchObjectIdAndVersion(
 		long researchObjectId, int researchObjectVersion) {
 		return getFinder()

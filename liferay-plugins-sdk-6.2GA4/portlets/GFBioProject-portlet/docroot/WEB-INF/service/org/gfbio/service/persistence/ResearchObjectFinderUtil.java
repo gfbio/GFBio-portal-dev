@@ -31,6 +31,13 @@ public class ResearchObjectFinderUtil {
 		return getFinder().getCheckOfId(researchObjectId);
 	}
 
+	public static java.util.List<java.lang.Boolean> getCheckOfIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return getFinder()
+				   .getCheckOfIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
 	public static java.util.List<org.gfbio.model.ResearchObject> getDirectParent(
 		long researchObjectId) {
 		return getFinder().getDirectParent(researchObjectId);

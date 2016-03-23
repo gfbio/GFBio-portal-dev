@@ -18,11 +18,14 @@ import java.util.List;
 
 import org.gfbio.NoSuchDataProviderException;
 import org.gfbio.model.DataProvider;
+import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.base.DataProviderLocalServiceBaseImpl;
 import org.gfbio.service.persistence.DataProviderFinderUtil;
 import org.gfbio.service.persistence.DataProvider_PersistentIdentifierFinderUtil;
+import org.json.simple.JSONObject;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
 /**
@@ -44,7 +47,23 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
-		
+	
+	public JSONObject getDataProviderById (long dataProviderId){
+		JSONObject responseJson = new JSONObject();
+		try {
+			responseJson = constructDataProviderAsJson(DataProviderLocalServiceUtil.getDataProvider(dataProviderId));
+		} catch (PortalException | SystemException e) {e.printStackTrace();}
+		return responseJson;
+	}
+	
+	
+	public JSONObject getDataProviderByLabel (String label){
+		JSONObject responseJson = new JSONObject();
+		responseJson = getDataProviderById(getDataProviderIdByLabel(label));
+		return responseJson;
+	}
+	
+	
 	//
 	public long getDataProviderIdByLabel (String label){
 		return (long) DataProviderFinderUtil.getDataProviderIdByLabel(label).get(0);
@@ -56,7 +75,13 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 	public List getDataProviderIds (long persistentIdentiferId){
 		return DataProvider_PersistentIdentifierFinderUtil.getDataProviderIds(persistentIdentiferId);
 	}
+
 	
+	//
+	@SuppressWarnings("rawtypes")
+	public List getLabels (){
+		return DataProviderFinderUtil.getLabels();
+	}
 	
 	//
 	public String getLabelById (long dataProviderId){
@@ -71,6 +96,34 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 	}
 	
 
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public Boolean checkDataProviderLabel(String archive) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  DataProviderFinderUtil.getCheckOfLabel(archive);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructDataProviderAsJson (DataProvider dataProvider){
+
+		JSONObject json = new JSONObject();
+		json.put("dataproviderid", dataProvider.getDataProviderID());
+		json.put("name", (dataProvider.getName()).trim());
+		json.put("label", (dataProvider.getLabel()).trim());
+		json.put("description", (dataProvider.getDescription()).trim());
+		json.put("adress", (dataProvider.getAddress()).trim());
+		json.put("website", (dataProvider.getWebsite()).trim());
+		json.put("training", (dataProvider.getTraining()).trim());
+		return json;
+	}
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 

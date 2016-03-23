@@ -390,6 +390,13 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return _researchObjectLocalService.checkResearchObjectIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
+	@Override
 	public org.json.simple.JSONObject constructResearchObjectJson(
 		org.gfbio.model.ResearchObject researchObject) {
 		return _researchObjectLocalService.constructResearchObjectJson(researchObject);
@@ -427,18 +434,17 @@ public class ResearchObjectLocalServiceWrapper
 
 	@Override
 	public long createResearchObject(java.lang.String name,
-		java.lang.String label, java.lang.String extendedData,
-		java.lang.String researchObjectType)
+		java.lang.String label, java.lang.String extendedData)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _researchObjectLocalService.createResearchObject(name, label,
-			extendedData, researchObjectType);
+			extendedData);
 	}
 
 	@Override
-	public long updateResearchObject(long researchObjectId,
+	public long updateKernelResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
 		java.lang.String label, java.lang.String extendedData) {
-		return _researchObjectLocalService.updateResearchObject(researchObjectId,
+		return _researchObjectLocalService.updateKernelResearchObject(researchObjectId,
 			researchObjectVersion, name, label, extendedData);
 	}
 

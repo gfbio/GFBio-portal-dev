@@ -361,6 +361,13 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().checkResearchObjectId(researchObjectId);
 	}
 
+	public static java.lang.Boolean checkResearchObjectIdAndVersion(
+		long researchObjectId, int researchObjectVersion) {
+		return getService()
+				   .checkResearchObjectIdAndVersion(researchObjectId,
+			researchObjectVersion);
+	}
+
 	public static org.json.simple.JSONObject constructResearchObjectJson(
 		org.gfbio.model.ResearchObject researchObject) {
 		return getService().constructResearchObjectJson(researchObject);
@@ -392,19 +399,16 @@ public class ResearchObjectLocalServiceUtil {
 	}
 
 	public static long createResearchObject(java.lang.String name,
-		java.lang.String label, java.lang.String extendedData,
-		java.lang.String researchObjectType)
+		java.lang.String label, java.lang.String extendedData)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .createResearchObject(name, label, extendedData,
-			researchObjectType);
+		return getService().createResearchObject(name, label, extendedData);
 	}
 
-	public static long updateResearchObject(long researchObjectId,
+	public static long updateKernelResearchObject(long researchObjectId,
 		int researchObjectVersion, java.lang.String name,
 		java.lang.String label, java.lang.String extendedData) {
 		return getService()
-				   .updateResearchObject(researchObjectId,
+				   .updateKernelResearchObject(researchObjectId,
 			researchObjectVersion, name, label, extendedData);
 	}
 

@@ -25,10 +25,18 @@ public interface ContentFinder {
 	public java.util.List getContentIdsWithoutRelationships(long rowId,
 		java.lang.String columnName1, java.lang.String columnName2);
 
+	public java.util.List getContentIdsWithNormalTableRelationships(
+		long rowId, java.lang.String tableName, java.lang.String columnName1,
+		java.lang.String columnName2);
+
 	public java.util.List getContentIdsWithRelationships(long rowId,
 		java.lang.String columnName1, java.lang.String columnName2);
 
 	public java.util.List getColumnIdById(long contentId);
+
+	public java.util.List getContentIdsByRowId(long rowId);
+
+	public java.util.List getHeadIdById(long contentId);
 
 	public java.util.List getRowIds(long headId);
 
@@ -37,10 +45,8 @@ public interface ContentFinder {
 
 	public java.util.List getRowIdByContentId(long contentId);
 
-	public java.util.List getHeadIdById(long contentId);
-
-	public java.util.List getContentIdsByRowId(long rowId);
-
 	public java.util.List getRowIdOfRelation(java.lang.String cellContent1,
 		java.lang.String cellContent2);
+
+	public java.util.List getRowInformationByContentId(long contentId);
 }

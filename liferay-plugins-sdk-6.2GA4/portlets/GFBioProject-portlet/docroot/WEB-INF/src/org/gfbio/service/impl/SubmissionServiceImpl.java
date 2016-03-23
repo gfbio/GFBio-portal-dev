@@ -49,7 +49,7 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 	
 	
 	//
-	public JSONArray getSubmisionsByBrokerSubmissionId (JSONObject requestJson){
+	public JSONArray getSubmissionsByBrokerSubmissionId (JSONObject requestJson){
 		JSONArray responseJson = new JSONArray();
 		responseJson =SubmissionLocalServiceUtil.getSubmissionsByBrokerSubmissionId(requestJson);
 		return responseJson;
@@ -57,7 +57,7 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 	
 	
 	//
-	public JSONArray getSubmisionsByResearchObjectId (JSONObject requestJson){
+	public JSONArray getSubmissionsByResearchObjectId (JSONObject requestJson){
 		return SubmissionLocalServiceUtil.getSubmissionsByResearchObjectId(requestJson);
 	}
 	
@@ -66,7 +66,7 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 	
 
 	//
-	public JSONArray createSubmision (String requestJson){
+	public JSONArray createSubmission (String requestJson){
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
 		try {
@@ -77,9 +77,10 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 	
 	
 	//
-	public JSONArray updateSubmision (String requestJson){
+	public JSONArray updateSubmission (String requestJson){
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
+		System.out.println(requestJson);
 		try {
 			parseJson = (JSONArray) parser.parse(requestJson);
 		} catch (ParseException e) {e.printStackTrace();}

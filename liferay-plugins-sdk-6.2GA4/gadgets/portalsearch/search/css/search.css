@@ -2,8 +2,8 @@
 @import url("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css");
 
 input[type=search] {
-	width: 25%;
-	min-width: 200px;
+	/*width: 25%;
+	min-width: 200px;*/
     vertical-align: bottom;
 }
 
@@ -12,7 +12,7 @@ input[type=search] {
 }
 
 #gfbioSearchInput{
-	width: 40%;
+	width: auto;/*40%*/
 }
 
 label, input, button {
@@ -42,6 +42,10 @@ select[name=tableId_length] {
 	color: #333;
 	font-family: 'Roboto' !important;
 	font-size: 14px ;
+}
+
+#search_result_table{
+	overflow-x:auto;
 }
 
 .dataTables_length, .dataTables_info, .dataTables_paginate{
