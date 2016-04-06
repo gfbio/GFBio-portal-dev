@@ -3,7 +3,7 @@
   margin-bottom: 0; }
 
 body.portlet {
-  border: none; }
+  border-width: 0; }
 
 .portlet-topper {
   position: relative; }
@@ -46,11 +46,13 @@ body.portlet {
 
 .portlet-title-text {
   display: inline-block;
-  max-width: 95%;
+  white-space: nowrap;
   overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  vertical-align: top;
-  white-space: nowrap; }
+  max-width: 95%;
+  vertical-align: top; }
 
 .panel-page-content .portlet-title-text, .panel-page-body .portlet-title-text {
   cursor: auto; }
@@ -62,14 +64,14 @@ body.portlet {
   padding: 0; }
 
 .portlet-nested-portlets .portlet-boundary {
+  left: 0 !important;
   position: relative !important;
-  top: 0 !important;
-  left: 0 !important; }
+  top: 0 !important; }
 
 .portlet-borderless-bar, .portlet-content .lfr-icon-actions {
   background: #333;
   color: #FFF;
-  text-shadow: -1px -1px #000; }
+  text-shadow: -1px -1px black; }
   .portlet-borderless-bar a, .portlet-content .lfr-icon-actions a {
     color: #3AF; }
 
@@ -79,6 +81,9 @@ body.portlet {
 
 .portlet-borderless-container:hover .portlet-borderless-bar .portlet-actions, .portlet-content:hover .lfr-icon-actions .taglib-text {
   display: inline-block; }
+
+.portlet-borderless-bar .portlet-options .dropdown-toggle, .portlet-borderless-bar .portlet-options.open .dropdown-toggle {
+  background-image: url(../images/portlet/options_borderless.png); }
 
 .portlet-content .lfr-icon-actions {
   float: left;
@@ -122,38 +127,44 @@ body.portlet {
   position: relative; }
 
 .portlet-borderless-bar {
+  background-color: transparent;
   font-size: 10px;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=30);
   opacity: 0.3;
-  padding: 2px 5px 1px;
+  height: 0;
+  padding: 0;
   position: absolute;
   right: 0;
   top: 0;
+  width: 100%;
   z-index: 200; }
   .portlet-borderless-bar a {
     background: url() no-repeat 0 50%;
     display: inline-block;
-    height: 16px;
+    height: 20px;
     margin-left: 5px;
     text-indent: -9999px;
-    vertical-align: middle;
     width: 16px; }
   .portlet-borderless-bar .portlet-actions {
-    display: none;
-    float: left;
-    margin-right: 10px;
-    overflow: hidden; }
+    float: right;
+    overflow: hidden;
+    padding: 0 5px; }
+    .portlet-borderless-bar .portlet-actions .portlet-action, .portlet-borderless-bar .portlet-actions .portlet-options {
+      display: inline-block; }
   .portlet-borderless-bar .portlet-actions, .portlet-borderless-bar .portlet-title-default {
-    min-height: 20px;
-    vertical-align: top; }
+    background-color: #333;
+    min-height: 21px; }
   .portlet-borderless-bar .portlet-action-separator {
     display: none; }
   .portlet-borderless-bar .portlet-back a {
     height: auto;
     text-indent: 0;
     width: auto; }
-  .portlet-borderless-bar .portlet-close a {
-    background-image: url(../images/portlet/close_borderless.png); }
+  .portlet-borderless-bar .portlet-close {
+    display: inline-block;
+    vertical-align: middle; }
+    .portlet-borderless-bar .portlet-close a {
+      background-image: url(../images/portlet/close_borderless.png); }
   .portlet-borderless-bar .portlet-options li.lfr-trigger strong a {
     background-image: url(../images/portlet/options_borderless.png); }
 
@@ -172,15 +183,24 @@ body.portlet {
   width: auto; }
 
 .portlet-title-default {
-  display: inline-block;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   float: right;
   font-weight: bold;
+  height: 0;
+  line-height: 19px;
+  max-width: 50%;
+  padding: 0 10px;
   text-transform: uppercase; }
 
 .portlet-draggable .portlet-topper {
   cursor: move; }
 .portlet-draggable .portlet-title-default {
-  background: url(../images/portlet/draggable_borderless.png) no-repeat 0 50%;
+  background: #333333 url(../images/portlet/draggable_borderless.png) no-repeat 0 50%;
   cursor: move;
   padding-left: 20px; }
 
@@ -308,7 +328,7 @@ body.portlet {
 /* ---------- Miscellaneous portlet styles ---------- */
 .restricted, .restricted td {
   background: #FDD;
-  border: none; }
+  border-width: 0; }
 .restricted * {
   color: #727C81; }
 
@@ -329,7 +349,8 @@ body.portlet {
   background-image: url();
   background-position: 5px 50%;
   background-repeat: no-repeat;
-  padding-left: 30px; }
+  padding-left: 30px;
+  vertical-align: middle; }
 .table-data tr.lfr-role-guest .first {
   background-image: url(../images/common/guest_icon.png); }
 .table-data tr.lfr-role-regular .first {
@@ -346,14 +367,30 @@ body.portlet {
 .lfr-portlet-item, .lfr-portlet-item p a {
   font-size: 1em; }
 
+/* ---------- Breadcrumb taglib ---------- */
+.breadcrumb.breadcrumb-vertical {
+  display: inline-block;
+  text-align: center; }
+  .breadcrumb.breadcrumb-vertical li {
+    display: block; }
+    .breadcrumb.breadcrumb-vertical li.last, .breadcrumb.breadcrumb-vertical li.only {
+      background: none; }
+  .breadcrumb.breadcrumb-vertical .divider {
+    background: url(@theme_image_path@/arrows/07_down.png) no-repeat 50% 100%;
+    display: block;
+    text-indent: 110%;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 10px; }
+
 /* ---------- Calendar taglib ---------- */
 .taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
-  border: none; }
+  border-width: 0; }
 .taglib-calendar tr td a {
   background-color: #F0F5F7;
   border: 1px solid #FFF;
-  border-bottom: none;
-  border-left: none;
+  border-bottom-width: 0;
+  border-left-width: 0;
   display: block;
   height: 15px;
   padding: 5px 0; }
@@ -388,7 +425,7 @@ body.portlet {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1; }
 .ie .taglib-calendar tr td.first a {
-  border-right: none; }
+  border-right-width: 0; }
 
 .ie6 .portlet-content .icons-container, .ie7 .portlet-content .icons-container {
   overflow: visible; }

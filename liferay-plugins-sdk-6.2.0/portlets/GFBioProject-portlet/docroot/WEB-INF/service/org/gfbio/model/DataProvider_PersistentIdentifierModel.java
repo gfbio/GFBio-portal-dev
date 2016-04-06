@@ -124,19 +124,19 @@ public interface DataProvider_PersistentIdentifierModel extends BaseModel<DataPr
 
 	@Override
 	public int compareTo(
-		org.gfbio.model.DataProvider_PersistentIdentifier dataProvider_PersistentIdentifier);
+		DataProvider_PersistentIdentifier dataProvider_PersistentIdentifier);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<org.gfbio.model.DataProvider_PersistentIdentifier> toCacheModel();
+	public CacheModel<DataProvider_PersistentIdentifier> toCacheModel();
 
 	@Override
-	public org.gfbio.model.DataProvider_PersistentIdentifier toEscapedModel();
+	public DataProvider_PersistentIdentifier toEscapedModel();
 
 	@Override
-	public org.gfbio.model.DataProvider_PersistentIdentifier toUnescapedModel();
+	public DataProvider_PersistentIdentifier toUnescapedModel();
 
 	@Override
 	public String toString();

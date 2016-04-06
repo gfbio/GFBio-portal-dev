@@ -124,13 +124,6 @@
 
   /* Icon rotations and mirroring */
   /* ensure rotation occurs inside anchor tags */
-  @font-face {
-    font-family: 'fontawesome-alloy';
-    src: url("fonts/fontawesome-alloy.eot");
-    src: url("fonts/fontawesome-alloy.eot?#iefix") format("embedded-opentype"), url("fonts/fontawesome-alloy.woff") format("woff"), url("fonts/fontawesome-alloy.ttf") format("truetype"), url("fonts/fontawesome-alloy.svg#fontawesome-alloy") format("svg");
-    font-weight: normal;
-    font-style: normal; }
-
   /* Use the following CSS code if you want to use data attributes for inserting your icons */
   /* Use the following CSS code if you want to have a class per icon */
   /*
@@ -5200,7 +5193,9 @@
     background-position: 6px 50%;
     padding-left: 30px; }
   .aui .navbar .nav li > a {
-    word-break: break-all; }
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word; }
   .aui [class^="icon-"],
   .aui [class*=" icon-"] {
     font-family: 'fontawesome-alloy';
@@ -5254,6 +5249,8 @@
     padding: .2em .25em .15em;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
     border-radius: 3px; }
   .aui .icon-2x {
     font-size: 2em; }
@@ -5261,6 +5258,8 @@
       border-width: 2px;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
       border-radius: 4px; }
   .aui .icon-3x {
     font-size: 3em; }
@@ -5268,6 +5267,8 @@
       border-width: 3px;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
       border-radius: 5px; }
   .aui .icon-4x {
     font-size: 4em; }
@@ -5275,6 +5276,8 @@
       border-width: 4px;
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
+      -ms-border-radius: 6px;
+      -o-border-radius: 6px;
       border-radius: 6px; }
   .aui .icon-5x {
     font-size: 5em; }
@@ -5282,6 +5285,8 @@
       border-width: 5px;
       -webkit-border-radius: 7px;
       -moz-border-radius: 7px;
+      -ms-border-radius: 7px;
+      -o-border-radius: 7px;
       border-radius: 7px; }
   .aui .pull-right {
     float: right; }

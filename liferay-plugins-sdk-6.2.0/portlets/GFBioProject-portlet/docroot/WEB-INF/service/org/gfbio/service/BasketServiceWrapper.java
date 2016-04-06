@@ -57,41 +57,41 @@ public class BasketServiceWrapper implements BasketService,
 	}
 
 	@Override
-	public org.gfbio.model.Basket getBasketById(long basketId)
+	public com.liferay.portal.kernel.json.JSONArray getBasketById(long basketId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _basketService.getBasketById(basketId);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsByIds(
 		long[] basketIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _basketService.getBasketsByIds(basketIds);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsByUserAndPeriod(
 		long userId, int period)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _basketService.getBasketsByUserAndPeriod(userId, period);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsByUserId(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return _basketService.getBasketsByUserId(userId);
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsIdByUserAndPeriod(
 		long userId, int period)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _basketService.getBasketsIdByUserAndPeriod(userId, period);
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.json.JSONArray getBasketsIdByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return _basketService.getBasketsIdByUserId(userId);
 	}
 

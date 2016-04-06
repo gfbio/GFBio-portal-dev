@@ -62,12 +62,12 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class BasketServiceSoap {
-	public static org.gfbio.model.BasketSoap getBasketById(long basketId)
+	public static java.lang.String getBasketById(long basketId)
 		throws RemoteException {
 		try {
-			org.gfbio.model.Basket returnValue = BasketServiceUtil.getBasketById(basketId);
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketById(basketId);
 
-			return org.gfbio.model.BasketSoap.toSoapModel(returnValue);
+			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -76,12 +76,12 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static org.gfbio.model.BasketSoap[] getBasketsByIds(long[] basketIds)
+	public static java.lang.String getBasketsByIds(long[] basketIds)
 		throws RemoteException {
 		try {
-			java.util.List<org.gfbio.model.Basket> returnValue = BasketServiceUtil.getBasketsByIds(basketIds);
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketsByIds(basketIds);
 
-			return org.gfbio.model.BasketSoap.toSoapModels(returnValue);
+			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -90,42 +90,13 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static org.gfbio.model.BasketSoap[] getBasketsByUserAndPeriod(
-		long userId, int period) throws RemoteException {
-		try {
-			java.util.List<org.gfbio.model.Basket> returnValue = BasketServiceUtil.getBasketsByUserAndPeriod(userId,
-					period);
-
-			return org.gfbio.model.BasketSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static org.gfbio.model.BasketSoap[] getBasketsByUserId(long userId)
-		throws RemoteException {
-		try {
-			java.util.List<org.gfbio.model.Basket> returnValue = BasketServiceUtil.getBasketsByUserId(userId);
-
-			return org.gfbio.model.BasketSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static java.lang.Long[] getBasketsIdByUserAndPeriod(long userId,
+	public static java.lang.String getBasketsByUserAndPeriod(long userId,
 		int period) throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = BasketServiceUtil.getBasketsIdByUserAndPeriod(userId,
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketsByUserAndPeriod(userId,
 					period);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -134,12 +105,41 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static java.lang.Long[] getBasketsIdByUserId(long userId)
+	public static java.lang.String getBasketsByUserId(long userId)
 		throws RemoteException {
 		try {
-			java.util.List<java.lang.Long> returnValue = BasketServiceUtil.getBasketsIdByUserId(userId);
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketsByUserId(userId);
 
-			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getBasketsIdByUserAndPeriod(long userId,
+		int period) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketsIdByUserAndPeriod(userId,
+					period);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getBasketsIdByUserId(long userId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketsIdByUserId(userId);
+
+			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

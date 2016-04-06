@@ -288,10 +288,6 @@ public class ColumnClp extends BaseModelImpl<Column> implements Column {
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -342,5 +338,4 @@ public class ColumnClp extends BaseModelImpl<Column> implements Column {
 	private long _headID;
 	private String _column_name;
 	private BaseModel<?> _columnRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

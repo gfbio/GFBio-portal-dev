@@ -415,10 +415,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return getPrimaryKey().hashCode();
@@ -497,5 +493,4 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	private String _extendeddata;
 	private String _researchObjectType;
 	private BaseModel<?> _researchObjectRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

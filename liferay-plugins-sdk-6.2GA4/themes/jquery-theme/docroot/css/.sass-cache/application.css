@@ -54,6 +54,9 @@
 .sortable-layout-drag-target-indicator {
   margin: 2px 0; }
 
+.yui3-dd-proxy {
+  z-index: 1110 !important; }
+
 /* ---------- Portal tool tips ---------- */
 .tooltip {
   max-width: 200px; }
@@ -380,6 +383,63 @@
 .taglib-page-iterator .search-pages .page-links {
   padding: 0; }
 
+/* ---------- CKEditor menu ---------- */
+.aui .cke_dialog .cke_dialog_ui_input_text {
+  height: auto; }
+.aui .cke_editable_inline a {
+  cursor: pointer; }
+
+/* ---------- CKEditor panel menu ---------- */
+.cke_panel.cke_combopanel {
+  width: 220px; }
+
+.cke_panel_block .cke_panel_grouptitle {
+  font-size: 20px;
+  line-height: 20px;
+  margin-top: 0; }
+.cke_panel_block .cke_panel_list {
+  margin-left: 0; }
+  .cke_panel_block .cke_panel_list .cke_panel_listItem {
+    line-height: initial; }
+    .cke_panel_block .cke_panel_list .cke_panel_listItem a:hover {
+      text-decoration: none; }
+
+/* ---------- HTML editor ---------- */
+body.html-editor {
+  background: #FFF;
+  color: #000;
+  padding: 1em; }
+
+.html-editor.portlet-message-boards {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+  word-wrap: break-word; }
+  .html-editor.portlet-message-boards blockquote {
+    background: #eef0f2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
+    border: 1px solid #777;
+    padding: 5px 45px; }
+    .html-editor.portlet-message-boards blockquote:after {
+      background: url(../images/message_boards/quoteright.png) no-repeat 50%;
+      content: '';
+      display: block;
+      float: right;
+      height: 24px;
+      margin-right: -35px;
+      margin-top: -25px;
+      width: 31px;
+      z-index: 999; }
+    .html-editor.portlet-message-boards blockquote cite {
+      display: block;
+      font-weight: bold; }
+  .html-editor.portlet-message-boards pre {
+    background: #F9F9F9;
+    border: 1px solid #777;
+    padding: 0.5em; }
+
 /* ---------- Inline editing ---------- */
 .lfr-editable {
   outline: 1px dashed #68bb30;
@@ -427,6 +487,8 @@
   height: 25px;
   width: 25px; }
 
+.ie input.cke_dialog_ui_input_text {
+  height: auto; }
 .ie .proxy.not-intersecting .forbidden-action {
   right: 2px;
   top: 2px; }
@@ -448,6 +510,10 @@
   text-indent: 0; }
 .ie7 .paginator-current-page {
   color: #FFF; }
+
+.ie8 .row-fluid input[class*=span].search-query {
+  line-height: 20px;
+  min-height: 20px; }
 
 .ios.mobile .modal-content .dialog-iframe-bd {
   overflow: auto;

@@ -4,7 +4,8 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
   .aui #heading {
     bottom: 100%;
-    position: absolute; }
+    margin-top: -2em;
+    position: relative; }
     .aui #heading .site-title {
       font-size: 26px; }
       .aui #heading .site-title img {

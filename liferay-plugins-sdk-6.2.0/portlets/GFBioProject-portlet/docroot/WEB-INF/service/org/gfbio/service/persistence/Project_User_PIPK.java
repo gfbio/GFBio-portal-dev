@@ -21,7 +21,6 @@ import java.io.Serializable;
 
 /**
  * @author Marcel Froemming
- * @generated
  */
 public class Project_User_PIPK implements Comparable<Project_User_PIPK>,
 	Serializable {

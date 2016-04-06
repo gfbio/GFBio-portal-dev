@@ -198,19 +198,19 @@ public interface DataProviderModel extends BaseModel<DataProvider> {
 	public Object clone();
 
 	@Override
-	public int compareTo(org.gfbio.model.DataProvider dataProvider);
+	public int compareTo(DataProvider dataProvider);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<org.gfbio.model.DataProvider> toCacheModel();
+	public CacheModel<DataProvider> toCacheModel();
 
 	@Override
-	public org.gfbio.model.DataProvider toEscapedModel();
+	public DataProvider toEscapedModel();
 
 	@Override
-	public org.gfbio.model.DataProvider toUnescapedModel();
+	public DataProvider toUnescapedModel();
 
 	@Override
 	public String toString();

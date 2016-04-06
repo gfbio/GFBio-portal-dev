@@ -153,19 +153,19 @@ public interface Project_UserModel extends BaseModel<Project_User> {
 	public Object clone();
 
 	@Override
-	public int compareTo(org.gfbio.model.Project_User project_User);
+	public int compareTo(Project_User project_User);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<org.gfbio.model.Project_User> toCacheModel();
+	public CacheModel<Project_User> toCacheModel();
 
 	@Override
-	public org.gfbio.model.Project_User toEscapedModel();
+	public Project_User toEscapedModel();
 
 	@Override
-	public org.gfbio.model.Project_User toUnescapedModel();
+	public Project_User toUnescapedModel();
 
 	@Override
 	public String toString();
