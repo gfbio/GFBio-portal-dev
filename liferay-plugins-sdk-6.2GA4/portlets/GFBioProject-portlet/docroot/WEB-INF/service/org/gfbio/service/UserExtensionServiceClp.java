@@ -35,6 +35,10 @@ public class UserExtensionServiceClp implements UserExtensionService {
 		_methodName3 = "getUserById";
 
 		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName4 = "getTest";
+
+		_methodParameterTypes4 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -122,6 +126,40 @@ public class UserExtensionServiceClp implements UserExtensionService {
 		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public org.json.simple.JSONObject getTest(org.json.simple.JSONObject json)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4,
+					new Object[] { ClpSerializer.translateInput(json) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.NoSuchModelException) {
+				throw (com.liferay.portal.NoSuchModelException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -129,4 +167,6 @@ public class UserExtensionServiceClp implements UserExtensionService {
 	private String[] _methodParameterTypes1;
 	private String _methodName3;
 	private String[] _methodParameterTypes3;
+	private String _methodName4;
+	private String[] _methodParameterTypes4;
 }

@@ -51,5 +51,9 @@ public class UserExtensionServiceImpl extends UserExtensionServiceBaseImpl {
 		return UserExtensionLocalServiceUtil.getUserExtentionById(json);
 	}
 	
+	public JSONObject getTest(JSONObject json) throws NoSuchModelException, SystemException {
+		return json;
+	}
+	
 	
 }

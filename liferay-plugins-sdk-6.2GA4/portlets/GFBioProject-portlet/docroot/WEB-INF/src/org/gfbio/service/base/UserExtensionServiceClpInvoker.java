@@ -35,6 +35,10 @@ public class UserExtensionServiceClpInvoker {
 		_methodName108 = "getUserById";
 
 		_methodParameterTypes108 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName109 = "getTest";
+
+		_methodParameterTypes109 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -56,6 +60,11 @@ public class UserExtensionServiceClpInvoker {
 			return UserExtensionServiceUtil.getUserById((org.json.simple.JSONObject)arguments[0]);
 		}
 
+		if (_methodName109.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
+			return UserExtensionServiceUtil.getTest((org.json.simple.JSONObject)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -65,4 +74,6 @@ public class UserExtensionServiceClpInvoker {
 	private String[] _methodParameterTypes103;
 	private String _methodName108;
 	private String[] _methodParameterTypes108;
+	private String _methodName109;
+	private String[] _methodParameterTypes109;
 }
