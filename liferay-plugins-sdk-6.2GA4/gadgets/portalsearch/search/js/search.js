@@ -322,8 +322,8 @@
 					// list all the return field from elasticSearch here
 					var jArr = [];
 					jArr.push("_score");
-					jArr.push("citation.title");
-					jArr.push("citation.authors");
+					jArr.push("citation_title");
+					jArr.push("citation_authors");
 					jArr.push("description");
 					jArr.push("dataCenter");
 					//jArr.push("region");
@@ -467,12 +467,12 @@
 						//console.log('parseReturnedJSONfromSearch');
 						//console.log(sourceObj);
 						inner.score = score;
-						if (sourceObj["citation.title"] !== undefined)
-							inner.title = sourceObj["citation.title"][0];
+						if (sourceObj["citation_title"] !== undefined)
+							inner.title = sourceObj["citation_title"][0];
 						else
 							inner.title = "";
-						if (sourceObj["citation.authors"] !== undefined)
-							inner.authors = sourceObj["citation.authors"];
+						if (sourceObj["citation_authors"] !== undefined)
+							inner.authors = sourceObj["citation_authors"];
 						else
 							inner.authors = "";
 						if (sourceObj["description"] !== undefined)
