@@ -540,7 +540,7 @@
 						if (sourceObj["html-1"]) { // this field is used only for displaying data
 							var html = sourceObj["html-1"][0];
 							html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
-							inner.html = writeShowHideParameterField(html);
+							inner.html = writeShowHideFields(html);
 						} else
 							inner.html = "";
 
@@ -558,7 +558,7 @@
 					return res;
 				}
 
-				function writeShowHideParameterField(orgHTML){
+				function writeShowHideFields(orgHTML){
 					var d = document.createElement('div');
 					d.innerHTML = orgHTML;
 					var elms = d.getElementsByClassName('desc-right');
@@ -566,25 +566,24 @@
 						var descLeft = elm.previousElementSibling;
 						var field = descLeft.childNodes[0].nodeValue;
 						
-						if (field.startsWith('Parameters')){
-							var paramStr = elm.textContent;
+						if (field.startsWith('Parameters') || field.startsWith('Summary')){
+							var fullStr = elm.textContent;
 							var limitLen = 180;
-							if ((paramStr.length > limitLen)&&(paramStr.length > limitLen+5)){
+							if ((fullStr.length > limitLen)&&(fullStr.length > limitLen+5)){
 								// set two length to prevent the expansion for less than 5 characters
-								var trimmedContent = paramStr.substring(0,limitLen);
-								var shortenedParam = '<span class="paramExpanded">'+paramStr
+								var trimmedContent = fullStr.substring(0,limitLen);
+								var shortenedText = '<span class="textExpanded">'+fullStr
 												+'</span>'
-												+'<span class="paramCollapsed">'+trimmedContent
+												+'<span class="textCollapsed">'+trimmedContent
 												+'...</span>'
-												+'<a href="javascript:void(0)" class="paramCollapsed">(+)</a>'
-												+'<a href="javascript:void(0)" class="paramExpanded">(-)</a>';
-								d.innerHTML = d.innerHTML.replace(paramStr,shortenedParam);
+												+'<a href="javascript:void(0)" class="textCollapsed">(+)</a>'
+												+'<a href="javascript:void(0)" class="textExpanded">(-)</a>';
+								elm.innerHTML = shortenedText;
 							}
 						}
 					});
 					return d.innerHTML;
 				}
-				
 				function writeResultTable() {
 					var displaytext = "<table style='border: 0; cellpadding: 0; cellspacing: 0;' id='tableId' class='display'>";
 					var div = document.getElementById('search_result_table');
@@ -927,9 +926,135 @@
 				};
 				
 				function toggleParametersField(){
-					$(".paramExpanded").hide();	
-					$(".paramExpanded, .paramCollapsed").click(function() {
-						$(this).parent().children(".paramExpanded, .paramCollapsed").toggle();
+					$(".textExpanded").hide();	
+					$(".textExpanded, .textCollapsed").click(function() {
+						$(this).parent().children(".textExpanded, .textCollapsed").toggle();
 						adjust();
 					});
 				};
+				
+				function showLatestTenDataset(){
+					writeResultTable();
+					var oTable = $('#tableId').DataTable({
+							"bDestroy" : true,
+							"bPaginate" : true,
+							"bJQueryUI" : true,
+							"bProcessing" : true,
+							"bServerSide" : true,
+							"sAjaxSource" : 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search',
+							"bRetrieve" : true,
+							"fnServerData" : getInitialFnServerData(),
+
+							"aoColumns" : [{
+									"data" : "score",
+									"visible" : false,
+									"sortable" : false
+								}, {
+									"data" : "html",
+									"visible" : true,
+									"sortable" : false
+								}, {
+									"class" : "color-control",
+									"sortable" : false,
+									"data" : null,
+									"defaultContent" : "<input type='text' class='full-spectrum'/><div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>",
+								}
+							],
+							"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', //'lrtip',
+							//"order" : [ [ 0, "desc" ] ],
+							"sAutoWidth" : true,
+
+							"fnDrawCallback" : function (oSettings) {
+								// do nothing if table is empty
+								//console.log(':Search: table draw callback');
+								if (!$(".dataTables_empty")[0]) {
+									addColorPicker();
+									setSelectedRowStyle();
+									// activate parameter show/hide event
+									toggleParametersField();
+								}					
+							},
+							"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+								showCartIcon(nRow, aData);
+							},
+							"oLanguage" : {
+								"sLengthMenu" : "Show _MENU_ entries per page"
+							}
+						});
+					// activate the row click event
+					onRowClick();
+				};
+				
+				function getInitialFnServerData(){
+					return function (sSource, aoData, fnCallback) {
+						// Construct query message in JSON format
+						var queryfield = createQueryFieldArray();
+						var initialQuery = getInitialJSONQuery(queryfield);
+						// Store query string for sending to VAT
+						document.getElementById("queryJSON").value = JSON.stringify(initialQuery);
+						// Send request via AJAX
+						$.ajax(sSource, {
+							contentType : 'application/json; charset=UTF-8',
+							type : 'POST',
+							data : JSON.stringify(initialQuery),
+							dataType : 'json',
+							success : function (json) {
+								var datasrc = json.hits.hits;
+								// display facet only if the search return more than 1 result
+								if (datasrc.length > 0) {
+									var facet = json.aggregations;
+									console.log(facet);
+									if (gadgets.Hub.isConnected())
+										gadgets.Hub.publish('gfbio.search.facet', facet);
+								} else {
+									if (gadgets.Hub.isConnected())
+										gadgets.Hub.publish('gfbio.search.facet', '');
+								}
+								var res = parseReturnedJSONfromSearch(datasrc);
+								json.iTotalRecords = json.hits.total;
+								json.iTotalDisplayRecords = json.hits.total;
+								json.data = res;
+								fnCallback(json);
+							}
+						});
+					}
+				};
+				
+				function getInitialJSONQuery(queryfield) {
+					return {
+						'query' :{'match_all':{}},
+						'sort'	:{ "internal-datestamp": {
+										"order": "desc"
+									  }
+								},
+						'from' : 0,
+						'size' : 10,
+						'fields' : queryfield,
+						'aggs' : {
+							'author' : {
+								'terms' : {
+									'field' : 'citation_authorFacet',
+									'size' : 50
+								}
+							},
+							'year' : {
+								'terms' : {
+									'field' : 'citation_yearFacet',
+									'size' : 50
+								}
+							},
+							'region' : {
+								'terms' : {
+									'field' : 'regionFacet',
+									'size' : 50
+								}
+							},
+							'dataCenter' : {
+								'terms' : {
+									'field' : 'dataCenterFacet',
+									'size' : 50
+								}
+							}
+						}
+					}
+				}
