@@ -63,7 +63,7 @@
 			
 			
     			<div class="header-suchfeld" id="header-suchfeld">
-      					<form action="$portal_url/data-portal" method="GET" name="portalForm" id="header-suchfeld-form" class="header-suchfeld">
+      					<form action="$portal_url/search-page" method="GET" name="portalForm" id="header-suchfeld-form" class="header-suchfeld">
         						<input type="hidden" name="formtype" value="simple" /><label for="acQueryInput_">Find Data</label>
        						    <input type="text" name="q_" id="acQueryInput_" class="text" value="" autocomplete="off">
         						<div id="acQueryContainer_" class="acDropdown"></div>
@@ -116,7 +116,7 @@ $theme.include($body_top_include)
 					<h2 class="ce_headline">our partners</h2>
 		
 					<div class="ce_text partners-list-link block" id="partners-list-link">
-		  				<h3><a title="Partner" href="$portal_url/partner">&gt;&gt; See the complete list</a></h3>    
+		  				<h3><a title="Partner" href="$portal_url/consortium">&gt;&gt; See the complete list</a></h3>    
 					</div>
 		
 					<div class="ce_text block">
