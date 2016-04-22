@@ -1,277 +1,10 @@
 var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
 
-function loadBasket(topic, data, subscriberData) {
-	document.getElementById("basketID").value = data.basketID;
-	document.getElementById("visualBasket").value = data.basketContent
-		var query = JSON.parse(data.query);
-	var queryStr = query.query.function_score.query.filtered.query.simple_query_string.query;
-	console.log(queryStr);
-	var searchbox = document.getElementById("gfbioSearchInput");
-	searchbox.value = queryStr;
-	newQuery(false);
-}
-
-function applyFacetFilter(topic, data, subscriberData) {
-	var facetFilters = data.filtered;
-	var filteredArray = [];
-	var yearRange = "";
-	//console.log(':Search: receive facet filter - '+JSON.stringify(facetFilters));
-	for (var i = 0; i < facetFilters.length; i++) {
-		var facetFilter = facetFilters[i];
-		if ((facetFilter.facetCat == "citation_yearFacet") && (facetFilter.facetTerm.indexOf(" - ") > 0)) {
-			yearRange = facetFilter.facetTerm;
-		} else {
-			var filterStr = "{\"term\":{\"{0}\":\"{1}\"}}".format(facetFilter.facetCat, facetFilter.facetTerm);
-			//console.log(':Search: filterStr - '+filterStr);
-			var filterTerm = JSON.parse(filterStr);
-			filteredArray.push(filterTerm);
-		}
-	}
-	filterQuery(filteredArray, yearRange);
-};
-function updateVisualisation() {
-	var jsonData = getSelectedResult();
-	// Add query message in JSON format
-	var queryJSON = document.getElementById("queryJSON").value;
-	jsonData.queryStr = queryJSON;
-	console.log(':Search: fire selected data: ' + JSON.stringify(jsonData));
-	addBasket();
-	if (gadgets.Hub.isConnected()) {
-		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
-	}
-}
-
-function addBasket() {
-	var val = document.getElementById("visualBasket").value;
-	if (val == "") {
-		console.log('No basket selected.');
-	} else {
-		var uid = parent.Liferay.ThemeDisplay.getUserId();
-		var basketid = document.getElementById("basketID").value;
-		var query = document.getElementById("queryJSON").value;
-		parent.Liferay.Service(
-			'/GFBioProject-portlet.basket/update-basket', {
-			basketID : basketid,
-			userID : uid,
-			name : uid + '_basket',
-			basketContent : val,
-			queryJSON : query
-		},
-			function (obj) {
-			console.log("Post return: " + obj);
-			// if the returned value is basket id
-			if (!isNaN(obj)) {
-				document.getElementById("basketID").value = obj;
-			}
-		});
-	}
-}
-
-function newQuery(clearBasket) {
-	$('#tableId').DataTable().clear();
-	var keyword = document.getElementById("gfbioSearchInput").value;
-	var filter = [];
-
-	if (gadgets.Hub.isConnected())
-		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
-
-	$('#gfbioSearchInput').autocomplete('close');
-
-	getSearchResult(keyword, filter, "");
-	var visualBasket = document.getElementById("visualBasket");
-	// clear visualBasket if the clearBasket flag is true
-	if (clearBasket)
-		visualBasket.value = "";
-	updateVisualisation();
-}
-
-function filterQuery(filter, yearRange) {
-	// keep only filtered items
-	$('#tableId').DataTable().clear();
-	var keyword = document.getElementById("gfbioSearchInput").value;
-
-	getSearchResult(keyword, filter, yearRange);
-}
-
-function getSearchResult(keyword, filter, yearRange) {
-	//console.log(':Search: getSearchResult: '+keyword);
-	if (gadgets.Hub.isConnected() && (keyword != "")) {
-		// prevent calling ts when keyword box is empty
-		gadgets.Hub.publish('gfbio.search.ts', keyword);
-	}
-	writeResultTable();
-	var oTable = $('#tableId').DataTable({
-			"bDestroy" : true,
-			"bPaginate" : true,
-			"bJQueryUI" : true,
-			"bProcessing" : true,
-			"bServerSide" : true,
-			"sAjaxSource" : searchAPI,
-			"bRetrieve" : true,
-			"fnServerData" : fnServerObjectToArray(keyword, filter, yearRange),
-
-			"aoColumns" : [{
-					"data" : "score",
-					"visible" : false,
-					"sortable" : false
-				}, {
-					"data" : "html",
-					"visible" : true,
-					"sortable" : false
-				}, {
-					"class" : "color-control",
-					"sortable" : false,
-					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>"+ cartDiv
-				}
-			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', //'lrtip',
-			//"order" : [ [ 0, "desc" ] ],
-			"sAutoWidth" : true,
-
-			"fnDrawCallback" : function (oSettings) {
-				// do nothing if table is empty
-				if (!$(".dataTables_empty")[0]) {
-					addColorPicker();
-					setSelectedRowStyle();
-					// activate parameter show/hide event
-					toggleParametersField()
-				}
-			},
-			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
-				showCartIcon(nRow, aData);
-			},
-			"oLanguage" : {
-				"sLengthMenu" : "Show _MENU_ entries per page"
-			}
-		});
-	// activate the row click event
-	onRowClick();
-}
-
-function fnServerObjectToArray(keyword, filterArray, yearRange) {
-	return function (sSource, aoData, fnCallback) {
-
-		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
-		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
-		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
-		var filteredQuery = getFilteredQuery(keyword, filterArray, yearRange);
-		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
-		// Store query string for sending to VAT
-		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
-		// Send request via AJAX
-		$.ajax(sSource, {
-			contentType : 'application/json; charset=UTF-8',
-			type : 'POST',
-			data : JSON.stringify(completeQuery),
-			dataType : 'json',
-			success : function (json) {
-				var datasrc = json.hits.hits;
-				// display facet only if the search return more than 1 result
-				if (datasrc.length > 0) {
-					var facet = json.aggregations;
-					console.log(facet);
-					if (gadgets.Hub.isConnected())
-						gadgets.Hub.publish('gfbio.search.facet', facet);
-				} else {
-					if (gadgets.Hub.isConnected())
-						gadgets.Hub.publish('gfbio.search.facet', '');
-				}
-				var res = parseReturnedJSONfromSearch(datasrc);
-				json.iTotalRecords = json.hits.total;
-				json.iTotalDisplayRecords = json.hits.total;
-				json.data = res;
-				fnCallback(json);
-			}
-		});
-	};
-};
-
-function setSelectedRowStyle() {
-	// read basket value
-	var basket = document.getElementById("visualBasket");
-	var basketStr = basket.value;
-	var jsonData = {};
-	if (basketStr != "") {
-		jsonData = JSON.parse(basketStr);
-		// loop through each value and compare if the
-		// similar value exists on the current page
-		$.each(jsonData.selected, function (index, result) {
-			var selectedLink = result['metadataLink'];
-			var tb = $('#tableId').DataTable();
-			var displayedResult = tb.rows().data();
-
-			$.each(displayedResult, function (ind2, res2) {
-				var displayedLink = res2.metadataLink;
-				if (selectedLink == displayedLink) {
-					// if yes, toggle class to selected.
-					var row = tb.rows().nodes()[ind2];
-					row.className += ' selected';
-					//console.log('found selected row: '+ind2);
-					row.childNodes[1].childNodes[2].className = 'cart_selected';
-					$(row.childNodes[1].childNodes[1]).removeClass("invisible");
-				}
-			});
-		});
-	}
-}
-
-function onRowClick() {
-	$('#tableId tbody').off('click');
-	$('#tableId tbody').on('click', '#cart', function (e) {
-		var cell = $(this).parent();
-		var row = cell.parent();
-		var icol = row.children().index(cell);
-		var irow = row.parent().children().index(row);
-
-		row.toggleClass('selected');
-
-		// get Element visual basket for updating
-		var basket = document.getElementById("visualBasket");
-		var basketStr = basket.value;
-		var jsonData = {};
-		var selected = [];
-		// toggle basket
-		if (row.hasClass('selected')) {
-			$(this).attr('class', 'cart_selected');
-			$($(".sp-replacer")[irow]).removeClass("invisible");
-			// add to basket
-			if (basketStr == "") {
-				jsonData.selected = selected;
-			} else {
-				jsonData = JSON.parse(basketStr);
-			}
-
-			var nRow = row[0];
-			var tRows = $('#tableId').DataTable().rows();
-			var resultArray = createResultArray(nRow, tRows);
-			jsonData.selected.push(resultArray);
-			// store basket in string format
-			basket.value = JSON.stringify(jsonData);
-		} else {
-			$(this).attr('class', 'cart_unselected');
-			$($(".sp-replacer")[irow]).addClass("invisible");
-			// remove from basket
-			if (basketStr != "") {
-				jsonData = JSON.parse(basketStr);
-				// get row index to find metadatalink as id
-				var nRow = row[0];
-				var tRows = $('#tableId').DataTable().rows();
-				var resultArray = createResultArray(nRow, tRows);
-				// metadataLink is supposed to be unique for each dataset,
-				// so I use it as an id for each row.
-				jsonData.selected = JSONfindAndRemove(jsonData.selected, 'metadataLink', resultArray.metadataLink);
-				basket.value = JSON.stringify(jsonData);
-			}
-		}
-		//update visualisation
-		updateVisualisation();
-	});
-}
-
+/////////////////////////////// Search initial functions //////////////////////////////
+/*
+ * Description: Make enter press in search textbox equivalent to clicking search button
+ */
 function listenToEnterPress() {
 	$("#gfbioSearchInput").keyup(function (event) {
 		if (event.keyCode == 13) {
@@ -281,8 +14,10 @@ function listenToEnterPress() {
 	});
 }
 
+/*
+ * Description: set autocomplete to the search textbox
+ */
 function setAutoComplete() {
-	// this function is recommended by pansimple
 	$('#gfbioSearchInput').autocomplete({
 		minLength : 1,
 		delay : 0,
@@ -316,21 +51,11 @@ function setAutoComplete() {
 	});
 }
 
-function getSelectedResult() {
-	var jsonData = {};
-	var selected = [];
-	var basket = document.getElementById("visualBasket");
-	var basketStr = basket.value;
-	// if nothing selected, return empty array []
-	if (basketStr == "") {
-		jsonData.selected = selected;
-	} else {
-		// convert basketStr to JSON object
-		jsonData = JSON.parse(basketStr);
-	}
-
-	return jsonData;
-}
+/*
+ * Description: Read URL and extract variable
+ * Input: variable name, e.g. "q_"
+ * Return: keyword attaced to the variable
+ */
 function getQueryVariable(variable) {
 	var query = document.referrer;
 	var vars = query.split('&');
@@ -344,6 +69,282 @@ function getQueryVariable(variable) {
 	return '';
 }
 
+/*
+ * Description: Query for the latest 10 dataset and display to the result table
+ * Effect: The result table and facet gadget are updated
+ */
+function showLatestTenDataset(filter, yearRange) {
+	// clear result table
+	$('#tableId').DataTable().clear();
+	
+	writeResultTable();
+	var oTable = $('#tableId').DataTable({
+			"bDestroy" : true,
+			"bPaginate" : true,
+			"bJQueryUI" : true,
+			"bProcessing" : true,
+			"bServerSide" : true,
+			"sAjaxSource" : searchAPI,
+			"bRetrieve" : true,
+			"fnServerData" : getFilteredLatestDataset(filter, yearRange),
+			// no query, no filter
+			"aoColumns" : [{
+					"data" : "score",
+					"visible" : false,
+					"sortable" : false
+				}, {
+					"data" : "html",
+					"visible" : true,
+					"sortable" : false
+				}, {
+					"class" : "color-control",
+					"sortable" : false,
+					"data" : null,
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
+				}
+			],
+			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', //'lrtip',
+			//"order" : [ [ 0, "desc" ] ],
+			"sAutoWidth" : true,
+
+			"fnDrawCallback" : function (oSettings) {
+				// do nothing if table is empty
+				//console.log(':Search: table draw callback');
+				if (!$(".dataTables_empty")[0]) {
+					addColorPicker();
+					setSelectedRowStyle();
+					// activate parameter show/hide event
+					toggleParametersField();
+				}
+			},
+			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+				showCartIcon(nRow, aData);
+			},
+			"oLanguage" : {
+				"sLengthMenu" : "Show _MENU_ entries per page"
+			}
+		});
+	// activate the row click event
+	onRowClick();
+};
+
+function getFilteredLatestDataset(filter, yearRange) {
+	return function (sSource, aoData, fnCallback) {
+		console.log("getFilteredLatestDataset");
+		console.log("filter:"+filter);
+		console.log("yearRange:"+yearRange);
+		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
+		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
+		// Construct query message in JSON format
+		var queryfield = createQueryFieldArray();
+		var filteredQuery = getFilteredQuery("", filter, yearRange);
+		var boostedQuery = applyBoost(filteredQuery);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		completeQuery.sort = {
+			"citation_date" : {
+				"order" : "desc"
+			}
+		}; // add sorting by citation date
+		console.log("initial query: "+ completeQuery);
+		//var initialQuery = getInitialJSONQuery(queryfield,iDisplayStart,iDisplayLength);
+		// Store query string for sending to VAT
+		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
+		// Send request via AJAX
+		$.ajax(sSource, {
+			contentType : 'application/json; charset=UTF-8',
+			type : 'POST',
+			data : JSON.stringify(completeQuery),
+			dataType : 'json',
+			success : function (json) {
+				var datasrc = json.hits.hits;
+				// display facet only if the search return more than 1 result
+				if (datasrc.length > 0) {
+					var facet = json.aggregations;
+					console.log(facet);
+					if (gadgets.Hub.isConnected())
+						gadgets.Hub.publish('gfbio.search.facet', facet);
+				} else {
+					if (gadgets.Hub.isConnected())
+						gadgets.Hub.publish('gfbio.search.facet', '');
+				}
+				var res = parseReturnedJSONfromSearch(datasrc);
+				json.iTotalRecords = json.hits.total;
+				json.iTotalDisplayRecords = json.hits.total;
+				json.data = res;
+				fnCallback(json);
+			}
+		});
+	}
+};
+/*
+function getInitialJSONQuery(queryfield,iDisplayStart,iDisplayLength) {
+return {
+'query' : {
+'match_all' : {}
+
+},
+'sort' : {
+"internal-datestamp" : {
+"order" : "desc"
+}
+},
+'from' : iDisplayStart,
+'size' : iDisplayLength,
+'fields' : queryfield,
+'aggs' : {
+'author' : {
+'terms' : {
+'field' : 'citation_authorFacet',
+'size' : 50
+}
+},
+'year' : {
+'terms' : {
+'field' : 'citation_yearFacet',
+'size' : 50
+}
+},
+'region' : {
+'terms' : {
+'field' : 'regionFacet',
+'size' : 50
+}
+},
+'dataCenter' : {
+'terms' : {
+'field' : 'dataCenterFacet',
+'size' : 50
+}
+}
+}
+}
+}*/
+///////////////////////////// End Search initial functions /////////////////////////////
+
+/////////////////////////////// Main search functions ////////////////////////////////////
+function newQuery(clearBasket) {
+	// clear result table
+	$('#tableId').DataTable().clear();
+	// read search keywords
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	var filter = [];
+	// reset facet gadgeet
+	if (gadgets.Hub.isConnected())
+		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+	// autocomplete from the textbox doesn't automatically closed
+	$('#gfbioSearchInput').autocomplete('close');
+	// send query to pansimple and parse result to the table
+	getSearchResult(keyword, filter, "");
+	// clear visualBasket if the clearBasket flag is true
+	var visualBasket = document.getElementById("visualBasket");
+	if (clearBasket)
+		visualBasket.value = "";
+	// send content of visual basket to the mini-map gadget
+	updateMap();
+}
+
+function getSearchResult(keyword, filter, yearRange) {
+	// every submitted query must be sent to TS gadget too
+	if (gadgets.Hub.isConnected() && (keyword != "")) {
+		// prevent calling ts when keyword box is empty
+		gadgets.Hub.publish('gfbio.search.ts', keyword);
+	}
+	// create a result table as a placeholder
+	writeResultTable();
+	// bound a datatable to pansimple API query
+	var oTable = $('#tableId').DataTable({
+			"bDestroy" : true,
+			"bPaginate" : true,
+			"bJQueryUI" : true,
+			"bProcessing" : true,
+			"bServerSide" : true,
+			"sAjaxSource" : searchAPI, // the URL of Search API
+			"bRetrieve" : true,
+			"fnServerData" : submitQueryToServer(keyword, filter, yearRange),
+			"aoColumns" : [{
+					"data" : "score",
+					"visible" : false,
+					"sortable" : false
+				}, {
+					"data" : "html",
+					"visible" : true,
+					"sortable" : false
+				}, {
+					"class" : "color-control",
+					"sortable" : false,
+					"data" : null,
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
+				}
+			],
+			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
+			"sAutoWidth" : true,
+
+			"fnDrawCallback" : function (oSettings) {
+				// do nothing if table is empty
+				if (!$(".dataTables_empty")[0]) {
+					addColorPicker();
+					setSelectedRowStyle();
+					// activate parameter show/hide event
+					toggleParametersField()
+				}
+			},
+			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+				showCartIcon(nRow, aData);
+			},
+			"oLanguage" : {
+				"sLengthMenu" : "Show _MENU_ entries per page"
+			}
+		});
+	// activate the row click event
+	onRowClick();
+}
+
+function submitQueryToServer(keyword, filter, yearRange) {
+	return function (sSource, aoData, fnCallback) {
+		// set value for pagination
+		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
+		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
+
+		// Construct query message in JSON format
+		var queryfield = createQueryFieldArray();
+		var filteredQuery = getFilteredQuery(keyword, filter, yearRange);
+		var boostedQuery = applyBoost(filteredQuery);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+
+		// Store query string for sending to VAT
+		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
+
+		// Send request via AJAX
+		$.ajax(sSource, {
+			contentType : 'application/json; charset=UTF-8',
+			type : 'POST',
+			data : JSON.stringify(completeQuery),
+			dataType : 'json',
+			success : function (result) {
+				// get JSON result back from the server
+				var datasrc = result.hits.hits;
+
+				// display facet only if the search return more than 1 result
+				if (datasrc.length > 0) {
+					var facet = result.aggregations;
+					console.log(facet);
+					if (gadgets.Hub.isConnected())
+						gadgets.Hub.publish('gfbio.search.facet', facet);
+				} else {
+					if (gadgets.Hub.isConnected())
+						gadgets.Hub.publish('gfbio.search.facet', '');
+				}
+				var res = parseReturnedJSONfromSearch(datasrc);
+				result.iTotalRecords = result.hits.total;
+				result.iTotalDisplayRecords = result.hits.total;
+				result.data = res;
+				// return result object
+				fnCallback(result);
+			}
+		});
+	};
+};
+
 function createQueryFieldArray() {
 	// list all the return field from elasticSearch here
 	var jArr = [];
@@ -352,6 +353,10 @@ function createQueryFieldArray() {
 	jArr.push("citation_authors");
 	jArr.push("description");
 	jArr.push("dataCenter");
+	jArr.push("region");
+	jArr.push("project");
+	jArr.push("parameter");
+	jArr.push("investigator");
 	jArr.push("internal-datestamp");
 	jArr.push("maxLatitude");
 	jArr.push("minLatitude");
@@ -365,21 +370,37 @@ function createQueryFieldArray() {
 	return jArr;
 }
 function getFilteredQuery(keyword, filterArray, yearRange) {
-	var queryObj = {
-		"simple_query_string" : {
-			"query" : keyword,
-			"fields" : ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
-			"default_operator" : "and"
-		}
-	};
+
+	var queryObj;
+	if (keyword != "") {
+		queryObj = {
+			"simple_query_string" : {
+				"query" : keyword,
+				"fields" : ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
+				"default_operator" : "and"
+			}
+		};
+	} else {
+		queryObj = {
+			"match_all" : {}
+		};
+	}
 	var filterObj;
 
 	if (yearRange == "") {
-		filterObj = {
-			"and" : {
-				"filters" : filterArray
-			}
-		};
+		if (filterArray != "") {
+			filterObj = {
+				"and" : {
+					"filters" : filterArray
+				}
+			};
+		} else {
+			return {
+				"filtered" : {
+					"query" : queryObj
+				}
+			};
+		}
 	} else {
 		var splitPos = yearRange.indexOf(' - ');
 		var minYear = yearRange.substring(0, splitPos);
@@ -457,7 +478,233 @@ function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfiel
 	}
 }
 
-function createResultArray(nRow, tRows) {
+function parseReturnedJSONfromSearch(datasrc) {
+	var res = [];
+	for (var i = 0, iLen = datasrc.length; i < iLen; i++) {
+		var inner = new Object();
+		var score = datasrc[i]._score;
+		var fields = datasrc[i].fields;
+		inner.score = score;
+
+		inner.title = getValueFromJSONObject(fields, "citation_title", 0);
+		inner.authors = getValueFromJSONObject(fields, "citation_authors");
+		inner.description = getValueFromJSONObject(fields, "description", 0);
+		inner.dataCenter = getValueFromJSONObject(fields, "dataCenter", 0);
+		inner.region = getValueFromJSONObject(fields, "region");
+		inner.project = getValueFromJSONObject(fields, "project");
+		inner.parameter = getValueFromJSONObject(fields, "parameter");
+		inner.investigator = getValueFromJSONObject(fields, "investigator");
+		inner.timeStamp = getValueFromJSONObject(fields, "internal-datestamp", 0);
+		inner.maxLatitude = getValueFromJSONObject(fields, "maxLatitude", 0);
+		inner.minLatitude = getValueFromJSONObject(fields, "minLatitude", 0);
+		inner.maxLongitude = getValueFromJSONObject(fields, "maxLongitude", 0);
+		inner.minLongitude = getValueFromJSONObject(fields, "minLongitude", 0);
+		inner.metadatalink = getValueFromJSONObject(fields, "metadatalink", 0);
+
+		if (fields["html-1"]) { // this field is used only for displaying data
+			var html = fields["html-1"][0];
+			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
+			inner.html = writeShowHideFields(html);
+		} else
+			inner.html = "";
+
+		if (fields["xml"]) { // this field contains raw data, is used for basket
+			var xml = fields["xml"];
+			// creates object instantce of XMLtoJSON
+			var xml2json = new XMLtoJSON();
+			var json = xml2json.fromStr(xml);
+			inner.xml = json; //JSON.stringify(json);
+		} else
+			inner.xml = "";
+
+		res.push(inner);
+	}
+	return res;
+}
+function writeResultTable() {
+	var displaytext = "<table style='border: 0; cellpadding: 0; cellspacing: 0;' id='tableId' class='display'>";
+	var div = document.getElementById('search_result_table');
+	div.innerHTML = displaytext;
+}
+/////////////////////////////// End main search functions ////////////////////////////////////
+
+/////////////////////////////// Basket functions ///////////////////////////////////////
+function loadBasket(topic, data, subscriberData) {
+	document.getElementById("basketID").value = data.basketID;
+	document.getElementById("visualBasket").value = data.basketContent
+		var query = JSON.parse(data.query);
+	var queryStr = query.query.function_score.query.filtered.query.simple_query_string.query;
+	console.log(queryStr);
+	var searchbox = document.getElementById("gfbioSearchInput");
+	searchbox.value = queryStr;
+	newQuery(false);
+}
+
+function addBasket() {
+	var val = document.getElementById("visualBasket").value;
+	if (val == "") {
+		console.log('No basket selected.');
+	} else {
+		var uid = parent.Liferay.ThemeDisplay.getUserId();
+		var basketid = document.getElementById("basketID").value;
+		var query = document.getElementById("queryJSON").value;
+		parent.Liferay.Service(
+			'/GFBioProject-portlet.basket/update-basket', {
+			basketID : basketid,
+			userID : uid,
+			name : uid + '_basket',
+			basketContent : val,
+			queryJSON : query
+		},
+			function (obj) {
+			console.log("Post return: " + obj);
+			// if the returned value is basket id
+			if (!isNaN(obj)) {
+				document.getElementById("basketID").value = obj;
+			}
+		});
+	}
+}
+function getSelectedResult() {
+	var jsonData = {};
+	var selected = [];
+	var basket = document.getElementById("visualBasket");
+	var basketStr = basket.value;
+	// if nothing selected, return empty array []
+	if (basketStr == "") {
+		jsonData.selected = selected;
+	} else {
+		// convert basketStr to JSON object
+		jsonData = JSON.parse(basketStr);
+	}
+
+	return jsonData;
+}
+/////////////////////////////// End Basket functions ////////////////////////////////////
+
+/////////////////////////////// Facet filter functions ////////////////////////////////////
+function applyFacetFilter(topic, data, subscriberData) {
+	console.log("facet is selected.");
+	var facetFilters = data.filtered;
+	var filteredArray = [];
+	var yearRange = "";
+	//console.log(':Search: receive facet filter - '+JSON.stringify(facetFilters));
+	for (var i = 0; i < facetFilters.length; i++) {
+		var facetFilter = facetFilters[i];
+		if ((facetFilter.facetCat == "citation_yearFacet") && (facetFilter.facetTerm.indexOf(" - ") > 0)) {
+			yearRange = facetFilter.facetTerm;
+		} else {
+			var filterStr = "{\"term\":{\"{0}\":\"{1}\"}}".format(facetFilter.facetCat, facetFilter.facetTerm);
+			//console.log(':Search: filterStr - '+filterStr);
+			var filterTerm = JSON.parse(filterStr);
+			filteredArray.push(filterTerm);
+		}
+	}
+	filterQuery(filteredArray, yearRange);
+};
+
+function filterQuery(filter, yearRange) {
+	console.log("requery with filters.");
+	// keep only filtered items
+	// clear result table
+	$('#tableId').DataTable().clear();
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	// resubmit a query with filter to pansimple and rewrite the result table
+	if (keyword != ""){
+		console.log("requery with keyword.")
+		getSearchResult(keyword, filter, yearRange);
+		}
+	else{
+		console.log("requery with 10 latest dataset");
+		showLatestTenDataset(filter, yearRange);
+		}
+}
+/////////////////////////////// End Facet filter functions /////////////////////////////////
+
+/////////////////////////////// Search Result UI functions /////////////////////////////////
+function setSelectedRowStyle() {
+	// read basket value
+	var basket = document.getElementById("visualBasket");
+	var basketStr = basket.value;
+	var jsonData = {};
+	if (basketStr != "") {
+		jsonData = JSON.parse(basketStr);
+		// loop through each value and compare if the
+		// similar value exists on the current page
+		$.each(jsonData.selected, function (index, result) {
+			var selectedLink = result['metadataLink'];
+			var tb = $('#tableId').DataTable();
+			var displayedResult = tb.rows().data();
+
+			$.each(displayedResult, function (ind2, res2) {
+				var displayedLink = res2.metadataLink;
+				if (selectedLink == displayedLink) {
+					// if yes, toggle class to selected.
+					var row = tb.rows().nodes()[ind2];
+					row.className += ' selected';
+					//console.log('found selected row: '+ind2);
+					row.childNodes[1].childNodes[2].className = 'cart_selected';
+					$(row.childNodes[1].childNodes[1]).removeClass("invisible");
+				}
+			});
+		});
+	}
+}
+
+function onRowClick() {
+	$('#tableId tbody').off('click');
+	$('#tableId tbody').on('click', '#cart', function (e) {
+		var cell = $(this).parent();
+		var row = cell.parent();
+		var icol = row.children().index(cell);
+		var irow = row.parent().children().index(row);
+
+		row.toggleClass('selected');
+
+		// get Element visual basket for updating
+		var basket = document.getElementById("visualBasket");
+		var basketStr = basket.value;
+		var jsonData = {};
+		var selected = [];
+		// toggle basket
+		if (row.hasClass('selected')) {
+			$(this).attr('class', 'cart_selected');
+			$($(".sp-replacer")[irow]).removeClass("invisible");
+			// add to basket
+			if (basketStr == "") {
+				jsonData.selected = selected;
+			} else {
+				jsonData = JSON.parse(basketStr);
+			}
+
+			var nRow = row[0];
+			var tRows = $('#tableId').DataTable().rows();
+			var resultArray = getDataFromSelectedRow(nRow, tRows);
+			jsonData.selected.push(resultArray);
+			// store basket in string format
+			basket.value = JSON.stringify(jsonData);
+		} else {
+			$(this).attr('class', 'cart_unselected');
+			$($(".sp-replacer")[irow]).addClass("invisible");
+			// remove from basket
+			if (basketStr != "") {
+				jsonData = JSON.parse(basketStr);
+				// get row index to find metadatalink as id
+				var nRow = row[0];
+				var tRows = $('#tableId').DataTable().rows();
+				var resultArray = getDataFromSelectedRow(nRow, tRows);
+				// metadataLink is supposed to be unique for each dataset,
+				// so I use it as an id for each row.
+				jsonData.selected = JSONfindAndRemove(jsonData.selected, 'metadataLink', resultArray.metadataLink);
+				basket.value = JSON.stringify(jsonData);
+			}
+		}
+		//update visualisation
+		updateMap();
+	});
+}
+
+function getDataFromSelectedRow(nRow, tRows) {
 	var div = nRow.getElementsByClassName("sp-preview-inner")[0];
 	var color = getStyle(div, "background-color");
 	var iRow = nRow._DT_RowIndex;
@@ -477,106 +724,6 @@ function createResultArray(nRow, tRows) {
 		"xml" : value.xml
 	};
 	return result;
-}
-
-function parseReturnedJSONfromSearch(datasrc) {
-	var res = [];
-	for (var i = 0, iLen = datasrc.length; i < iLen; i++) {
-		var inner = new Object();
-		var score = datasrc[i]._score;
-		var sourceObj = datasrc[i].fields;
-		//console.log('parseReturnedJSONfromSearch');
-		//console.log(sourceObj);
-		inner.score = score;
-		if (sourceObj["citation_title"] !== undefined)
-			inner.title = sourceObj["citation_title"][0];
-		else
-			inner.title = "";
-		if (sourceObj["citation_authors"] !== undefined)
-			inner.authors = sourceObj["citation_authors"];
-		else
-			inner.authors = "";
-		if (sourceObj["description"] !== undefined)
-			inner.description = sourceObj["description"][0];
-		else
-			inner.description = "";
-		if (sourceObj["dataCenter"] !== undefined)
-			inner.dataCenter = sourceObj["dataCenter"][0];
-		else
-			inner.dataCenter = "";
-		if (sourceObj["region"] !== undefined)
-			inner.region = sourceObj["region"];
-		else
-			inner.region = "";
-		if (sourceObj["project"] !== undefined)
-			inner.project = sourceObj["project"];
-		else
-			inner.project = "";
-		if (sourceObj["citation.date"] !== undefined)
-			inner.citationDate = sourceObj["citation.date"];
-		else
-			inner.citationDate = "";
-		if (sourceObj["parameter"] !== undefined)
-			inner.parameter = sourceObj["parameter"];
-		else
-			inner.parameter = "";
-		if (sourceObj["investigator"] !== undefined)
-			inner.investigator = sourceObj["investigator"];
-		else
-			inner.investigator = "";
-		if (sourceObj["internal-datestamp"] !== undefined)
-			inner.timeStamp = sourceObj["internal-datestamp"][0];
-		else
-			inner.timeStamp = "";
-		if (sourceObj["maxLatitude"] !== undefined)
-			inner.maxLatitude = sourceObj["maxLatitude"][0];
-		else
-			inner.maxLatitude = undefined;
-		if (sourceObj["minLatitude"] !== undefined)
-			inner.minLatitude = sourceObj["minLatitude"][0];
-		else
-			inner.minLatitude = undefined;
-		if (sourceObj["maxLongitude"] !== undefined)
-			inner.maxLongitude = sourceObj["maxLongitude"][0];
-		else
-			inner.maxLongitude = undefined;
-		if (sourceObj["minLongitude"] !== undefined)
-			inner.minLongitude = sourceObj["minLongitude"][0];
-		else
-			inner.minLongitude = undefined;
-		if (sourceObj["taxonomy"] !== undefined)
-			inner.taxonomy = sourceObj["taxonomy"];
-		else
-			inner.taxonomy = "";
-		if (sourceObj["datalink"])
-			inner.dataLink = sourceObj["datalink"];
-		else
-			inner.dataLink = "";
-
-		if (sourceObj["metadatalink"])
-			inner.metadataLink = sourceObj["metadatalink"][0];
-		else
-			inner.metadataLink = "";
-
-		if (sourceObj["html-1"]) { // this field is used only for displaying data
-			var html = sourceObj["html-1"][0];
-			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
-			inner.html = writeShowHideFields(html);
-		} else
-			inner.html = "";
-
-		if (sourceObj["xml"]) { // this field contains raw data, is used for basket
-			var xml = sourceObj["xml"];
-			// creates object instantce of XMLtoJSON
-			var xml2json = new XMLtoJSON();
-			var json = xml2json.fromStr(xml);
-			inner.xml = json; //JSON.stringify(json);
-		} else
-			inner.xml = "";
-
-		res.push(inner);
-	}
-	return res;
 }
 
 function writeShowHideFields(orgHTML) {
@@ -603,40 +750,17 @@ function writeShowHideFields(orgHTML) {
 	});
 	return d.innerHTML;
 }
-function writeResultTable() {
-	var displaytext = "<table style='border: 0; cellpadding: 0; cellspacing: 0;' id='tableId' class='display'>";
-	var div = document.getElementById('search_result_table');
-	div.innerHTML = displaytext;
-}
 
-function getValueByAttribute(list, attr, val) {
-	var result = null;
-	$.each(list, function (index, item) {
-		if (item[attr].toString() == val.toString()) {
-			result = list[index].value;
-			return false; // breaks the $.each() loop
-		}
-	});
-	return result;
-}
-
-function JSONfindAndRemove(array, property, value) {
-	var resultArray = [];
-	$.each(array, function (index, result) {
-		if (result[property] == value) {
-			// Remove from array is not working I don't know why,
-			// just do it another way round
-		} else {
-			resultArray.push(result);
-		}
-	});
-	return resultArray;
-}
-
-function componentFromStr(numStr, percent) {
-	var num = Math.max(0, parseInt(numStr, 10));
-	return percent ?
-	Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+function updateMap() {
+	var jsonData = getSelectedResult();
+	// Add query message in JSON format
+	var queryJSON = document.getElementById("queryJSON").value;
+	jsonData.queryStr = queryJSON;
+	console.log(':Search: fire selected data: ' + JSON.stringify(jsonData));
+	addBasket();
+	if (gadgets.Hub.isConnected()) {
+		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
+	}
 }
 
 function addColorPicker() {
@@ -770,7 +894,7 @@ function addColorPicker() {
 					}
 				});
 				basket.value = JSON.stringify(jsonData);
-				updateVisualisation();
+				updateMap();
 			}
 		}
 	});
@@ -795,8 +919,9 @@ function showCartIcon(nRow, aData) {
 		elmDiv.removeClass('invisible');
 	}
 }
+//////////////////////////// End Search result UI functions //////////////////////////////
 
-////////////////////////////////////////  misc functions  ///////////////////////////////////////////
+///////////////////////////////////  Misc functions  /////////////////////////////////////
 /*
  * Description: Convert RGB code to Hex number
  * Usage: Color for each item in basket
@@ -811,13 +936,43 @@ function rgbToHex(rgb) {
 	var b;
 	var hex = "";
 	if ((result = rgbRegex.exec(rgb))) {
-		r = componentFromStr(result[1], result[2]);
-		g = componentFromStr(result[3], result[4]);
-		b = componentFromStr(result[5], result[6]);
+		r = colorCompositeFromStr(result[1], result[2]);
+		g = colorCompositeFromStr(result[3], result[4]);
+		b = colorCompositeFromStr(result[5], result[6]);
 
 		hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
 	}
 	return hex;
+}
+
+function colorCompositeFromStr(numStr, percent) {
+	var num = Math.max(0, parseInt(numStr, 10));
+	return percent ?
+	Math.floor(255 * Math.min(100, num) / 100) : Math.min(255, num);
+}
+
+function getValueByAttribute(list, attr, val) {
+	var result = null;
+	$.each(list, function (index, item) {
+		if (item[attr].toString() == val.toString()) {
+			result = list[index].value;
+			return false; // breaks the $.each() loop
+		}
+	});
+	return result;
+}
+
+function JSONfindAndRemove(array, property, value) {
+	var resultArray = [];
+	$.each(array, function (index, result) {
+		if (result[property] == value) {
+			// Remove from array is not working I don't know why,
+			// just do it another way round
+		} else {
+			resultArray.push(result);
+		}
+	});
+	return resultArray;
 }
 
 function getStyle(x, styleProp) {
@@ -828,9 +983,9 @@ function getStyle(x, styleProp) {
 	return y;
 }
 
-function tog(v) {
-	return v ? 'addClass' : 'removeClass';
-}
+//function tog(v) {
+//	return v ? 'addClass' : 'removeClass';
+//}
 
 String.prototype.format = function () {
 	var formatted = this;
@@ -950,12 +1105,25 @@ function XMLtoJSON() {
 	// Removes '\t\r\n', rows with multiples '""', multiple empty rows, '  "",', and "  ",; replace empty [] with ""
 	var jsontoStr = function (js_obj) {
 		var rejsn = JSON.stringify(js_obj, undefined, 2).replace(/(\\t|\\r|\\n)/g, '').replace(/"",[\n\t\r\s]+""[,]*/g, '')
-			.replace(/(\n[\t\s\r]*\n)/g, '').replace(/[\s\t]{2,}""[,]{0,1}/g, '').replace(/"[\s\t]{1,}"[,]{0,1}/g, '').replace(/\[[\t\s]*\]/g, '""');
+			.replace(/(\n[\t\s\r]*\n)/g, '').replace(/[\s\t]{2,}""[,]{0,1}/g, '')
+			.replace(/"[\s\t]{1,}"[,]{0,1}/g, '').replace(/\[[\t\s]*\]/g, '""');
 		return (rejsn.indexOf('"parsererror": {') == -1) ? rejsn : 'Invalid XML format';
 	}
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+function getValueFromJSONObject(jObj, name) {
+	if (jObj[name] !== undefined)
+		return jObj[name];
+	else
+		return "";
+}
+
+function getValueFromJSONObject(jObj, name, ind) {
+	if (jObj[name] !== undefined)
+		return jObj[name][ind];
+	else
+		return "";
+}
 
 function toggleParametersField() {
 	$(".textExpanded").hide();
@@ -964,133 +1132,4 @@ function toggleParametersField() {
 		adjust();
 	});
 };
-
-function showLatestTenDataset() {
-	writeResultTable();
-	var oTable = $('#tableId').DataTable({
-			"bDestroy" : true,
-			"bPaginate" : true,
-			"bJQueryUI" : true,
-			"bProcessing" : true,
-			"bServerSide" : true,
-			"sAjaxSource" : searchAPI,
-			"bRetrieve" : true,
-			"fnServerData" : getInitialFnServerData(),
-
-			"aoColumns" : [{
-					"data" : "score",
-					"visible" : false,
-					"sortable" : false
-				}, {
-					"data" : "html",
-					"visible" : true,
-					"sortable" : false
-				}, {
-					"class" : "color-control",
-					"sortable" : false,
-					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>"+cartDiv
-				}
-			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', //'lrtip',
-			//"order" : [ [ 0, "desc" ] ],
-			"sAutoWidth" : true,
-
-			"fnDrawCallback" : function (oSettings) {
-				// do nothing if table is empty
-				//console.log(':Search: table draw callback');
-				if (!$(".dataTables_empty")[0]) {
-					addColorPicker();
-					setSelectedRowStyle();
-					// activate parameter show/hide event
-					toggleParametersField();
-				}
-			},
-			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
-				showCartIcon(nRow, aData);
-			},
-			"oLanguage" : {
-				"sLengthMenu" : "Show _MENU_ entries per page"
-			}
-		});
-	// activate the row click event
-	onRowClick();
-};
-
-function getInitialFnServerData() {
-	return function (sSource, aoData, fnCallback) {
-		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
-		var initialQuery = getInitialJSONQuery(queryfield);
-		// Store query string for sending to VAT
-		document.getElementById("queryJSON").value = JSON.stringify(initialQuery);
-		// Send request via AJAX
-		$.ajax(sSource, {
-			contentType : 'application/json; charset=UTF-8',
-			type : 'POST',
-			data : JSON.stringify(initialQuery),
-			dataType : 'json',
-			success : function (json) {
-				var datasrc = json.hits.hits;
-				// display facet only if the search return more than 1 result
-				if (datasrc.length > 0) {
-					var facet = json.aggregations;
-					console.log(facet);
-					if (gadgets.Hub.isConnected())
-						gadgets.Hub.publish('gfbio.search.facet', facet);
-				} else {
-					if (gadgets.Hub.isConnected())
-						gadgets.Hub.publish('gfbio.search.facet', '');
-				}
-				var res = parseReturnedJSONfromSearch(datasrc);
-				json.iTotalRecords = json.hits.total;
-				json.iTotalDisplayRecords = json.hits.total;
-				json.data = res;
-				fnCallback(json);
-			}
-		});
-	}
-};
-
-function getInitialJSONQuery(queryfield) {
-	return {
-		'query' : {
-			'match_all' : {}
-
-		},
-		'sort' : {
-			"internal-datestamp" : {
-				"order" : "desc"
-			}
-		},
-		'from' : 0,
-		'size' : 10,
-		'fields' : queryfield,
-		'aggs' : {
-			'author' : {
-				'terms' : {
-					'field' : 'citation_authorFacet',
-					'size' : 50
-				}
-			},
-			'year' : {
-				'terms' : {
-					'field' : 'citation_yearFacet',
-					'size' : 50
-				}
-			},
-			'region' : {
-				'terms' : {
-					'field' : 'regionFacet',
-					'size' : 50
-				}
-			},
-			'dataCenter' : {
-				'terms' : {
-					'field' : 'dataCenterFacet',
-					'size' : 50
-				}
-			}
-		}
-	}
-}
+///////////////////////////////////  End Misc functions  //////////////////////////////////
