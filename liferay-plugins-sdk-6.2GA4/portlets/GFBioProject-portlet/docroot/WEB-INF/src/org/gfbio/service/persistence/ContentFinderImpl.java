@@ -17,6 +17,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String FINDER_CLASS_NAME_ENTITY 							= ContentFinderImpl.class.getName();
 	public static String GET_CELL_CONTENT 									= FINDER_CLASS_NAME_ENTITY + ".getCellContent";
 	public static String GET_CELL_CONTENT_BY_CONTENTID 						= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
+	public static String GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME			= FINDER_CLASS_NAME_ENTITY + ".getCellContentByRowIdAndColumnName";
 	public static String GET_COLUMNID_BY_ID 								= FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
 	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS 				= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
 	public static String GET_CONTENTIDS_WITH_NORMAL_TABLE_RELATIONSHIPS 	= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithNormalTableRelationships";
@@ -62,13 +63,12 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	///get the content of cell with a specific id
+	//get the content of cell with a specific id
 	@SuppressWarnings("rawtypes")
 	public List getCellContentByContentId(long contentId) {
 		
 		Session session = null;
 		try {
-		
 			session = openSession();
 			String sql = CustomSQLUtil.get(GET_CELL_CONTENT_BY_CONTENTID);
 			SQLQuery queryObject = session.createSQLQuery(sql);
@@ -84,13 +84,34 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
+	///get the content of cell with a specific id
+	@SuppressWarnings("rawtypes")
+	public List getCellContentByRowIdAndColumnName(long rowId, String columnName) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("cellContent", Type.STRING);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(rowId);
+			qPos.add(columnName);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {closeSession(session);	}
+		return null;
+	}
+	
+	
 	///get List of content IDs, without content of relationship tables
 	@SuppressWarnings("rawtypes")
 	public  List getContentIdsWithoutRelationships(long rowId, String columnName1, String columnName2) {
 		
 		Session session = null;
 		try {
-		
 			session = openSession();
 			String sql = CustomSQLUtil.get(GET_CONTENTIDS_WITHOUT_RELATIONSHIPS);
 			

@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gfbio.NoSuchContentException;
+import org.gfbio.NoSuchHeadException;
 import org.gfbio.model.Column;
 import org.gfbio.model.Content;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.ContentLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ContentFinderUtil;
 import org.json.simple.JSONArray;
@@ -100,6 +102,18 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	@SuppressWarnings("rawtypes")
 	public List getCellContentByContentId(long contentId) {
 		return ContentFinderUtil.getCellContentByContentId(contentId);
+	}
+	
+	
+	//get Content of  a specific cell in HCC
+	@SuppressWarnings("rawtypes")
+	public String getCellContentByRowIdAndColumnName(long rowId, String columnName) {
+		String cellContent ="";
+		List cellContentList = ContentFinderUtil.getCellContentByRowIdAndColumnName(rowId, columnName);
+		if (cellContentList.size() > 0)
+			cellContent = (String) cellContentList.get(0);
+		 
+		 return cellContent;
 	}
 	
 	
@@ -260,6 +274,21 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			rowId = (long) rowIdList.get(0);
 		return rowId;
 	}
+	
+	
+	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
+	public long getRowIdByCellContent(String tableName, String columnName, String cellContent){
+		long rowId =0;
+		long headId =0;
+		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+		if(headId !=0){
+			rowId = getRowIdByCellContent(headId, columnName, cellContent);
+		}
+		return rowId;
+	}
+	
 
 	// get the columnId of a specific content.
 	@SuppressWarnings("rawtypes")
@@ -353,7 +382,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		Content content = null;
 
 		try {
-			content = ContentLocalServiceUtil.getContent(contentId);
+			content = getContent(contentId);
 		} catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
 
 		// if it true, then must be build a new content with a new primary key else update the content
@@ -371,7 +400,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 
 		if (rowId==0)
 			try {
-				rowId= ContentLocalServiceUtil.constructNewId();
+				rowId= constructNewId();
 			} catch (SystemException e) {e.printStackTrace();}
 
 		content.setHeadID(headId);
@@ -382,7 +411,6 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			super.updateContent(content);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
-		
 		return check;
 	}
 

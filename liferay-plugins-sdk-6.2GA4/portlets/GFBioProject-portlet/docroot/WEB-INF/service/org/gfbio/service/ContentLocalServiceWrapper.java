@@ -300,6 +300,13 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public java.lang.String getCellContentByRowIdAndColumnName(long rowId,
+		java.lang.String columnName) {
+		return _contentLocalService.getCellContentByRowIdAndColumnName(rowId,
+			columnName);
+	}
+
+	@Override
 	public long getColumnIdById(long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -392,6 +399,13 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 		java.lang.String cellContent) {
 		return _contentLocalService.getRowIdByCellContent(headId, columnName,
 			cellContent);
+	}
+
+	@Override
+	public long getRowIdByCellContent(java.lang.String tableName,
+		java.lang.String columnName, java.lang.String cellContent) {
+		return _contentLocalService.getRowIdByCellContent(tableName,
+			columnName, cellContent);
 	}
 
 	@Override

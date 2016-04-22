@@ -21,18 +21,18 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class ColumnFinderUtil {
-	public static java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
-		java.lang.String columnName) {
-		return getFinder().getColumnsWithRelation(columnName);
-	}
-
-	public static java.util.List getHeadIdsWithoutRelationshipsByColumnName(
-		java.lang.String columnName) {
-		return getFinder().getHeadIdsWithoutRelationshipsByColumnName(columnName);
+	public static java.util.List getColumnIdByNames(
+		java.lang.String tableName, java.lang.String columnName) {
+		return getFinder().getColumnIdByNames(tableName, columnName);
 	}
 
 	public static java.util.List getColumnNameById(long columnid) {
 		return getFinder().getColumnNameById(columnid);
+	}
+
+	public static java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
+		java.lang.String columnName) {
+		return getFinder().getColumnsWithRelation(columnName);
 	}
 
 	public static java.util.List getCountofColumns(long headId) {
@@ -42,6 +42,11 @@ public class ColumnFinderUtil {
 	public static java.util.List getHeadIdsByColumnName(
 		java.lang.String columnName) {
 		return getFinder().getHeadIdsByColumnName(columnName);
+	}
+
+	public static java.util.List getHeadIdsWithoutRelationshipsByColumnName(
+		java.lang.String columnName) {
+		return getFinder().getHeadIdsWithoutRelationshipsByColumnName(columnName);
 	}
 
 	public static ColumnFinder getFinder() {

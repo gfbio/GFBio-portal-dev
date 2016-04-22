@@ -30,6 +30,11 @@ public class ContentFinderUtil {
 		return getFinder().getCellContentByContentId(contentId);
 	}
 
+	public static java.util.List getCellContentByRowIdAndColumnName(
+		long rowId, java.lang.String columnName) {
+		return getFinder().getCellContentByRowIdAndColumnName(rowId, columnName);
+	}
+
 	public static java.util.List getContentIdsWithoutRelationships(long rowId,
 		java.lang.String columnName1, java.lang.String columnName2) {
 		return getFinder()

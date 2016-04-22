@@ -69,7 +69,7 @@
 		<field name="name" type="String" />
 		<field name="label" type="String" />
 		<field name="extendeddata" type="String" />
-		<field name="researchObjectType" type="String" />
+		<field name="metadataID" type="long" />
 	</model>
 	<model name="org.gfbio.model.Submission">
 		<field name="submissionID" type="long" />

@@ -641,6 +641,54 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		
 		return check;
 	}
+	
+	
+	//update or build a relation table with content -> build a relationship
+	@SuppressWarnings("unchecked")
+	public Boolean updateInterfaceTableWithContent(String nonhccTableName, long nonHCCContentId, String hccTableName, long hccContentId){
+		
+		Boolean check = true;
+		long headId =0;
+		String tableName="";
+
+		try {
+			tableName = constructRelationName(nonhccTableName, hccTableName);
+		} catch (NoSuchHeadException | SystemException e1) {System.out.println("No Head exists with the primary key "+headId);}
+
+		try {
+			headId = getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		
+		JSONObject json = constructHeadJson(headId, tableName, "relationship");
+		JSONObject jsonColumn1 = null;
+		JSONObject jsonColumn2 = null;
+		JSONObject jsonContent1 = null;
+		JSONObject jsonContent2 = null;
+		
+		try {
+			jsonColumn1 = ColumnLocalServiceUtil.constructColumnJson(columnPersistence.findByHeadIdAndColumnName(headId, getTableNameById(headId1)).get(0).getColumnID(), headId, getTableNameById(headId1));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		try {
+			jsonColumn2 = ColumnLocalServiceUtil.constructColumnJson(columnPersistence.findByHeadIdAndColumnName(headId, getTableNameById(headId2)).get(0).getColumnID(), headId, getTableNameById(headId2));
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+
+		try {
+			jsonContent1 = ContentLocalServiceUtil.constructContentJson(0, headId1, columnPersistence.findByHeadIdAndColumnName(headId, getTableNameById(headId1)).get(0).getColumnID(), 0, Long.toString(ContentLocalServiceUtil.getRowIdById(contentId1)));
+		} catch (SystemException | PortalException e) {e.printStackTrace();	}
+		
+		try {
+			jsonContent2 = ContentLocalServiceUtil.constructContentJson(0, headId2, columnPersistence.findByHeadIdAndColumnName(headId, getTableNameById(headId2)).get(0).getColumnID(), 0, Long.toString(ContentLocalServiceUtil.getRowIdById(contentId2)));
+		} catch (SystemException | PortalException e) {e.printStackTrace();	}
+
+		jsonColumn1.put("0", jsonContent1);
+		jsonColumn2.put("0", jsonContent2);
+		json.put("0", jsonColumn1);
+		json.put("1", jsonColumn2);
+		
+		check =updateHeadWithColumns2(json);
+		
+		return check;
+	}
 
 	
 	//update or build a new head with their columns and their contents
@@ -650,7 +698,6 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		int i=0;
 		while (json.containsKey(i)){
 			JSONObject columnjson = (JSONObject) json.get(i);
-			System.out.println(columnjson.get("headid"));
 			check = ColumnLocalServiceUtil.updateColumnWithContents(columnjson);
 			i++;
 		}

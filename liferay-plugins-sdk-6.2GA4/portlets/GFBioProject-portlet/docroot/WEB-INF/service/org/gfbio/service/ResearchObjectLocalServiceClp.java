@@ -243,9 +243,13 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 		_methodParameterTypes47 = new String[] { "long", "int", "java.lang.String" };
 
-		_methodName48 = "updateResearchObjectVersion";
+		_methodName48 = "updateMetadataId";
 
-		_methodParameterTypes48 = new String[] { "long", "int" };
+		_methodParameterTypes48 = new String[] { "long", "int", "long" };
+
+		_methodName49 = "updateResearchObjectVersion";
+
+		_methodParameterTypes49 = new String[] { "long", "int" };
 	}
 
 	@Override
@@ -1585,13 +1589,44 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public int updateResearchObjectVersion(long researchObjectId,
-		int researchObjectVersion) {
+	public java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName48,
 					_methodParameterTypes48,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					metadataId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int updateResearchObjectVersion(long researchObjectId,
+		int researchObjectVersion) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName49,
+					_methodParameterTypes49,
 					new Object[] { researchObjectId, researchObjectVersion });
 		}
 		catch (Throwable t) {
@@ -1706,4 +1741,6 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	private String[] _methodParameterTypes47;
 	private String _methodName48;
 	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
 }

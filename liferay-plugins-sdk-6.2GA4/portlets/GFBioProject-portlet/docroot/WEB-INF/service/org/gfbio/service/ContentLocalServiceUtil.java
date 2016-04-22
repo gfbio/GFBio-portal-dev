@@ -288,6 +288,11 @@ public class ContentLocalServiceUtil {
 		return getService().getCellContentByContentId(contentId);
 	}
 
+	public static java.lang.String getCellContentByRowIdAndColumnName(
+		long rowId, java.lang.String columnName) {
+		return getService().getCellContentByRowIdAndColumnName(rowId, columnName);
+	}
+
 	public static long getColumnIdById(long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -369,6 +374,12 @@ public class ContentLocalServiceUtil {
 		java.lang.String columnName, java.lang.String cellContent) {
 		return getService()
 				   .getRowIdByCellContent(headId, columnName, cellContent);
+	}
+
+	public static long getRowIdByCellContent(java.lang.String tableName,
+		java.lang.String columnName, java.lang.String cellContent) {
+		return getService()
+				   .getRowIdByCellContent(tableName, columnName, cellContent);
 	}
 
 	public static long getRowIdById(long contentId) {

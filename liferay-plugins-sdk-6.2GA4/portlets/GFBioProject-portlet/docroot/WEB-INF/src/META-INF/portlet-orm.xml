@@ -139,7 +139,7 @@
 			<basic name="name" />
 			<basic name="label" />
 			<basic name="extendeddata" />
-			<basic name="researchObjectType" />
+			<basic name="metadataID" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

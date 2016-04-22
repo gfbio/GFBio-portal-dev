@@ -81,7 +81,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
 		attributes.put("extendeddata", getExtendeddata());
-		attributes.put("researchObjectType", getResearchObjectType());
+		attributes.put("metadataID", getMetadataID());
 
 		return attributes;
 	}
@@ -126,10 +126,10 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 			setExtendeddata(extendeddata);
 		}
 
-		String researchObjectType = (String)attributes.get("researchObjectType");
+		Long metadataID = (Long)attributes.get("metadataID");
 
-		if (researchObjectType != null) {
-			setResearchObjectType(researchObjectType);
+		if (metadataID != null) {
+			setMetadataID(metadataID);
 		}
 	}
 
@@ -275,22 +275,21 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	}
 
 	@Override
-	public String getResearchObjectType() {
-		return _researchObjectType;
+	public long getMetadataID() {
+		return _metadataID;
 	}
 
 	@Override
-	public void setResearchObjectType(String researchObjectType) {
-		_researchObjectType = researchObjectType;
+	public void setMetadataID(long metadataID) {
+		_metadataID = metadataID;
 
 		if (_researchObjectRemoteModel != null) {
 			try {
 				Class<?> clazz = _researchObjectRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setResearchObjectType",
-						String.class);
+				Method method = clazz.getMethod("setMetadataID", long.class);
 
-				method.invoke(_researchObjectRemoteModel, researchObjectType);
+				method.invoke(_researchObjectRemoteModel, metadataID);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -375,7 +374,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		clone.setName(getName());
 		clone.setLabel(getLabel());
 		clone.setExtendeddata(getExtendeddata());
-		clone.setResearchObjectType(getResearchObjectType());
+		clone.setMetadataID(getMetadataID());
 
 		return clone;
 	}
@@ -440,8 +439,8 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		sb.append(getLabel());
 		sb.append(", extendeddata=");
 		sb.append(getExtendeddata());
-		sb.append(", researchObjectType=");
-		sb.append(getResearchObjectType());
+		sb.append(", metadataID=");
+		sb.append(getMetadataID());
 		sb.append("}");
 
 		return sb.toString();
@@ -480,8 +479,8 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		sb.append(getExtendeddata());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>researchObjectType</column-name><column-value><![CDATA[");
-		sb.append(getResearchObjectType());
+			"<column><column-name>metadataID</column-name><column-value><![CDATA[");
+		sb.append(getMetadataID());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -495,7 +494,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	private String _name;
 	private String _label;
 	private String _extendeddata;
-	private String _researchObjectType;
+	private long _metadataID;
 	private BaseModel<?> _researchObjectRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

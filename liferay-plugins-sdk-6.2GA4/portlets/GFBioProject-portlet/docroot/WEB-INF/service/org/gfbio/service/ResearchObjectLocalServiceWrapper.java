@@ -474,6 +474,13 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId) {
+		return _researchObjectLocalService.updateMetadataId(researchObjectId,
+			researchObjectVersion, metadataId);
+	}
+
+	@Override
 	public int updateResearchObjectVersion(long researchObjectId,
 		int researchObjectVersion) {
 		return _researchObjectLocalService.updateResearchObjectVersion(researchObjectId,

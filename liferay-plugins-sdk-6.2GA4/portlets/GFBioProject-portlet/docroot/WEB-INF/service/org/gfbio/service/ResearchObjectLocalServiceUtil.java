@@ -438,6 +438,13 @@ public class ResearchObjectLocalServiceUtil {
 			researchObjectVersion, researchObjectType);
 	}
 
+	public static java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId) {
+		return getService()
+				   .updateMetadataId(researchObjectId, researchObjectVersion,
+			metadataId);
+	}
+
 	public static int updateResearchObjectVersion(long researchObjectId,
 		int researchObjectVersion) {
 		return getService()

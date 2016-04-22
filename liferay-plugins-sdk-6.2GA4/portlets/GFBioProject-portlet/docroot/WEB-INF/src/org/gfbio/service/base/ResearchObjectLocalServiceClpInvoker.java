@@ -244,9 +244,13 @@ public class ResearchObjectLocalServiceClpInvoker {
 				"long", "int", "java.lang.String"
 			};
 
-		_methodName153 = "updateResearchObjectVersion";
+		_methodName153 = "updateMetadataId";
 
-		_methodParameterTypes153 = new String[] { "long", "int" };
+		_methodParameterTypes153 = new String[] { "long", "int", "long" };
+
+		_methodName154 = "updateResearchObjectVersion";
+
+		_methodParameterTypes154 = new String[] { "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -512,6 +516,13 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		if (_methodName153.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateMetadataId(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObjectVersion(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -615,4 +626,6 @@ public class ResearchObjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes152;
 	private String _methodName153;
 	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
 }

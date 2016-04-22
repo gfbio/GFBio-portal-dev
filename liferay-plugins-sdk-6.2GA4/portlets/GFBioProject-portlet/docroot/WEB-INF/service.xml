@@ -141,7 +141,8 @@
 		<column name="name" 					type="String" />
 		<column name="label" 					type="String" />
 		<column name="extendeddata"				type="String" />
-		<column name="researchObjectType"		type="String" />
+		<column name="metadataID"				type="long" />
+		
 
 		<order by="asc">		<order-column name="name" />		</order>
 

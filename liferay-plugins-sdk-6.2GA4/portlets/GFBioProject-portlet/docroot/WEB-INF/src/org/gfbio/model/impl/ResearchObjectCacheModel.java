@@ -50,8 +50,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		sb.append(label);
 		sb.append(", extendeddata=");
 		sb.append(extendeddata);
-		sb.append(", researchObjectType=");
-		sb.append(researchObjectType);
+		sb.append(", metadataID=");
+		sb.append(metadataID);
 		sb.append("}");
 
 		return sb.toString();
@@ -86,12 +86,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			researchObjectImpl.setExtendeddata(extendeddata);
 		}
 
-		if (researchObjectType == null) {
-			researchObjectImpl.setResearchObjectType(StringPool.BLANK);
-		}
-		else {
-			researchObjectImpl.setResearchObjectType(researchObjectType);
-		}
+		researchObjectImpl.setMetadataID(metadataID);
 
 		researchObjectImpl.resetOriginalValues();
 
@@ -106,7 +101,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		name = objectInput.readUTF();
 		label = objectInput.readUTF();
 		extendeddata = objectInput.readUTF();
-		researchObjectType = objectInput.readUTF();
+		metadataID = objectInput.readLong();
 	}
 
 	@Override
@@ -137,12 +132,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 			objectOutput.writeUTF(extendeddata);
 		}
 
-		if (researchObjectType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(researchObjectType);
-		}
+		objectOutput.writeLong(metadataID);
 	}
 
 	public long researchObjectID;
@@ -151,5 +141,5 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	public String name;
 	public String label;
 	public String extendeddata;
-	public String researchObjectType;
+	public long metadataID;
 }

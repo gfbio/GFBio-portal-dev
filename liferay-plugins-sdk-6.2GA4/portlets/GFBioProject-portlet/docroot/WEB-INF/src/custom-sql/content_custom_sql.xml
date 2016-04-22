@@ -27,6 +27,20 @@
 		]]>
     </sql>
     
+        <sql id="org.gfbio.service.persistence.ContentFinderImpl.getCellContentByRowIdAndColumnName">
+	    <![CDATA[
+			SELECT 
+				gfbio_content.cellcontent
+			FROM 
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE
+				gfbio_content.columnid = gfbio_column.columnid AND
+				gfbio_content.rowid = ? AND
+			 	gfbio_column.column_name = ?
+		]]>
+    </sql>
+    
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getColumnIdById">
 	    <![CDATA[
 			SELECT 
