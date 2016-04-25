@@ -94,29 +94,7 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
 	}
 	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public String getTest(String requestJson){
-		String requestString = "test: ".concat(requestJson);
-		JSONArray requestArray = new JSONArray();
-		requestArray.add(requestString);
-		System.out.println("foo".concat(requestJson.toString()));
-		return requestString;
-	}
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public String createTest(JSONObject requestJson){
-		String requestString = "test: ".concat(requestJson.toString());
-		JSONArray requestArray = new JSONArray();
-		requestArray.add(requestString);
-		System.out.println("foo");
-		return requestString;
-	}
-	
-	
+		
 	//
 	public JSONArray updateResearchObject(String requestJson){
 		JSONParser parser = new JSONParser();
@@ -126,5 +104,11 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 		} catch (ParseException e) {e.printStackTrace();}
 		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(parseJson);
 	}
+	
+	
+/*	//
+	public Boolean updateLicenseId (long researchObjectId, int researchObjectVersion, long licenseId){
+		return ResearchObjectLocalServiceUtil.updateLicenseId (researchObjectId, researchObjectVersion, licenseId);
+	}*/
 	
 }

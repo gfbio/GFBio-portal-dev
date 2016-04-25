@@ -422,6 +422,33 @@ public class ResearchObjectLocalServiceUtil {
 			researchObjectType);
 	}
 
+	public static org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label) {
+		return getService().checkHCCBackground(tableName, columnName, label);
+	}
+
+	public static java.lang.Boolean updateLicenseId(long researchObjectId,
+		int researchObjectVersion, java.lang.String licenseLabel) {
+		return getService()
+				   .updateLicenseId(researchObjectId, researchObjectVersion,
+			licenseLabel);
+	}
+
+	public static java.lang.Boolean updateLicenseId(long researchObjectId,
+		int researchObjectVersion, long licenseId) {
+		return getService()
+				   .updateLicenseId(researchObjectId, researchObjectVersion,
+			licenseId);
+	}
+
+	public static java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId) {
+		return getService()
+				   .updateMetadataId(researchObjectId, researchObjectVersion,
+			metadataId);
+	}
+
 	public static java.lang.Boolean updateParentResearchObjectIdByIds(
 		long researchObjectId, int researchObjectVersion,
 		long parentResearchObjectId) {
@@ -436,13 +463,6 @@ public class ResearchObjectLocalServiceUtil {
 		return getService()
 				   .updateResearchObjectType(researchObjectId,
 			researchObjectVersion, researchObjectType);
-	}
-
-	public static java.lang.Boolean updateMetadataId(long researchObjectId,
-		int researchObjectVersion, long metadataId) {
-		return getService()
-				   .updateMetadataId(researchObjectId, researchObjectVersion,
-			metadataId);
 	}
 
 	public static int updateResearchObjectVersion(long researchObjectId,

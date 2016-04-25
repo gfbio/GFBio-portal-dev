@@ -18,6 +18,9 @@ package org.gfbio.service.persistence;
  * @author Marcel Froemming
  */
 public interface ContentFinder {
+	public java.util.List checkKeyPairInRelationship(long headId,
+		java.lang.String pk1, java.lang.String pk2);
+
 	public java.util.List getCellContent(long headId, long rowId, long columnId);
 
 	public java.util.List getCellContentByContentId(long contentId);

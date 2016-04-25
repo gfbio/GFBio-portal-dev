@@ -400,7 +400,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype", "metadataid", "brokerobjectid"};
+		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype", "metadataid","licenseid","licenselabel", "brokerobjectid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -423,7 +423,15 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			if (requestJson.containsKey("metadataid") && check)
 				check = updateMetadataId(researchObjectId, researchObjectVersion, (long) requestJson.get("metadataid"));
-						
+
+			
+			if(requestJson.containsKey("licenselabel") && check)
+				check = updateLicenseId(researchObjectId, researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
+			
+			if (requestJson.containsKey("licenseid") && check)
+				check = updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
+			
+			
 			if (requestJson.containsKey("projectid") && check)
 				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
 	
@@ -514,6 +522,14 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						
 						if (check)
 							check = updateParentResearchObjectIdByIds (researchObjectId, researchObjectVersion,researchObject.getParentResearchObjectID());
+						
+						//no check request, because: if exists a license-ro-relation, than check is false 
+						if(requestJson.containsKey("licenselabel") && check)
+							updateLicenseId(researchObjectId, researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
+						
+						//no check request, because: if exists a license-ro-relation, than check is false 
+						if (requestJson.containsKey("licenseid") && check)
+							updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
 						
 						if (check){
 							responseJson.put("researchobjectid", researchObjectId);
@@ -683,11 +699,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	public Boolean updateLicenseId (long researchObjectId, int researchObjectVersion, long licenseId){
-		Boolean check = false;
-		
-		HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_researchobject", researchObjectId, "gfbio_license", licenseId);
-		
-		return check;
+		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_researchobject", researchObjectId, "gfbio_license", licenseId);
 	}
 	
 	

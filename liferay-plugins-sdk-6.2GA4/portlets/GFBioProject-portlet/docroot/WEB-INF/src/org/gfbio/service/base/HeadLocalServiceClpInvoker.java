@@ -217,6 +217,12 @@ public class HeadLocalServiceClpInvoker {
 		_methodName148 = "updateTable";
 
 		_methodParameterTypes148 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName149 = "updateInterfaceTableWithContent";
+
+		_methodParameterTypes149 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "long"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -460,6 +466,13 @@ public class HeadLocalServiceClpInvoker {
 			return HeadLocalServiceUtil.updateTable((org.json.simple.JSONObject)arguments[0]);
 		}
 
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
+			return HeadLocalServiceUtil.updateInterfaceTableWithContent((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], ((Long)arguments[3]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -549,4 +562,6 @@ public class HeadLocalServiceClpInvoker {
 	private String[] _methodParameterTypes147;
 	private String _methodName148;
 	private String[] _methodParameterTypes148;
+	private String _methodName149;
+	private String[] _methodParameterTypes149;
 }

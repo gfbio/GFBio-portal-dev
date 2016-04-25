@@ -324,4 +324,8 @@ public interface HeadLocalService extends BaseLocalService, InvokableLocalServic
 		long headId2, long contentId1, long contentId2);
 
 	public java.lang.Boolean updateTable(org.json.simple.JSONObject json);
+
+	public java.lang.Boolean updateInterfaceTableWithContent(
+		java.lang.String nonHccTableName, long nonHccContentId,
+		java.lang.String hccTableName, long hccContentId);
 }

@@ -407,6 +407,11 @@ public class ContentLocalServiceUtil {
 			tableName1, tableName2);
 	}
 
+	public static java.lang.Boolean checkKeyPairInRelationship(long headId,
+		java.lang.String pk1, java.lang.String pk2) {
+		return getService().checkKeyPairInRelationship(headId, pk1, pk2);
+	}
+
 	public static org.json.simple.JSONObject constructContentJson(
 		long contentId, long headId, long columnId, long rowId,
 		java.lang.String cellContent) {

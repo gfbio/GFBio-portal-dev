@@ -353,6 +353,11 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
 	
+	//Are pk1 and pk2 in table with headid, the Boolean is false, because the function will is useing in relationship table update
+	public Boolean checkKeyPairInRelationship(long headId, String pk1, String pk2) {
+		return (Boolean) ContentFinderUtil.checkKeyPairInRelationship (headId, pk1, pk2).get(0);
+	}
+	
 	//build a content entry to a JSON
 	@SuppressWarnings("unchecked")
 	public JSONObject constructContentJson(long contentId, long headId, long columnId, long rowId, String cellContent){
@@ -430,7 +435,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
 		String cellcontent = (String) json.get(contentKey);
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
-			check = ContentLocalServiceUtil.updateContent(contentId, headId, columnId, rowId, cellcontent);
+			check = updateContent(contentId, headId, columnId, rowId, cellcontent);
 		return check;
 	}
 	
@@ -450,7 +455,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
 		String cellcontent = (String) json.get(contentKey);
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
-			check = ContentLocalServiceUtil.updateContent(contentId, headId, columnId, rowId, cellcontent);
+			check = updateContent(contentId, headId, columnId, rowId, cellcontent);
 		return check;
 	}
 	

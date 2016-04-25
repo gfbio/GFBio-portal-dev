@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class ContentFinderUtil {
+	public static java.util.List checkKeyPairInRelationship(long headId,
+		java.lang.String pk1, java.lang.String pk2) {
+		return getFinder().checkKeyPairInRelationship(headId, pk1, pk2);
+	}
+
 	public static java.util.List getCellContent(long headId, long rowId,
 		long columnId) {
 		return getFinder().getCellContent(headId, rowId, columnId);

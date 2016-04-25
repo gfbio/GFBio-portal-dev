@@ -227,29 +227,35 @@ public class ContentLocalServiceClpInvoker {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName150 = "constructContentJson";
+		_methodName150 = "checkKeyPairInRelationship";
 
 		_methodParameterTypes150 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
+
+		_methodName151 = "constructContentJson";
+
+		_methodParameterTypes151 = new String[] {
 				"long", "long", "long", "long", "java.lang.String"
 			};
 
-		_methodName151 = "constructNewId";
+		_methodName152 = "constructNewId";
 
-		_methodParameterTypes151 = new String[] {  };
-
-		_methodName152 = "updateContent";
-
-		_methodParameterTypes152 = new String[] {
-				"long", "long", "long", "long", "java.lang.String"
-			};
+		_methodParameterTypes152 = new String[] {  };
 
 		_methodName153 = "updateContent";
 
-		_methodParameterTypes153 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes153 = new String[] {
+				"long", "long", "long", "long", "java.lang.String"
+			};
 
-		_methodName154 = "updateContent2";
+		_methodName154 = "updateContent";
 
 		_methodParameterTypes154 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName155 = "updateContent2";
+
+		_methodParameterTypes155 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -502,32 +508,38 @@ public class ContentLocalServiceClpInvoker {
 
 		if (_methodName150.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
+			return ContentLocalServiceUtil.checkKeyPairInRelationship(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+		}
+
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return ContentLocalServiceUtil.constructContentJson(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return ContentLocalServiceUtil.constructNewId();
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return ContentLocalServiceUtil.updateContent(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
 				((Long)arguments[3]).longValue(), (java.lang.String)arguments[4]);
 		}
 
-		if (_methodName153.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return ContentLocalServiceUtil.updateContent((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName154.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return ContentLocalServiceUtil.updateContent2((org.json.simple.JSONObject)arguments[0]);
 		}
 
@@ -632,4 +644,6 @@ public class ContentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes153;
 	private String _methodName154;
 	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
 }

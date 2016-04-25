@@ -423,6 +423,14 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 		return _headLocalService.updateTable(json);
 	}
 
+	@Override
+	public java.lang.Boolean updateInterfaceTableWithContent(
+		java.lang.String nonHccTableName, long nonHccContentId,
+		java.lang.String hccTableName, long hccContentId) {
+		return _headLocalService.updateInterfaceTableWithContent(nonHccTableName,
+			nonHccContentId, hccTableName, hccContentId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

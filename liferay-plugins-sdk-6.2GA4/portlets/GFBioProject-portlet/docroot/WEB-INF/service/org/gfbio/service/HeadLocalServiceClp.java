@@ -217,6 +217,12 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		_methodName43 = "updateTable";
 
 		_methodParameterTypes43 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName44 = "updateInterfaceTableWithContent";
+
+		_methodParameterTypes44 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "long"
+			};
 	}
 
 	@Override
@@ -1422,6 +1428,40 @@ public class HeadLocalServiceClp implements HeadLocalService {
 		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public java.lang.Boolean updateInterfaceTableWithContent(
+		java.lang.String nonHccTableName, long nonHccContentId,
+		java.lang.String hccTableName, long hccContentId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
+					new Object[] {
+						ClpSerializer.translateInput(nonHccTableName),
+						
+					nonHccContentId,
+						
+					ClpSerializer.translateInput(hccTableName),
+						
+					hccContentId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1509,4 +1549,6 @@ public class HeadLocalServiceClp implements HeadLocalService {
 	private String[] _methodParameterTypes42;
 	private String _methodName43;
 	private String[] _methodParameterTypes43;
+	private String _methodName44;
+	private String[] _methodParameterTypes44;
 }

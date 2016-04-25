@@ -349,15 +349,25 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String label,
 		java.lang.String extendedData, java.lang.String researchObjectType);
 
+	public org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label);
+
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		int researchObjectVersion, java.lang.String licenseLabel);
+
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		int researchObjectVersion, long licenseId);
+
+	public java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId);
+
 	public java.lang.Boolean updateParentResearchObjectIdByIds(
 		long researchObjectId, int researchObjectVersion,
 		long parentResearchObjectId);
 
 	public java.lang.Boolean updateResearchObjectType(long researchObjectId,
 		int researchObjectVersion, java.lang.String researchObjectType);
-
-	public java.lang.Boolean updateMetadataId(long researchObjectId,
-		int researchObjectVersion, long metadataId);
 
 	public int updateResearchObjectVersion(long researchObjectId,
 		int researchObjectVersion);

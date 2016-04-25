@@ -459,6 +459,35 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label) {
+		return _researchObjectLocalService.checkHCCBackground(tableName,
+			columnName, label);
+	}
+
+	@Override
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		int researchObjectVersion, java.lang.String licenseLabel) {
+		return _researchObjectLocalService.updateLicenseId(researchObjectId,
+			researchObjectVersion, licenseLabel);
+	}
+
+	@Override
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		int researchObjectVersion, long licenseId) {
+		return _researchObjectLocalService.updateLicenseId(researchObjectId,
+			researchObjectVersion, licenseId);
+	}
+
+	@Override
+	public java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId) {
+		return _researchObjectLocalService.updateMetadataId(researchObjectId,
+			researchObjectVersion, metadataId);
+	}
+
+	@Override
 	public java.lang.Boolean updateParentResearchObjectIdByIds(
 		long researchObjectId, int researchObjectVersion,
 		long parentResearchObjectId) {
@@ -471,13 +500,6 @@ public class ResearchObjectLocalServiceWrapper
 		int researchObjectVersion, java.lang.String researchObjectType) {
 		return _researchObjectLocalService.updateResearchObjectType(researchObjectId,
 			researchObjectVersion, researchObjectType);
-	}
-
-	@Override
-	public java.lang.Boolean updateMetadataId(long researchObjectId,
-		int researchObjectVersion, long metadataId) {
-		return _researchObjectLocalService.updateMetadataId(researchObjectId,
-			researchObjectVersion, metadataId);
 	}
 
 	@Override

@@ -11,7 +11,7 @@
 			WHERE
 			  gfbio_head.headid = gfbio_column.headid AND
 			  gfbio_head.table_name = ? AND
-			  gfbio_column.column_name = ? ;
+			  gfbio_column.column_name = ?
 		]]>
     </sql>
 

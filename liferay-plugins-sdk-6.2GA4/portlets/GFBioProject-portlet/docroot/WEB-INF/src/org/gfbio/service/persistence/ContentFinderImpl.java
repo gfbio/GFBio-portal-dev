@@ -15,6 +15,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements ContentFinder{
 	
 	public static String FINDER_CLASS_NAME_ENTITY 							= ContentFinderImpl.class.getName();
+	public static String CHECK_KEYPAIR_IN_RELATIONSHIP						= FINDER_CLASS_NAME_ENTITY + ".checkKeyPairInRelationship";
 	public static String GET_CELL_CONTENT 									= FINDER_CLASS_NAME_ENTITY + ".getCellContent";
 	public static String GET_CELL_CONTENT_BY_CONTENTID 						= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
 	public static String GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME			= FINDER_CLASS_NAME_ENTITY + ".getCellContentByRowIdAndColumnName";
@@ -32,8 +33,35 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	
 	
 	
+	//Are pk1 and pk2 in table with headid, the Boolean is false, because the function will is useing in relationship table update
+	@SuppressWarnings("rawtypes")
+	public List checkKeyPairInRelationship(long headId, String pk1, String pk2) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(CHECK_KEYPAIR_IN_RELATIONSHIP);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("check", Type.BOOLEAN);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(headId);
+			qPos.add(pk1);
+			qPos.add(pk2);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
 	
-
+	
 	//get the content of cell with a specific row and column in a specific table
 	@SuppressWarnings("rawtypes")
 	public List getCellContent(long headId, long rowId, long columnId) {

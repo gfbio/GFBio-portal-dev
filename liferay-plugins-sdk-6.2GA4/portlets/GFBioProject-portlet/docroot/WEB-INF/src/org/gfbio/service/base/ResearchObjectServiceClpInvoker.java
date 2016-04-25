@@ -52,17 +52,9 @@ public class ResearchObjectServiceClpInvoker {
 
 		_methodParameterTypes112 = new String[] { "java.lang.String" };
 
-		_methodName113 = "getTest";
+		_methodName113 = "updateResearchObject";
 
 		_methodParameterTypes113 = new String[] { "java.lang.String" };
-
-		_methodName114 = "createTest";
-
-		_methodParameterTypes114 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName115 = "updateResearchObject";
-
-		_methodParameterTypes115 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -106,16 +98,6 @@ public class ResearchObjectServiceClpInvoker {
 
 		if (_methodName113.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
-			return ResearchObjectServiceUtil.getTest((java.lang.String)arguments[0]);
-		}
-
-		if (_methodName114.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
-			return ResearchObjectServiceUtil.createTest((org.json.simple.JSONObject)arguments[0]);
-		}
-
-		if (_methodName115.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
 			return ResearchObjectServiceUtil.updateResearchObject((java.lang.String)arguments[0]);
 		}
 
@@ -138,8 +120,4 @@ public class ResearchObjectServiceClpInvoker {
 	private String[] _methodParameterTypes112;
 	private String _methodName113;
 	private String[] _methodParameterTypes113;
-	private String _methodName114;
-	private String[] _methodParameterTypes114;
-	private String _methodName115;
-	private String[] _methodParameterTypes115;
 }

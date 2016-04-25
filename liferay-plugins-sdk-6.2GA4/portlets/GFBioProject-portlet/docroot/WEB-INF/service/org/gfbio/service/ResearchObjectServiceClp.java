@@ -52,17 +52,9 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 
 		_methodParameterTypes7 = new String[] { "java.lang.String" };
 
-		_methodName8 = "getTest";
+		_methodName8 = "updateResearchObject";
 
 		_methodParameterTypes8 = new String[] { "java.lang.String" };
-
-		_methodName9 = "createTest";
-
-		_methodParameterTypes9 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName10 = "updateResearchObject";
-
-		_methodParameterTypes10 = new String[] { "java.lang.String" };
 	}
 
 	@Override
@@ -241,61 +233,13 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	}
 
 	@Override
-	public java.lang.String getTest(java.lang.String requestJson) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName8,
-					_methodParameterTypes8,
-					new Object[] { ClpSerializer.translateInput(requestJson) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.lang.String createTest(org.json.simple.JSONObject requestJson) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName9,
-					_methodParameterTypes9,
-					new Object[] { ClpSerializer.translateInput(requestJson) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public org.json.simple.JSONArray updateResearchObject(
 		java.lang.String requestJson) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName10,
-					_methodParameterTypes10,
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8,
 					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
@@ -330,8 +274,4 @@ public class ResearchObjectServiceClp implements ResearchObjectService {
 	private String[] _methodParameterTypes7;
 	private String _methodName8;
 	private String[] _methodParameterTypes8;
-	private String _methodName9;
-	private String[] _methodParameterTypes9;
-	private String _methodName10;
-	private String[] _methodParameterTypes10;
 }

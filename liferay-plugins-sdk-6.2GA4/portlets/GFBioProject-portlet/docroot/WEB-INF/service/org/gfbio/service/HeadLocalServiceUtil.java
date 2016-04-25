@@ -395,6 +395,14 @@ public class HeadLocalServiceUtil {
 		return getService().updateTable(json);
 	}
 
+	public static java.lang.Boolean updateInterfaceTableWithContent(
+		java.lang.String nonHccTableName, long nonHccContentId,
+		java.lang.String hccTableName, long hccContentId) {
+		return getService()
+				   .updateInterfaceTableWithContent(nonHccTableName,
+			nonHccContentId, hccTableName, hccContentId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -234,23 +234,39 @@ public class ResearchObjectLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName151 = "updateParentResearchObjectIdByIds";
+		_methodName151 = "checkHCCBackground";
 
-		_methodParameterTypes151 = new String[] { "long", "int", "long" };
+		_methodParameterTypes151 = new String[] {
+				"java.lang.String", "java.lang.String", "java.lang.String"
+			};
 
-		_methodName152 = "updateResearchObjectType";
+		_methodName152 = "updateLicenseId";
 
 		_methodParameterTypes152 = new String[] {
 				"long", "int", "java.lang.String"
 			};
 
-		_methodName153 = "updateMetadataId";
+		_methodName153 = "updateLicenseId";
 
 		_methodParameterTypes153 = new String[] { "long", "int", "long" };
 
-		_methodName154 = "updateResearchObjectVersion";
+		_methodName154 = "updateMetadataId";
 
-		_methodParameterTypes154 = new String[] { "long", "int" };
+		_methodParameterTypes154 = new String[] { "long", "int", "long" };
+
+		_methodName155 = "updateParentResearchObjectIdByIds";
+
+		_methodParameterTypes155 = new String[] { "long", "int", "long" };
+
+		_methodName156 = "updateResearchObjectType";
+
+		_methodParameterTypes156 = new String[] {
+				"long", "int", "java.lang.String"
+			};
+
+		_methodName157 = "updateResearchObjectVersion";
+
+		_methodParameterTypes157 = new String[] { "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -502,27 +518,47 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		if (_methodName151.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateParentResearchObjectIdByIds(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				((Long)arguments[2]).longValue());
+			return ResearchObjectLocalServiceUtil.checkHCCBackground((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName152.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateResearchObjectType(((Long)arguments[0]).longValue(),
+			return ResearchObjectLocalServiceUtil.updateLicenseId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2]);
 		}
 
 		if (_methodName153.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateMetadataId(((Long)arguments[0]).longValue(),
+			return ResearchObjectLocalServiceUtil.updateLicenseId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName154.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateMetadataId(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateParentResearchObjectIdByIds(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateResearchObjectType(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				(java.lang.String)arguments[2]);
+		}
+
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObjectVersion(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -628,4 +664,10 @@ public class ResearchObjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes153;
 	private String _methodName154;
 	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName156;
+	private String[] _methodParameterTypes156;
+	private String _methodName157;
+	private String[] _methodParameterTypes157;
 }

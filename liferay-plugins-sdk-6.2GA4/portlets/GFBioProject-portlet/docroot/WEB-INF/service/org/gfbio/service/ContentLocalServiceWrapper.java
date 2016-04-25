@@ -439,6 +439,12 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public java.lang.Boolean checkKeyPairInRelationship(long headId,
+		java.lang.String pk1, java.lang.String pk2) {
+		return _contentLocalService.checkKeyPairInRelationship(headId, pk1, pk2);
+	}
+
+	@Override
 	public org.json.simple.JSONObject constructContentJson(long contentId,
 		long headId, long columnId, long rowId, java.lang.String cellContent) {
 		return _contentLocalService.constructContentJson(contentId, headId,
