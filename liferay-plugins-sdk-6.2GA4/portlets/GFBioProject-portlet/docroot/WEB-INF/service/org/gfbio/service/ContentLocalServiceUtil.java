@@ -407,6 +407,21 @@ public class ContentLocalServiceUtil {
 			tableName1, tableName2);
 	}
 
+	public static java.lang.Boolean checkExistenceOfKeyId(
+		java.lang.String tableName, long pk) {
+		return getService().checkExistenceOfKeyId(tableName, pk);
+	}
+
+	public static java.lang.Boolean checkExistenceOfKeyId(
+		java.lang.String tableName, java.lang.String pk) {
+		return getService().checkExistenceOfKeyId(tableName, pk);
+	}
+
+	public static java.lang.Boolean checkExistenceOfKeyId(long headId,
+		java.lang.String pk) {
+		return getService().checkExistenceOfKeyId(headId, pk);
+	}
+
 	public static java.lang.Boolean checkKeyPairInRelationship(long headId,
 		java.lang.String pk1, java.lang.String pk2) {
 		return getService().checkKeyPairInRelationship(headId, pk1, pk2);

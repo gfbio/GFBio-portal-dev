@@ -347,14 +347,20 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().checkForIgnoredParameter(objects, keyList);
 	}
 
-	public static java.lang.Boolean checkParentAttributById(
-		long researchObjectId) {
-		return getService().checkParentAttributById(researchObjectId);
+	public static org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label) {
+		return getService().checkHCCBackground(tableName, columnName, label);
 	}
 
 	public static org.json.simple.JSONObject checkNullParent(
 		org.json.simple.JSONObject json) {
 		return getService().checkNullParent(json);
+	}
+
+	public static java.lang.Boolean checkParentAttributById(
+		long researchObjectId) {
+		return getService().checkParentAttributById(researchObjectId);
 	}
 
 	public static java.lang.Boolean checkResearchObjectId(long researchObjectId) {
@@ -422,10 +428,18 @@ public class ResearchObjectLocalServiceUtil {
 			researchObjectType);
 	}
 
-	public static org.json.simple.JSONObject checkHCCBackground(
-		java.lang.String tableName, java.lang.String columnName,
-		java.lang.String label) {
-		return getService().checkHCCBackground(tableName, columnName, label);
+	public static java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorMail) {
+		return getService()
+				   .updateAuthorId(researchObjectId, researchObjectVersion,
+			authorMail);
+	}
+
+	public static java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, long authorId) {
+		return getService()
+				   .updateAuthorId(researchObjectId, researchObjectVersion,
+			authorId);
 	}
 
 	public static java.lang.Boolean updateLicenseId(long researchObjectId,

@@ -114,29 +114,29 @@ public class Project_ResearchObjectLocalServiceClpInvoker {
 				"org.gfbio.model.Project_ResearchObject"
 			};
 
-		_methodName118 = "getBeanIdentifier";
+		_methodName130 = "getBeanIdentifier";
 
-		_methodParameterTypes118 = new String[] {  };
+		_methodParameterTypes130 = new String[] {  };
 
-		_methodName119 = "setBeanIdentifier";
+		_methodName131 = "setBeanIdentifier";
 
-		_methodParameterTypes119 = new String[] { "java.lang.String" };
+		_methodParameterTypes131 = new String[] { "java.lang.String" };
 
-		_methodName124 = "getProjectIDList";
+		_methodName136 = "getProjectIDList";
 
-		_methodParameterTypes124 = new String[] { "long" };
+		_methodParameterTypes136 = new String[] { "long" };
 
-		_methodName125 = "getResearchObjectsByProjectId";
+		_methodName137 = "getResearchObjectsByProjectId";
 
-		_methodParameterTypes125 = new String[] { "long" };
+		_methodParameterTypes137 = new String[] { "long" };
 
-		_methodName126 = "checkResearchObjectIdAndVersion";
+		_methodName138 = "checkResearchObjectIdAndVersion";
 
-		_methodParameterTypes126 = new String[] { "long", "int" };
+		_methodParameterTypes138 = new String[] { "long", "int" };
 
-		_methodName127 = "updateProjectResearchObject";
+		_methodName139 = "updateProjectResearchObject";
 
-		_methodParameterTypes127 = new String[] { "long", "long", "int" };
+		_methodParameterTypes139 = new String[] { "long", "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -228,36 +228,36 @@ public class Project_ResearchObjectLocalServiceClpInvoker {
 			return Project_ResearchObjectLocalServiceUtil.updateProject_ResearchObject((org.gfbio.model.Project_ResearchObject)arguments[0]);
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			Project_ResearchObjectLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.getProjectIDList(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName138.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName139.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
 			return Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue());
@@ -298,16 +298,16 @@ public class Project_ResearchObjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName118;
-	private String[] _methodParameterTypes118;
-	private String _methodName119;
-	private String[] _methodParameterTypes119;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
+	private String _methodName131;
+	private String[] _methodParameterTypes131;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
+	private String _methodName137;
+	private String[] _methodParameterTypes137;
+	private String _methodName138;
+	private String[] _methodParameterTypes138;
+	private String _methodName139;
+	private String[] _methodParameterTypes139;
 }

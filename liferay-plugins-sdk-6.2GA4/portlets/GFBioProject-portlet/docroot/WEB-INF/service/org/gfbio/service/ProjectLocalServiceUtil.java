@@ -360,6 +360,16 @@ public class ProjectLocalServiceUtil {
 			extendedData, startDate, endDate, status);
 	}
 
+	public static java.lang.Boolean updateCategories(long projectId,
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateCategories(projectId, requestJson);
+	}
+
+	public static java.lang.Boolean updateCategory(long projectId,
+		long categoryId) {
+		return getService().updateCategory(projectId, categoryId);
+	}
+
 	public static java.lang.Boolean updateEndDate(long projectId,
 		java.util.Date endDate) {
 		return getService().updateEndDate(projectId, endDate);

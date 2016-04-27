@@ -298,13 +298,47 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
-	public Boolean checkParentAttributById(long researchObjectId){
-		
+	@SuppressWarnings("unchecked")
+	public JSONObject checkHCCBackground (String tableName, String columnName, String label) {
+
+		JSONObject responseJson = new JSONObject();
 		Boolean check = false;
-		List <Boolean> checkList =  ResearchObjectFinderUtil.getCheckOfDirectParent(researchObjectId);
-		if (checkList.size()>0)
-			check = checkList.get(0);
-		return check;
+		long rowId = ContentLocalServiceUtil.getRowIdByCellContent(tableName, columnName,  label);
+
+		// if rowid == 0 then researchObjectType isn't in gfbio_metadate and so build a new entry with researchObjectType as new label and id with a new id
+		if (rowId ==0){
+			long headId =0;
+			try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
+			} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+			
+			if (headId !=0){
+				
+				//columnName column
+				long columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, columnName);
+				if (columnId != 0){
+					try {rowId= ContentLocalServiceUtil.constructNewId();
+					} catch (SystemException e) {e.printStackTrace();}
+					check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, label);
+					
+					//id
+					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "id");
+					if (columnId != 0)
+						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
+				}
+			}
+		}
+		else{
+			check = true;
+		}
+		
+		long contentId =0;
+		try {contentId = ContentLocalServiceUtil.getContentIdByTableIds(rowId, ColumnLocalServiceUtil.getColumnIdByNames(tableName, "id"));
+		} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
+
+		responseJson.put("check", check);
+		responseJson.put("contentid", contentId);
+		
+		return responseJson;
 	}
 	
 	
@@ -318,6 +352,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					json.put("parentresearchobjectid", null);
 				}
 		return json;
+	}
+	
+	
+	//
+	public Boolean checkParentAttributById(long researchObjectId){
+		
+		Boolean check = false;
+		List <Boolean> checkList =  ResearchObjectFinderUtil.getCheckOfDirectParent(researchObjectId);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
 	}
 	
 	
@@ -400,7 +445,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype", "metadataid","licenseid","licenselabel", "brokerobjectid"};
+		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype", "metadataid","licenseid","licenselabel", "authormail","authorid", "brokerobjectid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -430,6 +475,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			if (requestJson.containsKey("licenseid") && check)
 				check = updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
+			
+			
+			if(requestJson.containsKey("authormail") && check)
+				check = updateAuthorId(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim());
+			
+			if (requestJson.containsKey("authorid") && check)
+				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
 			
 			
 			if (requestJson.containsKey("projectid") && check)
@@ -483,7 +535,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"label", "extendeddata", "name", "researchobjectid"};
+		String [] keySet = {"label", "extendeddata", "name", "researchobjectid","licenseid","licenselabel", "authormail","authorid", "brokerobjectid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -530,6 +582,14 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if (requestJson.containsKey("licenseid") && check)
 							updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
+						
+						//no check request, because: if exists a license-ro-relation, than check is false 
+						if(requestJson.containsKey("authormail") && check)
+							updateAuthorId(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim());
+						
+						//no check request, because: if exists a license-ro-relation, than check is false 
+						if (requestJson.containsKey("authorid") && check)
+							updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
 						
 						if (check){
 							responseJson.put("researchobjectid", researchObjectId);
@@ -640,47 +700,21 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
-	@SuppressWarnings("unchecked")
-	public JSONObject checkHCCBackground (String tableName, String columnName, String label) {
-
-		JSONObject responseJson = new JSONObject();
+	public Boolean updateAuthorId (long researchObjectId, int researchObjectVersion, String authorMail){
 		Boolean check = false;
-		long rowId = ContentLocalServiceUtil.getRowIdByCellContent(tableName, columnName,  label);
-
-		// if rowid == 0 then researchObjectType isn't in gfbio_metadate and so build a new entry with researchObjectType as new label and id with a new id
-		if (rowId ==0){
-			long headId =0;
-			try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
-			} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
-			
-			if (headId !=0){
-				
-				//columnName column
-				long columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, columnName);
-				if (columnId != 0){
-					try {rowId= ContentLocalServiceUtil.constructNewId();
-					} catch (SystemException e) {e.printStackTrace();}
-					check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, label);
-					
-					//id
-					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "id");
-					if (columnId != 0)
-						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
-				}
-			}
-		}
-		else{
-			check = true;
-		}
+		JSONObject hccJson= new JSONObject();
+		hccJson = checkHCCBackground("gfbio_externalperson", "mail", authorMail);
 		
-		long contentId =0;
-		try {contentId = ContentLocalServiceUtil.getContentIdByTableIds(rowId, ColumnLocalServiceUtil.getColumnIdByNames(tableName, "id"));
-		} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
+		if ((boolean) hccJson.get("check"))
+			check =  updateAuthorId(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
 
-		responseJson.put("check", check);
-		responseJson.put("contentid", contentId);
-		
-		return responseJson;
+		return check;
+	}
+	
+	
+	//
+	public Boolean updateAuthorId (long researchObjectId, int researchObjectVersion, long authorId){
+		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_researchobject", researchObjectId, "gfbio_externalperson", authorId);
 	}
 	
 

@@ -24,72 +24,72 @@ import java.util.Arrays;
  */
 public class ContentServiceClpInvoker {
 	public ContentServiceClpInvoker() {
-		_methodName102 = "getBeanIdentifier";
+		_methodName114 = "getBeanIdentifier";
 
-		_methodParameterTypes102 = new String[] {  };
+		_methodParameterTypes114 = new String[] {  };
 
-		_methodName103 = "setBeanIdentifier";
+		_methodName115 = "setBeanIdentifier";
 
-		_methodParameterTypes103 = new String[] { "java.lang.String" };
+		_methodParameterTypes115 = new String[] { "java.lang.String" };
 
-		_methodName108 = "getContentIdsWithRelationships";
+		_methodName120 = "getContentIdsWithRelationships";
 
-		_methodParameterTypes108 = new String[] {
+		_methodParameterTypes120 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName109 = "getContentIdsWithNormalTableRelationships";
+		_methodName121 = "getContentIdsWithNormalTableRelationships";
 
-		_methodParameterTypes109 = new String[] {
+		_methodParameterTypes121 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName110 = "getRowInformationByContentId";
+		_methodName122 = "getRowInformationByContentId";
 
-		_methodParameterTypes110 = new String[] { "long" };
+		_methodParameterTypes122 = new String[] { "long" };
 
-		_methodName111 = "getRowInformationOfRelationByContentId";
+		_methodName123 = "getRowInformationOfRelationByContentId";
 
-		_methodParameterTypes111 = new String[] {
+		_methodParameterTypes123 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName102.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
 			return ContentServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName103.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
 			ContentServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName108.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			return ContentServiceUtil.getContentIdsWithRelationships(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
-		if (_methodName109.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
 			return ContentServiceUtil.getContentIdsWithNormalTableRelationships(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3]);
 		}
 
-		if (_methodName110.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return ContentServiceUtil.getRowInformationByContentId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName111.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			return ContentServiceUtil.getRowInformationOfRelationByContentId(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
@@ -97,16 +97,16 @@ public class ContentServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName102;
-	private String[] _methodParameterTypes102;
-	private String _methodName103;
-	private String[] _methodParameterTypes103;
-	private String _methodName108;
-	private String[] _methodParameterTypes108;
-	private String _methodName109;
-	private String[] _methodParameterTypes109;
-	private String _methodName110;
-	private String[] _methodParameterTypes110;
-	private String _methodName111;
-	private String[] _methodParameterTypes111;
+	private String _methodName114;
+	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
+	private String _methodName121;
+	private String[] _methodParameterTypes121;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
+	private String _methodName123;
+	private String[] _methodParameterTypes123;
 }

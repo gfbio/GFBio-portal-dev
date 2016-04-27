@@ -108,27 +108,27 @@ public class Project_UserLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Project_User" };
 
-		_methodName118 = "getBeanIdentifier";
+		_methodName130 = "getBeanIdentifier";
 
-		_methodParameterTypes118 = new String[] {  };
+		_methodParameterTypes130 = new String[] {  };
 
-		_methodName119 = "setBeanIdentifier";
+		_methodName131 = "setBeanIdentifier";
 
-		_methodParameterTypes119 = new String[] { "java.lang.String" };
+		_methodParameterTypes131 = new String[] { "java.lang.String" };
 
-		_methodName124 = "getProjectIDList";
+		_methodName136 = "getProjectIDList";
 
-		_methodParameterTypes124 = new String[] { "long" };
+		_methodParameterTypes136 = new String[] { "long" };
 
-		_methodName125 = "updateProjectUser";
+		_methodName137 = "updateProjectUser";
 
-		_methodParameterTypes125 = new String[] {
+		_methodParameterTypes137 = new String[] {
 				"long", "long", "java.lang.String"
 			};
 
-		_methodName126 = "updateProjectUser";
+		_methodName138 = "updateProjectUser";
 
-		_methodParameterTypes126 = new String[] {
+		_methodParameterTypes138 = new String[] {
 				"long", "long", "java.util.Date", "java.util.Date",
 				"java.lang.String"
 			};
@@ -223,31 +223,31 @@ public class Project_UserLocalServiceClpInvoker {
 			return Project_UserLocalServiceUtil.updateProject_User((org.gfbio.model.Project_User)arguments[0]);
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return Project_UserLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			Project_UserLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			return Project_UserLocalServiceUtil.getProjectIDList(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			return Project_UserLocalServiceUtil.updateProjectUser(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName138.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
 			return Project_UserLocalServiceUtil.updateProjectUser(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(), (java.util.Date)arguments[2],
 				(java.util.Date)arguments[3], (java.lang.String)arguments[4]);
@@ -288,14 +288,14 @@ public class Project_UserLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName118;
-	private String[] _methodParameterTypes118;
-	private String _methodName119;
-	private String[] _methodParameterTypes119;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
+	private String _methodName131;
+	private String[] _methodParameterTypes131;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
+	private String _methodName137;
+	private String[] _methodParameterTypes137;
+	private String _methodName138;
+	private String[] _methodParameterTypes138;
 }

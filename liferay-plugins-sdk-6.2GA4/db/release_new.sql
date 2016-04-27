@@ -399,18 +399,18 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('56','18','gfbio_
 ----------------------------------------------------------------------------------------------
 
 
-CREATE TABLE funding_personproject
+CREATE TABLE gfbio_funding_personproject
 (
   projectid bigint NOT NULL,
-  fundingagency bigint NOT NULL,
-  fundingprogram bigint NOT NULL,
+  fundingagencyid bigint NOT NULL,
+  fundingprogramid bigint NOT NULL,
   personid bigint NOT NULL,
   persontype character(75) NOT NULL,
-  CONSTRAINT gfbio_funding_personproject_pkey PRIMARY KEY (projectid, fundingagency, fundingprogram, personid, persontype),
-  CONSTRAINT gfbio_fundingagency_fkey FOREIGN KEY (fundingagency)
+  CONSTRAINT gfbio_funding_personproject_pkey PRIMARY KEY (projectid, fundingagencyid, fundingprogramid, personid, persontype),
+  CONSTRAINT gfbio_fundingagency_fkey FOREIGN KEY (fundingagencyid)
       REFERENCES gfbio_content (contentid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT gfbio_fundingprogram_fkey FOREIGN KEY (fundingprogram)
+  CONSTRAINT gfbio_fundingprogram_fkey FOREIGN KEY (fundingprogramid)
       REFERENCES gfbio_content (contentid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectid)
@@ -420,8 +420,8 @@ CREATE TABLE funding_personproject
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE funding_personproject
-  OWNER TO postgres;
+ALTER TABLE gfbio_funding_personproject
+  OWNER TO liferay_gfbio;
 
   
 
@@ -454,17 +454,17 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('60','19','websit
 ---------------------------------------------------------------------------------------------
 
 
-CREATE TABLE funding_institutionproject
+CREATE TABLE gfbio_funding_institutionproject
 (
   projectid bigint NOT NULL,
   fundingagencyid bigint NOT NULL,
-  fundingprogram bigint NOT NULL,
+  fundingprogramid bigint NOT NULL,
   institutionid bigint NOT NULL,
-  CONSTRAINT gfbio_funding_institutionproject_pkey PRIMARY KEY (projectid, fundingagencyid, fundingprogram, institutionid),
+  CONSTRAINT gfbio_funding_institutionproject_pkey PRIMARY KEY (projectid, fundingagencyid, fundingprogramid, institutionid),
   CONSTRAINT gfbio_fundingagency_fkey FOREIGN KEY (fundingagencyid)
       REFERENCES gfbio_content (contentid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT gfbio_fundingprogram_fkey FOREIGN KEY (fundingprogram)
+  CONSTRAINT gfbio_fundingprogram_fkey FOREIGN KEY (fundingprogramid)
       REFERENCES gfbio_content (contentid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT gfbio_institution_fkey FOREIGN KEY (institutionid)
@@ -477,5 +477,5 @@ CREATE TABLE funding_institutionproject
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE funding_institutionproject
-  OWNER TO postgres;
+ALTER TABLE gfbio_funding_institutionproject
+  OWNER TO liferay_gfbio;

@@ -32,6 +32,7 @@ import org.gfbio.model.Project;
 import org.gfbio.model.Project_ResearchObject;
 import org.gfbio.model.Project_User;
 import org.gfbio.model.ResearchObject;
+import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
@@ -268,7 +269,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		long projectId = 0;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "description", "parentprojectid", "userid", "startdate", "enddate", "status"};
+		String [] keySet = {"name", "label", "extendeddata", "description", "parentprojectid", "userid", "startdate", "enddate", "status", "dcrtid", "dcrtids"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -325,9 +326,18 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			
 			if (requestJson.containsKey("status") && check)
 				check = updateStatus(projectId, (String) requestJson.get("status"));
+			
+			if (requestJson.containsKey("dcrtids") && check)
+				check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
+			
+			if (requestJson.containsKey("dcrtid") && check)
+				check = updateCategory(projectId, (long) requestJson.get("dcrtid"));
+
+			
+			
 		
 			if (check){
-				responseJson.put("projectId", projectId);
+				responseJson.put("projectid", projectId);
 			}else
 				responseJson.put("ERROR:", "ERROR: create project is failed.");
 		}else{
@@ -426,6 +436,21 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//-------------------------------  Update Attribute Functions ----------------------------------------------//
+	
+	
+	//
+	public Boolean updateCategories (long projectId, JSONArray requestJson){
+		Boolean check = false;
+		for (int i =0; i <requestJson.size();i++)
+			check = updateCategory( projectId, (long) requestJson.get(i));
+		return check;
+	}	
+	
+	
+	//
+	public Boolean updateCategory (long projectId, long categoryId){
+		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_project", projectId, "gfbio_category", categoryId);
+	}
 	
 	
 	//

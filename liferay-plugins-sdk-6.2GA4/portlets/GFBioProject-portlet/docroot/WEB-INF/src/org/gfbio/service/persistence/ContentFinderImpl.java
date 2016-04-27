@@ -15,6 +15,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements ContentFinder{
 	
 	public static String FINDER_CLASS_NAME_ENTITY 							= ContentFinderImpl.class.getName();
+	public static String CHECK_EXISTENCE_OF_KEYID							= FINDER_CLASS_NAME_ENTITY + ".checkExistenceOfKeyId";
 	public static String CHECK_KEYPAIR_IN_RELATIONSHIP						= FINDER_CLASS_NAME_ENTITY + ".checkKeyPairInRelationship";
 	public static String GET_CELL_CONTENT 									= FINDER_CLASS_NAME_ENTITY + ".getCellContent";
 	public static String GET_CELL_CONTENT_BY_CONTENTID 						= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
@@ -31,6 +32,33 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_ROWID_OF_RELATION 								= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
 	public static String GET_ROW_INFORMATION_BY_CONTENTID					= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
 	
+	
+	//Is  pk in table with headid, the Boolean is true
+	@SuppressWarnings("rawtypes")
+	public List checkExistenceOfKeyId(long headId, String pk) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(CHECK_EXISTENCE_OF_KEYID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("check", Type.BOOLEAN);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(headId);
+			qPos.add(pk);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
 	
 	
 	//Are pk1 and pk2 in table with headid, the Boolean is false, because the function will is useing in relationship table update

@@ -72,6 +72,31 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Funding_InstitutionProjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.Funding_InstitutionProjectPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="fundingAgencyID" />
+			<id name="fundingProgramID" />
+			<id name="institutionID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Funding_PersonProjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.Funding_PersonProjectPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="fundingAgencyID" />
+			<id name="fundingProgramID" />
+			<id name="personID" />
+			<id name="personType" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.HeadModelImpl">
 		<attributes>
 			<id name="headID" />
@@ -202,6 +227,14 @@
 	</entity>
 	<entity class="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" name="DataProvider_PersistentIdentifier">
 		<table name="gfbio_DataProvider_PersistentIdentifier" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Funding_InstitutionProjectImpl" name="Funding_InstitutionProject">
+		<table name="gfbio_Funding_InstitutionProject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Funding_PersonProjectImpl" name="Funding_PersonProject">
+		<table name="gfbio_Funding_PersonProject" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.HeadImpl" name="Head">

@@ -308,6 +308,11 @@ public interface ProjectLocalService extends BaseLocalService,
 		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.lang.Boolean updateCategories(long projectId,
+		org.json.simple.JSONArray requestJson);
+
+	public java.lang.Boolean updateCategory(long projectId, long categoryId);
+
 	public java.lang.Boolean updateEndDate(long projectId,
 		java.util.Date endDate);
 

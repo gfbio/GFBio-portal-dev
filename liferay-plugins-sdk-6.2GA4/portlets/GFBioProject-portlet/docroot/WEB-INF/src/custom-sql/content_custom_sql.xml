@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
+
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.checkExistenceOfKeyId">
+	    <![CDATA[
+			SELECT 
+				(CASE WHEN count(contentid) >0 THEN true ELSE false END ) as check
+			FROM
+				public.gfbio_content
+			WHERE
+				headid = ? AND
+				cellcontent = ?
+		]]>
+    </sql> 
+    
     
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.checkKeyPairInRelationship">
 	    <![CDATA[

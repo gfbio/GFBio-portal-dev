@@ -384,6 +384,17 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public java.lang.Boolean updateCategories(long projectId,
+		org.json.simple.JSONArray requestJson) {
+		return _projectLocalService.updateCategories(projectId, requestJson);
+	}
+
+	@Override
+	public java.lang.Boolean updateCategory(long projectId, long categoryId) {
+		return _projectLocalService.updateCategory(projectId, categoryId);
+	}
+
+	@Override
 	public java.lang.Boolean updateEndDate(long projectId,
 		java.util.Date endDate) {
 		return _projectLocalService.updateEndDate(projectId, endDate);

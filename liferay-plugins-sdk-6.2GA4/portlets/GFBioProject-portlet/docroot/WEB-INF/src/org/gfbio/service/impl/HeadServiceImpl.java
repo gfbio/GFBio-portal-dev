@@ -14,9 +14,6 @@
 
 package org.gfbio.service.impl;
 
-import java.util.List;
-
-import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.HeadServiceBaseImpl;
 
 /**

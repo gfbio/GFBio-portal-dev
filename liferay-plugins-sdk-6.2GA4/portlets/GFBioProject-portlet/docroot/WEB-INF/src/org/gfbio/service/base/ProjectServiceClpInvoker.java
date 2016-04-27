@@ -24,67 +24,67 @@ import java.util.Arrays;
  */
 public class ProjectServiceClpInvoker {
 	public ProjectServiceClpInvoker() {
-		_methodName102 = "getBeanIdentifier";
+		_methodName114 = "getBeanIdentifier";
 
-		_methodParameterTypes102 = new String[] {  };
+		_methodParameterTypes114 = new String[] {  };
 
-		_methodName103 = "setBeanIdentifier";
+		_methodName115 = "setBeanIdentifier";
 
-		_methodParameterTypes103 = new String[] { "java.lang.String" };
+		_methodParameterTypes115 = new String[] { "java.lang.String" };
 
-		_methodName108 = "getProjectById";
+		_methodName120 = "getProjectById";
 
-		_methodParameterTypes108 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes120 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName109 = "checkProjectOnSubmissions";
+		_methodName121 = "checkProjectOnSubmissions";
 
-		_methodParameterTypes109 = new String[] { "long" };
+		_methodParameterTypes121 = new String[] { "long" };
 
-		_methodName110 = "createProject";
+		_methodName122 = "createProject";
 
-		_methodParameterTypes110 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes122 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName102.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
 			return ProjectServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName103.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
 			ProjectServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName108.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			return ProjectServiceUtil.getProjectById((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName109.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
 			return ProjectServiceUtil.checkProjectOnSubmissions(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName110.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return ProjectServiceUtil.createProject((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName102;
-	private String[] _methodParameterTypes102;
-	private String _methodName103;
-	private String[] _methodParameterTypes103;
-	private String _methodName108;
-	private String[] _methodParameterTypes108;
-	private String _methodName109;
-	private String[] _methodParameterTypes109;
-	private String _methodName110;
-	private String[] _methodParameterTypes110;
+	private String _methodName114;
+	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
+	private String _methodName120;
+	private String[] _methodParameterTypes120;
+	private String _methodName121;
+	private String[] _methodParameterTypes121;
+	private String _methodName122;
+	private String[] _methodParameterTypes122;
 }

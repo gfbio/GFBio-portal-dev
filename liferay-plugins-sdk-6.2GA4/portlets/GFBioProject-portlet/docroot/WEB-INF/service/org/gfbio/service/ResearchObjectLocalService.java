@@ -308,10 +308,14 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	public java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList);
 
-	public java.lang.Boolean checkParentAttributById(long researchObjectId);
+	public org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label);
 
 	public org.json.simple.JSONObject checkNullParent(
 		org.json.simple.JSONObject json);
+
+	public java.lang.Boolean checkParentAttributById(long researchObjectId);
 
 	public java.lang.Boolean checkResearchObjectId(long researchObjectId);
 
@@ -349,9 +353,11 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String label,
 		java.lang.String extendedData, java.lang.String researchObjectType);
 
-	public org.json.simple.JSONObject checkHCCBackground(
-		java.lang.String tableName, java.lang.String columnName,
-		java.lang.String label);
+	public java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorMail);
+
+	public java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, long authorId);
 
 	public java.lang.Boolean updateLicenseId(long researchObjectId,
 		int researchObjectVersion, java.lang.String licenseLabel);

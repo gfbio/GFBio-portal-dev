@@ -55,16 +55,14 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	//delete contents of a specific column
 	public void deleteContentsByColumnId (long columnId){
+		
 		List <Content> contentList = null;
-
-		try {
-			contentList = contentPersistence.findByColumnId(columnId);
+		try {contentList = contentPersistence.findByColumnId(columnId);
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				try {
-					ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
+				try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
 				} catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
@@ -73,8 +71,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public void deleteContentsByHeadId(long headId) throws SystemException{
 		List <Content> contentList = contentPersistence.findByHeadId(headId);
 		for (int i =0; i<contentList.size();i++)
-			try {
-				ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
+			try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
 			} catch (PortalException e) {e.printStackTrace();}
 	}
 	
@@ -83,14 +80,12 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public void deleteContentsByRowId (long rowId){
 		
 		List <Content> contentList = null;
-		try {
-			contentList = contentPersistence.findByRowId(rowId);
+		try {contentList = contentPersistence.findByRowId(rowId);
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				try {
-					ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
+				try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
 				} catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
@@ -174,8 +169,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		
 		JSONObject json = new JSONObject();
 		Content content = null;
-		try {
-			content = contentPersistence.findByContentId(contentId);
+		try {content = contentPersistence.findByContentId(contentId);
 		} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 		if (content != null)
 			json = constructContentJson(content.getContentID(), content.getHeadID(), content.getColumnID(), content.getRowID(), content.getCellContent());
@@ -351,6 +345,31 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//Is  pk in table with table name, the Boolean is true
+	public Boolean checkExistenceOfKeyId(String tableName, long pk) {
+		return checkExistenceOfKeyId(tableName, Long.toString(pk));
+	}
+	
+	
+	//Is  pk in table with table name, the Boolean is true
+	public Boolean checkExistenceOfKeyId(String tableName, String pk) {
+		Boolean check = false;
+		long headid =0;
+		try {
+			headid = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		if (headid !=0)
+			check =(Boolean) ContentFinderUtil.checkExistenceOfKeyId(headid, pk).get(0); 
+		return check;
+	}
+
+	
+	//Is  pk in table with headid, the Boolean is true
+	public Boolean checkExistenceOfKeyId(long headId, String pk) {
+		return (Boolean) ContentFinderUtil.checkExistenceOfKeyId(headId, pk).get(0);
+	}
 	
 	
 	//Are pk1 and pk2 in table with headid, the Boolean is false, because the function will is useing in relationship table update

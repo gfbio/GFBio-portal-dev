@@ -7,6 +7,8 @@
 	<import class="org.gfbio.model.Content" />
 	<import class="org.gfbio.model.DataProvider" />
 	<import class="org.gfbio.model.DataProvider_PersistentIdentifier" />
+	<import class="org.gfbio.model.Funding_InstitutionProject" />
+	<import class="org.gfbio.model.Funding_PersonProject" />
 	<import class="org.gfbio.model.Head" />
 	<import class="org.gfbio.model.Project" />
 	<import class="org.gfbio.model.Project_ResearchObject" />
@@ -55,6 +57,23 @@
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK">
 			<key-property name="gfbioDataProvider" column="gfbio_dataprovider" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="gfbioPersistentIdentifier" column="gfbio_persistentidentifier" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+	</class>
+	<class name="org.gfbio.model.impl.Funding_InstitutionProjectImpl" table="gfbio_Funding_InstitutionProject">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Funding_InstitutionProjectPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingAgencyID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingProgramID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="institutionID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+	</class>
+	<class name="org.gfbio.model.impl.Funding_PersonProjectImpl" table="gfbio_Funding_PersonProject">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Funding_PersonProjectPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingAgencyID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingProgramID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="personID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="personType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		</composite-id>
 	</class>
 	<class name="org.gfbio.model.impl.HeadImpl" table="gfbio_Head">

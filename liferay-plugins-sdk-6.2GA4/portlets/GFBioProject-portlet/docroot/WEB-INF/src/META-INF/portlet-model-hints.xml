@@ -34,6 +34,19 @@
 		<field name="gfbioDataProvider" type="long" />
 		<field name="gfbioPersistentIdentifier" type="long" />
 	</model>
+	<model name="org.gfbio.model.Funding_InstitutionProject">
+		<field name="projectID" type="long" />
+		<field name="fundingAgencyID" type="long" />
+		<field name="fundingProgramID" type="long" />
+		<field name="institutionID" type="long" />
+	</model>
+	<model name="org.gfbio.model.Funding_PersonProject">
+		<field name="projectID" type="long" />
+		<field name="fundingAgencyID" type="long" />
+		<field name="fundingProgramID" type="long" />
+		<field name="personID" type="long" />
+		<field name="personType" type="String" />
+	</model>
 	<model name="org.gfbio.model.Head">
 		<field name="headID" type="long" />
 		<field name="table_name" type="String" />

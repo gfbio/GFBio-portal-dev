@@ -28,6 +28,10 @@ import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.DataProviderServiceUtil;
 import org.gfbio.service.DataProvider_PersistentIdentifierLocalServiceUtil;
 import org.gfbio.service.DataProvider_PersistentIdentifierServiceUtil;
+import org.gfbio.service.Funding_InstitutionProjectLocalServiceUtil;
+import org.gfbio.service.Funding_InstitutionProjectServiceUtil;
+import org.gfbio.service.Funding_PersonProjectLocalServiceUtil;
+import org.gfbio.service.Funding_PersonProjectServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.HeadServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
@@ -73,6 +77,12 @@ public class ClpMessageListener extends BaseMessageListener {
 			DataProvider_PersistentIdentifierLocalServiceUtil.clearService();
 
 			DataProvider_PersistentIdentifierServiceUtil.clearService();
+			Funding_InstitutionProjectLocalServiceUtil.clearService();
+
+			Funding_InstitutionProjectServiceUtil.clearService();
+			Funding_PersonProjectLocalServiceUtil.clearService();
+
+			Funding_PersonProjectServiceUtil.clearService();
 			HeadLocalServiceUtil.clearService();
 
 			HeadServiceUtil.clearService();

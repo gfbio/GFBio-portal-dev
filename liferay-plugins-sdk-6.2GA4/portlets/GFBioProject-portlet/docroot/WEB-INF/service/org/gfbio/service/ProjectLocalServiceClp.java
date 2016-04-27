@@ -184,25 +184,35 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 				"java.util.Date", "java.lang.String"
 			};
 
-		_methodName35 = "updateEndDate";
+		_methodName35 = "updateCategories";
 
-		_methodParameterTypes35 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes35 = new String[] {
+				"long", "org.json.simple.JSONArray"
+			};
 
-		_methodName36 = "updateExtendedData";
+		_methodName36 = "updateCategory";
 
-		_methodParameterTypes36 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes36 = new String[] { "long", "long" };
 
-		_methodName37 = "updateParentProjectByIds";
+		_methodName37 = "updateEndDate";
 
-		_methodParameterTypes37 = new String[] { "long", "long" };
+		_methodParameterTypes37 = new String[] { "long", "java.util.Date" };
 
-		_methodName38 = "updateStartDate";
+		_methodName38 = "updateExtendedData";
 
-		_methodParameterTypes38 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes38 = new String[] { "long", "java.lang.String" };
 
-		_methodName39 = "updateStatus";
+		_methodName39 = "updateParentProjectByIds";
 
-		_methodParameterTypes39 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes39 = new String[] { "long", "long" };
+
+		_methodName40 = "updateStartDate";
+
+		_methodParameterTypes40 = new String[] { "long", "java.util.Date" };
+
+		_methodName41 = "updateStatus";
+
+		_methodParameterTypes41 = new String[] { "long", "java.lang.String" };
 	}
 
 	@Override
@@ -1217,13 +1227,66 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
-	public java.lang.Boolean updateEndDate(long projectId,
-		java.util.Date endDate) {
+	public java.lang.Boolean updateCategories(long projectId,
+		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName35,
 					_methodParameterTypes35,
+					new Object[] {
+						projectId,
+						
+					ClpSerializer.translateInput(requestJson)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateCategory(long projectId, long categoryId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
+					new Object[] { projectId, categoryId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateEndDate(long projectId,
+		java.util.Date endDate) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						projectId,
 						
@@ -1251,8 +1314,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						projectId,
 						
@@ -1280,8 +1343,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] { projectId, parentProjectId });
 		}
 		catch (Throwable t) {
@@ -1305,8 +1368,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						projectId,
 						
@@ -1334,8 +1397,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
 					new Object[] { projectId, ClpSerializer.translateInput(
 							status) });
 		}
@@ -1433,4 +1496,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	private String[] _methodParameterTypes38;
 	private String _methodName39;
 	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
 }
