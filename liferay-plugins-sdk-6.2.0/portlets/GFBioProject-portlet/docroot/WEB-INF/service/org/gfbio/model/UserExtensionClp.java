@@ -228,10 +228,6 @@ public class UserExtensionClp extends BaseModelImpl<UserExtension>
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -267,5 +263,4 @@ public class UserExtensionClp extends BaseModelImpl<UserExtension>
 
 	private long _userID;
 	private BaseModel<?> _userExtensionRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

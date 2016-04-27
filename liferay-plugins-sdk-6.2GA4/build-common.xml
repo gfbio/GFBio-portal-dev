@@ -530,7 +530,7 @@ Error-Prone was automatically installed. Please rerun your task.
 					<if>
 						<available file="@{module.dir}/docroot/WEB-INF/lib" />
 						<then>
-							<retry retrycount="1" retrydelay="5000">
+							<retry retrycount="1" >
 								<delete>
 									<fileset dir="@{module.dir}/docroot/WEB-INF/lib" includes="${required.portal.jars}" />
 									<fileset dir="@{module.dir}/docroot/WEB-INF/lib" includes="${plugin.jars}" />

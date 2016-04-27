@@ -578,10 +578,6 @@ public class SubmissionClp extends BaseModelImpl<Submission>
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -695,5 +691,4 @@ public class SubmissionClp extends BaseModelImpl<Submission>
 	private Date _publicAfter;
 	private String _status;
 	private BaseModel<?> _submissionRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

@@ -165,19 +165,19 @@ public interface ContentModel extends BaseModel<Content> {
 	public Object clone();
 
 	@Override
-	public int compareTo(org.gfbio.model.Content content);
+	public int compareTo(Content content);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<org.gfbio.model.Content> toCacheModel();
+	public CacheModel<Content> toCacheModel();
 
 	@Override
-	public org.gfbio.model.Content toEscapedModel();
+	public Content toEscapedModel();
 
 	@Override
-	public org.gfbio.model.Content toUnescapedModel();
+	public Content toUnescapedModel();
 
 	@Override
 	public String toString();

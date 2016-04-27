@@ -21,7 +21,6 @@ import java.io.Serializable;
 
 /**
  * @author Marcel Froemming
- * @generated
  */
 public class Project_UserPK implements Comparable<Project_UserPK>, Serializable {
 	public long projectID;

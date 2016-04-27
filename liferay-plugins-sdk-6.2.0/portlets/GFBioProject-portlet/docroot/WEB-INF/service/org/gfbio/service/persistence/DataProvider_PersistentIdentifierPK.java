@@ -21,7 +21,6 @@ import java.io.Serializable;
 
 /**
  * @author Marcel Froemming
- * @generated
  */
 public class DataProvider_PersistentIdentifierPK implements Comparable<DataProvider_PersistentIdentifierPK>,
 	Serializable {

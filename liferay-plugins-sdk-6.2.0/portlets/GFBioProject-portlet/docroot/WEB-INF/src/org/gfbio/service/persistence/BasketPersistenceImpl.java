@@ -2265,7 +2265,7 @@ public class BasketPersistenceImpl extends BasePersistenceImpl<Basket>
 		basketImpl.setUserID(basket.getUserID());
 		basketImpl.setName(basket.getName());
 		basketImpl.setLastModifiedDate(basket.getLastModifiedDate());
-		basketImpl.setBasketJSON(basket.getBasketJSON());
+		basketImpl.setBasketContent(basket.getBasketContent());
 		basketImpl.setQueryJSON(basket.getQueryJSON());
 
 		return basketImpl;

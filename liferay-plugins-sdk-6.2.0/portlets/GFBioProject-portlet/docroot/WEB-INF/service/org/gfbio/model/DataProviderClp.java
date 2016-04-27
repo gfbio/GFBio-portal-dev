@@ -405,10 +405,6 @@ public class DataProviderClp extends BaseModelImpl<DataProvider>
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -487,5 +483,4 @@ public class DataProviderClp extends BaseModelImpl<DataProvider>
 	private String _website;
 	private String _training;
 	private BaseModel<?> _dataProviderRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

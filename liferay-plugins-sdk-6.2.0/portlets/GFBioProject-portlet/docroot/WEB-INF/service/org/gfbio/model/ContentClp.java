@@ -350,10 +350,6 @@ public class ContentClp extends BaseModelImpl<Content> implements Content {
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -418,5 +414,4 @@ public class ContentClp extends BaseModelImpl<Content> implements Content {
 	private long _rowID;
 	private String _cellContent;
 	private BaseModel<?> _contentRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

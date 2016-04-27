@@ -138,19 +138,19 @@ public interface HeadModel extends BaseModel<Head> {
 	public Object clone();
 
 	@Override
-	public int compareTo(org.gfbio.model.Head head);
+	public int compareTo(Head head);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<org.gfbio.model.Head> toCacheModel();
+	public CacheModel<Head> toCacheModel();
 
 	@Override
-	public org.gfbio.model.Head toEscapedModel();
+	public Head toEscapedModel();
 
 	@Override
-	public org.gfbio.model.Head toUnescapedModel();
+	public Head toUnescapedModel();
 
 	@Override
 	public String toString();

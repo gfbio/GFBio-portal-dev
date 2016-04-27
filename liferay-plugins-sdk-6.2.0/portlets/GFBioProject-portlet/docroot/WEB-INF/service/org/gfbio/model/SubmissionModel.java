@@ -275,19 +275,19 @@ public interface SubmissionModel extends BaseModel<Submission> {
 	public Object clone();
 
 	@Override
-	public int compareTo(org.gfbio.model.Submission submission);
+	public int compareTo(Submission submission);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<org.gfbio.model.Submission> toCacheModel();
+	public CacheModel<Submission> toCacheModel();
 
 	@Override
-	public org.gfbio.model.Submission toEscapedModel();
+	public Submission toEscapedModel();
 
 	@Override
-	public org.gfbio.model.Submission toUnescapedModel();
+	public Submission toUnescapedModel();
 
 	@Override
 	public String toString();

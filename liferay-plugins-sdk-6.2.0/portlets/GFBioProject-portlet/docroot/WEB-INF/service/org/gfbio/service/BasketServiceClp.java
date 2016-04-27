@@ -123,7 +123,7 @@ public class BasketServiceClp implements BasketService {
 	}
 
 	@Override
-	public org.gfbio.model.Basket getBasketById(long basketId)
+	public com.liferay.portal.kernel.json.JSONArray getBasketById(long basketId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -147,11 +147,11 @@ public class BasketServiceClp implements BasketService {
 			}
 		}
 
-		return (org.gfbio.model.Basket)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByIds(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsByIds(
 		long[] basketIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -177,11 +177,11 @@ public class BasketServiceClp implements BasketService {
 			}
 		}
 
-		return (java.util.List<org.gfbio.model.Basket>)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserAndPeriod(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsByUserAndPeriod(
 		long userId, int period)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -206,11 +206,11 @@ public class BasketServiceClp implements BasketService {
 			}
 		}
 
-		return (java.util.List<org.gfbio.model.Basket>)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<org.gfbio.model.Basket> getBasketsByUserId(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsByUserId(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -234,11 +234,11 @@ public class BasketServiceClp implements BasketService {
 			}
 		}
 
-		return (java.util.List<org.gfbio.model.Basket>)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getBasketsIdByUserAndPeriod(
+	public com.liferay.portal.kernel.json.JSONArray getBasketsIdByUserAndPeriod(
 		long userId, int period)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -263,12 +263,12 @@ public class BasketServiceClp implements BasketService {
 			}
 		}
 
-		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getBasketsIdByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.json.JSONArray getBasketsIdByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
@@ -291,7 +291,7 @@ public class BasketServiceClp implements BasketService {
 			}
 		}
 
-		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.portal.kernel.json.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
