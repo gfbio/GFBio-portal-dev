@@ -259,4 +259,103 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	<portlet>
+		<portlet-name>submissionworkflowcollections</portlet-name>
+		<display-name>Submission Workflow Collections</display-name>
+		<portlet-class>
+			org.gfbio.SubmissionWorkflowCollections
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/submissionworkflowcollections/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>Submissionworkflowcollections</title>
+			<short-title>Submissionworkflowcollections</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>workflowcollections</portlet-name>
+		<display-name>Submission Workflow of Collections</display-name>
+		<portlet-class>
+			org.gfbio.submissionworkflow.WorkflowCollectionsPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/workflowcollections/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>Workflow of Collections</title>
+			<short-title>Workflowcollections</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	<portlet>
+		<portlet-name>workflowena</portlet-name>
+		<display-name>Workflow ENA</display-name>
+		<portlet-class>
+			org.gfbio.submissionworkflow.WorkflowENAPortlet
+		</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/workflowena/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>Workflow ENA</title>
+			<short-title>Workflowena</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
 </portlet-app>

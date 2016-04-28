@@ -1,4 +1,4 @@
-package org.gfbio.archiving;
+package org.gfbio.submissionworkflow;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;

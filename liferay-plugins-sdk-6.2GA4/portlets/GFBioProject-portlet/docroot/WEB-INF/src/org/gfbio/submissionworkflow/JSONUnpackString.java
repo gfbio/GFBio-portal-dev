@@ -1,4 +1,4 @@
-package org.gfbio.archiving;
+package org.gfbio.submissionworkflow;
 
 public class JSONUnpackString {
 	public JSONUnpackString(String text, int index ) {
