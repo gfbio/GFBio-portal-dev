@@ -64,9 +64,8 @@ function showhide(j) {
 //
 function ENAradio(workflow, userId){
 	//radiohide(j);
-	for (i = -20; i>-29;i--)
-		SubmitENA(i, "hide", userId);
-	SubmitENA(workflow, "show", userId);
+	SubmitENA(workflow, "hide", userId);
+	//SubmitENA(workflow, "show", userId);
 }
 
 
@@ -143,7 +142,6 @@ function chooseProject2(archivingURL, method, id, name, j) {
 
 // Method for build a new Project
 function checkDate(name, size) {
-	console.log("checktest");
 	var check = true;
 	var numbers =['0','1','2','3','4','5','6','7','8','9' ];
 	var sign = ['-'];

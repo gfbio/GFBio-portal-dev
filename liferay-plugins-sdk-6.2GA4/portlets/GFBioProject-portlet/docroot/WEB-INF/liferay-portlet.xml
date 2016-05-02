@@ -13,16 +13,6 @@
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
-
-	<portlet-name>back-to-su-ma</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>back-to-su-ma-portlet</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>data-provider-managment</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -67,18 +57,6 @@
 	</portlet>
 
 	<portlet>
-		<portlet-name>submission-manager</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>
-			submission-manager-portlet
-		</css-class-wrapper>
-	</portlet>
-
-	<portlet>
 		<portlet-name>table-builder</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -108,20 +86,8 @@
 		<css-class-wrapper>back-to-su-ma-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>submissionworkflowcollections</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>
-			submissionworkflowcollections-portlet
-		</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>workflowcollections</portlet-name>
 		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>

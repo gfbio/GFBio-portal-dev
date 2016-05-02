@@ -46,7 +46,8 @@
 				<form action="select.htm">
 					<select  style="width:75%" name="<portlet:namespace />choWorkflow" id="choWorkflow"  size="1" onclick="ENAradio(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value, <%=PortalUtil.getUser(request).getUserId()%>)">
 						<option  value="none"> </option>
-						<option  value="-21">Molecular Sequence Data</option>
+						<option  value="ena">Molecular Sequence Data</option>
+						<option  value="collections">Collections</option>
 					</select>
 				</form>
 				<br>

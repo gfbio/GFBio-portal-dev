@@ -9,9 +9,9 @@
 <%@ taglib uri="http://liferay.com/tld/ui" 			prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" 		prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.NoSuchModelException" %><%@
-page import="com.liferay.portal.kernel.exception.SystemException" %><%@
-page import="com.liferay.portal.util.PortalUtil" %>
+<%@ page import="com.liferay.portal.NoSuchModelException" %>
+<%@ page import="com.liferay.portal.kernel.exception.SystemException" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <%@ page import="java.util.*" %>
 
@@ -73,8 +73,6 @@ page import="com.liferay.portal.util.PortalUtil" %>
 	function SubmitENA(hidecode, showhide, userId) {
 		var toSubmit = {
 			     "hidecode" : hidecode,
-			     "showhide" : showhide,
-			     "userid" : userId,
 			   };
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}

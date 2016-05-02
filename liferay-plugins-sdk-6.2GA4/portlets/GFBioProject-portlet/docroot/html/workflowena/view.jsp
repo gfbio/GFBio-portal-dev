@@ -2,68 +2,25 @@
 
 <portlet:defineObjects />
 
-  <html lang="en"  style="height: 100%;">
+<html lang="en"  style="height: 100%;">
 			
-            <head>
+	<head>
 			
-                <title ng-bind="pageTitle"></title>
-                <link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
-                <link rel="stylesheet" type="text/css" href="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css" />
-				<style type="text/css">
-					.swHide {display: none}
-					.swMain{display: block}
-				</style>
-                <script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>
+		<title ng-bind="pageTitle"></title>
 				
-			<script>
+		<%@ include file="/html/workflowena/init.jsp" %> <!-- library imports -->
+		
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css" />
 				
-			
-				gadgets.HubSettings.onConnect = function(hub, suc, err) {
-					gadgets.Hub.subscribe("gfbio.archiving.submit", receiveRequest);
-				};
-					
-				function receiveRequest(topic, data, subscriberData) {
-				    
-					if (data.showhide == "show" && data.hidecode=='-21'){
-					  
-					    visibleShow(data.hidecode);
-                        //$( "#hide_-21:not(:contains('submittingUser'))" ).prepend("{{ addToConfig('submittingUser','"+data.userid+"') }}");
-	    
-					}else{
-					    visibleHide(data.hidecode);
-					}
-					adjust();
-				}
+		<script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>
 				
-				
-				function adjust(){
-				    var height = $('body').height()+20;
-    				if (height < 950 && height > 50){ 
-    				    height = 2500;
-     				}
-    				gadgets.window.adjustHeight(height);
-				};
-				
-				
-				function visibleShow(j) {
-					document.getElementById("hide_".concat(j)).className = "swMain";
-				};
-						
-			
-				function visibleHide(j) {
-					document.getElementById("hide_".concat(j)).className = "swHide";
-				};
-
-			</script>
-
-            </head>
+	 </head>
             
-            <body ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
+    <body ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
             
-                {{ addToConfig('submittingUser','15926') }}
-			
-				<div id="hide_-21" class="swHide">
-				
+              
+		{{ addToConfig('submittingUser','<%=PortalUtil.getUserId(request) %>') }}
 				
 				
 					<nav class="navbar navbar-default" role="navigation">
@@ -96,7 +53,7 @@
 						<div ui-view="main"></div>
 					</div>
 					
-				</div>
+		
 			
-            </body>
-            </html>
+	</body>
+</html>
