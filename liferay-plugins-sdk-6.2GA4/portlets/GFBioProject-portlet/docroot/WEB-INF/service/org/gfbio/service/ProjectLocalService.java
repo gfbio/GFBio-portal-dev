@@ -275,6 +275,10 @@ public interface ProjectLocalService extends BaseLocalService,
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getResearchObjectsByProjectId(
+		long projectId);
+
 	public java.lang.Boolean checkProjectOnId(long projectId);
 
 	public java.lang.Boolean checkProjectOnSubmissions(long projectId);

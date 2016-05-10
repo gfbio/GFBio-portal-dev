@@ -95,6 +95,7 @@
 			workflowcollections-portlet
 		</css-class-wrapper>
 	</portlet>
+	
 	<portlet>
 		<portlet-name>workflowena</portlet-name>
 		<icon>/icon.png</icon>
@@ -104,6 +105,8 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>workflowena-portlet</css-class-wrapper>
 	</portlet>
+	
+	
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

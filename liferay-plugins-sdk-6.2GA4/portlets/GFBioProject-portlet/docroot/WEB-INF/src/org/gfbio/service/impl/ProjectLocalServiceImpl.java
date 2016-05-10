@@ -80,7 +80,6 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	public JSONObject getCompleteProjectById (JSONObject requestJson){
 		
 		JSONObject responseJson = new JSONObject();
-		List <ResearchObject> researchObjectList = null;
 		Set<String> set = new HashSet<String>();
 		set.add("projectid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -89,20 +88,10 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 			long projectId = (long)requestJson.get("projectid");
 			if (checkProjectOnId(projectId)){
-				try {
-					responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey((long) requestJson.get("projectid")));
-				} catch (NoSuchProjectException | SystemException e) {
-					responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
-				}
-				if (responseJson != null){
-					researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId((long) requestJson.get("projectid"));
-					if (researchObjectList.size() >0){
-						JSONArray researchObjectJSON = new JSONArray();
-						for (int i =0; i< researchObjectList.size();i++)
-							researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
-						responseJson.put("researchobjects", researchObjectJSON);
-					}
-				}
+				try {responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey((long) requestJson.get("projectid")));} 
+				catch (NoSuchProjectException | SystemException e) {responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");	}
+				if (responseJson != null)
+					responseJson.put("researchobjects", getResearchObjectsByProjectId((long) requestJson.get("projectid")));
 			}
 			else
 				responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
@@ -115,7 +104,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 		return responseJson;
 	}
-	
+
 	
 	//
 	@SuppressWarnings({ "unchecked"})
@@ -125,11 +114,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		if (requestJson.containsKey("projectid")){
 			long projectId = (long)requestJson.get("projectid");
 			if (checkProjectOnId(projectId)){
-				try {
-					responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey(projectId));
-				} catch (NoSuchProjectException | SystemException e) {
-					e.printStackTrace();
-					responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
+				try {responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey(projectId));}
+				catch (NoSuchProjectException | SystemException e) {responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
 			}
 			else
 				responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
@@ -169,6 +155,21 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		for (int i = 0; i<idList.size(); i++)
 			researchObjectList.add(researchObjectPersistence.findByPrimaryKey(idList.get(i).getResearchObjectID()));
 		return researchObjectList;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getResearchObjectsByProjectId (long projectId){
+		JSONArray researchObjectJSON = new JSONArray();
+		List <ResearchObject> researchObjectList = null;
+		researchObjectList = Project_ResearchObjectLocalServiceUtil.getResearchObjectsByProjectId(projectId);
+		if (researchObjectList.size() >0)
+			for (int i =0; i< researchObjectList.size();i++)
+				researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+		else
+			researchObjectJSON = null;
+		return researchObjectJSON;
 	}
 
 	

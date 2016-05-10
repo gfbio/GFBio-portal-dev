@@ -305,6 +305,11 @@ public class ProjectLocalServiceUtil {
 		return getService().getResearchObjectList(projectID, userID);
 	}
 
+	public static org.json.simple.JSONArray getResearchObjectsByProjectId(
+		long projectId) {
+		return getService().getResearchObjectsByProjectId(projectId);
+	}
+
 	public static java.lang.Boolean checkProjectOnId(long projectId) {
 		return getService().checkProjectOnId(projectId);
 	}

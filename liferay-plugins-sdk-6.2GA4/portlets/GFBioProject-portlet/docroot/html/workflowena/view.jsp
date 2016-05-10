@@ -2,18 +2,23 @@
 
 <portlet:defineObjects />
 
-<html lang="en"  style="height: 100%;">
+<html lang="en">
 			
 	<head>
 			
 		<title ng-bind="pageTitle"></title>
 				
 		<%@ include file="/html/workflowena/init.jsp" %> <!-- library imports -->
-		
+
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css" />
-				
+
 		<script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>
+		
+		<script type='text/javascript'>  
+		//var $jq = jQuery.noConflict(true);
+		
+		</script>
 				
 	 </head>
             

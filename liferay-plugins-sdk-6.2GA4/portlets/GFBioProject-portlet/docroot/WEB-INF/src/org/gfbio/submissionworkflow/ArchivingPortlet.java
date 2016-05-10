@@ -10,15 +10,14 @@ import java.io.IOException;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -60,7 +59,7 @@ public class ArchivingPortlet extends GenericPortlet {
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
 		response.setContentType("text/html");
-
+		
 		if (request.getParameter("responseTarget") != null) {
 
 			//choose a project
@@ -73,15 +72,31 @@ public class ArchivingPortlet extends GenericPortlet {
 		}
 	}
 	
-	// choose Dataset
+	
+	//
+	@SuppressWarnings("unchecked")
 	public void chooseProject(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
-		String projectID = request.getParameter("data").substring(1, request.getParameter("data").length()-1);
-		PortletPreferences prefs = request.getPreferences();
+		JSONObject responseJson = new JSONObject();
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {
+			parseJson = (JSONObject) parser.parse(dataJson);
+		} catch (ParseException e) {e.printStackTrace();}
 
-		if (projectID != null) {
-		prefs.setValue("choPro", projectID);
-		prefs.store();
+		
+		if (parseJson.containsKey("projectid")) {
+			if (!(((String) parseJson.get("projectid")).equals("none"))){
+			
+				responseJson.put("researchobjects", ProjectLocalServiceUtil.getResearchObjectsByProjectId(Long.valueOf((String) parseJson.get("projectid")).longValue()));
+				
+			}else
+				responseJson.put("projectid", 0);
+			
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().write(responseJson.toString());
 		}
 	}
 

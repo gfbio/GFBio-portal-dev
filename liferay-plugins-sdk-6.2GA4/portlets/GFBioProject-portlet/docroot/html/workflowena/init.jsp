@@ -19,11 +19,11 @@
 	//Message from Hide Managment
 	$(document).ready(function() {
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
-			if (data == undefined || !(data.hidecode==="ena")){}
-			else{
-				var submissionManager =   $("#ena");
-				submissionManager.attr("class", "swMain");		
-			}
+			var submissionManager =   $("#ena");
+			if (data == undefined || !(data.hidecode==="ena"))
+				submissionManager.attr("class", "swHide");
+			else 
+				submissionManager.attr("class", "swMain");
 		});
 	});
 	

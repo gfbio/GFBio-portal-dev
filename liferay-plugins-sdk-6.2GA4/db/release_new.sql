@@ -1,3 +1,34 @@
+-------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content ---------------------------------
+----------------------------------     category parent      -------------------------------
+-------------------------------------------------------------------------------------------
+
+
+------------------------------------- Head Table Content -------------------------------------
+
+
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('20','gfbio_license','entity');
+
+
+------------------------------------- Column Table Content -------------------------------------
+
+
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('61','20','id');	
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('62','20','gfbio_category');	
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('63','20','parent');
+
+
+------------------------------------- Content Table Content -------------------------------------
+
+
+------------------------------------- Delete old category_parent -------------------------------------
+
+
+DELETE FROM gfbio_colum WHERE columnid = 23;
+DELETE FROM gfbio_colum WHERE columnid = 24;
+DELETE FROM gfbio_head WHERE headid = 8;
+
+
 
 -------------------------------------------------------------------------------------------
 ------------------------------------ Head, Cell & Content ---------------------------------

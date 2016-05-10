@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 
 
-<%@ include file="/html/archiving/init.jsp" %> 																			<!-- library imports -->
+<%@ include file="/html/init.jsp" %> 																			<!-- library imports -->
 <%@ include file="/html/dataprovidermanagment/init.jsp" %> 																<!-- library imports -->
 <script  src="${pageContext.request.contextPath}/js/main.js"       					type="text/javascript"></script>  	<!-- main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/dataprovidermanagment.js"      	type="text/javascript"></script>  	<!-- main.js  imports -->

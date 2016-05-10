@@ -69,14 +69,6 @@
 	}
 	
 	
-	//ENA Widget Publish
-	function SubmitENA(hidecode, showhide, userId) {
-		var toSubmit = {
-			     "hidecode" : hidecode,
-			   };
-		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
-	}
-	
 
 	//GCDJ Submit Answer
 	$(document).ready(function() {

@@ -318,6 +318,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONArray getResearchObjectsByProjectId(
+		long projectId) {
+		return _projectLocalService.getResearchObjectsByProjectId(projectId);
+	}
+
+	@Override
 	public java.lang.Boolean checkProjectOnId(long projectId) {
 		return _projectLocalService.checkProjectOnId(projectId);
 	}
