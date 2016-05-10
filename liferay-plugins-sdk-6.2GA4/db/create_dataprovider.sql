@@ -12,6 +12,12 @@ CREATE TABLE gfbio_dataprovider
   address text,
   website character(150),
   training text,
+  physicalobjects bit,
+  taxonbased bit,
+  notaxonbased bit,
+  livingobjects bit,
+  deadobjects bit,
+  sequencedata bit,
   CONSTRAINT gfbio_dataprovider_pkey PRIMARY KEY (dataproviderid),
   CONSTRAINT gfbio_dataprovider_label_key UNIQUE (label)
 )
