@@ -117,19 +117,31 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getProjectIDList";
+		_methodName19 = "getFullNamesAsString";
 
-		_methodParameterTypes19 = new String[] { "long" };
+		_methodParameterTypes19 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName20 = "updateProjectUser";
+		_methodName20 = "getOwnerAndPiByProjectId";
 
-		_methodParameterTypes20 = new String[] {
+		_methodParameterTypes20 = new String[] { "long" };
+
+		_methodName21 = "getOwnerAndPiIdByProjectId";
+
+		_methodParameterTypes21 = new String[] { "long" };
+
+		_methodName22 = "getProjectIDList";
+
+		_methodParameterTypes22 = new String[] { "long" };
+
+		_methodName23 = "updateProjectUser";
+
+		_methodParameterTypes23 = new String[] {
 				"long", "long", "java.lang.String"
 			};
 
-		_methodName21 = "updateProjectUser";
+		_methodName24 = "updateProjectUser";
 
-		_methodParameterTypes21 = new String[] {
+		_methodParameterTypes24 = new String[] {
 				"long", "long", "java.util.Date", "java.util.Date",
 				"java.lang.String"
 			};
@@ -690,13 +702,85 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 	}
 
 	@Override
+	public java.lang.String getFullNamesAsString(
+		org.json.simple.JSONArray requestJson) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName19,
+					_methodParameterTypes19,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getOwnerAndPiByProjectId(long projectId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { projectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getOwnerAndPiIdByProjectId(
+		long projectId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { projectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
 		long userID) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName19,
-					_methodParameterTypes19, new Object[] { userID });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { userID });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -719,8 +803,8 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						projectId,
 						
@@ -751,8 +835,8 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						projectID,
 						
@@ -823,4 +907,10 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
+	private String _methodName24;
+	private String[] _methodParameterTypes24;
 }

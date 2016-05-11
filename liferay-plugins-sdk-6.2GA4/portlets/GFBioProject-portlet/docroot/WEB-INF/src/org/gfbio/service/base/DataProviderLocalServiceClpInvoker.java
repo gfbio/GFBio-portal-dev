@@ -100,53 +100,53 @@ public class DataProviderLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.DataProvider" };
 
-		_methodName130 = "getBeanIdentifier";
+		_methodName132 = "getBeanIdentifier";
 
-		_methodParameterTypes130 = new String[] {  };
+		_methodParameterTypes132 = new String[] {  };
 
-		_methodName131 = "setBeanIdentifier";
+		_methodName133 = "setBeanIdentifier";
 
-		_methodParameterTypes131 = new String[] { "java.lang.String" };
+		_methodParameterTypes133 = new String[] { "java.lang.String" };
 
-		_methodName136 = "getDataProviderById";
+		_methodName138 = "getDataProviderById";
 
-		_methodParameterTypes136 = new String[] { "long" };
+		_methodParameterTypes138 = new String[] { "long" };
 
-		_methodName137 = "getDataProviderByLabel";
+		_methodName139 = "getDataProviderByLabel";
 
-		_methodParameterTypes137 = new String[] { "java.lang.String" };
+		_methodParameterTypes139 = new String[] { "java.lang.String" };
 
-		_methodName138 = "getDataProviderIdByLabel";
+		_methodName140 = "getDataProviderIdByLabel";
 
-		_methodParameterTypes138 = new String[] { "java.lang.String" };
+		_methodParameterTypes140 = new String[] { "java.lang.String" };
 
-		_methodName139 = "getDataProviderIds";
-
-		_methodParameterTypes139 = new String[] { "long" };
-
-		_methodName140 = "getLabels";
-
-		_methodParameterTypes140 = new String[] {  };
-
-		_methodName141 = "getLabelById";
+		_methodName141 = "getDataProviderIds";
 
 		_methodParameterTypes141 = new String[] { "long" };
 
-		_methodName142 = "getPersistentIdentiferIds";
+		_methodName142 = "getLabels";
 
-		_methodParameterTypes142 = new String[] { "long" };
+		_methodParameterTypes142 = new String[] {  };
 
-		_methodName143 = "checkDataProviderLabel";
+		_methodName143 = "getLabelById";
 
-		_methodParameterTypes143 = new String[] { "java.lang.String" };
+		_methodParameterTypes143 = new String[] { "long" };
 
-		_methodName144 = "constructDataProviderAsJson";
+		_methodName144 = "getPersistentIdentiferIds";
 
-		_methodParameterTypes144 = new String[] { "org.gfbio.model.DataProvider" };
+		_methodParameterTypes144 = new String[] { "long" };
 
-		_methodName145 = "updateDataProvider";
+		_methodName145 = "checkDataProviderLabel";
 
-		_methodParameterTypes145 = new String[] {
+		_methodParameterTypes145 = new String[] { "java.lang.String" };
+
+		_methodName146 = "constructDataProviderAsJson";
+
+		_methodParameterTypes146 = new String[] { "org.gfbio.model.DataProvider" };
+
+		_methodName147 = "updateDataProvider";
+
+		_methodParameterTypes147 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String"
@@ -242,65 +242,65 @@ public class DataProviderLocalServiceClpInvoker {
 			return DataProviderLocalServiceUtil.updateDataProvider((org.gfbio.model.DataProvider)arguments[0]);
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return DataProviderLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName131.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			DataProviderLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName136.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getDataProviderById(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName137.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getDataProviderByLabel((java.lang.String)arguments[0]);
-		}
-
 		if (_methodName138.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getDataProviderIdByLabel((java.lang.String)arguments[0]);
+			return DataProviderLocalServiceUtil.getDataProviderById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName139.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getDataProviderIds(((Long)arguments[0]).longValue());
+			return DataProviderLocalServiceUtil.getDataProviderByLabel((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName140.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getLabels();
+			return DataProviderLocalServiceUtil.getDataProviderIdByLabel((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName141.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getLabelById(((Long)arguments[0]).longValue());
+			return DataProviderLocalServiceUtil.getDataProviderIds(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName142.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
-			return DataProviderLocalServiceUtil.getPersistentIdentiferIds(((Long)arguments[0]).longValue());
+			return DataProviderLocalServiceUtil.getLabels();
 		}
 
 		if (_methodName143.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
-			return DataProviderLocalServiceUtil.checkDataProviderLabel((java.lang.String)arguments[0]);
+			return DataProviderLocalServiceUtil.getLabelById(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName144.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
-			return DataProviderLocalServiceUtil.constructDataProviderAsJson((org.gfbio.model.DataProvider)arguments[0]);
+			return DataProviderLocalServiceUtil.getPersistentIdentiferIds(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName145.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+			return DataProviderLocalServiceUtil.checkDataProviderLabel((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+			return DataProviderLocalServiceUtil.constructDataProviderAsJson((org.gfbio.model.DataProvider)arguments[0]);
+		}
+
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			return DataProviderLocalServiceUtil.updateDataProvider(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
@@ -342,14 +342,10 @@ public class DataProviderLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName130;
-	private String[] _methodParameterTypes130;
-	private String _methodName131;
-	private String[] _methodParameterTypes131;
-	private String _methodName136;
-	private String[] _methodParameterTypes136;
-	private String _methodName137;
-	private String[] _methodParameterTypes137;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 	private String _methodName138;
 	private String[] _methodParameterTypes138;
 	private String _methodName139;
@@ -366,4 +362,8 @@ public class DataProviderLocalServiceClpInvoker {
 	private String[] _methodParameterTypes144;
 	private String _methodName145;
 	private String[] _methodParameterTypes145;
+	private String _methodName146;
+	private String[] _methodParameterTypes146;
+	private String _methodName147;
+	private String[] _methodParameterTypes147;
 }

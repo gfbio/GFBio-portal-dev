@@ -249,29 +249,33 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 		_methodParameterTypes48 = new String[] { "long", "int", "long" };
 
-		_methodName49 = "updateLicenseId";
+		_methodName49 = "updateDescription";
 
 		_methodParameterTypes49 = new String[] { "long", "int", "java.lang.String" };
 
 		_methodName50 = "updateLicenseId";
 
-		_methodParameterTypes50 = new String[] { "long", "int", "long" };
+		_methodParameterTypes50 = new String[] { "long", "int", "java.lang.String" };
 
-		_methodName51 = "updateMetadataId";
+		_methodName51 = "updateLicenseId";
 
 		_methodParameterTypes51 = new String[] { "long", "int", "long" };
 
-		_methodName52 = "updateParentResearchObjectIdByIds";
+		_methodName52 = "updateMetadataId";
 
 		_methodParameterTypes52 = new String[] { "long", "int", "long" };
 
-		_methodName53 = "updateResearchObjectType";
+		_methodName53 = "updateParentResearchObjectIdByIds";
 
-		_methodParameterTypes53 = new String[] { "long", "int", "java.lang.String" };
+		_methodParameterTypes53 = new String[] { "long", "int", "long" };
 
-		_methodName54 = "updateResearchObjectVersion";
+		_methodName54 = "updateResearchObjectType";
 
-		_methodParameterTypes54 = new String[] { "long", "int" };
+		_methodParameterTypes54 = new String[] { "long", "int", "java.lang.String" };
+
+		_methodName55 = "updateResearchObjectVersion";
+
+		_methodParameterTypes55 = new String[] { "long", "int" };
 	}
 
 	@Override
@@ -1642,13 +1646,44 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public java.lang.Boolean updateLicenseId(long researchObjectId,
-		int researchObjectVersion, java.lang.String licenseLabel) {
+	public java.lang.Boolean updateDescription(long researchObjectId,
+		int researchObjectVersion, java.lang.String description) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName49,
 					_methodParameterTypes49,
+					new Object[] {
+						researchObjectId,
+						
+					researchObjectVersion,
+						
+					ClpSerializer.translateInput(description)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		int researchObjectVersion, java.lang.String licenseLabel) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName50,
+					_methodParameterTypes50,
 					new Object[] {
 						researchObjectId,
 						
@@ -1678,8 +1713,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName50,
-					_methodParameterTypes50,
+			returnObj = _invokableLocalService.invokeMethod(_methodName51,
+					_methodParameterTypes51,
 					new Object[] {
 						researchObjectId,
 						
@@ -1709,8 +1744,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName51,
-					_methodParameterTypes51,
+			returnObj = _invokableLocalService.invokeMethod(_methodName52,
+					_methodParameterTypes52,
 					new Object[] {
 						researchObjectId,
 						
@@ -1741,8 +1776,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName52,
-					_methodParameterTypes52,
+			returnObj = _invokableLocalService.invokeMethod(_methodName53,
+					_methodParameterTypes53,
 					new Object[] {
 						researchObjectId,
 						
@@ -1772,8 +1807,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName53,
-					_methodParameterTypes53,
+			returnObj = _invokableLocalService.invokeMethod(_methodName54,
+					_methodParameterTypes54,
 					new Object[] {
 						researchObjectId,
 						
@@ -1803,8 +1838,8 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName54,
-					_methodParameterTypes54,
+			returnObj = _invokableLocalService.invokeMethod(_methodName55,
+					_methodParameterTypes55,
 					new Object[] { researchObjectId, researchObjectVersion });
 		}
 		catch (Throwable t) {
@@ -1931,4 +1966,6 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	private String[] _methodParameterTypes53;
 	private String _methodName54;
 	private String[] _methodParameterTypes54;
+	private String _methodName55;
+	private String[] _methodParameterTypes55;
 }

@@ -359,6 +359,9 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	public java.lang.Boolean updateAuthorId(long researchObjectId,
 		int researchObjectVersion, long authorId);
 
+	public java.lang.Boolean updateDescription(long researchObjectId,
+		int researchObjectVersion, java.lang.String description);
+
 	public java.lang.Boolean updateLicenseId(long researchObjectId,
 		int researchObjectVersion, java.lang.String licenseLabel);
 

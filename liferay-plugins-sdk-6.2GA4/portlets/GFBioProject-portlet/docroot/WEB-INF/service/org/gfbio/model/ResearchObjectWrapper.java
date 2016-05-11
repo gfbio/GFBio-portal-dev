@@ -54,6 +54,7 @@ public class ResearchObjectWrapper implements ResearchObject,
 		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
+		attributes.put("description", getDescription());
 		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("metadataID", getMetadataID());
 
@@ -92,6 +93,12 @@ public class ResearchObjectWrapper implements ResearchObject,
 
 		if (label != null) {
 			setLabel(label);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
 		}
 
 		String extendeddata = (String)attributes.get("extendeddata");
@@ -226,6 +233,26 @@ public class ResearchObjectWrapper implements ResearchObject,
 	@Override
 	public void setLabel(java.lang.String label) {
 		_researchObject.setLabel(label);
+	}
+
+	/**
+	* Returns the description of this research object.
+	*
+	* @return the description of this research object
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _researchObject.getDescription();
+	}
+
+	/**
+	* Sets the description of this research object.
+	*
+	* @param description the description of this research object
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_researchObject.setDescription(description);
 	}
 
 	/**

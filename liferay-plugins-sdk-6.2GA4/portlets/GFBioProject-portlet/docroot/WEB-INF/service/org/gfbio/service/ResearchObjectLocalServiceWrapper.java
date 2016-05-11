@@ -481,6 +481,13 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.Boolean updateDescription(long researchObjectId,
+		int researchObjectVersion, java.lang.String description) {
+		return _researchObjectLocalService.updateDescription(researchObjectId,
+			researchObjectVersion, description);
+	}
+
+	@Override
 	public java.lang.Boolean updateLicenseId(long researchObjectId,
 		int researchObjectVersion, java.lang.String licenseLabel) {
 		return _researchObjectLocalService.updateLicenseId(researchObjectId,

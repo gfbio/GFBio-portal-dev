@@ -76,7 +76,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	public JSONObject getResearchObjectASJsonById(JSONObject requestJson){
 		
 		JSONObject responseJson = new JSONObject();
@@ -106,6 +106,24 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			}else
 				responseJson.put("ERROR", "ERROR: No key 'researchobjectid' exist.");
 		}
+		
+		if (responseJson.containsKey("metadataid"))
+			responseJson.put("metadatalabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("metadataid")),"label"));
+
+
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson_researchobject", (long) responseJson.get("researchobjectid")))
+			try {responseJson.put("authorid", ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_externalperson_researchobject"), (Long.toString((long) responseJson.get("researchobjectid")))));}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		
+		
+		if (responseJson.containsKey("authorid")){
+			JSONArray idArray = (JSONArray) responseJson.get("authorid");
+			JSONArray labelArray = new JSONArray();
+			for (int i =0; i <idArray.size();i++)
+				labelArray.add(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById((long) idArray.get(i) ),"name"));
+			responseJson.put("authorname", labelArray);
+		}
+		
 		
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING",ignoreParameter);
@@ -398,6 +416,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			json.put("researchobjectversion", researchObject.getResearchObjectVersion());		
 			json.put("name", researchObject.getName());
 			json.put("label", researchObject.getLabel());
+			json.put("description", researchObject.getDescription());
 			json.put("extendeddata", researchObject.getExtendeddata());
 			json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
 			json.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
@@ -445,7 +464,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "parentresearchobjectid", "projectid", "researchobjecttype", "metadataid","licenseid","licenselabel", "authormail","authorid", "brokerobjectid"};
+		String [] keySet = {"authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -461,7 +480,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				if (researchObjectId !=0)
 					check = true;
 			} catch (SystemException e) {e.printStackTrace();}
-			
+
+			if(requestJson.containsKey("description") && check)
+				updateDescription(researchObjectId, researchObjectVersion, ((String) requestJson.get("description")).trim());
 			
 			if(requestJson.containsKey("researchobjecttype") && check)
 				check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
@@ -535,7 +556,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"label", "extendeddata", "name", "researchobjectid","licenseid","licenselabel", "authormail","authorid", "brokerobjectid"};
+		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenselabel", "name", "researchobjectid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -574,6 +595,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						
 						if (check)
 							check = updateParentResearchObjectIdByIds (researchObjectId, researchObjectVersion,researchObject.getParentResearchObjectID());
+
+						
+						if(requestJson.containsKey("description") && check)
+							updateDescription(researchObjectId, researchObjectVersion, ((String) requestJson.get("description")).trim());
 						
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("licenselabel") && check)
@@ -715,6 +740,27 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	public Boolean updateAuthorId (long researchObjectId, int researchObjectVersion, long authorId){
 		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_researchobject", researchObjectId, "gfbio_externalperson", authorId);
+	}
+	
+	
+	//
+	public Boolean updateDescription (long researchObjectId, int researchObjectVersion, String description){
+		Boolean check = false;
+		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+		ResearchObject researchObject = null;
+		
+		try {
+			researchObject = researchObjectPersistence.findByPrimaryKey(pk);
+		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+	
+		if (researchObject != null){
+			researchObject.setDescription(description);
+			try {
+				super.updateResearchObject(researchObject);
+				check = true;
+			} catch (SystemException e) {e.printStackTrace();}
+		}
+		return check;
 	}
 	
 

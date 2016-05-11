@@ -140,6 +140,7 @@
 		<column name="parentResearchObjectID" 	type="long"  />
 		<column name="name" 					type="String" />
 		<column name="label" 					type="String" />
+		<column name="description" 				type="String" />
 		<column name="extendeddata"				type="String" />
 		<column name="metadataID"				type="long" />
 		

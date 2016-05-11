@@ -79,6 +79,13 @@ public class ContentFinderUtil {
 		return getFinder().getHeadIdById(contentId);
 	}
 
+	public static java.util.List getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellcontent) {
+		return getFinder()
+				   .getOppositeCellContentsOfRelationsByCellContent(headId,
+			cellcontent);
+	}
+
 	public static java.util.List getRowIds(long headId) {
 		return getFinder().getRowIds(headId);
 	}

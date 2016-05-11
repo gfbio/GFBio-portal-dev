@@ -46,6 +46,9 @@ public interface ContentFinder {
 
 	public java.util.List getHeadIdById(long contentId);
 
+	public java.util.List getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellcontent);
+
 	public java.util.List getRowIds(long headId);
 
 	public java.util.List getRowIdByCellContent(long headId,

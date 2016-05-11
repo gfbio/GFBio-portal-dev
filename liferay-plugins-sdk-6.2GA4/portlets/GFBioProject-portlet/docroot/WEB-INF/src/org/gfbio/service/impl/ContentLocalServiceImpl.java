@@ -28,6 +28,8 @@ import org.gfbio.service.base.ContentLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ContentFinderUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,6 +111,20 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			cellContent = (String) cellContentList.get(0);
 		 
 		 return cellContent;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getOppositeCellContentsOfRelationsByCellContent(long headId, String cellContent){
+		List <String> responseList = ContentFinderUtil.getOppositeCellContentsOfRelationsByCellContent(headId, cellContent);
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {parseJson = (JSONArray) parser.parse(responseList.toString());}
+		catch (ParseException e) {e.printStackTrace();}
+
+		return parseJson;
+		
 	}
 	
 	
@@ -357,9 +373,8 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public Boolean checkExistenceOfKeyId(String tableName, String pk) {
 		Boolean check = false;
 		long headid =0;
-		try {
-			headid = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
-		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		try {headid = HeadLocalServiceUtil.getHeadIdByTableName(tableName);} 
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
 		if (headid !=0)
 			check =(Boolean) ContentFinderUtil.checkExistenceOfKeyId(headid, pk).get(0); 
 		return check;

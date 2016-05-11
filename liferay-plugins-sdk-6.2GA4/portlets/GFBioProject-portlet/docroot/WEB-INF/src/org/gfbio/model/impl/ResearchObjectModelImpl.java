@@ -66,10 +66,11 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			{ "parentResearchObjectID", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "label", Types.VARCHAR },
+			{ "description", Types.VARCHAR },
 			{ "extendeddata", Types.VARCHAR },
 			{ "metadataID", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null,researchObjectVersion INTEGER not null,parentResearchObjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,extendeddata VARCHAR(75) null,metadataID LONG,primary key (researchObjectID, researchObjectVersion))";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null,researchObjectVersion INTEGER not null,parentResearchObjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,extendeddata VARCHAR(75) null,metadataID LONG,primary key (researchObjectID, researchObjectVersion))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_ResearchObject";
 	public static final String ORDER_BY_JPQL = " ORDER BY researchObject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_ResearchObject.name ASC";
@@ -109,6 +110,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		model.setParentResearchObjectID(soapModel.getParentResearchObjectID());
 		model.setName(soapModel.getName());
 		model.setLabel(soapModel.getLabel());
+		model.setDescription(soapModel.getDescription());
 		model.setExtendeddata(soapModel.getExtendeddata());
 		model.setMetadataID(soapModel.getMetadataID());
 
@@ -181,6 +183,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
+		attributes.put("description", getDescription());
 		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("metadataID", getMetadataID());
 
@@ -219,6 +222,12 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		if (label != null) {
 			setLabel(label);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
 		}
 
 		String extendeddata = (String)attributes.get("extendeddata");
@@ -357,6 +366,22 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@JSON
 	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@JSON
+	@Override
 	public String getExtendeddata() {
 		if (_extendeddata == null) {
 			return StringPool.BLANK;
@@ -405,6 +430,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		researchObjectImpl.setParentResearchObjectID(getParentResearchObjectID());
 		researchObjectImpl.setName(getName());
 		researchObjectImpl.setLabel(getLabel());
+		researchObjectImpl.setDescription(getDescription());
 		researchObjectImpl.setExtendeddata(getExtendeddata());
 		researchObjectImpl.setMetadataID(getMetadataID());
 
@@ -502,6 +528,14 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			researchObjectCacheModel.label = null;
 		}
 
+		researchObjectCacheModel.description = getDescription();
+
+		String description = researchObjectCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			researchObjectCacheModel.description = null;
+		}
+
 		researchObjectCacheModel.extendeddata = getExtendeddata();
 
 		String extendeddata = researchObjectCacheModel.extendeddata;
@@ -517,7 +551,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
@@ -529,6 +563,8 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		sb.append(getName());
 		sb.append(", label=");
 		sb.append(getLabel());
+		sb.append(", description=");
+		sb.append(getDescription());
 		sb.append(", extendeddata=");
 		sb.append(getExtendeddata());
 		sb.append(", metadataID=");
@@ -540,7 +576,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.ResearchObject");
@@ -565,6 +601,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		sb.append(
 			"<column><column-name>label</column-name><column-value><![CDATA[");
 		sb.append(getLabel());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>description</column-name><column-value><![CDATA[");
+		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>extendeddata</column-name><column-value><![CDATA[");
@@ -597,6 +637,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	private String _originalName;
 	private String _label;
 	private String _originalLabel;
+	private String _description;
 	private String _extendeddata;
 	private long _metadataID;
 	private long _columnBitmask;

@@ -293,6 +293,13 @@ public class ContentLocalServiceUtil {
 		return getService().getCellContentByRowIdAndColumnName(rowId, columnName);
 	}
 
+	public static java.util.List<java.lang.String> getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellContent) {
+		return getService()
+				   .getOppositeCellContentsOfRelationsByCellContent(headId,
+			cellContent);
+	}
+
 	public static long getColumnIdById(long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

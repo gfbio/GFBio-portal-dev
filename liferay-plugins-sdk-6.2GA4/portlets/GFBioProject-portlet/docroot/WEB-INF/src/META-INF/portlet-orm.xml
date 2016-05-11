@@ -163,6 +163,7 @@
 			<basic name="parentResearchObjectID" />
 			<basic name="name" />
 			<basic name="label" />
+			<basic name="description" />
 			<basic name="extendeddata" />
 			<basic name="metadataID" />
 			<transient name="modelAttributes" />

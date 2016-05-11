@@ -442,6 +442,13 @@ public class ResearchObjectLocalServiceUtil {
 			authorId);
 	}
 
+	public static java.lang.Boolean updateDescription(long researchObjectId,
+		int researchObjectVersion, java.lang.String description) {
+		return getService()
+				   .updateDescription(researchObjectId, researchObjectVersion,
+			description);
+	}
+
 	public static java.lang.Boolean updateLicenseId(long researchObjectId,
 		int researchObjectVersion, java.lang.String licenseLabel) {
 		return getService()

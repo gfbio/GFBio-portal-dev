@@ -307,6 +307,13 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public java.util.List<java.lang.String> getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellContent) {
+		return _contentLocalService.getOppositeCellContentsOfRelationsByCellContent(headId,
+			cellContent);
+	}
+
+	@Override
 	public long getColumnIdById(long contentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

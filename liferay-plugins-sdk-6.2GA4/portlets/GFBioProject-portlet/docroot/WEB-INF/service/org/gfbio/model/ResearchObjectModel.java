@@ -132,6 +132,21 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	public void setLabel(String label);
 
 	/**
+	 * Returns the description of this research object.
+	 *
+	 * @return the description of this research object
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this research object.
+	 *
+	 * @param description the description of this research object
+	 */
+	public void setDescription(String description);
+
+	/**
 	 * Returns the extendeddata of this research object.
 	 *
 	 * @return the extendeddata of this research object

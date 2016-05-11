@@ -54,15 +54,24 @@
 	
 			<form action="select.html" id="choProjForm">
 				<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseProjProProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX')" >
-					<option selected value="none">None </option>
+					<option value="none"> </option>
 					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
 						<option value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
 					<%} } %>
 				</select>
 			</form>
-							
-			<div id="chooseROX">
-				
+					
+			
+			<div id="chooseROX" class="swHide">
+			
+				Please select an existing dataset, <br>or choose nothing.
+						
+				<form action='select.html' id="choROForm">
+					<select id='workflowChooseRO' name='<portlet:namespace/>workflowChooseRO' size='1' style='width:90%'>
+						<option value='none'> </option>
+					</select>
+				</form>	
+	
 			</div>
 	
 
@@ -73,7 +82,7 @@
 			<input id="submissionCheck" type="hidden" value="true">
 	
 			<form action="select.htm">
-				<select  id="choWorkflow" style="width:90%" name="<portlet:namespace />choWorkflow"   size="1" onclick="startSubmissionWorkflow(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, <%=PortalUtil.getUser(request).getUserId()%>)">
+				<select  id="choWorkflow" style="width:90%" name="<portlet:namespace />choWorkflow"   size="1" onclick="startSubmissionWorkflow(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value, choROForm.workflowChooseRO.options[choROForm.workflowChooseRO.selectedIndex].value, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, <%=PortalUtil.getUser(request).getUserId()%>)">
 					<option  value="none"> </option>
 					<option  value="ena">Molecular Sequence Data</option>
 					<option  value="collections">Collections</option>
