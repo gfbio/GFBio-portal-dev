@@ -31,6 +31,7 @@ import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.HeadLocalServiceBaseImpl;
 import org.gfbio.service.persistence.HeadFinderUtil;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -211,6 +212,37 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 			
 		return returnTable;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getTableAsJSONArrayByName(JSONObject requestJson){
+
+		JSONArray responseJson = new JSONArray();
+		if (requestJson.containsKey("tablename"))
+			try {responseJson = getTableAsJSONArray(getHeadIdByTableName((String)requestJson.get("tablename")));} 
+			catch (NoSuchHeadException | SystemException e) {responseJson.add("ERROR: No key table with tablename '"+(String)requestJson.get("tablename")+"' exist.");}
+		else
+			responseJson.add("ERROR: No key 'tablename' exist.");
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked" })
+	public JSONArray getTableAsJSONArray(long headId){
+		
+		JSONArray responseJson = new JSONArray();
+		List <Long> rowList= ContentLocalServiceUtil.getRowIds(headId);
+		int rowCount =0;
+		
+		try {rowCount = ContentLocalServiceUtil.getCountOfRows(headId);}
+		catch (SystemException e) {e.printStackTrace();}
+		for (int i=0; i < rowCount;i++)
+			responseJson.add(ContentLocalServiceUtil.getRowInformationById(rowList.get(i)));
+
+		return responseJson;
 	}
 	
 		

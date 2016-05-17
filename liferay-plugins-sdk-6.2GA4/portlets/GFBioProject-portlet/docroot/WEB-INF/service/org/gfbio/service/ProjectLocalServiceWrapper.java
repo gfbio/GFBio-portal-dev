@@ -364,6 +364,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject updateProjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return _projectLocalService.updateProjectByJson(requestJson);
+	}
+
+	@Override
 	public long createProject(long userId, java.lang.String name,
 		java.lang.String label, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException {

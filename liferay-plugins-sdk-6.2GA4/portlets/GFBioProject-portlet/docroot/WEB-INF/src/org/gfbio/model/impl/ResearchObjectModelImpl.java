@@ -68,9 +68,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			{ "label", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "extendeddata", Types.VARCHAR },
-			{ "metadataID", Types.BIGINT }
+			{ "metadataID", Types.BIGINT },
+			{ "licenseID", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null,researchObjectVersion INTEGER not null,parentResearchObjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,extendeddata VARCHAR(75) null,metadataID LONG,primary key (researchObjectID, researchObjectVersion))";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_ResearchObject (researchObjectID LONG not null,researchObjectVersion INTEGER not null,parentResearchObjectID LONG,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,extendeddata VARCHAR(75) null,metadataID LONG,licenseID LONG,primary key (researchObjectID, researchObjectVersion))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_ResearchObject";
 	public static final String ORDER_BY_JPQL = " ORDER BY researchObject.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_ResearchObject.name ASC";
@@ -113,6 +114,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		model.setDescription(soapModel.getDescription());
 		model.setExtendeddata(soapModel.getExtendeddata());
 		model.setMetadataID(soapModel.getMetadataID());
+		model.setLicenseID(soapModel.getLicenseID());
 
 		return model;
 	}
@@ -186,6 +188,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		attributes.put("description", getDescription());
 		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("metadataID", getMetadataID());
+		attributes.put("licenseID", getLicenseID());
 
 		return attributes;
 	}
@@ -240,6 +243,12 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		if (metadataID != null) {
 			setMetadataID(metadataID);
+		}
+
+		Long licenseID = (Long)attributes.get("licenseID");
+
+		if (licenseID != null) {
+			setLicenseID(licenseID);
 		}
 	}
 
@@ -407,6 +416,17 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		_metadataID = metadataID;
 	}
 
+	@JSON
+	@Override
+	public long getLicenseID() {
+		return _licenseID;
+	}
+
+	@Override
+	public void setLicenseID(long licenseID) {
+		_licenseID = licenseID;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -433,6 +453,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		researchObjectImpl.setDescription(getDescription());
 		researchObjectImpl.setExtendeddata(getExtendeddata());
 		researchObjectImpl.setMetadataID(getMetadataID());
+		researchObjectImpl.setLicenseID(getLicenseID());
 
 		researchObjectImpl.resetOriginalValues();
 
@@ -546,12 +567,14 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 		researchObjectCacheModel.metadataID = getMetadataID();
 
+		researchObjectCacheModel.licenseID = getLicenseID();
+
 		return researchObjectCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
@@ -569,6 +592,8 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 		sb.append(getExtendeddata());
 		sb.append(", metadataID=");
 		sb.append(getMetadataID());
+		sb.append(", licenseID=");
+		sb.append(getLicenseID());
 		sb.append("}");
 
 		return sb.toString();
@@ -576,7 +601,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.ResearchObject");
@@ -614,6 +639,10 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 			"<column><column-name>metadataID</column-name><column-value><![CDATA[");
 		sb.append(getMetadataID());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>licenseID</column-name><column-value><![CDATA[");
+		sb.append(getLicenseID());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -640,6 +669,7 @@ public class ResearchObjectModelImpl extends BaseModelImpl<ResearchObject>
 	private String _description;
 	private String _extendeddata;
 	private long _metadataID;
+	private long _licenseID;
 	private long _columnBitmask;
 	private ResearchObject _escapedModel;
 }

@@ -81,6 +81,11 @@ public class ProjectServiceUtil {
 		return getService().createProject(requestJson);
 	}
 
+	public static org.json.simple.JSONObject updateProject(
+		org.json.simple.JSONObject requestJson) {
+		return getService().updateProject(requestJson);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

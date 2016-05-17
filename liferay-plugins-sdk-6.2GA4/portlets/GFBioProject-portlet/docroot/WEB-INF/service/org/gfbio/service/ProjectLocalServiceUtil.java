@@ -343,6 +343,11 @@ public class ProjectLocalServiceUtil {
 		return getService().createProjectByJson(requestJson);
 	}
 
+	public static org.json.simple.JSONObject updateProjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return getService().updateProjectByJson(requestJson);
+	}
+
 	public static long createProject(long userId, java.lang.String name,
 		java.lang.String label, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException {

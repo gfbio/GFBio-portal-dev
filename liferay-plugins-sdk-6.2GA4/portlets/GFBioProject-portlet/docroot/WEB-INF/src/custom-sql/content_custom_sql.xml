@@ -127,58 +127,6 @@
     </sql>
     
     
-    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsWithNormalTableRelationships">
-	    <![CDATA[
-			SELECT
-				public.gfbio_content.contentid
-			FROM
-				public.gfbio_content
-			WHERE
-				CAST(gfbio_content.rowid AS text)  in (
-				
-					SELECT
-						cellcontent
-					FROM
-						public.gfbio_content
-					WHERE
-						rowid in(
-							SELECT 
-								rowid
-							FROM
-								public.gfbio_content
-							WHERE
-								gfbio_content.columnid in(
-									SELECT 
-										public.gfbio_column.columnid
-									FROM
-										public.gfbio_column
-									WHERE
-										column_name =?
-								) and
-								gfbio_content.headid in(
-									SELECT 
-										public.gfbio_head.headid
-									FROM
-										public.gfbio_head
-									WHERE
-										table_name =?
-								)and
-								public.gfbio_content.cellcontent=?
-							) and
-							gfbio_content.columnid in(
-								SELECT 
-									public.gfbio_column.columnid
-								FROM
-									public.gfbio_column
-								WHERE
-									column_name =?
-							)
-					) AND
-					CAST(contentid as text) = cellcontent
-				ORDER BY gfbio_content.contentid
-		]]>
-    </sql>
-    
    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsWithNormalTableRelationships">
 	    <![CDATA[
 			SELECT
@@ -230,6 +178,73 @@
 				ORDER BY gfbio_content.contentid
 		]]>
     </sql>
+    
+    
+     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsOfRelationshipsOfSpecificCellContent">
+	    <![CDATA[
+			SELECT 
+				CAST(cellcontent as bigint) AS contentid
+			FROM 
+				public.gfbio_content
+			WHERE 
+				rowid in(
+					SELECT 
+						rowid 
+					FROM 
+						public.gfbio_content
+					WHERE
+						headid = ? AND
+						cellcontent in (
+							SELECT
+								CAST(contentid as text)
+							FROM
+								public.gfbio_content
+							WHERE
+								rowid in (  
+									SELECT 
+										rowid 
+									FROM 
+								  		public.gfbio_content
+									WHERE
+								  		headid = ? AND
+								  		cellcontent = ?)	AND
+							   			columnid in (
+											SELECT 
+												columnid 
+											FROM 
+												public.gfbio_column
+											WHERE
+												column_name ='id'
+										)
+								)
+						) AND
+						cellcontent not in (
+							SELECT
+								CAST(contentid as text)
+							FROM
+								public.gfbio_content
+							WHERE
+						  		rowid in (  
+									SELECT 
+										rowid 
+									FROM 
+										public.gfbio_content
+									WHERE
+										headid = ? AND
+										cellcontent = ?
+								) AND
+						   		columnid in (
+									SELECT 
+										columnid 
+									FROM 
+										public.gfbio_column
+									WHERE
+										column_name ='id'
+								)
+						)
+		]]>
+    </sql>
+    
     
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsWithRelationships">
 	    <![CDATA[
@@ -396,7 +411,7 @@
 		]]>
     </sql>
     
-        <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowInformationByContentId">
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowInformationByContentId">
 	    <![CDATA[
 			select 
 				gfbio_column.column_name AS column,
@@ -415,6 +430,23 @@
 						public.gfbio_content
 					where	
 						contentid = ?)
+		]]>
+    </sql>
+    
+        
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowInformationByRowId">
+	    <![CDATA[
+			select 
+				gfbio_column.column_name AS column,
+				gfbio_content.cellcontent AS content
+			from
+				public.gfbio_content 
+			INNER JOIN 
+				public.gfbio_column  
+			ON
+				gfbio_column.columnid = gfbio_content.columnid 
+			where
+				rowid = ?
 		]]>
     </sql>
     

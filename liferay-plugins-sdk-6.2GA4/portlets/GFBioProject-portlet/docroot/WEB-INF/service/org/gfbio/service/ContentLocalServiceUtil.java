@@ -293,7 +293,7 @@ public class ContentLocalServiceUtil {
 		return getService().getCellContentByRowIdAndColumnName(rowId, columnName);
 	}
 
-	public static java.util.List<java.lang.String> getOppositeCellContentsOfRelationsByCellContent(
+	public static org.json.simple.JSONArray getOppositeCellContentsOfRelationsByCellContent(
 		long headId, java.lang.String cellContent) {
 		return getService()
 				   .getOppositeCellContentsOfRelationsByCellContent(headId,
@@ -321,6 +321,22 @@ public class ContentLocalServiceUtil {
 
 	public static java.util.List getContentIdsByRowId(long rowId) {
 		return getService().getContentIdsByRowId(rowId);
+	}
+
+	public static java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		java.lang.String relationTableName, java.lang.String entitiyTableName,
+		java.lang.String entityTableCellContent) {
+		return getService()
+				   .getContentIdsOfRelationshipsOfSpecificCellContent(relationTableName,
+			entitiyTableName, entityTableCellContent);
+	}
+
+	public static java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		long relationTableHeadId, long entitiyTableHeadId,
+		java.lang.String entityTableCellContent) {
+		return getService()
+				   .getContentIdsOfRelationshipsOfSpecificCellContent(relationTableHeadId,
+			entitiyTableHeadId, entityTableCellContent);
 	}
 
 	public static java.util.List getContentIdsWithoutRelationships(long rowId,
@@ -407,11 +423,29 @@ public class ContentLocalServiceUtil {
 		return getService().getRowInformationByContentId(contentId);
 	}
 
+	public static org.json.simple.JSONObject getRowInformationById(long rowId) {
+		return getService().getRowInformationById(rowId);
+	}
+
 	public static org.json.simple.JSONArray getRowInformationOfRelationByContentId(
 		long contentId, java.lang.String tableName1, java.lang.String tableName2) {
 		return getService()
 				   .getRowInformationOfRelationByContentId(contentId,
 			tableName1, tableName2);
+	}
+
+	public static org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		org.json.simple.JSONObject requestJson) {
+		return getService()
+				   .getRowInformationsOfRelationshipsOfSpecificCellContent(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		java.lang.String relationTableName, java.lang.String entitiyTableName,
+		java.lang.String entityTableCellContent) {
+		return getService()
+				   .getRowInformationsOfRelationshipsOfSpecificCellContent(relationTableName,
+			entitiyTableName, entityTableCellContent);
 	}
 
 	public static java.lang.Boolean checkExistenceOfKeyId(
@@ -427,6 +461,11 @@ public class ContentLocalServiceUtil {
 	public static java.lang.Boolean checkExistenceOfKeyId(long headId,
 		java.lang.String pk) {
 		return getService().checkExistenceOfKeyId(headId, pk);
+	}
+
+	public static java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return getService().checkForIgnoredParameter(objects, keyList);
 	}
 
 	public static java.lang.Boolean checkKeyPairInRelationship(long headId,

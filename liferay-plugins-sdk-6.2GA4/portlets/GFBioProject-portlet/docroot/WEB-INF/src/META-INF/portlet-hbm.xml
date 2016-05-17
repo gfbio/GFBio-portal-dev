@@ -123,6 +123,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="extendeddata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metadataID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="licenseID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="org.gfbio.model.impl.SubmissionImpl" table="gfbio_Submission">
 		<id name="submissionID" type="long">

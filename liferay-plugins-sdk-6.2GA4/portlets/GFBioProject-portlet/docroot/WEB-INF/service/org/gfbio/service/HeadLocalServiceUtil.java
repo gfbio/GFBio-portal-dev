@@ -309,6 +309,15 @@ public class HeadLocalServiceUtil {
 		return getService().getTableAsArray(headId);
 	}
 
+	public static org.json.simple.JSONArray getTableAsJSONArrayByName(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getTableAsJSONArrayByName(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getTableAsJSONArray(long headId) {
+		return getService().getTableAsJSONArray(headId);
+	}
+
 	public static java.lang.String getTableNameById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {

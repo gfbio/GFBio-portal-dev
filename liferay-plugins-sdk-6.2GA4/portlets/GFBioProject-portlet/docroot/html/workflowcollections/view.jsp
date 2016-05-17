@@ -26,7 +26,7 @@
 	<div id="collections" class="swHide">
 		
 
-		<h2>submission of collection data</h2>
+		
 		
 
 	</div>

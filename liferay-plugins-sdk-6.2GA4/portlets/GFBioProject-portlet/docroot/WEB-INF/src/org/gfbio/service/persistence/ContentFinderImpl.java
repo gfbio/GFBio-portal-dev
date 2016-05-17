@@ -21,6 +21,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_CELL_CONTENT_BY_CONTENTID 							= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
 	public static String GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME				= FINDER_CLASS_NAME_ENTITY + ".getCellContentByRowIdAndColumnName";
 	public static String GET_COLUMNID_BY_ID 									= FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
+	public static String GET_CONTENTIDS_OF_RELATIONSHIPS_OF_SPECIFIC_CELLCONTENT= FINDER_CLASS_NAME_ENTITY + ".getContentIdsOfRelationshipsOfSpecificCellContent";
 	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS 					= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
 	public static String GET_CONTENTIDS_WITH_NORMAL_TABLE_RELATIONSHIPS 		= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithNormalTableRelationships";
 	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS 						= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
@@ -32,6 +33,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_ROWID_BY_CONTENTID									= FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
 	public static String GET_ROWID_OF_RELATION 									= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
 	public static String GET_ROW_INFORMATION_BY_CONTENTID						= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
+	public static String GET_ROW_INFORMATION_BY_ROWID							= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByRowId";
 	
 	
 	//Is  pk in table with headid, the Boolean is true
@@ -163,7 +165,37 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
-	///get List of content IDs, without content of relationship tables
+	//get List of content IDs from a relationship between two entities. The list has only IDs from one of the entities. The not list entity has a condition in cell content column. Example: the function get all category entries of the relationship between category and types, where the type cell content is 'research field'    
+	@SuppressWarnings("rawtypes")
+	public  List getContentIdsOfRelationshipsOfSpecificCellContent(long relationTableHeadId, long entitiyTableHeadId, String entityTableCellContent) {
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CONTENTIDS_OF_RELATIONSHIPS_OF_SPECIFIC_CELLCONTENT);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("contentid", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(relationTableHeadId);
+			qPos.add(entitiyTableHeadId);
+			qPos.add(entityTableCellContent);
+			qPos.add(entitiyTableHeadId);
+			qPos.add(entityTableCellContent);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get List of content IDs, without content of relationship tables
 	@SuppressWarnings("rawtypes")
 	public  List getContentIdsWithoutRelationships(long rowId, String columnName1, String columnName2) {
 		
@@ -220,6 +252,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 		}
 		return null;
 	}
+	
 	
 	
 	//get List of content IDs, with content of relationship tables
@@ -498,6 +531,35 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 			
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(contentId);
+			
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get ID of a row that are in a specific table and column and content in the cell of column in table
+	@SuppressWarnings("rawtypes")
+	public  List getRowInformationByRowId(long rowId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_ROW_INFORMATION_BY_ROWID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("column", Type.STRING);
+			queryObject.addScalar("content", Type.STRING);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(rowId);
 			
 			return (List) queryObject.list();
 			

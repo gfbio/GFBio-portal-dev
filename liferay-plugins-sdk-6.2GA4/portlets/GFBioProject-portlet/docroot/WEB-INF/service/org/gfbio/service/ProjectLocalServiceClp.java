@@ -166,14 +166,11 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 
 		_methodParameterTypes32 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName33 = "createProject";
+		_methodName33 = "updateProjectByJson";
 
-		_methodParameterTypes33 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String"
-			};
+		_methodParameterTypes33 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName34 = "updateProject";
+		_methodName34 = "createProject";
 
 		_methodParameterTypes34 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
@@ -183,40 +180,47 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		_methodName35 = "updateProject";
 
 		_methodParameterTypes35 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String"
+			};
+
+		_methodName36 = "updateProject";
+
+		_methodParameterTypes36 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.util.Date", "java.lang.String"
 			};
 
-		_methodName36 = "updateCategories";
+		_methodName37 = "updateCategories";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes37 = new String[] {
 				"long", "org.json.simple.JSONArray"
 			};
 
-		_methodName37 = "updateCategory";
+		_methodName38 = "updateCategory";
 
-		_methodParameterTypes37 = new String[] { "long", "long" };
+		_methodParameterTypes38 = new String[] { "long", "long" };
 
-		_methodName38 = "updateEndDate";
+		_methodName39 = "updateEndDate";
 
-		_methodParameterTypes38 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes39 = new String[] { "long", "java.util.Date" };
 
-		_methodName39 = "updateExtendedData";
+		_methodName40 = "updateExtendedData";
 
-		_methodParameterTypes39 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes40 = new String[] { "long", "java.lang.String" };
 
-		_methodName40 = "updateParentProjectByIds";
+		_methodName41 = "updateParentProjectByIds";
 
-		_methodParameterTypes40 = new String[] { "long", "long" };
+		_methodParameterTypes41 = new String[] { "long", "long" };
 
-		_methodName41 = "updateStartDate";
+		_methodName42 = "updateStartDate";
 
-		_methodParameterTypes41 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes42 = new String[] { "long", "java.util.Date" };
 
-		_methodName42 = "updateStatus";
+		_methodName43 = "updateStatus";
 
-		_methodParameterTypes42 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes43 = new String[] { "long", "java.lang.String" };
 	}
 
 	@Override
@@ -1133,14 +1137,39 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	}
 
 	@Override
+	public org.json.simple.JSONObject updateProjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long createProject(long userId, java.lang.String name,
 		java.lang.String label, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						userId,
 						
@@ -1176,8 +1205,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						projectId,
 						
@@ -1213,8 +1242,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						projectID,
 						
@@ -1260,8 +1289,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						projectId,
 						
@@ -1288,8 +1317,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] { projectId, categoryId });
 		}
 		catch (Throwable t) {
@@ -1313,8 +1342,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] {
 						projectId,
 						
@@ -1342,8 +1371,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40,
 					new Object[] {
 						projectId,
 						
@@ -1371,8 +1400,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
+			returnObj = _invokableLocalService.invokeMethod(_methodName41,
+					_methodParameterTypes41,
 					new Object[] { projectId, parentProjectId });
 		}
 		catch (Throwable t) {
@@ -1396,8 +1425,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] {
 						projectId,
 						
@@ -1425,8 +1454,8 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName42,
-					_methodParameterTypes42,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] { projectId, ClpSerializer.translateInput(
 							status) });
 		}
@@ -1530,4 +1559,6 @@ public class ProjectLocalServiceClp implements ProjectLocalService {
 	private String[] _methodParameterTypes41;
 	private String _methodName42;
 	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
 }

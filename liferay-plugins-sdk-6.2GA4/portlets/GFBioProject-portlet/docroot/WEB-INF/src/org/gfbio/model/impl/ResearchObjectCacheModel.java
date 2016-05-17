@@ -36,7 +36,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{researchObjectID=");
 		sb.append(researchObjectID);
@@ -54,6 +54,8 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		sb.append(extendeddata);
 		sb.append(", metadataID=");
 		sb.append(metadataID);
+		sb.append(", licenseID=");
+		sb.append(licenseID);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,6 +98,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		}
 
 		researchObjectImpl.setMetadataID(metadataID);
+		researchObjectImpl.setLicenseID(licenseID);
 
 		researchObjectImpl.resetOriginalValues();
 
@@ -112,6 +115,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		description = objectInput.readUTF();
 		extendeddata = objectInput.readUTF();
 		metadataID = objectInput.readLong();
+		licenseID = objectInput.readLong();
 	}
 
 	@Override
@@ -150,6 +154,7 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 		}
 
 		objectOutput.writeLong(metadataID);
+		objectOutput.writeLong(licenseID);
 	}
 
 	public long researchObjectID;
@@ -160,4 +165,5 @@ public class ResearchObjectCacheModel implements CacheModel<ResearchObject>,
 	public String description;
 	public String extendeddata;
 	public long metadataID;
+	public long licenseID;
 }

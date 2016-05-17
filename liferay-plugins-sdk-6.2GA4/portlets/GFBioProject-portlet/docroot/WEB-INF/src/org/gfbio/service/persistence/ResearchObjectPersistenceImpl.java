@@ -2807,6 +2807,7 @@ public class ResearchObjectPersistenceImpl extends BasePersistenceImpl<ResearchO
 		researchObjectImpl.setDescription(researchObject.getDescription());
 		researchObjectImpl.setExtendeddata(researchObject.getExtendeddata());
 		researchObjectImpl.setMetadataID(researchObject.getMetadataID());
+		researchObjectImpl.setLicenseID(researchObject.getLicenseID());
 
 		return researchObjectImpl;
 	}

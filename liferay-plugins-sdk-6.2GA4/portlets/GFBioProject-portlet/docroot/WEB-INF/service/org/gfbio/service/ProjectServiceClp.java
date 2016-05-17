@@ -47,6 +47,10 @@ public class ProjectServiceClp implements ProjectService {
 		_methodName6 = "createProject";
 
 		_methodParameterTypes6 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName7 = "updateProject";
+
+		_methodParameterTypes7 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -195,6 +199,31 @@ public class ProjectServiceClp implements ProjectService {
 		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public org.json.simple.JSONObject updateProject(
+		org.json.simple.JSONObject requestJson) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -208,4 +237,6 @@ public class ProjectServiceClp implements ProjectService {
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
 }

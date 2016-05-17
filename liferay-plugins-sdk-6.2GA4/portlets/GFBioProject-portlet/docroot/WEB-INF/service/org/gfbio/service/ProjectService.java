@@ -76,4 +76,7 @@ public interface ProjectService extends BaseService, InvokableService {
 
 	public org.json.simple.JSONObject createProject(
 		org.json.simple.JSONObject requestJson);
+
+	public org.json.simple.JSONObject updateProject(
+		org.json.simple.JSONObject requestJson);
 }

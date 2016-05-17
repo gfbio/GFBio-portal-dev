@@ -307,7 +307,7 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public java.util.List<java.lang.String> getOppositeCellContentsOfRelationsByCellContent(
+	public org.json.simple.JSONArray getOppositeCellContentsOfRelationsByCellContent(
 		long headId, java.lang.String cellContent) {
 		return _contentLocalService.getOppositeCellContentsOfRelationsByCellContent(headId,
 			cellContent);
@@ -338,6 +338,22 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	@Override
 	public java.util.List getContentIdsByRowId(long rowId) {
 		return _contentLocalService.getContentIdsByRowId(rowId);
+	}
+
+	@Override
+	public java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		java.lang.String relationTableName, java.lang.String entitiyTableName,
+		java.lang.String entityTableCellContent) {
+		return _contentLocalService.getContentIdsOfRelationshipsOfSpecificCellContent(relationTableName,
+			entitiyTableName, entityTableCellContent);
+	}
+
+	@Override
+	public java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		long relationTableHeadId, long entitiyTableHeadId,
+		java.lang.String entityTableCellContent) {
+		return _contentLocalService.getContentIdsOfRelationshipsOfSpecificCellContent(relationTableHeadId,
+			entitiyTableHeadId, entityTableCellContent);
 	}
 
 	@Override
@@ -439,10 +455,29 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject getRowInformationById(long rowId) {
+		return _contentLocalService.getRowInformationById(rowId);
+	}
+
+	@Override
 	public org.json.simple.JSONArray getRowInformationOfRelationByContentId(
 		long contentId, java.lang.String tableName1, java.lang.String tableName2) {
 		return _contentLocalService.getRowInformationOfRelationByContentId(contentId,
 			tableName1, tableName2);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		org.json.simple.JSONObject requestJson) {
+		return _contentLocalService.getRowInformationsOfRelationshipsOfSpecificCellContent(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		java.lang.String relationTableName, java.lang.String entitiyTableName,
+		java.lang.String entityTableCellContent) {
+		return _contentLocalService.getRowInformationsOfRelationshipsOfSpecificCellContent(relationTableName,
+			entitiyTableName, entityTableCellContent);
 	}
 
 	@Override
@@ -461,6 +496,12 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	public java.lang.Boolean checkExistenceOfKeyId(long headId,
 		java.lang.String pk) {
 		return _contentLocalService.checkExistenceOfKeyId(headId, pk);
+	}
+
+	@Override
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return _contentLocalService.checkForIgnoredParameter(objects, keyList);
 	}
 
 	@Override

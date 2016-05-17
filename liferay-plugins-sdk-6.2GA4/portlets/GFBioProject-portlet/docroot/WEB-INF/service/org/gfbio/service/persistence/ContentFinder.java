@@ -30,6 +30,10 @@ public interface ContentFinder {
 	public java.util.List getCellContentByRowIdAndColumnName(long rowId,
 		java.lang.String columnName);
 
+	public java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		long relationTableHeadId, long entitiyTableHeadId,
+		java.lang.String entityTableCellContent);
+
 	public java.util.List getContentIdsWithoutRelationships(long rowId,
 		java.lang.String columnName1, java.lang.String columnName2);
 
@@ -60,4 +64,6 @@ public interface ContentFinder {
 		java.lang.String cellContent2);
 
 	public java.util.List getRowInformationByContentId(long contentId);
+
+	public java.util.List getRowInformationByRowId(long rowId);
 }

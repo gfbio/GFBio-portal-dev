@@ -57,6 +57,7 @@ public class ResearchObjectWrapper implements ResearchObject,
 		attributes.put("description", getDescription());
 		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("metadataID", getMetadataID());
+		attributes.put("licenseID", getLicenseID());
 
 		return attributes;
 	}
@@ -111,6 +112,12 @@ public class ResearchObjectWrapper implements ResearchObject,
 
 		if (metadataID != null) {
 			setMetadataID(metadataID);
+		}
+
+		Long licenseID = (Long)attributes.get("licenseID");
+
+		if (licenseID != null) {
+			setLicenseID(licenseID);
 		}
 	}
 
@@ -293,6 +300,26 @@ public class ResearchObjectWrapper implements ResearchObject,
 	@Override
 	public void setMetadataID(long metadataID) {
 		_researchObject.setMetadataID(metadataID);
+	}
+
+	/**
+	* Returns the license i d of this research object.
+	*
+	* @return the license i d of this research object
+	*/
+	@Override
+	public long getLicenseID() {
+		return _researchObject.getLicenseID();
+	}
+
+	/**
+	* Sets the license i d of this research object.
+	*
+	* @param licenseID the license i d of this research object
+	*/
+	@Override
+	public void setLicenseID(long licenseID) {
+		_researchObject.setLicenseID(licenseID);
 	}
 
 	@Override

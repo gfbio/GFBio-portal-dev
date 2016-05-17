@@ -15,7 +15,9 @@
 package org.gfbio.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gfbio.NoSuchContentException;
 import org.gfbio.NoSuchHeadException;
@@ -156,6 +158,23 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	@SuppressWarnings("rawtypes")
 	public List getContentIdsByRowId (long rowId){
 		return ContentFinderUtil.getContentIdsByRowId(rowId);
+	}
+	
+	
+	//
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List getContentIdsOfRelationshipsOfSpecificCellContent(String relationTableName, String entitiyTableName, String entityTableCellContent){
+		List <Long> idList = new ArrayList ();
+		try {idList = ContentFinderUtil.getContentIdsOfRelationshipsOfSpecificCellContent(HeadLocalServiceUtil.getHeadIdByTableName(relationTableName), HeadLocalServiceUtil.getHeadIdByTableName(entitiyTableName), entityTableCellContent);}
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		return idList;
+	}	
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public List getContentIdsOfRelationshipsOfSpecificCellContent(long relationTableHeadId, long entitiyTableHeadId, String entityTableCellContent){
+		return ContentFinderUtil.getContentIdsOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
 	}
 	
 	
@@ -328,7 +347,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return ContentFinderUtil.getRowIds(headId);
 	}
 	
-	
+		
 	//get a List of rowIds of specific head
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public JSONObject  getRowInformationByContentId (long contentId){
@@ -339,6 +358,20 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			 Object[] arrayobject=(Object[])object;
 			 responseJson.put((String)arrayobject[0], (String)arrayobject[1]);
 		 }
+		return responseJson;
+	}
+	
+	
+	//get a List of rowIds of specific head
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public JSONObject  getRowInformationById (long rowId){
+		
+		 JSONObject responseJson = new JSONObject();
+		 List response =  (ArrayList) ContentFinderUtil.getRowInformationByRowId (rowId);
+		 for(Object object:response){
+			 Object[] arrayobject=(Object[])object;
+			 responseJson.put((String)arrayobject[0], (String)arrayobject[1]);
+		}
 		return responseJson;
 	}
 	
@@ -357,6 +390,42 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		responseArray.add(otherContentJson);
 
 		return responseArray;
+	}
+	
+
+	//get List of content Informations from a relationship between two entities. The list has only Informations from one of the entities. The not list entity has a condition in cell content column. Example: The function get all category entries of the relationship between category and types, where the type cell content is 'research field'
+	@SuppressWarnings("unchecked")
+	public JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(JSONObject requestJson){
+		
+		Set<String> set = new HashSet<String>();
+		String [] keySet = {"relationtablename","entitytablename", "entitytablecellcontent"};
+		for (int i = 0; i< keySet.length;i++)
+			set.add(keySet[i]);
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
+		JSONArray responseJson = new JSONArray();
+		if (requestJson.containsKey("relationtablename") && requestJson.containsKey("entitytablename") && requestJson.containsKey("entitytablecellcontent"))
+			responseJson = getRowInformationsOfRelationshipsOfSpecificCellContent((String)requestJson.get("relationtablename"), (String)requestJson.get("entitytablename"), (String)requestJson.get("entitytablecellcontent"));
+		else
+			responseJson.add("ERROR: To get the Informations, the json need minimal 'relationtablename', 'entitytablename' and 'entitytablecellcontent' as Strings.");
+
+		if (!ignoreParameter.equals(""))
+			responseJson.add(ignoreParameter);
+		return responseJson;
+	}
+	
+	
+	//get List of content Informations from a relationship between two entities. The list has only Informations from one of the entities. The not list entity has a condition in cell content column. Example: The function get all category entries of the relationship between category and types, where the type cell content is 'research field'
+	@SuppressWarnings({ "unchecked" })
+	public JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(String relationTableName, String entitiyTableName, String entityTableCellContent){
+		JSONArray responseJson = new JSONArray();
+		List <Long> idList = getContentIdsOfRelationshipsOfSpecificCellContent(relationTableName, entitiyTableName, entityTableCellContent);
+		if (idList.size()>0)
+			for (int i =0; i < idList.size();i++)
+				responseJson.add(getRowInformationByContentId(idList.get(i)));
+		else
+			responseJson.add("Error: No relationsships exists, with this conditions.");
+		return responseJson;
 	}
 	
 	
@@ -384,6 +453,24 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	//Is  pk in table with headid, the Boolean is true
 	public Boolean checkExistenceOfKeyId(long headId, String pk) {
 		return (Boolean) ContentFinderUtil.checkExistenceOfKeyId(headId, pk).get(0);
+	}
+	
+	
+	//
+	public String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
+
+		String ignoredParameter = "WARNING:";
+		Boolean check = false;
+		for (int i =0; i < objects.length;i++)
+			if (!keyList.contains((objects[i]))){
+				ignoredParameter = ignoredParameter.concat(" ").concat(objects[i].toString()).concat(",");
+				check = true;
+			}
+		if (check == true)
+			ignoredParameter = ignoredParameter.substring(0, ignoredParameter.length()-1).concat(" are not parameters of this method.");
+		else
+			ignoredParameter ="";
+		return ignoredParameter;
 	}
 	
 	

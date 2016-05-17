@@ -166,14 +166,11 @@ public class ProjectLocalServiceClpInvoker {
 
 		_methodParameterTypes151 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName152 = "createProject";
+		_methodName152 = "updateProjectByJson";
 
-		_methodParameterTypes152 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"java.lang.String"
-			};
+		_methodParameterTypes152 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName153 = "updateProject";
+		_methodName153 = "createProject";
 
 		_methodParameterTypes153 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
@@ -183,40 +180,47 @@ public class ProjectLocalServiceClpInvoker {
 		_methodName154 = "updateProject";
 
 		_methodParameterTypes154 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String"
+			};
+
+		_methodName155 = "updateProject";
+
+		_methodParameterTypes155 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.util.Date",
 				"java.util.Date", "java.lang.String"
 			};
 
-		_methodName155 = "updateCategories";
+		_methodName156 = "updateCategories";
 
-		_methodParameterTypes155 = new String[] {
+		_methodParameterTypes156 = new String[] {
 				"long", "org.json.simple.JSONArray"
 			};
 
-		_methodName156 = "updateCategory";
+		_methodName157 = "updateCategory";
 
-		_methodParameterTypes156 = new String[] { "long", "long" };
+		_methodParameterTypes157 = new String[] { "long", "long" };
 
-		_methodName157 = "updateEndDate";
+		_methodName158 = "updateEndDate";
 
-		_methodParameterTypes157 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes158 = new String[] { "long", "java.util.Date" };
 
-		_methodName158 = "updateExtendedData";
+		_methodName159 = "updateExtendedData";
 
-		_methodParameterTypes158 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes159 = new String[] { "long", "java.lang.String" };
 
-		_methodName159 = "updateParentProjectByIds";
+		_methodName160 = "updateParentProjectByIds";
 
-		_methodParameterTypes159 = new String[] { "long", "long" };
+		_methodParameterTypes160 = new String[] { "long", "long" };
 
-		_methodName160 = "updateStartDate";
+		_methodName161 = "updateStartDate";
 
-		_methodParameterTypes160 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes161 = new String[] { "long", "java.util.Date" };
 
-		_methodName161 = "updateStatus";
+		_methodName162 = "updateStatus";
 
-		_methodParameterTypes161 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes162 = new String[] { "long", "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -394,20 +398,25 @@ public class ProjectLocalServiceClpInvoker {
 
 		if (_methodName152.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
-			return ProjectLocalServiceUtil.createProject(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				(java.lang.String)arguments[3]);
+			return ProjectLocalServiceUtil.updateProjectByJson((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName153.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
-			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
+			return ProjectLocalServiceUtil.createProject(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(java.lang.String)arguments[3]);
 		}
 
 		if (_methodName154.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
+			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3]);
+		}
+
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateProject(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -416,44 +425,44 @@ public class ProjectLocalServiceClpInvoker {
 				(java.lang.String)arguments[8]);
 		}
 
-		if (_methodName155.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateCategories(((Long)arguments[0]).longValue(),
 				(org.json.simple.JSONArray)arguments[1]);
 		}
 
-		if (_methodName156.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateCategory(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName157.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateEndDate(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1]);
 		}
 
-		if (_methodName158.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
+		if (_methodName159.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateExtendedData(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName159.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes159, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateParentProjectByIds(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName160.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
+		if (_methodName161.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateStartDate(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1]);
 		}
 
-		if (_methodName161.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes161, parameterTypes)) {
+		if (_methodName162.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes162, parameterTypes)) {
 			return ProjectLocalServiceUtil.updateStatus(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
@@ -545,4 +554,6 @@ public class ProjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes160;
 	private String _methodName161;
 	private String[] _methodParameterTypes161;
+	private String _methodName162;
+	private String[] _methodParameterTypes162;
 }

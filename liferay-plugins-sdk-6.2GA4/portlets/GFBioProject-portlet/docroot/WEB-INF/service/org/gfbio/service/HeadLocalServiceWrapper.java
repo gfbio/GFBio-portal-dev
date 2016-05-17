@@ -326,6 +326,17 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONArray getTableAsJSONArrayByName(
+		org.json.simple.JSONObject requestJson) {
+		return _headLocalService.getTableAsJSONArrayByName(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getTableAsJSONArray(long headId) {
+		return _headLocalService.getTableAsJSONArray(headId);
+	}
+
+	@Override
 	public java.lang.String getTableNameById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {

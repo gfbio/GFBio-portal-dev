@@ -54,7 +54,6 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	//
 	public String getFullNamesAsString (long projectId){
 		JSONArray jsonarray = Project_UserLocalServiceUtil.getOwnerAndPiByProjectId(projectId);
-		System.out.println(jsonarray);
 		return Project_UserLocalServiceUtil.getFullNamesAsString(jsonarray);
 	}
 	
@@ -67,10 +66,6 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 		return ProjectLocalServiceUtil.checkProjectOnSubmissions(projectId);
 	}
 	
-	
-	
-	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
-	
 
 	//
 	public JSONObject createProject(JSONObject requestJson) {
@@ -80,5 +75,13 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 		return responseJson;
 	}
 	
+	
+	//
+	public JSONObject updateProject(JSONObject requestJson) {
+
+		JSONObject responseJson = new JSONObject();
+		responseJson = ProjectLocalServiceUtil.updateProjectByJson(requestJson);
+		return responseJson;
+	}
 
 }

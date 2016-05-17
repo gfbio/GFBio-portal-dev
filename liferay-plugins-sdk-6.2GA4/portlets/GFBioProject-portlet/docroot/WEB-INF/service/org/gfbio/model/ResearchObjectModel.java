@@ -175,6 +175,20 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	 */
 	public void setMetadataID(long metadataID);
 
+	/**
+	 * Returns the license i d of this research object.
+	 *
+	 * @return the license i d of this research object
+	 */
+	public long getLicenseID();
+
+	/**
+	 * Sets the license i d of this research object.
+	 *
+	 * @param licenseID the license i d of this research object
+	 */
+	public void setLicenseID(long licenseID);
+
 	@Override
 	public boolean isNew();
 

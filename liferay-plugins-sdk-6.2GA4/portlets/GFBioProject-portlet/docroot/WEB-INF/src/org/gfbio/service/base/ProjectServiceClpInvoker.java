@@ -47,6 +47,10 @@ public class ProjectServiceClpInvoker {
 		_methodName125 = "createProject";
 
 		_methodParameterTypes125 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName126 = "updateProject";
+
+		_methodParameterTypes126 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -83,6 +87,11 @@ public class ProjectServiceClpInvoker {
 			return ProjectServiceUtil.createProject((org.json.simple.JSONObject)arguments[0]);
 		}
 
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+			return ProjectServiceUtil.updateProject((org.json.simple.JSONObject)arguments[0]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -98,4 +107,6 @@ public class ProjectServiceClpInvoker {
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
 	private String[] _methodParameterTypes125;
+	private String _methodName126;
+	private String[] _methodParameterTypes126;
 }

@@ -110,7 +110,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		if (responseJson.containsKey("metadataid"))
 			responseJson.put("metadatalabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("metadataid")),"label"));
 
-
+		
+		if (responseJson.containsKey("licenseid")){
+			responseJson.put("licenselabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("licenseid")),"label"));
+		}
+		
 		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson_researchobject", (long) responseJson.get("researchobjectid")))
 			try {responseJson.put("authorid", ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_externalperson_researchobject"), (Long.toString((long) responseJson.get("researchobjectid")))));}
 			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
@@ -121,7 +125,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			JSONArray labelArray = new JSONArray();
 			for (int i =0; i <idArray.size();i++)
 				labelArray.add(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById((long) idArray.get(i) ),"name"));
-			responseJson.put("authorname", labelArray);
+			responseJson.put("authorname", labelArray.toString());
 		}
 		
 		
@@ -409,7 +413,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructResearchObjectJson (ResearchObject researchObject){
-		
 		JSONObject json = new JSONObject();
 		if (researchObject != null){
 			json.put("researchobjectid", researchObject.getResearchObjectID());
@@ -421,6 +424,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
 			json.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
 			json.put("metadataid", researchObject.getMetadataID());	
+			json.put("licenseid", researchObject.getLicenseID());
 		}
 		return checkNullParent(json);
 	}
@@ -458,6 +462,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createResearchObjectByJson(JSONObject requestJson){
+		
+		System.out.println("test: "+requestJson);
 		
 		Boolean check = false;
 		long researchObjectId = 0;

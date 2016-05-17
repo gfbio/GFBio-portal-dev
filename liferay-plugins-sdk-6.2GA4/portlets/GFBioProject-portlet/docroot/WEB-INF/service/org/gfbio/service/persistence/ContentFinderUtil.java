@@ -45,6 +45,14 @@ public class ContentFinderUtil {
 		return getFinder().getCellContentByRowIdAndColumnName(rowId, columnName);
 	}
 
+	public static java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		long relationTableHeadId, long entitiyTableHeadId,
+		java.lang.String entityTableCellContent) {
+		return getFinder()
+				   .getContentIdsOfRelationshipsOfSpecificCellContent(relationTableHeadId,
+			entitiyTableHeadId, entityTableCellContent);
+	}
+
 	public static java.util.List getContentIdsWithoutRelationships(long rowId,
 		java.lang.String columnName1, java.lang.String columnName2) {
 		return getFinder()
@@ -106,6 +114,10 @@ public class ContentFinderUtil {
 
 	public static java.util.List getRowInformationByContentId(long contentId) {
 		return getFinder().getRowInformationByContentId(contentId);
+	}
+
+	public static java.util.List getRowInformationByRowId(long rowId) {
+		return getFinder().getRowInformationByRowId(rowId);
 	}
 
 	public static ContentFinder getFinder() {

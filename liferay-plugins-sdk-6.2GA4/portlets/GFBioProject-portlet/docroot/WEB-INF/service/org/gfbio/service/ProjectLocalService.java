@@ -298,6 +298,9 @@ public interface ProjectLocalService extends BaseLocalService,
 	public org.json.simple.JSONObject createProjectByJson(
 		org.json.simple.JSONObject requestJson);
 
+	public org.json.simple.JSONObject updateProjectByJson(
+		org.json.simple.JSONObject requestJson);
+
 	public long createProject(long userId, java.lang.String name,
 		java.lang.String label, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException;

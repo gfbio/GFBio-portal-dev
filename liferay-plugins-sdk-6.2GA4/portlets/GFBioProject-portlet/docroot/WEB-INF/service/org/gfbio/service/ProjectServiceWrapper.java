@@ -78,6 +78,12 @@ public class ProjectServiceWrapper implements ProjectService,
 		return _projectService.createProject(requestJson);
 	}
 
+	@Override
+	public org.json.simple.JSONObject updateProject(
+		org.json.simple.JSONObject requestJson) {
+		return _projectService.updateProject(requestJson);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

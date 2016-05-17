@@ -14,7 +14,12 @@
 
 package org.gfbio.service.impl;
 
+import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.HeadServiceBaseImpl;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+
 
 /**
  * The implementation of the head remote service.
@@ -33,5 +38,9 @@ import org.gfbio.service.base.HeadServiceBaseImpl;
 public class HeadServiceImpl extends HeadServiceBaseImpl {
 	
 	
+	//
+	public JSONArray getTableAsJSONArrayByName(JSONObject requestJson){
+		return HeadLocalServiceUtil.getTableAsJSONArrayByName(requestJson);
+	}
 
 }

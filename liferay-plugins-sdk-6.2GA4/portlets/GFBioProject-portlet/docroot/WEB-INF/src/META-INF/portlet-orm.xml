@@ -166,6 +166,7 @@
 			<basic name="description" />
 			<basic name="extendeddata" />
 			<basic name="metadataID" />
+			<basic name="licenseID" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

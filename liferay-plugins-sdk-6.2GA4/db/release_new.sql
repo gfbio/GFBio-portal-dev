@@ -68,27 +68,6 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('27','8','extende
 ------------------------------------- Content Table Content -------------------------------------
 
 
--------------------------------------------------------------------------------------------
------------------------------------- Head, Cell & Content ---------------------------------
------------------------------     license / research object      --------------------------
--------------------------------------------------------------------------------------------
-
-
-------------------------------------- Head Table Content -------------------------------------
-
-
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('9','gfbio_license_researchobject','relationship');
-
-
-------------------------------------- Column Table Content -------------------------------------
-
-
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('28','9','gfbio_license');
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('29','9','gfbio_researchobject');
-
-
-------------------------------------- Content Table Content -------------------------------------
-
 
 ----------------------------------------------------------------------------------------------
 -------------------------------------     dataprovider      ----------------------------------
@@ -260,6 +239,7 @@ $do$;
 
 ALTER TABLE gfbio_researchobject ADD COLUMN description text;
 ALTER TABLE gfbio_researchobject ADD COLUMN metadataid bigint;
+ALTER TABLE gfbio_researchobject ADD COLUMN licenseid bigint;
 
 
 DO
