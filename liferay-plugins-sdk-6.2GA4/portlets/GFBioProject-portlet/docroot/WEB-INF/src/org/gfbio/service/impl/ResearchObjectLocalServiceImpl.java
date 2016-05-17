@@ -40,6 +40,8 @@ import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectPK;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * The implementation of the research object local service.
@@ -463,14 +465,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	@SuppressWarnings("unchecked")
 	public JSONObject createResearchObjectByJson(JSONObject requestJson){
 		
-		System.out.println("test: "+requestJson);
-		
 		Boolean check = false;
 		long researchObjectId = 0;
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype"};
+		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -503,6 +503,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			if (requestJson.containsKey("licenseid") && check)
 				check = updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
 			
+			
+			if(requestJson.containsKey("authornames") && check)
+				updateAuthorIds(researchObjectId, researchObjectVersion, ((String) requestJson.get("authornames")).trim());
 			
 			if(requestJson.containsKey("authormail") && check)
 				check = updateAuthorId(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim());
@@ -615,6 +618,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 							updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
 						
 						//no check request, because: if exists a license-ro-relation, than check is false 
+						if(requestJson.containsKey("authornames") && check)
+							updateAuthorIds(researchObjectId, researchObjectVersion, ((String) requestJson.get("authornames")).trim());
+						
+						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("authormail") && check)
 							updateAuthorId(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim());
 						
@@ -688,9 +695,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 		long check =0;
 		
-		try {
-			researchObject = researchObjectPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchResearchObjectException | SystemException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
+		catch (NoSuchResearchObjectException | SystemException e) {System.out.println("no enitity with pk: "+pk+" is found");}
 
 		if (researchObject == null)
 			try {
@@ -730,6 +736,26 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//-------------------------------  Update Attribute Functions ----------------------------------------------//
 	
 	
+	
+	//
+	public Boolean updateAuthorIds (long researchObjectId, int researchObjectVersion, String authorNames){
+		
+		Boolean check = false;
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {parseJson = (JSONArray) parser.parse(authorNames);}
+		catch (ParseException e) {e.printStackTrace();}
+		
+		for (int i=0; i < parseJson.size();i++){
+			JSONObject hccJson= new JSONObject();
+			hccJson = checkHCCBackground("gfbio_externalperson", "name", (String) parseJson.get(i));
+			if ((boolean) hccJson.get("check"))
+				check =  updateAuthorId(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
+		}
+		
+		return check;
+	}
+	
 	//
 	public Boolean updateAuthorId (long researchObjectId, int researchObjectVersion, String authorMail){
 		Boolean check = false;
@@ -755,9 +781,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 		ResearchObject researchObject = null;
 		
-		try {
-			researchObject = researchObjectPersistence.findByPrimaryKey(pk);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
 	
 		if (researchObject != null){
 			researchObject.setDescription(description);
@@ -780,12 +805,29 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			check =  updateLicenseId(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
 
 		return check;
+		
 	}
 	
 	
 	//
 	public Boolean updateLicenseId (long researchObjectId, int researchObjectVersion, long licenseId){
-		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_researchobject", researchObjectId, "gfbio_license", licenseId);
+		
+		Boolean check = false;
+		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+		ResearchObject researchObject = null;
+		
+		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+	
+		if (researchObject != null){
+			researchObject.setLicenseID(licenseId);;
+			try {
+				super.updateResearchObject(researchObject);
+				check = true;
+			} catch (SystemException e) {e.printStackTrace();}
+		}
+		
+		return check;
 	}
 	
 	
@@ -819,9 +861,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 		ResearchObject researchObject = null;
 		
-		try {
-			researchObject = researchObjectPersistence.findByPrimaryKey(pk);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
 	
 		if (researchObject != null){
 			researchObject.setParentResearchObjectID(parentResearchObjectId);
