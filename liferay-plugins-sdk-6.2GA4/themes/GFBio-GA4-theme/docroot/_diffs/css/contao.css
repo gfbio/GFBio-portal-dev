@@ -1,14 +1,4 @@
-@import "compass";
 
-@import "mixins";
-
-@import url(custom_common.css);
-
-@import url(color_schemes/common.css);
-
-@import url(color_schemes/dark.css);
-
-@import url(color_schemes/light.css);
 
 /* This file allows you to override default styles in one central location for easier upgrade and maintenance. */
 

@@ -5,8 +5,14 @@ AUI().ready(
 	loaded.
 	*/
 
-	function() {
-	}
+		 $(function(A) {
+
+			   new A.Tooltip({
+		       bodyContent: 'Test tooltip',
+			   position: 'right',
+			   trigger:document.getElementByClassName("sign-in"),
+			  }).render();
+	      })
 );
 
 Liferay.Portlet.ready(
@@ -19,7 +25,10 @@ Liferay.Portlet.ready(
 	*/
 
 	function(portletId, node) {
+		
 	}
+	
+	
 );
 
 Liferay.on(

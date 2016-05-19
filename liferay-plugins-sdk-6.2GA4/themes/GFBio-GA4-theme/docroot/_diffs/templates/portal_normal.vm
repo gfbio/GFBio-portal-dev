@@ -144,6 +144,7 @@ $theme.include($bottom_include)
 
 #js ("$javascript_folder/jquery-1.10.2.js")
 #js ("$javascript_folder/jquery-1.10.2-ui.js")
+
 <script>
 (function($) {
     $(document).ready(function() {
@@ -151,7 +152,8 @@ $theme.include($bottom_include)
         // Put custom options here
         heightStyle: 'content',
         header: 'div.toggler',
-        collapsible: true
+        collapsible: true,
+        active: false,
       });
       var activate = function(tog) {
         var tgs = $('div.toggler');
@@ -173,9 +175,6 @@ $theme.include($bottom_include)
     });
   })(jQuery);
 </script>
-
-
-
 </body>
 
 </html>

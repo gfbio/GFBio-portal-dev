@@ -139,7 +139,8 @@ $theme.include($bottom_include)
         // Put custom options here
         heightStyle: 'content',
         header: 'div.toggler',
-        collapsible: true
+        collapsible: true,
+        active: false
       });
       var activate = function(tog) {
         var tgs = $('div.toggler');
