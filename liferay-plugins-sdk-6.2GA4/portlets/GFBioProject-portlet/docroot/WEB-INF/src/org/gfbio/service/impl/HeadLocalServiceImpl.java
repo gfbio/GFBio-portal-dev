@@ -180,9 +180,8 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		for (int y = 1; y < table[0].length;y++){
 			table[0][y]= (long) rowIdList.get(y-1);
 			for (int x =1;x< table.length;x++)
-				try {
-					table[x][y] = ContentLocalServiceUtil.getContentIdByTableIds(Long.valueOf(table[0][y]).longValue(), Long.valueOf(table[x][0]).longValue());
-				} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
+				try {table[x][y] = ContentLocalServiceUtil.getContentIdByTableIds(Long.valueOf(table[0][y]).longValue(), Long.valueOf(table[x][0]).longValue());}
+				catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 		}
 		
 		return table;

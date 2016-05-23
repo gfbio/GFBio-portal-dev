@@ -289,8 +289,8 @@
 				choLi.empty();
 				choLi.append("<option value='none'></option>");
 				for (i =0; i <obj.length;i++){
-					var json = obj[0];
-					choLi.append("<option id='cwf_ro_license"+json.id+"' value='"+json.id+"'>"+json.label+"</option>");
+					var json = obj[i];
+					choLi.append("<option id='cwf_ro_license"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
 				}
 					
 				//choLi.append("<option value='other'>other</option>");

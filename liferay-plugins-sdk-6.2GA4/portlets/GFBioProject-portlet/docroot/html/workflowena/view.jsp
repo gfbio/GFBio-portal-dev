@@ -7,24 +7,40 @@
 	<head>
 			
 		<title ng-bind="pageTitle"></title>
-				
+
 		<%@ include file="/html/workflowena/init.jsp" %> <!-- library imports -->
-
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css" />
-
-		<script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>
 		
-		<script type='text/javascript'>  
-		//var $jq = jQuery.noConflict(true);
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type="text/css">
+ <!-- 	<link href="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css"   rel="stylesheet" type="text/css">  -->
+ <%-- 	<link href="<%= request.getContextPath() %>/css/ena_test.css"	 rel="stylesheet" 	type="text/css"> 	 --%>				<!-- main.css imports -->
 		
-		</script>
+<script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>		
+
+<script src="${pageContext.request.contextPath}/js/jquery-1.10.2-ui.js" 				type="text/javascript"></script>  	<!--  main.js  imports -->
+<script src="${pageContext.request.contextPath}/js/jquery-1.10.2.js" 					type="text/javascript"></script>  	<!--  main.js  imports -->
+<script src="${pageContext.request.contextPath}/js/jquery-1.11.2-ui.min.js" 			type="text/javascript"></script>  	<!--  main.js  imports -->
+<script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js" 				type="text/javascript"></script>  	<!--  main.js  imports -->
 				
 	 </head>
+	 
+	 <script>
+	 
+	 var $j = jQuery.noConflict();
+	 
+	 
+	 //$.noConflict();
+	 // Code that uses other library's $ can follow here.
+
+	 
+		 $j( document ).ready(function() {
+			    console.log( "ready!" );
+			});
+	 
+	 </script>
             
     <body ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
             
-              
+          Hallo world    
 		{{ addToConfig('submittingUser','<%=PortalUtil.getUserId(request) %>') }}
 				
 				
@@ -60,5 +76,10 @@
 					
 		
 			
-	</body>
+
+
+
+
+</body>
+
 </html>
