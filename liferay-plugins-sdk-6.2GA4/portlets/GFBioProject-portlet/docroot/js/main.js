@@ -169,50 +169,6 @@ function checkDate(name, size) {
 }
 
 
-//
-function deleteRelationContent(method, rowid, contentid, tab, path){
-	var data = {};
-	data["rowid"] = rowid;
-	data["contentid"] = contentid;
-	tablebuilderURL = document.getElementById('tablebuilderurl').value;
-	resourceMethod(tablebuilderURL, method, data, false);
-	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
-	document.getElementById('tablebuilderurl').value = tablebuilderURL;
-}
-
-
-//
-function deleteContent(method, data, tab, path){
-	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
-	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
-}
-
-
-//
-function deleteColumn(method, data, tab1, path1,tab2,path2){
-	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
-	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
-	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
-}
-
-
-//
-function deleteTable(method, data, tab1, path1,tab2,path2){
-	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
-	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
-	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
-}
-
-
-
-
-//Method to update a Row in Head/Position
-function updateTable (method, name, size, task, tab1, path1, tab2, path2,runningNumber) {
-	resourceMethod_I_to(document.getElementById('tablebuilderurl').value, method, name, size, task, false, runningNumber);
-	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
-	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
-}
-
 
 // Method to update a Project
 function updateProject (archivingURL, method, name, size, hide, userID) {
@@ -226,38 +182,6 @@ function updateProject (archivingURL, method, name, size, hide, userID) {
 		window.setTimeout('visibleHide('+'2'+hide.substring(1)+')',1500);
 	}
 }
-
-
-//Method to update a RelationTable in Head
-function updateRelationTable (method, mtable, ntable,tab,  path) {
-	var data = {};
-	data["mtable"] = mtable;
-	data["ntable"] = ntable;
-	resourceMethod(document.getElementById('tablebuilderurl').value, method, data, false);
-	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
-}
-
-
-//
-function updateRelationContent(method, tablename, rowid,contentid, tab1,  path1, tab2,  path2) {
-	var data = {};
-	data["tablename"] = tablename;
-	data["rowid"] = rowid;
-	data["contentid"] = contentid;
-	tablebuilderURL = document.getElementById('tablebuilderurl').value;
-	resourceMethod(tablebuilderURL, method, data, false);
-	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
-	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
-	document.getElementById('tablebuilderurl').value = tablebuilderURL;
-}
-
-
-//
-function chooseTableForRelationship(method, rowid, headid1, headid2, archivingURL, withoutRelationship, withRelationship){
-	archivingURL = document.getElementById('tablebuilderurl').value;
-	resourceMethod_Choose(archivingURL, method, rowid, headid1, headid2, withoutRelationship, withRelationship,false);
-}
-
 
 
 
@@ -288,6 +212,7 @@ function resourceMethod(archivingURL, method, data, async) {
 
 //
 function resourceMethod_I_to(archivingURL, method, name, size, relationID, async, runningNumber) {
+	console.log (archivingURL+ " | "+ method+ " | "+ name+ " | "+ size+ " | "+ relationID+ " | "+ async+ " | "+ runningNumber);
 	var str ;
 	var headStr;
 	var data = {};
@@ -312,6 +237,7 @@ function resourceMethod_I_to(archivingURL, method, name, size, relationID, async
 		var subdata = buildJsonColum("0", document.getElementById('top'.concat(headStr)).value, "");
 		data = addSubJsonToJson(data, subdata, size);
 	}
+	console.log("data: "+data);
 	ajaxRequest(archivingURL, method, data, async);
 };
 

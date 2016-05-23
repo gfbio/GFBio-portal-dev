@@ -1,3 +1,5 @@
+<input name="csrfmiddlewaretoken" type="hidden" value="HSujo2ODIdggzYB7imfBM4Nh17ZcEp2C" />
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%!RenderResponse renderResponse; %>
 
@@ -5,12 +7,16 @@
 
 <portlet:defineObjects />
 <portlet:resourceURL escapeXml="false" id="tablebuilderURL" var="tablebuilderURL" />
-<portlet:actionURL  var="tablebuilderactionURL" portletMode="view"/>
+<%-- <portlet:actionURL  var="tablebuilderactionURL" portletMode="view"/> --%>
 <meta charset="UTF-8">
 
-<%@ include file="/html/init.jsp" %> <!-- library imports -->
+
+
+<%@ include file="/html/init.jsp" %> 																				
+<%@ include file="/html/tablebuilder/init.jsp" %> 																	
 <script src="${pageContext.request.contextPath}/js/main.js" 					type="text/javascript"></script>  	<!--  main.js  imports -->
-<link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 	type="text/css"> 					<!-- main.css imports -->
+<script src="${pageContext.request.contextPath}/js/tableBuilder.js"     		type="text/javascript"></script>  	<!--  tableBuilder.js  imports -->
+<link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 	type="text/css"> 					<!--  main.css imports -->
 
 <input type="hidden" class="widthL" id="path"  				value="<%=request.getContextPath()%>" />
 <input type="hidden" class="widthL" id="tablebuilderurl"  	value="<%=tablebuilderURL %>" />

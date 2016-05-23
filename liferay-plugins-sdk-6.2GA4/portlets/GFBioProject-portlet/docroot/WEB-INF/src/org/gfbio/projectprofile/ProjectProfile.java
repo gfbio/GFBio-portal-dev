@@ -59,6 +59,8 @@ public class ProjectProfile extends GenericPortlet {
 	
 
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+		
+		System.out.println(request.getParameter("responseTarget"));
 
 		response.setContentType("text/html");
 

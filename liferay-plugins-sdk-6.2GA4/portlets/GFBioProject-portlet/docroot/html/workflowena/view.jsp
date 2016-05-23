@@ -8,22 +8,22 @@
 			
 		<title ng-bind="pageTitle"></title>
 
-		<%@ include file="/html/workflowena/init.jsp" %> <!-- library imports -->
+ 		<%@ include file="/html/workflowena/init.jsp" %> <!-- library imports --> 
 		
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type="text/css">
- <!-- 	<link href="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css"   rel="stylesheet" type="text/css">  -->
+ 	 	<link href="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css"   rel="stylesheet" type="text/css"> 
  <%-- 	<link href="<%= request.getContextPath() %>/css/ena_test.css"	 rel="stylesheet" 	type="text/css"> 	 --%>				<!-- main.css imports -->
 		
-<script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>		
+ <script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>	
 
-<script src="${pageContext.request.contextPath}/js/jquery-1.10.2-ui.js" 				type="text/javascript"></script>  	<!--  main.js  imports -->
-<script src="${pageContext.request.contextPath}/js/jquery-1.10.2.js" 					type="text/javascript"></script>  	<!--  main.js  imports -->
-<script src="${pageContext.request.contextPath}/js/jquery-1.11.2-ui.min.js" 			type="text/javascript"></script>  	<!--  main.js  imports -->
-<script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js" 				type="text/javascript"></script>  	<!--  main.js  imports -->
+<%-- <script src="${pageContext.request.contextPath}/js/jquery-1.10.2-ui.js" 				type="text/javascript"></script>  	<!--  main.js  imports -->
+	 <script src="${pageContext.request.contextPath}/js/jquery-1.10.2.js" 					type="text/javascript"></script>  	<!--  main.js  imports -->
+	 <script src="${pageContext.request.contextPath}/js/jquery-1.11.2-ui.min.js" 			type="text/javascript"></script>  	<!--  main.js  imports -->
+	 <script src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js" 				type="text/javascript"></script>  	<!--  main.js  imports --> --%>
 				
 	 </head>
 	 
-	 <script>
+<!-- 	 <script>
 	 
 	 var $j = jQuery.noConflict();
 	 
@@ -36,11 +36,10 @@
 			    console.log( "ready!" );
 			});
 	 
-	 </script>
+	 </script> -->
             
     <body ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
             
-          Hallo world    
 		{{ addToConfig('submittingUser','<%=PortalUtil.getUserId(request) %>') }}
 				
 				

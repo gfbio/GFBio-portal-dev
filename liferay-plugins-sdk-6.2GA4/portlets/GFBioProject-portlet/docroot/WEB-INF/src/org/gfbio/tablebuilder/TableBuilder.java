@@ -89,6 +89,8 @@ public class TableBuilder extends GenericPortlet {
 
 		response.setContentType("text/html");
 		
+		System.out.println(request.getParameter("responseTarget"));
+		
 		if (request.getParameter("responseTarget") != null) {
 			
 			//choose Table
@@ -361,6 +363,8 @@ public class TableBuilder extends GenericPortlet {
 	//update head and columns in context of a entity table
 	@SuppressWarnings("unused")
 	public void updateTable(ResourceRequest request, ResourceResponse response) {
+		
+		System.out.println("updateTable");
 
 		JSONParser parser = new JSONParser();
 		JSONObject json = new JSONObject();

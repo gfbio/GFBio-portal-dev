@@ -113,6 +113,7 @@
 			},
 			async: as,
 			success : function() {
+				console.log("true");
 			}
 		});
 	}
@@ -141,6 +142,7 @@
 	
 	//
 	function ajaxActionRequest_Choose(archivingURL, method, data, withoutRelationship, withRelationship, as) {
+		console.log("ajaxRequest: "+archivingURL+" | "+ method+" | "+JSON.stringify(data)+" | "+as);
  		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
