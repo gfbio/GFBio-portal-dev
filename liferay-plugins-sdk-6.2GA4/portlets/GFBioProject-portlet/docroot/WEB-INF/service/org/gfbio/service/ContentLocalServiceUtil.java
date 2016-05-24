@@ -376,11 +376,11 @@ public class ContentLocalServiceUtil {
 		return getService().getRowIdOfRelation(cellContent1, cellContent2);
 	}
 
-	public static org.json.simple.JSONObject constructContentJson(
+	public static org.json.simple.JSONObject constructColumnJson(
 		long contentId, long headId, long columnId, long rowId,
 		java.lang.String cellContent) {
 		return getService()
-				   .constructContentJson(contentId, headId, columnId, rowId,
+				   .constructColumnJson(contentId, headId, columnId, rowId,
 			cellContent);
 	}
 

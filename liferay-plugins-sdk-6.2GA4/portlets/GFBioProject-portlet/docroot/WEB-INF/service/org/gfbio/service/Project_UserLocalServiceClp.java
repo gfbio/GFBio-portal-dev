@@ -124,14 +124,7 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 		_methodName20 = "updateProjectUser";
 
 		_methodParameterTypes20 = new String[] {
-				"long", "long", "java.lang.String"
-			};
-
-		_methodName21 = "updateProjectUser";
-
-		_methodParameterTypes21 = new String[] {
-				"long", "long", "java.util.Date", "java.util.Date",
-				"java.lang.String"
+				"long", "long", "java.util.Date", "java.util.Date"
 			};
 	}
 
@@ -714,45 +707,15 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 	}
 
 	@Override
-	public java.lang.Boolean updateProjectUser(long projectId, long userId,
-		java.lang.String userType) {
+	public long updateProjectUser(long projectID, long userID,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProject_UserException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
-					new Object[] {
-						projectId,
-						
-					userId,
-						
-					ClpSerializer.translateInput(userType)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.lang.Boolean updateProjectUser(long projectID, long userID,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String userType) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
 					new Object[] {
 						projectID,
 						
@@ -760,13 +723,19 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 						
 					ClpSerializer.translateInput(startDate),
 						
-					ClpSerializer.translateInput(endDate),
-						
-					ClpSerializer.translateInput(userType)
+					ClpSerializer.translateInput(endDate)
 					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof org.gfbio.NoSuchProject_UserException) {
+				throw (org.gfbio.NoSuchProject_UserException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -777,7 +746,7 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 			}
 		}
 
-		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+		return ((Long)returnObj).longValue();
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -821,6 +790,4 @@ public class Project_UserLocalServiceClp implements Project_UserLocalService {
 	private String[] _methodParameterTypes19;
 	private String _methodName20;
 	private String[] _methodParameterTypes20;
-	private String _methodName21;
-	private String[] _methodParameterTypes21;
 }

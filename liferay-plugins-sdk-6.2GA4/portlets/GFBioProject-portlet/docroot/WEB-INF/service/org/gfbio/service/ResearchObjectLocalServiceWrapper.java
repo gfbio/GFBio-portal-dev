@@ -289,9 +289,9 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public org.json.simple.JSONArray getResearchObjectASJsonById(
 		org.json.simple.JSONArray requestJson) {
-		return _researchObjectLocalService.getResearchObjectAsJsonById(requestJson);
+		return _researchObjectLocalService.getResearchObjectASJsonById(requestJson);
 	}
 
 	@Override

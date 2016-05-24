@@ -8,9 +8,11 @@
 <portlet:actionURL  var="tablebuilderactionURL" portletMode="view"/>
 <meta charset="UTF-8">
 
+
 <%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
 <script src="${pageContext.request.contextPath}/js/main.js" 					type="text/javascript"></script>  	<!--  main.js  imports -->
 <link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 	type="text/css"> 					<!-- main.css imports -->
+
 
 <input type="hidden" class="widthL" id="path"  				value="<%=request.getContextPath()%>" />
 <input type="hidden" class="widthL" id="tablebuilderurl"  	value="<%=tablebuilderURL %>" />

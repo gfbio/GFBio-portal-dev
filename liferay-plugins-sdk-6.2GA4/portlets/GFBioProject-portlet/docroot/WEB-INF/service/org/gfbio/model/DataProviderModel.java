@@ -161,6 +161,132 @@ public interface DataProviderModel extends BaseModel<DataProvider> {
 	 */
 	public void setTraining(String training);
 
+	/**
+	 * Returns the physicalobjects of this data provider.
+	 *
+	 * @return the physicalobjects of this data provider
+	 */
+	public boolean getPhysicalobjects();
+
+	/**
+	 * Returns <code>true</code> if this data provider is physicalobjects.
+	 *
+	 * @return <code>true</code> if this data provider is physicalobjects; <code>false</code> otherwise
+	 */
+	public boolean isPhysicalobjects();
+
+	/**
+	 * Sets whether this data provider is physicalobjects.
+	 *
+	 * @param physicalobjects the physicalobjects of this data provider
+	 */
+	public void setPhysicalobjects(boolean physicalobjects);
+
+	/**
+	 * Returns the taxonbased of this data provider.
+	 *
+	 * @return the taxonbased of this data provider
+	 */
+	public boolean getTaxonbased();
+
+	/**
+	 * Returns <code>true</code> if this data provider is taxonbased.
+	 *
+	 * @return <code>true</code> if this data provider is taxonbased; <code>false</code> otherwise
+	 */
+	public boolean isTaxonbased();
+
+	/**
+	 * Sets whether this data provider is taxonbased.
+	 *
+	 * @param taxonbased the taxonbased of this data provider
+	 */
+	public void setTaxonbased(boolean taxonbased);
+
+	/**
+	 * Returns the notaxonbased of this data provider.
+	 *
+	 * @return the notaxonbased of this data provider
+	 */
+	public boolean getNotaxonbased();
+
+	/**
+	 * Returns <code>true</code> if this data provider is notaxonbased.
+	 *
+	 * @return <code>true</code> if this data provider is notaxonbased; <code>false</code> otherwise
+	 */
+	public boolean isNotaxonbased();
+
+	/**
+	 * Sets whether this data provider is notaxonbased.
+	 *
+	 * @param notaxonbased the notaxonbased of this data provider
+	 */
+	public void setNotaxonbased(boolean notaxonbased);
+
+	/**
+	 * Returns the livingobjects of this data provider.
+	 *
+	 * @return the livingobjects of this data provider
+	 */
+	public boolean getLivingobjects();
+
+	/**
+	 * Returns <code>true</code> if this data provider is livingobjects.
+	 *
+	 * @return <code>true</code> if this data provider is livingobjects; <code>false</code> otherwise
+	 */
+	public boolean isLivingobjects();
+
+	/**
+	 * Sets whether this data provider is livingobjects.
+	 *
+	 * @param livingobjects the livingobjects of this data provider
+	 */
+	public void setLivingobjects(boolean livingobjects);
+
+	/**
+	 * Returns the deadobjects of this data provider.
+	 *
+	 * @return the deadobjects of this data provider
+	 */
+	public boolean getDeadobjects();
+
+	/**
+	 * Returns <code>true</code> if this data provider is deadobjects.
+	 *
+	 * @return <code>true</code> if this data provider is deadobjects; <code>false</code> otherwise
+	 */
+	public boolean isDeadobjects();
+
+	/**
+	 * Sets whether this data provider is deadobjects.
+	 *
+	 * @param deadobjects the deadobjects of this data provider
+	 */
+	public void setDeadobjects(boolean deadobjects);
+
+	/**
+	 * Returns the sequencedata of this data provider.
+	 *
+	 * @return the sequencedata of this data provider
+	 */
+	public boolean getSequencedata();
+
+	/**
+	 * Returns <code>true</code> if this data provider is sequencedata.
+	 *
+	 * @return <code>true</code> if this data provider is sequencedata; <code>false</code> otherwise
+	 */
+	public boolean isSequencedata();
+
+	/**
+	 * Sets whether this data provider is sequencedata.
+	 *
+	 * @param sequencedata the sequencedata of this data provider
+	 */
+	public void setSequencedata(boolean sequencedata);
+
 	@Override
 	public boolean isNew();
 

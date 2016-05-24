@@ -393,19 +393,6 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
-	public java.lang.Boolean updateParentRelationTable(long headId,
-		java.lang.String tableName) {
-		return _headLocalService.updateParentRelationTable(headId, tableName);
-	}
-
-	@Override
-	public java.lang.Boolean updateParentRelationTableWithContent(
-		long headIdOfColumn, long contentId1, long contentId2) {
-		return _headLocalService.updateParentRelationTableWithContent(headIdOfColumn,
-			contentId1, contentId2);
-	}
-
-	@Override
 	public java.lang.Boolean updateRelationTable(long headId,
 		java.lang.String mtable, java.lang.String ntable) {
 		return _headLocalService.updateRelationTable(headId, mtable, ntable);

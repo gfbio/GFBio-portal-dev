@@ -19,15 +19,16 @@
 
 <body >
 
+
 	<%if (PortalUtil.getUser(request)==null){ %>
 
-		<div class="portlet-msg-alert">
-			Please sign in to use the project profile.
-		</div>
+	
 
 	<%}else { %>
 
-		<p>
+		<div class="section" id="tabSubmission">
+
+			<p>
 			<h2>Submission Workflows</h2>
 			<p>
 			Please select a data center in order to start a submission workflow.
@@ -58,9 +59,10 @@
 			<!-- ------------------------------------------------------------- complete Submission ----------------------------------------------->
 			<div class="swHide" id="hide_-20">
 				<div class="portlet-msg-alert" style="background-color: #C6E0B4; border-color: #548235; color:#375623">
-					Thank you for your submission! The data submission has been successful. You can view your data in the project profile.
+					Thank you for your submission! The data submission has been successful. You can view your data in the <a href="<portlet:renderURL><portlet:param name="jspPage" value="view.jsp#tab-3" /></portlet:renderURL>">project profile</a>.
 				</div>
 			</div>
+	  	</div>
 
 	<%} %>
 </body>

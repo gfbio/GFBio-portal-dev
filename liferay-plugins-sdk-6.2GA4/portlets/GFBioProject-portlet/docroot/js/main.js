@@ -87,21 +87,21 @@ function radiohide(j) {
 
 
 //
-function visibleStateChoose(j) {
-	(document.getElementById("hide_".concat(j)).className=="swHide") ? visibleShow(j) : visibleHide(j);
-}
+//function visibleStateChoose(j) {
+	//(document.getElementById("hide_".concat(j)).className=="swHide") ? visibleShow(j) : visibleHide(j);
+//}
 
 
 //
-function visibleShow(j) {
-	document.getElementById("hide_".concat(j)).className = "swMain";
-};
+//function visibleShow(j) {
+//	document.getElementById("hide_".concat(j)).className = "swMain";
+//};
 
 
 //
-function visibleHide(j) {
-	document.getElementById("hide_".concat(j)).className = "swHide";
-};
+//function visibleHide(j) {
+//	document.getElementById("hide_".concat(j)).className = "swHide";
+//};
 
 
 /////////////////////////////////////////   ResourceRequest  //////////////////////////////////////////////
@@ -123,14 +123,14 @@ function chooseTable(method, data) {
 }
 
 
-/*// Method to choose a Project
+// Method to choose a Project
 function chooseProject(url, method, data, j) {
 	resourceMethod(url, method, data, false);
 	window.setTimeout('reload()',5);
-}*/
+}
 
 
-/*//Method to choose a Project
+//Method to choose a Project
 function chooseProject2(archivingURL, method, id, name, j) {
 	var data = {};
 	data["id"] = id;
@@ -138,12 +138,11 @@ function chooseProject2(archivingURL, method, id, name, j) {
 	resourceMethod(archivingURL, method, data, false);
 	visibleShow(j);
 	window.setTimeout('reload()',5);
-}*/
+}
 
 
 // Method for build a new Project
 function checkDate(name, size) {
-	console.log("checktest");
 	var check = true;
 	var numbers =['0','1','2','3','4','5','6','7','8','9' ];
 	var sign = ['-'];
@@ -211,6 +210,22 @@ function deleteTable(method, data, tab1, path1,tab2,path2){
 }
 
 
+//
+function newProject(archivingURL, method, name, size, hide,  userID) {
+	var check = checkDate(name, size);
+	if (check == true) {
+		resourceMethod_I(archivingURL, method, name, size,  userID, false);
+		cleanTextSet(name, size);
+		updateLaVaSet_I(name, size);
+		visibleShow(hide);
+		reload();
+	}
+	else
+	{
+		visibleShow('2'+hide.substring(1));
+		window.setTimeout('visibleHide('+'2'+hide.substring(1)+')',1500);
+	}
+}
 
 
 //Method to update a Row in Head/Position
@@ -262,19 +277,9 @@ function updateRelationContent(method, tablename, rowid,contentid, tab1,  path1,
 //
 function chooseTableForRelationship(method, rowid, headid1, headid2, archivingURL, withoutRelationship, withRelationship){
 	archivingURL = document.getElementById('tablebuilderurl').value;
+	console.log("|2| "+method + " | "+ rowid+ " | "+ headid1+ " | "+ headid2+ " | "+ archivingURL+ " | "+ withoutRelationship+ " | "+ withRelationship);
 	resourceMethod_Choose(archivingURL, method, rowid, headid1, headid2, withoutRelationship, withRelationship,false);
 }
-
-
-
-
-
-/*//generally Methods
-function resourceMethod_ChooseProject(projectProfileURL, method, projectId,  divId,async) {
-	var data = {};
-	data["projectid"] = projectId;
-	ajaxActionRequest_ChooseProject(projectProfileURL, method, data, divId,async);
-}*/
 
 
 //generally Methods
@@ -325,7 +330,7 @@ function resourceMethod_I_to(archivingURL, method, name, size, relationID, async
 
 //
 function resourceMethod_I(archivingURL, method, name, size, relationID, async) {
-
+	
 	var str ;
 	var data = {};
 	data["relationID"] = relationID;
@@ -335,8 +340,8 @@ function resourceMethod_I(archivingURL, method, name, size, relationID, async) {
 		data[topic] = document.getElementById(str).value;
 	}
 	ajaxRequest(archivingURL, method, data, async);
+	updateLaVaSet_I(name, size);
 };
-
 
 
 //

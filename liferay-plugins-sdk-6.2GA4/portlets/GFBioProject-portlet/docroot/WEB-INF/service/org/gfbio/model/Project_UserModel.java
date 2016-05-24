@@ -14,7 +14,6 @@
 
 package org.gfbio.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -88,21 +87,6 @@ public interface Project_UserModel extends BaseModel<Project_User> {
 	 * @param userID the user i d of this project_ user
 	 */
 	public void setUserID(long userID);
-
-	/**
-	 * Returns the usertype of this project_ user.
-	 *
-	 * @return the usertype of this project_ user
-	 */
-	@AutoEscape
-	public String getUsertype();
-
-	/**
-	 * Sets the usertype of this project_ user.
-	 *
-	 * @param usertype the usertype of this project_ user
-	 */
-	public void setUsertype(String usertype);
 
 	/**
 	 * Returns the start date of this project_ user.

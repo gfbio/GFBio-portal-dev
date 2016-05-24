@@ -1,122 +1,172 @@
-<%-- <input name="csrfmiddlewaretoken" type="hidden" value="HSujo2ODIdggzYB7imfBM4Nh17ZcEp2C" />
+<%@ include file="/html/dcst/init.jsp" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-<%@ include file="/html/dcst/init.jsp"%>
-<script src="${pageContext.request.contextPath}/js/main.js"  					type="text/javascript"></script>  <!--  main.js  imports -->
-<link href="<%= request.getContextPath() %>/css/main.css" rel="stylesheet" type="text/css">
+<script  src="<%=request.getContextPath()%>/js/dcst/dcst.js"       type="text/javascript"></script> <!--  dcst.js  imports -->
+<script  src="<%=request.getContextPath()%>/js/jquery-1.12.3.min.js"       type="text/javascript"></script>  
+<link href="<%=request.getContextPath()%>/css/main.css" rel="stylesheet" type="text/css"> <!-- main.css imports -->
 
-<!-- 
- <jsp:useBean class="java.lang.String" id="keyWords" scope="request" /> 
--->
 
-Das ist unser tolles Portlet
+<style>
+	li .aui .control-group {
+		margin-bottom: 0px !important;
+	}
+</style>
 
 <%
-long userid = PortalUtil.getUserId(request);
-List <Project> projectList = new ArrayList<Project>();
-projectList = null;
-try {
-	 projectList = ProjectLocalServiceUtil.getProjectList(userid);
-} catch (NoSuchModelException e) {
-	e.printStackTrace();
-} catch (SystemException e) {
-	e.printStackTrace();
-}
+List<GResearchField> fields = new ArrayList<GResearchField>();
+fields = DCSTPortlet.getResearchFieldList();
 %>
-Es gibt <%=projectList.size() %> Projekte. Ich bin User <%=userid %>>
-	
-<!-- Acordion um die Types anzuzeigen -->
-<div  class="toggler">
-Type
-</div>
 
-<div class="accordion">
-
-		<% 	//get the headid of table gfbio_type
-			Long typeId = HeadLocalServiceUtil.getHeadID("gfbio_type");
-		    //get the list of all Positions(all rows) for the specified typeid
-			List<Position> typeList = PositionLocalServiceUtil.getPositionsbyHeadId(typeId); 
+<portlet:resourceURL var="ajaxUrl" id="radio" />
+<portlet:resourceURL var="ajaxUrl2" id="category" />
 			
-		    //get the headid of relation category_type
-			Long categoryTypeId = HeadLocalServiceUtil.getHeadID("gfbio_category_type");
-		    //get the list of all positions for categoy_type
-			List<Position> categoryTypeList = PositionLocalServiceUtil.getPositionsbyHeadId(categoryTypeId); 
-		    		
-			//get the headid of relation category
-			Long categoryId = HeadLocalServiceUtil.getHeadID("gfbio_category");	
-			int catColumnNum = HeadLocalServiceUtil.getColumnByName(categoryId, "name");
-						
-		%>
-		
-		<%	for(int i = 0; i < typeList.size();i++){ 
-			    //columnnumber for feature name of table type
-				int headColNum = HeadLocalServiceUtil.getColumnByName(typeId, "name");%>
-				
-		<!-- PseudoAcordion um für jeden Type die entsprechende Categorieliste anzuzeigen -->
-			<div id="<%="hide_accordion_".concat("type").concat(new Integer(i).toString())%>" onclick="pseudoaccordion('<%="type".concat(new Integer(i).toString()) %>')" style="cursor:pointer;">
-				<!-- Display list of Types at column headColNum and row positionid for type  -->
-				<h4 > <span id="<%="h_".concat("type").concat(new Integer(i).toString())%>">+</span> <%= PositionLocalServiceUtil.getColumnContent(typeList.get(i).getPositionID(), headColNum) %></h4>
+<script type="text/javascript" >
+$(document).ready(function () {
+    $("input[type='radio']").click(function (callback) {
+    
+    	   	
+    	physicalval = $("input[name='physical']:checked").val();
+    	taxonval = $("input[name='taxon']:checked").val();
+    	aliveval = $("input[name='alive']:checked").val();
+    	sequencedval = $("input[name='sequenced']:checked").val();
+        
+    	var response = '';
+        $.ajax({
+		            method: 'post',
+		            url: '<%=ajaxUrl%>',
+		            data: {
+		            	physical: physicalval,
+		            	taxon: taxonval,
+		            	alive: aliveval,
+		            	sequenced: sequencedval
+		            },
+		            success: function(text) {
+	                     response = text;
+	                     document.getElementById("result").innerHTML = response;
+	                }
+	               
+        });
+    });
+});
+
+$(document).ready(function () {
+    $(document.getElementById("researchfield")).on('change', function (callback) {
+    
+    	var e = document.getElementById("researchfield");
+    	var value = e.options[e.selectedIndex].value;
+    	
+    	var response = '';
+        $.ajax({
+		            method: 'post',
+		            url: '<%=ajaxUrl2%>',
+		            data: {
+		            	val: value
+		            },
+		            success: function(text) {
+	                     response = text;
+	                     document.getElementById("categorylist").innerHTML = response;
+	                }
+	               
+        });
+    });
+});
+</script>
+
+<div id="left" style="float: left; margin-right: 20px;">
+	
+	
+	<h3>Selection Field 1</h3>
+	
+	<ul style="list-style: none;">
+		<li id="physical" style="margin-left: 20px;">
+			Do you want to submit physical objects along with your data?
+			<div style="display:block;">
+				<input name="physical" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleShow('taxon'); hideFirstLevelRight();" />
+				Yes
 			</div>
+			<div style="display:block;">
+				<input name="physical" style="margin-bottom: 7px" type="radio" value="false" onClick="hideFirstLevelLeft(); visibleShow('sequenced');" />
+				No
+			</div>
+		</li>
+		<li id="taxon" style="margin-left: 20px;" class="swHide">
+			Do you have taxon-based or not taxon-based objects additional to your data?
+			<div style="display:block;">
+				<input name="taxon" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleShow('alive'); visibleHide('selection2');" />
+				Taxon-based
+			</div>
+			<div style="display:block;">
+				<input name="taxon" style="margin-bottom: 7px" type="radio" value="false" onClick="visibleShow('selection2'); hideSecondLevelLeft();" />
+				Non taxon-based
+			</div>
+		</li>
+		<li id="alive" style="margin-left: 20px;" class="swHide">
+			Is your object dead or alive?
+			<div style="display:block;">
+				<input name="alive" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleHide('material');" />
+				Alive
+			</div>
+			<div style="display:block;">
+				<input name="alive" style="margin-bottom: 7px" type="radio" value="false" onClick="visibleShow('material');" />
+				Dead
+			</div>
+		</li>
+		<li id="material" style="margin-left: 20px;" class="swHide">
+			Which kind of material would you deliver?
 			
-			<!-- Display the list of categories for every type -->		
-			<div id= "<%="hide_".concat("type").concat(new Integer(i).toString())%>" class="swHide">
-			
-				<% 	//get columnnumber of category in relation category_type
-					int catColNumb = HeadLocalServiceUtil.getColumnByName(categoryTypeId, "gfbio_category");
-					//get columnnumber of type in relation category_type
-					int typeColNumb = HeadLocalServiceUtil.getColumnByName(categoryTypeId, "gfbio_type");
-					
-					
-										
-					//positionPersistencefindbyColumn01("string");
-					
-					//get the positionid for the actual type
-					String posTypeId = new Long(typeList.get(i).getPositionID()).toString();
-					//List of all positions for a specific typeid ??in category_type relation
-					List<Position> catList = PositionLocalServiceUtil.getPositionsbyColumnName(posTypeId, typeColNumb);
-					
-					%>
-					
-					<%for(int j=0; j<catList.size(); j++){ 
-						String stringCatId_ij = PositionLocalServiceUtil.getColumnContent(catList.get(j).getPositionID(), catColNumb);
-						Long catId_ij = Long.valueOf(stringCatId_ij).longValue();%>
-						
-						<div class="row">
-							<div class="dynamicIcon1st">- </div>
-							<label  class="dynamicTableIst" id="<%="type_".concat(new Integer(i).toString()).concat("_category_").concat(new Integer(j).toString())%> "
-									onclick="getCategory('<%= PositionLocalServiceUtil.getColumnContent(catId_ij, catColumnNum) %>')"><%= PositionLocalServiceUtil.getColumnContent(catId_ij, catColumnNum) %></label><br/>
-						</div>
-						
-						
-					<% }	%>
+		</li>
+		<li id="sequenced" style="margin-left: 20px;" class="swHide">
+			Do you have primarily sequenced data?
+			<div style="display:block;">
+				<input name="sequenced" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleHide('selection2');" />
+				Yes
+			</div>
+			<div style="display:block;">
+				<input name="sequenced" style="margin-bottom: 7px" type="radio" value="false" onClick="visibleShow('selection2');" />
+				No
+			</div>
+		</li>
+		
+<%-- 		<li style="margin-left: 20px;">
+			<portlet:actionURL name="sampleProject" var="sampleURL">
+				<portlet:param name="jspPage" value="/html/dcst/view.jsp" />
+			</portlet:actionURL>
+			<aui:form action="<%= sampleURL.toString() %>" method="post">
+				<aui:fieldset>
+					<aui:button-row>
+			        	<aui:button type="submit" value="Next" />
+			        </aui:button-row>
+				</aui:fieldset>
+			</aui:form>
+		</li> --%>
+	</ul> 
+	 <div id="selection2" class="swHide">
+		<h3>Selection Field 2</h3>
+		<h4>Select Research Field</h4>
+		<select id="researchfield" name="researchfield" onChange="visibleShow('categories'); hideCategory(this.value);" >
+			<option label="Select" value="noselection" />
+			<%
+			for(GResearchField field: fields) {
+			%>
+				<option label="<%=field.getName() %>" value="<%=field.getId() %>" />
+			<%
+			}
+			%>
+		</select>
+	</div>
+	<div id="categories" class="swHide">
+		<h4>Categories</h4>
+			<div id="categorylist">
 			
 			</div>
-		
-		
-		<%	} %>
-	
-</div>	
-
-<!-- Acordion um die Research Fields anzuzeigen -->
-<div   class="toggler">
-Research Field
+	</div>
 </div>
 
-<div  class="accordion">
-test
-</div>	
-	
+<div id="right" style="float: right; width: 50%;">
+	<h3>Data Provider Recommendations</h3>
 
-<div id="datacenters">
-	<% 	//get the headid for table dataprovider
-	    Long headId = HeadLocalServiceUtil.getHeadID("gfbio_dataprovider");
-		//list of positions for dataprovider
-		List<Position> positionList = PositionLocalServiceUtil.getPositionsbyHeadId(headId); %>
-	<%	for(int i = 0; i < positionList.size();i++){ 
-		    //get the columnnumber for feature name of table dataprovider
-			int headColNum = HeadLocalServiceUtil.getColumnByName(headId, "name");%>
-			<!-- Display the list of all DataCenter at column headColNum and row positionid_datacenter -->
-		<div id=<%="hide_datacenter_".concat(new Integer(i).toString()) %> class="swMain"> <%=PositionLocalServiceUtil.getColumnContent(positionList.get(i).getPositionID(), headColNum ) %></div>
-	<%	} %>
+		<div id="result" style="text-align: left">
+			No choice has been made
+		</div>
 </div>
- --%>
+
+<div id="clear" style="clear: both;" ></div>

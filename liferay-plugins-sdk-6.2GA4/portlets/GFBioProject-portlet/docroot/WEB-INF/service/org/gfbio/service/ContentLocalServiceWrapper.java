@@ -404,9 +404,9 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject constructContentJson(long contentId,
+	public org.json.simple.JSONObject constructColumnJson(long contentId,
 		long headId, long columnId, long rowId, java.lang.String cellContent) {
-		return _contentLocalService.constructContentJson(contentId, headId,
+		return _contentLocalService.constructColumnJson(contentId, headId,
 			columnId, rowId, cellContent);
 	}
 

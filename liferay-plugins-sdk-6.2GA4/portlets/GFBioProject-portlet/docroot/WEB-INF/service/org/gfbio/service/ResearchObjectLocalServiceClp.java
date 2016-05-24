@@ -117,7 +117,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getResearchObjectAsJsonById";
+		_methodName19 = "getResearchObjectASJsonById";
 
 		_methodParameterTypes19 = new String[] { "org.json.simple.JSONArray" };
 
@@ -804,7 +804,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public org.json.simple.JSONArray getResearchObjectASJsonById(
 		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 

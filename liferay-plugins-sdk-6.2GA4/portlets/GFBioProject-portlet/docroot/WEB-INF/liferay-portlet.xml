@@ -28,6 +28,8 @@
 	<portlet>
 		<portlet-name>dcst</portlet-name>
 		<icon>/icon.png</icon>
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+    <ajaxable>true</ajaxable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
@@ -45,15 +47,6 @@
 		<css-class-wrapper>table-builder-portlet</css-class-wrapper>
 	</portlet>
 	
-	<portlet>
-		<portlet-name>new-project</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>new-project-portlet</css-class-wrapper>
-	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
@@ -73,6 +66,5 @@
 		<role-name>user</role-name>
 		<role-link>User</role-link>
 	</role-mapper>
-	
 	
 </liferay-portlet-app>

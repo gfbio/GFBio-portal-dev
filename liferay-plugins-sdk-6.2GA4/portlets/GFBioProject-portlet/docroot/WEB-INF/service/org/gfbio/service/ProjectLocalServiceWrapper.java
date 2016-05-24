@@ -297,6 +297,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public java.util.List<org.gfbio.model.Project> getProjects()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _projectLocalService.getProjects();
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Project> getProjectList(long userID)
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -336,27 +342,6 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
-	public org.json.simple.JSONObject createProjectByJson(
-		org.json.simple.JSONObject requestJson) {
-		return _projectLocalService.createProjectByJson(requestJson);
-	}
-
-	@Override
-	public long createProject(long userId, java.lang.String name,
-		java.lang.String label, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _projectLocalService.createProject(userId, name, label,
-			description);
-	}
-
-	@Override
-	public long updateProject(long projectId, java.lang.String name,
-		java.lang.String label, java.lang.String description) {
-		return _projectLocalService.updateProject(projectId, name, label,
-			description);
-	}
-
-	@Override
 	public long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.lang.String extendedData,
@@ -365,37 +350,6 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _projectLocalService.updateProject(projectID, userID, name,
 			label, description, extendedData, startDate, endDate, status);
-	}
-
-	@Override
-	public java.lang.Boolean updateEndDate(long projectId,
-		java.util.Date endDate) {
-		return _projectLocalService.updateEndDate(projectId, endDate);
-	}
-
-	@Override
-	public java.lang.Boolean updateExtendedData(long projectId,
-		java.lang.String extendedData) {
-		return _projectLocalService.updateExtendedData(projectId, extendedData);
-	}
-
-	@Override
-	public java.lang.Boolean updateParentProjectByIds(long projectId,
-		long parentProjectId) {
-		return _projectLocalService.updateParentProjectByIds(projectId,
-			parentProjectId);
-	}
-
-	@Override
-	public java.lang.Boolean updateStartDate(long projectId,
-		java.util.Date startDate) {
-		return _projectLocalService.updateStartDate(projectId, startDate);
-	}
-
-	@Override
-	public java.lang.Boolean updateStatus(long projectId,
-		java.lang.String status) {
-		return _projectLocalService.updateStatus(projectId, status);
 	}
 
 	/**

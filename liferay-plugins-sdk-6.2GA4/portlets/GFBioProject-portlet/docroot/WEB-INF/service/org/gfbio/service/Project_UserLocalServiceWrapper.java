@@ -294,18 +294,12 @@ public class Project_UserLocalServiceWrapper implements Project_UserLocalService
 	}
 
 	@Override
-	public java.lang.Boolean updateProjectUser(long projectId, long userId,
-		java.lang.String userType) {
-		return _project_UserLocalService.updateProjectUser(projectId, userId,
-			userType);
-	}
-
-	@Override
-	public java.lang.Boolean updateProjectUser(long projectID, long userID,
-		java.util.Date startDate, java.util.Date endDate,
-		java.lang.String userType) {
+	public long updateProjectUser(long projectID, long userID,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			org.gfbio.NoSuchProject_UserException {
 		return _project_UserLocalService.updateProjectUser(projectID, userID,
-			startDate, endDate, userType);
+			startDate, endDate);
 	}
 
 	/**

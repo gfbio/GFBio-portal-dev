@@ -286,6 +286,11 @@ public class ProjectLocalServiceUtil {
 		return getService().getProjectById(requestJson);
 	}
 
+	public static java.util.List<org.gfbio.model.Project> getProjects()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getProjects();
+	}
+
 	public static java.util.List<org.gfbio.model.Project> getProjectList(
 		long userID)
 		throws com.liferay.portal.NoSuchModelException,
@@ -320,22 +325,6 @@ public class ProjectLocalServiceUtil {
 		return getService().constructProjectsAsJson(projectList);
 	}
 
-	public static org.json.simple.JSONObject createProjectByJson(
-		org.json.simple.JSONObject requestJson) {
-		return getService().createProjectByJson(requestJson);
-	}
-
-	public static long createProject(long userId, java.lang.String name,
-		java.lang.String label, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().createProject(userId, name, label, description);
-	}
-
-	public static long updateProject(long projectId, java.lang.String name,
-		java.lang.String label, java.lang.String description) {
-		return getService().updateProject(projectId, name, label, description);
-	}
-
 	public static long updateProject(long projectID, long userID,
 		java.lang.String name, java.lang.String label,
 		java.lang.String description, java.lang.String extendedData,
@@ -345,31 +334,6 @@ public class ProjectLocalServiceUtil {
 		return getService()
 				   .updateProject(projectID, userID, name, label, description,
 			extendedData, startDate, endDate, status);
-	}
-
-	public static java.lang.Boolean updateEndDate(long projectId,
-		java.util.Date endDate) {
-		return getService().updateEndDate(projectId, endDate);
-	}
-
-	public static java.lang.Boolean updateExtendedData(long projectId,
-		java.lang.String extendedData) {
-		return getService().updateExtendedData(projectId, extendedData);
-	}
-
-	public static java.lang.Boolean updateParentProjectByIds(long projectId,
-		long parentProjectId) {
-		return getService().updateParentProjectByIds(projectId, parentProjectId);
-	}
-
-	public static java.lang.Boolean updateStartDate(long projectId,
-		java.util.Date startDate) {
-		return getService().updateStartDate(projectId, startDate);
-	}
-
-	public static java.lang.Boolean updateStatus(long projectId,
-		java.lang.String status) {
-		return getService().updateStatus(projectId, status);
 	}
 
 	public static void clearService() {

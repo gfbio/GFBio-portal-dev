@@ -88,15 +88,6 @@ public class ResearchObjectServiceUtil {
 		return getService().createResearchObject(requestJson);
 	}
 
-	public static java.lang.String getTest(java.lang.String requestJson) {
-		return getService().getTest(requestJson);
-	}
-
-	public static java.lang.String createTest(
-		org.json.simple.JSONObject requestJson) {
-		return getService().createTest(requestJson);
-	}
-
 	public static org.json.simple.JSONArray updateResearchObject(
 		java.lang.String requestJson) {
 		return getService().updateResearchObject(requestJson);
