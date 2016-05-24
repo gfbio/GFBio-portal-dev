@@ -15,7 +15,6 @@
 package org.gfbio.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 
 import org.gfbio.model.Project_User;
@@ -38,14 +37,12 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{projectID=");
 		sb.append(projectID);
 		sb.append(", userID=");
 		sb.append(userID);
-		sb.append(", usertype=");
-		sb.append(usertype);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", endDate=");
@@ -61,13 +58,6 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 
 		project_UserImpl.setProjectID(projectID);
 		project_UserImpl.setUserID(userID);
-
-		if (usertype == null) {
-			project_UserImpl.setUsertype(StringPool.BLANK);
-		}
-		else {
-			project_UserImpl.setUsertype(usertype);
-		}
 
 		if (startDate == Long.MIN_VALUE) {
 			project_UserImpl.setStartDate(null);
@@ -92,7 +82,6 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		projectID = objectInput.readLong();
 		userID = objectInput.readLong();
-		usertype = objectInput.readUTF();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
 	}
@@ -102,21 +91,12 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 		throws IOException {
 		objectOutput.writeLong(projectID);
 		objectOutput.writeLong(userID);
-
-		if (usertype == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(usertype);
-		}
-
 		objectOutput.writeLong(startDate);
 		objectOutput.writeLong(endDate);
 	}
 
 	public long projectID;
 	public long userID;
-	public String usertype;
 	public long startDate;
 	public long endDate;
 }

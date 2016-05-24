@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 
@@ -64,11 +63,10 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "projectID", Types.BIGINT },
 			{ "userID", Types.BIGINT },
-			{ "usertype", Types.VARCHAR },
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_User (projectID LONG not null,userID LONG not null,usertype VARCHAR(75) null,startDate DATE null,endDate DATE null,primary key (projectID, userID))";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_User (projectID LONG not null,userID LONG not null,startDate DATE null,endDate DATE null,primary key (projectID, userID))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Project_User";
 	public static final String ORDER_BY_JPQL = " ORDER BY project_User.id.projectID ASC, project_User.id.userID ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project_User.projectID ASC, gfbio_Project_User.userID ASC";
@@ -102,7 +100,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		model.setProjectID(soapModel.getProjectID());
 		model.setUserID(soapModel.getUserID());
-		model.setUsertype(soapModel.getUsertype());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
 
@@ -172,7 +169,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("userID", getUserID());
-		attributes.put("usertype", getUsertype());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 
@@ -191,12 +187,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		if (userID != null) {
 			setUserID(userID);
-		}
-
-		String usertype = (String)attributes.get("usertype");
-
-		if (usertype != null) {
-			setUsertype(usertype);
 		}
 
 		Date startDate = (Date)attributes.get("startDate");
@@ -260,22 +250,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 	@JSON
 	@Override
-	public String getUsertype() {
-		if (_usertype == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _usertype;
-		}
-	}
-
-	@Override
-	public void setUsertype(String usertype) {
-		_usertype = usertype;
-	}
-
-	@JSON
-	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -316,7 +290,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		project_UserImpl.setProjectID(getProjectID());
 		project_UserImpl.setUserID(getUserID());
-		project_UserImpl.setUsertype(getUsertype());
 		project_UserImpl.setStartDate(getStartDate());
 		project_UserImpl.setEndDate(getEndDate());
 
@@ -382,14 +355,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		project_UserCacheModel.userID = getUserID();
 
-		project_UserCacheModel.usertype = getUsertype();
-
-		String usertype = project_UserCacheModel.usertype;
-
-		if ((usertype != null) && (usertype.length() == 0)) {
-			project_UserCacheModel.usertype = null;
-		}
-
 		Date startDate = getStartDate();
 
 		if (startDate != null) {
@@ -413,14 +378,12 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{projectID=");
 		sb.append(getProjectID());
 		sb.append(", userID=");
 		sb.append(getUserID());
-		sb.append(", usertype=");
-		sb.append(getUsertype());
 		sb.append(", startDate=");
 		sb.append(getStartDate());
 		sb.append(", endDate=");
@@ -432,7 +395,7 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.Project_User");
@@ -445,10 +408,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 		sb.append(
 			"<column><column-name>userID</column-name><column-value><![CDATA[");
 		sb.append(getUserID());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>usertype</column-name><column-value><![CDATA[");
-		sb.append(getUsertype());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>startDate</column-name><column-value><![CDATA[");
@@ -474,7 +433,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 	private long _userID;
 	private long _originalUserID;
 	private boolean _setOriginalUserID;
-	private String _usertype;
 	private Date _startDate;
 	private Date _endDate;
 	private long _columnBitmask;

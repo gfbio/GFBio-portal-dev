@@ -62,57 +62,32 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////	
 	
-
 	
 	//update or create a Project and set the relationship to User
-	public Boolean updateProjectUser(long projectId, long userId, String userType) {
+	public long updateProjectUser(long projectID, long userID, Date startDate, Date endDate) throws NoSuchProject_UserException, SystemException {
 
-		Boolean check = false;
-		Project_User relation = null;
-		Project_UserPK pk = new Project_UserPK(projectId, userId);
-
-		try {
-			relation = project_UserPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchProject_UserException | SystemException e) {System.out.println("Entry in Project does not exist with 'projectId' "+projectId+ " and 'userid' " + userId + " and will be create now");}
-
-		if (relation == null) {
-			relation = project_UserPersistence.create(pk);
-		}
-		relation.setUsertype(userType);
-
-		try {
-			super.updateProject_User(relation);
-			check = true;
-		} catch (SystemException e) {e.printStackTrace();}
-		
-		return check;
-	}
-	
-	
-	//update or create a Project and set the relationship to User
-	public Boolean updateProjectUser(long projectID, long userID, Date startDate, Date endDate, String userType) {
-
-		Boolean check = false;
 		Project_User relation = null;
 		Project_UserPK pk = new Project_UserPK(projectID, userID);
 
 		try {
 			relation = project_UserPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchProject_UserException | SystemException e) {e.printStackTrace();}
+		} catch (NoSuchProject_UserException e) {e.printStackTrace();}
+
+		//create new relationship between project and user
 
 		if (relation == null) {
 			relation = project_UserPersistence.create(pk);
+			relation.setStartDate(startDate);
+			relation.setEndDate(endDate);
 		}
-		relation.setStartDate(startDate);
-		relation.setEndDate(endDate);
-		relation.setUsertype(userType);
+		//update the relationship between project and user
+		else {
+			relation.setStartDate(startDate);
+			relation.setEndDate(endDate);
+		}
 
-		try {
-			super.updateProject_User(relation);
-			check = true;
-		} catch (SystemException e) {e.printStackTrace();}
-		
-		return check;
+		super.updateProject_User(relation);
+		return relation.getUserID() + relation.getProjectID();
 	}
 
 }

@@ -76,19 +76,5 @@ public class ProjectServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONObject createProject(
-		org.json.simple.JSONObject requestJson) throws RemoteException {
-		try {
-			org.json.simple.JSONObject returnValue = ProjectServiceUtil.createProject(requestJson);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(ProjectServiceSoap.class);
 }

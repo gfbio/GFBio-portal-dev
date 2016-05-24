@@ -64,7 +64,7 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 		try {
 			parseJson = (JSONArray) parser.parse(requestJson);
 		} catch (ParseException e) {e.printStackTrace();}
-		return ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(parseJson);
+		return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById(parseJson);
 	}
 	
 	
@@ -92,28 +92,6 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 			parseJson = (JSONArray) parser.parse(requestJson);
 		} catch (ParseException e) {e.printStackTrace();}
 		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
-	}
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public String getTest(String requestJson){
-		String requestString = "test: ".concat(requestJson);
-		JSONArray requestArray = new JSONArray();
-		requestArray.add(requestString);
-		System.out.println("foo".concat(requestJson.toString()));
-		return requestString;
-	}
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public String createTest(JSONObject requestJson){
-		String requestString = "test: ".concat(requestJson.toString());
-		JSONArray requestArray = new JSONArray();
-		requestArray.add(requestString);
-		System.out.println("foo");
-		return requestString;
 	}
 	
 	

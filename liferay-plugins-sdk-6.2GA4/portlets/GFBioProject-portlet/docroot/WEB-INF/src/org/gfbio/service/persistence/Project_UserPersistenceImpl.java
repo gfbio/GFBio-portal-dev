@@ -1648,7 +1648,6 @@ public class Project_UserPersistenceImpl extends BasePersistenceImpl<Project_Use
 
 		project_UserImpl.setProjectID(project_User.getProjectID());
 		project_UserImpl.setUserID(project_User.getUserID());
-		project_UserImpl.setUsertype(project_User.getUsertype());
 		project_UserImpl.setStartDate(project_User.getStartDate());
 		project_UserImpl.setEndDate(project_User.getEndDate());
 
