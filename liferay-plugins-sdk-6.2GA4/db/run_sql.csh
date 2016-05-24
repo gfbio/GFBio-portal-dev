@@ -16,9 +16,7 @@ $command create_researchobject.sql
 $command create_submission.sql
 $command create_project_researchobject.sql
 $command create_project_user.sql
-$command create_project_user_pi.sql
 $command create_dataprovider_persistentidentifiert.sql
-
 
 
 $command insert_gfbio_category_type.sql
@@ -30,3 +28,5 @@ $command insert_gfbio_persistentidentifier.sql
 $command insert_gfbio_researchfield.sql
 $command insert_gfbio_type.sql
 $command insert_gfbio_dataprovider_persistentidentifier.sql
+
+$command change_categories_2.sql
