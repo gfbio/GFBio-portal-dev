@@ -111,8 +111,6 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING", ignoreParameter);
 
-		System.out.println("categorytest: "+responseJson);
-		
 		return responseJson;
 	}
 
@@ -573,7 +571,6 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	//
 	public Boolean updateCategory (long projectId, long categoryId){
-		System.out.println(projectId + " || "+ categoryId);
 		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_project", projectId, "gfbio_category", categoryId);
 	}
 	

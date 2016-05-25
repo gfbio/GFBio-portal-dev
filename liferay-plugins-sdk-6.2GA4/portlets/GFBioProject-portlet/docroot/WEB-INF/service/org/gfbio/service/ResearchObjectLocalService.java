@@ -353,6 +353,9 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String label,
 		java.lang.String extendedData, java.lang.String researchObjectType);
 
+	public java.lang.Boolean updateAuthorIds(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorNames);
+
 	public java.lang.Boolean updateAuthorId(long researchObjectId,
 		int researchObjectVersion, java.lang.String authorMail);
 
@@ -363,10 +366,13 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		int researchObjectVersion, java.lang.String description);
 
 	public java.lang.Boolean updateLicenseId(long researchObjectId,
-		int researchObjectVersion, java.lang.String licenseLabel);
+		java.lang.String licenseLabel);
 
 	public java.lang.Boolean updateLicenseId(long researchObjectId,
-		int researchObjectVersion, long licenseId);
+		long licenseId);
+
+	public java.lang.Boolean updateLicenseIds(long researchObjectId,
+		org.json.simple.JSONArray requestJson);
 
 	public java.lang.Boolean updateMetadataId(long researchObjectId,
 		int researchObjectVersion, long metadataId);

@@ -55,32 +55,67 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 
 //
 function submitInput(){
-	console.log("hallo1");
 	
 	if (checkInput()){
 		var mrrJson = saveAllInput();
-		console.log("hallo2");
-		console.log(mrrJson);
+
 		var researchObjectoJson = mrrJson.researchobjects;
 		//submissionregistryKontakt
-		console.log("hallo3");
-		console.log(researchObjectoJson);
+
 		var registryJson = buildSubmissionJsonForRegistry(researchObjectoJson);
-		console.log("hallo4");
-		console.log(registryJson);
+
 		Liferay.Service('/GFBioProject-portlet.submission/create-submission',
 			{
 				requestJson: '['.concat(JSON.stringify(registryJson)).concat(']')
 			},
 			function(obj) {
 				console.log(obj);
+				sendMail(obj);
 			}
 		);
 		
-		//Ticketsystem
 	}else{
 		console.log("=(");
 	}
+}
+
+
+//
+function sendMail(obj) {
+/*    var link = "mailto:marfroem@googlemail.com"
+             + "&subject=" + escape("First Workflow test")
+             + "&body=" + escape('It is my first test' + obj)
+    ;
+
+   window.location.href = link;*/
+
+/*	 $(location).attr('href', 'mailto:?subject='
+            + encodeURIComponent("This is my subject")
+            + "&body=" 
+            + encodeURIComponent("This is my body")
+);*/
+	console.log(obj);
+	
+/*	$.ajax({
+		type:"POST",
+		url: "http://helpdesk.gfbio.org/servicedesk/customer/portal/2",
+		data : {
+			'message': {
+				'from_email': 'Final_Phinix@web.de',
+			      'to': [
+			          {
+			            'email': 'marfroem@googlemail.com',
+			            'name': 'Test',
+			            'type': 'to'
+			          },
+			        ],
+			      'autotext': 'true',
+			      'subject': 'YOUR SUBJECT HERE!',
+			      'html': 'YOUR EMAIL CONTENT HERE! YOU CAN USE HTML!'
+			    }
+			}
+		 });
+	}*/
 }
 
 
@@ -97,13 +132,12 @@ function checkInput(){
 	if (document.getElementById("cwf_ro_author").value=="") 					{	check = false; document.getElementById("cwf_ro_author_l").className="rowLatofalse";}			else{document.getElementById("cwf_ro_author_l").className="rowLato";}
 	if (document.getElementById("cwf_ro_dct").value=="") 						{	check = false; document.getElementById("cwf_ro_dct_l").className="rowLatofalse";}				else{document.getElementById("cwf_ro_dct_l").className="rowLato";}
 	if (document.getElementById("cwf_ro_description").value=="") 				{	check = false; document.getElementById("cwf_ro_description_l").className="rowLatofalse";}		else{document.getElementById("cwf_ro_description_l").className="rowLato";}
-	//if (document.getElementById("cwf_ro_publications").value=="") 				{	check = false; document.getElementById("cwf_ro_publications_l").className="rowLatofalse";}		else{document.getElementById("cwf_ro_publications_l").className="rowLato";}
 	if (document.getElementById("cwf_ro_metadatalabel").value=="none") 			{	check = false; document.getElementById("cwf_ro_metadatalabel_l").className="rowLatofalse";}		else{document.getElementById("cwf_ro_metadatalabel_l").className="rowLato";}
 	
 	if (!(document.getElementById("cwf_ro_nagojayes").checked=="checked") &&
 		!(document.getElementById("cwf_ro_nagojano").checked=="checked") &&
 		  document.getElementById("cwf_ro_nagojadiv").value=="") 				{	check = false; document.getElementById("cwf_ro_nagoja_l").className="rowLatofalse";}			else{document.getElementById("cwf_ro_nagoja_l").className="rowLato";}
-	if (document.getElementById("cwf_ro_license").value=="none") 				{	check = false; document.getElementById("cwf_ro_license_l").className="rowLatofalse";}			else{document.getElementById("cwf_ro_license_l").className="rowLato";}
+	//if (document.getElementById("cwf_ro_license").value=="none") 				{	check = false; document.getElementById("cwf_ro_license_l").className="rowLatofalse";}			else{document.getElementById("cwf_ro_license_l").className="rowLato";}
 
 	if (!check){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
@@ -279,7 +313,6 @@ function createCwfProject(){
 					document.getElementById("cwf_project_label").value = document.getElementById("cwf_project_name").value;
 				
 				projectJson["projectid"]=obj.projectid;
-
 				var commentarField = $("#".concat('cwf_lf_comentarField'));
 				commentarField.empty();
 				commentarField.append("Data were stored.");
@@ -289,7 +322,6 @@ function createCwfProject(){
 				commentarField.empty();
 				commentarField.append("Failed to save the data.");
 			}
-
 		}
 	);
 	return projectJson;
@@ -428,6 +460,11 @@ function buildCommonResearchObjectJson(projectJson){
 	
 	if (document.getElementById("cwf_ro_license").value!="none")
 		researchObjectJson["licenseid"] = Number(document.getElementById("cwf_ro_license").value);
+	
+	var licenseJson =[];
+	for (i =0; i<document.getElementsByName("keywords").length;i++)
+		if (document.getElementsByName("keywords")[i].checked)
+			dcrtJson.push(document.getElementsByName("keywords")[i].value);
 	
 	return researchObjectJson;
 }

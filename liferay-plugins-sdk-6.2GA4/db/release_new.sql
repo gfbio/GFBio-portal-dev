@@ -140,14 +140,14 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('34','11','versio
 
 -------------------------------------------------------------------------------------------
 ------------------------------------ Head, Cell & Content ---------------------------------
------------------------------     metadata / research object      --------------------------
+-----------------------------     license / research object      --------------------------
 -------------------------------------------------------------------------------------------
 
 
 ------------------------------------- Head Table Content -------------------------------------
 
 
---INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('12','gfbio_metadata_researchobject','relationship');
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('20','gfbio_metadata_researchobject','relationship');
 
 
 ------------------------------------- Column Table Content -------------------------------------
@@ -275,7 +275,7 @@ $do$;
 
 ALTER TABLE gfbio_researchobject ADD COLUMN description text;
 ALTER TABLE gfbio_researchobject ADD COLUMN metadataid bigint;
-ALTER TABLE gfbio_researchobject ADD COLUMN licenseid bigint;
+-- ALTER TABLE gfbio_researchobject ADD COLUMN licenseid bigint;
 
 
 DO

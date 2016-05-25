@@ -133,9 +133,9 @@
 					"<div class='rowLato' id='cwf_ro_publications_l'> related publications </div>"+
 					"<div class='rowField'><input type='text' id='cwf_ro_publications' value=''></div>"+
 				"</div>"+
-				"<div class='row'>"+
+				"<div class='row' >"+
 					"<div class='rowLato' id='cwf_ro_metadatalabel_l'> metadata shema / data type  </div>"+
-					"<div class='rowField'>"+
+					"<div class='rowField' id='cwf_ro_metadatalabel_v'>"+
 						"<form action='select.html'>"+
 							"<select id='cwf_ro_metadatalabel' name='<portlet:namespace/>cwf_ro_metadatalabel' size='1' style='width:90%'>"+
 								"<option value='none'></option>"+
@@ -162,6 +162,8 @@
 					"</div>"+
 					"<div class='rowInput' id='cwf_ro_nagojadiv'></div>"+
 				"</div>"+
+				
+				"<div id='cwf_ro_licenses'></div>"+
 				
 				"<div class='row'>"+
 					"<div class='rowLato' id='cwf_ro_license_l'> licence </div>"+
@@ -211,9 +213,10 @@
 				requestJson: {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
 			},
 			function(obj) {
+				
 				var divKey = $("#".concat('cwf_project_keywords'));
 				divKey.empty();
-				//divKey.append("<form id='cwf_project_keywords_form'>");
+
 				for (i=0; i < obj.length;i++){
 					if (i < obj.length-1){
 						var j = i+1;
@@ -239,7 +242,6 @@
 						);
 					}
 				}
-				//divKey.append("</form>");
 			}
 		);
 		
@@ -293,13 +295,58 @@
 					choLi.append("<option id='cwf_ro_license"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
 				}
 					
-				//choLi.append("<option value='other'>other</option>");
 			}
 		);
 		
 		
+		Liferay.Service('/GFBioProject-portlet.head/get-table-as-json-array-by-name',
+				{
+					requestJson: {"tablename":"gfbio_license"}
+				},
+				function(obj) {
+					
+					var divLi = $("#".concat('cwf_ro_licenses'));
+					divLi.empty();
+
+					for (i=0; i < obj.length;i++){
+						if (i < obj.length-1){
+							var j = i+1;
+							
+							divLi.append(
+								"<div class='row'>"+
+									"<div class='rowLato'>"+
+										"<input type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='keywords' value='"+obj[i].id+"'> "+obj[i].name+
+									"</div>"+
+									"<div class='rowField'>"+
+										"<input type='checkbox' id='cwf_ro_licenses"+obj[j].id+"' name='keywords' value='"+obj[j].id+"'> "+obj[j].name+
+									"</div>"+
+								"</div>"
+							);
+							i = i+1;
+						}else{
+							divLi.append(
+								"<div class='row'>"+
+									"<div class='rowLato'>"+
+										"<input type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='keywords' value='"+obj[i].id+"'> "+obj[i].name+
+									"</div>"+
+								"</div>"
+							);
+						}
+					}
+						
+				}
+			);
+		
+		
+		
+		
+		
+		
+		
 
 
+		
+		
 	}
 	
 	
@@ -332,6 +379,7 @@
 			},
 			function(obj) 
 			{	
+				console.log(obj);
 				document.getElementById("cwf_project_id").innerHTML= obj.projectid;
 				document.getElementById("cwf_project_name").value= obj.name;
 				document.getElementById("cwf_project_label").value= obj.label;
@@ -356,14 +404,18 @@
 	
 	//
 	function fillResearchObjectInformations(data, div){
-		//console.log(data);
 
+		
+		
+				
 		Liferay.Service('/GFBioProject-portlet.researchobject/get-research-object-by-id',
 				  {
 				    requestJson: '[{"researchobjectid":'+Number(data.researchobjectid)+'}]'
 				  },
 				function(obj) {
-					  console.log(obj);
+					  
+					console.log (obj);  
+					var div =   $("#cwf_ro_metadatalabel_v");
 					var json = obj[0];
 					var ed = json.extendeddata;
 					for (i=0;i<ed.length/2;i++)
@@ -372,17 +424,22 @@
 					var author = (json.authorname).substring(1, (json.authorname.length)-1);
 					for (i=0;i<author.length/2;i++)
 						author = author.replace('"','');
-
+					
 					document.getElementById("cwf_ro_id").innerHTML= json.researchobjectid;
 					document.getElementById("cwf_ro_version").innerHTML= json.researchobjectversion;
 					document.getElementById("cwf_ro_name").value= json.name;
 					document.getElementById("cwf_ro_label").value= json.label;
 					document.getElementById("cwf_ro_dct").value= extendeddata.datacollectiontime;
 					document.getElementById("cwf_ro_description").value= json.description;
-					document.getElementById("cwf_ro_metadatalabel"+json.metadataid).selected= true;
+					div.empty();
+					div.append(json.metadatalabel);
 					document.getElementById("cwf_ro_author").value= author;
 					document.getElementById("cwf_ro_publications").value= extendeddata.publications;
 					document.getElementById("cwf_ro_license"+json.licenseid).selected= true;
+					
+					var json = JSON.parse(obj.licenseid);
+					for (i=0;i<json.length;i++)
+						document.getElementById("cwf_ro_licenses"+json[i]).checked= "checked";
 
 				}
 			);

@@ -40,7 +40,6 @@ public class ResearchObjectSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setExtendeddata(model.getExtendeddata());
 		soapModel.setMetadataID(model.getMetadataID());
-		soapModel.setLicenseID(model.getLicenseID());
 
 		return soapModel;
 	}
@@ -158,14 +157,6 @@ public class ResearchObjectSoap implements Serializable {
 		_metadataID = metadataID;
 	}
 
-	public long getLicenseID() {
-		return _licenseID;
-	}
-
-	public void setLicenseID(long licenseID) {
-		_licenseID = licenseID;
-	}
-
 	private long _researchObjectID;
 	private int _researchObjectVersion;
 	private long _parentResearchObjectID;
@@ -174,5 +165,4 @@ public class ResearchObjectSoap implements Serializable {
 	private String _description;
 	private String _extendeddata;
 	private long _metadataID;
-	private long _licenseID;
 }

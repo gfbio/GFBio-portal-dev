@@ -83,7 +83,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		attributes.put("description", getDescription());
 		attributes.put("extendeddata", getExtendeddata());
 		attributes.put("metadataID", getMetadataID());
-		attributes.put("licenseID", getLicenseID());
 
 		return attributes;
 	}
@@ -138,12 +137,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 		if (metadataID != null) {
 			setMetadataID(metadataID);
-		}
-
-		Long licenseID = (Long)attributes.get("licenseID");
-
-		if (licenseID != null) {
-			setLicenseID(licenseID);
 		}
 	}
 
@@ -334,29 +327,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		}
 	}
 
-	@Override
-	public long getLicenseID() {
-		return _licenseID;
-	}
-
-	@Override
-	public void setLicenseID(long licenseID) {
-		_licenseID = licenseID;
-
-		if (_researchObjectRemoteModel != null) {
-			try {
-				Class<?> clazz = _researchObjectRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setLicenseID", long.class);
-
-				method.invoke(_researchObjectRemoteModel, licenseID);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
 	public BaseModel<?> getResearchObjectRemoteModel() {
 		return _researchObjectRemoteModel;
 	}
@@ -436,7 +406,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		clone.setDescription(getDescription());
 		clone.setExtendeddata(getExtendeddata());
 		clone.setMetadataID(getMetadataID());
-		clone.setLicenseID(getLicenseID());
 
 		return clone;
 	}
@@ -487,7 +456,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{researchObjectID=");
 		sb.append(getResearchObjectID());
@@ -505,8 +474,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 		sb.append(getExtendeddata());
 		sb.append(", metadataID=");
 		sb.append(getMetadataID());
-		sb.append(", licenseID=");
-		sb.append(getLicenseID());
 		sb.append("}");
 
 		return sb.toString();
@@ -514,7 +481,7 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.ResearchObject");
@@ -552,10 +519,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 			"<column><column-name>metadataID</column-name><column-value><![CDATA[");
 		sb.append(getMetadataID());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>licenseID</column-name><column-value><![CDATA[");
-		sb.append(getLicenseID());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -570,7 +533,6 @@ public class ResearchObjectClp extends BaseModelImpl<ResearchObject>
 	private String _description;
 	private String _extendeddata;
 	private long _metadataID;
-	private long _licenseID;
 	private BaseModel<?> _researchObjectRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

@@ -467,6 +467,13 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.Boolean updateAuthorIds(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorNames) {
+		return _researchObjectLocalService.updateAuthorIds(researchObjectId,
+			researchObjectVersion, authorNames);
+	}
+
+	@Override
 	public java.lang.Boolean updateAuthorId(long researchObjectId,
 		int researchObjectVersion, java.lang.String authorMail) {
 		return _researchObjectLocalService.updateAuthorId(researchObjectId,
@@ -489,16 +496,23 @@ public class ResearchObjectLocalServiceWrapper
 
 	@Override
 	public java.lang.Boolean updateLicenseId(long researchObjectId,
-		int researchObjectVersion, java.lang.String licenseLabel) {
+		java.lang.String licenseLabel) {
 		return _researchObjectLocalService.updateLicenseId(researchObjectId,
-			researchObjectVersion, licenseLabel);
+			licenseLabel);
 	}
 
 	@Override
 	public java.lang.Boolean updateLicenseId(long researchObjectId,
-		int researchObjectVersion, long licenseId) {
+		long licenseId) {
 		return _researchObjectLocalService.updateLicenseId(researchObjectId,
-			researchObjectVersion, licenseId);
+			licenseId);
+	}
+
+	@Override
+	public java.lang.Boolean updateLicenseIds(long researchObjectId,
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectLocalService.updateLicenseIds(researchObjectId,
+			requestJson);
 	}
 
 	@Override

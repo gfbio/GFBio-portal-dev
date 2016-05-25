@@ -240,7 +240,7 @@ public class ResearchObjectLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String"
 			};
 
-		_methodName166 = "updateAuthorId";
+		_methodName166 = "updateAuthorIds";
 
 		_methodParameterTypes166 = new String[] {
 				"long", "int", "java.lang.String"
@@ -248,15 +248,15 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		_methodName167 = "updateAuthorId";
 
-		_methodParameterTypes167 = new String[] { "long", "int", "long" };
-
-		_methodName168 = "updateDescription";
-
-		_methodParameterTypes168 = new String[] {
+		_methodParameterTypes167 = new String[] {
 				"long", "int", "java.lang.String"
 			};
 
-		_methodName169 = "updateLicenseId";
+		_methodName168 = "updateAuthorId";
+
+		_methodParameterTypes168 = new String[] { "long", "int", "long" };
+
+		_methodName169 = "updateDescription";
 
 		_methodParameterTypes169 = new String[] {
 				"long", "int", "java.lang.String"
@@ -264,25 +264,35 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		_methodName170 = "updateLicenseId";
 
-		_methodParameterTypes170 = new String[] { "long", "int", "long" };
+		_methodParameterTypes170 = new String[] { "long", "java.lang.String" };
 
-		_methodName171 = "updateMetadataId";
+		_methodName171 = "updateLicenseId";
 
-		_methodParameterTypes171 = new String[] { "long", "int", "long" };
+		_methodParameterTypes171 = new String[] { "long", "long" };
 
-		_methodName172 = "updateParentResearchObjectIdByIds";
+		_methodName172 = "updateLicenseIds";
 
-		_methodParameterTypes172 = new String[] { "long", "int", "long" };
+		_methodParameterTypes172 = new String[] {
+				"long", "org.json.simple.JSONArray"
+			};
 
-		_methodName173 = "updateResearchObjectType";
+		_methodName173 = "updateMetadataId";
 
-		_methodParameterTypes173 = new String[] {
+		_methodParameterTypes173 = new String[] { "long", "int", "long" };
+
+		_methodName174 = "updateParentResearchObjectIdByIds";
+
+		_methodParameterTypes174 = new String[] { "long", "int", "long" };
+
+		_methodName175 = "updateResearchObjectType";
+
+		_methodParameterTypes175 = new String[] {
 				"long", "int", "java.lang.String"
 			};
 
-		_methodName174 = "updateResearchObjectVersion";
+		_methodName176 = "updateResearchObjectVersion";
 
-		_methodParameterTypes174 = new String[] { "long", "int" };
+		_methodParameterTypes176 = new String[] { "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -540,7 +550,7 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		if (_methodName166.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes166, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateAuthorId(((Long)arguments[0]).longValue(),
+			return ResearchObjectLocalServiceUtil.updateAuthorIds(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2]);
 		}
@@ -549,19 +559,19 @@ public class ResearchObjectLocalServiceClpInvoker {
 				Arrays.deepEquals(_methodParameterTypes167, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateAuthorId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
-				((Long)arguments[2]).longValue());
+				(java.lang.String)arguments[2]);
 		}
 
 		if (_methodName168.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes168, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateDescription(((Long)arguments[0]).longValue(),
+			return ResearchObjectLocalServiceUtil.updateAuthorId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
-				(java.lang.String)arguments[2]);
+				((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName169.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes169, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.updateLicenseId(((Long)arguments[0]).longValue(),
+			return ResearchObjectLocalServiceUtil.updateDescription(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2]);
 		}
@@ -569,33 +579,44 @@ public class ResearchObjectLocalServiceClpInvoker {
 		if (_methodName170.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes170, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateLicenseId(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				((Long)arguments[2]).longValue());
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName171.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes171, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateLicenseId(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName172.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+			return ResearchObjectLocalServiceUtil.updateLicenseIds(((Long)arguments[0]).longValue(),
+				(org.json.simple.JSONArray)arguments[1]);
+		}
+
+		if (_methodName173.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateMetadataId(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName172.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes172, parameterTypes)) {
+		if (_methodName174.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateParentResearchObjectIdByIds(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName173.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes173, parameterTypes)) {
+		if (_methodName175.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes175, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObjectType(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				(java.lang.String)arguments[2]);
 		}
 
-		if (_methodName174.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes174, parameterTypes)) {
+		if (_methodName176.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes176, parameterTypes)) {
 			return ResearchObjectLocalServiceUtil.updateResearchObjectVersion(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -713,4 +734,8 @@ public class ResearchObjectLocalServiceClpInvoker {
 	private String[] _methodParameterTypes173;
 	private String _methodName174;
 	private String[] _methodParameterTypes174;
+	private String _methodName175;
+	private String[] _methodParameterTypes175;
+	private String _methodName176;
+	private String[] _methodParameterTypes176;
 }

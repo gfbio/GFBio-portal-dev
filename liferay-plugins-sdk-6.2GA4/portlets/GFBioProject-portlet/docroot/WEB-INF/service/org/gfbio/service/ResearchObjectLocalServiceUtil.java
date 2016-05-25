@@ -428,6 +428,13 @@ public class ResearchObjectLocalServiceUtil {
 			researchObjectType);
 	}
 
+	public static java.lang.Boolean updateAuthorIds(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorNames) {
+		return getService()
+				   .updateAuthorIds(researchObjectId, researchObjectVersion,
+			authorNames);
+	}
+
 	public static java.lang.Boolean updateAuthorId(long researchObjectId,
 		int researchObjectVersion, java.lang.String authorMail) {
 		return getService()
@@ -450,17 +457,18 @@ public class ResearchObjectLocalServiceUtil {
 	}
 
 	public static java.lang.Boolean updateLicenseId(long researchObjectId,
-		int researchObjectVersion, java.lang.String licenseLabel) {
-		return getService()
-				   .updateLicenseId(researchObjectId, researchObjectVersion,
-			licenseLabel);
+		java.lang.String licenseLabel) {
+		return getService().updateLicenseId(researchObjectId, licenseLabel);
 	}
 
 	public static java.lang.Boolean updateLicenseId(long researchObjectId,
-		int researchObjectVersion, long licenseId) {
-		return getService()
-				   .updateLicenseId(researchObjectId, researchObjectVersion,
-			licenseId);
+		long licenseId) {
+		return getService().updateLicenseId(researchObjectId, licenseId);
+	}
+
+	public static java.lang.Boolean updateLicenseIds(long researchObjectId,
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateLicenseIds(researchObjectId, requestJson);
 	}
 
 	public static java.lang.Boolean updateMetadataId(long researchObjectId,

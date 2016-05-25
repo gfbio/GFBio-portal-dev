@@ -426,7 +426,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
 			json.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
 			json.put("metadataid", researchObject.getMetadataID());	
-			json.put("licenseid", researchObject.getLicenseID());
 		}
 		return checkNullParent(json);
 	}
@@ -470,7 +469,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype"};
+		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenseids","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -498,10 +497,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 			
 			if(requestJson.containsKey("licenselabel") && check)
-				check = updateLicenseId(researchObjectId, researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
+				check = updateLicenseId(researchObjectId,  ((String) requestJson.get("licenselabel")).trim());
 			
 			if (requestJson.containsKey("licenseid") && check)
-				check = updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
+				check = updateLicenseId(researchObjectId, (long) requestJson.get("licenseid"));
 			
 			
 			if(requestJson.containsKey("authornames") && check)
@@ -565,7 +564,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenselabel", "name", "researchobjectid"};
+		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenseids","licenselabel", "name", "researchobjectid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -611,11 +610,26 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("licenselabel") && check)
-							updateLicenseId(researchObjectId, researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
+							updateLicenseId(researchObjectId,  ((String) requestJson.get("licenselabel")).trim());
 						
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if (requestJson.containsKey("licenseid") && check)
-							updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
+							updateLicenseId(researchObjectId, (long) requestJson.get("licenseid"));
+						
+						//
+						if (requestJson.containsKey("licenseids") && check){
+							if (requestJson.get("licenseids").getClass().toString().equals("class java.lang.String")){
+								String licenseIdsString =  (String) requestJson.get("licenseids");
+								if (!((licenseIdsString.substring(0,0)).equals("[")))
+									licenseIdsString = "[".concat(licenseIdsString).concat("]");
+								JSONParser parser = new JSONParser();
+								JSONArray parseJson = new JSONArray();
+								try {parseJson = (JSONArray) parser.parse(licenseIdsString);} 
+								catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+								check = updateLicenseIds(researchObjectId,  parseJson);
+							}else
+								check = updateLicenseIds(researchObjectId,  (JSONArray) requestJson.get("licenseids"));
+						}
 						
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("authornames") && check)
@@ -796,39 +810,34 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 
 	//
-	public Boolean updateLicenseId (long researchObjectId, int researchObjectVersion, String licenseLabel){
+	public Boolean updateLicenseId (long researchObjectId, String licenseLabel){
 		Boolean check = false;
 		JSONObject hccJson= new JSONObject();
 		hccJson = checkHCCBackground("gfbio_license", "label", licenseLabel);
 		
 		if ((boolean) hccJson.get("check"))
-			check =  updateLicenseId(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
+			check =  updateLicenseId(researchObjectId, (long) hccJson.get("contentid"));
 
 		return check;
-		
 	}
 	
 	
 	//
-	public Boolean updateLicenseId (long researchObjectId, int researchObjectVersion, long licenseId){
-		
-		Boolean check = false;
-		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
-		ResearchObject researchObject = null;
-		
-		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
-	
-		if (researchObject != null){
-			researchObject.setLicenseID(licenseId);;
-			try {
-				super.updateResearchObject(researchObject);
-				check = true;
-			} catch (SystemException e) {e.printStackTrace();}
-		}
-		
-		return check;
+	public Boolean updateLicenseId (long researchObjectId, long licenseId){
+		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_project", researchObjectId, "gfbio_category", licenseId);
+
 	}
+	
+	
+	//
+	public Boolean updateLicenseIds (long researchObjectId, JSONArray requestJson){
+		Boolean check = false;
+		System.out.println(requestJson);
+		for (int i =0; i <requestJson.size();i++)
+			check = updateLicenseId( researchObjectId, (long) requestJson.get(i));
+		System.out.println("update "+ check);
+		return check;
+	}	
 	
 	
 	//
