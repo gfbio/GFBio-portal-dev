@@ -2,11 +2,11 @@
 	#tabTableMenu{width:5500px;}
 	#tabContentMenu{width:5500px;}
 		
-	td{	text-align:left; }
+	td{	text-align:left;}
 	label{cursor:default;}
 
-	.swHide{display:none}
-	.swMain{display:block}
+	.swHide{display:none;}
+	.swMain{display:block;}
 
 	.dBorder{ outline-style:solid; outline-color:rgb(200,200,200); outline-width:thin; padding-top:5px; padding-bottom:5px; padding-left:2px; padding-right:2px}
 

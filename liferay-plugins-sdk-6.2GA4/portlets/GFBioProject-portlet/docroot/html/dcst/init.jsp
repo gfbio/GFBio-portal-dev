@@ -19,7 +19,7 @@
 
 <%@ page import="org.gfbio.idmg.dcst.DCSTPortlet" %>
 <%@ page import="org.gfbio.model.DataProvider" %>
-<%@ page import="org.gfbio.idmg.dcst.dao.GResearchField" %>
+<%@ page import="org.gfbio.idmg.dcst.dao.GCategory" %>
 
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="org.json.simple.parser.JSONParser" %>

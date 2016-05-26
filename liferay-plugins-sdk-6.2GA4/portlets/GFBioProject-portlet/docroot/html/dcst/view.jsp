@@ -12,8 +12,8 @@
 </style>
 
 <%
-List<GResearchField> fields = new ArrayList<GResearchField>();
-fields = DCSTPortlet.getResearchFieldList();
+List<GCategory> categories = new ArrayList<GCategory>();
+categories = DCSTPortlet.getCategoryList();
 %>
 
 <portlet:resourceURL var="ajaxUrl" id="radio" />
@@ -76,7 +76,7 @@ $(document).ready(function () {
 	
 	<h3>Selection Field 1</h3>
 	
-	<ul style="list-style: none;">
+	<ul style="list-style: none; margin: 0 0 10px 0;">
 		<li id="physical" style="margin-left: 20px;">
 			Do you want to submit physical objects along with your data?
 			<div style="display:block;">
@@ -141,23 +141,19 @@ $(document).ready(function () {
 	</ul> 
 	 <div id="selection2" class="swHide">
 		<h3>Selection Field 2</h3>
-		<h4>Select Research Field</h4>
-		<select id="researchfield" name="researchfield" onChange="visibleShow('categories'); hideCategory(this.value);" >
-			<option label="Select" value="noselection" />
-			<%
-			for(GResearchField field: fields) {
-			%>
-				<option label="<%=field.getName() %>" value="<%=field.getId() %>" />
-			<%
-			}
-			%>
-		</select>
-	</div>
-	<div id="categories" class="swHide">
-		<h4>Categories</h4>
-			<div id="categorylist">
-			
-			</div>
+		<div id="categorydiv" style="margin-left: 20px;">
+			<h4>Select Category</h4>
+			<select id="category" name="category" >
+				<option label="Select" value="noselection" />
+				<%
+				for(GCategory c : categories) {
+				%>
+				<option label="<%=c.getName() %>" value="<%=c.getId()%>" />
+				<%
+				}
+				%>
+			</select>
+		</div>
 	</div>
 </div>
 

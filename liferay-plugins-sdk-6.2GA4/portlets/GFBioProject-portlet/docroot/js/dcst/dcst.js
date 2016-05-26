@@ -62,3 +62,18 @@ function hideCategory(selection) {
 		document.getElementById("categories").className = "swHide";
 	}
 }
+
+//
+function categoryalert(label) {
+	document.getElementById(label).setAttribute("style", "font-weight: bold");
+	
+	var searchEles = document.getElementById("categorylist").children;
+	for(var i = 0; i < searchEles.length; i++) {
+		var insidediv = searchEles[i].children;
+		for(var j = 0; j < insidediv.length; j++) {
+			if (insidediv(j).getAttribute("id") != label) {
+				insidediv[j].setAttribute("style", "font-weight: normal");
+			}
+		}
+	}
+}

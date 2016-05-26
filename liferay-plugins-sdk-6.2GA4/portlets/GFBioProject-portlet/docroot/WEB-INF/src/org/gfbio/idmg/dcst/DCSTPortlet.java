@@ -12,10 +12,8 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.gfbio.idmg.dcst.dao.GCategoryResearchField;
 import org.gfbio.idmg.dcst.dao.GCategory;
 import org.gfbio.idmg.dcst.dao.GContentDAO;
-import org.gfbio.idmg.dcst.dao.GResearchField;
 import org.gfbio.model.Column;
 import org.gfbio.model.Content;
 import org.gfbio.model.DataProvider;
@@ -93,15 +91,20 @@ public class DCSTPortlet extends MVCPortlet {
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
+		System.out.println("Ich war hier");
 		
-		List<GCategory> categories = getCategoriesForResearchField(Long.parseLong(value));
+		List<GCategory> categories = getCategoryList();
 		
 		if(categories.isEmpty()) {
 			writer.println("There are no categories available");
 		} else {
 			for (GCategory c : categories) {
-				System.out.println(c.getLabel());
-				writer.println(c.getLabel() + "</br>");
+				String label = c.getLabel();
+				System.out.println(label);
+				writer.println("<div style=\"display:block; margin-bottom: 10px;\">");
+				//writer.println("<input name=\"" + c.getLabel().toLowerCase() + "\" style=\"margin-bottom: 7px\" type=\"radio\" value=\"true\" onClick=\"\" />");
+				writer.println("<span id=\"" + label + "\" onclick=\"categoryalert('" + label + "');\" >" + label + "</span>");
+				writer.println("</div>");
 			}
 		}
 	}
@@ -194,7 +197,7 @@ public class DCSTPortlet extends MVCPortlet {
 	 */
 	public static void sampleProject(ActionRequest req, ActionResponse res) {
 
-		getCategoryDataprovider();
+		getCategoryDataproviderContent();
 
 	}
 
@@ -208,16 +211,8 @@ public class DCSTPortlet extends MVCPortlet {
 		}
 		return providers;
 	}
-
-	public static void getTypes() {
-
-		GContentDAO types = getContent(5);
-
-		_log.error(types.getColumnNames().toString());
-		_log.error(types.getContents().toString());
-	}
-
-	public static GContentDAO getCategories() {
+	
+	public static GContentDAO getCategoryContent() {
 
 		GContentDAO categories = getContent(1);
 
@@ -227,28 +222,17 @@ public class DCSTPortlet extends MVCPortlet {
 		return categories;
 	}
 
-	public static List<GCategory> getCategoriesForResearchField(
-			long researchFieldId) {
-		GContentDAO content = getCategories();
+	public static List<GCategory> getCategoryList() {
+		GContentDAO content = getCategoryContent();
 		List<GCategory> categories = new ArrayList<GCategory>();
-		List<GCategoryResearchField> relations = getCategoryResearchFieldList();
+
 		GCategory category;
 		for (HashMap<Long, String> map : content.getContents()) {
 			category = new GCategory();
-			boolean save = false;
 			for (Long key : map.keySet()) {
 				if (key == 1) {
 					Long id = Long.parseLong(map.get(key));
-					for (GCategoryResearchField crf : relations) {
-						if (crf.getCategoryId() == id
-								&& crf.getResearchFieldId() == researchFieldId) {
-							save = true;
-						}
-					}
 					category.setId(id);
-				}
-				if (!save) {
-					break;
 				}
 				if (key == 2) {
 					category.setName(map.get(key));
@@ -257,50 +241,28 @@ public class DCSTPortlet extends MVCPortlet {
 					category.setLabel(map.get(key));
 				}
 			}
-			if (save) {
-				categories.add(category);
-			}
+			categories.add(category);
 		}
-
 		return categories;
 	}
 
-	public static GContentDAO getResearchFields() {
+	public static void getTypeContent() {
 
-		GContentDAO researchfields = getContent(2);
+		GContentDAO types = getContent(5);
 
-		_log.error(researchfields.getColumnNames().toString());
-		_log.error(researchfields.getContents().toString());
-
-		return researchfields;
+		_log.error(types.getColumnNames().toString());
+		_log.error(types.getContents().toString());
 	}
 
-	public static List<GResearchField> getResearchFieldList() {
-		GContentDAO researchContent = getResearchFields();
-		List<GResearchField> researchfields = new ArrayList<GResearchField>();
-		GResearchField researchfield;
-		for (HashMap<Long, String> map : researchContent.getContents()) {
-			researchfield = new GResearchField();
-			for (Long key : map.keySet()) {
-				// _log.error("Key: " + key);
-				// _log.error("Value: " + map.get(key));
-				if (key == 4) {
-					Long id = Long.parseLong(map.get(key));
-					researchfield.setId(id);
-				}
-				if (key == 5) {
-					researchfield.setName(map.get(key));
-				}
-				if (key == 6) {
-					researchfield.setDescription(map.get(key));
-				}
-			}
-			researchfields.add(researchfield);
-		}
-		return researchfields;
+	public static void getCategoryTypeContent() {
+
+		GContentDAO categoryDataprovider = getContent(6);
+
+		_log.error(categoryDataprovider.getColumnNames().toString());
+		_log.error(categoryDataprovider.getContents().toString());
 	}
 
-	public static void getCategoryDataprovider() {
+	public static void getCategoryDataproviderContent() {
 
 		GContentDAO categoryDataprovider = getContent(7);
 
@@ -308,49 +270,41 @@ public class DCSTPortlet extends MVCPortlet {
 		_log.error(categoryDataprovider.getContents().toString());
 	}
 
-	public static GContentDAO getCategoryResearchField() {
+//	public static GContentDAO getCategoryResearchField() {
+//
+//		GContentDAO categoryResearchField = getContent(4);
+//
+//		_log.error(categoryResearchField.getColumnNames().toString());
+//		_log.error(categoryResearchField.getContents().toString());
+//
+//		return categoryResearchField;
+//	}
 
-		GContentDAO categoryResearchField = getContent(4);
-
-		_log.error(categoryResearchField.getColumnNames().toString());
-		_log.error(categoryResearchField.getContents().toString());
-
-		return categoryResearchField;
-	}
-
-	public static List<GCategoryResearchField> getCategoryResearchFieldList() {
-		GContentDAO content = getCategoryResearchField();
-		List<GCategoryResearchField> list = new ArrayList<GCategoryResearchField>();
-		GCategoryResearchField categoryResearchField;
-
-		for (HashMap<Long, String> map : content.getContents()) {
-			categoryResearchField = new GCategoryResearchField();
-			for (Long key : map.keySet()) {
-				if (key == 10) {
-					Long id = Long.parseLong(map.get(key));
-					categoryResearchField.setCategoryId(id);
-					;
-				}
-				if (key == 11) {
-					Long id = Long.parseLong(map.get(key));
-					categoryResearchField.setResearchFieldId(id);
-				}
-			}
-			list.add(categoryResearchField);
-		}
-		for (GCategoryResearchField g : list) {
-			_log.error(g.toString());
-		}
-		return list;
-	}
-
-	public static void getCategoryType() {
-
-		GContentDAO categoryDataprovider = getContent(6);
-
-		_log.error(categoryDataprovider.getColumnNames().toString());
-		_log.error(categoryDataprovider.getContents().toString());
-	}
+//	public static List<GCategoryResearchField> getCategoryResearchFieldList() {
+//		GContentDAO content = getCategoryResearchField();
+//		List<GCategoryResearchField> list = new ArrayList<GCategoryResearchField>();
+//		GCategoryResearchField categoryResearchField;
+//
+//		for (HashMap<Long, String> map : content.getContents()) {
+//			categoryResearchField = new GCategoryResearchField();
+//			for (Long key : map.keySet()) {
+//				if (key == 10) {
+//					Long id = Long.parseLong(map.get(key));
+//					categoryResearchField.setCategoryId(id);
+//					;
+//				}
+//				if (key == 11) {
+//					Long id = Long.parseLong(map.get(key));
+//					categoryResearchField.setResearchFieldId(id);
+//				}
+//			}
+//			list.add(categoryResearchField);
+//		}
+//		for (GCategoryResearchField g : list) {
+//			_log.error(g.toString());
+//		}
+//		return list;
+//	}
 
 	private static GContentDAO getContent(long headId) {
 
