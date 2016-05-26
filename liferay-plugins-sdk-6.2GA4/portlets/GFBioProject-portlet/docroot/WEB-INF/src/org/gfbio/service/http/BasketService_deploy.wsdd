@@ -32,7 +32,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketJSON" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketContent" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryJSON" type="tns:string"></parameter>
 		</operation>
 		<parameter name="allowedMethods" value="getBasketById getBasketsByIds getBasketsByUserAndPeriod getBasketsByUserId getBasketsIdByUserAndPeriod getBasketsIdByUserId removeBasket updateBasket" />
