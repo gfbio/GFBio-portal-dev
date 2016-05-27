@@ -190,6 +190,8 @@
 								"style='width:100%' value='"+basket.name+"'/>";
 						basketsHTML += "</td></tr>";
 						
+						console.log('writeBasketsHTML');
+						console.log(basket);
 						var basketObj = basket.basketContent;
 						basketsHTML += "<tr><td width='10%'>JSON:</td><td></td></tr>"+
 										"<tr><td colspan='2'>"+

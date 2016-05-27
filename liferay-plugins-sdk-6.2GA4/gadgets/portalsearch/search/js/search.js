@@ -689,12 +689,12 @@ function setSelectedRowStyle() {
 		// loop through each value and compare if the
 		// similar value exists on the current page
 		$.each(jsonData.selected, function (index, result) {
-			var selectedLink = result['metadataLink'];
+			var selectedLink = result['metadatalink'];
 			var tb = $('#tableId').DataTable();
 			var displayedResult = tb.rows().data();
 
 			$.each(displayedResult, function (ind2, res2) {
-				var displayedLink = res2.metadataLink;
+				var displayedLink = res2.metadatalink;
 				if (selectedLink == displayedLink) {
 					// if yes, toggle class to selected.
 					var row = tb.rows().nodes()[ind2];
@@ -760,7 +760,7 @@ function onRowClick() {
 				// metadataLink is supposed to be unique for each dataset,
 				// so I use it as an id for each row.
 				jsonData.selected = JSONfindAndRemove(jsonData.selected, 
-								'metadataLink', resultArray.metadataLink);
+								'metadatalink', resultArray.metadatalink);
 				basket.value = JSON.stringify(jsonData);
 			}
 		}
@@ -781,7 +781,7 @@ function getDataFromSelectedRow(nRow, tRows) {
 	var iRow = nRow._DT_RowIndex;
 	var value = tRows.data()[iRow];
 	var result = {
-		"metadataLink" : value.metadataLink,
+		"metadatalink" : value.metadatalink,
 		"timeStamp" : value.timeStamp,
 		"maxLatitude" : value.maxLatitude,
 		"minLatitude" : value.minLatitude,
@@ -968,11 +968,11 @@ function addColorPicker() {
 				var col = this.parentElement;
 				var row = col.parentElement;
 				var tb = $('#tableId').DataTable();
-				var metadataLink = tb.rows().data()[row.rowIndex - 1].metadataLink;
+				var metadatalink = tb.rows().data()[row.rowIndex - 1].metadataLink;
 				// loop compare with the link in basket
 				$.each(jsonData.selected, function (index, result) {
-					var selectedLink = result['metadataLink'];
-					if (selectedLink == metadataLink) {
+					var selectedLink = result['metadatalink'];
+					if (selectedLink == metadatalink) {
 						// if found the link, update row detail
 						jsonData.selected[index].color = color.toHexString();
 					}
