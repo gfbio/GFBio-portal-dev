@@ -68,18 +68,18 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONArray getResearchObjectAsJsonById(JSONArray requestJson){
+	public JSONArray getResearchObjectsAsJsonById(JSONArray requestJson){
 		
 		JSONArray responseJson = new JSONArray();
 		for (int i =0; i <requestJson.size();i++)
-			responseJson.add(getResearchObjectASJsonById((JSONObject) requestJson.get(i)));
+			responseJson.add(getResearchObjectAsJsonById((JSONObject) requestJson.get(i)));
 		return responseJson;
 	}
 	
 	
 	//
 	@SuppressWarnings({ "unchecked" })
-	public JSONObject getResearchObjectASJsonById(JSONObject requestJson){
+	public JSONObject getResearchObjectAsJsonById(JSONObject requestJson){
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
@@ -113,9 +113,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("metadatalabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("metadataid")),"label"));
 
 		
-		if (responseJson.containsKey("licenseid")){
-			responseJson.put("licenselabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("licenseid")),"label"));
-		}
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_license_researchobject", (long) responseJson.get("researchobjectid")))
+			try {responseJson.put("licenseid", (ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_license_researchobject"), (Long.toString((long) responseJson.get("researchobjectid"))))).toString());}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		
 		
 		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson_researchobject", (long) responseJson.get("researchobjectid")))
 			try {responseJson.put("authorid", ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_externalperson_researchobject"), (Long.toString((long) responseJson.get("researchobjectid")))));}
@@ -130,9 +131,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("authorname", labelArray.toString());
 		}
 		
-		
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING",ignoreParameter);
+		
 		return checkNullParent(responseJson);
 	}
 
@@ -604,10 +605,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						if (check)
 							check = updateParentResearchObjectIdByIds (researchObjectId, researchObjectVersion,researchObject.getParentResearchObjectID());
 
-						
 						if(requestJson.containsKey("description") && check)
 							updateDescription(researchObjectId, researchObjectVersion, ((String) requestJson.get("description")).trim());
-						
+					
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("licenselabel") && check)
 							updateLicenseId(researchObjectId,  ((String) requestJson.get("licenselabel")).trim());
@@ -615,13 +615,15 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if (requestJson.containsKey("licenseid") && check)
 							updateLicenseId(researchObjectId, (long) requestJson.get("licenseid"));
-						
+				
 						//
 						if (requestJson.containsKey("licenseids") && check){
 							if (requestJson.get("licenseids").getClass().toString().equals("class java.lang.String")){
 								String licenseIdsString =  (String) requestJson.get("licenseids");
+
 								if (!((licenseIdsString.substring(0,0)).equals("[")))
 									licenseIdsString = "[".concat(licenseIdsString).concat("]");
+
 								JSONParser parser = new JSONParser();
 								JSONArray parseJson = new JSONArray();
 								try {parseJson = (JSONArray) parser.parse(licenseIdsString);} 
@@ -630,11 +632,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 							}else
 								check = updateLicenseIds(researchObjectId,  (JSONArray) requestJson.get("licenseids"));
 						}
-						
+				
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("authornames") && check)
 							updateAuthorIds(researchObjectId, researchObjectVersion, ((String) requestJson.get("authornames")).trim());
-						
+				
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("authormail") && check)
 							updateAuthorId(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim());
@@ -824,18 +826,25 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	public Boolean updateLicenseId (long researchObjectId, long licenseId){
-		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_project", researchObjectId, "gfbio_category", licenseId);
-
+		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_license", researchObjectId, "gfbio_researchobject", licenseId);
 	}
 	
 	
 	//
 	public Boolean updateLicenseIds (long researchObjectId, JSONArray requestJson){
 		Boolean check = false;
-		System.out.println(requestJson);
+		JSONArray responseJson = new JSONArray();
+		
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_license_researchobject", researchObjectId))
+			try {responseJson = ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_license_researchobject"), Long.toString(researchObjectId));} 
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		if (responseJson.size()>0)
+			for (int i =0; i < responseJson.size();i++)
+				ContentLocalServiceUtil.deleteRelationContentByCellContent(Long.toString(researchObjectId), Long.toString((Long) responseJson.get(i)) );
+
 		for (int i =0; i <requestJson.size();i++)
 			check = updateLicenseId( researchObjectId, (long) requestJson.get(i));
-		System.out.println("update "+ check);
+
 		return check;
 	}	
 	

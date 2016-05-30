@@ -275,14 +275,14 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public static org.json.simple.JSONArray getResearchObjectsAsJsonById(
 		org.json.simple.JSONArray requestJson) {
-		return getService().getResearchObjectAsJsonById(requestJson);
+		return getService().getResearchObjectsAsJsonById(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectASJsonById(
+	public static org.json.simple.JSONObject getResearchObjectAsJsonById(
 		org.json.simple.JSONObject requestJson) {
-		return getService().getResearchObjectASJsonById(requestJson);
+		return getService().getResearchObjectAsJsonById(requestJson);
 	}
 
 	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(

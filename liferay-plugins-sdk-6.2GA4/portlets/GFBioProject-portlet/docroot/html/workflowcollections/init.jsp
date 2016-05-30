@@ -153,19 +153,20 @@
 				"</br>"+	
 				
 				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_ro_nagoja_l'> dataset is subject to the Nagoja Protocol? </div>"+
+					"<div id='cwf_ro_nagoja_l'> dataset is subject to the Nagoja Protocol? </div>"+
 					"<div class='rowFieldB'>"+
 					 	"<fieldset>"+ 
-							"<input type='radio' id='cwf_ro_nagojayes' name='cwf_ro_nagoja' value='yes'>	<label for='cwf_ro_nagojayes'> yes</label>"+ 
-							"<input type='radio' id='cwf_ro_nagojano'  name='cwf_ro_nagoja' value='no'>		<label for='cwf_ro_nagojano' > no </label>"+ 
+							"<input type='radio' id='cwf_ro_nagojayes' name='cwf_ro_nagoja' value='yes'>	 yes"+ 
+							"<input type='radio' id='cwf_ro_nagojano'  name='cwf_ro_nagoja' value='no'>		 no "+ 
 						"</fieldset>"+
 					"</div>"+
 					"<div class='rowInput' id='cwf_ro_nagojadiv'></div>"+
 				"</div>"+
 				
+				"<div class='row'>Please select the appropriate licenses </div>"+
 				"<div id='cwf_ro_licenses'></div>"+
 				
-				"<div class='row'>"+
+/* 				"<div class='row'>"+
 					"<div class='rowLato' id='cwf_ro_license_l'> licence </div>"+
 					"<div class='rowField'>"+
 						"<form action='select.html'>"+
@@ -174,7 +175,7 @@
 							"</select>"+
 						"</form>"+
 					"</div>"+
-				"</div>"+
+				"</div>"+ */
 
 				
 				"</br>"+
@@ -259,6 +260,7 @@
 		
 		document.getElementById("cwf_ro_id").innerHTML= 0;
 		document.getElementById("cwf_ro_version").innerHTML= 1;
+		document.getElementById("cwf_ro_nagojano").checked = true;
 		
 		
 		Liferay.Service('/GFBioProject-portlet.head/get-table-as-json-array-by-name',
@@ -279,112 +281,41 @@
 			);
 		
 		document.getElementById("cwf_pd_id").innerHTML= 0;
-		
-		
-		
+			
 		Liferay.Service('/GFBioProject-portlet.head/get-table-as-json-array-by-name',
 			{
 				requestJson: {"tablename":"gfbio_license"}
 			},
 			function(obj) {
-				var choLi = $("#".concat('cwf_ro_license'));
-				choLi.empty();
-				choLi.append("<option value='none'></option>");
-				for (i =0; i <obj.length;i++){
-					var json = obj[i];
-					choLi.append("<option id='cwf_ro_license"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
-				}
 					
-			}
+				var divLi = $("#".concat('cwf_ro_licenses'));
+				divLi.empty();
+				for (i=0; i < obj.length;i++)
+					divLi.append(
+						"<div class='row'>"+
+								"<input type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='licenses' value='"+obj[i].id+"'> "+obj[i].name+
+						"</div>"
+					);						
+				}
 		);
-		
-		
-		Liferay.Service('/GFBioProject-portlet.head/get-table-as-json-array-by-name',
-				{
-					requestJson: {"tablename":"gfbio_license"}
-				},
-				function(obj) {
-					
-					var divLi = $("#".concat('cwf_ro_licenses'));
-					divLi.empty();
-
-					for (i=0; i < obj.length;i++){
-						if (i < obj.length-1){
-							var j = i+1;
-							
-							divLi.append(
-								"<div class='row'>"+
-									"<div class='rowLato'>"+
-										"<input type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='keywords' value='"+obj[i].id+"'> "+obj[i].name+
-									"</div>"+
-									"<div class='rowField'>"+
-										"<input type='checkbox' id='cwf_ro_licenses"+obj[j].id+"' name='keywords' value='"+obj[j].id+"'> "+obj[j].name+
-									"</div>"+
-								"</div>"
-							);
-							i = i+1;
-						}else{
-							divLi.append(
-								"<div class='row'>"+
-									"<div class='rowLato'>"+
-										"<input type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='keywords' value='"+obj[i].id+"'> "+obj[i].name+
-									"</div>"+
-								"</div>"
-							);
-						}
-					}
-						
-				}
-			);
-		
-		
-		
-		
-		
-		
-		
-
-
-		
-		
 	}
 	
 	
 	//default fill function of collections submission workflow
 	function fillProjectInformations(data, div){
 
-/* 		var workflowcollectionsURL = (document.getElementById("workflowcollectionsurl").value).toString();
-		var url = workflowcollectionsURL.concat("/GFBioSubmissionWorkflow")
-		console.log("++"+ document.getElementById("workflowcollectionsurl"));
-		console.log("+++"+ document.getElementById("workflowcollectionsurl").value);
-		console.log("++++"+workflowcollectionsURL.concat("/GFBioSubmissionWorkflow"));
-		console.log("+++++");
-		var method = "getproject"; 
-		$.ajax({
-			"type" : "POST",
-			"url": url,
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : method
-			},
-			async: false,
-			success : function (data){
-				console.log("!! "+data);
-				document.getElementById("cwf_ro_id").innerHTML= 0;
-			}
-		}); */
 		Liferay.Service('/GFBioProject-portlet.project/get-project-by-id',
 			{
 				requestJson: {"projectid": Number(data.projectid)}
 			},
 			function(obj) 
 			{	
-				console.log(obj);
+				console.log ("fillProjectInformations");  
+				console.log (obj);  
 				document.getElementById("cwf_project_id").innerHTML= obj.projectid;
 				document.getElementById("cwf_project_name").value= obj.name;
 				document.getElementById("cwf_project_label").value= obj.label;
 				document.getElementById("cwf_project_description").value= obj.description;
-				
 				var json = JSON.parse(obj.categoryid);
 				for (i=0;i<json.length;i++)
 					document.getElementById("cwf_project_keywords"+json[i]).checked= "checked";
@@ -405,15 +336,12 @@
 	//
 	function fillResearchObjectInformations(data, div){
 
-		
-		
-				
 		Liferay.Service('/GFBioProject-portlet.researchobject/get-research-object-by-id',
 				  {
 				    requestJson: '[{"researchobjectid":'+Number(data.researchobjectid)+'}]'
 				  },
 				function(obj) {
-					  
+					console.log ("fillResearchObjectInformations");  
 					console.log (obj);  
 					var div =   $("#cwf_ro_metadatalabel_v");
 					var json = obj[0];
@@ -432,15 +360,23 @@
 					document.getElementById("cwf_ro_dct").value= extendeddata.datacollectiontime;
 					document.getElementById("cwf_ro_description").value= json.description;
 					div.empty();
-					div.append(json.metadatalabel);
+					div.append(json.metadatalabel+
+						"<div class='rowField'><input type='hidden' id='cwf_ro_metadatalabel' value='"+json.metadatalabel+"'></div>"
+);
 					document.getElementById("cwf_ro_author").value= author;
 					document.getElementById("cwf_ro_publications").value= extendeddata.publications;
-					document.getElementById("cwf_ro_license"+json.licenseid).selected= true;
-					
-					var json = JSON.parse(obj.licenseid);
-					for (i=0;i<json.length;i++)
-						document.getElementById("cwf_ro_licenses"+json[i]).checked= "checked";
 
+					
+					if (extendeddata.nagoja == "no"){
+						document.getElementById("cwf_ro_nagojano").checked = true;
+					}else{
+						document.getElementById("cwf_ro_nagojayes").checked = true;
+						document.getElementById("cwf_ro_nagojayes").value =extendeddata.nagoja;
+					}
+					
+					var licenseJson = JSON.parse(json.licenseid);
+					for (i=0;i<licenseJson.length;i++)
+						document.getElementById("cwf_ro_licenses"+licenseJson[i]).checked= "checked";
 				}
 			);
 	}

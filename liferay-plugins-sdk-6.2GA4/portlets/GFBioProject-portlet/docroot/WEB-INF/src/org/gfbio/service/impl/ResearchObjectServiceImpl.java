@@ -64,7 +64,7 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 		try {parseJson = (JSONArray) parser.parse(requestJson);}
 		catch (ParseException e) {e.printStackTrace();}
 		
-		return ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(parseJson);
+		return ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById(parseJson);
 	}
 	
 	

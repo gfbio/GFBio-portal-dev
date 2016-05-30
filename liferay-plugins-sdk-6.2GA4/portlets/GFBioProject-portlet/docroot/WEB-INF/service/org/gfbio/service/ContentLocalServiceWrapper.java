@@ -295,6 +295,13 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public void deleteRelationContentByCellContent(
+		java.lang.String cellcontent1, java.lang.String cellcontent2) {
+		_contentLocalService.deleteRelationContentByCellContent(cellcontent1,
+			cellcontent2);
+	}
+
+	@Override
 	public java.util.List getCellContentByContentId(long contentId) {
 		return _contentLocalService.getCellContentByContentId(contentId);
 	}
@@ -304,13 +311,6 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 		java.lang.String columnName) {
 		return _contentLocalService.getCellContentByRowIdAndColumnName(rowId,
 			columnName);
-	}
-
-	@Override
-	public org.json.simple.JSONArray getOppositeCellContentsOfRelationsByCellContent(
-		long headId, java.lang.String cellContent) {
-		return _contentLocalService.getOppositeCellContentsOfRelationsByCellContent(headId,
-			cellContent);
 	}
 
 	@Override
@@ -415,6 +415,13 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	@Override
 	public long getHeadIdById(long contentId) {
 		return _contentLocalService.getHeadIdById(contentId);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellContent) {
+		return _contentLocalService.getOppositeCellContentsOfRelationsByCellContent(headId,
+			cellContent);
 	}
 
 	@Override

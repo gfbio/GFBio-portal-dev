@@ -110,7 +110,6 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING", ignoreParameter);
-
 		return responseJson;
 	}
 
@@ -561,10 +560,17 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	//
 	public Boolean updateCategories (long projectId, JSONArray requestJson){
 		Boolean check = false;
-		System.out.println(requestJson);
+		JSONArray responseJson = new JSONArray();
+		
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_category_project", projectId))
+			try {responseJson = ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_project"), Long.toString(projectId));} 
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		if (responseJson.size()>0)
+			for (int i =0; i < responseJson.size();i++)
+				ContentLocalServiceUtil.deleteRelationContentByCellContent(Long.toString(projectId), Long.toString((Long) responseJson.get(i)) );
+
 		for (int i =0; i <requestJson.size();i++)
 			check = updateCategory( projectId, (long) requestJson.get(i));
-		System.out.println("update "+ check);
 		return check;
 	}	
 	

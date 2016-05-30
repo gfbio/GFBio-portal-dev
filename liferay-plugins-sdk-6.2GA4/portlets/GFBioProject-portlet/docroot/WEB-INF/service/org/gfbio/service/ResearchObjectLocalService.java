@@ -255,11 +255,11 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public org.json.simple.JSONArray getResearchObjectsAsJsonById(
 		org.json.simple.JSONArray requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getResearchObjectASJsonById(
+	public org.json.simple.JSONObject getResearchObjectAsJsonById(
 		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

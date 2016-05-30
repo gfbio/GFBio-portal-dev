@@ -3,44 +3,34 @@
 ----------------------------------     category parent      -------------------------------
 -------------------------------------------------------------------------------------------
 
+------------------------- Delete old category_parent and relation -------------------------
+
+
+DELETE FROM gfbio_column WHERE columnid = 28;
+DELETE FROM gfbio_column WHERE columnid = 29;
+DELETE FROM gfbio_head WHERE headid = 9;
+
+DELETE FROM gfbio_column WHERE columnid = 61;
+DELETE FROM gfbio_column WHERE columnid = 62;
+DELETE FROM gfbio_column WHERE columnid = 63;
+DELETE FROM gfbio_head WHERE headid = 20;
+
 
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('20','gfbio_license','entity');
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('21','gfbio_category_parent','entity');
 
 
 ------------------------------------- Column Table Content -------------------------------------
 
 
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('61','20','id');	
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('62','20','gfbio_category');	
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('63','20','parent');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('63','21','id');	
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('64','21','gfbio_category');	
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('65','21','parent');
 
 
 ------------------------------------- Content Table Content -------------------------------------
-
-
-------------------------------------- Delete old category_parent -------------------------------------
-
-
-DELETE FROM gfbio_colum WHERE columnid = 23;
-DELETE FROM gfbio_colum WHERE columnid = 24;
-DELETE FROM gfbio_head WHERE headid = 8;
-
-
-
--------------------------------------------------------------------------------------------
------------------------------------- Head, Cell & Content ---------------------------------
-------------------------------     category / dataprovider      ---------------------------
--------------------------------------------------------------------------------------------
-
-
-------------------------------------- Column Table Content -------------------------------------
-
-
-update gfbio_column set headid = 7 WHERE columnid = 17;
-update gfbio_column set headid = 7 WHERE columnid = 18;
 
 
 -------------------------------------------------------------------------------------------
@@ -106,12 +96,6 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1694','8','27','1485','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1695','8','27','1489','');
 
-----------------------------------------------------------------------------------------------
--------------------------------------     dataprovider      ----------------------------------
-----------------------------------------------------------------------------------------------
-
-
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES ('10', 'GFBio collections', 'GFBio collections');
 
 
 --------------------------------------------------------------------------------------------
@@ -147,14 +131,14 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('34','11','versio
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('20','gfbio_metadata_researchobject','relationship');
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('20','gfbio_license_researchobject','relationship');
 
 
 ------------------------------------- Column Table Content -------------------------------------
 
 
---INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('35','12','gfbio_metadata');
---INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('36','12','gfbio_researchobject');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('61','20','gfbio_license');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('62','20','gfbio_researchobject');
 
 
 
@@ -473,10 +457,10 @@ ALTER TABLE gfbio_funding_personproject
 
   
 
---------------------------------------------------------------------------------------------
------------------------------------- Head, Cell & Content ----------------------------------
---------------------------     funding agency / funding program      -----------------------
---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content -----------------------------------
+-------------------------------------     institution      ----------------------------------
+---------------------------------------------------------------------------------------------
 
 
 ------------------------------------- Head Table Content -------------------------------------
@@ -790,6 +774,16 @@ WHERE
 ------------------------------------ Head, Cell & Content ----------------------------------
 --------------------------------     category dataprovider     -----------------------------
 --------------------------------------------------------------------------------------------
+
+
+------------------------------------- Column Table Content -------------------------------------
+
+
+update gfbio_column set headid = 7 WHERE columnid = 17;
+update gfbio_column set headid = 7 WHERE columnid = 18;
+
+
+------------------------------------- Content Table Content -------------------------------------
 
 
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1568','7','17','1569','1492');

@@ -116,11 +116,11 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		_methodParameterTypes133 = new String[] { "java.lang.String" };
 
-		_methodName138 = "getResearchObjectAsJsonById";
+		_methodName138 = "getResearchObjectsAsJsonById";
 
 		_methodParameterTypes138 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName139 = "getResearchObjectASJsonById";
+		_methodName139 = "getResearchObjectAsJsonById";
 
 		_methodParameterTypes139 = new String[] { "org.json.simple.JSONObject" };
 
@@ -398,12 +398,12 @@ public class ResearchObjectLocalServiceClpInvoker {
 
 		if (_methodName138.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById((org.json.simple.JSONArray)arguments[0]);
+			return ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById((org.json.simple.JSONArray)arguments[0]);
 		}
 
 		if (_methodName139.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
-			return ResearchObjectLocalServiceUtil.getResearchObjectASJsonById((org.json.simple.JSONObject)arguments[0]);
+			return ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName140.equals(name) &&

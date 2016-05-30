@@ -284,6 +284,12 @@ public class ContentLocalServiceUtil {
 		getService().deleteContentsByRowId(rowId);
 	}
 
+	public static void deleteRelationContentByCellContent(
+		java.lang.String cellcontent1, java.lang.String cellcontent2) {
+		getService()
+			.deleteRelationContentByCellContent(cellcontent1, cellcontent2);
+	}
+
 	public static java.util.List getCellContentByContentId(long contentId) {
 		return getService().getCellContentByContentId(contentId);
 	}
@@ -291,13 +297,6 @@ public class ContentLocalServiceUtil {
 	public static java.lang.String getCellContentByRowIdAndColumnName(
 		long rowId, java.lang.String columnName) {
 		return getService().getCellContentByRowIdAndColumnName(rowId, columnName);
-	}
-
-	public static org.json.simple.JSONArray getOppositeCellContentsOfRelationsByCellContent(
-		long headId, java.lang.String cellContent) {
-		return getService()
-				   .getOppositeCellContentsOfRelationsByCellContent(headId,
-			cellContent);
 	}
 
 	public static long getColumnIdById(long contentId)
@@ -391,6 +390,13 @@ public class ContentLocalServiceUtil {
 
 	public static long getHeadIdById(long contentId) {
 		return getService().getHeadIdById(contentId);
+	}
+
+	public static org.json.simple.JSONArray getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellContent) {
+		return getService()
+				   .getOppositeCellContentsOfRelationsByCellContent(headId,
+			cellContent);
 	}
 
 	public static long getRowIdByCellContent(long headId,

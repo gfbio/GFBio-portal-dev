@@ -61,13 +61,13 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public void deleteContentsByColumnId (long columnId){
 		
 		List <Content> contentList = null;
-		try {contentList = contentPersistence.findByColumnId(columnId);
-		} catch (SystemException e) {e.printStackTrace();}
+		try {contentList = contentPersistence.findByColumnId(columnId);}
+		catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
-				} catch (PortalException | SystemException e) {e.printStackTrace();}
+				try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());} 
+				catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
 	
@@ -94,6 +94,13 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 	
 	
+	//
+	public void deleteRelationContentByCellContent(String cellcontent1, String cellcontent2 ){
+		long rowId = getRowIdOfRelation(cellcontent1, cellcontent2);
+		deleteContentsByRowId (rowId);
+	}
+	
+	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
@@ -113,20 +120,6 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			cellContent = (String) cellContentList.get(0);
 		 
 		 return cellContent;
-	}
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public JSONArray getOppositeCellContentsOfRelationsByCellContent(long headId, String cellContent){
-		List <String> responseList = ContentFinderUtil.getOppositeCellContentsOfRelationsByCellContent(headId, cellContent);
-		JSONParser parser = new JSONParser();
-		JSONArray parseJson = new JSONArray();
-		try {parseJson = (JSONArray) parser.parse(responseList.toString());}
-		catch (ParseException e) {e.printStackTrace();}
-
-		return parseJson;
-		
 	}
 	
 	
@@ -291,6 +284,20 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		if (headIdList.size() >0)
 			headId = (long) headIdList.get(0);
 		return headId;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getOppositeCellContentsOfRelationsByCellContent(long headId, String cellContent){
+		List <String> responseList = ContentFinderUtil.getOppositeCellContentsOfRelationsByCellContent(headId, cellContent);
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {parseJson = (JSONArray) parser.parse(responseList.toString());}
+		catch (ParseException e) {e.printStackTrace();}
+
+		return parseJson;
+		
 	}
 	
 

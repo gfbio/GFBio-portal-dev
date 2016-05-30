@@ -117,11 +117,11 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 
 		_methodParameterTypes17 = new String[] { "java.lang.String" };
 
-		_methodName19 = "getResearchObjectAsJsonById";
+		_methodName19 = "getResearchObjectsAsJsonById";
 
 		_methodParameterTypes19 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName20 = "getResearchObjectASJsonById";
+		_methodName20 = "getResearchObjectAsJsonById";
 
 		_methodParameterTypes20 = new String[] { "org.json.simple.JSONObject" };
 
@@ -847,7 +847,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public org.json.simple.JSONArray getResearchObjectsAsJsonById(
 		org.json.simple.JSONArray requestJson) {
 		Object returnObj = null;
 
@@ -872,7 +872,7 @@ public class ResearchObjectLocalServiceClp implements ResearchObjectLocalService
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectASJsonById(
+	public org.json.simple.JSONObject getResearchObjectAsJsonById(
 		org.json.simple.JSONObject requestJson) {
 		Object returnObj = null;
 

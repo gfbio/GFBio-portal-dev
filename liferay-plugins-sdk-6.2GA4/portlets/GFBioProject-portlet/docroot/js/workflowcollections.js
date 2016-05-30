@@ -69,8 +69,7 @@ function submitInput(){
 				requestJson: '['.concat(JSON.stringify(registryJson)).concat(']')
 			},
 			function(obj) {
-				console.log(obj);
-				sendMail(obj);
+				//sendMail(obj);
 			}
 		);
 		
@@ -82,40 +81,36 @@ function submitInput(){
 
 //
 function sendMail(obj) {
-/*    var link = "mailto:marfroem@googlemail.com"
-             + "&subject=" + escape("First Workflow test")
-             + "&body=" + escape('It is my first test' + obj)
-    ;
+	var uri='//helpdesk.gfbio.org/rest/api/6/issue/';
 
-   window.location.href = link;*/
+	var submitData = {
+		    "fields": {
+		        "project":
+		        { 
+		           "key": "TEST"
+		        },
+		        "summary": "REST ye merry gentlemen.",
+		        "description": "Creating of an issue using project keys and issue type names using the REST API",
+		        "issuetype": {
+		           "name": "Bug"
+		        }
+		    }
+		 };
 
-/*	 $(location).attr('href', 'mailto:?subject='
-            + encodeURIComponent("This is my subject")
-            + "&body=" 
-            + encodeURIComponent("This is my body")
-);*/
-	console.log(obj);
 	
+/*																					//http://host:port/context/rest/api-name/api-version/resource-name
+	curl -u admin:admin -X POST --data submitData -H "Content-Type: application/json" http:uri 
+	*/
+	
+
 /*	$.ajax({
-		type:"POST",
-		url: "http://helpdesk.gfbio.org/servicedesk/customer/portal/2",
-		data : {
-			'message': {
-				'from_email': 'Final_Phinix@web.de',
-			      'to': [
-			          {
-			            'email': 'marfroem@googlemail.com',
-			            'name': 'Test',
-			            'type': 'to'
-			          },
-			        ],
-			      'autotext': 'true',
-			      'subject': 'YOUR SUBJECT HERE!',
-			      'html': 'YOUR EMAIL CONTENT HERE! YOU CAN USE HTML!'
-			    }
-			}
-		 });
-	}*/
+		  type: "POST",
+		  url: url,
+		  data: data,
+		  success: success,
+		  dataType: dataType
+		});*/
+
 }
 
 
@@ -270,7 +265,6 @@ function updateCwfResearchObject(projectJson){
 			requestJson: '['.concat(JSON.stringify(researchObjectJson)).concat(']')
 		},
 		function(obj) {
-			console.log(obj);
 			var json = obj[0];
 			if (json.researchobjectid >0){
 				document.getElementById("cwf_ro_version").innerHTML= json.researchobjectversion;
@@ -399,21 +393,23 @@ function buildCommonProjectJson(){
 		"name":projectName,
 		"label":projectLabel,
 		"description":document.getElementById("cwf_project_description").value,
-		"extendeddata": extendetdata.toString()		
+		"extendeddata": JSON.stringify(extendetdata)		
 	};
 
 	if (!(dcrtJson.toString()==""))
 		projectJson["dcrtids"] = dcrtJson.toString();
-	
+
 	return projectJson;
 }
 
 
 //
 function buildResearchObjectJsonForUpdate(projectJson){
+
 	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	researchObjectJson["researchobjectid"]= Number(document.getElementById("cwf_ro_id").innerHTML);
 	researchObjectJson["researchobjectversion"]= Number(document.getElementById("cwf_ro_version").innerHTML);
+
 	return researchObjectJson;
 }
 
@@ -435,20 +431,20 @@ function buildCommonResearchObjectJson(projectJson){
 	if (roLabel=="")	roLabel = roName;
 	
 	var nagoja ="";
-	if (document.getElementById("cwf_ro_nagojano").checked=="checked")		nagoja = "no";
-	else																	nagoja = document.getElementById("cwf_ro_nagojadiv").value=="";
+	if (document.getElementById("cwf_ro_nagojano").checked)		nagoja = 'no';
+	else														nagoja = document.getElementById("cwf_ro_nagojadetails").value;
 
 	var authornames = (document.getElementById("cwf_ro_author").value).trim();
 	if (authornames.charAt(authornames.length-1)==',')
 		authornames = authornames.substring(0, authornames.length-1);
 	authornames = ('["'.concat(authornames).concat('"]')).replace(/,/g,'","');
-	
+
 	var extendetdata = {
 		"publications":document.getElementById("cwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("cwf_ro_dct").value,
 		"nagoja": nagoja
 	}
-	
+
 	var researchObjectJson = {
 		"authornames": authornames,
 		"name":roName,
@@ -457,14 +453,13 @@ function buildCommonResearchObjectJson(projectJson){
 		"extendeddata": extendetdata,
 		"projectid": projectJson.projectid
 	};
-	
-	if (document.getElementById("cwf_ro_license").value!="none")
-		researchObjectJson["licenseid"] = Number(document.getElementById("cwf_ro_license").value);
-	
+
 	var licenseJson =[];
-	for (i =0; i<document.getElementsByName("keywords").length;i++)
-		if (document.getElementsByName("keywords")[i].checked)
-			dcrtJson.push(document.getElementsByName("keywords")[i].value);
+	for (i =0; i<document.getElementsByName("licenses").length;i++)
+		if (document.getElementsByName("licenses")[i].checked)
+			licenseJson.push(document.getElementsByName("licenses")[i].value);
 	
+	if (!(licenseJson.toString()==""))
+		researchObjectJson["licenseids"] = licenseJson.toString();
 	return researchObjectJson;
 }
