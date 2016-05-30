@@ -276,6 +276,10 @@ public class UserExtensionLocalServiceUtil {
 		return getService().getUserExtentionById(requestJson);
 	}
 
+	public static java.lang.Boolean checkExistenceOfUserId(long userId) {
+		return getService().checkExistenceOfUserId(userId);
+	}
+
 	public static java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
 		return getService().checkForIgnoredParameter(objects, keyList);

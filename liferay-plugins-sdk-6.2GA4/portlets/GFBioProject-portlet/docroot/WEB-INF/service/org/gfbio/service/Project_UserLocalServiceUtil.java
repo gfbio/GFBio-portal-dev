@@ -275,6 +275,21 @@ public class Project_UserLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.lang.String getFullNamesAsString(
+		org.json.simple.JSONArray requestJson) {
+		return getService().getFullNamesAsString(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getOwnerAndPiByProjectId(
+		long projectId) {
+		return getService().getOwnerAndPiByProjectId(projectId);
+	}
+
+	public static java.util.List<java.lang.Long> getOwnerAndPiIdByProjectId(
+		long projectId) {
+		return getService().getOwnerAndPiIdByProjectId(projectId);
+	}
+
 	public static java.util.List<org.gfbio.model.Project_User> getProjectIDList(
 		long userID) {
 		return getService().getProjectIDList(userID);

@@ -291,6 +291,11 @@ public class UserExtensionLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.Boolean checkExistenceOfUserId(long userId) {
+		return _userExtensionLocalService.checkExistenceOfUserId(userId);
+	}
+
+	@Override
 	public java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
 		return _userExtensionLocalService.checkForIgnoredParameter(objects,

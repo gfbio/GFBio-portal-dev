@@ -288,6 +288,23 @@ public class Project_UserLocalServiceWrapper implements Project_UserLocalService
 	}
 
 	@Override
+	public java.lang.String getFullNamesAsString(
+		org.json.simple.JSONArray requestJson) {
+		return _project_UserLocalService.getFullNamesAsString(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getOwnerAndPiByProjectId(long projectId) {
+		return _project_UserLocalService.getOwnerAndPiByProjectId(projectId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getOwnerAndPiIdByProjectId(
+		long projectId) {
+		return _project_UserLocalService.getOwnerAndPiIdByProjectId(projectId);
+	}
+
+	@Override
 	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
 		long userID) {
 		return _project_UserLocalService.getProjectIDList(userID);

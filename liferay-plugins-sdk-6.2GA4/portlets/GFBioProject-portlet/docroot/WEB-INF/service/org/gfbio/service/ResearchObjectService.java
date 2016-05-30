@@ -84,11 +84,6 @@ public interface ResearchObjectService extends BaseService, InvokableService {
 	public org.json.simple.JSONArray createResearchObject(
 		java.lang.String requestJson);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getTest(java.lang.String requestJson);
-
-	public java.lang.String createTest(org.json.simple.JSONObject requestJson);
-
 	public org.json.simple.JSONArray updateResearchObject(
 		java.lang.String requestJson);
 }

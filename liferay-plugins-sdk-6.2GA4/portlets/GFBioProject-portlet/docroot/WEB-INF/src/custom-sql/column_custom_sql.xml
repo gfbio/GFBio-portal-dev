@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnIdByNames">
+	    <![CDATA[
+			SELECT 
+			  gfbio_column.columnid
+			FROM 
+			  public.gfbio_head,
+			  public.gfbio_column
+			WHERE
+			  gfbio_head.headid = gfbio_column.headid AND
+			  gfbio_head.table_name = ? AND
+			  gfbio_column.column_name = ?
+		]]>
+    </sql>
+
     <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnsWithRelation">
 	    <![CDATA[
 			SELECT

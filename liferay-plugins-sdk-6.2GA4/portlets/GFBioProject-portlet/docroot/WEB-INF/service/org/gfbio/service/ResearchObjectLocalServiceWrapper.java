@@ -289,15 +289,15 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public org.json.simple.JSONArray getResearchObjectsAsJsonById(
 		org.json.simple.JSONArray requestJson) {
-		return _researchObjectLocalService.getResearchObjectAsJsonById(requestJson);
+		return _researchObjectLocalService.getResearchObjectsAsJsonById(requestJson);
 	}
 
 	@Override
-	public org.json.simple.JSONObject getResearchObjectASJsonById(
+	public org.json.simple.JSONObject getResearchObjectAsJsonById(
 		org.json.simple.JSONObject requestJson) {
-		return _researchObjectLocalService.getResearchObjectASJsonById(requestJson);
+		return _researchObjectLocalService.getResearchObjectAsJsonById(requestJson);
 	}
 
 	@Override
@@ -374,14 +374,22 @@ public class ResearchObjectLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.Boolean checkParentAttributById(long researchObjectId) {
-		return _researchObjectLocalService.checkParentAttributById(researchObjectId);
+	public org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label) {
+		return _researchObjectLocalService.checkHCCBackground(tableName,
+			columnName, label);
 	}
 
 	@Override
 	public org.json.simple.JSONObject checkNullParent(
 		org.json.simple.JSONObject json) {
 		return _researchObjectLocalService.checkNullParent(json);
+	}
+
+	@Override
+	public java.lang.Boolean checkParentAttributById(long researchObjectId) {
+		return _researchObjectLocalService.checkParentAttributById(researchObjectId);
 	}
 
 	@Override
@@ -456,6 +464,62 @@ public class ResearchObjectLocalServiceWrapper
 		return _researchObjectLocalService.updateResearchObjectWithProject(projectId,
 			researchObjectId, researchObjectVersion, name, label, extendedData,
 			researchObjectType);
+	}
+
+	@Override
+	public java.lang.Boolean updateAuthorIds(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorNames) {
+		return _researchObjectLocalService.updateAuthorIds(researchObjectId,
+			researchObjectVersion, authorNames);
+	}
+
+	@Override
+	public java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorMail) {
+		return _researchObjectLocalService.updateAuthorId(researchObjectId,
+			researchObjectVersion, authorMail);
+	}
+
+	@Override
+	public java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, long authorId) {
+		return _researchObjectLocalService.updateAuthorId(researchObjectId,
+			researchObjectVersion, authorId);
+	}
+
+	@Override
+	public java.lang.Boolean updateDescription(long researchObjectId,
+		int researchObjectVersion, java.lang.String description) {
+		return _researchObjectLocalService.updateDescription(researchObjectId,
+			researchObjectVersion, description);
+	}
+
+	@Override
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		java.lang.String licenseLabel) {
+		return _researchObjectLocalService.updateLicenseId(researchObjectId,
+			licenseLabel);
+	}
+
+	@Override
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		long licenseId) {
+		return _researchObjectLocalService.updateLicenseId(researchObjectId,
+			licenseId);
+	}
+
+	@Override
+	public java.lang.Boolean updateLicenseIds(long researchObjectId,
+		org.json.simple.JSONArray requestJson) {
+		return _researchObjectLocalService.updateLicenseIds(researchObjectId,
+			requestJson);
+	}
+
+	@Override
+	public java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId) {
+		return _researchObjectLocalService.updateMetadataId(researchObjectId,
+			researchObjectVersion, metadataId);
 	}
 
 	@Override

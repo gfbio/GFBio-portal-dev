@@ -255,6 +255,17 @@ public interface Project_UserLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getFullNamesAsString(
+		org.json.simple.JSONArray requestJson);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getOwnerAndPiByProjectId(long projectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Long> getOwnerAndPiIdByProjectId(
+		long projectId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<org.gfbio.model.Project_User> getProjectIDList(
 		long userID);
 

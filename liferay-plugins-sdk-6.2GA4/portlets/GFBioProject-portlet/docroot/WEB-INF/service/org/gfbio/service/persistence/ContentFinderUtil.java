@@ -21,6 +21,16 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Marcel Froemming
  */
 public class ContentFinderUtil {
+	public static java.util.List checkExistenceOfKeyId(long headId,
+		java.lang.String pk) {
+		return getFinder().checkExistenceOfKeyId(headId, pk);
+	}
+
+	public static java.util.List checkKeyPairInRelationship(long headId,
+		java.lang.String pk1, java.lang.String pk2) {
+		return getFinder().checkKeyPairInRelationship(headId, pk1, pk2);
+	}
+
 	public static java.util.List getCellContent(long headId, long rowId,
 		long columnId) {
 		return getFinder().getCellContent(headId, rowId, columnId);
@@ -28,6 +38,19 @@ public class ContentFinderUtil {
 
 	public static java.util.List getCellContentByContentId(long contentId) {
 		return getFinder().getCellContentByContentId(contentId);
+	}
+
+	public static java.util.List getCellContentByRowIdAndColumnName(
+		long rowId, java.lang.String columnName) {
+		return getFinder().getCellContentByRowIdAndColumnName(rowId, columnName);
+	}
+
+	public static java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		long relationTableHeadId, long entitiyTableHeadId,
+		java.lang.String entityTableCellContent) {
+		return getFinder()
+				   .getContentIdsOfRelationshipsOfSpecificCellContent(relationTableHeadId,
+			entitiyTableHeadId, entityTableCellContent);
 	}
 
 	public static java.util.List getContentIdsWithoutRelationships(long rowId,
@@ -64,6 +87,13 @@ public class ContentFinderUtil {
 		return getFinder().getHeadIdById(contentId);
 	}
 
+	public static java.util.List getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellcontent) {
+		return getFinder()
+				   .getOppositeCellContentsOfRelationsByCellContent(headId,
+			cellcontent);
+	}
+
 	public static java.util.List getRowIds(long headId) {
 		return getFinder().getRowIds(headId);
 	}
@@ -84,6 +114,10 @@ public class ContentFinderUtil {
 
 	public static java.util.List getRowInformationByContentId(long contentId) {
 		return getFinder().getRowInformationByContentId(contentId);
+	}
+
+	public static java.util.List getRowInformationByRowId(long rowId) {
+		return getFinder().getRowInformationByRowId(rowId);
 	}
 
 	public static ContentFinder getFinder() {
