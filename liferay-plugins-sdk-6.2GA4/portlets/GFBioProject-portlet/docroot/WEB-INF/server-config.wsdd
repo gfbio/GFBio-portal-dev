@@ -63,7 +63,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketJSON" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="basketContent" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryJSON" type="tns:string"></parameter>
 		</operation>
 		<parameter name="allowedMethods" value="getBasketById getBasketsByIds getBasketsByUserAndPeriod getBasketsByUserId getBasketsIdByUserAndPeriod getBasketsIdByUserId removeBasket updateBasket" />
@@ -282,22 +282,22 @@
 	</service>
 	<service name="Plugin_gfbio_SubmissionService" provider="java:RPC" style="rpc" use="encoded">
 		<arrayMapping xmlns:ns="urn:http.service.gfbio.org" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="createSubmision" qname="operNS:createSubmision" returnQName="createSubmisionReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="createSubmission" qname="operNS:createSubmission" returnQName="createSubmissionReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="requestJson" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getLatestPublicSubmissions" qname="operNS:getLatestPublicSubmissions" returnQName="getLatestPublicSubmissionsReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="requestJson" type="tns:anyType"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getSubmisionsByBrokerSubmissionId" qname="operNS:getSubmisionsByBrokerSubmissionId" returnQName="getSubmisionsByBrokerSubmissionIdReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getSubmissionsByBrokerSubmissionId" qname="operNS:getSubmissionsByBrokerSubmissionId" returnQName="getSubmissionsByBrokerSubmissionIdReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="requestJson" type="tns:anyType"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getSubmisionsByResearchObjectId" qname="operNS:getSubmisionsByResearchObjectId" returnQName="getSubmisionsByResearchObjectIdReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="getSubmissionsByResearchObjectId" qname="operNS:getSubmissionsByResearchObjectId" returnQName="getSubmissionsByResearchObjectIdReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="requestJson" type="tns:anyType"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="updateSubmision" qname="operNS:updateSubmision" returnQName="updateSubmisionReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="urn:http.service.gfbio.org" xmlns:tns2="http://www.w3.org/2001/XMLSchema" name="updateSubmission" qname="operNS:updateSubmission" returnQName="updateSubmissionReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemType="tns2:anyType" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="requestJson" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="createSubmision getLatestPublicSubmissions getSubmisionsByBrokerSubmissionId getSubmisionsByResearchObjectId updateSubmision" />
+		<parameter name="allowedMethods" value="createSubmission getLatestPublicSubmissions getSubmissionsByBrokerSubmissionId getSubmissionsByResearchObjectId updateSubmission" />
 		<parameter name="className" value="org.gfbio.service.http.SubmissionServiceSoap" />
 		<parameter name="schemaUnqualified" value="urn:http.service.gfbio.org" />
 		<parameter name="typeMappingVersion" value="1.2" />

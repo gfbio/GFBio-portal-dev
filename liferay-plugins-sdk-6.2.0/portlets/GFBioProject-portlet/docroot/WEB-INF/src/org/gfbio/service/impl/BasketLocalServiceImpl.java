@@ -191,7 +191,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	// update or create a new project
 
 	public long updateBasket(long basketId, long userId, String name,
-			String basketJSON, String queryJSON) throws SystemException {
+			String basketContent, String queryJSON) throws SystemException {
 
 		Basket basket = null;
 		try {
@@ -204,7 +204,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basket.setName(name);
 				Date now = new java.util.Date();
 				basket.setLastModifiedDate(now);
-				basket.setBasketJSON(basketJSON);
+				basket.setBasketContent(basketContent);
 				basket.setQueryJSON(queryJSON);
 				super.updateBasket(basket);
 			} else {
@@ -221,7 +221,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			basket.setName(name);
 			Date now = new java.util.Date();
 			basket.setLastModifiedDate(now);
-			basket.setBasketJSON(basketJSON);
+			basket.setBasketContent(basketContent);
 			basket.setQueryJSON(queryJSON);
 			super.updateBasket(basket);
 			e.printStackTrace();
@@ -350,9 +350,9 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				jObj.put("name", basket.getName());
 				jObj.put("lastModifiedDate", basket.getLastModifiedDate());
 				
-				String strBasket = basket.getBasketJSON();
+				String strBasket = basket.getBasketContent();
 				JSONObject jBasket = JSONFactoryUtil.createJSONObject(strBasket);
-				jObj.put("basketJSON", jBasket);
+				jObj.put("basketContent", jBasket);
 				JSONObject jQuery = JSONFactoryUtil.createJSONObject(basket.getQueryJSON());
 				jObj.put("queryJSON", jQuery);
 			}

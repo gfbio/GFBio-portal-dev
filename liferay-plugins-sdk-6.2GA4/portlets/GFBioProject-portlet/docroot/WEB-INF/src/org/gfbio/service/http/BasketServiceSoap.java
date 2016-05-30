@@ -149,11 +149,11 @@ public class BasketServiceSoap {
 	}
 
 	public static long updateBasket(long basketId, long userId,
-		java.lang.String name, java.lang.String basketJSON,
+		java.lang.String name, java.lang.String basketContent,
 		java.lang.String queryJSON) throws RemoteException {
 		try {
 			long returnValue = BasketServiceUtil.updateBasket(basketId, userId,
-					name, basketJSON, queryJSON);
+					name, basketContent, queryJSON);
 
 			return returnValue;
 		}

@@ -38,6 +38,8 @@ import java.util.Map;
 import org.gfbio.NoSuchBasketException;
 import org.gfbio.model.Basket;
 import org.gfbio.service.base.BasketLocalServiceBaseImpl;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
 
 /**
  * The implementation of the basket local service.
@@ -351,12 +353,16 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				jObj.put("lastModifiedDate", basket.getLastModifiedDate());
 
 				String strBasket = basket.getBasketContent();
-				JSONObject jBasket = JSONFactoryUtil
-						.createJSONObject(strBasket);
-				jObj.put("basketContent", jBasket);
-				JSONObject jQuery = JSONFactoryUtil.createJSONObject(basket
-						.getQueryJSON());
-				jObj.put("queryJSON", jQuery);
+				JSONObject jBasket = JSONFactoryUtil.createJSONObject(strBasket);
+				JSONArray jaBasket = JSONFactoryUtil.createJSONArray();
+				jaBasket.put(jBasket);
+				jObj.put("basketContent", jaBasket);
+				
+				String strQuery = basket.getQueryJSON();
+				JSONObject jQuery = JSONFactoryUtil.createJSONObject(strQuery);
+				JSONArray jaQuery = JSONFactoryUtil.createJSONArray();
+				jaQuery.put(jQuery);
+				jObj.put("queryJSON", jaQuery);
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());

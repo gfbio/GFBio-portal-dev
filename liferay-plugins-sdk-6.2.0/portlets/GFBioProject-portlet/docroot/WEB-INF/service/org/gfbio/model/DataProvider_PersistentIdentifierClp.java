@@ -257,10 +257,6 @@ public class DataProvider_PersistentIdentifierClp extends BaseModelImpl<DataProv
 		}
 	}
 
-	public Class<?> getClpSerializerClass() {
-		return _clpSerializerClass;
-	}
-
 	@Override
 	public int hashCode() {
 		return getPrimaryKey().hashCode();
@@ -304,5 +300,4 @@ public class DataProvider_PersistentIdentifierClp extends BaseModelImpl<DataProv
 	private long _gfbioDataProvider;
 	private long _gfbioPersistentIdentifier;
 	private BaseModel<?> _dataProvider_PersistentIdentifierRemoteModel;
-	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

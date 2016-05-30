@@ -1,0 +1,64 @@
+##<div class="container-fluid" id="wrapper">
+#*<div id="heading">
+			<h1 class="site-title">
+				<a class="$logo_css_class" href="$site_default_url" title="#language_format ("go-to-x", [$site_name])">
+					<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
+				</a>
+
+				#if ($show_site_name)
+					<span class="site-name" title="#language_format ("go-to-x", [$site_name])">
+						$site_name
+					</span>
+				#end
+			</h1>
+
+			<img src="$images_folder/layout/gf_bio_body_bg.jpg" style="width:100%"  position:fixed; z-index:-1000;>
+			
+			#*<h2 class="page-title">
+				<span>$the_title</span>
+			</h2>*#
+			
+			<div class="ce_pageimages header-page-images block" id="header-page-images">
+
+				<figure class="image_container">
+					<img src="$images_folder/layout/header-page-images/header-image-start.png" width="1020" height="320" alt="header-image-start">
+				</figure>
+			</div>
+			
+			
+			
+		</div>*#
+		
+		
+		##<div id="dock">
+				##if ($is_signed_in)
+				#	#dockbar()
+				##end
+			##</div>
+			
+			#if (!$is_signed_in)
+					##<a data-redirect="$is_login_redirect_required" href="$sign_in_url" id="sign-in" rel="nofollow">$sign_in_text</a>
+			#end
+			
+			
+			
+			<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+	
+
+
+ $('div.toggler').focus(function(e) {
+          $('div.toggler').attr('tabindex', 0);
+          $(this).attr('tabindex', -1);
+        }).blur(function() {
+          $(this).attr('tabindex', 0);
+        }).click(function() {
+          activate($(this));
+        }).keypress(function(event) {
+          if (event.keyCode == 13) activate($(this));
+        });
+
+	
+	 

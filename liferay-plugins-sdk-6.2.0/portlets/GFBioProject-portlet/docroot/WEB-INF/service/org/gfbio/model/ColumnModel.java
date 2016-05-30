@@ -137,19 +137,19 @@ public interface ColumnModel extends BaseModel<Column> {
 	public Object clone();
 
 	@Override
-	public int compareTo(org.gfbio.model.Column column);
+	public int compareTo(Column column);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<org.gfbio.model.Column> toCacheModel();
+	public CacheModel<Column> toCacheModel();
 
 	@Override
-	public org.gfbio.model.Column toEscapedModel();
+	public Column toEscapedModel();
 
 	@Override
-	public org.gfbio.model.Column toUnescapedModel();
+	public Column toUnescapedModel();
 
 	@Override
 	public String toString();

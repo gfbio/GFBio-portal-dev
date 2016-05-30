@@ -16,7 +16,6 @@ package org.gfbio.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,7 +52,6 @@ public interface DataProviderLocalService extends BaseLocalService,
 	* @return the data provider that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.DataProvider addDataProvider(
 		org.gfbio.model.DataProvider dataProvider)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -74,7 +72,6 @@ public interface DataProviderLocalService extends BaseLocalService,
 	* @throws PortalException if a data provider with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.DataProvider deleteDataProvider(long dataProviderID)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -86,7 +83,6 @@ public interface DataProviderLocalService extends BaseLocalService,
 	* @return the data provider that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.DataProvider deleteDataProvider(
 		org.gfbio.model.DataProvider dataProvider)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,7 +222,6 @@ public interface DataProviderLocalService extends BaseLocalService,
 	* @return the data provider that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.DataProvider updateDataProvider(
 		org.gfbio.model.DataProvider dataProvider)
 		throws com.liferay.portal.kernel.exception.SystemException;

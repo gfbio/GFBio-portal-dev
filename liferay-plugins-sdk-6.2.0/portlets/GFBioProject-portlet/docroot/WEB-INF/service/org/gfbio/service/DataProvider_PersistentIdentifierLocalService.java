@@ -16,7 +16,6 @@ package org.gfbio.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,7 +52,6 @@ public interface DataProvider_PersistentIdentifierLocalService
 	* @return the data provider_ persistent identifier that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.DataProvider_PersistentIdentifier addDataProvider_PersistentIdentifier(
 		org.gfbio.model.DataProvider_PersistentIdentifier dataProvider_PersistentIdentifier)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -75,7 +73,6 @@ public interface DataProvider_PersistentIdentifierLocalService
 	* @throws PortalException if a data provider_ persistent identifier with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.DataProvider_PersistentIdentifier deleteDataProvider_PersistentIdentifier(
 		org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -88,7 +85,6 @@ public interface DataProvider_PersistentIdentifierLocalService
 	* @return the data provider_ persistent identifier that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public org.gfbio.model.DataProvider_PersistentIdentifier deleteDataProvider_PersistentIdentifier(
 		org.gfbio.model.DataProvider_PersistentIdentifier dataProvider_PersistentIdentifier)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -230,7 +226,6 @@ public interface DataProvider_PersistentIdentifierLocalService
 	* @return the data provider_ persistent identifier that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public org.gfbio.model.DataProvider_PersistentIdentifier updateDataProvider_PersistentIdentifier(
 		org.gfbio.model.DataProvider_PersistentIdentifier dataProvider_PersistentIdentifier)
 		throws com.liferay.portal.kernel.exception.SystemException;
