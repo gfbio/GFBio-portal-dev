@@ -88,6 +88,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 	
 	
+	
 	 img#logo-gfbio{
 	
 		@include respond-to(phone){
@@ -906,6 +907,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 }
+
 
 /* ---------- Responsive Styles ------*/
 

@@ -108,7 +108,7 @@ $theme.include($body_top_include)
 					</div></td>
 					</tr></tbody></table>
 					<div class="ce_text block">
-						<p align="center"><img src="$images_folder/public/Logos%20Member/GFBiologofooter_juni2015.png" alt="" width="962" height="140"></p>  
+						<p align="center"><img src="$images_folder/public/Logos%20Member/GFBiologofooter_juni2016.png" alt="" width="962" height="140"></p>  
 		  			</div>
 			   </div>
 		</div>
@@ -135,6 +135,7 @@ $theme.include($bottom_include)
 <script>
 (function($) {
     $(document).ready(function() {
+      $('.sign-in a').attr('title','Please sign in or register to GFBio!');
       $(document).accordion({
         // Put custom options here
         heightStyle: 'content',
@@ -161,6 +162,10 @@ $theme.include($bottom_include)
       });
     });
   })(jQuery);
+  
+  
+  
+  
 </script>
 
 
