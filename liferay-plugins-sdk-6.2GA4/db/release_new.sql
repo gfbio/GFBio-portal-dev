@@ -6,14 +6,14 @@
 ------------------------- Delete old category_parent and relation -------------------------
 
 
-DELETE FROM gfbio_column WHERE columnid = 28;
-DELETE FROM gfbio_column WHERE columnid = 29;
-DELETE FROM gfbio_head WHERE headid = 9;
+DELETE FROM gfbio_column WHERE columnid = 23;
+DELETE FROM gfbio_column WHERE columnid = 24;
+DELETE FROM gfbio_head WHERE headid = 8;
 
-DELETE FROM gfbio_column WHERE columnid = 61;
-DELETE FROM gfbio_column WHERE columnid = 62;
-DELETE FROM gfbio_column WHERE columnid = 63;
-DELETE FROM gfbio_head WHERE headid = 20;
+--DELETE FROM gfbio_column WHERE columnid = 61;
+--DELETE FROM gfbio_column WHERE columnid = 62;
+--DELETE FROM gfbio_column WHERE columnid = 63;
+--DELETE FROM gfbio_head WHERE headid = 20;
 
 
 ------------------------------------- Head Table Content -------------------------------------
