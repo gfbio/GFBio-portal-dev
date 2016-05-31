@@ -23,6 +23,7 @@
 			"researchobjectid"   : researchObjectId,
 			"projectid"   : projectId,
 			"userid"   : userId,
+			"hidecode": '-21'
 		};
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
