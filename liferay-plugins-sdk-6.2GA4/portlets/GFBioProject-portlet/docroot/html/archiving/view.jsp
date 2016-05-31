@@ -39,10 +39,6 @@
 			<h2>Submission Workflows</h2>
 			<p>
 				
-			<br>
-			Please select an existing project, <br>or choose nothing.
-			<br>
-	
 			<%
 				Long userID = PortalUtil.getUserId(request);
 				List <Project> projectList = new ArrayList<Project>();
@@ -52,17 +48,23 @@
 				catch (SystemException e) {e.printStackTrace();	}
 			%>
 	
-			<form action="select.html" id="choProjForm">
-				<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseProjProProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX')" >
-					<option value="none"> </option>
-					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
-						<option value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
-					<%} } %>
-				</select>
-			</form>
+			<div id="chooseROX" class="swHide">
+			
+				<!-- 			<br>
+				Please select an existing project, <br>or choose nothing.
+				<br> -->
+			
+				<form action="select.html" id="choProjForm">
+					<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseProjProProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX')" >
+						<option value="none"> </option>
+						<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
+							<option value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
+						<%} } %>
+					</select>
+				</form>
 					
 			
-			<div id="chooseROX" class="swHide">
+			
 			
 				Please select an existing dataset, <br>or choose nothing.
 						
@@ -72,11 +74,11 @@
 					</select>
 				</form>	
 	
-			</div>
+			</div> 
 	
 
 	
-			Please select a data center in order to start a submission workflow.
+			Please select a exploratory focus in order to start a submission workflow.
 			<br>
 			<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 			<input id="submissionCheck" type="hidden" value="true">
@@ -85,7 +87,7 @@
 				<select  id="choWorkflow" style="width:90%" name="<portlet:namespace />choWorkflow"   size="1" onclick="startSubmissionWorkflow(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value, choROForm.workflowChooseRO.options[choROForm.workflowChooseRO.selectedIndex].value, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, <%=PortalUtil.getUser(request).getUserId()%>)">
 					<option  value="none"> </option>
 					<option  value="ena">Molecular Sequence Data</option>
-					<option  value="collections">Collections</option>
+<!-- 					<option  value="collections">Collections</option> -->
 				</select>
 			</form>
 			<br>

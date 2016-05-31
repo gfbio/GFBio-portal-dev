@@ -17,15 +17,29 @@
 	
 	
 	//generelly submission workflow fire to subworkflows
-	function sentWorkflowInformations(hidecode, showhide, researchObjectId, projectId, userId) {
+	function sentWorkflowInformations(workflow, showhide, researchObjectId, projectId, userId) {
+		var showhide;
+		var hidecode;
+		if (workflow =='ena'){
+			showhide = 'show';
+			hidecode = '-21';
+		}
+		else{
+			showhide = 'hide';
+			hidecode = '-21';
+		}
 		var toSubmit = {
-			"hidecode" : hidecode,
+			"workflow" : workflow,
 			"researchobjectid"   : researchObjectId,
 			"projectid"   : projectId,
 			"userid"   : userId,
+			"hidecode": hidecode,
+			"showhide": showhide
 		};
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
 	}
+	
+
 	
 		
 	//
