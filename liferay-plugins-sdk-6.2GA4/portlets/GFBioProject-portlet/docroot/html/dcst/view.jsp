@@ -48,11 +48,11 @@ Es gibt <%=projectList.size() %> Projekte.
 <liferay-ui:search-container emptyResultsMessage="there-are-no-projects" delta="15" >
 	<liferay-ui:search-container-results>
 		<%		
-		results = ListUtil.subList(projectList, searchContainer.getStart(), searchContainer.getEnd());
+/* 		results = ListUtil.subList(projectList, searchContainer.getStart(), searchContainer.getEnd());
 		total	= projectList.size();
 		
 		pageContext.setAttribute("results", results);
-		pageContext.setAttribute("total", total);
+		pageContext.setAttribute("total", total); */
 		%>
 	</liferay-ui:search-container-results>
 	

@@ -74,6 +74,13 @@ public class UserExtensionServiceUtil {
 		return getService().getUserById(json);
 	}
 
+	public static org.json.simple.JSONObject getTest(
+		org.json.simple.JSONObject json)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTest(json);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -13,7 +13,8 @@ CREATE TABLE gfbio_researchobject
   name character varying(75),
   label character varying(75) NOT NULL,
   extendeddata text,
-  researchobjecttype character varying(75) NOT NULL,
+  description text,
+  metadataid bigint,
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion)
 )
 WITH (
@@ -21,3 +22,5 @@ WITH (
 );
 ALTER TABLE gfbio_researchobject
   OWNER TO liferay_gfbio;
+
+  

@@ -254,6 +254,8 @@ public interface UserExtensionLocalService extends BaseLocalService,
 	public org.json.simple.JSONObject getUserExtentionById(
 		org.json.simple.JSONObject requestJson);
 
+	public java.lang.Boolean checkExistenceOfUserId(long userId);
+
 	public java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList);
 

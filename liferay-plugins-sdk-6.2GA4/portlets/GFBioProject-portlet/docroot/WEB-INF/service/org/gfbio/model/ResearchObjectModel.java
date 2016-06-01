@@ -132,6 +132,21 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	public void setLabel(String label);
 
 	/**
+	 * Returns the description of this research object.
+	 *
+	 * @return the description of this research object
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this research object.
+	 *
+	 * @param description the description of this research object
+	 */
+	public void setDescription(String description);
+
+	/**
 	 * Returns the extendeddata of this research object.
 	 *
 	 * @return the extendeddata of this research object
@@ -147,19 +162,18 @@ public interface ResearchObjectModel extends BaseModel<ResearchObject> {
 	public void setExtendeddata(String extendeddata);
 
 	/**
-	 * Returns the research object type of this research object.
+	 * Returns the metadata i d of this research object.
 	 *
-	 * @return the research object type of this research object
+	 * @return the metadata i d of this research object
 	 */
-	@AutoEscape
-	public String getResearchObjectType();
+	public long getMetadataID();
 
 	/**
-	 * Sets the research object type of this research object.
+	 * Sets the metadata i d of this research object.
 	 *
-	 * @param researchObjectType the research object type of this research object
+	 * @param metadataID the metadata i d of this research object
 	 */
-	public void setResearchObjectType(String researchObjectType);
+	public void setMetadataID(long metadataID);
 
 	@Override
 	public boolean isNew();

@@ -16,7 +16,9 @@ package org.gfbio.service.impl;
 
 
 import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -49,6 +51,13 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	}
 	
 	
+	//
+	public String getFullNamesAsString (long projectId){
+		JSONArray jsonarray = Project_UserLocalServiceUtil.getOwnerAndPiByProjectId(projectId);
+		return Project_UserLocalServiceUtil.getFullNamesAsString(jsonarray);
+	}
+	
+	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
@@ -56,10 +65,6 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	public Boolean checkProjectOnSubmissions(long projectId){
 		return ProjectLocalServiceUtil.checkProjectOnSubmissions(projectId);
 	}
-	
-	
-	
-	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 
 	//
@@ -70,5 +75,13 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 		return responseJson;
 	}
 	
+	
+	//
+	public JSONObject updateProject(JSONObject requestJson) {
+
+		JSONObject responseJson = new JSONObject();
+		responseJson = ProjectLocalServiceUtil.updateProjectByJson(requestJson);
+		return responseJson;
+	}
 
 }

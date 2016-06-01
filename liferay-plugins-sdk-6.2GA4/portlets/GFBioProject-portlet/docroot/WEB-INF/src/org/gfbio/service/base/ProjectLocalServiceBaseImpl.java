@@ -43,12 +43,15 @@ import org.gfbio.service.persistence.DataProviderFinder;
 import org.gfbio.service.persistence.DataProviderPersistence;
 import org.gfbio.service.persistence.DataProvider_PersistentIdentifierFinder;
 import org.gfbio.service.persistence.DataProvider_PersistentIdentifierPersistence;
+import org.gfbio.service.persistence.Funding_InstitutionProjectPersistence;
+import org.gfbio.service.persistence.Funding_PersonProjectPersistence;
 import org.gfbio.service.persistence.HeadFinder;
 import org.gfbio.service.persistence.HeadPersistence;
 import org.gfbio.service.persistence.ProjectFinder;
 import org.gfbio.service.persistence.ProjectPersistence;
 import org.gfbio.service.persistence.Project_ResearchObjectFinder;
 import org.gfbio.service.persistence.Project_ResearchObjectPersistence;
+import org.gfbio.service.persistence.Project_UserFinder;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
@@ -648,6 +651,120 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the funding_ institution project local service.
+	 *
+	 * @return the funding_ institution project local service
+	 */
+	public org.gfbio.service.Funding_InstitutionProjectLocalService getFunding_InstitutionProjectLocalService() {
+		return funding_InstitutionProjectLocalService;
+	}
+
+	/**
+	 * Sets the funding_ institution project local service.
+	 *
+	 * @param funding_InstitutionProjectLocalService the funding_ institution project local service
+	 */
+	public void setFunding_InstitutionProjectLocalService(
+		org.gfbio.service.Funding_InstitutionProjectLocalService funding_InstitutionProjectLocalService) {
+		this.funding_InstitutionProjectLocalService = funding_InstitutionProjectLocalService;
+	}
+
+	/**
+	 * Returns the funding_ institution project remote service.
+	 *
+	 * @return the funding_ institution project remote service
+	 */
+	public org.gfbio.service.Funding_InstitutionProjectService getFunding_InstitutionProjectService() {
+		return funding_InstitutionProjectService;
+	}
+
+	/**
+	 * Sets the funding_ institution project remote service.
+	 *
+	 * @param funding_InstitutionProjectService the funding_ institution project remote service
+	 */
+	public void setFunding_InstitutionProjectService(
+		org.gfbio.service.Funding_InstitutionProjectService funding_InstitutionProjectService) {
+		this.funding_InstitutionProjectService = funding_InstitutionProjectService;
+	}
+
+	/**
+	 * Returns the funding_ institution project persistence.
+	 *
+	 * @return the funding_ institution project persistence
+	 */
+	public Funding_InstitutionProjectPersistence getFunding_InstitutionProjectPersistence() {
+		return funding_InstitutionProjectPersistence;
+	}
+
+	/**
+	 * Sets the funding_ institution project persistence.
+	 *
+	 * @param funding_InstitutionProjectPersistence the funding_ institution project persistence
+	 */
+	public void setFunding_InstitutionProjectPersistence(
+		Funding_InstitutionProjectPersistence funding_InstitutionProjectPersistence) {
+		this.funding_InstitutionProjectPersistence = funding_InstitutionProjectPersistence;
+	}
+
+	/**
+	 * Returns the funding_ person project local service.
+	 *
+	 * @return the funding_ person project local service
+	 */
+	public org.gfbio.service.Funding_PersonProjectLocalService getFunding_PersonProjectLocalService() {
+		return funding_PersonProjectLocalService;
+	}
+
+	/**
+	 * Sets the funding_ person project local service.
+	 *
+	 * @param funding_PersonProjectLocalService the funding_ person project local service
+	 */
+	public void setFunding_PersonProjectLocalService(
+		org.gfbio.service.Funding_PersonProjectLocalService funding_PersonProjectLocalService) {
+		this.funding_PersonProjectLocalService = funding_PersonProjectLocalService;
+	}
+
+	/**
+	 * Returns the funding_ person project remote service.
+	 *
+	 * @return the funding_ person project remote service
+	 */
+	public org.gfbio.service.Funding_PersonProjectService getFunding_PersonProjectService() {
+		return funding_PersonProjectService;
+	}
+
+	/**
+	 * Sets the funding_ person project remote service.
+	 *
+	 * @param funding_PersonProjectService the funding_ person project remote service
+	 */
+	public void setFunding_PersonProjectService(
+		org.gfbio.service.Funding_PersonProjectService funding_PersonProjectService) {
+		this.funding_PersonProjectService = funding_PersonProjectService;
+	}
+
+	/**
+	 * Returns the funding_ person project persistence.
+	 *
+	 * @return the funding_ person project persistence
+	 */
+	public Funding_PersonProjectPersistence getFunding_PersonProjectPersistence() {
+		return funding_PersonProjectPersistence;
+	}
+
+	/**
+	 * Sets the funding_ person project persistence.
+	 *
+	 * @param funding_PersonProjectPersistence the funding_ person project persistence
+	 */
+	public void setFunding_PersonProjectPersistence(
+		Funding_PersonProjectPersistence funding_PersonProjectPersistence) {
+		this.funding_PersonProjectPersistence = funding_PersonProjectPersistence;
+	}
+
+	/**
 	 * Returns the head local service.
 	 *
 	 * @return the head local service
@@ -925,6 +1042,24 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setProject_UserPersistence(
 		Project_UserPersistence project_UserPersistence) {
 		this.project_UserPersistence = project_UserPersistence;
+	}
+
+	/**
+	 * Returns the project_ user finder.
+	 *
+	 * @return the project_ user finder
+	 */
+	public Project_UserFinder getProject_UserFinder() {
+		return project_UserFinder;
+	}
+
+	/**
+	 * Sets the project_ user finder.
+	 *
+	 * @param project_UserFinder the project_ user finder
+	 */
+	public void setProject_UserFinder(Project_UserFinder project_UserFinder) {
+		this.project_UserFinder = project_UserFinder;
 	}
 
 	/**
@@ -1349,6 +1484,18 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected DataProvider_PersistentIdentifierPersistence dataProvider_PersistentIdentifierPersistence;
 	@BeanReference(type = DataProvider_PersistentIdentifierFinder.class)
 	protected DataProvider_PersistentIdentifierFinder dataProvider_PersistentIdentifierFinder;
+	@BeanReference(type = org.gfbio.service.Funding_InstitutionProjectLocalService.class)
+	protected org.gfbio.service.Funding_InstitutionProjectLocalService funding_InstitutionProjectLocalService;
+	@BeanReference(type = org.gfbio.service.Funding_InstitutionProjectService.class)
+	protected org.gfbio.service.Funding_InstitutionProjectService funding_InstitutionProjectService;
+	@BeanReference(type = Funding_InstitutionProjectPersistence.class)
+	protected Funding_InstitutionProjectPersistence funding_InstitutionProjectPersistence;
+	@BeanReference(type = org.gfbio.service.Funding_PersonProjectLocalService.class)
+	protected org.gfbio.service.Funding_PersonProjectLocalService funding_PersonProjectLocalService;
+	@BeanReference(type = org.gfbio.service.Funding_PersonProjectService.class)
+	protected org.gfbio.service.Funding_PersonProjectService funding_PersonProjectService;
+	@BeanReference(type = Funding_PersonProjectPersistence.class)
+	protected Funding_PersonProjectPersistence funding_PersonProjectPersistence;
 	@BeanReference(type = org.gfbio.service.HeadLocalService.class)
 	protected org.gfbio.service.HeadLocalService headLocalService;
 	@BeanReference(type = org.gfbio.service.HeadService.class)
@@ -1379,6 +1526,8 @@ public abstract class ProjectLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected org.gfbio.service.Project_UserService project_UserService;
 	@BeanReference(type = Project_UserPersistence.class)
 	protected Project_UserPersistence project_UserPersistence;
+	@BeanReference(type = Project_UserFinder.class)
+	protected Project_UserFinder project_UserFinder;
 	@BeanReference(type = org.gfbio.service.ResearchObjectLocalService.class)
 	protected org.gfbio.service.ResearchObjectLocalService researchObjectLocalService;
 	@BeanReference(type = org.gfbio.service.ResearchObjectService.class)

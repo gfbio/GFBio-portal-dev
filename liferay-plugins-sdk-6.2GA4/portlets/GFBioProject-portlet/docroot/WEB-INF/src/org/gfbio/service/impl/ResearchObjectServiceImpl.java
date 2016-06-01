@@ -61,10 +61,10 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	public JSONArray getResearchObjectById (String requestJson){
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
-		try {
-			parseJson = (JSONArray) parser.parse(requestJson);
-		} catch (ParseException e) {e.printStackTrace();}
-		return ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(parseJson);
+		try {parseJson = (JSONArray) parser.parse(requestJson);}
+		catch (ParseException e) {e.printStackTrace();}
+		
+		return ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById(parseJson);
 	}
 	
 	
@@ -88,43 +88,27 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	public JSONArray createResearchObject(String requestJson){
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
-		try {
-			parseJson = (JSONArray) parser.parse(requestJson);
-		} catch (ParseException e) {e.printStackTrace();}
+		try {parseJson = (JSONArray) parser.parse(requestJson);}
+		catch (ParseException e) {e.printStackTrace();}
+		
 		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
 	}
 	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public String getTest(String requestJson){
-		String requestString = "test: ".concat(requestJson);
-		JSONArray requestArray = new JSONArray();
-		requestArray.add(requestString);
-		System.out.println("foo".concat(requestJson.toString()));
-		return requestString;
-	}
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public String createTest(JSONObject requestJson){
-		String requestString = "test: ".concat(requestJson.toString());
-		JSONArray requestArray = new JSONArray();
-		requestArray.add(requestString);
-		System.out.println("foo");
-		return requestString;
-	}
-	
-	
+		
 	//
 	public JSONArray updateResearchObject(String requestJson){
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
-		try {
-			parseJson = (JSONArray) parser.parse(requestJson);
-		} catch (ParseException e) {e.printStackTrace();}
+		try {parseJson = (JSONArray) parser.parse(requestJson);}
+		catch (ParseException e) {e.printStackTrace();}
+		
 		return ResearchObjectLocalServiceUtil.updateResearchObjectByJson(parseJson);
 	}
+	
+	
+/*	//
+	public Boolean updateLicenseId (long researchObjectId, int researchObjectVersion, long licenseId){
+		return ResearchObjectLocalServiceUtil.updateLicenseId (researchObjectId, researchObjectVersion, licenseId);
+	}*/
 	
 }

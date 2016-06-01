@@ -318,6 +318,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONArray getResearchObjectsByProjectId(
+		long projectId) {
+		return _projectLocalService.getResearchObjectsByProjectId(projectId);
+	}
+
+	@Override
 	public java.lang.Boolean checkProjectOnId(long projectId) {
 		return _projectLocalService.checkProjectOnId(projectId);
 	}
@@ -358,6 +364,12 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject updateProjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return _projectLocalService.updateProjectByJson(requestJson);
+	}
+
+	@Override
 	public long createProject(long userId, java.lang.String name,
 		java.lang.String label, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -381,6 +393,17 @@ public class ProjectLocalServiceWrapper implements ProjectLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _projectLocalService.updateProject(projectID, userID, name,
 			label, description, extendedData, startDate, endDate, status);
+	}
+
+	@Override
+	public java.lang.Boolean updateCategories(long projectId,
+		org.json.simple.JSONArray requestJson) {
+		return _projectLocalService.updateCategories(projectId, requestJson);
+	}
+
+	@Override
+	public java.lang.Boolean updateCategory(long projectId, long categoryId) {
+		return _projectLocalService.updateCategory(projectId, categoryId);
 	}
 
 	@Override

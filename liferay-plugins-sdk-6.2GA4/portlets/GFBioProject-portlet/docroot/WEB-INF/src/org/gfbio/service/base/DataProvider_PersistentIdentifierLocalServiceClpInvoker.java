@@ -114,25 +114,25 @@ public class DataProvider_PersistentIdentifierLocalServiceClpInvoker {
 				"org.gfbio.model.DataProvider_PersistentIdentifier"
 			};
 
-		_methodName118 = "getBeanIdentifier";
+		_methodName132 = "getBeanIdentifier";
 
-		_methodParameterTypes118 = new String[] {  };
+		_methodParameterTypes132 = new String[] {  };
 
-		_methodName119 = "setBeanIdentifier";
+		_methodName133 = "setBeanIdentifier";
 
-		_methodParameterTypes119 = new String[] { "java.lang.String" };
+		_methodParameterTypes133 = new String[] { "java.lang.String" };
 
-		_methodName124 = "getDataProviderIds";
+		_methodName138 = "getDataProviderIds";
 
-		_methodParameterTypes124 = new String[] { "long" };
+		_methodParameterTypes138 = new String[] { "long" };
 
-		_methodName125 = "getPersistentIdentiferIds";
+		_methodName139 = "getPersistentIdentiferIds";
 
-		_methodParameterTypes125 = new String[] { "long" };
+		_methodParameterTypes139 = new String[] { "long" };
 
-		_methodName126 = "updateDataProvider_PersistentIdentifier";
+		_methodName140 = "updateDataProvider_PersistentIdentifier";
 
-		_methodParameterTypes126 = new String[] { "long", "long" };
+		_methodParameterTypes140 = new String[] { "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -224,30 +224,30 @@ public class DataProvider_PersistentIdentifierLocalServiceClpInvoker {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.updateDataProvider_PersistentIdentifier((org.gfbio.model.DataProvider_PersistentIdentifier)arguments[0]);
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			DataProvider_PersistentIdentifierLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName138.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.getDataProviderIds(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName139.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.getPersistentIdentiferIds(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName140.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
 			return DataProvider_PersistentIdentifierLocalServiceUtil.updateDataProvider_PersistentIdentifier(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
@@ -287,14 +287,14 @@ public class DataProvider_PersistentIdentifierLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName118;
-	private String[] _methodParameterTypes118;
-	private String _methodName119;
-	private String[] _methodParameterTypes119;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
+	private String _methodName138;
+	private String[] _methodParameterTypes138;
+	private String _methodName139;
+	private String[] _methodParameterTypes139;
+	private String _methodName140;
+	private String[] _methodParameterTypes140;
 }

@@ -12,5 +12,7 @@
 		<portlet id="project-profile"></portlet>
 		<portlet id="submission-manager"></portlet>
 		<portlet id="table-builder"></portlet>
+		<portlet id="workflowcollections"></portlet>
+		<portlet id="workflowena"></portlet>
 	</category>
 </display>

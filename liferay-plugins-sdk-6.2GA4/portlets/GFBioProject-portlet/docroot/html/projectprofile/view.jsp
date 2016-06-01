@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 
 
-<%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
+<%@ include file="/html/init.jsp" %> <!-- library imports -->
 <%@ include file="/html/projectprofile/init.jsp" %> <!-- library imports -->
 <script  src="${pageContext.request.contextPath}/js/main.js"       			type="text/javascript"></script>  <!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/projectProfile.js"      type="text/javascript"></script>  <!--  main.js  imports -->
@@ -38,13 +38,9 @@
 				Long userID = PortalUtil.getUserId(request);
 				List <Project> projectList = new ArrayList<Project>();
 				projectList = null;
-				try {
-					 projectList = ProjectLocalServiceUtil.getProjectList(userID);
-				} catch (NoSuchModelException e) {
-					e.printStackTrace();
-				} catch (SystemException e) {
-					e.printStackTrace();
-				}
+				try {projectList = ProjectLocalServiceUtil.getProjectList(userID);}
+				catch (NoSuchModelException e) {e.printStackTrace();}
+				catch (SystemException e) {e.printStackTrace();	}
 			%>
 	
 			<%if (projectList.size()==0){ %>
@@ -52,8 +48,6 @@
 				<div class="portlet-msg-alert">
 					Please create a project.
 				</div>
-				UserId: <%=userID %>
-	
 			<%}else { %>
 			
 				<!------------------------------------------------ Choose Project -------------------------------------------------------------------->

@@ -349,7 +349,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray createSubmission (JSONArray requestJson){
-		
+		System.out.println("SubReg (local): "  +requestJson);
 		JSONArray responseJson = new JSONArray();
 		
 		for (int i =0; i <requestJson.size();i++)
@@ -363,7 +363,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	@SuppressWarnings("unchecked")
 	public JSONObject createSubmission (JSONObject requestJson){
 		
-		System.out.println(requestJson);
+		System.out.println("SubReg (local) i: "+requestJson);
 		
 		Boolean check = false;
 		JSONObject keyJson = new JSONObject();

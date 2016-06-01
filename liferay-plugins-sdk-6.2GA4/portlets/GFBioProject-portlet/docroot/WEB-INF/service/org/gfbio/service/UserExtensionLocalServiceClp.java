@@ -113,15 +113,19 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 
 		_methodParameterTypes19 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName20 = "checkForIgnoredParameter";
+		_methodName20 = "checkExistenceOfUserId";
 
-		_methodParameterTypes20 = new String[] {
+		_methodParameterTypes20 = new String[] { "long" };
+
+		_methodName21 = "checkForIgnoredParameter";
+
+		_methodParameterTypes21 = new String[] {
 				"java.lang.Object[][]", "java.util.Set"
 			};
 
-		_methodName21 = "constructUserExtentionJsonById";
+		_methodName22 = "constructUserExtentionJsonById";
 
-		_methodParameterTypes21 = new String[] { "com.liferay.portal.model.User" };
+		_methodParameterTypes22 = new String[] { "com.liferay.portal.model.User" };
 	}
 
 	@Override
@@ -696,13 +700,36 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 	}
 
 	@Override
+	public java.lang.Boolean checkExistenceOfUserId(long userId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.Boolean)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName20,
-					_methodParameterTypes20,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] {
 						ClpSerializer.translateInput(objects),
 						
@@ -732,8 +759,8 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] { ClpSerializer.translateInput(user) });
 		}
 		catch (Throwable t) {
@@ -802,4 +829,6 @@ public class UserExtensionLocalServiceClp implements UserExtensionLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
+	private String _methodName22;
+	private String[] _methodParameterTypes22;
 }

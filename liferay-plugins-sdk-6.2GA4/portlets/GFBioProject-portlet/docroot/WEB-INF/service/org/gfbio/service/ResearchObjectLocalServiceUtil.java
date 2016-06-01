@@ -275,14 +275,14 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public static org.json.simple.JSONArray getResearchObjectsAsJsonById(
 		org.json.simple.JSONArray requestJson) {
-		return getService().getResearchObjectAsJsonById(requestJson);
+		return getService().getResearchObjectsAsJsonById(requestJson);
 	}
 
-	public static org.json.simple.JSONObject getResearchObjectASJsonById(
+	public static org.json.simple.JSONObject getResearchObjectAsJsonById(
 		org.json.simple.JSONObject requestJson) {
-		return getService().getResearchObjectASJsonById(requestJson);
+		return getService().getResearchObjectAsJsonById(requestJson);
 	}
 
 	public static org.json.simple.JSONObject getResearchObjectAbsolutParent(
@@ -347,14 +347,20 @@ public class ResearchObjectLocalServiceUtil {
 		return getService().checkForIgnoredParameter(objects, keyList);
 	}
 
-	public static java.lang.Boolean checkParentAttributById(
-		long researchObjectId) {
-		return getService().checkParentAttributById(researchObjectId);
+	public static org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label) {
+		return getService().checkHCCBackground(tableName, columnName, label);
 	}
 
 	public static org.json.simple.JSONObject checkNullParent(
 		org.json.simple.JSONObject json) {
 		return getService().checkNullParent(json);
+	}
+
+	public static java.lang.Boolean checkParentAttributById(
+		long researchObjectId) {
+		return getService().checkParentAttributById(researchObjectId);
 	}
 
 	public static java.lang.Boolean checkResearchObjectId(long researchObjectId) {
@@ -420,6 +426,56 @@ public class ResearchObjectLocalServiceUtil {
 				   .updateResearchObjectWithProject(projectId,
 			researchObjectId, researchObjectVersion, name, label, extendedData,
 			researchObjectType);
+	}
+
+	public static java.lang.Boolean updateAuthorIds(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorNames) {
+		return getService()
+				   .updateAuthorIds(researchObjectId, researchObjectVersion,
+			authorNames);
+	}
+
+	public static java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorMail) {
+		return getService()
+				   .updateAuthorId(researchObjectId, researchObjectVersion,
+			authorMail);
+	}
+
+	public static java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, long authorId) {
+		return getService()
+				   .updateAuthorId(researchObjectId, researchObjectVersion,
+			authorId);
+	}
+
+	public static java.lang.Boolean updateDescription(long researchObjectId,
+		int researchObjectVersion, java.lang.String description) {
+		return getService()
+				   .updateDescription(researchObjectId, researchObjectVersion,
+			description);
+	}
+
+	public static java.lang.Boolean updateLicenseId(long researchObjectId,
+		java.lang.String licenseLabel) {
+		return getService().updateLicenseId(researchObjectId, licenseLabel);
+	}
+
+	public static java.lang.Boolean updateLicenseId(long researchObjectId,
+		long licenseId) {
+		return getService().updateLicenseId(researchObjectId, licenseId);
+	}
+
+	public static java.lang.Boolean updateLicenseIds(long researchObjectId,
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateLicenseIds(researchObjectId, requestJson);
+	}
+
+	public static java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId) {
+		return getService()
+				   .updateMetadataId(researchObjectId, researchObjectVersion,
+			metadataId);
 	}
 
 	public static java.lang.Boolean updateParentResearchObjectIdByIds(

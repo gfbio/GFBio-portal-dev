@@ -81,4 +81,8 @@ public interface ContentService extends BaseService, InvokableService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.json.simple.JSONArray getRowInformationOfRelationByContentId(
 		long contentId, java.lang.String tableName1, java.lang.String tableName2);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		org.json.simple.JSONObject requestJson);
 }

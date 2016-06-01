@@ -36,13 +36,21 @@ public class ProjectServiceClp implements ProjectService {
 
 		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName4 = "checkProjectOnSubmissions";
+		_methodName4 = "getFullNamesAsString";
 
 		_methodParameterTypes4 = new String[] { "long" };
 
-		_methodName5 = "createProject";
+		_methodName5 = "checkProjectOnSubmissions";
 
-		_methodParameterTypes5 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes5 = new String[] { "long" };
+
+		_methodName6 = "createProject";
+
+		_methodParameterTypes6 = new String[] { "org.json.simple.JSONObject" };
+
+		_methodName7 = "updateProject";
+
+		_methodParameterTypes7 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -121,12 +129,35 @@ public class ProjectServiceClp implements ProjectService {
 	}
 
 	@Override
-	public java.lang.Boolean checkProjectOnSubmissions(long projectId) {
+	public java.lang.String getFullNamesAsString(long projectId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName4,
 					_methodParameterTypes4, new Object[] { projectId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.lang.Boolean checkProjectOnSubmissions(long projectId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { projectId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -149,8 +180,33 @@ public class ProjectServiceClp implements ProjectService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONObject)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public org.json.simple.JSONObject updateProject(
+		org.json.simple.JSONObject requestJson) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
 					new Object[] { ClpSerializer.translateInput(requestJson) });
 		}
 		catch (Throwable t) {
@@ -179,4 +235,8 @@ public class ProjectServiceClp implements ProjectService {
 	private String[] _methodParameterTypes4;
 	private String _methodName5;
 	private String[] _methodParameterTypes5;
+	private String _methodName6;
+	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
 }

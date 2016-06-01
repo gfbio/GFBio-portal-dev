@@ -31,6 +31,7 @@ import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.HeadLocalServiceBaseImpl;
 import org.gfbio.service.persistence.HeadFinderUtil;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -179,9 +180,8 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		for (int y = 1; y < table[0].length;y++){
 			table[0][y]= (long) rowIdList.get(y-1);
 			for (int x =1;x< table.length;x++)
-				try {
-					table[x][y] = ContentLocalServiceUtil.getContentIdByTableIds(Long.valueOf(table[0][y]).longValue(), Long.valueOf(table[x][0]).longValue());
-				} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
+				try {table[x][y] = ContentLocalServiceUtil.getContentIdByTableIds(Long.valueOf(table[0][y]).longValue(), Long.valueOf(table[x][0]).longValue());}
+				catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 		}
 		
 		return table;
@@ -211,6 +211,37 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 			
 		return returnTable;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getTableAsJSONArrayByName(JSONObject requestJson){
+
+		JSONArray responseJson = new JSONArray();
+		if (requestJson.containsKey("tablename"))
+			try {responseJson = getTableAsJSONArray(getHeadIdByTableName((String)requestJson.get("tablename")));} 
+			catch (NoSuchHeadException | SystemException e) {responseJson.add("ERROR: No key table with tablename '"+(String)requestJson.get("tablename")+"' exist.");}
+		else
+			responseJson.add("ERROR: No key 'tablename' exist.");
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked" })
+	public JSONArray getTableAsJSONArray(long headId){
+		
+		JSONArray responseJson = new JSONArray();
+		List <Long> rowList= ContentLocalServiceUtil.getRowIds(headId);
+		int rowCount =0;
+		
+		try {rowCount = ContentLocalServiceUtil.getCountOfRows(headId);}
+		catch (SystemException e) {e.printStackTrace();}
+		for (int i=0; i < rowCount;i++)
+			responseJson.add(ContentLocalServiceUtil.getRowInformationById(rowList.get(i)));
+
+		return responseJson;
 	}
 	
 		
@@ -641,7 +672,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		
 		return check;
 	}
-
+	
 	
 	//update or build a new head with their columns and their contents
 	public Boolean updateTable (JSONObject json){
@@ -650,9 +681,52 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		int i=0;
 		while (json.containsKey(i)){
 			JSONObject columnjson = (JSONObject) json.get(i);
-			System.out.println(columnjson.get("headid"));
 			check = ColumnLocalServiceUtil.updateColumnWithContents(columnjson);
 			i++;
+		}
+		return check;
+	}
+	
+	
+	//update or build a relation table with content -> build a relationship
+	@SuppressWarnings("unchecked")
+	public Boolean updateInterfaceTableWithContent(String nonHccTableName, long nonHccContentId, String hccTableName, long hccContentId){
+		
+		Boolean check = false;
+		long headId =0;
+		String tableName="";
+
+		tableName = constructRelationName(nonHccTableName, hccTableName);
+		try {
+			headId = getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+
+		check = ContentLocalServiceUtil.checkKeyPairInRelationship(headId,  Long.toString(nonHccContentId),  Long.toString(hccContentId));
+		
+		if (check){
+			JSONObject json = constructHeadJson(headId, tableName, "relationship");
+			JSONObject jsonColumn1 = null;
+			JSONObject jsonColumn2 = null;
+			JSONObject jsonContent1 = null;
+			JSONObject jsonContent2 = null;
+			
+			jsonColumn1 = ColumnLocalServiceUtil.constructColumnJson(ColumnLocalServiceUtil.getColumnIdByNames(tableName, nonHccTableName), headId, nonHccTableName);
+			jsonColumn2 = ColumnLocalServiceUtil.constructColumnJson(ColumnLocalServiceUtil.getColumnIdByNames(tableName, hccTableName), headId, hccTableName);
+	
+			try {
+				jsonContent1 = ContentLocalServiceUtil.constructContentJson(0, getHeadIdByTableName(nonHccTableName), ColumnLocalServiceUtil.getColumnIdByNames(tableName, nonHccTableName), 0, Long.toString(nonHccContentId));
+			} catch (SystemException | PortalException e) {e.printStackTrace();	}
+			
+			try {
+				jsonContent2 = ContentLocalServiceUtil.constructContentJson(0, getHeadIdByTableName(hccTableName), ColumnLocalServiceUtil.getColumnIdByNames(tableName, hccTableName), 0, Long.toString(hccContentId));
+			} catch (SystemException | PortalException e) {e.printStackTrace();	}
+	
+			jsonColumn1.put("0", jsonContent1);
+			jsonColumn2.put("0", jsonContent2);
+			json.put("0", jsonColumn1);
+			json.put("1", jsonColumn2);
+			
+			check =updateHeadWithColumns2(json);
 		}
 		return check;
 	}

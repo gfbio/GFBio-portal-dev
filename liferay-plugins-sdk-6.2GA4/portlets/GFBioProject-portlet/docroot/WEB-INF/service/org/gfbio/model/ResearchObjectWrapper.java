@@ -54,8 +54,9 @@ public class ResearchObjectWrapper implements ResearchObject,
 		attributes.put("parentResearchObjectID", getParentResearchObjectID());
 		attributes.put("name", getName());
 		attributes.put("label", getLabel());
+		attributes.put("description", getDescription());
 		attributes.put("extendeddata", getExtendeddata());
-		attributes.put("researchObjectType", getResearchObjectType());
+		attributes.put("metadataID", getMetadataID());
 
 		return attributes;
 	}
@@ -94,16 +95,22 @@ public class ResearchObjectWrapper implements ResearchObject,
 			setLabel(label);
 		}
 
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
 		String extendeddata = (String)attributes.get("extendeddata");
 
 		if (extendeddata != null) {
 			setExtendeddata(extendeddata);
 		}
 
-		String researchObjectType = (String)attributes.get("researchObjectType");
+		Long metadataID = (Long)attributes.get("metadataID");
 
-		if (researchObjectType != null) {
-			setResearchObjectType(researchObjectType);
+		if (metadataID != null) {
+			setMetadataID(metadataID);
 		}
 	}
 
@@ -229,6 +236,26 @@ public class ResearchObjectWrapper implements ResearchObject,
 	}
 
 	/**
+	* Returns the description of this research object.
+	*
+	* @return the description of this research object
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _researchObject.getDescription();
+	}
+
+	/**
+	* Sets the description of this research object.
+	*
+	* @param description the description of this research object
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_researchObject.setDescription(description);
+	}
+
+	/**
 	* Returns the extendeddata of this research object.
 	*
 	* @return the extendeddata of this research object
@@ -249,23 +276,23 @@ public class ResearchObjectWrapper implements ResearchObject,
 	}
 
 	/**
-	* Returns the research object type of this research object.
+	* Returns the metadata i d of this research object.
 	*
-	* @return the research object type of this research object
+	* @return the metadata i d of this research object
 	*/
 	@Override
-	public java.lang.String getResearchObjectType() {
-		return _researchObject.getResearchObjectType();
+	public long getMetadataID() {
+		return _researchObject.getMetadataID();
 	}
 
 	/**
-	* Sets the research object type of this research object.
+	* Sets the metadata i d of this research object.
 	*
-	* @param researchObjectType the research object type of this research object
+	* @param metadataID the metadata i d of this research object
 	*/
 	@Override
-	public void setResearchObjectType(java.lang.String researchObjectType) {
-		_researchObject.setResearchObjectType(researchObjectType);
+	public void setMetadataID(long metadataID) {
+		_researchObject.setMetadataID(metadataID);
 	}
 
 	@Override

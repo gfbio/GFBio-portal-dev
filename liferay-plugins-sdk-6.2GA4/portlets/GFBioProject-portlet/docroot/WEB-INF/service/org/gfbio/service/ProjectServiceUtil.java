@@ -68,6 +68,10 @@ public class ProjectServiceUtil {
 		return getService().getProjectById(requestJson);
 	}
 
+	public static java.lang.String getFullNamesAsString(long projectId) {
+		return getService().getFullNamesAsString(projectId);
+	}
+
 	public static java.lang.Boolean checkProjectOnSubmissions(long projectId) {
 		return getService().checkProjectOnSubmissions(projectId);
 	}
@@ -75,6 +79,11 @@ public class ProjectServiceUtil {
 	public static org.json.simple.JSONObject createProject(
 		org.json.simple.JSONObject requestJson) {
 		return getService().createProject(requestJson);
+	}
+
+	public static org.json.simple.JSONObject updateProject(
+		org.json.simple.JSONObject requestJson) {
+		return getService().updateProject(requestJson);
 	}
 
 	public static void clearService() {

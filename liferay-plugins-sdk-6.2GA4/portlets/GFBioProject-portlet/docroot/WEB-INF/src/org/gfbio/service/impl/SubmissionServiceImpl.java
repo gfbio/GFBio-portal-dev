@@ -67,11 +67,11 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 
 	//
 	public JSONArray createSubmission (String requestJson){
+		System.out.println("SubReg: "  +requestJson);
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
-		try {
-			parseJson = (JSONArray) parser.parse(requestJson);
-		} catch (ParseException e) {e.printStackTrace();}
+		try {parseJson = (JSONArray) parser.parse(requestJson);}
+		catch (ParseException e) {e.printStackTrace();}
 		return SubmissionLocalServiceUtil.createSubmission (parseJson);
 	}
 	

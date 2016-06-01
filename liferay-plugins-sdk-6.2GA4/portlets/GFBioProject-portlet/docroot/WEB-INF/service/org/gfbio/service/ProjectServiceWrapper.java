@@ -63,6 +63,11 @@ public class ProjectServiceWrapper implements ProjectService,
 	}
 
 	@Override
+	public java.lang.String getFullNamesAsString(long projectId) {
+		return _projectService.getFullNamesAsString(projectId);
+	}
+
+	@Override
 	public java.lang.Boolean checkProjectOnSubmissions(long projectId) {
 		return _projectService.checkProjectOnSubmissions(projectId);
 	}
@@ -71,6 +76,12 @@ public class ProjectServiceWrapper implements ProjectService,
 	public org.json.simple.JSONObject createProject(
 		org.json.simple.JSONObject requestJson) {
 		return _projectService.createProject(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONObject updateProject(
+		org.json.simple.JSONObject requestJson) {
+		return _projectService.updateProject(requestJson);
 	}
 
 	/**

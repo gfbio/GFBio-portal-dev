@@ -21,8 +21,12 @@ import java.util.List;
 
 import org.gfbio.NoSuchProject_UserException;
 import org.gfbio.model.Project_User;
+import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.base.Project_UserLocalServiceBaseImpl;
+import org.gfbio.service.persistence.Project_UserFinderUtil;
 import org.gfbio.service.persistence.Project_UserPK;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * The implementation of the project_ user local service.
@@ -44,18 +48,47 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
+	//
+	public String getFullNamesAsString(JSONArray requestJson){
+		String response ="";
+		for (int i =0; i < requestJson.size();i++)
+			if (( (JSONObject) requestJson.get(i)).containsKey("fullname"))
+				response = response.concat((String) ((JSONObject) requestJson.get(i)).get("fullname")).concat(", ");
+		if (response.length()>0)	
+			response = response.substring(0, response.length()-2);
+		return response;
+	}
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONArray getOwnerAndPiByProjectId(long projectId){
+		JSONArray responseJson = new JSONArray();
+		List <Long> userIdList = getOwnerAndPiIdByProjectId(projectId);
+		for (int i= 0; i< userIdList.size();i++ ){
+			JSONObject userJson = new JSONObject();
+			JSONObject idJson = new JSONObject();
+			idJson.put("userid", userIdList.get(i));
+			userJson = UserExtensionLocalServiceUtil.getUserExtentionById(idJson);
+			responseJson.add(userJson);
+		}
+		
+		return responseJson;
+	}
+	
+	
+	//
+	public List <Long> getOwnerAndPiIdByProjectId(long projectId){
+		List <Long> userList = null;
+		userList = Project_UserFinderUtil.getOwnerAndPiByProjectId(projectId);
+		return userList;
+	}
+	
+	
 	//get a ID-List (Project_User-Object) of all project of a specific user
 	public List<Project_User> getProjectIDList(long userID) {
 		List<Project_User> idList = null;
-		try {
-			idList = project_UserPersistence.findByUserID(userID);
-		} catch (SystemException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-		}
-
+		try {idList = project_UserPersistence.findByUserID(userID);} 
+		catch (SystemException e) {e.printStackTrace();}
 		return idList;
 	}
 	
