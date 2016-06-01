@@ -507,20 +507,23 @@ function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfiel
  */
 function parseReturnedJSONfromSearch(datasrc) {
 	var res = [];
+	//console.log('parseReturnedJSONfromSearch');
+	//console.log(datasrc);
 	for (var i = 0, iLen = datasrc.length; i < iLen; i++) {
 		var inner = new Object();
 		var score = datasrc[i]._score;
 		var fields = datasrc[i].fields;
 		inner.score = score;
-
+	    //console.log('parseReturnedJSONfromSearch:fields');
+		//console.log(fields);
 		inner.title = getValueFromJSONObject(fields, "citation_title", 0);
-		inner.authors = getValueFromJSONObject(fields, "citation_authors");
+		inner.authors = getValueFromJSONArray(fields, "citation_authors");
 		inner.description = getValueFromJSONObject(fields, "description", 0);
 		inner.dataCenter = getValueFromJSONObject(fields, "dataCenter", 0);
-		inner.region = getValueFromJSONObject(fields, "region");
-		inner.project = getValueFromJSONObject(fields, "project");
-		inner.parameter = getValueFromJSONObject(fields, "parameter");
-		inner.investigator = getValueFromJSONObject(fields, "investigator");
+		inner.region = getValueFromJSONArray(fields, "region");
+		inner.project = getValueFromJSONArray(fields, "project");
+		inner.parameter = getValueFromJSONArray(fields, "parameter");
+		inner.investigator = getValueFromJSONArray(fields, "investigator");
 		inner.timeStamp = getValueFromJSONObject(fields, "internal-datestamp", 0);
 		inner.maxLatitude = getValueFromJSONObject(fields, "maxLatitude", 0);
 		inner.minLatitude = getValueFromJSONObject(fields, "minLatitude", 0);
@@ -543,8 +546,10 @@ function parseReturnedJSONfromSearch(datasrc) {
 			inner.xml = json; //JSON.stringify(json);
 		} else
 			inner.xml = "";
-
+	
 		res.push(inner);
+		//console.log('parseReturnedJSONfromSearch:inner');
+		//console.log(inner);
 	}
 	return res;
 }
@@ -1145,13 +1150,12 @@ function XMLtoJSON() {
 		// gets the JSON string
 		var json_str = jsontoStr(setJsonObj(xmlDoc));
 		json_str = json_str.replace('\n', '');
-
 		// sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
 		if (typeof(rstr) == 'undefined') {
 			try {
 				return JSON.parse(json_str)
 			} catch (e) {
-				//console.log(e); //error in the above string(in this case,yes)!
+				console.log(e); //error in the above string(in this case,yes)!
 				return ''
 			}
 		} else {
@@ -1183,8 +1187,12 @@ function XMLtoJSON() {
 				var item = xml.childNodes.item(i);
 				var nodeName = item.nodeName;
 				if (typeof(js_obj[nodeName]) == "undefined") {
-					if (nodeName == "#text")
-						js_obj = item.textContent;
+					if (nodeName == "#text"){
+						var content = item.textContent.trim();
+						if (content!=""){
+							js_obj = content;
+						}
+					}
 					else
 						js_obj[nodeName] = setJsonObj(item);
 				} else {
@@ -1213,9 +1221,18 @@ function XMLtoJSON() {
 /*
  * Description: Read value from a JSONObject
  */
-function getValueFromJSONObject(jObj, name) {
-	if (jObj[name] !== undefined)
-		return jObj[name];
+function getValueFromJSONArray(jObj, name) {
+	if (jObj[name] !== undefined){
+		var res = "";
+		var jArr = jObj[name];
+		for(var i=0; i <jArr.length; i++)
+		{
+		   res += jArr[i];
+		   if(i<jArr.length-1)
+			   res += "; ";
+		}
+		return res;
+	}
 	else
 		return "";
 }

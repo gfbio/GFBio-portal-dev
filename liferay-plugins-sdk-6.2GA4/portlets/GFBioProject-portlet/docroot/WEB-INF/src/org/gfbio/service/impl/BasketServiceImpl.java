@@ -15,12 +15,15 @@
 package org.gfbio.service.impl;
 
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
-import java.util.List;
 import java.util.Map;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 
 import org.gfbio.model.Basket;
 import org.gfbio.service.BasketLocalServiceUtil;
@@ -113,4 +116,12 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 	public Map<Long,String> getBasketUsersIds(long userId) throws Exception{
 		return BasketLocalServiceUtil.getBasketUsersIds(userId);
 	}
+	public User getUserDetail(long userId) throws PortalException, SystemException{
+		return BasketLocalServiceUtil.getUserDetail(userId);
+	}
+
+	public boolean authorize(long userId) throws Exception{
+		return BasketLocalServiceUtil.authorize(userId);
+	}
+	
 }

@@ -17,6 +17,7 @@ package org.gfbio.service.impl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -25,8 +26,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 // if using org.json, the response message in liferay webservice will be incomplete 
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +39,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.gfbio.NoSuchBasketException;
 import org.gfbio.model.Basket;
@@ -379,5 +387,17 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			jArr.put(jBasket);
 		}
 		return jArr;
+	}
+
+	public User getUserDetail(long userId) throws PortalException, SystemException{
+		User user = UserLocalServiceUtil.getUser(userId);
+		return user;
+	}
+
+	public boolean authorize(long userId) throws Exception{
+		User user = getUserDetail(userId);
+		PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
+		boolean isSigned = checker.isSignedIn();
+		return isSigned;
 	}
 }

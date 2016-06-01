@@ -150,6 +150,14 @@ public class BasketLocalServiceClp implements BasketLocalService {
 		_methodName28 = "getBasketUsersIds";
 
 		_methodParameterTypes28 = new String[] { "long" };
+
+		_methodName29 = "getUserDetail";
+
+		_methodParameterTypes29 = new String[] { "long" };
+
+		_methodName30 = "authorize";
+
+		_methodParameterTypes30 = new String[] { "long" };
 	}
 
 	@Override
@@ -1022,6 +1030,66 @@ public class BasketLocalServiceClp implements BasketLocalService {
 		return (java.util.Map<java.lang.Long, java.lang.String>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public com.liferay.portal.model.User getUserDetail(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.portal.model.User)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public boolean authorize(long userId) throws java.lang.Exception {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { userId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof java.lang.Exception) {
+				throw (java.lang.Exception)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -1079,4 +1147,8 @@ public class BasketLocalServiceClp implements BasketLocalService {
 	private String[] _methodParameterTypes27;
 	private String _methodName28;
 	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
 }

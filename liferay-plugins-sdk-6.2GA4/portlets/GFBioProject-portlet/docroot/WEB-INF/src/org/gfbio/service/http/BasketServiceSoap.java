@@ -179,5 +179,32 @@ public class BasketServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.model.User getUserDetail(long userId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.model.User returnValue = BasketServiceUtil.getUserDetail(userId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean authorize(long userId) throws RemoteException {
+		try {
+			boolean returnValue = BasketServiceUtil.authorize(userId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(BasketServiceSoap.class);
 }
