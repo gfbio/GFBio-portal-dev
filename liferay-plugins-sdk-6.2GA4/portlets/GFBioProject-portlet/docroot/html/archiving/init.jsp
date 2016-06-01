@@ -28,7 +28,7 @@
 			showhide = 'hide';
 			hidecode = '-21';
 		}
-		var toSubmit = {
+ 		var toSubmit = {
 			"workflow" : workflow,
 			"researchobjectid"   : researchObjectId,
 			"projectid"   : projectId,
@@ -36,7 +36,7 @@
 			"hidecode": hidecode,
 			"showhide": showhide
 		};
-		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
+		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
 	}
 	
 
@@ -79,7 +79,17 @@
 /////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
 	
+	$( document ).ready(function() {
+		 console.log( "ready!" );
+		 document.getElementById("workflowChoPro").selectedIndex = 0;
+		 document.getElementById("choWorkflow").selectedIndex = 0;
+	});
+	
+	
+	//
 	function buildChooseRO(data, divId){
+		
+		cleanSubmissionWorkflow();
 			
 		if (data.researchobjects == undefined)
 			var roList = [];
@@ -95,10 +105,17 @@
 			choRO.append("<option value='none'></option>");
 			for (i =0; i <roList.length;i++)
 				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" Version: "+ +roList[i].researchobjectversion+"</option>");
+			document.getElementById("workflowChooseRO").selectedIndex = 0;
 		}else{
 			div.attr("class", "swHide");
 			choRO.empty();
 		}
+	}
+	
+	
+	//
+	function cleanSubmissionWorkflow(){
+		document.getElementById("choWorkflow").selectedIndex = 0;
 	}
 
 	

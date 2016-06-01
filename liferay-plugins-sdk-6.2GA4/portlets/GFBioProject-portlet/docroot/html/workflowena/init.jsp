@@ -20,7 +20,7 @@
 	$(document).ready(function() {
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			var submissionManager =   $("#ena");
-			if (data == undefined || !(data.hidecode==="ena"))
+			if (data == undefined || !(data.workflow==="ena"))
 				submissionManager.attr("class", "swHide");
 			else 
 				submissionManager.attr("class", "swMain");

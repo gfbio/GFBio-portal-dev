@@ -8,7 +8,7 @@
 	$(document).ready(function() {
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			var div =   $("#collections");
-			if (data == undefined || !(data.hidecode==="collections")){
+			if (data == undefined || !(data.workflow==="collections")){
 				div.attr("class", "swHide");
 				div.empty();
 			}else {
@@ -48,11 +48,11 @@
 		if (data.userid != 0){
 
 			div.append(
-				"<h2>submission of collection data</h2>"+
+				"<h2>Submission of Collection data</h2>"+
 				"</br>"+
-				"<h3>project informations</h3>"+
+				"<h3>Project Informations</h3>"+
 				"</br>"+
-				"<h4>basic informations</h4>"+
+				"<h4>Basic Informations</h4>"+
 				"</br>"+
 				
 				"<div class='row'>"+
@@ -77,7 +77,7 @@
 				"</div>"+
 				
 				"</br>"+
-				"<h4>optional keywords</h4>"+
+				"<h4>Optional Keywords</h4>"+
 				"<div id='cwf_project_keywords'></div>"+
 				"<h3>submitter information</h3>"+
 				"</br>"+
@@ -96,9 +96,9 @@
 				"</div>"+
 				
 				"</br>"+
-				"<h3>dataset information</h3>"+
+				"<h3>Dataset Information</h3>"+
 				"</br>"+
-				"<h4>basic informations</h4>"+
+				"<h4>Basic Informations</h4>"+
 				"</br>"+
 				
 				"<div class='row'>"+
@@ -149,7 +149,7 @@
 				"</div>"+
 				
 				"</br>"+				
-				"<h4>licence information of dataset</h4>"+
+				"<h4>Licence Information of Dataset</h4>"+
 				"</br>"+	
 				
 				"<div class='row'>"+
@@ -165,19 +165,7 @@
 				
 				"<div class='row'>Please select the appropriate licenses </div>"+
 				"<div id='cwf_ro_licenses'></div>"+
-				
-/* 				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_ro_license_l'> licence </div>"+
-					"<div class='rowField'>"+
-						"<form action='select.html'>"+
-							"<select id='cwf_ro_license' name='<portlet:namespace/>cwf_ro_license' size='1' style='width:90%'>"+
-								"<option value='none'></option>"+
-							"</select>"+
-						"</form>"+
-					"</div>"+
-				"</div>"+ */
-
-				
+						
 				"</br>"+
 				"<div class='row' id='cwf_lf_comentarField'>"+
 				"</div>"+
