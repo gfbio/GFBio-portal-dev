@@ -80,5 +80,19 @@ public class UserExtensionServiceSoap {
 		}
 	}
 
+	public static org.json.simple.JSONObject getTest(
+		org.json.simple.JSONObject json) throws RemoteException {
+		try {
+			org.json.simple.JSONObject returnValue = UserExtensionServiceUtil.getTest(json);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(UserExtensionServiceSoap.class);
 }

@@ -326,6 +326,17 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONArray getTableAsJSONArrayByName(
+		org.json.simple.JSONObject requestJson) {
+		return _headLocalService.getTableAsJSONArrayByName(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getTableAsJSONArray(long headId) {
+		return _headLocalService.getTableAsJSONArray(headId);
+	}
+
+	@Override
 	public java.lang.String getTableNameById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
@@ -421,6 +432,14 @@ public class HeadLocalServiceWrapper implements HeadLocalService,
 	@Override
 	public java.lang.Boolean updateTable(org.json.simple.JSONObject json) {
 		return _headLocalService.updateTable(json);
+	}
+
+	@Override
+	public java.lang.Boolean updateInterfaceTableWithContent(
+		java.lang.String nonHccTableName, long nonHccContentId,
+		java.lang.String hccTableName, long hccContentId) {
+		return _headLocalService.updateInterfaceTableWithContent(nonHccTableName,
+			nonHccContentId, hccTableName, hccContentId);
 	}
 
 	/**

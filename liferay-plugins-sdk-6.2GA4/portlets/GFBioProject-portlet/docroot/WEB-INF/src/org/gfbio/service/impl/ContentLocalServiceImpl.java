@@ -15,17 +15,23 @@
 package org.gfbio.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gfbio.NoSuchContentException;
+import org.gfbio.NoSuchHeadException;
 import org.gfbio.model.Column;
 import org.gfbio.model.Content;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.ContentLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ContentFinderUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,17 +59,15 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	//delete contents of a specific column
 	public void deleteContentsByColumnId (long columnId){
+		
 		List <Content> contentList = null;
-
-		try {
-			contentList = contentPersistence.findByColumnId(columnId);
-		} catch (SystemException e) {e.printStackTrace();}
+		try {contentList = contentPersistence.findByColumnId(columnId);}
+		catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				try {
-					ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
-				} catch (PortalException | SystemException e) {e.printStackTrace();}
+				try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());} 
+				catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
 	
@@ -71,8 +75,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public void deleteContentsByHeadId(long headId) throws SystemException{
 		List <Content> contentList = contentPersistence.findByHeadId(headId);
 		for (int i =0; i<contentList.size();i++)
-			try {
-				ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
+			try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
 			} catch (PortalException e) {e.printStackTrace();}
 	}
 	
@@ -81,15 +84,20 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public void deleteContentsByRowId (long rowId){
 		
 		List <Content> contentList = null;
-		try {
-			contentList = contentPersistence.findByRowId(rowId);
+		try {contentList = contentPersistence.findByRowId(rowId);
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				try {
-					ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
+				try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());
 				} catch (PortalException | SystemException e) {e.printStackTrace();}
+	}
+	
+	
+	//
+	public void deleteRelationContentByCellContent(String cellcontent1, String cellcontent2 ){
+		long rowId = getRowIdOfRelation(cellcontent1, cellcontent2);
+		deleteContentsByRowId (rowId);
 	}
 	
 	
@@ -100,6 +108,18 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	@SuppressWarnings("rawtypes")
 	public List getCellContentByContentId(long contentId) {
 		return ContentFinderUtil.getCellContentByContentId(contentId);
+	}
+	
+	
+	//get Content of  a specific cell in HCC
+	@SuppressWarnings("rawtypes")
+	public String getCellContentByRowIdAndColumnName(long rowId, String columnName) {
+		String cellContent ="";
+		List cellContentList = ContentFinderUtil.getCellContentByRowIdAndColumnName(rowId, columnName);
+		if (cellContentList.size() > 0)
+			cellContent = (String) cellContentList.get(0);
+		 
+		 return cellContent;
 	}
 	
 	
@@ -134,6 +154,23 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 	
 	
+	//
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List getContentIdsOfRelationshipsOfSpecificCellContent(String relationTableName, String entitiyTableName, String entityTableCellContent){
+		List <Long> idList = new ArrayList ();
+		try {idList = ContentFinderUtil.getContentIdsOfRelationshipsOfSpecificCellContent(HeadLocalServiceUtil.getHeadIdByTableName(relationTableName), HeadLocalServiceUtil.getHeadIdByTableName(entitiyTableName), entityTableCellContent);}
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		return idList;
+	}	
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public List getContentIdsOfRelationshipsOfSpecificCellContent(long relationTableHeadId, long entitiyTableHeadId, String entityTableCellContent){
+		return ContentFinderUtil.getContentIdsOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
+	}
+	
+	
 	//get List of content IDs, without content of relationship tables
 	@SuppressWarnings("rawtypes")
 	public List getContentIdsWithoutRelationships (long rowId, String tableName1, String tableName2){
@@ -160,8 +197,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		
 		JSONObject json = new JSONObject();
 		Content content = null;
-		try {
-			content = contentPersistence.findByContentId(contentId);
+		try {content = contentPersistence.findByContentId(contentId);
 		} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 		if (content != null)
 			json = constructContentJson(content.getContentID(), content.getHeadID(), content.getColumnID(), content.getRowID(), content.getCellContent());
@@ -250,6 +286,20 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return headId;
 	}
 	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getOppositeCellContentsOfRelationsByCellContent(long headId, String cellContent){
+		List <String> responseList = ContentFinderUtil.getOppositeCellContentsOfRelationsByCellContent(headId, cellContent);
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {parseJson = (JSONArray) parser.parse(responseList.toString());}
+		catch (ParseException e) {e.printStackTrace();}
+
+		return parseJson;
+		
+	}
+	
 
 	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
 	@SuppressWarnings("rawtypes")
@@ -260,6 +310,21 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			rowId = (long) rowIdList.get(0);
 		return rowId;
 	}
+	
+	
+	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
+	public long getRowIdByCellContent(String tableName, String columnName, String cellContent){
+		long rowId =0;
+		long headId =0;
+		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+		if(headId !=0){
+			rowId = getRowIdByCellContent(headId, columnName, cellContent);
+		}
+		return rowId;
+	}
+	
 
 	// get the columnId of a specific content.
 	@SuppressWarnings("rawtypes")
@@ -289,7 +354,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return ContentFinderUtil.getRowIds(headId);
 	}
 	
-	
+		
 	//get a List of rowIds of specific head
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public JSONObject  getRowInformationByContentId (long contentId){
@@ -300,6 +365,20 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			 Object[] arrayobject=(Object[])object;
 			 responseJson.put((String)arrayobject[0], (String)arrayobject[1]);
 		 }
+		return responseJson;
+	}
+	
+	
+	//get a List of rowIds of specific head
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public JSONObject  getRowInformationById (long rowId){
+		
+		 JSONObject responseJson = new JSONObject();
+		 List response =  (ArrayList) ContentFinderUtil.getRowInformationByRowId (rowId);
+		 for(Object object:response){
+			 Object[] arrayobject=(Object[])object;
+			 responseJson.put((String)arrayobject[0], (String)arrayobject[1]);
+		}
 		return responseJson;
 	}
 	
@@ -320,9 +399,92 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return responseArray;
 	}
 	
+
+	//get List of content Informations from a relationship between two entities. The list has only Informations from one of the entities. The not list entity has a condition in cell content column. Example: The function get all category entries of the relationship between category and types, where the type cell content is 'research field'
+	@SuppressWarnings("unchecked")
+	public JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(JSONObject requestJson){
+		
+		Set<String> set = new HashSet<String>();
+		String [] keySet = {"relationtablename","entitytablename", "entitytablecellcontent"};
+		for (int i = 0; i< keySet.length;i++)
+			set.add(keySet[i]);
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
+		JSONArray responseJson = new JSONArray();
+		if (requestJson.containsKey("relationtablename") && requestJson.containsKey("entitytablename") && requestJson.containsKey("entitytablecellcontent"))
+			responseJson = getRowInformationsOfRelationshipsOfSpecificCellContent((String)requestJson.get("relationtablename"), (String)requestJson.get("entitytablename"), (String)requestJson.get("entitytablecellcontent"));
+		else
+			responseJson.add("ERROR: To get the Informations, the json need minimal 'relationtablename', 'entitytablename' and 'entitytablecellcontent' as Strings.");
+
+		if (!ignoreParameter.equals(""))
+			responseJson.add(ignoreParameter);
+		return responseJson;
+	}
+	
+	
+	//get List of content Informations from a relationship between two entities. The list has only Informations from one of the entities. The not list entity has a condition in cell content column. Example: The function get all category entries of the relationship between category and types, where the type cell content is 'research field'
+	@SuppressWarnings({ "unchecked" })
+	public JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(String relationTableName, String entitiyTableName, String entityTableCellContent){
+		JSONArray responseJson = new JSONArray();
+		List <Long> idList = getContentIdsOfRelationshipsOfSpecificCellContent(relationTableName, entitiyTableName, entityTableCellContent);
+		if (idList.size()>0)
+			for (int i =0; i < idList.size();i++)
+				responseJson.add(getRowInformationByContentId(idList.get(i)));
+		else
+			responseJson.add("Error: No relationsships exists, with this conditions.");
+		return responseJson;
+	}
+	
 	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
+	
+	//Is  pk in table with table name, the Boolean is true
+	public Boolean checkExistenceOfKeyId(String tableName, long pk) {
+		return checkExistenceOfKeyId(tableName, Long.toString(pk));
+	}
+	
+	
+	//Is  pk in table with table name, the Boolean is true
+	public Boolean checkExistenceOfKeyId(String tableName, String pk) {
+		Boolean check = false;
+		long headid =0;
+		try {headid = HeadLocalServiceUtil.getHeadIdByTableName(tableName);} 
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		if (headid !=0)
+			check =(Boolean) ContentFinderUtil.checkExistenceOfKeyId(headid, pk).get(0); 
+		return check;
+	}
+
+	
+	//Is  pk in table with headid, the Boolean is true
+	public Boolean checkExistenceOfKeyId(long headId, String pk) {
+		return (Boolean) ContentFinderUtil.checkExistenceOfKeyId(headId, pk).get(0);
+	}
+	
+	
+	//
+	public String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
+
+		String ignoredParameter = "WARNING:";
+		Boolean check = false;
+		for (int i =0; i < objects.length;i++)
+			if (!keyList.contains((objects[i]))){
+				ignoredParameter = ignoredParameter.concat(" ").concat(objects[i].toString()).concat(",");
+				check = true;
+			}
+		if (check == true)
+			ignoredParameter = ignoredParameter.substring(0, ignoredParameter.length()-1).concat(" are not parameters of this method.");
+		else
+			ignoredParameter ="";
+		return ignoredParameter;
+	}
+	
+	
+	//Are pk1 and pk2 in table with headid, the Boolean is false, because the function will is useing in relationship table update
+	public Boolean checkKeyPairInRelationship(long headId, String pk1, String pk2) {
+		return (Boolean) ContentFinderUtil.checkKeyPairInRelationship (headId, pk1, pk2).get(0);
+	}
 	
 	//build a content entry to a JSON
 	@SuppressWarnings("unchecked")
@@ -353,7 +515,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		Content content = null;
 
 		try {
-			content = ContentLocalServiceUtil.getContent(contentId);
+			content = getContent(contentId);
 		} catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
 
 		// if it true, then must be build a new content with a new primary key else update the content
@@ -371,7 +533,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 
 		if (rowId==0)
 			try {
-				rowId= ContentLocalServiceUtil.constructNewId();
+				rowId= constructNewId();
 			} catch (SystemException e) {e.printStackTrace();}
 
 		content.setHeadID(headId);
@@ -382,7 +544,6 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			super.updateContent(content);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
-		
 		return check;
 	}
 
@@ -402,7 +563,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
 		String cellcontent = (String) json.get(contentKey);
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
-			check = ContentLocalServiceUtil.updateContent(contentId, headId, columnId, rowId, cellcontent);
+			check = updateContent(contentId, headId, columnId, rowId, cellcontent);
 		return check;
 	}
 	
@@ -422,7 +583,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
 		String cellcontent = (String) json.get(contentKey);
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
-			check = ContentLocalServiceUtil.updateContent(contentId, headId, columnId, rowId, cellcontent);
+			check = updateContent(contentId, headId, columnId, rowId, cellcontent);
 		return check;
 	}
 	

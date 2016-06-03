@@ -17,7 +17,6 @@ package org.gfbio.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
 
@@ -60,7 +59,7 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		
 		if (requestJson.containsKey("userid"))
 			try {
-				responseJson = UserExtensionLocalServiceUtil.constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)requestJson.get("userid")));
+				responseJson = constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)requestJson.get("userid")));
 			} catch (NoSuchUserException | SystemException e) {e.printStackTrace();	responseJson.put("ERROR", e);}
 		else
 			responseJson.put("ERROR", "No key 'userid' exist.");
@@ -77,6 +76,22 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	
 		
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//Is  userid a id of a user, then the Boolean is true
+	public Boolean checkExistenceOfUserId (long userId){
+		
+		Boolean check =false;
+		User user = null;
+		
+		try {user = userPersistence.findByPrimaryKey(userId);
+		} catch (NoSuchUserException | SystemException e) {System.out.println("No user exists with the primary key "+userId);}
+		
+		if (user !=null)
+			check = true;
+		
+		return check;
+	}
 	
 	
 	//

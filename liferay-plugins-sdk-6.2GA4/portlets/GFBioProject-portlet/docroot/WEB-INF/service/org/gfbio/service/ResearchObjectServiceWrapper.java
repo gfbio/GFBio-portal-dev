@@ -89,16 +89,6 @@ public class ResearchObjectServiceWrapper implements ResearchObjectService,
 	}
 
 	@Override
-	public java.lang.String getTest(java.lang.String requestJson) {
-		return _researchObjectService.getTest(requestJson);
-	}
-
-	@Override
-	public java.lang.String createTest(org.json.simple.JSONObject requestJson) {
-		return _researchObjectService.createTest(requestJson);
-	}
-
-	@Override
 	public org.json.simple.JSONArray updateResearchObject(
 		java.lang.String requestJson) {
 		return _researchObjectService.updateResearchObject(requestJson);

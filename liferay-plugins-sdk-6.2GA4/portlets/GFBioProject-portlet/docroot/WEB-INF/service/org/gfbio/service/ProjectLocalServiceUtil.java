@@ -305,6 +305,11 @@ public class ProjectLocalServiceUtil {
 		return getService().getResearchObjectList(projectID, userID);
 	}
 
+	public static org.json.simple.JSONArray getResearchObjectsByProjectId(
+		long projectId) {
+		return getService().getResearchObjectsByProjectId(projectId);
+	}
+
 	public static java.lang.Boolean checkProjectOnId(long projectId) {
 		return getService().checkProjectOnId(projectId);
 	}
@@ -338,6 +343,11 @@ public class ProjectLocalServiceUtil {
 		return getService().createProjectByJson(requestJson);
 	}
 
+	public static org.json.simple.JSONObject updateProjectByJson(
+		org.json.simple.JSONObject requestJson) {
+		return getService().updateProjectByJson(requestJson);
+	}
+
 	public static long createProject(long userId, java.lang.String name,
 		java.lang.String label, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -358,6 +368,16 @@ public class ProjectLocalServiceUtil {
 		return getService()
 				   .updateProject(projectID, userID, name, label, description,
 			extendedData, startDate, endDate, status);
+	}
+
+	public static java.lang.Boolean updateCategories(long projectId,
+		org.json.simple.JSONArray requestJson) {
+		return getService().updateCategories(projectId, requestJson);
+	}
+
+	public static java.lang.Boolean updateCategory(long projectId,
+		long categoryId) {
+		return getService().updateCategory(projectId, categoryId);
 	}
 
 	public static java.lang.Boolean updateEndDate(long projectId,

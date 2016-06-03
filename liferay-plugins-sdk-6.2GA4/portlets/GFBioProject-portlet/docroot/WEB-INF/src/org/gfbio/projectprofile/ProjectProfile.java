@@ -59,7 +59,7 @@ public class ProjectProfile extends GenericPortlet {
 	
 
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
-
+		
 		response.setContentType("text/html");
 
 		if (request.getParameter("responseTarget") != null) {
@@ -137,7 +137,7 @@ public class ProjectProfile extends GenericPortlet {
 				parseJson.put("researchobjectid", Long.valueOf(projectid).longValue());
 				JSONArray jsonArray = new JSONArray();
 				jsonArray.add(parseJson);
-				responseJson = (JSONObject) ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(jsonArray).get(0);
+				responseJson = (JSONObject) ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById(jsonArray).get(0);
 			}else
 				responseJson.put("researchobjectid", 0);
 			

@@ -83,6 +83,18 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////////
 	
 	
+	//
+	@SuppressWarnings("rawtypes")
+	public long getColumnIdByNames (String tableName, String columnName){
+		long columnId = 0;
+		
+		List idList = ColumnFinderUtil.getColumnIdByNames(tableName, columnName);
+		if (idList.size()>0)
+			columnId = (long) idList.get(0);
+		return columnId;
+	}
+	
+	
 	/**
 	 * Returns the name of a column entry. 
 	 * 
@@ -96,18 +108,6 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		if (nameList.size()>0)
 			name =  (String) nameList.get(0);
 		return name;
-	}
-	
-	
-	/**
-	 * Returns all head id's of entries of entity gfbio_head, that have no table type 'relationship' (table type is a attribute in entity gfbio_head) and have a column with a specific name
-	 * 
-	 * @param	columnName	from type String, is a specific content of attribute 'column_name' of entity gfbio_content
-	 * @return				List from type long, consists of head id's 
-	 */
-	@SuppressWarnings("rawtypes")
-	public List getHeadIdsWithoutRelationshipsByColumnName(String columnName) throws SystemException{
-		return ColumnFinderUtil.getHeadIdsWithoutRelationshipsByColumnName(columnName);
 	}
 	
 		
@@ -158,6 +158,18 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	public List getHeadIdsByColumnName(String columnName) {
 		return ColumnFinderUtil.getHeadIdsByColumnName(columnName);
 	}	
+	
+	
+	/**
+	 * Returns all head id's of entries of entity gfbio_head, that have no table type 'relationship' (table type is a attribute in entity gfbio_head) and have a column with a specific name
+	 * 
+	 * @param	columnName	from type String, is a specific content of attribute 'column_name' of entity gfbio_content
+	 * @return				List from type long, consists of head id's 
+	 */
+	@SuppressWarnings("rawtypes")
+	public List getHeadIdsWithoutRelationshipsByColumnName(String columnName) throws SystemException{
+		return ColumnFinderUtil.getHeadIdsWithoutRelationshipsByColumnName(columnName);
+	}
 	
 	
 	//get the maximal count of columns of a List of heads

@@ -101,8 +101,8 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return null;
 	}
 
-	public long updateBasket(long basketId, long userId, String name, String basketJSON, String queryJSON) throws SystemException {
-		return BasketLocalServiceUtil.updateBasket(basketId, userId, name, basketJSON, queryJSON);
+	public long updateBasket(long basketId, long userId, String name, String basketContent, String queryJSON) throws SystemException {
+		return BasketLocalServiceUtil.updateBasket(basketId, userId, name, basketContent, queryJSON);
 	}
 
 	public Basket removeBasket(long basketId, long userId)

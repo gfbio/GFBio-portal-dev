@@ -70,6 +70,13 @@ public class UserExtensionServiceWrapper implements UserExtensionService,
 		return _userExtensionService.getUserById(json);
 	}
 
+	@Override
+	public org.json.simple.JSONObject getTest(org.json.simple.JSONObject json)
+		throws com.liferay.portal.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userExtensionService.getTest(json);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

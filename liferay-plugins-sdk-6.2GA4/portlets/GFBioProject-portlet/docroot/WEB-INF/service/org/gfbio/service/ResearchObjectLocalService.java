@@ -255,11 +255,11 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONArray getResearchObjectAsJsonById(
+	public org.json.simple.JSONArray getResearchObjectsAsJsonById(
 		org.json.simple.JSONArray requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public org.json.simple.JSONObject getResearchObjectASJsonById(
+	public org.json.simple.JSONObject getResearchObjectAsJsonById(
 		org.json.simple.JSONObject requestJson);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -308,10 +308,14 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 	public java.lang.String checkForIgnoredParameter(
 		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList);
 
-	public java.lang.Boolean checkParentAttributById(long researchObjectId);
+	public org.json.simple.JSONObject checkHCCBackground(
+		java.lang.String tableName, java.lang.String columnName,
+		java.lang.String label);
 
 	public org.json.simple.JSONObject checkNullParent(
 		org.json.simple.JSONObject json);
+
+	public java.lang.Boolean checkParentAttributById(long researchObjectId);
 
 	public java.lang.Boolean checkResearchObjectId(long researchObjectId);
 
@@ -348,6 +352,30 @@ public interface ResearchObjectLocalService extends BaseLocalService,
 		long researchObjectId, int researchObjectVersion,
 		java.lang.String name, java.lang.String label,
 		java.lang.String extendedData, java.lang.String researchObjectType);
+
+	public java.lang.Boolean updateAuthorIds(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorNames);
+
+	public java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, java.lang.String authorMail);
+
+	public java.lang.Boolean updateAuthorId(long researchObjectId,
+		int researchObjectVersion, long authorId);
+
+	public java.lang.Boolean updateDescription(long researchObjectId,
+		int researchObjectVersion, java.lang.String description);
+
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		java.lang.String licenseLabel);
+
+	public java.lang.Boolean updateLicenseId(long researchObjectId,
+		long licenseId);
+
+	public java.lang.Boolean updateLicenseIds(long researchObjectId,
+		org.json.simple.JSONArray requestJson);
+
+	public java.lang.Boolean updateMetadataId(long researchObjectId,
+		int researchObjectVersion, long metadataId);
 
 	public java.lang.Boolean updateParentResearchObjectIdByIds(
 		long researchObjectId, int researchObjectVersion,

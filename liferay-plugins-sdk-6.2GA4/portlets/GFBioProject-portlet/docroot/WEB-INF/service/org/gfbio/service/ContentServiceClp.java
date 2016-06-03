@@ -54,6 +54,10 @@ public class ContentServiceClp implements ContentService {
 		_methodParameterTypes6 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
+
+		_methodName7 = "getRowInformationsOfRelationshipsOfSpecificCellContent";
+
+		_methodParameterTypes7 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -226,6 +230,31 @@ public class ContentServiceClp implements ContentService {
 		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		org.json.simple.JSONObject requestJson) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
+					new Object[] { ClpSerializer.translateInput(requestJson) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -239,4 +268,6 @@ public class ContentServiceClp implements ContentService {
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
 }

@@ -46,3 +46,19 @@
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 	<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+	
+
+
+ $('div.toggler').focus(function(e) {
+          $('div.toggler').attr('tabindex', 0);
+          $(this).attr('tabindex', -1);
+        }).blur(function() {
+          $(this).attr('tabindex', 0);
+        }).click(function() {
+          activate($(this));
+        }).keypress(function(event) {
+          if (event.keyCode == 13) activate($(this));
+        });
+
+	
+	 

@@ -295,8 +295,22 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public void deleteRelationContentByCellContent(
+		java.lang.String cellcontent1, java.lang.String cellcontent2) {
+		_contentLocalService.deleteRelationContentByCellContent(cellcontent1,
+			cellcontent2);
+	}
+
+	@Override
 	public java.util.List getCellContentByContentId(long contentId) {
 		return _contentLocalService.getCellContentByContentId(contentId);
+	}
+
+	@Override
+	public java.lang.String getCellContentByRowIdAndColumnName(long rowId,
+		java.lang.String columnName) {
+		return _contentLocalService.getCellContentByRowIdAndColumnName(rowId,
+			columnName);
 	}
 
 	@Override
@@ -324,6 +338,22 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	@Override
 	public java.util.List getContentIdsByRowId(long rowId) {
 		return _contentLocalService.getContentIdsByRowId(rowId);
+	}
+
+	@Override
+	public java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		java.lang.String relationTableName, java.lang.String entitiyTableName,
+		java.lang.String entityTableCellContent) {
+		return _contentLocalService.getContentIdsOfRelationshipsOfSpecificCellContent(relationTableName,
+			entitiyTableName, entityTableCellContent);
+	}
+
+	@Override
+	public java.util.List getContentIdsOfRelationshipsOfSpecificCellContent(
+		long relationTableHeadId, long entitiyTableHeadId,
+		java.lang.String entityTableCellContent) {
+		return _contentLocalService.getContentIdsOfRelationshipsOfSpecificCellContent(relationTableHeadId,
+			entitiyTableHeadId, entityTableCellContent);
 	}
 
 	@Override
@@ -388,10 +418,24 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONArray getOppositeCellContentsOfRelationsByCellContent(
+		long headId, java.lang.String cellContent) {
+		return _contentLocalService.getOppositeCellContentsOfRelationsByCellContent(headId,
+			cellContent);
+	}
+
+	@Override
 	public long getRowIdByCellContent(long headId, java.lang.String columnName,
 		java.lang.String cellContent) {
 		return _contentLocalService.getRowIdByCellContent(headId, columnName,
 			cellContent);
+	}
+
+	@Override
+	public long getRowIdByCellContent(java.lang.String tableName,
+		java.lang.String columnName, java.lang.String cellContent) {
+		return _contentLocalService.getRowIdByCellContent(tableName,
+			columnName, cellContent);
 	}
 
 	@Override
@@ -418,10 +462,59 @@ public class ContentLocalServiceWrapper implements ContentLocalService,
 	}
 
 	@Override
+	public org.json.simple.JSONObject getRowInformationById(long rowId) {
+		return _contentLocalService.getRowInformationById(rowId);
+	}
+
+	@Override
 	public org.json.simple.JSONArray getRowInformationOfRelationByContentId(
 		long contentId, java.lang.String tableName1, java.lang.String tableName2) {
 		return _contentLocalService.getRowInformationOfRelationByContentId(contentId,
 			tableName1, tableName2);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		org.json.simple.JSONObject requestJson) {
+		return _contentLocalService.getRowInformationsOfRelationshipsOfSpecificCellContent(requestJson);
+	}
+
+	@Override
+	public org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
+		java.lang.String relationTableName, java.lang.String entitiyTableName,
+		java.lang.String entityTableCellContent) {
+		return _contentLocalService.getRowInformationsOfRelationshipsOfSpecificCellContent(relationTableName,
+			entitiyTableName, entityTableCellContent);
+	}
+
+	@Override
+	public java.lang.Boolean checkExistenceOfKeyId(java.lang.String tableName,
+		long pk) {
+		return _contentLocalService.checkExistenceOfKeyId(tableName, pk);
+	}
+
+	@Override
+	public java.lang.Boolean checkExistenceOfKeyId(java.lang.String tableName,
+		java.lang.String pk) {
+		return _contentLocalService.checkExistenceOfKeyId(tableName, pk);
+	}
+
+	@Override
+	public java.lang.Boolean checkExistenceOfKeyId(long headId,
+		java.lang.String pk) {
+		return _contentLocalService.checkExistenceOfKeyId(headId, pk);
+	}
+
+	@Override
+	public java.lang.String checkForIgnoredParameter(
+		java.lang.Object[] objects, java.util.Set<java.lang.String> keyList) {
+		return _contentLocalService.checkForIgnoredParameter(objects, keyList);
+	}
+
+	@Override
+	public java.lang.Boolean checkKeyPairInRelationship(long headId,
+		java.lang.String pk1, java.lang.String pk2) {
+		return _contentLocalService.checkKeyPairInRelationship(headId, pk1, pk2);
 	}
 
 	@Override

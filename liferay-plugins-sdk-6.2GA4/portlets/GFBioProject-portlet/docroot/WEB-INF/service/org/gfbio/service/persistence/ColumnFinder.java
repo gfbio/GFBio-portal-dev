@@ -18,15 +18,18 @@ package org.gfbio.service.persistence;
  * @author Marcel Froemming
  */
 public interface ColumnFinder {
-	public java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
-		java.lang.String columnName);
-
-	public java.util.List getHeadIdsWithoutRelationshipsByColumnName(
+	public java.util.List getColumnIdByNames(java.lang.String tableName,
 		java.lang.String columnName);
 
 	public java.util.List getColumnNameById(long columnid);
 
+	public java.util.List<org.gfbio.model.Column> getColumnsWithRelation(
+		java.lang.String columnName);
+
 	public java.util.List getCountofColumns(long headId);
 
 	public java.util.List getHeadIdsByColumnName(java.lang.String columnName);
+
+	public java.util.List getHeadIdsWithoutRelationshipsByColumnName(
+		java.lang.String columnName);
 }

@@ -14,6 +14,13 @@
 
 package org.gfbio.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import org.gfbio.service.HeadServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link org.gfbio.service.HeadServiceUtil} service utility. The
@@ -55,4 +62,19 @@ package org.gfbio.service.http;
  * @generated
  */
 public class HeadServiceSoap {
+	public static org.json.simple.JSONArray getTableAsJSONArrayByName(
+		org.json.simple.JSONObject requestJson) throws RemoteException {
+		try {
+			org.json.simple.JSONArray returnValue = HeadServiceUtil.getTableAsJSONArrayByName(requestJson);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(HeadServiceSoap.class);
 }

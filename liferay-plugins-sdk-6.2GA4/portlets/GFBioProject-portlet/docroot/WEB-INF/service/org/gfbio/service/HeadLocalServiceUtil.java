@@ -309,6 +309,15 @@ public class HeadLocalServiceUtil {
 		return getService().getTableAsArray(headId);
 	}
 
+	public static org.json.simple.JSONArray getTableAsJSONArrayByName(
+		org.json.simple.JSONObject requestJson) {
+		return getService().getTableAsJSONArrayByName(requestJson);
+	}
+
+	public static org.json.simple.JSONArray getTableAsJSONArray(long headId) {
+		return getService().getTableAsJSONArray(headId);
+	}
+
 	public static java.lang.String getTableNameById(long headId)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchHeadException {
@@ -393,6 +402,14 @@ public class HeadLocalServiceUtil {
 
 	public static java.lang.Boolean updateTable(org.json.simple.JSONObject json) {
 		return getService().updateTable(json);
+	}
+
+	public static java.lang.Boolean updateInterfaceTableWithContent(
+		java.lang.String nonHccTableName, long nonHccContentId,
+		java.lang.String hccTableName, long hccContentId) {
+		return getService()
+				   .updateInterfaceTableWithContent(nonHccTableName,
+			nonHccContentId, hccTableName, hccContentId);
 	}
 
 	public static void clearService() {

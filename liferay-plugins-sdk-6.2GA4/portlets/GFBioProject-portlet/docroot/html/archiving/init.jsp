@@ -1,136 +1,49 @@
+<script>
 
-
-
-<%@ taglib uri="http://java.sun.com/portlet_2_0" 	prefix="portlet" %>
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" 	prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" 	prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/security" 	prefix="liferay-security" %>
-<%@ taglib uri="http://liferay.com/tld/theme" 		prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" 			prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" 		prefix="liferay-util" %>
-
-<%@ page import="com.liferay.portal.NoSuchModelException" %><%@
-page import="com.liferay.portal.kernel.exception.SystemException" %><%@
-page import="com.liferay.portal.util.PortalUtil" %>
-
-<%@ page import="java.util.*" %>
-
-<%@ page import="javax.portlet.*" %>
-<%@ page import="javax.portlet.PortletPreferences" %>
-<%@ page import="javax.portlet.RenderResponse" %>
-
-<%@ page import="org.gfbio.model.Head" %>
-<%@ page import="org.gfbio.model.Content" %>
-<%@ page import="org.gfbio.model.Column" %>
-<%@ page import="org.gfbio.model.Project" %>
-<%@ page import="org.gfbio.model.ResearchObject" %>
-<%@ page import="org.gfbio.service.ColumnLocalServiceUtil" %>
-<%@ page import="org.gfbio.service.DataProviderLocalServiceUtil" %>
-<%@ page import="org.gfbio.service.HeadLocalServiceUtil" %>
-<%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
-
-<%@ page import="org.json.simple.JSONObject" %>
-<%@ page import="org.json.simple.parser.JSONParser" %>
-<%@ page import="org.json.simple.parser.ParseException" %>
-
-<portlet:defineObjects />
-<liferay-theme:defineObjects />
-<portlet:resourceURL escapeXml="false" id="archivingURL" var="archivingURL" />
-<!--
-<portlet:renderURL var="jspProjectProfile">
-	<portlet:param name="jspPage" value="/projectprofile.jsp" />
-</portlet:renderURL>
--->
-
-
-
-
-
-<script type="text/javascript">
-
-	/////////////////////////////////////////   GCDJ Widget  //////////////////////////////////////////////
-
-	
-	//hide GCDJ Widget
-	function hideSubmission(hidecode) {
-		var toHide = { "hidecode" : hidecode };
-		Liferay.fire('gadget:gfbio.archiving.submit', toHide);
-	}
-	
-
-	//GCDJ Widget Publish
-	function SubmitGCDJ(hidecode, showhide) {
-		var toSubmit = {
-			     "hidecode" : hidecode,
-			     "showhide" : showhide,
-			     "projId" : document.getElementById("chooPro").value
-			   };
-		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
-	}
+	/////////////////////////////////////////   portlet java communication  //////////////////////////////////////////////
 	
 	
-	//ENA Widget Publish
-	function SubmitENA(hidecode, showhide, userId) {
-		var toSubmit = {
-			     "hidecode" : hidecode,
-			     "showhide" : showhide,
-			     "userid" : userId,
-			   };
-		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit);
-	}
-	
-
-	//GCDJ Submit Answer
+	//Message from Hide Managment
 	$(document).ready(function() {
-		Liferay.on('gadget:gfbio.archiving.submit', function(topic, data, subscriberData) {
-			if (data == undefined){}
-			else
-				submitAnswer(data);
-		});
-	});
-	
-
-	//
-	function submitAnswer(data) {
-		$.ajax({
-			"type" : "POST",
-			"url": document.getElementById("archivingURL").value.concat("/GFBioArchiving"),
-			"data" : {
-				"<portlet:namespace />data" : data,
-				"<portlet:namespace />projId" : document.getElementById("chooPro").value,
-				"<portlet:namespace />responseTarget" : "GCDJWidget"
-			},
-			success : function(data) {
-			}
-		});
-		visibleShow("-20");
-		window.setTimeout('reload()',1);
-	}
-
-
-	/////////////////////////////////////////   ResourceRequest  //////////////////////////////////////////////
-	
-	
-	//
-	function ajaxRequest(archivingURL, method, data, as) {
-		console.log("ajaxRequest: "+archivingURL+" | "+ method+" | "+JSON.stringify(data)+" | "+as);
- 		$.ajax({
-			"type" : "POST",
-			"url": archivingURL.concat("/GFBioArchiving"),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : method
-			},
-			async: as,
-			success : function() {
-			}
-		});
-	}
-
-	
-	//
-	function ajaxValueResponse(archivingURL, method, data) {
 		
+		Liferay.on('gadget:gfbio.archiving.update', function(data) {
+			if (!(data == undefined))
+				if (data.updateproject==true){
+					var choPro = $("#".concat("workflowChoPro"));
+					choPro.append("<option value='"+data.projectid+"'>"+data.projectlabel+"</option>");
+				}
+		});
+	});
+	
+	
+	//generelly submission workflow fire to subworkflows
+	function sentWorkflowInformations(workflow, showhide, researchObjectId, projectId, userId) {
+		var showhide;
+		var hidecode;
+		if (workflow =='ena'){
+			showhide = 'show';
+			hidecode = '-21';
+		}
+		else{
+			showhide = 'hide';
+			hidecode = '-21';
+		}
+ 		var toSubmit = {
+			"workflow" : workflow,
+			"researchobjectid"   : researchObjectId,
+			"projectid"   : projectId,
+			"userid"   : userId,
+			"hidecode": hidecode,
+			"showhide": showhide
+		};
+		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
+	}
+	
+
+	
+		
+	//
+	function ajaxActionRequest_ChooseResearchObject(archivingURL, method, data, divId, as) {
 		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
@@ -138,20 +51,17 @@ page import="com.liferay.portal.util.PortalUtil" %>
 				"<portlet:namespace />data" : JSON.stringify(data),
 				"<portlet:namespace />responseTarget" : method
 			},
-			async: false,
-			success : function(data) {
-				callbackSuccess(data);
+			async: as,
+			success :  function (data){
+				buildResearchObject(data, divId) 
 			}
 		});
 	}
 	
 	
-	/////////////////////////////////////////   ActionRequest  //////////////////////////////////////////////
-
-	
 	//
-	function ajaxActionRequest_Choose(archivingURL, method, data, withoutRelationship, withRelationship, as) {
- 		$.ajax({
+	function ajaxActionRequest_ChooseProjProProject(archivingURL, method, data, divId, as) {
+			$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
 			"data" : {
@@ -159,65 +69,54 @@ page import="com.liferay.portal.util.PortalUtil" %>
 				"<portlet:namespace />responseTarget" : method
 			},
 			async: as,
-			success : function(data) {
-				
-				var withoutRelation = data.withoutRelationIdList;
-				var withoutSelect = $("#".concat(withoutRelationship));  
-				withoutSelect.empty();
-				
-				var withRelation = data.withRelationIdList;
-				var withSelect = $("#".concat(withRelationship));   
-				withSelect.empty();
-				
-				for (y = 0; y < withoutRelation.length; y++){
-					withoutSelect.append("<option value='" + withoutRelation[y]+ "'>" + data.withoutJson[withoutRelation[y]] + "</option>");
-				}
-
-				for (y = 0; y < withRelation.length; y++){
-					withSelect.append("<option value='" + withRelation[y]+ "'>" + data.withJson[withRelation[y]] + "</option>");
-				}
-					
+			success : function (data){
+				buildChooseRO(data, divId) ;
 			}
 		});
 	}
 	
-/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
+	
+/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
 	
-	//Message from hide managment
-	$(document).ready(function() {
-		Liferay.on('gadget:gfbio.submissionmanager.hidemanagment', function(data) {
-			
-			if (data == undefined){}
-			else{
-				var dataSubmission =   $("#dataSubmission");
-				dataSubmission.attr("class", data.view);			
-			}
-		});
+	$( document ).ready(function() {
+		 console.log( "ready!" );
+		 document.getElementById("workflowChoPro").selectedIndex = 0;
+		 document.getElementById("choWorkflow").selectedIndex = 0;
 	});
 	
 	
-	//Message from Submission Manager
-	$(document).ready(function() {
-		Liferay.on('gadget:gfbio.submissionmanager.datasubmission', function(data) {
+	//
+	function buildChooseRO(data, divId){
+		
+		cleanSubmissionWorkflow();
 			
-			if (data == undefined){}
-			else{
-				var dataSubmission =   $("#dataSubmission");
-				dataSubmission.attr("class", data.view);	
-			}
-		});
-	});
+		if (data.researchobjects == undefined)
+			var roList = [];
+		else
+			var roList = data.researchobjects;
+
+		var div =   $("#".concat(divId));
+		var choRO = $("#".concat('workflowChooseRO'));
+		
+		if (data.projectid !=0){
+			div.attr("class", "swMain");
+			choRO.empty();
+			choRO.append("<option value='none'></option>");
+			for (i =0; i <roList.length;i++)
+				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" Version: "+ +roList[i].researchobjectversion+"</option>");
+			document.getElementById("workflowChooseRO").selectedIndex = 0;
+		}else{
+			div.attr("class", "swHide");
+			choRO.empty();
+		}
+	}
 	
 	
-
- 	
-	
-
-
-
+	//
+	function cleanSubmissionWorkflow(){
+		document.getElementById("choWorkflow").selectedIndex = 0;
+	}
 
 	
-
-
 </script>

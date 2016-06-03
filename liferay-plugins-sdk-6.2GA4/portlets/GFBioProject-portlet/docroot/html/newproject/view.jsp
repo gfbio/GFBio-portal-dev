@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 
 
-<%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
+<%@ include file="/html/init.jsp" %> <!-- library imports -->
 <%@ include file="/html/newproject/init.jsp" %> <!-- library imports -->
 <script src="${pageContext.request.contextPath}/js/main.js"       			type="text/javascript"></script>  	<!-- main.js  imports -->
 <script src="${pageContext.request.contextPath}/js/newProject.js"       	type="text/javascript"></script>  	<!-- newProject.js  imports -->

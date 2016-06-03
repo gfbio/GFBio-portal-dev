@@ -275,6 +275,10 @@ public interface ProjectLocalService extends BaseLocalService,
 		throws com.liferay.portal.NoSuchModelException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.json.simple.JSONArray getResearchObjectsByProjectId(
+		long projectId);
+
 	public java.lang.Boolean checkProjectOnId(long projectId);
 
 	public java.lang.Boolean checkProjectOnSubmissions(long projectId);
@@ -294,6 +298,9 @@ public interface ProjectLocalService extends BaseLocalService,
 	public org.json.simple.JSONObject createProjectByJson(
 		org.json.simple.JSONObject requestJson);
 
+	public org.json.simple.JSONObject updateProjectByJson(
+		org.json.simple.JSONObject requestJson);
+
 	public long createProject(long userId, java.lang.String name,
 		java.lang.String label, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -307,6 +314,11 @@ public interface ProjectLocalService extends BaseLocalService,
 		java.util.Date startDate, java.util.Date endDate,
 		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.lang.Boolean updateCategories(long projectId,
+		org.json.simple.JSONArray requestJson);
+
+	public java.lang.Boolean updateCategory(long projectId, long categoryId);
 
 	public java.lang.Boolean updateEndDate(long projectId,
 		java.util.Date endDate);

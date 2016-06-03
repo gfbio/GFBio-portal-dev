@@ -120,7 +120,7 @@ $theme.include($body_top_include)
 					</div>
 		
 					<div class="ce_text block">
-						<p><img src="$images_folder/public/Logos%20Member/GFBiologofooter_juni2015.png" alt="" width="962" height="140"></p>  
+						<p><img src="$images_folder/public/Logos%20Member/GFBiologofooter_juni2016.png" alt="" width="962" height="140"></p>  
 		  			</div>
 			   </div>
 		</div>
@@ -144,14 +144,17 @@ $theme.include($bottom_include)
 
 #js ("$javascript_folder/jquery-1.10.2.js")
 #js ("$javascript_folder/jquery-1.10.2-ui.js")
+
 <script>
 (function($) {
     $(document).ready(function() {
+    $('.sign-in a').attr('title','Please sign in or register to GFBio!');
       $(document).accordion({
         // Put custom options here
         heightStyle: 'content',
         header: 'div.toggler',
-        collapsible: true
+        collapsible: true,
+        active: false,
       });
       var activate = function(tog) {
         var tgs = $('div.toggler');
@@ -173,9 +176,6 @@ $theme.include($bottom_include)
     });
   })(jQuery);
 </script>
-
-
-
 </body>
 
 </html>

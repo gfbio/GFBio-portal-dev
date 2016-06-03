@@ -140,8 +140,10 @@
 		<column name="parentResearchObjectID" 	type="long"  />
 		<column name="name" 					type="String" />
 		<column name="label" 					type="String" />
+		<column name="description" 				type="String" />
 		<column name="extendeddata"				type="String" />
-		<column name="researchObjectType"		type="String" />
+		<column name="metadataID"				type="long" />
+		
 
 		<order by="asc">		<order-column name="name" />		</order>
 
@@ -174,10 +176,10 @@
 
 		<finder name="ResearchObjectID"						return-type="Collection">			<finder-column name="researchObjectID" />														</finder>
 		<finder name="ResearchObjectIDWithVersion" 			return-type="Collection">			<finder-column name="researchObjectID" />		<finder-column name="researchObjectVersion" />	</finder>
-		<finder name="ResearchObjectIDWithLastChanges" 		return-type="SubmissionRegistry">	<finder-column name="researchObjectID" />		<finder-column name="lastChanged" />			</finder>
+		<finder name="ResearchObjectIDWithLastChanges" 		return-type="Submission">			<finder-column name="researchObjectID" />		<finder-column name="lastChanged" />			</finder>
 		<finder name="Archive"								return-type="Collection">			<finder-column name="archive" />																</finder>
 		<finder name="BrokerSubmissionID"					return-type="Collection">			<finder-column name="brokerSubmissionID" />														</finder>
-		<finder name="BrokerSubmissionIDWithLastChanges"	return-type="SubmissionRegistry">	<finder-column name="brokerSubmissionID" />		<finder-column name="lastChanged" />			</finder>
+		<finder name="BrokerSubmissionIDWithLastChanges"	return-type="Submission">			<finder-column name="brokerSubmissionID" />		<finder-column name="lastChanged" />			</finder>
 		<finder name="PersistentIdentifierID"				return-type="Collection">			<finder-column name="archivePID" />																</finder>
 		<finder name="PersistentIdentifierTypeID"			return-type="Collection">			<finder-column name="archivePIDType" />															</finder>
 		<finder name="UserID"								return-type="Collection">			<finder-column name="userID" />																	</finder>
@@ -243,6 +245,38 @@
 		<finder name="UserID" 			return-type="Collection">			<finder-column name="userID" />													</finder>
 		<finder name="findByPrimaryKey" return-type="Project_User">			<finder-column	name="projectID" />			<finder-column	name="userID" />	</finder>
 	</entity>
+	
+	
+	<!-- Relationship between project, funding agency, funding program and institution -->
+	
+	<entity name="Funding_InstitutionProject" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="projectID"			type="long"		primary="true" />
+		<column name="fundingAgencyID" 		type="long" 	primary="true" />
+		<column name="fundingProgramID"		type="long" 	primary="true" />
+		<column name="institutionID" 		type="long" 	primary="true" />
+
+		<finder name="FundingAgencyID"	return-type="Collection">		<finder-column name="fundingAgencyID" />											</finder>
+		<finder name="InstitutionID" 		return-type="Collection">	<finder-column name="institutionID"	/>													</finder>
+		<finder name="ProjectID"		return-type="Collection">		<finder-column name="projectID" />													</finder>
+	</entity>
+	
+	
+	<!-- Relationship between project, funding agency, funding program and person -->
+	
+	<entity name="Funding_PersonProject" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="projectID"			type="long"		primary="true" />
+		<column name="fundingAgencyID" 		type="long" 	primary="true" />
+		<column name="fundingProgramID"		type="long" 	primary="true" />
+		<column name="personID" 			type="long" 	primary="true" />
+		<column name="personType"			type="String"	primary="true"/>
+
+		<finder name="FundingAgencyID"	return-type="Collection">		<finder-column name="fundingAgencyID" />											</finder>
+		<finder name="Person" 			return-type="Collection">		<finder-column name="personID"	/>			<finder-column name="personType" />		</finder>
+		<finder name="ProjectID"		return-type="Collection">		<finder-column name="projectID" />													</finder>
+	</entity>
+	
+	
+
 
 
 </service-builder>
