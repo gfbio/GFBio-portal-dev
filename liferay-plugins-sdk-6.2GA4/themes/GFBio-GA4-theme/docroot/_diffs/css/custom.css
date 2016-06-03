@@ -37,8 +37,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 		font-family: robotoregular;
 		padding:0;
 	
-		 h1,h2 {
-			font: 24px/28px robotolight;
+		 h1 {
+			font: 28px robotolight;
+			
+		}
+		 h2 {
+			font: 24px robotolight;
 			
 		}
 		
@@ -48,9 +52,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			color: #999
 		}
 
-		h3 a:hover {
-			color: #CA8F23
-		}
 
 		h3 {
 			font: 20px robotolight;
