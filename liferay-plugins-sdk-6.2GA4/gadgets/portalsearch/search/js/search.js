@@ -82,6 +82,7 @@ function showLatestTenDataset(filter, yearRange) {
 	var oTable = $('#tableId').DataTable({
 			"bDestroy" : true,
 			"bPaginate" : true,
+			"sPaginationType":"simple",
 			"bJQueryUI" : true,
 			"bProcessing" : true,
 			"bServerSide" : true,
@@ -239,6 +240,7 @@ function getSearchResult(keyword, filter, yearRange) {
 	var oTable = $('#tableId').DataTable({
 			"bDestroy" : true,
 			"bPaginate" : true,
+			"sPaginationType":"simple",
 			"bJQueryUI" : true,
 			"bProcessing" : true,
 			"bServerSide" : true,
@@ -362,7 +364,8 @@ function createQueryFieldArray() {
 	jArr.push("maxLongitude");
 	jArr.push("minLongitude");
 	//jArr.push("taxonomy");
-	//jArr.push("datalink");
+	jArr.push("datalink");
+	jArr.push("format");
 	jArr.push("metadatalink");
 	jArr.push("html-1");
 	jArr.push("xml");
@@ -530,7 +533,8 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.maxLongitude = getValueFromJSONObject(fields, "maxLongitude", 0);
 		inner.minLongitude = getValueFromJSONObject(fields, "minLongitude", 0);
 		inner.metadatalink = getValueFromJSONObject(fields, "metadatalink", 0);
-
+		inner.datalink = getValueFromJSONObject(fields, "datalink", 0);
+		inner.format = getValueFromJSONObject(fields, "format", 0);
 		if (fields["html-1"]) { // this field is used only for displaying data
 			var html = fields["html-1"][0];
 			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
@@ -787,6 +791,8 @@ function getDataFromSelectedRow(nRow, tRows) {
 	var value = tRows.data()[iRow];
 	var result = {
 		"metadatalink" : value.metadatalink,
+		"datalink" : value.datalink,
+		"format" : value.format,
 		"timeStamp" : value.timeStamp,
 		"maxLatitude" : value.maxLatitude,
 		"minLatitude" : value.minLatitude,
