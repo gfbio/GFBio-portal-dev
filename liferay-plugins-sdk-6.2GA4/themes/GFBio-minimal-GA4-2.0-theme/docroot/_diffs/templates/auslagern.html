@@ -1,48 +1,146 @@
-##<div class="container-fluid" id="wrapper">
-#*<div id="heading">
-			<h1 class="site-title">
-				<a class="$logo_css_class" href="$site_default_url" title="#language_format ("go-to-x", [$site_name])">
-					<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
-				</a>
+<footer class="footer">
+    <div class="container">
+        <div class="row"> <!-- Footer top row -->
 
-				#if ($show_site_name)
-					<span class="site-name" title="#language_format ("go-to-x", [$site_name])">
-						$site_name
-					</span>
-				#end
-			</h1>
+            <div class="span12 offset4 border-right">
+                <h3>GFBio Consortium</h3>
+                <p>
+                    The German Federation for Biological Data (GFBio), a sustainable, service oriented,
+                    national data infrastructure facilitating data sharing for biological and environmental research.
+                </p>
+            </div>
 
-			<img src="$images_folder/layout/gf_bio_body_bg.jpg" style="width:100%"  position:fixed; z-index:-1000;>
-			
-			#*<h2 class="page-title">
-				<span>$the_title</span>
-			</h2>*#
-			
-			<div class="ce_pageimages header-page-images block" id="header-page-images">
+            <div class="span12 offset8">
+                
+                <div class="span12 offset4 border-right">
+                    <i class="icon-signal"></i>
+                    <h4>Want to know more ?</h4>
+                    <ul class="unstyled">
+                        <li><a href="http://helpdesk.gfbio.org/servicedesk/customer/portal/2/group/9">Helpdesk</a></li>
+                        <li><a href="#">Training</a></li>
+                        <li><a href="#">FAQ's</a></li>
+                    </ul>
+                </div>
 
-				<figure class="image_container">
-					<img src="$images_folder/layout/header-page-images/header-image-start.png" width="1020" height="320" alt="header-image-start">
-				</figure>
-			</div>
-			
-			
-			
-		</div>*#
-		
-		
-		##<div id="dock">
-				##if ($is_signed_in)
-				#	#dockbar()
-				##end
-			##</div>
-			
-			#if (!$is_signed_in)
-					##<a data-redirect="$is_login_redirect_required" href="$sign_in_url" id="sign-in" rel="nofollow">$sign_in_text</a>
-			#end
-			
-			
-			
-			<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-	<script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+                <div class="span12 offset4 border-right">
+                    <i class="icon-comments-alt"></i>
+                    <h4>Contact us !</h4>
+                    <p>
+                        Write our
+                        <strong><a
+                                href="http://helpdesk.gfbio.org/servicedesk/customer/portal/2/group/9">Helpdesk</a></strong>
+                        Staff !
+                    </p>
+                    <p>
+                        Got questions ? Email us at
+                        <strong><a href="mailto:helpdesk@gfbio.org">helpdesk@gfbio.org</a></strong>
+                    </p>
+                </div>
+
+                <div class="span12 offset4">
+                    <i class="icon-signin"></i>
+                    <h4>Sign up</h4>
+                    <p>
+                        Get full access to services and resources deriving benefit for your Projects
+                    </p>
+                    <br>
+                    <p>
+                        <a href="$portal_url/c/portal/login" class="btn btn-footer">Create an account !</a>
+                    </p>
+                </div>
+
+            </div>
+
+        </div> <!-- end Footer top row -->
+    </div>
+
+    <div class="container">
+        <div id="footer-middle-row" class="row"> <!-- Footer middle row -->
+
+            <div class="span6 offset3">
+                <a href="#">
+                    <i class="icon-search"></i>
+                    <h5 class="left">Search</h5>
+
+                    <p class="left">Start searching integrated datasets.</p>
+                </a>
+            </div>
+
+            <div class="span6 offset3">
+                <a href="#">
+                    <i class="icon-upload-alt"></i>
+                    <h5 class="left">Submit</h5>
+
+                    <p class="left">Deposit data and specimens in dedicated long-term archives.</p>
+                </a>
+            </div>
+
+            <div class="span6 offset3">
+                <a href="#">
+                    <i class="icon-cogs"></i>
+                    <h5 class="left">Manage</h5>
+
+                    <p class="left">Prepare a custom Data Management Plan for your project
+                        or application.</p>
+                </a>
+            </div>
+
+            <div class="span6 offset3">
+                <a href="#">
+                    <i class="icon-wrench"></i>
+                    <h5 class="left">Tools</h5>
+
+                    <p class="left">Biodiversity Management tools developed and supported by GFBio.</p>
+                </a>
+            </div>
+
+        </div> <!-- end Footer middle row  -->
+    </div>
+
+    <div class="container-fluid" id="footer-bottom-wrapper">
+        <div class="container">
+            <div class="row" id="footer-bottom-row"> <!-- Footer bottom row -->
+                
+                <div class="offset6 left">
+                    <ul class="unstyled inline">
+                        <li class="index-collection active-link folder">
+                            <a href="$portal_url/legal-information"><span>Legal Information</span></a>
+                        </li>
+                        <li class="index-collection active-link folder">
+                            <a href="$portal_url/terms-of-service"><span>Terms of Service</span></a>
+                        </li>
+                        <li class="index-collection active-link folder">
+                            <a href="$portal_url/privacy-policy"><span>Privacy Policy</span></a>
+                        </li>
+                        
+                    </ul>
+                </div>
+
+                <div class="offset6">
+                    <ul class="unstyled inline right">
+                        <li>
+                            <a href="mailto:helpdesk@gfbio.org"><i class="icon-envelope-alt"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/GFBio-717478461662621/?fref=nf"><i
+                                    class="icon-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.gfbio.org%2F&ref_src=twsrc%5Etfw&region=follow_link&screen_name=GFBio_Project&tw_p=followbutton">
+                                <i class="icon-twitter"></i></a>
+                        </li>
+                
+                
+                        <li>
+                            <a href="https://github.com/gfbio"><i class="icon-github-alt"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div> <!-- end Footer bottom row -->
+
+
+</footer>
