@@ -17,7 +17,7 @@
 			#end
 
 			<li id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
-				<a class="$nav_item_css_class" aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span>$nav_item.icon() $nav_item.getName()</span></a>
+				<a class="$nav_item_css_class" aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span class="menuitem">$nav_item.icon() $nav_item.getName()&nbsp;<i class="icon-angle-down"></i></span></a>
 
 				#if ($nav_item.hasChildren())
 					<ul class="level1" role="menu">

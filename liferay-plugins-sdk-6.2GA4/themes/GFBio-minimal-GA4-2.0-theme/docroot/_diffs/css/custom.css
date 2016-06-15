@@ -19,10 +19,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 
 .aui {
-	background-color: transparent;
+	background-color: white;
 	color: #333;
-	font-family: sans-serif;
-	font-size: 14px/18px ;
+	font-family: 'Lato', sans-serif;
+	font-size: 18px ;
 	
 	
 	.separator {
@@ -33,39 +33,43 @@ $dockbarOpenGradientStart: #0EA6F9;
 	
 	body{
 	
-		background-color: transparent;
-		font-family: sans-serif;
+		background-color: white;
+		font-family: 'Lato', sans-serif;
 		padding:0;
 	
 		h1, h2, h3,h4{
-			color:#639000;
+			color:#4d4d4d;
 		}
 		 h1{
-			font-size: 28px;
+			font-size: 36px;
+			font-weight:100;
 			
 		}
 		
 		h2{
-			font-size: 24px;
+			font-size: 30px;
+			font-weight:100;
 		}
 		
 		h3 {
-			font-size: 20px;
+			font-size: 24px;
+			font-weight:300;
 		}
 		
 		h4 {
-			font-size: 18px;
+			font-size: 20px;
+			font-weight:400;
 		} 
 
 		a {
 			color: #39F;
 		}
-	
+		
 	}
 	
 	#logo-gfbio{
-		height:120px;
-		margin-top:-60px;
+		/*height:120px;*/
+		margin-top:-80px;
 		background-color:#ffffff;
 	
 	}
@@ -73,7 +77,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 	img#logo-gfbio {
 	
 		padding-left:100px;
-		padding-top:80px;
+		padding-top:110px;
+		padding-bottom:10px;
 		height:60px;
 		width:125px;
 		
@@ -115,28 +120,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			position: absolute;
 		}
 	} 
-	
-	/* #sign-in {
-		background: url(@theme_image_path@/common/key.png) no-repeat 3px 50%;
-		font-weight: bold;
-		color:#FFFFFF;
-		padding: 5px 5px 5px 25px;
-		position: absolute;
-		right: 0;
-		top: -0.3em;
-		
-		@include respond-to(phone){
-			color:#118ADE;			
-			position: absolute;	
-			top: 0.3em;
-		}
-		
-		@include respond-to(tablet){
-			color:#118ADE;			
-			position: absolute;	
-			top: 1.5em;
-		}
-	} */
 	
 	
 	#nav{
@@ -350,7 +333,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		
 		@include respond-to(desktop){
 					right: 30em;
-					top: 4em;
+					top: 3em;
 					position: absolute;
 					margin-left: auto;
 					padding-top:0;
@@ -372,19 +355,47 @@ $dockbarOpenGradientStart: #0EA6F9;
 			a{
 				margin-left: 10px;
 				padding: 5px 10px;
-				font: 18px robotolight;
-				font-weight: bold;
+				font: 16px;
+				font-weight: none;
 				text-decoration: none;
 				display: inline-block;
 				
 				@include respond-to(desktop){
 						
-							font: 11px robotoregular;
+							font: 11px;
 							text-decoration: none;
 							color: #7a8bae;
 						
 				}
 				
+			}
+			
+			ul{
+						position: absolute;
+						display: none;
+						top: 100%;
+						left: 0;
+						z-index: 99;
+						box-shadow: 2px 2px 6px rgba(0, 0, 0, .2);
+						min-width: 12em; /* allow long menu items to determine submenu width */
+						*width: 12em;
+					
+					}
+					
+					>li {
+					float: left;
+					}
+				
+					li:hover>ul{
+						display:block;
+						background:#FFFFFF;
+				
+					}
+		 
+			
+			li .menuitem{
+				font-size:16px;
+			
 			}
 		}
 			
@@ -408,7 +419,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		
 			@include respond-to(desktop){
 					float:left;
-					padding-top:3em;
+					padding-top:0em;
 					margin-right: -44em;
 					display: inline-block; 
 					text-align: left;
@@ -442,12 +453,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 				display: inline-block;
 				margin-left: 10px;
 				padding: 5px 10px;
-				font: 16px robotolight;
+				font: 14px;
 				background-color:#FFFFFF;
 				color:#39f;
 				
 				@include respond-to(desktop){
-						font: 13px robotoregular;
+						font: 13px;
 						color: #666;
 						text-transform: none;
 						background-color: transparent;
@@ -463,7 +474,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				color: #fff;
 				
 				@include respond-to(desktop){
-						font: 13px robotoregular;					
+						font: 13px;					
 						text-decoration: none;
 						color: #39f;
 						
@@ -568,6 +579,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.breadcrumb {
 		background-color: #FAFAFA;
+		padding: 8px 4em;
 	}
 
 	#breadcrumbs {
@@ -582,7 +594,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-body{
 		
-		padding:10px;
+		padding:0px;
 	}
 	
 	.portlet-content, .portlet-minimized .portlet-content-container {
@@ -733,13 +745,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	/* ---------- Footer ---------- */
-
-	#footer {
-		text-align: right;
-	}
-
-	/* ---------- Hudcrumbs ---------- */
+		/* ---------- Hudcrumbs ---------- */
 
 	.lfr-hudcrumbs {
 		position: fixed;
@@ -917,9 +923,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-.row {
-	
+.container{
+	margin:0 auto;
+	width:95%;
 }
+
 .left{
 	float:left;
 }
@@ -928,28 +936,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	float:right;
 }
 
-.span12{
-	width:30%;
-	padding-left:5px;
-	padding-right:10px;
-}
-
-.offset3{
-	margin-left:0px;
-	width:25%;
-}
-.offset4{
-	margin-left:10px;
-}
-
-.offset6{
-	margin-left:0px;
-}
-
-.offset8{
-	width:66%;
-	margin-left:0px;
-}
 
 
 /*============================================================
@@ -967,7 +953,34 @@ $dockbarOpenGradientStart: #0EA6F9;
     text-align: center;
     font-weight: 300;
     padding-top: 4rem;
+    
+    
+    .span12 {
+		width:30%;
+		padding-left:5px;
+		padding-right:10px;
+	}
+	
+	.offset3, .offset3:first-child{
+	margin-left:0px;
+	width:25%;
 }
+	.offset4, .offset4:first-child{
+	margin-left:10px;
+}
+
+	.offset6, .offset6:first-child{
+	margin-left:0px;
+}
+
+	.offset8 {
+	width:66%;
+	margin-left:0px;
+}
+    
+}
+
+		
 
 .footer h3 {
     margin-top: 0;
@@ -1018,7 +1031,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 .footer h5 {
     font-size: 1.2em;
-    padding-left: 50px !important;
+    padding-left: 50px;
+    text-align:left;
 }
 
 .footer p {
@@ -1097,6 +1111,12 @@ a.btn-footer {
 a.btn-footer:hover {
     color: #345AA2;
     background-color: #fff;
+}
+
+
+.service-icon{
+	font-size:30px;
+	
 }
 }
 

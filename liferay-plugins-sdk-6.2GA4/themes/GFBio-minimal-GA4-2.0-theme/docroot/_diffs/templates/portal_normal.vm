@@ -11,12 +11,12 @@
 
 	$theme.include($top_head_include)
 	
+	
 </head>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
 
+<body id="top" class="$css_class" >
 
-<body id="top" class="$css_class win firefox gecko fx27" >
-
-<img src="$images_folder/layout/gf_bio_body_bg.jpg" alt="Welcome to GFBio - Header image" style="width:100%; position:fixed; z-index:-1000">
   	
 <div id="dock">				
 				#dockbar()
@@ -59,153 +59,7 @@ $theme.include($body_top_include)
 
 
 	
-	<footer class="footer">
-    <div class="container">
-        <div class="row"> <!-- Footer top row -->
-
-            <div class="span12 offset4 border-right">
-                <h3>GFBio Consortium</h3>
-                <p>
-                    The German Federation for Biological Data (GFBio), a sustainable, service oriented,
-                    national data infrastructure facilitating data sharing for biological and environmental research.
-                </p>
-            </div>
-
-            <div class="span12 offset8">
-                
-                <div class="span12 offset4 border-right">
-                    <i class="icon-signal"></i>
-                    <h4>Want to know more ?</h4>
-                    <ul class="unstyled">
-                        <li><a href="http://helpdesk.gfbio.org/servicedesk/customer/portal/2/group/9">Helpdesk</a></li>
-                        <li><a href="#">Training</a></li>
-                        <li><a href="#">FAQ's</a></li>
-                    </ul>
-                </div>
-
-                <div class="span12 offset4 border-right">
-                    <i class="icon-comments-alt"></i>
-                    <h4>Contact us !</h4>
-                    <p>
-                        Write our
-                        <strong><a
-                                href="http://helpdesk.gfbio.org/servicedesk/customer/portal/2/group/9">Helpdesk</a></strong>
-                        Staff !
-                    </p>
-                    <p>
-                        Got questions ? Email us at
-                        <strong><a href="mailto:helpdesk@gfbio.org">helpdesk@gfbio.org</a></strong>
-                    </p>
-                </div>
-
-                <div class="span12 offset4">
-                    <i class="icon-signin"></i>
-                    <h4>Sign up</h4>
-                    <p>
-                        Get full access to services and resources deriving benefit for your Projects
-                    </p>
-                    <br>
-                    <p>
-                        <a href="$portal_url/c/portal/login" class="btn btn-footer">Create an account !</a>
-                    </p>
-                </div>
-
-            </div>
-
-        </div> <!-- end Footer top row -->
-    </div>
-
-    <div class="container">
-        <div id="footer-middle-row" class="row"> <!-- Footer middle row -->
-
-            <div class="span6 offset3">
-                <a href="#">
-                    <i class="icon-search"></i>
-                    <h5 class="left">Search</h5>
-
-                    <p class="left">Start searching integrated datasets.</p>
-                </a>
-            </div>
-
-            <div class="span6 offset3">
-                <a href="#">
-                    <i class="icon-upload-alt"></i>
-                    <h5 class="left">Submit</h5>
-
-                    <p class="left">Deposit data and specimens in dedicated long-term archives.</p>
-                </a>
-            </div>
-
-            <div class="span6 offset3">
-                <a href="#">
-                    <i class="icon-cogs"></i>
-                    <h5 class="left">Manage</h5>
-
-                    <p class="left">Prepare a custom Data Management Plan for your project
-                        or application.</p>
-                </a>
-            </div>
-
-            <div class="span6 offset3">
-                <a href="#">
-                    <i class="icon-wrench"></i>
-                    <h5 class="left">Tools</h5>
-
-                    <p class="left">Biodiversity Management tools developed and supported by GFBio.</p>
-                </a>
-            </div>
-
-        </div> <!-- end Footer middle row  -->
-    </div>
-
-    <div class="container-fluid" id="footer-bottom-wrapper">
-        <div class="container">
-            <div class="row" id="footer-bottom-row"> <!-- Footer bottom row -->
-                
-                <div class="offset6 left">
-                    <ul class="unstyled inline">
-                        <li class="index-collection active-link folder">
-                            <a href="$portal_url/legal-information"><span>Legal Information</span></a>
-                        </li>
-                        <li class="index-collection active-link folder">
-                            <a href="$portal_url/terms-of-service"><span>Terms of Service</span></a>
-                        </li>
-                        <li class="index-collection active-link folder">
-                            <a href="$portal_url/privacy-policy"><span>Privacy Policy</span></a>
-                        </li>
-                        
-                    </ul>
-                </div>
-
-                <div class="offset6">
-                    <ul class="unstyled inline right">
-                        <li>
-                            <a href="mailto:helpdesk@gfbio.org"><i class="icon-envelope-alt"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/GFBio-717478461662621/?fref=nf"><i
-                                    class="icon-facebook"></i></a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.gfbio.org%2F&ref_src=twsrc%5Etfw&region=follow_link&screen_name=GFBio_Project&tw_p=followbutton">
-                                <i class="icon-twitter"></i></a>
-                        </li>
-                
-                
-                        <li>
-                            <a href="https://github.com/gfbio"><i class="icon-github-alt"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-    </div> <!-- end Footer bottom row -->
-
-
-</footer>
-
+	
 $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
