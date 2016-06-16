@@ -14,5 +14,6 @@
 		<portlet id="table-builder"></portlet>
 		<portlet id="workflowcollections"></portlet>
 		<portlet id="workflowena"></portlet>
+		<portlet id="ss-oregistration"></portlet>
 	</category>
 </display>
