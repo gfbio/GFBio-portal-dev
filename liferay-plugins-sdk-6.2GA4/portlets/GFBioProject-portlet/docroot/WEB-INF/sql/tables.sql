@@ -13,22 +13,6 @@ create table gfbio_Project_ResearchObject (
 	primary key (projectID, researchobjectID)
 );
 
-create table gfbio_Project_User_PI (
-	projectID LONG not null,
-	userID LONG not null,
-	begin DATE null,
-	end_ DATE null,
-	primary key (projectID, userID)
-);
-
-create table gfbio_Project_User_Worker (
-	projectID LONG not null,
-	userID LONG not null,
-	begin DATE null,
-	end_ DATE null,
-	primary key (projectID, userID)
-);
-
 create table gfbio_ResearchObject (
 	researchobjectID LONG not null primary key,
 	name VARCHAR(75) null,
