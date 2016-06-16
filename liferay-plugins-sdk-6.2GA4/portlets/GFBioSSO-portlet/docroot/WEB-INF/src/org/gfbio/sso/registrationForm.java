@@ -79,25 +79,26 @@ public class registrationForm extends GenericPortlet {
 
 //			String cn = user.getScreenName();
 //			String fullCN = "cn=" + cn + "," + usersContainer;
-			try {
-				DirContext ctx = new InitialDirContext(env);
-				SearchControls constraints = new SearchControls();
-				constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
-				NamingEnumeration<?> resp = ctx.search(usersContainer, "(mail="
-						+ user.getEmailAddress() + ")", constraints);
-				while (resp.hasMore()) {
-					SearchResult res = (SearchResult) resp.next();
-					log.info(res.getName());
-					log.info("user exists!");
-					renderRequest.setAttribute("password", "readonly");
-					renderRequest.setAttribute("submit", "disabled");
-					break;
-				}
-
-			} catch (NamingException e) {
-				log.error(e);
-				e.printStackTrace();
-			}
+			// this part will disable the submit form if the user is already exist in LDAP
+//			try {
+//				DirContext ctx = new InitialDirContext(env);
+//				SearchControls constraints = new SearchControls();
+//				constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
+//				NamingEnumeration<?> resp = ctx.search(usersContainer, "(mail="
+//						+ user.getEmailAddress() + ")", constraints);
+//				while (resp.hasMore()) {
+//					SearchResult res = (SearchResult) resp.next();
+//					log.info(res.getName());
+//					log.info("user exists!");
+//					renderRequest.setAttribute("password", "readonly");
+//					renderRequest.setAttribute("submit", "disabled");
+//					break;
+//				}
+//
+//			} catch (NamingException e) {
+//				log.error(e);
+//				e.printStackTrace();
+//			}
 		}
 		include(viewTemplate, renderRequest, renderResponse);
 	}
@@ -108,6 +109,7 @@ public class registrationForm extends GenericPortlet {
 		User user = (User) actionRequest.getAttribute(WebKeys.USER);
 
 		String password = actionRequest.getParameter("passwordform");
+
 		try {
 			boolean userAdded = addUser(user, password);
 			if (userAdded) {
@@ -184,16 +186,19 @@ public class registrationForm extends GenericPortlet {
 		attrs.put(screenName);
 		attrs.put(uid);
 		attrs.put(objclass);
+		
 		try {
-
-			if (ctx.getAttributes(fullCN) != null) {
-				// ctx.modifyAttributes(fullCN, DirContext.REPLACE_ATTRIBUTE,
-				// attrs);
-				// System.out.println( "UpdateUser: updated entry " + fullCN +
-				// ".");
-				// System.out.println( attrs);
-				log.warn("User already added.");
-				return false;
+			SearchControls constraints = new SearchControls();
+			constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
+			NamingEnumeration<?> resp = ctx.search(usersContainer, "(mail="
+					+ user.getEmailAddress() + ")", constraints);
+			while (resp.hasMore()) {
+				SearchResult res = (SearchResult) resp.next();
+				log.info(res.getName());
+				log.warn("user exists!");
+				ctx.modifyAttributes(fullCN, DirContext.REPLACE_ATTRIBUTE,
+				 attrs);
+				return true;
 			}
 
 		} catch (NameNotFoundException e) {
@@ -201,7 +206,12 @@ public class registrationForm extends GenericPortlet {
 			log.info("AddUser: added entry " + fullCN + ".");
 			log.info(attrs);
 			return true;
-		} finally {
+		}
+		catch (NamingException e) {
+			log.error(e);
+			e.printStackTrace();
+		}
+		finally {
 			ctx.close();
 		}
 		return false;
