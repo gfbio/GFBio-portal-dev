@@ -4,7 +4,7 @@
 <portlet:resourceURL var="thisURL" id="thisURL" escapeXml="false" /> 
 
 <p>SSO Password Settings</p>
-<p>Please fill in the password for SSO authentication (only once):</p>
+<p>Please fill in the password for SSO authentication:</p>
 <form action="<portlet:actionURL/>" method="post">
 <table>
 	<tr><td>Username: </td><td><input type="text" name = "username" readonly value="<%=renderRequest.getAttribute("username")%>"></td></tr>
