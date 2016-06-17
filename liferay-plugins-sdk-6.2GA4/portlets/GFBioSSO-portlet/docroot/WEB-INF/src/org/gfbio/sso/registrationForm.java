@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.util.PortalUtil;
 
 /**
  * Portlet implementation class registrationForm
@@ -57,7 +58,7 @@ public class registrationForm extends GenericPortlet {
 		log.info(usersContainer);
 		log.info(admindn);
 		log.info(admincred);
-		
+
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
 				"com.sun.jndi.ldap.LdapCtxFactory");
 		env.put(Context.PROVIDER_URL, ldapUri);
@@ -65,7 +66,7 @@ public class registrationForm extends GenericPortlet {
 		env.put(Context.SECURITY_CREDENTIALS, admincred);
 
 		viewTemplate = getInitParameter("view-template");
-		
+
 	}
 
 	public void doView(RenderRequest renderRequest,
@@ -76,29 +77,6 @@ public class registrationForm extends GenericPortlet {
 			renderRequest.setAttribute("lastname", user.getLastName());
 			renderRequest.setAttribute("username", user.getScreenName());
 			renderRequest.setAttribute("email", user.getEmailAddress());
-
-//			String cn = user.getScreenName();
-//			String fullCN = "cn=" + cn + "," + usersContainer;
-			// this part will disable the submit form if the user is already exist in LDAP
-//			try {
-//				DirContext ctx = new InitialDirContext(env);
-//				SearchControls constraints = new SearchControls();
-//				constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
-//				NamingEnumeration<?> resp = ctx.search(usersContainer, "(mail="
-//						+ user.getEmailAddress() + ")", constraints);
-//				while (resp.hasMore()) {
-//					SearchResult res = (SearchResult) resp.next();
-//					log.info(res.getName());
-//					log.info("user exists!");
-//					renderRequest.setAttribute("password", "readonly");
-//					renderRequest.setAttribute("submit", "disabled");
-//					break;
-//				}
-//
-//			} catch (NamingException e) {
-//				log.error(e);
-//				e.printStackTrace();
-//			}
 		}
 		include(viewTemplate, renderRequest, renderResponse);
 	}
@@ -111,15 +89,14 @@ public class registrationForm extends GenericPortlet {
 		String password = actionRequest.getParameter("passwordform");
 
 		try {
+
 			boolean userAdded = addUser(user, password);
 			if (userAdded) {
 				String successMsg = "Account updated Successfully!";
 				SessionMessages.add(actionRequest, "request_processed",
 						successMsg);
-			} else {
-				String warningMsg = "Account either incomplete or has been added!";
-				SessionErrors.add(actionRequest, "err_msg", warningMsg);
 			}
+
 		} catch (Exception e) {
 			log.error(e);
 			e.printStackTrace();
@@ -173,23 +150,25 @@ public class registrationForm extends GenericPortlet {
 		Attributes attrs = new BasicAttributes(true);
 
 		attrs.put(givenName);
-		if (surname.size()>0){
+		if (surname.size() > 0) {
 			attrs.put(surname);
-		}else{
+		} else {
 			return false;
 		}
 		attrs.put(email);
 		attrs.put(pwd);
-		if (jobTitle.size()>0){
+		if (jobTitle.size() > 0) {
 			attrs.put(jobTitle);
 		}
 		attrs.put(screenName);
 		attrs.put(uid);
 		attrs.put(objclass);
-		
+
 		try {
 			SearchControls constraints = new SearchControls();
 			constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
+			// check if this user is already exist in LDAP?
 			NamingEnumeration<?> resp = ctx.search(usersContainer, "(mail="
 					+ user.getEmailAddress() + ")", constraints);
 			while (resp.hasMore()) {
@@ -197,21 +176,18 @@ public class registrationForm extends GenericPortlet {
 				log.info(res.getName());
 				log.warn("user exists!");
 				ctx.modifyAttributes(fullCN, DirContext.REPLACE_ATTRIBUTE,
-				 attrs);
+						attrs);
 				return true;
 			}
 
-		} catch (NameNotFoundException e) {
 			ctx.createSubcontext(fullCN, attrs);
 			log.info("AddUser: added entry " + fullCN + ".");
 			log.info(attrs);
 			return true;
-		}
-		catch (NamingException e) {
+		} catch (NamingException e) {
 			log.error(e);
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			ctx.close();
 		}
 		return false;
