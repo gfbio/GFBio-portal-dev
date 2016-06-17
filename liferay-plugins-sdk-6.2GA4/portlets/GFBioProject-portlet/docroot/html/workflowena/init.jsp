@@ -16,7 +16,7 @@
 	/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
 	
-	//Message from Hide Managment
+/* 	//Message from Hide Managment
 	$(document).ready(function() {
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			var submissionManager =   $("#ena");
@@ -26,6 +26,6 @@
 				submissionManager.attr("class", "swMain");
 		});
 	});
-	
+	 */
 	
 </script>
