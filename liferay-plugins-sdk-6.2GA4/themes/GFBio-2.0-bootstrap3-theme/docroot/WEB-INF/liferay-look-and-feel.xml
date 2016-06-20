@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 6.2.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_6_2_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>6.2.3+</version>
+	</compatibility>
+	<theme id="GFBio-2.0-bootstrap3" name="GFBio 2.0 Bootstrap3">
+	<settings>
+			<setting configurable="true" key="dockbar-vertical" type="checkbox" value="true" />
+			<setting configurable="true" key="portlet-setup-show-borders-default" type="checkbox" value="false" />
+		</settings>
+		</theme>
+</look-and-feel>
