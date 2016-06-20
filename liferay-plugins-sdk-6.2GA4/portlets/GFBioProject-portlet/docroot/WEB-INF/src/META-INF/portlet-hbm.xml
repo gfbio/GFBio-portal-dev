@@ -52,6 +52,12 @@
 		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="website" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="training" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="physicalobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="taxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="notaxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="livingobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="deadobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="sequencedata" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" table="gfbio_DataProvider_PersistentIdentifier">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK">
@@ -108,9 +114,9 @@
 			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
-		<property name="usertype" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="userType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.ResearchObjectImpl" table="gfbio_ResearchObject">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.ResearchObjectPK">

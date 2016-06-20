@@ -44,12 +44,12 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 		sb.append(projectID);
 		sb.append(", userID=");
 		sb.append(userID);
-		sb.append(", usertype=");
-		sb.append(usertype);
 		sb.append(", startDate=");
 		sb.append(startDate);
 		sb.append(", endDate=");
 		sb.append(endDate);
+		sb.append(", userType=");
+		sb.append(userType);
 		sb.append("}");
 
 		return sb.toString();
@@ -61,13 +61,6 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 
 		project_UserImpl.setProjectID(projectID);
 		project_UserImpl.setUserID(userID);
-
-		if (usertype == null) {
-			project_UserImpl.setUsertype(StringPool.BLANK);
-		}
-		else {
-			project_UserImpl.setUsertype(usertype);
-		}
 
 		if (startDate == Long.MIN_VALUE) {
 			project_UserImpl.setStartDate(null);
@@ -83,6 +76,13 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 			project_UserImpl.setEndDate(new Date(endDate));
 		}
 
+		if (userType == null) {
+			project_UserImpl.setUserType(StringPool.BLANK);
+		}
+		else {
+			project_UserImpl.setUserType(userType);
+		}
+
 		project_UserImpl.resetOriginalValues();
 
 		return project_UserImpl;
@@ -92,9 +92,9 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		projectID = objectInput.readLong();
 		userID = objectInput.readLong();
-		usertype = objectInput.readUTF();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
+		userType = objectInput.readUTF();
 	}
 
 	@Override
@@ -102,21 +102,20 @@ public class Project_UserCacheModel implements CacheModel<Project_User>,
 		throws IOException {
 		objectOutput.writeLong(projectID);
 		objectOutput.writeLong(userID);
+		objectOutput.writeLong(startDate);
+		objectOutput.writeLong(endDate);
 
-		if (usertype == null) {
+		if (userType == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(usertype);
+			objectOutput.writeUTF(userType);
 		}
-
-		objectOutput.writeLong(startDate);
-		objectOutput.writeLong(endDate);
 	}
 
 	public long projectID;
 	public long userID;
-	public String usertype;
 	public long startDate;
 	public long endDate;
+	public String userType;
 }

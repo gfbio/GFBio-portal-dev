@@ -56,6 +56,12 @@ public class DataProviderWrapper implements DataProvider,
 		attributes.put("address", getAddress());
 		attributes.put("website", getWebsite());
 		attributes.put("training", getTraining());
+		attributes.put("physicalobjects", getPhysicalobjects());
+		attributes.put("taxonbased", getTaxonbased());
+		attributes.put("notaxonbased", getNotaxonbased());
+		attributes.put("livingobjects", getLivingobjects());
+		attributes.put("deadobjects", getDeadobjects());
+		attributes.put("sequencedata", getSequencedata());
 
 		return attributes;
 	}
@@ -102,6 +108,42 @@ public class DataProviderWrapper implements DataProvider,
 
 		if (training != null) {
 			setTraining(training);
+		}
+
+		Boolean physicalobjects = (Boolean)attributes.get("physicalobjects");
+
+		if (physicalobjects != null) {
+			setPhysicalobjects(physicalobjects);
+		}
+
+		Boolean taxonbased = (Boolean)attributes.get("taxonbased");
+
+		if (taxonbased != null) {
+			setTaxonbased(taxonbased);
+		}
+
+		Boolean notaxonbased = (Boolean)attributes.get("notaxonbased");
+
+		if (notaxonbased != null) {
+			setNotaxonbased(notaxonbased);
+		}
+
+		Boolean livingobjects = (Boolean)attributes.get("livingobjects");
+
+		if (livingobjects != null) {
+			setLivingobjects(livingobjects);
+		}
+
+		Boolean deadobjects = (Boolean)attributes.get("deadobjects");
+
+		if (deadobjects != null) {
+			setDeadobjects(deadobjects);
+		}
+
+		Boolean sequencedata = (Boolean)attributes.get("sequencedata");
+
+		if (sequencedata != null) {
+			setSequencedata(sequencedata);
 		}
 	}
 
@@ -263,6 +305,186 @@ public class DataProviderWrapper implements DataProvider,
 	@Override
 	public void setTraining(java.lang.String training) {
 		_dataProvider.setTraining(training);
+	}
+
+	/**
+	* Returns the physicalobjects of this data provider.
+	*
+	* @return the physicalobjects of this data provider
+	*/
+	@Override
+	public boolean getPhysicalobjects() {
+		return _dataProvider.getPhysicalobjects();
+	}
+
+	/**
+	* Returns <code>true</code> if this data provider is physicalobjects.
+	*
+	* @return <code>true</code> if this data provider is physicalobjects; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPhysicalobjects() {
+		return _dataProvider.isPhysicalobjects();
+	}
+
+	/**
+	* Sets whether this data provider is physicalobjects.
+	*
+	* @param physicalobjects the physicalobjects of this data provider
+	*/
+	@Override
+	public void setPhysicalobjects(boolean physicalobjects) {
+		_dataProvider.setPhysicalobjects(physicalobjects);
+	}
+
+	/**
+	* Returns the taxonbased of this data provider.
+	*
+	* @return the taxonbased of this data provider
+	*/
+	@Override
+	public boolean getTaxonbased() {
+		return _dataProvider.getTaxonbased();
+	}
+
+	/**
+	* Returns <code>true</code> if this data provider is taxonbased.
+	*
+	* @return <code>true</code> if this data provider is taxonbased; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isTaxonbased() {
+		return _dataProvider.isTaxonbased();
+	}
+
+	/**
+	* Sets whether this data provider is taxonbased.
+	*
+	* @param taxonbased the taxonbased of this data provider
+	*/
+	@Override
+	public void setTaxonbased(boolean taxonbased) {
+		_dataProvider.setTaxonbased(taxonbased);
+	}
+
+	/**
+	* Returns the notaxonbased of this data provider.
+	*
+	* @return the notaxonbased of this data provider
+	*/
+	@Override
+	public boolean getNotaxonbased() {
+		return _dataProvider.getNotaxonbased();
+	}
+
+	/**
+	* Returns <code>true</code> if this data provider is notaxonbased.
+	*
+	* @return <code>true</code> if this data provider is notaxonbased; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isNotaxonbased() {
+		return _dataProvider.isNotaxonbased();
+	}
+
+	/**
+	* Sets whether this data provider is notaxonbased.
+	*
+	* @param notaxonbased the notaxonbased of this data provider
+	*/
+	@Override
+	public void setNotaxonbased(boolean notaxonbased) {
+		_dataProvider.setNotaxonbased(notaxonbased);
+	}
+
+	/**
+	* Returns the livingobjects of this data provider.
+	*
+	* @return the livingobjects of this data provider
+	*/
+	@Override
+	public boolean getLivingobjects() {
+		return _dataProvider.getLivingobjects();
+	}
+
+	/**
+	* Returns <code>true</code> if this data provider is livingobjects.
+	*
+	* @return <code>true</code> if this data provider is livingobjects; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isLivingobjects() {
+		return _dataProvider.isLivingobjects();
+	}
+
+	/**
+	* Sets whether this data provider is livingobjects.
+	*
+	* @param livingobjects the livingobjects of this data provider
+	*/
+	@Override
+	public void setLivingobjects(boolean livingobjects) {
+		_dataProvider.setLivingobjects(livingobjects);
+	}
+
+	/**
+	* Returns the deadobjects of this data provider.
+	*
+	* @return the deadobjects of this data provider
+	*/
+	@Override
+	public boolean getDeadobjects() {
+		return _dataProvider.getDeadobjects();
+	}
+
+	/**
+	* Returns <code>true</code> if this data provider is deadobjects.
+	*
+	* @return <code>true</code> if this data provider is deadobjects; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDeadobjects() {
+		return _dataProvider.isDeadobjects();
+	}
+
+	/**
+	* Sets whether this data provider is deadobjects.
+	*
+	* @param deadobjects the deadobjects of this data provider
+	*/
+	@Override
+	public void setDeadobjects(boolean deadobjects) {
+		_dataProvider.setDeadobjects(deadobjects);
+	}
+
+	/**
+	* Returns the sequencedata of this data provider.
+	*
+	* @return the sequencedata of this data provider
+	*/
+	@Override
+	public boolean getSequencedata() {
+		return _dataProvider.getSequencedata();
+	}
+
+	/**
+	* Returns <code>true</code> if this data provider is sequencedata.
+	*
+	* @return <code>true</code> if this data provider is sequencedata; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSequencedata() {
+		return _dataProvider.isSequencedata();
+	}
+
+	/**
+	* Sets whether this data provider is sequencedata.
+	*
+	* @param sequencedata the sequencedata of this data provider
+	*/
+	@Override
+	public void setSequencedata(boolean sequencedata) {
+		_dataProvider.setSequencedata(sequencedata);
 	}
 
 	@Override

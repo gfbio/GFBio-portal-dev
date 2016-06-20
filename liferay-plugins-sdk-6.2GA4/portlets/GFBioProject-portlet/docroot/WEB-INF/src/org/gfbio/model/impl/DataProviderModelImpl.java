@@ -69,9 +69,15 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 			{ "description", Types.VARCHAR },
 			{ "address", Types.VARCHAR },
 			{ "website", Types.VARCHAR },
-			{ "training", Types.VARCHAR }
+			{ "training", Types.VARCHAR },
+			{ "physicalobjects", Types.BOOLEAN },
+			{ "taxonbased", Types.BOOLEAN },
+			{ "notaxonbased", Types.BOOLEAN },
+			{ "livingobjects", Types.BOOLEAN },
+			{ "deadobjects", Types.BOOLEAN },
+			{ "sequencedata", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_DataProvider (dataProviderID LONG not null primary key,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,address VARCHAR(75) null,website VARCHAR(75) null,training VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_DataProvider (dataProviderID LONG not null primary key,name VARCHAR(75) null,label VARCHAR(75) null,description VARCHAR(75) null,address VARCHAR(75) null,website VARCHAR(75) null,training VARCHAR(75) null,physicalobjects BOOLEAN,taxonbased BOOLEAN,notaxonbased BOOLEAN,livingobjects BOOLEAN,deadobjects BOOLEAN,sequencedata BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_DataProvider";
 	public static final String ORDER_BY_JPQL = " ORDER BY dataProvider.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_DataProvider.name ASC";
@@ -111,6 +117,12 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 		model.setAddress(soapModel.getAddress());
 		model.setWebsite(soapModel.getWebsite());
 		model.setTraining(soapModel.getTraining());
+		model.setPhysicalobjects(soapModel.getPhysicalobjects());
+		model.setTaxonbased(soapModel.getTaxonbased());
+		model.setNotaxonbased(soapModel.getNotaxonbased());
+		model.setLivingobjects(soapModel.getLivingobjects());
+		model.setDeadobjects(soapModel.getDeadobjects());
+		model.setSequencedata(soapModel.getSequencedata());
 
 		return model;
 	}
@@ -182,6 +194,12 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 		attributes.put("address", getAddress());
 		attributes.put("website", getWebsite());
 		attributes.put("training", getTraining());
+		attributes.put("physicalobjects", getPhysicalobjects());
+		attributes.put("taxonbased", getTaxonbased());
+		attributes.put("notaxonbased", getNotaxonbased());
+		attributes.put("livingobjects", getLivingobjects());
+		attributes.put("deadobjects", getDeadobjects());
+		attributes.put("sequencedata", getSequencedata());
 
 		return attributes;
 	}
@@ -228,6 +246,42 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 
 		if (training != null) {
 			setTraining(training);
+		}
+
+		Boolean physicalobjects = (Boolean)attributes.get("physicalobjects");
+
+		if (physicalobjects != null) {
+			setPhysicalobjects(physicalobjects);
+		}
+
+		Boolean taxonbased = (Boolean)attributes.get("taxonbased");
+
+		if (taxonbased != null) {
+			setTaxonbased(taxonbased);
+		}
+
+		Boolean notaxonbased = (Boolean)attributes.get("notaxonbased");
+
+		if (notaxonbased != null) {
+			setNotaxonbased(notaxonbased);
+		}
+
+		Boolean livingobjects = (Boolean)attributes.get("livingobjects");
+
+		if (livingobjects != null) {
+			setLivingobjects(livingobjects);
+		}
+
+		Boolean deadobjects = (Boolean)attributes.get("deadobjects");
+
+		if (deadobjects != null) {
+			setDeadobjects(deadobjects);
+		}
+
+		Boolean sequencedata = (Boolean)attributes.get("sequencedata");
+
+		if (sequencedata != null) {
+			setSequencedata(sequencedata);
 		}
 	}
 
@@ -370,6 +424,102 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 		_training = training;
 	}
 
+	@JSON
+	@Override
+	public boolean getPhysicalobjects() {
+		return _physicalobjects;
+	}
+
+	@Override
+	public boolean isPhysicalobjects() {
+		return _physicalobjects;
+	}
+
+	@Override
+	public void setPhysicalobjects(boolean physicalobjects) {
+		_physicalobjects = physicalobjects;
+	}
+
+	@JSON
+	@Override
+	public boolean getTaxonbased() {
+		return _taxonbased;
+	}
+
+	@Override
+	public boolean isTaxonbased() {
+		return _taxonbased;
+	}
+
+	@Override
+	public void setTaxonbased(boolean taxonbased) {
+		_taxonbased = taxonbased;
+	}
+
+	@JSON
+	@Override
+	public boolean getNotaxonbased() {
+		return _notaxonbased;
+	}
+
+	@Override
+	public boolean isNotaxonbased() {
+		return _notaxonbased;
+	}
+
+	@Override
+	public void setNotaxonbased(boolean notaxonbased) {
+		_notaxonbased = notaxonbased;
+	}
+
+	@JSON
+	@Override
+	public boolean getLivingobjects() {
+		return _livingobjects;
+	}
+
+	@Override
+	public boolean isLivingobjects() {
+		return _livingobjects;
+	}
+
+	@Override
+	public void setLivingobjects(boolean livingobjects) {
+		_livingobjects = livingobjects;
+	}
+
+	@JSON
+	@Override
+	public boolean getDeadobjects() {
+		return _deadobjects;
+	}
+
+	@Override
+	public boolean isDeadobjects() {
+		return _deadobjects;
+	}
+
+	@Override
+	public void setDeadobjects(boolean deadobjects) {
+		_deadobjects = deadobjects;
+	}
+
+	@JSON
+	@Override
+	public boolean getSequencedata() {
+		return _sequencedata;
+	}
+
+	@Override
+	public boolean isSequencedata() {
+		return _sequencedata;
+	}
+
+	@Override
+	public void setSequencedata(boolean sequencedata) {
+		_sequencedata = sequencedata;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -408,6 +558,12 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 		dataProviderImpl.setAddress(getAddress());
 		dataProviderImpl.setWebsite(getWebsite());
 		dataProviderImpl.setTraining(getTraining());
+		dataProviderImpl.setPhysicalobjects(getPhysicalobjects());
+		dataProviderImpl.setTaxonbased(getTaxonbased());
+		dataProviderImpl.setNotaxonbased(getNotaxonbased());
+		dataProviderImpl.setLivingobjects(getLivingobjects());
+		dataProviderImpl.setDeadobjects(getDeadobjects());
+		dataProviderImpl.setSequencedata(getSequencedata());
 
 		dataProviderImpl.resetOriginalValues();
 
@@ -523,12 +679,24 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 			dataProviderCacheModel.training = null;
 		}
 
+		dataProviderCacheModel.physicalobjects = getPhysicalobjects();
+
+		dataProviderCacheModel.taxonbased = getTaxonbased();
+
+		dataProviderCacheModel.notaxonbased = getNotaxonbased();
+
+		dataProviderCacheModel.livingobjects = getLivingobjects();
+
+		dataProviderCacheModel.deadobjects = getDeadobjects();
+
+		dataProviderCacheModel.sequencedata = getSequencedata();
+
 		return dataProviderCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{dataProviderID=");
 		sb.append(getDataProviderID());
@@ -544,6 +712,18 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 		sb.append(getWebsite());
 		sb.append(", training=");
 		sb.append(getTraining());
+		sb.append(", physicalobjects=");
+		sb.append(getPhysicalobjects());
+		sb.append(", taxonbased=");
+		sb.append(getTaxonbased());
+		sb.append(", notaxonbased=");
+		sb.append(getNotaxonbased());
+		sb.append(", livingobjects=");
+		sb.append(getLivingobjects());
+		sb.append(", deadobjects=");
+		sb.append(getDeadobjects());
+		sb.append(", sequencedata=");
+		sb.append(getSequencedata());
 		sb.append("}");
 
 		return sb.toString();
@@ -551,7 +731,7 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("org.gfbio.model.DataProvider");
@@ -585,6 +765,30 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 			"<column><column-name>training</column-name><column-value><![CDATA[");
 		sb.append(getTraining());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>physicalobjects</column-name><column-value><![CDATA[");
+		sb.append(getPhysicalobjects());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>taxonbased</column-name><column-value><![CDATA[");
+		sb.append(getTaxonbased());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>notaxonbased</column-name><column-value><![CDATA[");
+		sb.append(getNotaxonbased());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>livingobjects</column-name><column-value><![CDATA[");
+		sb.append(getLivingobjects());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deadobjects</column-name><column-value><![CDATA[");
+		sb.append(getDeadobjects());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sequencedata</column-name><column-value><![CDATA[");
+		sb.append(getSequencedata());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -606,6 +810,12 @@ public class DataProviderModelImpl extends BaseModelImpl<DataProvider>
 	private String _address;
 	private String _website;
 	private String _training;
+	private boolean _physicalobjects;
+	private boolean _taxonbased;
+	private boolean _notaxonbased;
+	private boolean _livingobjects;
+	private boolean _deadobjects;
+	private boolean _sequencedata;
 	private long _columnBitmask;
 	private DataProvider _escapedModel;
 }
