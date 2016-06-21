@@ -409,7 +409,7 @@ $dockbarVerticalWidth: 240px;*/
   padding: 3px 4px 4px;
   position: fixed;
   text-align: center;
-  top: 5px;
+  top: 90px;
   width: 25px;
   z-index: 9999;
   -webkit-border-radius: 0 5px 5px 0;
@@ -422,7 +422,7 @@ $dockbarVerticalWidth: 240px;*/
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out; }
   .aui .dockbar-vertical .icon-toggle-dockbar.over {
-    left: 240px;
+    /*left: $dockbarVerticalWidth;*/
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
@@ -432,7 +432,7 @@ $dockbarVerticalWidth: 240px;*/
   left: -5px;
   overflow: hidden;
   position: fixed;
-  top: 0;
+  top: 130px;
   width: 5px;
   z-index: 999;
   -webkit-transition: all 0.2s ease-in-out;

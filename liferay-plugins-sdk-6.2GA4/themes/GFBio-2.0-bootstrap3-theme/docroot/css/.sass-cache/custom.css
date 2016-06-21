@@ -2,7 +2,8 @@
   background-color: white;
   color: #333;
   font-family: 'Lato', sans-serif;
-  font-size: 18px;
+  font-weight: 300;
+  font-size: 16px;
   /**
   /*	Preloader
   /* ==========================================*/
@@ -56,12 +57,16 @@
   /*============================================================
   	Footer
   ==============================================================*/
-  	/*=========================================================
-  Dockbar
+  /*=========================================================
+  Liferay fixes - Dockbar
   =========================================================*/ }
   .aui body {
     background-color: white;
     font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #333;
+    font-size: 16px;
     padding: 0; }
     .aui body h1, .aui body h2, .aui body h3, .aui body h4 {
       color: #4d4d4d; }
@@ -78,9 +83,10 @@
       font-size: 20px;
       font-weight: 400; }
     .aui body a {
-      color: #39F; }
+      color: #39F;
+      font-weight: 300; }
   .aui #search {
-    margin-top: -5em; }
+    margin-top: 0; }
   .aui #sign-in {
     display: block; }
   .aui #logo-gfbio {
@@ -89,13 +95,13 @@
     background-color: #fff;
     padding-top: 5px;
     padding-bottom: 0px;
-    border-bottom: dotted 1px #333; }
+    /*border-bottom: dotted 1px #333;*/ }
   .aui img#logo-gfbio {
     height: 60px;
     width: 135px;
-    border-bottom: none; }
+    /*border-bottom: none;*/ }
   .aui .site-content {
-    margin-top: 100px; }
+    margin-top: 80px; }
   .aui #preloader {
     background-color: #fff;
     position: fixed;
@@ -357,13 +363,6 @@
     color: #fff;
     text-align: left;
     padding-left: 50px; }
-  .aui #footer-middle-row p {
-    font-weight: 300;
-    font-size: 0.9em;
-    color: #fff; }
-  .aui .footer h5 {
-    font-size: 1.2em;
-    padding-left: 50px !important; }
   .aui .footer p {
     margin-bottom: 1rem; }
   .aui .footer p a {
@@ -377,6 +376,13 @@
   .aui .footer ul > li > a {
     color: #fff;
     font-weight: bold; }
+  .aui .footer h5 {
+    font-size: 1.2em;
+    padding-left: 50px !important; }
+  .aui #footer-middle-row p {
+    font-weight: 300;
+    font-size: 0.9em;
+    color: #fff; }
   .aui #footer-middle-row {
     border-top: 1px dotted rgba(255, 255, 255, 0.4);
     padding: 25px 0; }
@@ -412,7 +418,10 @@
     padding-top: 0em; }
   .aui .lfr-add-panel {
     width: 440px;
-    margin-top: 7em;
+    margin-top: 130px;
     margin-left: -7em;
-    padding: 20px; }
+    padding: 20px;
+    position: fixed;
+    z-index: 9999;
+    background-color: white; }
 

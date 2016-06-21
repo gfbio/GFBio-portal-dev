@@ -992,7 +992,7 @@ $dockbarVerticalWidth: 240px;*/
   padding: 3px 4px 4px;
   position: fixed;
   text-align: center;
-  top: 5px;
+  top: 90px;
   width: 25px;
   z-index: 9999;
   -webkit-border-radius: 0 5px 5px 0;
@@ -1005,7 +1005,7 @@ $dockbarVerticalWidth: 240px;*/
   -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out; }
   .aui .dockbar-vertical .icon-toggle-dockbar.over {
-    left: 240px;
+    /*left: $dockbarVerticalWidth;*/
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
@@ -1015,7 +1015,7 @@ $dockbarVerticalWidth: 240px;*/
   left: -5px;
   overflow: hidden;
   position: fixed;
-  top: 0;
+  top: 130px;
   width: 5px;
   z-index: 999;
   -webkit-transition: all 0.2s ease-in-out;
@@ -6016,10 +6016,63 @@ body .ui-tooltip {
 
 @import url(yamm.css); */
 .aui {
+  /*=================================================================
+  	SUBMISSION PAGE
+  ==================================================================*/ }
+  .aui #submission-fork {
+    /*background-color: #eee;*/ }
+  .aui .icon-submission {
+    display: block;
+    margin: 20px 0 20px 0;
+    font-size: 5em;
+    color: inherit; }
+  .aui .subm-tile {
+    /*border: 1px solid #666;*/
+    /*border-radius: 6px;*/
+    /*height: 200px;*/
+    text-align: center; }
+  .aui .subm-tile > div {
+    border-left: 2px dashed #81B248; }
+  .aui #submission-fork #generic {
+    border-left: 0;
+    /*background-color: rgba(255, 206, 0, 1.0);*/
+    /*border: 1px solid rgba(255, 206, 0, 1.0);*/
+    /*border-radius: 6px;*/
+    padding: 10px; }
+  .aui #submission-fork #collections {
+    /*background-color: rgba(60, 172, 228, 1.0);*/
+    /*border: 1px solid rgba(60, 172, 228, 1.0);*/
+    /*border-radius: 6px;*/
+    padding: 10px; }
+  .aui #submission-fork #environmental {
+    /*background-color: rgba(50, 90, 162, 1.0);*/
+    /*border: 1px solid rgba(50, 90, 162, 1.0);*/
+    /*border-radius: 6px;*/
+    padding: 10px; }
+  .aui #submission-fork #molecular {
+    /*background-color: rgba(129, 178, 72, 1.0);*/
+    /*border: 1px solid rgba(129, 178, 72, 1.0);*/
+    /*border-radius: 6px;*/
+    padding: 10px; }
+  .aui #submission-fork h1, .aui h2, .aui h3 {
+    font-weight: 300; }
+  .aui #submission-fork h1 {
+    padding-bottom: 6px;
+    border-bottom: 2px dashed #81B248;
+    margin-bottom: 60px; }
+  .aui #submission-fork .subm-tile p {
+    text-align: center;
+    /*padding: 10px;*/ }
+  .aui #submission-footer h3 {
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #81B248; }
+
+.aui {
   background-color: white;
   color: #333;
   font-family: 'Lato', sans-serif;
-  font-size: 18px;
+  font-weight: 300;
+  font-size: 16px;
   /**
   /*	Preloader
   /* ==========================================*/
@@ -6073,12 +6126,16 @@ body .ui-tooltip {
   /*============================================================
   	Footer
   ==============================================================*/
-  	/*=========================================================
-  Dockbar
+  /*=========================================================
+  Liferay fixes - Dockbar
   =========================================================*/ }
   .aui body {
     background-color: white;
     font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    color: #333;
+    font-size: 16px;
     padding: 0; }
     .aui body h1, .aui body h2, .aui body h3, .aui body h4 {
       color: #4d4d4d; }
@@ -6095,9 +6152,10 @@ body .ui-tooltip {
       font-size: 20px;
       font-weight: 400; }
     .aui body a {
-      color: #39F; }
+      color: #39F;
+      font-weight: 300; }
   .aui #search {
-    margin-top: -5em; }
+    margin-top: 0; }
   .aui #sign-in {
     display: block; }
   .aui #logo-gfbio {
@@ -6106,13 +6164,13 @@ body .ui-tooltip {
     background-color: #fff;
     padding-top: 5px;
     padding-bottom: 0px;
-    border-bottom: dotted 1px #333; }
+    /*border-bottom: dotted 1px #333;*/ }
   .aui img#logo-gfbio {
     height: 60px;
     width: 135px;
-    border-bottom: none; }
+    /*border-bottom: none;*/ }
   .aui .site-content {
-    margin-top: 100px; }
+    margin-top: 80px; }
   .aui #preloader {
     background-color: #fff;
     position: fixed;
@@ -6374,13 +6432,6 @@ body .ui-tooltip {
     color: #fff;
     text-align: left;
     padding-left: 50px; }
-  .aui #footer-middle-row p {
-    font-weight: 300;
-    font-size: 0.9em;
-    color: #fff; }
-  .aui .footer h5 {
-    font-size: 1.2em;
-    padding-left: 50px !important; }
   .aui .footer p {
     margin-bottom: 1rem; }
   .aui .footer p a {
@@ -6394,6 +6445,13 @@ body .ui-tooltip {
   .aui .footer ul > li > a {
     color: #fff;
     font-weight: bold; }
+  .aui .footer h5 {
+    font-size: 1.2em;
+    padding-left: 50px !important; }
+  .aui #footer-middle-row p {
+    font-weight: 300;
+    font-size: 0.9em;
+    color: #fff; }
   .aui #footer-middle-row {
     border-top: 1px dotted rgba(255, 255, 255, 0.4);
     padding: 25px 0; }
@@ -6429,7 +6487,10 @@ body .ui-tooltip {
     padding-top: 0em; }
   .aui .lfr-add-panel {
     width: 440px;
-    margin-top: 7em;
+    margin-top: 130px;
     margin-left: -7em;
-    padding: 20px; }
+    padding: 20px;
+    position: fixed;
+    z-index: 9999;
+    background-color: white; }
 
