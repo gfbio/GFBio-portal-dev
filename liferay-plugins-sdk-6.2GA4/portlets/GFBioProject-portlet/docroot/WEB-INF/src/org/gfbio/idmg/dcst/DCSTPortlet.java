@@ -12,14 +12,17 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.NoSuchHeadException;
 import org.gfbio.idmg.dcst.dao.GCategory;
 import org.gfbio.idmg.dcst.dao.GContentDAO;
 import org.gfbio.model.Column;
 import org.gfbio.model.Content;
 import org.gfbio.model.DataProvider;
 import org.gfbio.model.Head;
+import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
+import org.json.simple.JSONArray;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -89,17 +92,24 @@ public class DCSTPortlet extends MVCPortlet {
 		String value = resourceRequest.getParameter("val");
 		System.out.println("Value " + value);
 		
+		JSONArray providerIdList = new JSONArray();
+		
+		try {
+			providerIdList = ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_dataprovider"), value);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+				
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		System.out.println("Ich war hier");
 		
-		List<GCategory> categories = getCategoryList();
+//		List<GCategory> categories = getCategoryList();
 		
-		if(categories.isEmpty()) {
+		if(providerIdList.isEmpty()) {
 			writer.println("There are no categories available");
 		} else {
-			for (GCategory c : categories) {
-				String label = c.getLabel();
+			for (int i =0; i < providerIdList.size();i++) {
+				String label = DataProviderLocalServiceUtil.getNameById((long) providerIdList.get(i));
 				System.out.println(label);
 				writer.println("<div style=\"display:block; margin-bottom: 10px;\">");
 				//writer.println("<input name=\"" + c.getLabel().toLowerCase() + "\" style=\"margin-bottom: 7px\" type=\"radio\" value=\"true\" onClick=\"\" />");
