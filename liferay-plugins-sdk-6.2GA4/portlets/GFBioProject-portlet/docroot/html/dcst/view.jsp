@@ -25,6 +25,7 @@ categories = DCSTPortlet.getCategoryList();
 
 $( document ).ready(function() {
 	$("input:radio").attr("checked", false);
+	 document.getElementById("category").selectedIndex = 0;
 }); 
 
 $( document ).ready(function() {
@@ -58,7 +59,8 @@ $( document ).ready(function() {
  $(document).ready(function () {
     $("input[type='radio']").click(function (callback) {
     
-    	   	
+
+   	    document.getElementById("category").selectedIndex = 0;   	
     	physicalval = $("input[name='physical']:checked").val();
     	taxonval = $("input[name='taxon']:checked").val();
     	aliveval = $("input[name='alive']:checked").val();
@@ -194,7 +196,7 @@ $(document).ready(function () {
 				<h4>Select Category</h4>
 				
 				<select id="category" name="category" >
-					<option label="Select" value="noselection" />
+					<option selected="selected" label="Select" value="noselection" />
 					<%
 					for(GCategory c : categories) {
 					%>
