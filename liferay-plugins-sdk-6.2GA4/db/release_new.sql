@@ -1,6 +1,15 @@
 ----------------------------------------------------------------------------------------------
 -------------------------------------     dataprovider      ----------------------------------
 ----------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN physicalobjects boolean;
+ALTER TABLE gfbio_dataprovider ADD COLUMN taxonbased boolean;
+ALTER TABLE gfbio_dataprovider ADD COLUMN notaxonbased boolean;
+ALTER TABLE gfbio_dataprovider ADD COLUMN livingobjects boolean;
+ALTER TABLE gfbio_dataprovider ADD COLUMN deadobjects boolean;
+ALTER TABLE gfbio_dataprovider ADD COLUMN sequencedata boolean;
+
+
 UPDATE gfbio_dataprovider SET name = 'Botanic Garden and Botanical Museum Berlin-Dahlem' WHERE label ='BGBM';
 UPDATE gfbio_dataprovider SET name = 'Leibniz Institute DSMZ-German Collection of Microorganisms and Cell Cultures' WHERE label ='DSMZ';
 UPDATE gfbio_dataprovider SET name = 'Museum fuer Naturkunde - Leibniz Institute for Evolution and Biodiversity Science' WHERE label ='MfN';
