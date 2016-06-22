@@ -1,0 +1,650 @@
+.aui{
+	
+	
+	background-color: white;
+	color: #333;
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+	font-size: 16px ;
+	
+	
+	body{
+	
+		background-color: white;
+		font-family: 'Lato', sans-serif;
+		font-weight: 300;
+		font-size: 16px ;
+		color: #333;
+		font-size: 16px ;
+		padding:0;
+	
+		h1, h2, h3,h4{
+			color:#4d4d4d;
+		}
+		 h1{
+			font-size: 36px;
+			font-weight:100;
+			
+		}
+		
+		h2{
+			font-size: 30px;
+			font-weight:100;
+		}
+		
+		h3 {
+			font-size: 24px;
+			font-weight:300;
+		}
+		
+		h4 {
+			font-size: 20px;
+			font-weight:400;
+		} 
+
+		a {
+			color: #39F;
+			font-weight: 300;
+		}
+		
+	}
+	 #search{
+		margin-top:0;
+	
+	} 
+	
+	#sign-in{
+		display:block;
+	}
+	
+	 #logo-gfbio{
+		
+		
+		margin-bottom: 10px;
+	    padding-left: 20px;
+	    background-color: #fff;
+	    padding-top: 5px;
+	    padding-bottom: 0px;
+	    /*border-bottom: dotted 1px #333;*/
+
+	
+	}
+	
+	img#logo-gfbio {
+	
+		
+		height: 60px;
+		width: 135px;
+		/*border-bottom: none;*/
+		 
+	}
+	
+	.site-content{
+		margin-top:80px;
+	}
+	
+
+/**
+/*	Preloader
+/* ==========================================*/
+
+#preloader {
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+/*Battery*/
+.loder-box {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 1px;
+    height: 100px;
+    left: 50%;
+    margin-left: -64px;
+    margin-top: -50px;
+    position: absolute;
+    top: 50%;
+    width: 128px;
+}
+
+.battery {
+    width: 60px;
+    height: 25px;
+    top: 35%;
+    border: 1px #2E2E2E solid;
+    border-radius: 2px;
+    position: relative;
+    -webkit-animation: charge 5s linear infinite;
+    -moz-animation: charge 5s linear infinite;
+    animation: charge 5s linear infinite;
+    margin: 0 auto;
+}
+
+.battery:after {
+    background-color: #2E2E2E;
+    border-radius: 0 1px 1px 0;
+    content: "";
+    height: 10px;
+    position: absolute;
+    right: -5px;
+    top: 7px;
+    width: 3px;
+}	
+	
+/*==========================================================
+	Menu, Navigation
+===========================================================*/	
+.dropdown-menu > li > a{
+	padding: 3px 10px;
+}
+
+.navbar-inverse{
+	background-color:transparent;
+}
+
+#nav{
+	margin-top: -5em;
+	margin-left: 15em;
+	font-family: sans-serif;
+	
+	ul > li > a {
+		color:#555;
+	
+	}
+	
+}
+
+#navigation {
+    -webkit-transition: all 0.8s ease 0s;
+    -moz-transition: all 0.8s ease 0s;
+    -ms-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
+
+    /*background-color: rgba(0,0,0,.3);*/
+    background-color: transparent;
+    /*background-color: rgba(255, 255, 255, 0.3);*/
+
+    /* for dark backgroudimages */
+    color: #fff;
+    /*background-color: rgba(255, 255, 255, 1.0);*/
+    /*background-color: rgba(52, 90, 162, 1.0);*/
+    /*color: #666;*/
+
+    /*box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);*/
+    /*padding: 5px 0;*/
+    /*margin-top: 33%;*/
+
+    /* uncomment to enable collapsing two-row navi example  */
+    /*height: 7.5em;*/
+}
+
+.navigation-shadow {
+    /* uncomment to enable collapsing two-row navi example  */
+    /*height: 3.5em !important;*/
+    background-color: #fff !important;
+    color: #666 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#navigation.animated-header {
+    /*padding: 20px 0;*/
+}
+
+/* TODO: add transitions for change of size in two row navi*/
+h1.navbar-brand {
+    -webkit-transition: all 0.8s ease 0s;
+    -moz-transition: all 0.8s ease 0s;
+    -ms-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
+
+    background: url("../img/GFBio_logo_png_60x122.png") no-repeat center center;
+    padding: 60px 122px 0 0 !important;
+
+    /*background: url("../img/GFBio_logo_png_299x147.png") no-repeat center center;*/
+    /*padding: 147px 299px 0 0 !important;*/
+
+    /*background: url(../img/GFBio_logo_174x86.png) no-repeat center center;*/
+    /*padding: 86px 174px 0 0 !important;*/
+
+    margin: 0;
+}
+
+.navigation-shadow h1.navbar-brand {
+    -webkit-transition: all 0.8s ease 0s;
+    -moz-transition: all 0.8s ease 0s;
+    -ms-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
+
+    background: url("../img/GFBio_logo_png_60x122.png") no-repeat center center;
+    padding: 60px 122px 0 0 !important;
+}
+
+#nav-left, #nav-right, #nav-right2 {
+    /*padding-top: 5px;*/
+}
+
+/* uncomment to enable collapsing two-row navi example  */
+/*#nav-right-root {
+    -webkit-transition: all 0.8s ease 0s;
+    -moz-transition: all 0.8s ease 0s;
+    -ms-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
+}
+
+#nav-right-root2 {
+    -webkit-transition: all 0.8s ease 0s;
+    -moz-transition: all 0.8s ease 0s;
+    -ms-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
+}
+
+#navigation.navigation-shadow div.container #nav-right-root {
+    -moz-transform: translateX(264px) translateY(-4.28571em);
+    -ms-transform: translateX(264px) translateY(-4.28571em);
+    -webkit-transform: translateX(264px) translateY(-4.28571em);
+    transform: translateX(264px) translateY(-4.28571em)
+}
+
+#navigation.navigation-shadow div.container #nav-right-root2 {
+    -moz-transform: translateY(-4.28571em);
+    -ms-transform: translateY(-4.28571em);
+    -webkit-transform: translateY(-4.28571em);
+    transform: translateY(-4.28571em)
+}
+*/
+#nav-left {
+    padding-left: 50px;
+}
+
+div#navbar-search-wrapper {
+    padding-left: 50px;
+}
+
+#navbar-search-submit {
+    text-transform: none;
+    color: #666;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+#navbar-search-submit:hover {
+    background-color: transparent;
+    color: rgba(52, 90, 162, 0.7);
+    /*color: rgba(129, 178, 72, 1.0);*/
+    /*color: rgba(255, 206, 0, 0.75);*/
+    /*border-bottom: 4px solid #fff;*/
+}
+
+#navbar-search-input {
+    height: 40px;
+    border-radius: 6px;
+}
+
+#nav-right-background {
+    z-index: -999;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-image: url("../img/header-image-start.png");
+    background-size: contain;
+    height: 231px;
+    width: 565px;
+
+    /*background-repeat: no-repeat;*/
+    /*background-attachment: fixed;*/
+    /*background-position: center;*/
+}
+
+.navbar-inverse .navbar-nav > li {
+    /*border-left: 3px dashed rgba(255, 255, 255, 0.5);*/
+}
+
+/* TODO: nice trick to color link while hovering menu */
+.navbar-inverse .navbar-nav > li:hover {
+    background-color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: inherit;
+    font-size: 15px;
+
+    /* close gap to megamenu*/
+    padding: 25px 15px 20px 15px;
+    /*text-transform: uppercase;*/
+}
+
+
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    /*color: #333333;*/
+    /*border-bottom: 3px solid rgba(52, 90, 162, 0.8);*/
+    color: #345AA2;
+    background-color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #333333;
+    font-weight: bold;
+    /*border-bottom: 3px solid rgba(52, 90, 162, 0.8);*/
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    color: #333333;
+    background-color: inherit;
+}
+
+
+.navigation-shadow .navbar-inverse .navbar-nav > li > a {
+    color: inherit;
+    font-size: 15px;
+    /*text-transform: uppercase;*/
+}
+
+.navigation-shadow .navbar-inverse .navbar-nav > li > a:hover {
+    color: #333333;
+    border-bottom: 3px solid rgba(52, 90, 162, 0.8);
+}
+
+.navigation-shadow .navbar-inverse .navbar-nav > li > a:focus {
+    color: #333333;
+    font-weight: bold;
+    /*border-bottom: 3px solid rgba(52, 90, 162, 0.8);*/
+}
+
+.navigation-shadow .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    color: #333333;
+    background-color: inherit;
+}
+
+/*=================================================================
+	YAMM MENU
+==================================================================*/
+
+/*  https://github.com/geedmo/yamm3 */
+.dropdown-menu {
+    border: 0;
+    /*margin: -5px;*/
+    box-shadow: 0 2px 5px rgba(0, 0.2, 0.2, 0.2);
+}
+
+.right {
+    padding-left: 10px;
+    float: right;
+}
+
+.yamm-content {
+    padding-top: 0;
+}
+
+.yamm-content a {
+    color: #666;
+    font-size: 15px;
+    padding: 10px 0 10px 10px;
+}
+
+.yamm-content h4 {
+    border-bottom: 1px solid rgba(52, 90, 162, 0.5);
+    padding: 0 20px 5px 0;
+}
+
+.yamm-content h4 > a {
+}
+
+.yamm-content a:hover {
+    color: #333;
+}
+
+.yamm-content .tile-1 {
+    color: rgba(52, 90, 162, 0.6);
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    /*border: 1px dotted rgba(129, 178, 72, 0.8); !*#666;*!*/
+    border: 1px solid rgba(52, 90, 162, 0.6);
+    border-radius: 6px;
+    margin-right: 10px;
+    margin-left: 20px;
+    /*margin: auto;*/
+    /*background-color: rgba(52, 90, 162, 0.3);*/
+}
+
+.yamm-content .tile-1:hover {
+    background-color: rgba(52, 90, 162, 0.6);
+}
+
+.yamm-content .tile-1 a span {
+    color: rgba(52, 90, 162, 0.6);
+}
+
+.yamm-content .tile-1:hover a h5 {
+    color: #fff;
+}
+
+.yamm-content .tile-1:hover a span {
+    color: #fff;
+}
+
+.yamm-content .tile-1 a h5 {
+    color: rgba(52, 90, 162, 0.6);
+}
+
+.yamm-content .tile-2 {
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(52, 90, 162, 0.6);
+    border-radius: 6px;
+    /*margin: auto;*/
+    /*background-color: rgba(52, 90, 162, 0.3);*/
+}
+
+.icon-mega-navi {
+    font-size: 24px;
+}
+
+div.yamm-content .mega-lifecycle a {
+    color: #666;
+    font-size: 15px;
+    padding: 0 15px 15px 15px;
+}
+
+div.yamm-content .mega-lifecycle a:hover {
+    color: #333333;
+    border-bottom: 3px solid rgba(52, 90, 162, 0.8);
+}
+
+div.yamm-content > div > .mega-lifecycle li {
+    padding: 15px;
+}
+
+div.yamm-content > div > .mega-lifecycle a:hover {
+    color: #333333;
+    border-bottom: 3px solid rgba(52, 90, 162, 0.8);
+}
+
+
+
+
+/*==========================================================
+Devices
+=================================================================*/
+.lfr-device .modal-header{
+	display:block;
+}
+	
+/*==========================================================
+	Portlet
+============================================================*/
+
+.portlet-content, .portlet-minimized .portlet-content-container{
+	padding:0;
+}
+
+
+/*============================================================
+	Footer
+==============================================================*/
+
+.border-right {
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.footer {
+    /*background-color: rgba(129, 178, 72, 0.8);*/
+    background-color: rgba(52, 90, 162, 0.8);
+    color: #fff;
+    text-align: center;
+    font-weight: 300;
+    padding-top: 4rem; 
+}
+
+.footer h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+    font-weight: 300;
+    color: #fff;
+}
+
+.footer h4 {
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 300;
+    margin-top: 0;
+}
+
+.footer a {
+    color: #fff;
+    font-weight: bold;
+}
+
+.footer a > i {
+    font-size: 1.8em;
+    padding-bottom: 10px;
+    float: left;
+    padding-top: 2px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.footer .left {
+    color: #fff;
+    text-align: left;
+    padding-left: 50px;
+}
+
+.footer p {
+    margin-bottom: 1rem;
+}
+
+.footer p a {
+    color: #fff;
+    font-weight: bold;
+}
+
+.footer i {
+    font-size: 1.8em;
+    padding-bottom: 10px;
+}
+
+footer ul > li {
+    padding-top: 0.5rem;
+}
+
+.footer ul > li > a {
+    color: #fff;
+    font-weight: bold;
+}
+
+.footer h5 {
+    font-size: 1.2em;
+    padding-left: 50px !important;
+}
+
+#footer-middle-row p {
+    font-weight: 300;
+    font-size: 0.9em;
+    color: #fff;
+}
+
+#footer-middle-row {
+    border-top: 1px dotted rgba(255, 255, 255, 0.4);
+    padding: 25px 0;
+}
+
+#footer-bottom-wrapper {
+    background-color: #5c5c5c;
+}
+
+#footer-bottom-row {
+
+}
+
+#footer-bottom-row ul {
+    margin: 0;
+    text-align: left;
+    padding: 1rem 1rem 0.7rem 0;
+}
+
+#footer-bottom-row ul li > a {
+    color: #a3a3a3;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 0.7rem 1rem 0.7rem 1rem;
+}
+
+#footer-bottom-row ul li > a:hover {
+    color: #fff;
+}
+
+#footer-bottom-row ul li > a > i {
+    font-size: 1.8em;
+}
+
+#footer-bottom-row ul li > a > i:hover {
+    color: #fff;
+}
+
+a.btn-footer {
+    text-transform: none;
+    font-weight: normal !important;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    margin-bottom: 4rem;
+
+	background: transparent;
+	text-shadow: none;
+}
+
+a.btn-footer:hover {
+    color: #345AA2;
+    background-color: #fff;
+}
+	
+	
+/*=========================================================
+Liferay fixes - Dockbar
+=========================================================*/
+.dockbar-messages .footer{
+		
+			padding-top:0em;
+		
+		
+	}	
+	
+.lfr-add-panel {
+    width: 440px;
+    margin-top: 130px;;
+    margin-left: -7em;
+    padding: 20px;
+    position: fixed;
+	z-index: 9999;
+	background-color: white;
+}
+}
