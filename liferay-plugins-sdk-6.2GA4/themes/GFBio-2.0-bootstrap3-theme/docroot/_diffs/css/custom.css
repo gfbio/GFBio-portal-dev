@@ -1,9 +1,49 @@
 .aui{
 	
 	
+	@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon/fonts/icomoon.eot?xtb52m');
+    src: url('../fonts/icomoon/fonts/icomoon.eot?xtb52m#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon/fonts/icomoon.ttf?xtb52m') format('truetype'),
+    url('../fonts/icomoon/fonts/icomoon.woff?xtb52m') format('woff'),
+    url('../fonts/icomoon/fonts/icomoon.svg?xtb52m#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+svg {
+    display: block;
+    position: relative;
+    width: 1024px;
+    height: inherit;
+    vertical-align: top;
+    margin: auto;
+    overflow: hidden;
+}
+
+
+/* [class^="icon-"], [class*=" icon-"] {
+    use !important to prevent issues with browser extensions that change fonts
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    Better Font Rendering ===========
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+	 */
+	
+	
+	
 	background-color: white;
 	color: #333;
-	font-family: 'Lato', sans-serif;
+	font-family: sans-serif;
 	font-weight: 300;
 	font-size: 16px ;
 	
@@ -11,13 +51,12 @@
 	body{
 	
 		background-color: white;
-		font-family: 'Lato', sans-serif;
+		font-family: sans-serif;
 		font-weight: 300;
 		font-size: 16px ;
 		color: #333;
-		font-size: 16px ;
 		padding:0;
-	
+	 
 		h1, h2, h3,h4{
 			color:#4d4d4d;
 		}
@@ -47,6 +86,10 @@
 			font-weight: 300;
 		}
 		
+		a:hover, a:focus{
+			text-decoration:none;
+		}
+		
 	}
 	 #search{
 		margin-top:0;
@@ -60,10 +103,9 @@
 	 #logo-gfbio{
 		
 		
-		margin-bottom: 10px;
+		margin-bottom: 0px;
 	    padding-left: 20px;
-	    background-color: #fff;
-	    padding-top: 5px;
+	    padding-top: 0px;
 	    padding-bottom: 0px;
 	    /*border-bottom: dotted 1px #333;*/
 
@@ -73,8 +115,8 @@
 	img#logo-gfbio {
 	
 		
-		height: 60px;
-		width: 135px;
+		/*height: 60px;*/
+		width: 130px;
 		/*border-bottom: none;*/
 		 
 	}
@@ -145,10 +187,9 @@
 }
 
 #nav{
-	margin-top: -5em;
-	margin-left: 15em;
-	font-family: sans-serif;
-	
+	margin-top: -4em;
+	margin-left: 10em;
+
 	ul > li > a {
 		color:#555;
 	
@@ -179,6 +220,8 @@
 
     /* uncomment to enable collapsing two-row navi example  */
     /*height: 7.5em;*/
+    
+    height:60px;
 }
 
 .navigation-shadow {
@@ -261,6 +304,7 @@ h1.navbar-brand {
 */
 #nav-left {
     padding-left: 50px;
+    height:60px;
 }
 
 div#navbar-search-wrapper {
@@ -470,7 +514,13 @@ div.yamm-content > div > .mega-lifecycle a:hover {
 }
 
 
-
+/*==============================================================
+Search
+==============================================================*/
+#page-search{
+	
+	padding-top:10px;
+}
 
 /*==========================================================
 Devices
@@ -503,6 +553,11 @@ Devices
     text-align: center;
     font-weight: 300;
     padding-top: 4rem; 
+    
+    /*Liferay portlet-body column-1 fix*/
+    margin-left:-15px;
+    margin-right:-15px;
+    
 }
 
 .footer h3 {
@@ -522,7 +577,7 @@ Devices
 
 .footer a {
     color: #fff;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .footer a > i {
@@ -545,7 +600,7 @@ Devices
 
 .footer p a {
     color: #fff;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .footer i {
@@ -647,4 +702,11 @@ Liferay fixes - Dockbar
 	z-index: 9999;
 	background-color: white;
 }
+
+ .form-group, .control-group{
+ 
+ 	margin-bottom:0px;
+ }
+
+
 }

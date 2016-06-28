@@ -12,6 +12,9 @@
 	$theme.include($top_head_include)
 </head>
 <link href="https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
+
 
 #set ($dockbar = $theme.getSetting("dockbar-vertical"))
 
@@ -31,7 +34,7 @@ $theme.include($body_top_include)
 	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
 
 	
-	<div class="container-fluid">
+	<div class="container">
 		<div id="logo-gfbio">
 				<a id="logo-gfbio-link" href="/">
 				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
@@ -85,7 +88,7 @@ $theme.include($body_top_include)
 
 			$theme.wrapPortlet("portlet.vm", $content_include)
 		#end
-	</div>
+	
 
 	<!--</div>-->
 </main>
@@ -104,7 +107,7 @@ $theme.include($bottom_include)
 #js ("$javascript_folder/owl.carousel.min.js")
 #js ("$javascript_folder/wow.min.js")
 
-
+</div>
 </body>
 
 </html>
