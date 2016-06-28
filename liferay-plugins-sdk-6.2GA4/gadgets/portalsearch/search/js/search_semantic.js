@@ -1,4 +1,5 @@
 var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+var TSAPI = "http://terminologies.gfbio.org/api/terminologies/";
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
@@ -211,7 +212,7 @@ function newQuery(clearBasket) {
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
 	getSearchResult(keyword, filter, "");
-	
+
 	// clear visualBasket if the clearBasket flag is true
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
@@ -220,6 +221,7 @@ function newQuery(clearBasket) {
 	// send content of visual basket to the mini-map gadget
 	updateMap();
 }
+
 
 /*
  * Description: Read and submit a keyword to search engine and display on the result table
@@ -335,6 +337,8 @@ function submitQueryToServer(keyword, filter, yearRange) {
 				result.iTotalRecords = result.hits.total;
 				result.iTotalDisplayRecords = result.hits.total;
 				result.data = res;
+				console.log("submitQueryToServer");
+				console.log(result);
 				// return result object
 				fnCallback(result);
 			}
@@ -538,7 +542,8 @@ function parseReturnedJSONfromSearch(datasrc) {
 		if (fields["html-1"]) { // this field is used only for displaying data
 			var html = fields["html-1"][0];
 			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
-			inner.html = writeShowHideFields(html);
+			html = writeShowHideFields(html);
+			inner.html = hilightResult(html);
 		} else
 			inner.html = "";
 
@@ -838,7 +843,21 @@ function writeShowHideFields(orgHTML) {
 	});
 	return d.innerHTML;
 }
-
+function hilightResult(orgHTML){
+	var semanticTerms = document.getElementById("semanticTerms").value;
+	var semList = semanticTerms.split("|");
+	var newHTML = orgHTML;
+	for (var i=0; i<semList.length; i++){
+		if (semList[i].trim() != ""){
+			if (newHTML.toLowerCase().indexOf(semList[i].toLowerCase())>=0){
+				var query = new RegExp("(\\b" + semList[i] + "\\b)", "gim");
+				//var temp = orgHTML.replace(/(<div>|<\/div>)/igm, "");
+				newHTML = newHTML.replace(query, "<span class='hilight'>$1</span>");
+			}
+		}
+	}
+	return newHTML;
+}
 /*
  * Description: Update the visualisation map with selected dataset
  * Effect: Update basket content and publish the selected data to the mini map
@@ -848,8 +867,7 @@ function updateMap() {
 	// Add query message in JSON format
 	var queryJSON = document.getElementById("queryJSON").value;
 	jsonData.queryStr = queryJSON;
-	console.log(':Search: fire selected data: ');
-	console.log(jsonData);
+	//console.log(':Search: fire selected data: ' + JSON.stringify(jsonData));
 	addBasket();
 	if (gadgets.Hub.isConnected()) {
 		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
@@ -1261,7 +1279,273 @@ function toggleParametersField() {
 	$(".textExpanded").hide();
 	$(".textExpanded, .textCollapsed").click(function () {
 		$(this).parent().children(".textExpanded, .textCollapsed").toggle();
-		adjust();
+		adjustGadgetHeight();
 	});
 };
 ///////////////////////////////////  End Misc functions  //////////////////////////////////
+
+
+///////////////////////////////////  Semantic functions  /////////////////////////////////////
+function semanticQuery(clearBasket) {
+	$("body").toggleClass("wait");
+	// clear result table
+	$('#tableId').DataTable().clear();
+	// read search keywords
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	var filter = [];
+	// reset facet gadgeet
+	if (gadgets.Hub.isConnected())
+		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+	// autocomplete from the textbox doesn't automatically closed
+	$('#gfbioSearchInput').autocomplete('close');
+	// send query to pansimple and parse result to the table
+	getTSterms(keyword, filter, "");
+
+	// clear visualBasket if the clearBasket flag is true
+	var visualBasket = document.getElementById("visualBasket");
+	if (clearBasket)
+		visualBasket.value = "";
+	
+	// send content of visual basket to the mini-map gadget
+	updateMap();
+}
+
+function getTSterms(keyword, filter, yearRange){
+	console.log("getTSterms");
+	// Send request via AJAX
+		$.ajax({
+			url: TSAPI+"search?query="+keyword,
+			type : 'GET',
+			dataType : 'json',
+			success : function (val) {
+				var jArrSyn = [];
+				console.log("Terminology for: "+keyword);
+				jArrSyn.push(keyword);
+				$.each(val.results, function(){
+					//console.log(this);
+					console.log("------------------------------");
+					$.each(this,function(key, value){
+						if ((key == "label")&&(value!= keyword)){
+							console.log(key+" : "+value);	
+							if (jArrSyn.indexOf(value.trim())<0){
+								jArrSyn.push(value.trim());
+							}
+						}else if ((key == "description")&&(value.indexOf("Is a:")>=0)){
+							console.log(key+" : "+value);	
+							var parsedStr = value.substr(value.indexOf("Is a:")+5).trim();
+							if (jArrSyn.indexOf(parsedStr)<0){
+								jArrSyn.push(parsedStr);
+							}
+						}else if (key == "uri"){
+							console.log(key+" : "+value);	
+						}else if (key == "sourceTerminology"){
+							console.log(key+" : "+value);	
+						}else if (key == "synonyms"){
+							console.log(key+" : ");	
+							for (i=0;i<value.length;i++){
+								console.log(value[i]);
+								if (jArrSyn.indexOf(value[i].trim())<0){
+									jArrSyn.push(value[i].trim());
+								}
+							}
+						}else if (key == "commonNames"){
+							console.log(key+" : ");	
+							for (i=0;i<value.length;i++){
+								console.log(value[i]);
+								if (jArrSyn.indexOf(value[i].trim())<0){
+									jArrSyn.push(value[i].trim());
+								}
+							}
+						}
+					
+					});
+				});
+				
+				semanticTerms = jArrSyn.join("|");
+				document.getElementById("semanticTerms").value = semanticTerms;
+				getSemanticSearchResult(jArrSyn, filter, "");
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
+}
+
+function getSemanticSearchResult(keywordArr, filter, yearRange) {
+	// every submitted query must be sent to TS gadget too
+	if (gadgets.Hub.isConnected() && (keywordArr != "")) {
+		// prevent calling ts when keyword box is empty
+		gadgets.Hub.publish('gfbio.search.ts', keywordArr);
+	}
+	// create a result table as a placeholder
+	writeResultTable();
+	// bound a datatable to pansimple API query
+	var oTable = $('#tableId').DataTable({
+			"bDestroy" : true,
+			"bPaginate" : true,
+			"sPaginationType":"simple",
+			"bJQueryUI" : true,
+			"bProcessing" : true,
+			"bServerSide" : true,
+			"sAjaxSource" : searchAPI, // the URL of Search API
+			"bRetrieve" : true,
+			"fnServerData" : semanticQueryToServer(keywordArr, filter, yearRange),
+			// assign only 3 columns for the result table
+			"aoColumns" : [{
+					// score column is used for sorting, hide it
+					"data" : "score",
+					"visible" : false,
+					"sortable" : false
+				}, {
+					// html column is the main display
+					"data" : "html",
+					"visible" : true,
+					"sortable" : false
+				}, {
+					// column displays color palette and basket cart icon
+					"class" : "color-control",
+					"sortable" : false,
+					"data" : null,
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
+				}
+			],
+			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
+			"sAutoWidth" : true,
+			// define the event after the search result is returned
+			"fnDrawCallback" : function (oSettings) {
+				// do nothing if table is empty
+				if (!$(".dataTables_empty")[0]) {
+					addColorPicker();
+					setSelectedRowStyle();
+					// activate parameter show/hide event
+					toggleParametersField();
+				}
+				$("body").toggleClass("wait");
+			},
+			// define the event after each table row is created
+			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+				showCartIcon(nRow, aData);
+			},
+			"oLanguage" : {
+				"sLengthMenu" : "Show _MENU_ entries per page"
+			}
+		});
+	// activate the row click event
+	onRowClick();
+}
+
+function semanticQueryToServer(keyword, filter, yearRange) {
+	return function (sSource, aoData, fnCallback) {
+		// set value for pagination
+		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
+		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
+
+		console.log("semanticQueryToServer");
+		// Construct query message in JSON format
+		var queryfield = createQueryFieldArray();
+		var booleanQuery = getBooleanQuery(keyword, filter, yearRange);
+		var boostedQuery = applyBoost(booleanQuery);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		console.log(completeQuery);
+		// Store query string for sending to VAT
+		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
+
+		// Send request via AJAX
+		$.ajax(sSource, {
+			contentType : 'application/json; charset=UTF-8',
+			type : 'POST',
+			data : JSON.stringify(completeQuery),
+			dataType : 'json',
+			success : function (result) {
+				// get JSON result back from the server
+				var datasrc = result.hits.hits;
+
+				// display facet only if the search return more than 1 result
+				if (datasrc.length > 0) {
+					var facet = result.aggregations;
+					if (gadgets.Hub.isConnected())
+						gadgets.Hub.publish('gfbio.search.facet', facet);
+				} else {
+					if (gadgets.Hub.isConnected())
+						gadgets.Hub.publish('gfbio.search.facet', '');
+				}
+				var res = parseReturnedJSONfromSearch(datasrc);
+				result.iTotalRecords = result.hits.total;
+				result.iTotalDisplayRecords = result.hits.total;
+				result.data = res;
+				console.log("submitQueryToServer");
+				console.log(result);
+				
+				// return result object
+				fnCallback(result);
+			}
+		});
+	};
+};
+
+
+function getBooleanQuery(keyword, filterArray, yearRange) {
+
+	var queryObj;
+	if (keyword.length>0) {
+		var boostedKeywords = [];
+		for (var i=0;i<keyword.length;i++){
+			var booster = 1;
+			if (i==0){
+				booster =	2.2;
+			}
+			boostedKeywords.push({"simple_query_string":{"query":keyword[i],
+						"fields" : ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
+						"default_operator" : "and",
+						"boost" : booster}});
+		}
+		queryObj = {"bool":{"should": boostedKeywords}};
+	} else {
+		queryObj = {
+			"match_all" : {}
+		};
+	}
+	var filterObj;
+
+	if (yearRange == "") {
+		if (filterArray != "") {
+			filterObj = {
+				"and" : {
+					"filters" : filterArray
+				}
+			};
+		} else {
+			return {
+				"filtered" : {
+					"query" : queryObj
+				}
+			};
+		}
+	} else {
+		var splitPos = yearRange.indexOf(' - ');
+		var minYear = yearRange.substring(0, splitPos);
+		var maxYear = yearRange.substring(splitPos + 3);
+		console.log(minYear + "-" + maxYear);
+		filterObj = [{
+				"and" : {
+					"filters" : filterArray
+				}
+			}, {
+				"range" : {
+					"citation_yearFacet" : {
+						"gte" : minYear,
+						"lte" : maxYear
+					}
+				}
+			}
+		]
+	}
+
+	return {
+		"filtered" : {
+			"query" : queryObj,
+			"filter" : filterObj
+		}
+	};
+}
+///////////////////////////////////  End Semantic functions  /////////////////////////////////////

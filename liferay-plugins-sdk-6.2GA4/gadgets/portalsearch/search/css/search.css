@@ -30,6 +30,20 @@ label, input, button {
     width:16px;
 	background-color: #eee;
 }
+#SemanticQueryButton{
+	background:url('../images/magnifierplus.png') no-repeat center center;
+    width:16px;
+	background-color: #eee;
+}
+
+span.hilight{
+    background-color:#FF9;
+    color:#555;
+}
+
+body.wait  {
+    cursor: wait;
+}
 
 select[name=tableId_length] {
 	width: 20%;
