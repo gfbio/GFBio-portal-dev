@@ -1,0 +1,1 @@
+#set ($portal_url = $portalUtil.getPortalURL($theme_display))
