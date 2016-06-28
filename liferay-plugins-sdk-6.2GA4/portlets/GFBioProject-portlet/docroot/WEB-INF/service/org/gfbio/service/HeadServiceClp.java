@@ -31,10 +31,6 @@ public class HeadServiceClp implements HeadService {
 		_methodName1 = "setBeanIdentifier";
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
-
-		_methodName3 = "getTableAsJSONArrayByName";
-
-		_methodParameterTypes3 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	@Override
@@ -87,36 +83,9 @@ public class HeadServiceClp implements HeadService {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public org.json.simple.JSONArray getTableAsJSONArrayByName(
-		org.json.simple.JSONObject requestJson) {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableService.invokeMethod(_methodName3,
-					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(requestJson) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (org.json.simple.JSONArray)ClpSerializer.translateOutput(returnObj);
-	}
-
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
 	private String _methodName1;
 	private String[] _methodParameterTypes1;
-	private String _methodName3;
-	private String[] _methodParameterTypes3;
 }

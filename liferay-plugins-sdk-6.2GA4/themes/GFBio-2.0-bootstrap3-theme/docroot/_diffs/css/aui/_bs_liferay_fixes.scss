@@ -79,3 +79,12 @@
 input[type=text].field, input[type=password].field, .aui-field-select, textarea {
 	@extend .form-control;
 }
+
+/*============================================================
+ responsive layout
+=============================================================*/
+@media (min-width: 1200px) { 
+
+	.container{ width:1170px;
+	}
+}

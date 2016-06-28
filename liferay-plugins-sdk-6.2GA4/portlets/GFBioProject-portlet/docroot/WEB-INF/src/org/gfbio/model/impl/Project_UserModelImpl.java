@@ -64,11 +64,11 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "projectID", Types.BIGINT },
 			{ "userID", Types.BIGINT },
-			{ "usertype", Types.VARCHAR },
 			{ "startDate", Types.TIMESTAMP },
-			{ "endDate", Types.TIMESTAMP }
+			{ "endDate", Types.TIMESTAMP },
+			{ "userType", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_User (projectID LONG not null,userID LONG not null,usertype VARCHAR(75) null,startDate DATE null,endDate DATE null,primary key (projectID, userID))";
+	public static final String TABLE_SQL_CREATE = "create table gfbio_Project_User (projectID LONG not null,userID LONG not null,startDate DATE null,endDate DATE null,userType VARCHAR(75) null,primary key (projectID, userID))";
 	public static final String TABLE_SQL_DROP = "drop table gfbio_Project_User";
 	public static final String ORDER_BY_JPQL = " ORDER BY project_User.id.projectID ASC, project_User.id.userID ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY gfbio_Project_User.projectID ASC, gfbio_Project_User.userID ASC";
@@ -102,9 +102,9 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		model.setProjectID(soapModel.getProjectID());
 		model.setUserID(soapModel.getUserID());
-		model.setUsertype(soapModel.getUsertype());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
+		model.setUserType(soapModel.getUserType());
 
 		return model;
 	}
@@ -172,9 +172,9 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("userID", getUserID());
-		attributes.put("usertype", getUsertype());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("userType", getUserType());
 
 		return attributes;
 	}
@@ -193,12 +193,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 			setUserID(userID);
 		}
 
-		String usertype = (String)attributes.get("usertype");
-
-		if (usertype != null) {
-			setUsertype(usertype);
-		}
-
 		Date startDate = (Date)attributes.get("startDate");
 
 		if (startDate != null) {
@@ -209,6 +203,12 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		String userType = (String)attributes.get("userType");
+
+		if (userType != null) {
+			setUserType(userType);
 		}
 	}
 
@@ -260,22 +260,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 	@JSON
 	@Override
-	public String getUsertype() {
-		if (_usertype == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _usertype;
-		}
-	}
-
-	@Override
-	public void setUsertype(String usertype) {
-		_usertype = usertype;
-	}
-
-	@JSON
-	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -294,6 +278,22 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 	@Override
 	public void setEndDate(Date endDate) {
 		_endDate = endDate;
+	}
+
+	@JSON
+	@Override
+	public String getUserType() {
+		if (_userType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _userType;
+		}
+	}
+
+	@Override
+	public void setUserType(String userType) {
+		_userType = userType;
 	}
 
 	public long getColumnBitmask() {
@@ -316,9 +316,9 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		project_UserImpl.setProjectID(getProjectID());
 		project_UserImpl.setUserID(getUserID());
-		project_UserImpl.setUsertype(getUsertype());
 		project_UserImpl.setStartDate(getStartDate());
 		project_UserImpl.setEndDate(getEndDate());
+		project_UserImpl.setUserType(getUserType());
 
 		project_UserImpl.resetOriginalValues();
 
@@ -382,14 +382,6 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 
 		project_UserCacheModel.userID = getUserID();
 
-		project_UserCacheModel.usertype = getUsertype();
-
-		String usertype = project_UserCacheModel.usertype;
-
-		if ((usertype != null) && (usertype.length() == 0)) {
-			project_UserCacheModel.usertype = null;
-		}
-
 		Date startDate = getStartDate();
 
 		if (startDate != null) {
@@ -408,6 +400,14 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 			project_UserCacheModel.endDate = Long.MIN_VALUE;
 		}
 
+		project_UserCacheModel.userType = getUserType();
+
+		String userType = project_UserCacheModel.userType;
+
+		if ((userType != null) && (userType.length() == 0)) {
+			project_UserCacheModel.userType = null;
+		}
+
 		return project_UserCacheModel;
 	}
 
@@ -419,12 +419,12 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 		sb.append(getProjectID());
 		sb.append(", userID=");
 		sb.append(getUserID());
-		sb.append(", usertype=");
-		sb.append(getUsertype());
 		sb.append(", startDate=");
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
+		sb.append(", userType=");
+		sb.append(getUserType());
 		sb.append("}");
 
 		return sb.toString();
@@ -447,16 +447,16 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 		sb.append(getUserID());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>usertype</column-name><column-value><![CDATA[");
-		sb.append(getUsertype());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>startDate</column-name><column-value><![CDATA[");
 		sb.append(getStartDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>endDate</column-name><column-value><![CDATA[");
 		sb.append(getEndDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userType</column-name><column-value><![CDATA[");
+		sb.append(getUserType());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -474,9 +474,9 @@ public class Project_UserModelImpl extends BaseModelImpl<Project_User>
 	private long _userID;
 	private long _originalUserID;
 	private boolean _setOriginalUserID;
-	private String _usertype;
 	private Date _startDate;
 	private Date _endDate;
+	private String _userType;
 	private long _columnBitmask;
 	private Project_User _escapedModel;
 }

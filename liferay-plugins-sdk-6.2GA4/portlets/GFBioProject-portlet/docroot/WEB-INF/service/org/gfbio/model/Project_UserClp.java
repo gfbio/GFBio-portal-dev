@@ -78,9 +78,9 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("userID", getUserID());
-		attributes.put("usertype", getUsertype());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("userType", getUserType());
 
 		return attributes;
 	}
@@ -99,12 +99,6 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 			setUserID(userID);
 		}
 
-		String usertype = (String)attributes.get("usertype");
-
-		if (usertype != null) {
-			setUsertype(usertype);
-		}
-
 		Date startDate = (Date)attributes.get("startDate");
 
 		if (startDate != null) {
@@ -115,6 +109,12 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		String userType = (String)attributes.get("userType");
+
+		if (userType != null) {
+			setUserType(userType);
 		}
 	}
 
@@ -165,29 +165,6 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 	}
 
 	@Override
-	public String getUsertype() {
-		return _usertype;
-	}
-
-	@Override
-	public void setUsertype(String usertype) {
-		_usertype = usertype;
-
-		if (_project_UserRemoteModel != null) {
-			try {
-				Class<?> clazz = _project_UserRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setUsertype", String.class);
-
-				method.invoke(_project_UserRemoteModel, usertype);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -226,6 +203,29 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 				Method method = clazz.getMethod("setEndDate", Date.class);
 
 				method.invoke(_project_UserRemoteModel, endDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public String getUserType() {
+		return _userType;
+	}
+
+	@Override
+	public void setUserType(String userType) {
+		_userType = userType;
+
+		if (_project_UserRemoteModel != null) {
+			try {
+				Class<?> clazz = _project_UserRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserType", String.class);
+
+				method.invoke(_project_UserRemoteModel, userType);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -304,9 +304,9 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 		clone.setProjectID(getProjectID());
 		clone.setUserID(getUserID());
-		clone.setUsertype(getUsertype());
 		clone.setStartDate(getStartDate());
 		clone.setEndDate(getEndDate());
+		clone.setUserType(getUserType());
 
 		return clone;
 	}
@@ -357,12 +357,12 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 		sb.append(getProjectID());
 		sb.append(", userID=");
 		sb.append(getUserID());
-		sb.append(", usertype=");
-		sb.append(getUsertype());
 		sb.append(", startDate=");
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
+		sb.append(", userType=");
+		sb.append(getUserType());
 		sb.append("}");
 
 		return sb.toString();
@@ -385,16 +385,16 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 		sb.append(getUserID());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>usertype</column-name><column-value><![CDATA[");
-		sb.append(getUsertype());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>startDate</column-name><column-value><![CDATA[");
 		sb.append(getStartDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>endDate</column-name><column-value><![CDATA[");
 		sb.append(getEndDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userType</column-name><column-value><![CDATA[");
+		sb.append(getUserType());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -404,9 +404,9 @@ public class Project_UserClp extends BaseModelImpl<Project_User>
 
 	private long _projectID;
 	private long _userID;
-	private String _usertype;
 	private Date _startDate;
 	private Date _endDate;
+	private String _userType;
 	private BaseModel<?> _project_UserRemoteModel;
 	private Class<?> _clpSerializerClass = org.gfbio.service.ClpSerializer.class;
 }

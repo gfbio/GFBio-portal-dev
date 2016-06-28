@@ -35,9 +35,9 @@ public class Project_UserSoap implements Serializable {
 
 		soapModel.setProjectID(model.getProjectID());
 		soapModel.setUserID(model.getUserID());
-		soapModel.setUsertype(model.getUsertype());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
+		soapModel.setUserType(model.getUserType());
 
 		return soapModel;
 	}
@@ -107,14 +107,6 @@ public class Project_UserSoap implements Serializable {
 		_userID = userID;
 	}
 
-	public String getUsertype() {
-		return _usertype;
-	}
-
-	public void setUsertype(String usertype) {
-		_usertype = usertype;
-	}
-
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -131,9 +123,17 @@ public class Project_UserSoap implements Serializable {
 		_endDate = endDate;
 	}
 
+	public String getUserType() {
+		return _userType;
+	}
+
+	public void setUserType(String userType) {
+		_userType = userType;
+	}
+
 	private long _projectID;
 	private long _userID;
-	private String _usertype;
 	private Date _startDate;
 	private Date _endDate;
+	private String _userType;
 }

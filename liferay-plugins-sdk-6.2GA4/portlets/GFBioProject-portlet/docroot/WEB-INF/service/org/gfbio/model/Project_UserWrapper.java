@@ -52,9 +52,9 @@ public class Project_UserWrapper implements Project_User,
 
 		attributes.put("projectID", getProjectID());
 		attributes.put("userID", getUserID());
-		attributes.put("usertype", getUsertype());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("userType", getUserType());
 
 		return attributes;
 	}
@@ -73,12 +73,6 @@ public class Project_UserWrapper implements Project_User,
 			setUserID(userID);
 		}
 
-		String usertype = (String)attributes.get("usertype");
-
-		if (usertype != null) {
-			setUsertype(usertype);
-		}
-
 		Date startDate = (Date)attributes.get("startDate");
 
 		if (startDate != null) {
@@ -89,6 +83,12 @@ public class Project_UserWrapper implements Project_User,
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		String userType = (String)attributes.get("userType");
+
+		if (userType != null) {
+			setUserType(userType);
 		}
 	}
 
@@ -154,26 +154,6 @@ public class Project_UserWrapper implements Project_User,
 	}
 
 	/**
-	* Returns the usertype of this project_ user.
-	*
-	* @return the usertype of this project_ user
-	*/
-	@Override
-	public java.lang.String getUsertype() {
-		return _project_User.getUsertype();
-	}
-
-	/**
-	* Sets the usertype of this project_ user.
-	*
-	* @param usertype the usertype of this project_ user
-	*/
-	@Override
-	public void setUsertype(java.lang.String usertype) {
-		_project_User.setUsertype(usertype);
-	}
-
-	/**
 	* Returns the start date of this project_ user.
 	*
 	* @return the start date of this project_ user
@@ -211,6 +191,26 @@ public class Project_UserWrapper implements Project_User,
 	@Override
 	public void setEndDate(java.util.Date endDate) {
 		_project_User.setEndDate(endDate);
+	}
+
+	/**
+	* Returns the user type of this project_ user.
+	*
+	* @return the user type of this project_ user
+	*/
+	@Override
+	public java.lang.String getUserType() {
+		return _project_User.getUserType();
+	}
+
+	/**
+	* Sets the user type of this project_ user.
+	*
+	* @param userType the user type of this project_ user
+	*/
+	@Override
+	public void setUserType(java.lang.String userType) {
+		_project_User.setUserType(userType);
 	}
 
 	@Override

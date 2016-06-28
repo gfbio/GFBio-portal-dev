@@ -10,7 +10,13 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.Project_UserLocalServiceUtil;
+import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.UserExtensionLocalServiceUtil;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -60,37 +66,74 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
     //
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
-		System.out.println("test");
 		response.setContentType("text/html");
 		
 		if (request.getParameter("responseTarget") != null) {
 
-			//get project
+			//starts getCompleteProjectById of project
+			if ("getfullnames".toString().equals(request.getParameter("responseTarget").toString()))
+				getFullNamesAsString(request, response);
+			
+			//starts getCompleteProjectById of project
 			if ("getproject".toString().equals(request.getParameter("responseTarget").toString()))
-				getproject(request, response);
+				getCompleteProjectById(request, response);
+			
+			//starts getResearchObjectById of researchobject
+			if ("getresearchobjectbyid".toString().equals(request.getParameter("responseTarget").toString()))
+				getResearchObjectById(request, response);
+			
+			//starts getRowInformationsOfRelationshipsOfSpecificCellContent of content
+			if ("getresearchfieldinformations".toString().equals(request.getParameter("responseTarget").toString()))
+				getRowInformationsOfRelationshipsOfSpecificCellContent(request, response);
+			
+			//starts service getTableAsJSONArrayByName of head 
+			if ("gettablebyname".toString().equals(request.getParameter("responseTarget").toString()))
+				getTableAsJsonArrayByName(request, response);
+			
+			//starts getUserExtentionById of userExtention
+			if ("getuserbyid".toString().equals(request.getParameter("responseTarget").toString()))
+				getUserExtentionById(request, response);
 
+		}
+	}
+	
 
+	//
+	@SuppressWarnings("unchecked")
+	public void getFullNamesAsString(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		JSONObject responseJson = new JSONObject();
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+		if (parseJson.containsKey("projectid")) {
+			if (((parseJson.get("projectid").getClass()).toString()).equals("class java.lang.Long"))
+				responseJson.put("projectpi", Project_UserLocalServiceUtil.getFullNamesAsString(Project_UserLocalServiceUtil.getOwnerAndPiByProjectId((long) parseJson.get("projectid"))));
+			else
+				responseJson.put("projectpi", "");
+			
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().write(responseJson.toString());
 		}
 	}
 	
 	
 	//
 	@SuppressWarnings("unchecked")
-	public void getproject(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+	public void getCompleteProjectById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
-		System.out.println("testererer");
 		JSONObject responseJson = new JSONObject();
 		String dataJson = request.getParameter("data");
 		JSONParser parser = new JSONParser();
 		JSONObject parseJson = new JSONObject();
-		try {
-			parseJson = (JSONObject) parser.parse(dataJson);
-		} catch (ParseException e) {e.printStackTrace();}
-
-		
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
 		if (parseJson.containsKey("projectid")) {
-			if (!(((String) parseJson.get("projectid")).equals("none")))
-				responseJson.put("researchobjects", ProjectLocalServiceUtil.getProjectById(parseJson));
+			if (((parseJson.get("projectid").getClass()).toString()).equals("class java.lang.Long"))
+				responseJson = ProjectLocalServiceUtil.getCompleteProjectById(parseJson);
 			else
 				responseJson.put("projectid", 0);
 			
@@ -99,5 +142,83 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 	        response.getWriter().write(responseJson.toString());
 		}
 	}
+	
+	
+	//
+	public void getResearchObjectById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		JSONArray responseJson = new JSONArray();
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+
+		try {parseJson = (JSONArray) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+
+		responseJson = ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById(parseJson);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+
+	}	
+	
+	
+	//
+	public void getRowInformationsOfRelationshipsOfSpecificCellContent(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		JSONArray responseJson = new JSONArray();
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+
+		responseJson = ContentLocalServiceUtil.getRowInformationsOfRelationshipsOfSpecificCellContent(parseJson);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+
+	}
     
+	
+	//
+	public void getTableAsJsonArrayByName(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		JSONArray responseJson = new JSONArray();
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+
+		responseJson = HeadLocalServiceUtil.getTableAsJSONArrayByName(parseJson);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+
+	}
+	
+	
+	//
+	public void getUserExtentionById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		JSONObject responseJson = new JSONObject();
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+
+		responseJson = UserExtensionLocalServiceUtil.getUserExtentionById(parseJson);
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+
+	}
+	
+	
 }

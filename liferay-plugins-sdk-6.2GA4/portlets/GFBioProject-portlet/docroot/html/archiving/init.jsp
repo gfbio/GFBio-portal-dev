@@ -39,7 +39,29 @@
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
 	}
 	
-
+	
+	//
+	function sentProjectInformations(userId, projectId){
+		console.log("user: "+userId);
+		console.log("project "+projectId);
+		var toSubmit = {
+			"userid"   : userId,
+			"projectid"   : projectId,
+			"researchobjectid"   : 0,
+		}
+		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
+	}
+	
+	
+	//
+	function sentResearchObjectInformations(userId, projectId, researchObjectId) {
+ 		var toSubmit = {
+ 			"userid"   : userId,
+ 			"projectid"   : projectId,
+ 			"researchobjectid"   : researchObjectId,
+		};
+		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
+	}
 	
 		
 	//
@@ -60,7 +82,7 @@
 	
 	
 	//
-	function ajaxActionRequest_ChooseProjProProject(archivingURL, method, data, divId, as) {
+	function ajaxActionRequest_ChooseWorkflowProject(archivingURL, method, data, divId, as) {
 			$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
@@ -80,16 +102,15 @@
 	
 	
 	$( document ).ready(function() {
-		 console.log( "ready!" );
 		 document.getElementById("workflowChoPro").selectedIndex = 0;
-		 document.getElementById("choWorkflow").selectedIndex = 0;
+		 //document.getElementById("choWorkflow").selectedIndex = 0;
 	});
 	
 	
 	//
 	function buildChooseRO(data, divId){
-		
-		cleanSubmissionWorkflow();
+
+		//cleanSubmissionWorkflow();
 			
 		if (data.researchobjects == undefined)
 			var roList = [];

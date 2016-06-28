@@ -37,6 +37,12 @@ public class DataProviderSoap implements Serializable {
 		soapModel.setAddress(model.getAddress());
 		soapModel.setWebsite(model.getWebsite());
 		soapModel.setTraining(model.getTraining());
+		soapModel.setPhysicalobjects(model.getPhysicalobjects());
+		soapModel.setTaxonbased(model.getTaxonbased());
+		soapModel.setNotaxonbased(model.getNotaxonbased());
+		soapModel.setLivingobjects(model.getLivingobjects());
+		soapModel.setDeadobjects(model.getDeadobjects());
+		soapModel.setSequencedata(model.getSequencedata());
 
 		return soapModel;
 	}
@@ -145,6 +151,78 @@ public class DataProviderSoap implements Serializable {
 		_training = training;
 	}
 
+	public boolean getPhysicalobjects() {
+		return _physicalobjects;
+	}
+
+	public boolean isPhysicalobjects() {
+		return _physicalobjects;
+	}
+
+	public void setPhysicalobjects(boolean physicalobjects) {
+		_physicalobjects = physicalobjects;
+	}
+
+	public boolean getTaxonbased() {
+		return _taxonbased;
+	}
+
+	public boolean isTaxonbased() {
+		return _taxonbased;
+	}
+
+	public void setTaxonbased(boolean taxonbased) {
+		_taxonbased = taxonbased;
+	}
+
+	public boolean getNotaxonbased() {
+		return _notaxonbased;
+	}
+
+	public boolean isNotaxonbased() {
+		return _notaxonbased;
+	}
+
+	public void setNotaxonbased(boolean notaxonbased) {
+		_notaxonbased = notaxonbased;
+	}
+
+	public boolean getLivingobjects() {
+		return _livingobjects;
+	}
+
+	public boolean isLivingobjects() {
+		return _livingobjects;
+	}
+
+	public void setLivingobjects(boolean livingobjects) {
+		_livingobjects = livingobjects;
+	}
+
+	public boolean getDeadobjects() {
+		return _deadobjects;
+	}
+
+	public boolean isDeadobjects() {
+		return _deadobjects;
+	}
+
+	public void setDeadobjects(boolean deadobjects) {
+		_deadobjects = deadobjects;
+	}
+
+	public boolean getSequencedata() {
+		return _sequencedata;
+	}
+
+	public boolean isSequencedata() {
+		return _sequencedata;
+	}
+
+	public void setSequencedata(boolean sequencedata) {
+		_sequencedata = sequencedata;
+	}
+
 	private long _dataProviderID;
 	private String _name;
 	private String _label;
@@ -152,4 +230,10 @@ public class DataProviderSoap implements Serializable {
 	private String _address;
 	private String _website;
 	private String _training;
+	private boolean _physicalobjects;
+	private boolean _taxonbased;
+	private boolean _notaxonbased;
+	private boolean _livingobjects;
+	private boolean _deadobjects;
+	private boolean _sequencedata;
 }

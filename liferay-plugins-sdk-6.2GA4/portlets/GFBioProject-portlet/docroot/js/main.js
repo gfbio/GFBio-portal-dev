@@ -93,8 +93,19 @@ function visibleShow(j) {
 
 
 //
+function visibleShowWithFullId(j) {
+	document.getElementById(j).className = "swMain";
+};
+
+
+//
 function visibleHide(j) {
-	document.getElementById("hide_".concat(j)).className = "swHide";
+	document.getElementById(j).className  = "swHide";
+};
+
+//
+function visibleHideWithFullId(j) {
+	document.getElementById(j).className  = "swHide";
 };
 
 

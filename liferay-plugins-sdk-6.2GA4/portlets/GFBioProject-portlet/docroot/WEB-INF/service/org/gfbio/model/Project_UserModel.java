@@ -90,21 +90,6 @@ public interface Project_UserModel extends BaseModel<Project_User> {
 	public void setUserID(long userID);
 
 	/**
-	 * Returns the usertype of this project_ user.
-	 *
-	 * @return the usertype of this project_ user
-	 */
-	@AutoEscape
-	public String getUsertype();
-
-	/**
-	 * Sets the usertype of this project_ user.
-	 *
-	 * @param usertype the usertype of this project_ user
-	 */
-	public void setUsertype(String usertype);
-
-	/**
 	 * Returns the start date of this project_ user.
 	 *
 	 * @return the start date of this project_ user
@@ -131,6 +116,21 @@ public interface Project_UserModel extends BaseModel<Project_User> {
 	 * @param endDate the end date of this project_ user
 	 */
 	public void setEndDate(Date endDate);
+
+	/**
+	 * Returns the user type of this project_ user.
+	 *
+	 * @return the user type of this project_ user
+	 */
+	@AutoEscape
+	public String getUserType();
+
+	/**
+	 * Sets the user type of this project_ user.
+	 *
+	 * @param userType the user type of this project_ user
+	 */
+	public void setUserType(String userType);
 
 	@Override
 	public boolean isNew();

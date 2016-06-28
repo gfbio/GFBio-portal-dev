@@ -301,6 +301,10 @@ public class DataProviderLocalServiceUtil {
 		return getService().getLabelById(dataProviderId);
 	}
 
+	public static java.lang.String getNameById(long dataProviderId) {
+		return getService().getNameById(dataProviderId);
+	}
+
 	public static java.util.List getPersistentIdentiferIds(long dataProviderId) {
 		return getService().getPersistentIdentiferIds(dataProviderId);
 	}

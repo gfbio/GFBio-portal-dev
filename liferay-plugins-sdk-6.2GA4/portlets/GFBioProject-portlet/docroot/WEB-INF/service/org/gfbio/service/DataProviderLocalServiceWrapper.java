@@ -315,6 +315,11 @@ public class DataProviderLocalServiceWrapper implements DataProviderLocalService
 	}
 
 	@Override
+	public java.lang.String getNameById(long dataProviderId) {
+		return _dataProviderLocalService.getNameById(dataProviderId);
+	}
+
+	@Override
 	public java.util.List getPersistentIdentiferIds(long dataProviderId) {
 		return _dataProviderLocalService.getPersistentIdentiferIds(dataProviderId);
 	}

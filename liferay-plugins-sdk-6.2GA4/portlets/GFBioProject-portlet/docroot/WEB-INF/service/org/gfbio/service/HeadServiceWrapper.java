@@ -56,12 +56,6 @@ public class HeadServiceWrapper implements HeadService,
 		return _headService.invokeMethod(name, parameterTypes, arguments);
 	}
 
-	@Override
-	public org.json.simple.JSONArray getTableAsJSONArrayByName(
-		org.json.simple.JSONObject requestJson) {
-		return _headService.getTableAsJSONArrayByName(requestJson);
-	}
-
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

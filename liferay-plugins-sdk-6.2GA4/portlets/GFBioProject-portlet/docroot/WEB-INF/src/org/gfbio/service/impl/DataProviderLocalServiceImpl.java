@@ -87,6 +87,12 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 	public String getLabelById (long dataProviderId){
 		return (String) DataProviderFinderUtil.getLabelById(dataProviderId).get(0);
 	}
+	
+	
+	//
+	public String getNameById (long dataProviderId){
+		return (String) DataProviderFinderUtil.getNameById(dataProviderId).get(0);
+	}
 
 	
 	//

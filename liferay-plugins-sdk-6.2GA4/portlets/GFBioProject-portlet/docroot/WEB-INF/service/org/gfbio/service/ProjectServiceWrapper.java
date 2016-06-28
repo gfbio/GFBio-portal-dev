@@ -63,11 +63,6 @@ public class ProjectServiceWrapper implements ProjectService,
 	}
 
 	@Override
-	public java.lang.String getFullNamesAsString(long projectId) {
-		return _projectService.getFullNamesAsString(projectId);
-	}
-
-	@Override
 	public java.lang.Boolean checkProjectOnSubmissions(long projectId) {
 		return _projectService.checkProjectOnSubmissions(projectId);
 	}

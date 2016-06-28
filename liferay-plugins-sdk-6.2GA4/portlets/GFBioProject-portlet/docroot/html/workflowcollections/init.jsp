@@ -1,10 +1,12 @@
+
+
 <script>
 
 
 	/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
 		
-	//Message from Hide Managment
+/* 	//Message from Hide Managment
 	$(document).ready(function() {
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			var div =   $("#collections");
@@ -24,7 +26,31 @@
 			}
 		});
 	});
-	
+	 */
+	 
+	//Message from Hide Managment
+	$(document).ready(function() {
+		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
+			
+			var div =   $("#collections");
+			
+			if (data.projectid==0){
+				fillDefaultInformations(data, div);
+			}else{
+				if (data.researchobjectid==0){
+					if (document.getElementById("cwf_project_id").innerHTML!= 0)
+						fillDefaultInformations(data, div);
+					fillProjectInformations(data, div);
+					fillDefaultResearchObjectInformations(data, div);
+				}else{
+					if (document.getElementById("cwf_ro_id").innerHTML!= 0)
+						fillDefaultResearchObjectInformations(data, div);
+					fillResearchObjectInformations(data, div);
+				}
+			}
+		});
+	});	 
+	 
 	
 	//fire to update information to generally worflow portlet
 	function sentWorkflowUpdate(project, projectId, projectLabel, researchObject) {
@@ -41,9 +67,18 @@
 	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
 	
+	//build default collection workflow without project or researchobject data
+	$(document).ready(function() {
+		var div =   $("#collections");
+		var data = {"userid":Number(themeDisplay.getUserId())};
+		buildCollectionsForm(data, div);
+		fillDefaultInformations(data, div);
+	});
+	
+	
+	
 	//
 	function buildCollectionsForm(data, div){
-		
 		
 		if (data.userid != 0){
 
@@ -194,22 +229,38 @@
 	
 	//default fill function of collections submission workflow
 	function fillDefaultInformations(data, div){
+		fillDefaultProjectInformations(data, div);
+		fillDefaultSubmitterInformations(data, div);
+		fillDefaultResearchObjectInformations(data, div);
+	}
+	
+	
+	//default fill function of collections submission workflow
+	function fillDefaultProjectInformations(data, div){
+
+		var url = document.getElementById('workflowcollectionsurl').value;
+		var ajaxData = {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
 
 		document.getElementById("cwf_project_id").innerHTML= 0;
+		document.getElementById("cwf_project_name").value= "";
+		document.getElementById("cwf_project_label").value= "";
+		document.getElementById("cwf_project_description").value= "";
 		
-		Liferay.Service('/GFBioProject-portlet.content/get-row-informations-of-relationships-of-specific-cell-content',
-			{
-				requestJson: {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "getresearchfieldinformations"
 			},
-			function(obj) {
-				
+			async: false,
+ 			success :  function (obj){
 				var divKey = $("#".concat('cwf_project_keywords'));
 				divKey.empty();
 
 				for (i=0; i < obj.length;i++){
 					if (i < obj.length-1){
 						var j = i+1;
-						
 						divKey.append(
 							"<div class='row'>"+
 								"<div class='rowLato'>"+
@@ -231,51 +282,78 @@
 						);
 					}
 				}
-			}
-		);
+			} 
+		}); 
 		
-		Liferay.Service('/GFBioProject-portlet.userextension/get-user-by-id',
-			{
-				json: {"userid":data.userid}
+		ajaxData = {"tablename":"gfbio_metadata"};
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "gettablebyname"
 			},
-			function(obj) {
-				document.getElementById("cwf_user_id").innerHTML= data.userid;
-				document.getElementById("cwf_user_name").innerHTML= obj.fullname;
-				document.getElementById("cwf_user_mail").innerHTML= obj.emailaddress;
-				document.getElementById("cwf_ro_author").value= obj.fullname.concat(",");
-			}
-		);
+			async: false,
+ 			success :  function (obj){
+ 				var choMeta = $("#".concat('cwf_ro_metadatalabel'));
+				choMeta.empty();
+				choMeta.append("<option value='none'></option>");
+				for (i =0; i <obj.length;i++){
+					var json = obj[i];
+					choMeta.append("<option id='cwf_ro_metadatalabel"+json.id+"' value='"+json.id+"'>"+json.label+"</option>");
+				}
+					
+				choMeta.append("<option value='other'>other</option>");
+ 			}
+ 		});
+				
 		
+	}
+	
+	
+	//
+	function fillDefaultResearchObjectInformations(data, div){
+	
+		var url = document.getElementById('workflowcollectionsurl').value;
+	
 		document.getElementById("cwf_ro_id").innerHTML= 0;
 		document.getElementById("cwf_ro_version").innerHTML= 1;
-		document.getElementById("cwf_ro_nagojano").checked = true;
+		document.getElementById("cwf_ro_name").value= "";
+		document.getElementById("cwf_ro_label").value= "";
 		
-		
-		Liferay.Service('/GFBioProject-portlet.head/get-table-as-json-array-by-name',
-				{
-					requestJson: {"tablename":"gfbio_metadata"}
-				},
-				function(obj) {
-					var choMeta = $("#".concat('cwf_ro_metadatalabel'));
-					choMeta.empty();
-					choMeta.append("<option value='none'></option>");
-					for (i =0; i <obj.length;i++){
-						var json = obj[i];
-						choMeta.append("<option id='cwf_ro_metadatalabel"+json.id+"' value='"+json.id+"'>"+json.label+"</option>");
-					}
-						
-					choMeta.append("<option value='other'>other</option>");
-				}
-			);
-		
-		document.getElementById("cwf_pd_id").innerHTML= 0;
-			
-		Liferay.Service('/GFBioProject-portlet.head/get-table-as-json-array-by-name',
-			{
-				requestJson: {"tablename":"gfbio_license"}
+		var ajaxData = {"userid":data.userid};
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "getuserbyid"
 			},
-			function(obj) {
-					
+			async: false,
+ 			success :  function (obj){
+				document.getElementById("cwf_ro_author").value= obj.fullname.concat(",");
+ 			}
+ 		});
+ 		
+ 		document.getElementById("cwf_ro_dct").value= "";
+ 		document.getElementById("cwf_ro_description").value= "";
+ 		document.getElementById("cwf_ro_publications").value= "";
+ 		document.getElementById("cwf_ro_metadatalabel").selectedIndex = 0;
+ 		document.getElementById("cwf_pd_id").innerHTML= 0;
+		document.getElementById("cwf_ro_nagojano").checked = true;
+		var radioNagoja = $("#".concat('cwf_ro_nagojadiv'));
+		radioNagoja.empty();
+		
+		ajaxData = {"tablename":"gfbio_license"};
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "gettablebyname"
+			},
+			async: false,
+ 			success :  function (obj){
 				var divLi = $("#".concat('cwf_ro_licenses'));
 				divLi.empty();
 				for (i=0; i < obj.length;i++)
@@ -283,90 +361,159 @@
 						"<div class='row'>"+
 								"<input type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='licenses' value='"+obj[i].id+"'> "+obj[i].name+
 						"</div>"
-					);						
-				}
-		);
+					);		
+ 			}
+ 		});
+			
 	}
 	
 	
+	
+	//
+	function fillDefaultSubmitterInformations(data, div){
+		
+		var url = document.getElementById('workflowcollectionsurl').value;
+		var ajaxData = {"userid":data.userid};
+		
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "getuserbyid"
+			},
+			async: false,
+ 			success :  function (obj){
+				document.getElementById("cwf_user_id").innerHTML= data.userid;
+				document.getElementById("cwf_user_name").innerHTML= obj.fullname;
+				document.getElementById("cwf_user_mail").innerHTML= obj.emailaddress;
+ 			}
+ 		});
+	}
+	
+	
+
+	
 	//default fill function of collections submission workflow
 	function fillProjectInformations(data, div){
-
-		Liferay.Service('/GFBioProject-portlet.project/get-project-by-id',
-			{
-				requestJson: {"projectid": Number(data.projectid)}
-			},
-			function(obj) 
-			{	
-				console.log ("fillProjectInformations");  
-				console.log (obj);  
-				document.getElementById("cwf_project_id").innerHTML= obj.projectid;
-				document.getElementById("cwf_project_name").value= obj.name;
-				document.getElementById("cwf_project_label").value= obj.label;
-				document.getElementById("cwf_project_description").value= obj.description;
-				var json = JSON.parse(obj.categoryid);
-				for (i=0;i<json.length;i++)
-					document.getElementById("cwf_project_keywords"+json[i]).checked= "checked";
-			}
-		);
 		
-		Liferay.Service('/GFBioProject-portlet.project/get-full-names-as-string',
-			{
-				projectId: Number(data.projectid)
-			},
-			function(obj) {
-				document.getElementById("cwf_project_pi").value= obj;
-			}
-		);
+		var url = document.getElementById('workflowcollectionsurl').value;
+		if (Number(data.projectid)!=0){
+			var ajaxData = {"projectid": Number(data.projectid)};
+	 		$.ajax({
+				"type" : "POST",
+				"url": url.concat('/WorkflowCollectionsPortlet'),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(ajaxData),
+					"<portlet:namespace />responseTarget" : "getproject"
+				},
+				async: false,
+	 			success :  function (obj){
+
+					document.getElementById("cwf_project_id").innerHTML= obj.projectid;
+					document.getElementById("cwf_project_name").value= obj.name;
+					document.getElementById("cwf_project_label").value= obj.label;
+					document.getElementById("cwf_project_description").value= obj.description;
+					var json = JSON.parse(obj.categoryid);
+					for (i=0;i<json.length;i++)
+						document.getElementById("cwf_project_keywords"+json[i]).checked= "checked";
+	 			}
+	 		});
+	 		
+	 		
+			ajaxData = {"projectid": Number(data.projectid)};
+	 		$.ajax({
+				"type" : "POST",
+				"url": url.concat('/WorkflowCollectionsPortlet'),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(ajaxData),
+					"<portlet:namespace />responseTarget" : "getfullnames"
+				},
+				async: false,
+	 			success :  function (obj){
+	 				document.getElementById("cwf_project_pi").value= obj.projectpi;
+	 			}
+	 		});
+		}
 	}
 	
 	
 	//
 	function fillResearchObjectInformations(data, div){
 
-		Liferay.Service('/GFBioProject-portlet.researchobject/get-research-object-by-id',
-				  {
-				    requestJson: '[{"researchobjectid":'+Number(data.researchobjectid)+'}]'
-				  },
-				function(obj) {
-					console.log ("fillResearchObjectInformations");  
-					console.log (obj);  
-					var div =   $("#cwf_ro_metadatalabel_v");
+		var url = document.getElementById('workflowcollectionsurl').value;
+		if (Number(data.researchobjectid)!=0){
+			var ajaxData = [{"researchobjectid":Number(data.researchobjectid)}];
+	 		$.ajax({
+				"type" : "POST",
+				"url": url.concat('/WorkflowCollectionsPortlet'),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(ajaxData),
+					"<portlet:namespace />responseTarget" : "getresearchobjectbyid"
+				},
+				async: false,
+	 			success :  function (obj){
+	 						
+	 				var div =   $("#cwf_ro_metadatalabel_v");
 					var json = obj[0];
 					var ed = json.extendeddata;
 					for (i=0;i<ed.length/2;i++)
 						ed = ed.replace("'",'"');
 					var extendeddata = JSON.parse(ed);
-					var author = (json.authorname).substring(1, (json.authorname.length)-1);
-					for (i=0;i<author.length/2;i++)
-						author = author.replace('"','');
 					
 					document.getElementById("cwf_ro_id").innerHTML= json.researchobjectid;
 					document.getElementById("cwf_ro_version").innerHTML= json.researchobjectversion;
 					document.getElementById("cwf_ro_name").value= json.name;
 					document.getElementById("cwf_ro_label").value= json.label;
-					document.getElementById("cwf_ro_dct").value= extendeddata.datacollectiontime;
+					
+					if (extendeddata.datacollectiontime !=null)
+						document.getElementById("cwf_ro_dct").value= extendeddata.datacollectiontime;
+					else
+						document.getElementById("cwf_ro_dct").value= "";
+					
 					document.getElementById("cwf_ro_description").value= json.description;
 					div.empty();
 					div.append(json.metadatalabel+
 						"<div class='rowField'><input type='hidden' id='cwf_ro_metadatalabel' value='"+json.metadatalabel+"'></div>"
-);
-					document.getElementById("cwf_ro_author").value= author;
-					document.getElementById("cwf_ro_publications").value= extendeddata.publications;
+					);
 
-					
-					if (extendeddata.nagoja == "no"){
-						document.getElementById("cwf_ro_nagojano").checked = true;
+					if (json.authorname != null){
+						var author = (json.authorname).substring(1, (json.authorname.length)-1);
+						for (i=0;i<author.length/2;i++)
+							author = author.replace('"','');
+						document.getElementById("cwf_ro_author").value= author;
 					}else{
-						document.getElementById("cwf_ro_nagojayes").checked = true;
-						document.getElementById("cwf_ro_nagojayes").value =extendeddata.nagoja;
+						document.getElementById("cwf_ro_author").value= "";
+					}
+					
+					
+					if (extendeddata.publications !=null)
+						document.getElementById("cwf_ro_publications").value= extendeddata.publications;
+					else
+						document.getElementById("cwf_ro_publications").value= "";
+					
+					
+
+					if (extendeddata.nagoja !=null){
+						if (extendeddata.nagoja == "no"){
+							document.getElementById("cwf_ro_nagojano").checked = true;
+						}else{
+							document.getElementById("cwf_ro_nagojayes").checked = true;
+							document.getElementById("cwf_ro_nagojayes").value =extendeddata.nagoja;
+						}
+					}else{
+						document.getElementById("cwf_ro_nagojano").checked = true;
 					}
 					
 					var licenseJson = JSON.parse(json.licenseid);
 					for (i=0;i<licenseJson.length;i++)
 						document.getElementById("cwf_ro_licenses"+licenseJson[i]).checked= "checked";
-				}
-			);
+
+	 			}
+	 		});
+		}
+		
+		
 	}
 	
 

@@ -54,10 +54,6 @@ public class ContentServiceClpInvoker {
 		_methodParameterTypes125 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
-
-		_methodName126 = "getRowInformationsOfRelationshipsOfSpecificCellContent";
-
-		_methodParameterTypes126 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -98,11 +94,6 @@ public class ContentServiceClpInvoker {
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
-			return ContentServiceUtil.getRowInformationsOfRelationshipsOfSpecificCellContent((org.json.simple.JSONObject)arguments[0]);
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -118,6 +109,4 @@ public class ContentServiceClpInvoker {
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
 	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
 }

@@ -53,6 +53,12 @@
 			<basic name="address" />
 			<basic name="website" />
 			<basic name="training" />
+			<basic name="physicalobjects" />
+			<basic name="taxonbased" />
+			<basic name="notaxonbased" />
+			<basic name="livingobjects" />
+			<basic name="deadobjects" />
+			<basic name="sequencedata" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -143,13 +149,13 @@
 		<attributes>
 			<id name="projectID" />
 			<id name="userID" />
-			<basic name="usertype" />
 			<basic name="startDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="endDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="userType" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

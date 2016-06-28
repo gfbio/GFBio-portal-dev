@@ -89,12 +89,6 @@ public class ContentServiceUtil {
 			tableName1, tableName2);
 	}
 
-	public static org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
-		org.json.simple.JSONObject requestJson) {
-		return getService()
-				   .getRowInformationsOfRelationshipsOfSpecificCellContent(requestJson);
-	}
-
 	public static void clearService() {
 		_service = null;
 	}

@@ -21,14 +21,9 @@
 <input type="hidden" class="widthL" id="workflowcollectionsurl"  	value="<%=workflowcollectionsURL %>" />
 
 
-<body >
 
-	<div id="collections" class="swHide">
-		
 
-		
-		
 
-	</div>
+<div id="collections"></div>
 	
-</body>
+

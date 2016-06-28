@@ -124,19 +124,5 @@ public class ContentServiceSoap {
 		}
 	}
 
-	public static org.json.simple.JSONArray getRowInformationsOfRelationshipsOfSpecificCellContent(
-		org.json.simple.JSONObject requestJson) throws RemoteException {
-		try {
-			org.json.simple.JSONArray returnValue = ContentServiceUtil.getRowInformationsOfRelationshipsOfSpecificCellContent(requestJson);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(ContentServiceSoap.class);
 }

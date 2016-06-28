@@ -111,7 +111,7 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 		if (relation == null) {
 			relation = project_UserPersistence.create(pk);
 		}
-		relation.setUsertype(userType);
+		relation.setUserType(userType);
 
 		try {
 			super.updateProject_User(relation);
@@ -138,7 +138,7 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 		}
 		relation.setStartDate(startDate);
 		relation.setEndDate(endDate);
-		relation.setUsertype(userType);
+		relation.setUserType(userType);
 
 		try {
 			super.updateProject_User(relation);

@@ -133,21 +133,25 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "getPersistentIdentiferIds";
+		_methodName25 = "getNameById";
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "checkDataProviderLabel";
+		_methodName26 = "getPersistentIdentiferIds";
 
-		_methodParameterTypes26 = new String[] { "java.lang.String" };
+		_methodParameterTypes26 = new String[] { "long" };
 
-		_methodName27 = "constructDataProviderAsJson";
+		_methodName27 = "checkDataProviderLabel";
 
-		_methodParameterTypes27 = new String[] { "org.gfbio.model.DataProvider" };
+		_methodParameterTypes27 = new String[] { "java.lang.String" };
 
-		_methodName28 = "updateDataProvider";
+		_methodName28 = "constructDataProviderAsJson";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes28 = new String[] { "org.gfbio.model.DataProvider" };
+
+		_methodName29 = "updateDataProvider";
+
+		_methodParameterTypes29 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String"
@@ -843,12 +847,35 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 	}
 
 	@Override
-	public java.util.List getPersistentIdentiferIds(long dataProviderId) {
+	public java.lang.String getNameById(long dataProviderId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName25,
 					_methodParameterTypes25, new Object[] { dataProviderId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.lang.String)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List getPersistentIdentiferIds(long dataProviderId) {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { dataProviderId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -870,8 +897,8 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] { ClpSerializer.translateInput(archive) });
 		}
 		catch (Throwable t) {
@@ -895,8 +922,8 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] { ClpSerializer.translateInput(dataProvider) });
 		}
 		catch (Throwable t) {
@@ -922,8 +949,8 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						dataProviderId,
 						
@@ -1012,4 +1039,6 @@ public class DataProviderLocalServiceClp implements DataProviderLocalService {
 	private String[] _methodParameterTypes27;
 	private String _methodName28;
 	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
 }

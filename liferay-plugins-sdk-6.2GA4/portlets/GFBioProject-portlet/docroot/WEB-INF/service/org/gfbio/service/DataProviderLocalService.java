@@ -270,6 +270,9 @@ public interface DataProviderLocalService extends BaseLocalService,
 	public java.lang.String getLabelById(long dataProviderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getNameById(long dataProviderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getPersistentIdentiferIds(long dataProviderId);
 
 	public java.lang.Boolean checkDataProviderLabel(java.lang.String archive);

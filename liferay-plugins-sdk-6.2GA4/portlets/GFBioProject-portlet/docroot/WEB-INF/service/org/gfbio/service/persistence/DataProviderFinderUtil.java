@@ -35,6 +35,10 @@ public class DataProviderFinderUtil {
 		return getFinder().getLabelById(dataProviderId);
 	}
 
+	public static java.util.List getNameById(long dataProviderId) {
+		return getFinder().getNameById(dataProviderId);
+	}
+
 	public static java.util.List getLabels() {
 		return getFinder().getLabels();
 	}

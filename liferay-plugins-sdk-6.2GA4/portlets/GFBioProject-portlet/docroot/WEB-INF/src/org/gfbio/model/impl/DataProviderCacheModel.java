@@ -36,7 +36,7 @@ public class DataProviderCacheModel implements CacheModel<DataProvider>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{dataProviderID=");
 		sb.append(dataProviderID);
@@ -52,6 +52,18 @@ public class DataProviderCacheModel implements CacheModel<DataProvider>,
 		sb.append(website);
 		sb.append(", training=");
 		sb.append(training);
+		sb.append(", physicalobjects=");
+		sb.append(physicalobjects);
+		sb.append(", taxonbased=");
+		sb.append(taxonbased);
+		sb.append(", notaxonbased=");
+		sb.append(notaxonbased);
+		sb.append(", livingobjects=");
+		sb.append(livingobjects);
+		sb.append(", deadobjects=");
+		sb.append(deadobjects);
+		sb.append(", sequencedata=");
+		sb.append(sequencedata);
 		sb.append("}");
 
 		return sb.toString();
@@ -105,6 +117,13 @@ public class DataProviderCacheModel implements CacheModel<DataProvider>,
 			dataProviderImpl.setTraining(training);
 		}
 
+		dataProviderImpl.setPhysicalobjects(physicalobjects);
+		dataProviderImpl.setTaxonbased(taxonbased);
+		dataProviderImpl.setNotaxonbased(notaxonbased);
+		dataProviderImpl.setLivingobjects(livingobjects);
+		dataProviderImpl.setDeadobjects(deadobjects);
+		dataProviderImpl.setSequencedata(sequencedata);
+
 		dataProviderImpl.resetOriginalValues();
 
 		return dataProviderImpl;
@@ -119,6 +138,12 @@ public class DataProviderCacheModel implements CacheModel<DataProvider>,
 		address = objectInput.readUTF();
 		website = objectInput.readUTF();
 		training = objectInput.readUTF();
+		physicalobjects = objectInput.readBoolean();
+		taxonbased = objectInput.readBoolean();
+		notaxonbased = objectInput.readBoolean();
+		livingobjects = objectInput.readBoolean();
+		deadobjects = objectInput.readBoolean();
+		sequencedata = objectInput.readBoolean();
 	}
 
 	@Override
@@ -167,6 +192,13 @@ public class DataProviderCacheModel implements CacheModel<DataProvider>,
 		else {
 			objectOutput.writeUTF(training);
 		}
+
+		objectOutput.writeBoolean(physicalobjects);
+		objectOutput.writeBoolean(taxonbased);
+		objectOutput.writeBoolean(notaxonbased);
+		objectOutput.writeBoolean(livingobjects);
+		objectOutput.writeBoolean(deadobjects);
+		objectOutput.writeBoolean(sequencedata);
 	}
 
 	public long dataProviderID;
@@ -176,4 +208,10 @@ public class DataProviderCacheModel implements CacheModel<DataProvider>,
 	public String address;
 	public String website;
 	public String training;
+	public boolean physicalobjects;
+	public boolean taxonbased;
+	public boolean notaxonbased;
+	public boolean livingobjects;
+	public boolean deadobjects;
+	public boolean sequencedata;
 }
