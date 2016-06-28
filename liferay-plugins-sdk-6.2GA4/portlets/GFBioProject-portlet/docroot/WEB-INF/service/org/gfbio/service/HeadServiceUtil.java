@@ -63,11 +63,6 @@ public class HeadServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static org.json.simple.JSONArray getTableAsJSONArrayByName(
-		org.json.simple.JSONObject requestJson) {
-		return getService().getTableAsJSONArrayByName(requestJson);
-	}
-
 	public static void clearService() {
 		_service = null;
 	}

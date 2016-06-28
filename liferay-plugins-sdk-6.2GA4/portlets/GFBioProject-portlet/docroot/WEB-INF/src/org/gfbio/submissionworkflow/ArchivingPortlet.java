@@ -85,14 +85,16 @@ public class ArchivingPortlet extends GenericPortlet {
 			parseJson = (JSONObject) parser.parse(dataJson);
 		} catch (ParseException e) {e.printStackTrace();}
 
-		
 		if (parseJson.containsKey("projectid")) {
-			if (!(((String) parseJson.get("projectid")).equals("none"))){
-			
-				responseJson.put("researchobjects", ProjectLocalServiceUtil.getResearchObjectsByProjectId(Long.valueOf((String) parseJson.get("projectid")).longValue()));
-				
+			if (((parseJson.get("projectid")).getClass().toString()).equals("class java.lang.String")){
+				if (!(((String) parseJson.get("projectid")).equals("none")))
+					responseJson.put("researchobjects", ProjectLocalServiceUtil.getResearchObjectsByProjectId(Long.valueOf((String) parseJson.get("projectid")).longValue()));
 			}else
-				responseJson.put("projectid", 0);
+				if (((parseJson.get("projectid")).getClass().toString()).equals("class java.lang.Long")){
+					if ((long) parseJson.get("projectid")!=0)
+						responseJson.put("researchobjects", ProjectLocalServiceUtil.getResearchObjectsByProjectId((long) parseJson.get("projectid")));
+				}else
+					responseJson.put("projectid", 0);
 			
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");

@@ -64,9 +64,9 @@ public class ContentServiceImpl extends ContentServiceBaseImpl {
 	}
 	
 	
-	//
+/*	//
 	public JSONArray  getRowInformationsOfRelationshipsOfSpecificCellContent (JSONObject requestJson){
 		return  ContentLocalServiceUtil.getRowInformationsOfRelationshipsOfSpecificCellContent (requestJson);
-	}
+	}*/
 	
 }

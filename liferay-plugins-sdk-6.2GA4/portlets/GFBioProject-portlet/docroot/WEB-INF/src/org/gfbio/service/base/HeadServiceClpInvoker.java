@@ -31,10 +31,6 @@ public class HeadServiceClpInvoker {
 		_methodName117 = "setBeanIdentifier";
 
 		_methodParameterTypes117 = new String[] { "java.lang.String" };
-
-		_methodName122 = "getTableAsJSONArrayByName";
-
-		_methodParameterTypes122 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -51,11 +47,6 @@ public class HeadServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
-			return HeadServiceUtil.getTableAsJSONArrayByName((org.json.simple.JSONObject)arguments[0]);
-		}
-
 		throw new UnsupportedOperationException();
 	}
 
@@ -63,6 +54,4 @@ public class HeadServiceClpInvoker {
 	private String[] _methodParameterTypes116;
 	private String _methodName117;
 	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
 }

@@ -14,10 +14,8 @@
 
 package org.gfbio.service.impl;
 
-import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.HeadServiceBaseImpl;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
 
 
 
@@ -38,9 +36,9 @@ import org.json.simple.JSONObject;
 public class HeadServiceImpl extends HeadServiceBaseImpl {
 	
 	
-	//
+/*	//
 	public JSONArray getTableAsJSONArrayByName(JSONObject requestJson){
 		return HeadLocalServiceUtil.getTableAsJSONArrayByName(requestJson);
-	}
+	}*/
 
 }

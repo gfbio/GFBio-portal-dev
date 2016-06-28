@@ -36,21 +36,17 @@ public class ProjectServiceClpInvoker {
 
 		_methodParameterTypes122 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName123 = "getFullNamesAsString";
+		_methodName123 = "checkProjectOnSubmissions";
 
 		_methodParameterTypes123 = new String[] { "long" };
 
-		_methodName124 = "checkProjectOnSubmissions";
+		_methodName124 = "createProject";
 
-		_methodParameterTypes124 = new String[] { "long" };
+		_methodParameterTypes124 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName125 = "createProject";
+		_methodName125 = "updateProject";
 
 		_methodParameterTypes125 = new String[] { "org.json.simple.JSONObject" };
-
-		_methodName126 = "updateProject";
-
-		_methodParameterTypes126 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -74,21 +70,16 @@ public class ProjectServiceClpInvoker {
 
 		if (_methodName123.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
-			return ProjectServiceUtil.getFullNamesAsString(((Long)arguments[0]).longValue());
+			return ProjectServiceUtil.checkProjectOnSubmissions(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName124.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
-			return ProjectServiceUtil.checkProjectOnSubmissions(((Long)arguments[0]).longValue());
+			return ProjectServiceUtil.createProject((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		if (_methodName125.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
-			return ProjectServiceUtil.createProject((org.json.simple.JSONObject)arguments[0]);
-		}
-
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return ProjectServiceUtil.updateProject((org.json.simple.JSONObject)arguments[0]);
 		}
 
@@ -107,6 +98,4 @@ public class ProjectServiceClpInvoker {
 	private String[] _methodParameterTypes124;
 	private String _methodName125;
 	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
 }

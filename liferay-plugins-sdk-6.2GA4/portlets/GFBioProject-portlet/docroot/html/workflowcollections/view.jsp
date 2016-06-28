@@ -24,6 +24,6 @@
 
 
 
-<div id="collections" class="swHide"></div>
+<div id="collections"></div>
 	
 
