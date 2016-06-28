@@ -1,51 +1,11 @@
 .aui{
 	
 	
-	@font-face {
-    font-family: 'icomoon';
-    src: url('../fonts/icomoon/fonts/icomoon.eot?xtb52m');
-    src: url('../fonts/icomoon/fonts/icomoon.eot?xtb52m#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon/fonts/icomoon.ttf?xtb52m') format('truetype'),
-    url('../fonts/icomoon/fonts/icomoon.woff?xtb52m') format('woff'),
-    url('../fonts/icomoon/fonts/icomoon.svg?xtb52m#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-svg {
-    display: block;
-    position: relative;
-    width: 1024px;
-    height: inherit;
-    vertical-align: top;
-    margin: auto;
-    overflow: hidden;
-}
-
-
-/* [class^="icon-"], [class*=" icon-"] {
-    use !important to prevent issues with browser extensions that change fonts
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    Better Font Rendering ===========
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-	 */
-	
-	
-	
 	background-color: white;
 	color: #333;
 	font-family: sans-serif;
 	font-weight: 300;
-	font-size: 16px ;
+	font-size: 15px ;
 	
 	
 	body{
@@ -53,7 +13,7 @@ svg {
 		background-color: white;
 		font-family: sans-serif;
 		font-weight: 300;
-		font-size: 16px ;
+		font-size: 15px ;
 		color: #333;
 		padding:0;
 	 
@@ -188,7 +148,7 @@ svg {
 
 #nav{
 	margin-top: -4em;
-	margin-left: 10em;
+	margin-left: 7em;
 
 	ul > li > a {
 		color:#555;
@@ -517,9 +477,27 @@ div.yamm-content > div > .mega-lifecycle a:hover {
 /*==============================================================
 Search
 ==============================================================*/
+#navsearch{
+	/*width:12em;*/
+}
+
 #page-search{
 	
 	padding-top:10px;
+	float:right;
+	
+	.control-group{
+		
+		float:left;
+	}
+	.control-group .lfr-search-keywords{
+		width:10em;
+	}
+	.control-group .lfr-search-button{
+		margin-left:0.5em;
+		padding-top:10px;
+		width:1em;
+	}
 }
 
 /*==========================================================
