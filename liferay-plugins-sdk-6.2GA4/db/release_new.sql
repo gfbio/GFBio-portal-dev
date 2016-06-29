@@ -192,4 +192,197 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 
 
 
+----------------------------------------------------------------------------------------------
+-------------------------------------     dataprovider      -- 29.06.2016 --------------------
+----------------------------------------------------------------------------------------------
+
+--Question 4
+ALTER TABLE gfbio_dataprovider ADD COLUMN botanicalobjects boolean;
+UPDATE gfbio_dataprovider SET botanicalobjects = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET botanicalobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET botanicalobjects = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET botanicalobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET botanicalobjects = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET botanicalobjects = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET botanicalobjects = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET botanicalobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET botanicalobjects = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN mycologicalobjects boolean;
+UPDATE gfbio_dataprovider SET mycologicalobjects = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET mycologicalobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET mycologicalobjects = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET mycologicalobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET mycologicalobjects = false WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET mycologicalobjects = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET mycologicalobjects = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET mycologicalobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET mycologicalobjects = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN zoologicalobjects boolean;
+UPDATE gfbio_dataprovider SET zoologicalobjects = false WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET zoologicalobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET zoologicalobjects = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET zoologicalobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET zoologicalobjects = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET zoologicalobjects = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET zoologicalobjects = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET zoologicalobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET zoologicalobjects = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN paleontologicalobjects boolean;
+UPDATE gfbio_dataprovider SET paleontologicalobjects = false WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET paleontologicalobjects = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN botanicaltissueobjects boolean;
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = false WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = false WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET botanicaltissueobjects = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN mycologicaltissueobjects boolean;
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = false WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = false WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET mycologicaltissueobjects = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN zoologicaltissueobjects boolean;
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = false WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = false WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET zoologicaltissueobjects = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN botanicaldnasamples boolean;
+UPDATE gfbio_dataprovider SET botanicaldnasamples = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = false WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET botanicaldnasamples = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN mycologicaldnasamples boolean;
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET mycologicaldnasamples = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN zoologicaldnasamples boolean;
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = false WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET zoologicaldnasamples = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN botanicalobjectsinethanol boolean;
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET botanicalobjectsinethanol = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN mycologicalobjectsinethanol boolean;
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET mycologicalobjectsinethanol = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN zoologicalobjectsinethanol boolean;
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = false WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET zoologicalobjectsinethanol = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN botanicalmicroscopicslides boolean;
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET botanicalmicroscopicslides = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN mycologicalmicroscopicslides boolean;
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = false WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = false WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET mycologicalmicroscopicslides = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN zoologicalmicroscopicslides boolean;
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = false WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET zoologicalmicroscopicslides = false WHERE label ='PANGAEA';
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN otherobjects boolean;
+UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='PANGAEA';
+
+
 
