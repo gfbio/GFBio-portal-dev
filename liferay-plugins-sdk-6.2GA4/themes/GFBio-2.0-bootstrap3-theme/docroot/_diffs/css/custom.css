@@ -747,6 +747,67 @@ a.btn-footer:hover {
 }
 	
 	
+/*Jquery Interaction states*/
+
+div.toggler {
+	margin-top: 20px;
+	font: 15px sans-serif;
+	color: #39F;
+	cursor: pointer
+}
+
+div.toggler:before {
+	content: '+ '
+}
+
+div.toggler .ui-icon {
+	display: none;
+	text-indent: -99999px;
+	overflow: hidden;
+	background-repeat: no-repeat; 
+	height: 0px;
+	weight:0px;
+}
+div.toggler.ui-state-active {
+	font-family: sans-serif;
+	color: #000
+}
+
+div.toggler:hover {
+	color: #000
+}
+
+div.toggler.ui-state-active:before {
+	content: '- '
+}
+
+
+div.toggler.ui-state-default{
+	border: 0px;
+	background: none;
+}
+div.toggler.ui-state-default a {
+	color: #555555;
+	text-decoration: none;
+}
+div.toggler.ui-state-hover,
+div.toggler.ui-state-focus,
+div.toggler .ui-state-active {
+	border: 0px;
+	background: none;
+}
+
+div.toggler .ui-state-active a{
+	text-decoration: none;
+}
+div.toggler .ui-accordion-header-icon{
+	background-image: none;
+}	
+div.ui-widget-content{
+	background:none;
+	border:none;
+}
+	
 /*=========================================================
 Liferay fixes - Dockbar
 =========================================================*/
