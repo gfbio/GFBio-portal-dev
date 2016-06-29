@@ -1,51 +1,11 @@
 .aui{
 	
 	
-	@font-face {
-    font-family: 'icomoon';
-    src: url('../fonts/icomoon/fonts/icomoon.eot?xtb52m');
-    src: url('../fonts/icomoon/fonts/icomoon.eot?xtb52m#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon/fonts/icomoon.ttf?xtb52m') format('truetype'),
-    url('../fonts/icomoon/fonts/icomoon.woff?xtb52m') format('woff'),
-    url('../fonts/icomoon/fonts/icomoon.svg?xtb52m#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-svg {
-    display: block;
-    position: relative;
-    width: 1024px;
-    height: inherit;
-    vertical-align: top;
-    margin: auto;
-    overflow: hidden;
-}
-
-
-/* [class^="icon-"], [class*=" icon-"] {
-    use !important to prevent issues with browser extensions that change fonts
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    Better Font Rendering ===========
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-	 */
-	
-	
-	
 	background-color: white;
-	color: #333;
+	color: #818181;
 	font-family: sans-serif;
 	font-weight: 300;
-	font-size: 16px ;
+	font-size: 15px ;
 	
 	
 	body{
@@ -53,12 +13,28 @@ svg {
 		background-color: white;
 		font-family: sans-serif;
 		font-weight: 300;
-		font-size: 16px ;
-		color: #333;
+		font-size: 15px ;
+		color: #818181;
+		line-height:24px;
 		padding:0;
 	 
-		h1, h2, h3,h4{
-			color:#4d4d4d;
+	 
+	 a {
+	    -webkit-transition: all 0.3s ease-out 0s;
+	    -moz-transition: all 0.3s ease-out 0s;
+	    -ms-transition: all 0.3s ease-out 0s;
+	    -o-transition: all 0.3s ease-out 0s;
+	    transition: all 0.3s ease-out 0s;
+		}
+
+		a, a:hover, a:focus, .btn:focus {
+		    text-decoration: none;
+		    outline: none;
+		}
+		
+		.h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: 'Lato', sans-serif;
+			color:#666;
 		}
 		 h1{
 			font-size: 36px;
@@ -81,14 +57,9 @@ svg {
 			font-weight:400;
 		} 
 
-		a {
-			color: #39F;
-			font-weight: 300;
-		}
 		
-		a:hover, a:focus{
-			text-decoration:none;
-		}
+		
+		
 		
 	}
 	 #search{
@@ -188,7 +159,7 @@ svg {
 
 #nav{
 	margin-top: -4em;
-	margin-left: 10em;
+	margin-left: 7em;
 
 	ul > li > a {
 		color:#555;
@@ -517,9 +488,45 @@ div.yamm-content > div > .mega-lifecycle a:hover {
 /*==============================================================
 Search
 ==============================================================*/
+#sign-in-link{
+	float: right;
+	padding-top: 18px;
+	margin-left: 2em;
+	color: #999;
+	font-size:15px;
+}
+
 #page-search{
 	
 	padding-top:10px;
+	float:right;
+	margin-left:5em;
+	
+	.control-group{
+		
+		float:left;
+	}
+	.control-group .lfr-search-keywords{
+		width:10em;
+		height: 40px;
+        border-radius: 6px;
+	}
+	.control-group #search{
+		margin-left:0.5em;
+		padding-top:10px;
+		width:1em;
+		
+		text-transform: none;
+    	color: #999;
+    	background-color: transparent;
+    	font-size: 20px;
+	}
+	
+	.control-group #search:hover {
+		 background-color: transparent;
+    	 color: rgba(52, 90, 162, 0.7);
+	}
+	
 }
 
 /*==========================================================
@@ -537,6 +544,63 @@ Devices
 	padding:0;
 }
 
+
+/*=================================================================
+	Services
+==================================================================*/
+
+.service-spacer {
+    margin-top: 40px;
+}
+
+.service-icon {
+    border: 3px solid transparent;
+    display: inline-block;
+    height: 95px;
+    width: 95px;
+    font-size: 54px;
+    line-height: 101px;
+
+    /*-webkit-transform: rotate(47deg);*/
+    /*-moz-transform: rotate(47deg);*/
+    /*-ms-transform: rotate(47deg);*/
+    /*-o-transform: rotate(47deg);*/
+    /*transform: rotate(47deg);*/
+
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -ms-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+
+.service-item:hover .service-icon {
+    /*border: 3px solid #009ee3;*/
+    margin-bottom: 20px;
+    color: rgba(129, 178, 72, 1.0);
+    font-size: 64px;
+
+}
+
+.icon-services {
+    display: block;
+    font-size: inherit;
+    /*color: #345AA2;*/
+    color: inherit;
+}
+
+.service-icon i {
+    /*-webkit-transform: rotate(-48deg);*/
+    /*-moz-transform: rotate(-48deg);*/
+    /*-ms-transform: rotate(-48deg);*/
+    /*-o-transform: rotate(-48deg);*/
+    /*transform: rotate(-48deg);*/
+}
+
+.service-item h3 {
+    font-size: 20px;
+    text-transform: uppercase;
+}
 
 /*============================================================
 	Footer
@@ -682,6 +746,67 @@ a.btn-footer:hover {
     background-color: #fff;
 }
 	
+	
+/*Jquery Interaction states*/
+
+div.toggler {
+	margin-top: 20px;
+	font: 15px sans-serif;
+	color: #39F;
+	cursor: pointer
+}
+
+div.toggler:before {
+	content: '+ '
+}
+
+div.toggler .ui-icon {
+	display: none;
+	text-indent: -99999px;
+	overflow: hidden;
+	background-repeat: no-repeat; 
+	height: 0px;
+	weight:0px;
+}
+div.toggler.ui-state-active {
+	font-family: sans-serif;
+	color: #000
+}
+
+div.toggler:hover {
+	color: #000
+}
+
+div.toggler.ui-state-active:before {
+	content: '- '
+}
+
+
+div.toggler.ui-state-default{
+	border: 0px;
+	background: none;
+}
+div.toggler.ui-state-default a {
+	color: #555555;
+	text-decoration: none;
+}
+div.toggler.ui-state-hover,
+div.toggler.ui-state-focus,
+div.toggler .ui-state-active {
+	border: 0px;
+	background: none;
+}
+
+div.toggler .ui-state-active a{
+	text-decoration: none;
+}
+div.toggler .ui-accordion-header-icon{
+	background-image: none;
+}	
+div.ui-widget-content{
+	background:none;
+	border:none;
+}
 	
 /*=========================================================
 Liferay fixes - Dockbar
