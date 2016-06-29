@@ -53,7 +53,7 @@ $theme.include($body_top_include)
           
           <!--</nav> -->
           <div id="sign-in-link">
-            	<a href="$portal_url/web/gfbio-theme-2.0/sign-in">Sign In</a>
+            	<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>
         </div>
 	 </div>	
 	 
@@ -92,6 +92,7 @@ $theme.include($bottom_include)
 
 
 #js ("$javascript_folder/jquery-1.11.1.min.js")
+#js ("$javascript_folder/jquery-1.11.2-ui.min.js")
 #js ("$javascript_folder/jquery.ba-cond.min.js")
 #js ("$javascript_folder/jquery.fancybox.pack.js")
 #js ("$javascript_folder/jquery.parallax-1.1.3.js")
@@ -100,6 +101,38 @@ $theme.include($bottom_include)
 #js ("$javascript_folder/modernizr-2.6.2.min.js")
 #js ("$javascript_folder/owl.carousel.min.js")
 #js ("$javascript_folder/wow.min.js")
+
+<script>
+(function($) {
+    $(document).ready(function() {
+      $(document).accordion({
+        // Put custom options here
+        heightStyle: 'content',
+        header: 'div.toggler',
+        collapsible: true,
+        active: false,
+      });
+      var activate = function(tog) {
+        var tgs = $('div.toggler');
+        tgs.removeClass('active');
+        tog.addClass('active');
+        tgs.next('div.accordion').attr('aria-hidden', 'true');
+        tog.next('div.accordion').attr('aria-hidden', 'false');
+      };
+      $('div.toggler').focus(function(e) {
+        $('div.toggler').attr('tabindex', 0);
+        $(this).attr('tabindex', -1);
+      }).blur(function() {
+        $(this).attr('tabindex', 0);
+      }).click(function() {
+        activate($(this));
+      }).keypress(function(event) {
+        if (event.keyCode == 13) activate($(this));
+      });
+    });
+  })(jQuery);
+</script>
+
 
 
 </body>
