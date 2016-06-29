@@ -826,12 +826,29 @@ Liferay fixes - Dockbar
     position: fixed;
 	z-index: 9999;
 	background-color: white;
+	height:80%;
+	overflow-y:scroll;
 }
 
  .form-group, .control-group{
- 
  	margin-bottom:0px;
  }
-
-
+ 
+ div.add-content-title, div.add-content-description{
+ 	margin-left:5px;
+ 	white-space:normal!important;
+ }
+ div.add-content-thumbnail{
+ 	width:100px;
+ }
+ .add-content-thumbnail img{
+ 	width:96px;
+ }
+ div.add-content-detail{
+ 	width: moz-fit-content;
+ }
+ 
+ a.selected .active span{
+ 	color:#3D91FF;
+ }
 }

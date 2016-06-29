@@ -9,8 +9,7 @@
 <p>Please fill in the password for SSO authentication:</p>
 <form action="<portlet:actionURL/>" onSubmit="return validateForm()" method="post">
 <table>
-	<tr><td>Username: </td><td><input type="text" id="username" name = "username" readonly value="<%=renderRequest.getAttribute("username")%>"></td></tr>
-	<tr><td>Email: </td><td><input type="text" id="email" name = "email" readonly value="<%=renderRequest.getAttribute("email")%>"></td></tr>
+	<tr><td>Username: </td><td><input type="text" id="email" name = "email" readonly value="<%=renderRequest.getAttribute("email")%>"></td></tr>
 	<tr><td>Firstname: </td><td><input type="text" id="firstname" name = "firstname" readonly value="<%=renderRequest.getAttribute("firstname")%>"></td></tr>
 	<tr><td>Lastname: </td><td><input type="text" id="lastname" name = "lastname" readonly value="<%=renderRequest.getAttribute("lastname")%>"></td></tr>
 	<tr><td>Password:</td><td><input type="password" id="pass1" name="<portlet:namespace/>passwordform"  required <%=renderRequest.getAttribute("password")%>></td></tr>
