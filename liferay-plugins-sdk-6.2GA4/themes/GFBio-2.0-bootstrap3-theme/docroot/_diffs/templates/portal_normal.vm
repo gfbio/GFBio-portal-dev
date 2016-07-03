@@ -33,7 +33,7 @@ $theme.include($body_top_include)
 	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
 
 	
-	<div class="container-fluid">
+	<div class="container">
 		<div id="logo-gfbio">
 				<a id="logo-gfbio-link" href="/">
 				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
@@ -53,7 +53,7 @@ $theme.include($body_top_include)
           
           <!--</nav> -->
           <div id="sign-in-link">
-            	<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>
+            	<a href="$portal_url/sign-in" title="Please sign in or register!">Sign In</a>
         </div>
 	 </div>	
 	 
