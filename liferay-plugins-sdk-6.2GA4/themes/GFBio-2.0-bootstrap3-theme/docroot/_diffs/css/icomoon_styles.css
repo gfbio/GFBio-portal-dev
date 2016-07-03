@@ -5351,7 +5351,10 @@ svg {
 	 .icon-eye-open {
 	@extend .icon-eye;
 	 }
-	 
+	 .icon-eye-close{
+	@extend .icon-eye-blocked;
+	 }
+	  
 	.icon-caret-down{
 	@extend .icon-circle-down;
 	}
@@ -5365,10 +5368,6 @@ svg {
 	}
 	
 	.icon-wrench{
-	
-	}
-	
-	.icon-list{
 	
 	}
 	
@@ -5386,8 +5385,16 @@ svg {
 	}
 
 	.icon-th-large{
+	@extend .icon-grid2;
+	}
+	
+	.icon-th-list{
 	@extend .icon-menu;
 	}
 	 
+	.icon-list{
+
+	}
+	
 	
 }
