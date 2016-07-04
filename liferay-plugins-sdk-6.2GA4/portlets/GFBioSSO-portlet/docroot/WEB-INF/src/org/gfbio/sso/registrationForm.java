@@ -75,9 +75,8 @@ public class registrationForm extends GenericPortlet {
 		if (user != null) {
 			renderRequest.setAttribute("firstname", user.getFirstName());
 			renderRequest.setAttribute("lastname", user.getLastName());
-			renderRequest.setAttribute("username", user.getEmailAddress());
 //			renderRequest.setAttribute("username", user.getScreenName());
-//			renderRequest.setAttribute("email", user.getEmailAddress());
+			renderRequest.setAttribute("email", user.getEmailAddress());
 		}
 		include(viewTemplate, renderRequest, renderResponse);
 	}
