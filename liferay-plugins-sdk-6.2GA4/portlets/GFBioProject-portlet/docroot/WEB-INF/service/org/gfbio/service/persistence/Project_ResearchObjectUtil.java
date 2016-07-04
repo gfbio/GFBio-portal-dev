@@ -245,8 +245,7 @@ public class Project_ResearchObjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_ResearchObject[] findByProjectID_PrevAndNext(
-		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK,
-		long projectID,
+		Project_ResearchObjectPK project_ResearchObjectPK, long projectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_ResearchObjectException {
@@ -428,7 +427,7 @@ public class Project_ResearchObjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_ResearchObject[] findByResearchObjectID_PrevAndNext(
-		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK,
+		Project_ResearchObjectPK project_ResearchObjectPK,
 		long researchObjectID, int researchObjectVersion,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -607,7 +606,7 @@ public class Project_ResearchObjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_ResearchObject[] findByResearchObjectID2_PrevAndNext(
-		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK,
+		Project_ResearchObjectPK project_ResearchObjectPK,
 		long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -667,7 +666,7 @@ public class Project_ResearchObjectUtil {
 	* @return the new project_ research object
 	*/
 	public static org.gfbio.model.Project_ResearchObject create(
-		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK) {
+		Project_ResearchObjectPK project_ResearchObjectPK) {
 		return getPersistence().create(project_ResearchObjectPK);
 	}
 
@@ -680,7 +679,7 @@ public class Project_ResearchObjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_ResearchObject remove(
-		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK)
+		Project_ResearchObjectPK project_ResearchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_ResearchObjectException {
 		return getPersistence().remove(project_ResearchObjectPK);
@@ -701,7 +700,7 @@ public class Project_ResearchObjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_ResearchObject findByPrimaryKey(
-		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK)
+		Project_ResearchObjectPK project_ResearchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_ResearchObjectException {
 		return getPersistence().findByPrimaryKey(project_ResearchObjectPK);
@@ -715,7 +714,7 @@ public class Project_ResearchObjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_ResearchObject fetchByPrimaryKey(
-		org.gfbio.service.persistence.Project_ResearchObjectPK project_ResearchObjectPK)
+		Project_ResearchObjectPK project_ResearchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(project_ResearchObjectPK);
 	}

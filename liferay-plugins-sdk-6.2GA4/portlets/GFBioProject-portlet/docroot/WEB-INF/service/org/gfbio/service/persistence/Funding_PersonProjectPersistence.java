@@ -151,8 +151,7 @@ public interface Funding_PersonProjectPersistence extends BasePersistence<Fundin
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_PersonProject[] findByFundingAgencyID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK,
-		long fundingAgencyID,
+		Funding_PersonProjectPK funding_PersonProjectPK, long fundingAgencyID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException;
@@ -298,8 +297,8 @@ public interface Funding_PersonProjectPersistence extends BasePersistence<Fundin
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_PersonProject[] findByPerson_PrevAndNext(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK,
-		long personID, java.lang.String personType,
+		Funding_PersonProjectPK funding_PersonProjectPK, long personID,
+		java.lang.String personType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException;
@@ -439,8 +438,7 @@ public interface Funding_PersonProjectPersistence extends BasePersistence<Fundin
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_PersonProject[] findByProjectID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK,
-		long projectID,
+		Funding_PersonProjectPK funding_PersonProjectPK, long projectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException;
@@ -487,7 +485,7 @@ public interface Funding_PersonProjectPersistence extends BasePersistence<Fundin
 	* @return the new funding_ person project
 	*/
 	public org.gfbio.model.Funding_PersonProject create(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK);
+		Funding_PersonProjectPK funding_PersonProjectPK);
 
 	/**
 	* Removes the funding_ person project with the primary key from the database. Also notifies the appropriate model listeners.
@@ -498,7 +496,7 @@ public interface Funding_PersonProjectPersistence extends BasePersistence<Fundin
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_PersonProject remove(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK)
+		Funding_PersonProjectPK funding_PersonProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException;
 
@@ -515,7 +513,7 @@ public interface Funding_PersonProjectPersistence extends BasePersistence<Fundin
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_PersonProject findByPrimaryKey(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK)
+		Funding_PersonProjectPK funding_PersonProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException;
 
@@ -527,7 +525,7 @@ public interface Funding_PersonProjectPersistence extends BasePersistence<Fundin
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_PersonProject fetchByPrimaryKey(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK)
+		Funding_PersonProjectPK funding_PersonProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

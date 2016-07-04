@@ -250,8 +250,7 @@ public class Funding_PersonProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_PersonProject[] findByFundingAgencyID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK,
-		long fundingAgencyID,
+		Funding_PersonProjectPK funding_PersonProjectPK, long fundingAgencyID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException {
@@ -425,8 +424,8 @@ public class Funding_PersonProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_PersonProject[] findByPerson_PrevAndNext(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK,
-		long personID, java.lang.String personType,
+		Funding_PersonProjectPK funding_PersonProjectPK, long personID,
+		java.lang.String personType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException {
@@ -593,8 +592,7 @@ public class Funding_PersonProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_PersonProject[] findByProjectID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK,
-		long projectID,
+		Funding_PersonProjectPK funding_PersonProjectPK, long projectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException {
@@ -653,7 +651,7 @@ public class Funding_PersonProjectUtil {
 	* @return the new funding_ person project
 	*/
 	public static org.gfbio.model.Funding_PersonProject create(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK) {
+		Funding_PersonProjectPK funding_PersonProjectPK) {
 		return getPersistence().create(funding_PersonProjectPK);
 	}
 
@@ -666,7 +664,7 @@ public class Funding_PersonProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_PersonProject remove(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK)
+		Funding_PersonProjectPK funding_PersonProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException {
 		return getPersistence().remove(funding_PersonProjectPK);
@@ -687,7 +685,7 @@ public class Funding_PersonProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_PersonProject findByPrimaryKey(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK)
+		Funding_PersonProjectPK funding_PersonProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_PersonProjectException {
 		return getPersistence().findByPrimaryKey(funding_PersonProjectPK);
@@ -701,7 +699,7 @@ public class Funding_PersonProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_PersonProject fetchByPrimaryKey(
-		org.gfbio.service.persistence.Funding_PersonProjectPK funding_PersonProjectPK)
+		Funding_PersonProjectPK funding_PersonProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(funding_PersonProjectPK);
 	}

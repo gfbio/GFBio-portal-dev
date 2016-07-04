@@ -147,8 +147,7 @@ public interface Project_UserPersistence extends BasePersistence<Project_User> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Project_User[] findByProjectID_PrevAndNext(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK,
-		long projectID,
+		Project_UserPK project_UserPK, long projectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException;
@@ -281,8 +280,7 @@ public interface Project_UserPersistence extends BasePersistence<Project_User> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Project_User[] findByUserID_PrevAndNext(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK,
-		long userID,
+		Project_UserPK project_UserPK, long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException;
@@ -390,8 +388,7 @@ public interface Project_UserPersistence extends BasePersistence<Project_User> {
 	* @param project_UserPK the primary key for the new project_ user
 	* @return the new project_ user
 	*/
-	public org.gfbio.model.Project_User create(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK);
+	public org.gfbio.model.Project_User create(Project_UserPK project_UserPK);
 
 	/**
 	* Removes the project_ user with the primary key from the database. Also notifies the appropriate model listeners.
@@ -401,8 +398,7 @@ public interface Project_UserPersistence extends BasePersistence<Project_User> {
 	* @throws org.gfbio.NoSuchProject_UserException if a project_ user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public org.gfbio.model.Project_User remove(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK)
+	public org.gfbio.model.Project_User remove(Project_UserPK project_UserPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException;
 
@@ -419,7 +415,7 @@ public interface Project_UserPersistence extends BasePersistence<Project_User> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Project_User findByPrimaryKey(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK)
+		Project_UserPK project_UserPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException;
 
@@ -431,7 +427,7 @@ public interface Project_UserPersistence extends BasePersistence<Project_User> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Project_User fetchByPrimaryKey(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK)
+		Project_UserPK project_UserPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

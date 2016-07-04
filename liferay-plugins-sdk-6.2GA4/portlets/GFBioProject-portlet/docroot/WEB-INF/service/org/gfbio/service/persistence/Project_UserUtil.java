@@ -243,8 +243,7 @@ public class Project_UserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_User[] findByProjectID_PrevAndNext(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK,
-		long projectID,
+		Project_UserPK project_UserPK, long projectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
@@ -401,8 +400,7 @@ public class Project_UserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_User[] findByUserID_PrevAndNext(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK,
-		long userID,
+		Project_UserPK project_UserPK, long userID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
@@ -534,7 +532,7 @@ public class Project_UserUtil {
 	* @return the new project_ user
 	*/
 	public static org.gfbio.model.Project_User create(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK) {
+		Project_UserPK project_UserPK) {
 		return getPersistence().create(project_UserPK);
 	}
 
@@ -547,7 +545,7 @@ public class Project_UserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_User remove(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK)
+		Project_UserPK project_UserPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
 		return getPersistence().remove(project_UserPK);
@@ -568,7 +566,7 @@ public class Project_UserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_User findByPrimaryKey(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK)
+		Project_UserPK project_UserPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchProject_UserException {
 		return getPersistence().findByPrimaryKey(project_UserPK);
@@ -582,7 +580,7 @@ public class Project_UserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Project_User fetchByPrimaryKey(
-		org.gfbio.service.persistence.Project_UserPK project_UserPK)
+		Project_UserPK project_UserPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(project_UserPK);
 	}

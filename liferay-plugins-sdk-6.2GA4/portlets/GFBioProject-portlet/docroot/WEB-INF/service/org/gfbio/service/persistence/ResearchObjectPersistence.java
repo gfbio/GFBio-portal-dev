@@ -151,8 +151,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.ResearchObject[] findByName_PrevAndNext(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK,
-		java.lang.String name,
+		ResearchObjectPK researchObjectPK, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchResearchObjectException;
@@ -290,8 +289,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.ResearchObject[] findByLabel_PrevAndNext(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK,
-		java.lang.String label,
+		ResearchObjectPK researchObjectPK, java.lang.String label,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchResearchObjectException;
@@ -494,8 +492,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.ResearchObject[] findByResearchObjectID_PrevAndNext(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK,
-		long researchObjectID,
+		ResearchObjectPK researchObjectPK, long researchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchResearchObjectException;
@@ -633,8 +630,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.ResearchObject[] findByParentID_PrevAndNext(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK,
-		long parentResearchObjectID,
+		ResearchObjectPK researchObjectPK, long parentResearchObjectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchResearchObjectException;
@@ -680,7 +676,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @return the new research object
 	*/
 	public org.gfbio.model.ResearchObject create(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK);
+		ResearchObjectPK researchObjectPK);
 
 	/**
 	* Removes the research object with the primary key from the database. Also notifies the appropriate model listeners.
@@ -691,7 +687,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.ResearchObject remove(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
+		ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchResearchObjectException;
 
@@ -708,7 +704,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.ResearchObject findByPrimaryKey(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
+		ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchResearchObjectException;
 
@@ -720,7 +716,7 @@ public interface ResearchObjectPersistence extends BasePersistence<ResearchObjec
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.ResearchObject fetchByPrimaryKey(
-		org.gfbio.service.persistence.ResearchObjectPK researchObjectPK)
+		ResearchObjectPK researchObjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

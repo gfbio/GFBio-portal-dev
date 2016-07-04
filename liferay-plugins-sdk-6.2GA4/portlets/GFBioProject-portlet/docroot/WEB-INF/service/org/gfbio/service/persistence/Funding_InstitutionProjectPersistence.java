@@ -151,7 +151,7 @@ public interface Funding_InstitutionProjectPersistence extends BasePersistence<F
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_InstitutionProject[] findByFundingAgencyID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK,
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK,
 		long fundingAgencyID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -290,7 +290,7 @@ public interface Funding_InstitutionProjectPersistence extends BasePersistence<F
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_InstitutionProject[] findByInstitutionID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK,
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK,
 		long institutionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -429,7 +429,7 @@ public interface Funding_InstitutionProjectPersistence extends BasePersistence<F
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_InstitutionProject[] findByProjectID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK,
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK,
 		long projectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -477,7 +477,7 @@ public interface Funding_InstitutionProjectPersistence extends BasePersistence<F
 	* @return the new funding_ institution project
 	*/
 	public org.gfbio.model.Funding_InstitutionProject create(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK);
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK);
 
 	/**
 	* Removes the funding_ institution project with the primary key from the database. Also notifies the appropriate model listeners.
@@ -488,7 +488,7 @@ public interface Funding_InstitutionProjectPersistence extends BasePersistence<F
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_InstitutionProject remove(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK)
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_InstitutionProjectException;
 
@@ -505,7 +505,7 @@ public interface Funding_InstitutionProjectPersistence extends BasePersistence<F
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_InstitutionProject findByPrimaryKey(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK)
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_InstitutionProjectException;
 
@@ -517,7 +517,7 @@ public interface Funding_InstitutionProjectPersistence extends BasePersistence<F
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.Funding_InstitutionProject fetchByPrimaryKey(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK)
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -152,7 +152,7 @@ public interface DataProvider_PersistentIdentifierPersistence
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.DataProvider_PersistentIdentifier[] findByDataProvider_PrevAndNext(
-		org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK,
+		DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK,
 		long gfbioDataProvider,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -291,7 +291,7 @@ public interface DataProvider_PersistentIdentifierPersistence
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.DataProvider_PersistentIdentifier[] findByPersistentIdentifier_PrevAndNext(
-		org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK,
+		DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK,
 		long gfbioPersistentIdentifier,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -339,7 +339,7 @@ public interface DataProvider_PersistentIdentifierPersistence
 	* @return the new data provider_ persistent identifier
 	*/
 	public org.gfbio.model.DataProvider_PersistentIdentifier create(
-		org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK);
+		DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK);
 
 	/**
 	* Removes the data provider_ persistent identifier with the primary key from the database. Also notifies the appropriate model listeners.
@@ -350,7 +350,7 @@ public interface DataProvider_PersistentIdentifierPersistence
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.DataProvider_PersistentIdentifier remove(
-		org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK)
+		DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchDataProvider_PersistentIdentifierException;
 
@@ -367,7 +367,7 @@ public interface DataProvider_PersistentIdentifierPersistence
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.DataProvider_PersistentIdentifier findByPrimaryKey(
-		org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK)
+		DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchDataProvider_PersistentIdentifierException;
 
@@ -379,7 +379,7 @@ public interface DataProvider_PersistentIdentifierPersistence
 	* @throws SystemException if a system exception occurred
 	*/
 	public org.gfbio.model.DataProvider_PersistentIdentifier fetchByPrimaryKey(
-		org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK)
+		DataProvider_PersistentIdentifierPK dataProvider_PersistentIdentifierPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

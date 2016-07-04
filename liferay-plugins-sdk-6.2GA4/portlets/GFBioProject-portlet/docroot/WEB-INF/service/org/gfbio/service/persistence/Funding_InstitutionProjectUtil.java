@@ -253,7 +253,7 @@ public class Funding_InstitutionProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_InstitutionProject[] findByFundingAgencyID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK,
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK,
 		long fundingAgencyID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -420,7 +420,7 @@ public class Funding_InstitutionProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_InstitutionProject[] findByInstitutionID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK,
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK,
 		long institutionID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -586,7 +586,7 @@ public class Funding_InstitutionProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_InstitutionProject[] findByProjectID_PrevAndNext(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK,
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK,
 		long projectID,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException,
@@ -646,7 +646,7 @@ public class Funding_InstitutionProjectUtil {
 	* @return the new funding_ institution project
 	*/
 	public static org.gfbio.model.Funding_InstitutionProject create(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK) {
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK) {
 		return getPersistence().create(funding_InstitutionProjectPK);
 	}
 
@@ -659,7 +659,7 @@ public class Funding_InstitutionProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_InstitutionProject remove(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK)
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_InstitutionProjectException {
 		return getPersistence().remove(funding_InstitutionProjectPK);
@@ -680,7 +680,7 @@ public class Funding_InstitutionProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_InstitutionProject findByPrimaryKey(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK)
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			org.gfbio.NoSuchFunding_InstitutionProjectException {
 		return getPersistence().findByPrimaryKey(funding_InstitutionProjectPK);
@@ -694,7 +694,7 @@ public class Funding_InstitutionProjectUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static org.gfbio.model.Funding_InstitutionProject fetchByPrimaryKey(
-		org.gfbio.service.persistence.Funding_InstitutionProjectPK funding_InstitutionProjectPK)
+		Funding_InstitutionProjectPK funding_InstitutionProjectPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().fetchByPrimaryKey(funding_InstitutionProjectPK);
 	}
