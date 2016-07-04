@@ -42,7 +42,10 @@ page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.expando.DuplicateColumnNameException" %><%@
 page import="com.liferay.webform.util.PortletPropsValues" %><%@
-page import="com.liferay.webform.util.WebFormUtil" %>
+page import="com.liferay.webform.util.WebFormUtil" %><%@ 
+page import="com.liferay.portal.service.UserLocalServiceUtil" %>
+
+
 
 <%@ page import="javax.portlet.ActionRequest" %>
 
