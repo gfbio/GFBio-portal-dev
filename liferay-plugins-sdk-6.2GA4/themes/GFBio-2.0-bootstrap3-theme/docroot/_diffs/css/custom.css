@@ -97,6 +97,7 @@
 	}
 	
 
+
 /**
 /*	Preloader
 /* ==========================================*/
@@ -602,8 +603,7 @@ Devices
     text-transform: uppercase;
 }
 
-/*============================================================
-	Footer
+/*============================================================	Footer
 ==============================================================*/
 
 .border-right {
@@ -818,9 +818,9 @@ Liferay fixes - Dockbar
 		
 	}	
 	
-.lfr-add-panel {
+.lfr-add-panel{
     width: 440px;
-    margin-top: 130px;;
+    margin-top: 130px;
     margin-left: -7em;
     padding: 20px;
     position: fixed;
@@ -828,6 +828,45 @@ Liferay fixes - Dockbar
 	background-color: white;
 	height:80%;
 	overflow-y:scroll;
+}
+
+.lfr-device-preview-panel {
+    width: 220px;
+    margin-top: 130px;;
+    padding: 20px;
+    position: fixed;
+	z-index: 9999;
+	background-color: white;
+	height:90%;
+	overflow-y:scroll;
+}
+.lfr-device-preview, .lfr-device{
+	top:60px !important;
+}
+.lfr-edit-layout-panel {
+    width: 440px;
+    margin-top: 130px;;
+    margin-left: -14em;
+    padding: 20px;
+    position: fixed;
+	z-index: 9999;
+	background-color: white;
+	height:80%;
+	overflow-y:scroll;
+}
+
+.smartphone{
+	height: 740px;
+}
+
+.lfr-edit-layout-panel a.site-admin-link{
+	margin-bottom:3em;
+}
+
+.lfr-edit-layout-panel div.button-holder{
+	margin-bottom:3em;
+	padding-bottom:10px;
+	padding-right:10px;
 }
 
  .form-group, .control-group{
