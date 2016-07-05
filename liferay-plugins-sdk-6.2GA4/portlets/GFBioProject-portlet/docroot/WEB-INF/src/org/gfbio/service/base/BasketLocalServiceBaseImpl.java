@@ -55,6 +55,7 @@ import org.gfbio.service.persistence.Project_UserFinder;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
+import org.gfbio.service.persistence.Search_HistoryPersistence;
 import org.gfbio.service.persistence.SubmissionFinder;
 import org.gfbio.service.persistence.SubmissionPersistence;
 import org.gfbio.service.persistence.UserExtensionPersistence;
@@ -1139,6 +1140,63 @@ public abstract class BasketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the search_ history local service.
+	 *
+	 * @return the search_ history local service
+	 */
+	public org.gfbio.service.Search_HistoryLocalService getSearch_HistoryLocalService() {
+		return search_HistoryLocalService;
+	}
+
+	/**
+	 * Sets the search_ history local service.
+	 *
+	 * @param search_HistoryLocalService the search_ history local service
+	 */
+	public void setSearch_HistoryLocalService(
+		org.gfbio.service.Search_HistoryLocalService search_HistoryLocalService) {
+		this.search_HistoryLocalService = search_HistoryLocalService;
+	}
+
+	/**
+	 * Returns the search_ history remote service.
+	 *
+	 * @return the search_ history remote service
+	 */
+	public org.gfbio.service.Search_HistoryService getSearch_HistoryService() {
+		return search_HistoryService;
+	}
+
+	/**
+	 * Sets the search_ history remote service.
+	 *
+	 * @param search_HistoryService the search_ history remote service
+	 */
+	public void setSearch_HistoryService(
+		org.gfbio.service.Search_HistoryService search_HistoryService) {
+		this.search_HistoryService = search_HistoryService;
+	}
+
+	/**
+	 * Returns the search_ history persistence.
+	 *
+	 * @return the search_ history persistence
+	 */
+	public Search_HistoryPersistence getSearch_HistoryPersistence() {
+		return search_HistoryPersistence;
+	}
+
+	/**
+	 * Sets the search_ history persistence.
+	 *
+	 * @param search_HistoryPersistence the search_ history persistence
+	 */
+	public void setSearch_HistoryPersistence(
+		Search_HistoryPersistence search_HistoryPersistence) {
+		this.search_HistoryPersistence = search_HistoryPersistence;
+	}
+
+	/**
 	 * Returns the submission local service.
 	 *
 	 * @return the submission local service
@@ -1536,6 +1594,12 @@ public abstract class BasketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected ResearchObjectPersistence researchObjectPersistence;
 	@BeanReference(type = ResearchObjectFinder.class)
 	protected ResearchObjectFinder researchObjectFinder;
+	@BeanReference(type = org.gfbio.service.Search_HistoryLocalService.class)
+	protected org.gfbio.service.Search_HistoryLocalService search_HistoryLocalService;
+	@BeanReference(type = org.gfbio.service.Search_HistoryService.class)
+	protected org.gfbio.service.Search_HistoryService search_HistoryService;
+	@BeanReference(type = Search_HistoryPersistence.class)
+	protected Search_HistoryPersistence search_HistoryPersistence;
 	@BeanReference(type = org.gfbio.service.SubmissionLocalService.class)
 	protected org.gfbio.service.SubmissionLocalService submissionLocalService;
 	@BeanReference(type = org.gfbio.service.SubmissionService.class)
