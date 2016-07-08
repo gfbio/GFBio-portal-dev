@@ -5396,5 +5396,12 @@ svg {
 
 	}
 	
+	.icon-remove{
+	@extend .icon-cross;
+	}
+	
+	.icon-list-alt{
+	@extend .icon-windows2;
+	}
 	
 }

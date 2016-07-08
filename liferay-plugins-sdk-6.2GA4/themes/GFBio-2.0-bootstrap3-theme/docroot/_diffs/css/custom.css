@@ -1024,7 +1024,7 @@ Liferay fixes - Dockbar
 }
 
 .lfr-device-preview-panel {
-    width: 220px;
+    width: 240px;
     margin-top: 130px;;
     padding: 20px;
     position: fixed;
@@ -1052,15 +1052,21 @@ Liferay fixes - Dockbar
 	height: 740px;
 }
 
-.lfr-edit-layout-panel a.site-admin-link{
-	margin-bottom:3em;
+.lfr-device-content.modal-header{
+	padding:10px 10px 5px 10px;
 }
+.lfr-device-content.modal-body{
+	height:91%;
+}
+/* .lfr-edit-layout-panel a.site-admin-link{ */
+/* 	margin-bottom:3em; */
+/* } */
 
-.lfr-edit-layout-panel div.button-holder{
-	margin-bottom:3em;
-	padding-bottom:10px;
-	padding-right:10px;
-}
+/* .lfr-edit-layout-panel div.button-holder{ */
+/* 	margin-bottom:3em; */
+/* 	padding-bottom:10px; */
+/* 	padding-right:10px; */
+/* } */
 
  .form-group, .control-group{
  	margin-bottom:0px;
