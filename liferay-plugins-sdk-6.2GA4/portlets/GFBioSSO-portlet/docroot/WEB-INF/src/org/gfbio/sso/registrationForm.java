@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.naming.Context;
-import javax.naming.NameNotFoundException;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -27,14 +26,12 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
-import com.liferay.portal.util.PortalUtil;
 
 /**
  * Portlet implementation class registrationForm
@@ -71,12 +68,24 @@ public class registrationForm extends GenericPortlet {
 
 	public void doView(RenderRequest renderRequest,
 			RenderResponse renderResponse) throws IOException, PortletException {
-		User user = (User) renderRequest.getAttribute(WebKeys.USER);
-		if (user != null) {
-			renderRequest.setAttribute("firstname", user.getFirstName());
-			renderRequest.setAttribute("lastname", user.getLastName());
-			renderRequest.setAttribute("email", user.getEmailAddress());
-		}
+//		User user = (User) renderRequest.getAttribute(WebKeys.USER);
+//		if (user != null) {
+//			if (!user.getFirstName().equals(null))
+//				renderRequest.setAttribute("firstname", user.getFirstName());
+//			else
+//				renderRequest.setAttribute("firstname", "");
+//			if (!user.getLastName().equals(null))
+//				renderRequest.setAttribute("lastname", user.getLastName());
+//			else
+//				renderRequest.setAttribute("lastname", "");
+//			if (!user.getEmailAddress().equals(null))
+//				renderRequest.setAttribute("email", user.getEmailAddress());
+//			else
+//				renderRequest.setAttribute("email", "");
+//			if (user.getFirstName().equals(null)|| user.getLastName().equals(null) 
+//					|| user.getEmailAddress().equals(null))
+//				renderRequest.setAttribute("submit", "disabled=\"true\"");
+//		}
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 

@@ -1,23 +1,37 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
+<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+ <%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
 <portlet:defineObjects />
 <portlet:resourceURL var="thisURL" id="thisURL" escapeXml="false" /> 
 
+<liferay-theme:defineObjects />
 <liferay-ui:error key="error-key" />
 
+<%
+long userID = themeDisplay.getUserId();
+
+String email = UserLocalServiceUtil.getUser(userID).getEmailAddress();
+String firstname = UserLocalServiceUtil.getUser(userID).getFirstName();
+String lastname = UserLocalServiceUtil.getUser(userID).getLastName();
+String submit = "";
+if (email=="" || firstname=="" || lastname==""){
+	submit="disabled='true'";
+}
+%>
 <p>SSO Password Settings</p>
 <p>Please fill in the password for SSO authentication:</p>
-<form action="<portlet:actionURL/>" onSubmit="return validateForm()" method="post">
-<table>
-	<tr><td>Username: </td><td><input type="text" id="email" name = "email" readonly value="<%=renderRequest.getAttribute("email")%>"></td></tr>
-	<tr><td>Firstname: </td><td><input type="text" id="firstname" name = "firstname" readonly value="<%=renderRequest.getAttribute("firstname")%>"></td></tr>
-	<tr><td>Lastname: </td><td><input type="text" id="lastname" name = "lastname" readonly value="<%=renderRequest.getAttribute("lastname")%>"></td></tr>
-	<tr><td>Password:</td><td><input type="password" id="pass1" name="<portlet:namespace/>passwordform"  required <%=renderRequest.getAttribute("password")%>></td></tr>
-	<tr><td>Retype Password:</td><td><input type="password" id="pass2" name="<portlet:namespace/>passwordform2" required <%=renderRequest.getAttribute("password")%>></td></tr>
+<aui:form action="<portlet:actionURL/>" onSubmit="return validateForm()" method="post">
+	<aui:input type="text" id="email" label="Username" name = "email" readonly="true" value="<%=email%>"/>
+	<aui:input type="text" id="firstname" label="first-name" name = "firstname" readonly="true" value="<%=firstname%>"/>
+	<aui:input type="text" id="lastname" label="last-name" name = "lastname" readonly="true" value="<%=lastname%>"/>
+	<aui:input type="password" id="pass1" label="password" name="<portlet:namespace/>passwordform"  required="true"/>
+	<aui:input type="password" id="pass2" label="confirm-password" name="<portlet:namespace/>passwordform2" required="true"/>
 	<div id="msg"></div>
-	<tr><td></td><td><input type="submit" value="SUBMIT" <%=renderRequest.getAttribute("submit")%>></td></tr>
-</table>
-</form>
+	</br>
+	<input type="submit" value="SUBMIT" <%=submit%>></td></tr>
+
+</aui:form>
 
 <script>
     function validateForm() {
