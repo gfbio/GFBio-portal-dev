@@ -1069,9 +1069,11 @@ Liferay fixes - Dockbar
 /* } */
 
  .form-group, .control-group{
- 	margin-bottom:0px;
+ 	margin:5px;
  }
- 
+ input{
+    border-radius:0px !important;
+ }
  .portal-popup .checkbox{
 	padding-left:0px;
 }
