@@ -17,6 +17,7 @@ package org.gfbio.service.impl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,15 +28,21 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -389,15 +396,87 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return jArr;
 	}
 
-	public User getUserDetail(long userId) throws PortalException, SystemException{
-		User user = UserLocalServiceUtil.getUser(userId);
-		return user;
+	public JSONArray getUserDetail(long userId) throws PortalException, SystemException{
+
+		JSONArray res = JSONFactoryUtil.createJSONArray();
+		long currentUserId = PrincipalThreadLocal.getUserId();
+		boolean adminRole = isUserAdmin(currentUserId);
+		if (adminRole) System.out.println("This user is admin");
+		if (adminRole || (currentUserId==userId)){
+			System.out.println("authen success");
+			User user = UserLocalServiceUtil.getUser(userId);
+			JSONObject juser = JSONFactoryUtil.createJSONObject();
+			juser.put("createDate", user.getCreateDate());
+			juser.put("emailAddress", user.getEmailAddress());
+			juser.put("firstName", user.getFirstName());
+			juser.put("lastName", user.getLastName());
+			juser.put("screenName", user.getScreenName());
+			juser.put("jobTitle", user.getJobTitle());
+			juser.put("lastLoginDate", user.getLastLoginDate());
+			juser.put("userId", user.getUserId());
+			res.put(juser);
+			return res;
+		}
+		else return null;
 	}
 
-	public boolean authorize(long userId) throws Exception{
-		User user = getUserDetail(userId);
-		PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
-		boolean isSigned = checker.isSignedIn();
-		return isSigned;
+	public JSONArray authorize(String token) throws Exception{
+		JSONArray res = JSONFactoryUtil.createJSONArray();
+		long userId = PrincipalThreadLocal.getUserId();
+		String encryptedId = encryptText(Long.toString(userId));
+		if (encryptedId.contentEquals(token)){
+			User user = UserLocalServiceUtil.getUser(userId);
+			PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
+			boolean isSigned = checker.isSignedIn();
+			JSONObject jres = JSONFactoryUtil.createJSONObject();
+			jres.put("success", true);
+			jres.put("userid", userId);
+			res.put(jres);
+		}
+		else {
+			JSONObject jres = JSONFactoryUtil.createJSONObject();
+			jres.put("success", false);
+			jres.put("userid", 0);
+			res.put(jres);
+		}
+		return res;
+	}
+	
+	public String getToken(){
+		long userId = PrincipalThreadLocal.getUserId();
+		return encryptText(Long.toString(userId));
+	}
+	
+	private static String encryptText(String text)
+	{
+	    String sha1 = "";
+	    try
+	    {
+	        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+	        crypt.reset();
+	        crypt.update(text.getBytes("UTF-8"));
+	        sha1 = byteToHex(crypt.digest());
+	    }
+	    catch(NoSuchAlgorithmException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    catch(UnsupportedEncodingException e)
+	    {
+	        e.printStackTrace();
+	    }
+	    return sha1;
+	}
+
+	private static String byteToHex(final byte[] hash)
+	{
+	    Formatter formatter = new Formatter();
+	    for (byte b : hash)
+	    {
+	        formatter.format("%02x", b);
+	    }
+	    String result = formatter.toString();
+	    formatter.close();
+	    return result;
 	}
 }

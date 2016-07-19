@@ -18,6 +18,8 @@ import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.liferay.portal.kernel.json.JSONArray;
@@ -116,12 +118,15 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 	public Map<Long,String> getBasketUsersIds(long userId) throws Exception{
 		return BasketLocalServiceUtil.getBasketUsersIds(userId);
 	}
-	public User getUserDetail(long userId) throws PortalException, SystemException{
+	public JSONArray getUserDetail(long userId) throws PortalException, SystemException{
 		return BasketLocalServiceUtil.getUserDetail(userId);
 	}
 
-	public boolean authorize(long userId) throws Exception{
-		return BasketLocalServiceUtil.authorize(userId);
+	public JSONArray authorize(String token) throws Exception{
+		return BasketLocalServiceUtil.authorize(token);
 	}
-	
+
+	public String getToken() throws Exception{
+		return BasketLocalServiceUtil.getToken();
+	}
 }
