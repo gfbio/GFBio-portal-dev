@@ -1,7 +1,8 @@
 ﻿DROP TABLE IF EXISTS
  gfbio_project_researchobject, gfbio_project_user, gfbio_project_user_pi, gfbio_dataprovider_persistentidentifier,
  gfbio_content, gfbio_column, gfbio_head,
- gfbio_basket, gfbio_project, gfbio_submissionregistry, gfbio_dataprovider, gfbio_researchobject;
+ gfbio_basket, gfbio_project, gfbio_submissionregistry, gfbio_dataprovider, gfbio_researchobject,
+ gfbio_usersso;
  
  
  -- CREATE TYPE ro_type AS ENUM ('sample', 'experiment');
@@ -99,6 +100,10 @@
   
   
 
+------------------------------- User SSO -----------------------
+
+
+--- see create_usersso.sql
 
   
   
