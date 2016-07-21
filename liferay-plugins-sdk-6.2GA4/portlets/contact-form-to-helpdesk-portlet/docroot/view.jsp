@@ -21,8 +21,17 @@ String title = LocalizationUtil.getPreferencesValue(portletPreferences, "title",
 String description = LocalizationUtil.getPreferencesValue(portletPreferences, "description", themeDisplay.getLanguageId());
 boolean requireCaptcha = GetterUtil.getBoolean(portletPreferences.getValue("requireCaptcha", StringPool.BLANK));
 String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
-String fromName = portletPreferences.getValue("fromName", StringPool.BLANK);
-String fromAddress = portletPreferences.getValue("fromAddress", StringPool.BLANK);
+
+long userID = themeDisplay.getUserId();
+String fromName = UserLocalServiceUtil.getUser(userID).getFirstName() + " " + UserLocalServiceUtil.getUser(userID).getLastName();
+
+String fromAddress = "";
+if (fromName.trim()!=""){
+	fromAddress = UserLocalServiceUtil.getUser(userID).getEmailAddress();
+}
+
+String subject = portletPreferences.getValue("subject", StringPool.BLANK);
+
 
 %>
 
@@ -30,6 +39,8 @@ String fromAddress = portletPreferences.getValue("fromAddress", StringPool.BLANK
 	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="saveData" />
 </portlet:actionURL>
 
+<div class="contact-form-helpdesk wow animated fadeInLeft">
+                
 <aui:form action="<%= saveDataURL %>" method="post" name="fm">
 	<c:if test="<%= Validator.isNull(successURL) %>">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -55,9 +66,10 @@ String fromAddress = portletPreferences.getValue("fromAddress", StringPool.BLANK
 		<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
 		<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />
 			
-		<aui:input cssClass="lfr-input-text-container" label="name-from" name="fromName" value="<%= fromName %>" />
-		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" />
-	
+		<aui:input cssClass="lfr-input-text-container" label="name-from" name="fromName" value="<%= fromName %>" placeholder="Your Name..."/>
+		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..."/>
+		<aui:input cssClass="lfr-input-text-container" label="subject" name="subject" value="<%= subject %>" placeholder="Subject..." />
+	 
 		
 
 		<%
@@ -96,10 +108,10 @@ String fromAddress = portletPreferences.getValue("fromAddress", StringPool.BLANK
 					<p class="lfr-webform" id="<portlet:namespace /><%= fieldName %>"><%= HtmlUtil.escape(fieldOptions) %></p>
 				</c:when>
 				<c:when test='<%= fieldType.equals("text") %>'>
-					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" />
+					 	<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>"/>
 				</c:when>
 				<c:when test='<%= fieldType.equals("textarea") %>'>
-					<aui:input cssClass='<%= "lfr-textarea-container" + (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" wrap="soft" />
+					<aui:input cssClass='<%= "lfr-textarea-container" + (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" placeholder="Your Message..."  wrap="soft" />
 				</c:when>
 				<c:when test='<%= fieldType.equals("checkbox") %>'>
 					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>" />
@@ -157,6 +169,8 @@ String fromAddress = portletPreferences.getValue("fromAddress", StringPool.BLANK
 		<aui:button onClick="" type="submit" value="send" />
 	</aui:fieldset>
 </aui:form>
+
+</div>
 
 <aui:script use="aui-base,selector-css3">
 	var form = A.one('#<portlet:namespace />fm');

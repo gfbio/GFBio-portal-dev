@@ -53,5 +53,41 @@
 .web-form-portlet {
 	.description {
 		margin-bottom: 2em;
-	}
+		
+	
+}
+}
+.contact-form-helpdesk label{
+	display:none;
+}
+
+.contact-form-helpdesk legend{
+	display:none;
+}
+.contact-form-helpdesk .description{
+	display:none;
+}
+
+.contact-form-helpdesk textarea {
+    width: 100%;
+    height: 165px;
+}
+
+.contact-form-helpdesk .btn {
+    border-radius: 0;
+    border: 0;
+    position: relative;
+    text-transform: uppercase;
+    margin-top:10px;
+    margin-bottom:10px;
+    background-color: rgba(0, 158, 227, 0.78);
+    background-color: rgba(52, 90, 162, 0.8);
+    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.15) inset;
+    padding: 15px 55px;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.contact-form-helpdesk .btn-primary:hover {
+    background-color: rgba(129, 178, 72, 1.0);
 }
