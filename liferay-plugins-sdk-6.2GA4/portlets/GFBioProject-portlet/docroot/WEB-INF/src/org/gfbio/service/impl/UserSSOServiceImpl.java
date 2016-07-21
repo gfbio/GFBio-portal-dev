@@ -14,11 +14,11 @@
 
 package org.gfbio.service.impl;
 
+import org.gfbio.service.UserSSOLocalServiceUtil;
 import org.gfbio.service.base.UserSSOServiceBaseImpl;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONArray;
 
 /**
  * The implementation of the user s s o remote service.
@@ -36,11 +36,21 @@ import com.liferay.portal.kernel.json.JSONArray;
  */
 public class UserSSOServiceImpl extends UserSSOServiceBaseImpl {
 
-	public boolean authorizeToken(String token, long userID) throws SystemException, NoSuchModelException {
-		return authorizeToken(token, userID);
+	public boolean authorizeToken(String token, long userID) {
+		try {
+			return UserSSOLocalServiceUtil.authorizeToken(token, userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 	
-	public String getToken(long userID) throws SystemException, NoSuchModelException {
-		return getToken(userID);
+	public String getToken(long userID) {
+		try {
+			return UserSSOLocalServiceUtil.getToken(userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 }

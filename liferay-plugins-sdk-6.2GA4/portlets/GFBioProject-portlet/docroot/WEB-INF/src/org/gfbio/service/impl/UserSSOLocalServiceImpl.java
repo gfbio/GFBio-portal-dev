@@ -14,20 +14,16 @@
 
 package org.gfbio.service.impl;
 
-import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.gfbio.NoSuchBasketException;
 import org.gfbio.NoSuchUserSSOException;
-import org.gfbio.model.Basket;
 import org.gfbio.model.UserSSO;
+import org.gfbio.service.UserSSOLocalServiceUtil;
 import org.gfbio.service.base.UserSSOLocalServiceBaseImpl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The implementation of the user s s o local service.
@@ -48,28 +44,34 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.UserSSOLocalServiceUtil
  */
 public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
-	public UserSSO updateUserSSO(long userID, String token) throws Exception {
+	private UserSSO updateUserSSO(long userID, String token) {
 		UserSSO sso = null;
 		Date now = new Date();
 		try {
 			// update userSSO
 			sso = userSSOPersistence.findByPrimaryKey(userID);
-			sso.setUserID(userID);
 			sso.setToken(token);
 			sso.setLastModifiedDate(now);
-			super.updateUserSSO(sso);
+			UserSSO ret = UserSSOLocalServiceUtil.updateUserSSO(sso);
 
-		} catch (NoSuchUserSSOException e) {
-			// create new userSSO
-			sso = userSSOPersistence.create(CounterLocalServiceUtil
-					.increment(getModelClassName()));
-			sso.setUserID(userID);
-			sso.setToken(token);
-			sso.setLastModifiedDate(now);
-			super.updateUserSSO(sso);
+		} catch (Exception e){
 			e.printStackTrace();
 		}
-
+		
+		return sso;
+	}
+	private UserSSO createUserSSO(long userID, String token){
+		UserSSO sso = null;
+		Date now = new Date();
+		// create new userSSO
+		try {
+			sso = userSSOPersistence.create(userID);
+			sso.setToken(token);
+			sso.setLastModifiedDate(now);
+			UserSSO ret = UserSSOLocalServiceUtil.addUserSSO(sso);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return sso;
 	}
 	
@@ -90,10 +92,11 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 		return success;
 	}
 
-	public String getToken(long userID) throws Exception {
+	public String getToken(long userID) {
 		String token = "";
-		UserSSO sso = this.userSSOPersistence.findByUserID(userID);
-		if (sso != null) {
+		try{
+			UserSSO sso = this.userSSOPersistence.findByUserID(userID);
+
 			Date tokenDate = sso.getLastModifiedDate();
 			if (getDifferentDates(tokenDate) >= 7) {
 				token = generateNewToken();
@@ -102,17 +105,22 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 			} else {// use the existing one
 				token = sso.getToken();
 			}
-		} else {
+
+		} catch (NoSuchUserSSOException e) {
 			token = generateNewToken();
 			// create new row in db
-			updateUserSSO(userID,token);
+			createUserSSO(userID,token);
+		} catch (Exception e){
+			System.out.println(e);
 		}
 		return token;
 	}
 
 	private String generateNewToken() {
 		SecureRandom random = new SecureRandom();
-		String token = new BigInteger(130, random).toString(32);
+	    byte bytes[] = new byte[20];
+	    random.nextBytes(bytes);
+	    String token = bytes.toString();
 		return token;
 	}
 
