@@ -75,20 +75,32 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 		return sso;
 	}
 	
-	public boolean authorizeToken(String token, long userID) throws Exception {
-		boolean success = false;
-		UserSSO sso = userSSOPersistence.findByUserID(userID);
-		if (sso != null) {
+	// return 	0 : success, 1 : token expired, 
+	//			2 : no record found, 3 token mismatched,
+	// 			4 : unknown error;
+	public int authorizeToken(String token, long userID) throws Exception {
+		int success = 4;
+		try {
+			UserSSO sso = userSSOPersistence.findByUserID(userID);
 			Date tokenDate = sso.getLastModifiedDate();
 			// only for the valid token
 			if (getDifferentDates(tokenDate) < 7) {
 				String savedToken = sso.getToken();
 				if (savedToken.equals(token)) {
-					success = true;
+					success = 0;
+				}
+				else{
+					success = 3;
 				}
 			}
-		}
+			else {
+				success = 1;
+			}
 
+		} catch (Exception e) {
+			success = 2; //no record
+			e.printStackTrace();
+		}
 		return success;
 	}
 

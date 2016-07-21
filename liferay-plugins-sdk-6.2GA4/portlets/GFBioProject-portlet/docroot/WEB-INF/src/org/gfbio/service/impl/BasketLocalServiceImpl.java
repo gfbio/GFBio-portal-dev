@@ -17,7 +17,6 @@ package org.gfbio.service.impl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,19 +26,15 @@ import com.liferay.portal.kernel.json.JSONObject;
 // if using org.json, the response message in liferay webservice will be incomplete 
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
@@ -47,14 +42,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
-
 import org.gfbio.NoSuchBasketException;
 import org.gfbio.model.Basket;
+import org.gfbio.service.UserSSOServiceUtil;
 import org.gfbio.service.base.BasketLocalServiceBaseImpl;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
 
 /**
  * The implementation of the basket local service.
@@ -422,29 +413,34 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	public JSONArray authorize(String token) throws Exception{
 		JSONArray res = JSONFactoryUtil.createJSONArray();
-		long userId = PrincipalThreadLocal.getUserId();
-		String encryptedId = encryptText(Long.toString(userId));
-		if (encryptedId.contentEquals(token)){
-			User user = UserLocalServiceUtil.getUser(userId);
-			PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
-			boolean isSigned = checker.isSignedIn();
+		long userID = PrincipalThreadLocal.getUserId();
+
+		// return 	0 : success, 1 : token expired, 
+		//			2 : no record found, 3 token mismatched,
+		// 			4 : unknown error;
+		int auth = UserSSOServiceUtil.authorizeToken(token, userID);
+//		if (auth == 0){
+			User user = UserLocalServiceUtil.getUser(userID);
+//			PermissionChecker checker = PermissionCheckerFactoryUtil.create(user);
+//			boolean isSigned = checker.isSignedIn();
 			JSONObject jres = JSONFactoryUtil.createJSONObject();
-			jres.put("success", true);
-			jres.put("userid", userId);
+			jres.put("success", auth);
+			jres.put("userid", userID);
 			res.put(jres);
-		}
-		else {
-			JSONObject jres = JSONFactoryUtil.createJSONObject();
-			jres.put("success", false);
-			jres.put("userid", 0);
-			res.put(jres);
-		}
+//		}
+//		else {
+//			JSONObject jres = JSONFactoryUtil.createJSONObject();
+//			jres.put("success", false);
+//			jres.put("userid", 0);
+//			res.put(jres);
+//		}
 		return res;
 	}
 	
 	public String getToken(){
-		long userId = PrincipalThreadLocal.getUserId();
-		return encryptText(Long.toString(userId));
+		long userID = PrincipalThreadLocal.getUserId();
+		String token = UserSSOServiceUtil.getToken(userID);
+		return token;
 	}
 	
 	private static String encryptText(String text)
