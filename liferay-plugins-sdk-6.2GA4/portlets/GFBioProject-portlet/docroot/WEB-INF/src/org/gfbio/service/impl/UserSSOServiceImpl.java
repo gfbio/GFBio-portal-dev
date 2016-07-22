@@ -36,9 +36,9 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class UserSSOServiceImpl extends UserSSOServiceBaseImpl {
 
-	public int authorizeToken(String token, long userID) {
+	public int authenticateToken(String token, long userID) {
 		try {
-			return UserSSOLocalServiceUtil.authorizeToken(token, userID);
+			return UserSSOLocalServiceUtil.authenticateToken(token, userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

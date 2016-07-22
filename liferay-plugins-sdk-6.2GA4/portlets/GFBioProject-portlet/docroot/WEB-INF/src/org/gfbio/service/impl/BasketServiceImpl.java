@@ -122,8 +122,8 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return BasketLocalServiceUtil.getUserDetail(userId);
 	}
 
-	public JSONArray authorize(String token) throws Exception{
-		return BasketLocalServiceUtil.authorize(token);
+	public JSONArray authenticate(String token) throws Exception{
+		return BasketLocalServiceUtil.authenticate(token);
 	}
 
 	public String getToken() throws Exception{

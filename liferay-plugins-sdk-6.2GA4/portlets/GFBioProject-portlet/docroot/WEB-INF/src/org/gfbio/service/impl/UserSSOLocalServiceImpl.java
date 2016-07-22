@@ -14,9 +14,13 @@
 
 package org.gfbio.service.impl;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import org.gfbio.NoSuchUserSSOException;
 import org.gfbio.model.UserSSO;
@@ -24,6 +28,11 @@ import org.gfbio.service.UserSSOLocalServiceUtil;
 import org.gfbio.service.base.UserSSOLocalServiceBaseImpl;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+
+import java.math.BigInteger;
 
 /**
  * The implementation of the user s s o local service.
@@ -54,13 +63,14 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 			sso.setLastModifiedDate(now);
 			UserSSO ret = UserSSOLocalServiceUtil.updateUserSSO(sso);
 
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return sso;
 	}
-	private UserSSO createUserSSO(long userID, String token){
+
+	private UserSSO createUserSSO(long userID, String token) {
 		UserSSO sso = null;
 		Date now = new Date();
 		// create new userSSO
@@ -74,31 +84,30 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 		}
 		return sso;
 	}
-	
-	// return 	0 : success, 1 : token expired, 
-	//			2 : no record found, 3 token mismatched,
-	// 			4 : unknown error;
-	public int authorizeToken(String token, long userID) throws Exception {
+
+	// return 0 : success, 1 : token expired,
+	// 2 : no record found, 3 non-admin user,
+	// 4 : unknown error;
+	public int authenticateToken(String token, long userID) throws Exception {
 		int success = 4;
+		boolean adminRole = isUserAdmin(userID);
+		if (!adminRole) {
+			return 3;
+		}
 		try {
-			UserSSO sso = userSSOPersistence.findByUserID(userID);
+			//UserSSO sso = userSSOPersistence.findByUserID(userID);
+			UserSSO sso = userSSOPersistence.findByToken(token);
 			Date tokenDate = sso.getLastModifiedDate();
+
 			// only for the valid token
 			if (getDifferentDates(tokenDate) < 7) {
-				String savedToken = sso.getToken();
-				if (savedToken.equals(token)) {
-					success = 0;
-				}
-				else{
-					success = 3;
-				}
-			}
-			else {
+				success = 0;
+			} else {
 				success = 1;
 			}
 
 		} catch (Exception e) {
-			success = 2; //no record
+			success = 2; // no record
 			e.printStackTrace();
 		}
 		return success;
@@ -106,14 +115,14 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 
 	public String getToken(long userID) {
 		String token = "";
-		try{
+		try {
 			UserSSO sso = this.userSSOPersistence.findByUserID(userID);
 
 			Date tokenDate = sso.getLastModifiedDate();
 			if (getDifferentDates(tokenDate) >= 7) {
 				token = generateNewToken();
 				// update token to db
-				updateUserSSO(userID,token);
+				updateUserSSO(userID, token);
 			} else {// use the existing one
 				token = sso.getToken();
 			}
@@ -121,19 +130,16 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 		} catch (NoSuchUserSSOException e) {
 			token = generateNewToken();
 			// create new row in db
-			createUserSSO(userID,token);
-		} catch (Exception e){
+			createUserSSO(userID, token);
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		return token;
 	}
 
 	private String generateNewToken() {
-		SecureRandom random = new SecureRandom();
-	    byte bytes[] = new byte[20];
-	    random.nextBytes(bytes);
-	    String token = bytes.toString();
-		return token;
+		String uuid = UUID.randomUUID().toString();
+		return uuid;
 	}
 
 	private long getDifferentDates(Date refDate) {
@@ -155,4 +161,22 @@ public class UserSSOLocalServiceImpl extends UserSSOLocalServiceBaseImpl {
 		return now;
 	}
 
+	private boolean isUserAdmin(long userId) {
+		boolean isAdmin = false;
+		try {
+			List<Role> roles;
+			roles = RoleLocalServiceUtil.getUserRoles(userId);
+			for (Role role : roles) {
+				// System.out.println(role.getName());
+				if (role.getName().indexOf("Administrator") > -1) {
+					isAdmin = true;
+					break;
+				}
+			}
+		} catch (SystemException e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return isAdmin;
+	}
 }
