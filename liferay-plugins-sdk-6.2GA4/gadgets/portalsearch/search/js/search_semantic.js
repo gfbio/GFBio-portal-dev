@@ -1023,8 +1023,8 @@ function addColorPicker() {
  */
 function showCartIcon(nRow, aData) {
 	// show the cart icon only if the geological data is provided
-	if (((aData.maxLatitude != undefined) || (aData.minLatitude != undefined)) &&
-		((aData.maxLongitude != undefined) || (aData.minLongitude != undefined))) {
+	if (((aData.maxLatitude != '') || (aData.minLatitude != '')) &&
+		((aData.maxLongitude != '') || (aData.minLongitude != ''))) {
 		// read the current row number and get a div for the cart
 		var elmRow = $(nRow);
 		var elmTD = $(elmRow[0].lastElementChild);
