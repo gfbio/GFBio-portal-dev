@@ -406,8 +406,8 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		long userID = PrincipalThreadLocal.getUserId();
 
 		// return 0 : success, 1 : token expired,
-		// 2 : no record found, 3 token mismatched,
-		// 4 : unknown error, 5 non-admin user;
+		// 2 : no record found, 3 non-admin user,
+		// 4 : unknown error ;
 		int auth = UserSSOServiceUtil.authenticateToken(token, userID);
 		System.out.println("This user is admin");
 		User user = UserLocalServiceUtil.getUser(userID);

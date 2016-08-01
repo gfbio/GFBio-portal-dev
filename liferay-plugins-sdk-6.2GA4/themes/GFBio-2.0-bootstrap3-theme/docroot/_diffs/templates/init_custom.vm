@@ -1,2 +1,3 @@
 #set ($portal_url = $portalUtil.getPortalURL($theme_display))
 #set ($sign_in_text = "Sign In")
+#set ($sign_in_url = $propsUtil.get("sign_in_url"))

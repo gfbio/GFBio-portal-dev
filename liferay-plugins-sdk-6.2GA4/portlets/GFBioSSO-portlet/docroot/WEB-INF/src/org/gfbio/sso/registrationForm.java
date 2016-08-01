@@ -78,13 +78,13 @@ public class registrationForm extends GenericPortlet {
 //				renderRequest.setAttribute("lastname", user.getLastName());
 //			else
 //				renderRequest.setAttribute("lastname", "");
-//			if (!user.getEmailAddress().equals(null))
-//				renderRequest.setAttribute("email", user.getEmailAddress());
-//			else
-//				renderRequest.setAttribute("email", "");
 //			if (user.getFirstName().equals(null)|| user.getLastName().equals(null) 
-//					|| user.getEmailAddress().equals(null))
+//					|| user.getEmailAddress().equals(null)){
 //				renderRequest.setAttribute("submit", "disabled=\"true\"");
+//				renderRequest.setAttribute("email", "");
+//			}else{
+//				renderRequest.setAttribute("email", user.getEmailAddress());
+//			}
 //		}
 		include(viewTemplate, renderRequest, renderResponse);
 	}

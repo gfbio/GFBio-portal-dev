@@ -9,10 +9,7 @@ $(window).resize(function() {
 });
 function setLayoutForMobileScreen(){
    width = $(window).width();
-	var keyword = $("#gfbioSearchInput");
-   console.log('----');
-   console.log(keyword.attr('value'));
-   console.log('----');
+   
    if (width <600){
       if ($("#column-2").prevAll($("#column-1")).length !== 0){
          $("#column-1").remove().insertAfter($("#column-2"));

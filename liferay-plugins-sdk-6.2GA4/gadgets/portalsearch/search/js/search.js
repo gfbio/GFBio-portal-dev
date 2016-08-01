@@ -70,7 +70,7 @@ function getQueryVariable(variable) {
 
 /*
  * Description: Query for the latest 10 dataset and display to the result table
- * Input: JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Effect: The result table and facet gadget are updated
  */
@@ -82,7 +82,7 @@ function showLatestTenDataset(filter, yearRange) {
 	var oTable = $('#tableId').DataTable({
 			"bDestroy" : true,
 			"bPaginate" : true,
-			"sPaginationType":"simple",
+			"sPaginationType" : "simple",
 			"bJQueryUI" : true,
 			"bProcessing" : true,
 			"bServerSide" : true,
@@ -109,7 +109,7 @@ function showLatestTenDataset(filter, yearRange) {
 					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
 				}
 			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', 
+			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
 			"sAutoWidth" : true,
 			// define the event after the search result is returned
 			"fnDrawCallback" : function (oSettings) {
@@ -136,7 +136,7 @@ function showLatestTenDataset(filter, yearRange) {
 
 /*
  * Description: Get latest dataset with (or without) filtering option, no keyword.
- * Input: JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Return: Data to display on the search result table
  */
@@ -150,13 +150,13 @@ function getFilteredLatestDataset(filter, yearRange) {
 		var filteredQuery = getFilteredQuery("", filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
 		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
-		
+
 		// add sorting by citation date
 		completeQuery.sort = {
 			"citation_date" : {
 				"order" : "desc"
 			}
-		}; 
+		};
 
 		// Store query string for sending to VAT
 		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
@@ -193,7 +193,7 @@ function getFilteredLatestDataset(filter, yearRange) {
 /////////////////////////////// Main search functions ////////////////////////////////////
 
 /*
- * Description: Read a keyword parameter and call getSearchResult 
+ * Description: Read a keyword parameter and call getSearchResult
  *              to submit a query and display search result
  * Input: boolean clearBasket: submit a new query with clear basket command or not
  * Effect: Show the result, refresh facet and VAT
@@ -203,28 +203,31 @@ function newQuery(clearBasket) {
 	$('#tableId').DataTable().clear();
 	// read search keywords
 	var keyword = document.getElementById("gfbioSearchInput").value;
+	setCookie("gfbioSearchInput", keyword);
 	var filter = [];
-	// reset facet gadgeet
-	if (gadgets.Hub.isConnected())
+	// reset facet gadget
+	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+		console.log('search:reset facet');
+	}
 	// autocomplete from the textbox doesn't automatically closed
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
 	getSearchResult(keyword, filter, "");
-	
+
 	// clear visualBasket if the clearBasket flag is true
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
 		visualBasket.value = "";
-	
+
 	// send content of visual basket to the mini-map gadget
 	updateMap();
 }
 
 /*
  * Description: Read and submit a keyword to search engine and display on the result table
- * Input: String keyword : search keyword  
- *        JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: String keyword : search keyword
+ *        JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Effect: Update TS, rewrite the result table
  */
@@ -240,7 +243,7 @@ function getSearchResult(keyword, filter, yearRange) {
 	var oTable = $('#tableId').DataTable({
 			"bDestroy" : true,
 			"bPaginate" : true,
-			"sPaginationType":"simple",
+			"sPaginationType" : "simple",
 			"bJQueryUI" : true,
 			"bProcessing" : true,
 			"bServerSide" : true,
@@ -292,8 +295,8 @@ function getSearchResult(keyword, filter, yearRange) {
 
 /*
  * Description: Get search result from submitted keyword with (or without) filtering option
- * Input: String keyword : search keyword  
- *        JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: String keyword : search keyword
+ *        JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Output: JSONObject result : Data to display on the search result table
  */
@@ -325,11 +328,16 @@ function submitQueryToServer(keyword, filter, yearRange) {
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
 					var facet = result.aggregations;
-					if (gadgets.Hub.isConnected())
+					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
+						console.log('search:set facet to:');
+						console.log(facet);
+					}
 				} else {
-					if (gadgets.Hub.isConnected())
+					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', '');
+						console.log('search:clear facet');
+					}
 				}
 				var res = parseReturnedJSONfromSearch(datasrc);
 				result.iTotalRecords = result.hits.total;
@@ -374,8 +382,8 @@ function createQueryFieldArray() {
 
 /*
  * Description: Add filter to a JSON query message
- * Input: String keyword : search keyword  
- *        JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: String keyword : search keyword
+ *        JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Output: JSONObject : filtered query
  */
@@ -461,7 +469,7 @@ function applyBoost(query) {
 
 /*
  * Description: Complete a JSON query message with query size, query field, and facets options
- * Input: JSONObject boostedQuery : a JSON query mesage with filter and boost parameters  
+ * Input: JSONObject boostedQuery : a JSON query mesage with filter and boost parameters
  *        int iDisplayStart : starting index of dataset (read from pagination option)
  *        int iDisplayLength : size of dataset (read from pagination option)
  *        JSONArray queryfield : array of query fields
@@ -517,7 +525,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 		var score = datasrc[i]._score;
 		var fields = datasrc[i].fields;
 		inner.score = score;
-	    //console.log('parseReturnedJSONfromSearch:fields');
+		//console.log('parseReturnedJSONfromSearch:fields');
 		//console.log(fields);
 		inner.title = getValueFromJSONObject(fields, "citation_title", 0);
 		inner.authors = getValueFromJSONArray(fields, "citation_authors");
@@ -550,7 +558,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 			inner.xml = json; //JSON.stringify(json);
 		} else
 			inner.xml = "";
-	
+
 		res.push(inner);
 		//console.log('parseReturnedJSONfromSearch:inner');
 		//console.log(inner);
@@ -572,7 +580,7 @@ function writeResultTable() {
 //////////////////////////////////// Basket functions ////////////////////////////////////////
 
 /*
- * Description: Load a basket data, with stored keyword and selected datasets. 
+ * Description: Load a basket data, with stored keyword and selected datasets.
  *              This function is called from a basket manager gadget, which is not currently in used
  * Input: PubSubMessage data : a message contain the basket content published by the basket manager
  * Effect: The search box is automatically filled with the basket's keyword and submitted for search
@@ -755,7 +763,7 @@ function onRowClick() {
 			// store basket in string format
 			basket.value = JSON.stringify(jsonData);
 		} else {
-			// show the icon that this item is unselected, 
+			// show the icon that this item is unselected,
 			// and ready to be added into a cart/basket
 			$(this).attr('class', 'cart_unselected');
 			$($(".sp-replacer")[irow]).addClass("invisible");
@@ -768,8 +776,8 @@ function onRowClick() {
 				var resultArray = getDataFromSelectedRow(nRow, tRows);
 				// metadataLink is supposed to be unique for each dataset,
 				// so I use it as an id for each row.
-				jsonData.selected = JSONfindAndRemove(jsonData.selected, 
-								'metadatalink', resultArray.metadatalink);
+				jsonData.selected = JSONfindAndRemove(jsonData.selected,
+						'metadatalink', resultArray.metadatalink);
 				basket.value = JSON.stringify(jsonData);
 			}
 		}
@@ -781,7 +789,7 @@ function onRowClick() {
 /*
  * Description: Read dataset information from the selected row
  * Input: int nRow : row index
- *        int tRows : row's columns 
+ *        int tRows : row's columns
  * Output: JSONObject result: Information of the selected dataset + color code
  */
 function getDataFromSelectedRow(nRow, tRows) {
@@ -848,10 +856,10 @@ function updateMap() {
 	// Add query message in JSON format
 	var queryJSON = document.getElementById("queryJSON").value;
 	jsonData.queryStr = queryJSON;
-	console.log(':Search: fire selected data: ');
-	console.log(jsonData);
 	addBasket();
 	if (gadgets.Hub.isConnected()) {
+		console.log(':Search: fire selected data: ');
+		console.log(jsonData);
 		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
 	}
 }
@@ -999,7 +1007,7 @@ function addColorPicker() {
 
 /*
  * Description: Display cart icon for each dataset when a location detail is available.
- * Input: nRow - row number of search result 
+ * Input: nRow - row number of search result
  *        aData - json data of that row of search result
  * Effect: Cart icon will appear for each search result if they have geological data
  */
@@ -1080,7 +1088,6 @@ function JSONfindAndRemove(array, property, value) {
 	return resultArray;
 }
 
-
 /*
  * Description: Get HTML element's style
  */
@@ -1091,7 +1098,6 @@ function getStyle(x, styleProp) {
 		var y = document.defaultView.getComputedStyle(x, null).getPropertyValue(styleProp);
 	return y;
 }
-
 
 /*
  * Description: Equilvalent to JAVA's String.format()
@@ -1194,13 +1200,12 @@ function XMLtoJSON() {
 				var item = xml.childNodes.item(i);
 				var nodeName = item.nodeName;
 				if (typeof(js_obj[nodeName]) == "undefined") {
-					if (nodeName == "#text"){
+					if (nodeName == "#text") {
 						var content = item.textContent.trim();
-						if (content!=""){
+						if (content != "") {
 							js_obj = content;
 						}
-					}
-					else
+					} else
 						js_obj[nodeName] = setJsonObj(item);
 				} else {
 					if (typeof(js_obj[nodeName].push) == "undefined") {
@@ -1229,18 +1234,16 @@ function XMLtoJSON() {
  * Description: Read value from a JSONObject
  */
 function getValueFromJSONArray(jObj, name) {
-	if (jObj[name] !== undefined){
+	if (jObj[name] !== undefined) {
 		var res = "";
 		var jArr = jObj[name];
-		for(var i=0; i <jArr.length; i++)
-		{
-		   res += jArr[i];
-		   if(i<jArr.length-1)
-			   res += "; ";
+		for (var i = 0; i < jArr.length; i++) {
+			res += jArr[i];
+			if (i < jArr.length - 1)
+				res += "; ";
 		}
 		return res;
-	}
-	else
+	} else
 		return "";
 }
 
@@ -1265,4 +1268,24 @@ function toggleParametersField() {
 	});
 };
 
+function getCookie(name) {
+	var re = new RegExp(name + "=([^;]+)");
+	var value = re.exec(document.cookie);
+	console.log('getCookie:'+name);
+	console.log(value);
+	return (value != null) ? unescape(value[1]) : null;
+}
+
+function setCookie(name, value) {
+	var today = new Date();
+	var expiry = new Date(today.getTime() + 7 * 24 * 3600 * 1000); // plus 7 days
+	document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+	console.log('setCookie:'+name);
+	console.log(value);
+}  
+
+function deleteCookie(name)
+{
+    document.cookie=name + "=null; path=/; expires=" + expired.toGMTString();
+}
 ///////////////////////////////////  End Misc functions  //////////////////////////////////

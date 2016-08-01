@@ -1,0 +1,2 @@
+#set ($portal_url = $portalUtil.getPortalURL($theme_display))
+#set ($sign_in_text = "Sign In")

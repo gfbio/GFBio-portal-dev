@@ -6,8 +6,8 @@ var minFilteredYear;
 
 ///////////////////////////////////////  Create Main Facet Tree  ////////////////////////////////////
 function writeFacetTree(topic, data, subscriberData) {
-	//console.log(':Facet: refresh facet tray');
-	//console.log(data);
+	console.log(':Facet: refresh facet tray');
+	console.log(data);
 	facetData = data;
 	var displayHTML = "";
 	if (data != "") {

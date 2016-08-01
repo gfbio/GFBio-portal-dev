@@ -15,7 +15,8 @@ String email = UserLocalServiceUtil.getUser(userID).getEmailAddress();
 String firstname = UserLocalServiceUtil.getUser(userID).getFirstName();
 String lastname = UserLocalServiceUtil.getUser(userID).getLastName();
 String submit = "";
-if (email=="" || firstname=="" || lastname==""){
+if (firstname=="" || lastname==""){
+	email = "";
 	submit="disabled='true'";
 }
 %>
