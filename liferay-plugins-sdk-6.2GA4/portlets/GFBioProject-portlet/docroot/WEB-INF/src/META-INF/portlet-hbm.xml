@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.gfbio.model.Basket" />
+	<import class="org.gfbio.model.Column" />
+	<import class="org.gfbio.model.Content" />
+	<import class="org.gfbio.model.DataProvider" />
+	<import class="org.gfbio.model.DataProvider_PersistentIdentifier" />
+	<import class="org.gfbio.model.Funding_InstitutionProject" />
+	<import class="org.gfbio.model.Funding_PersonProject" />
+	<import class="org.gfbio.model.Head" />
+	<import class="org.gfbio.model.Project" />
+	<import class="org.gfbio.model.Project_ResearchObject" />
+	<import class="org.gfbio.model.Project_User" />
+	<import class="org.gfbio.model.ResearchObject" />
+	<import class="org.gfbio.model.Submission" />
+	<import class="org.gfbio.model.UserExtension" />
+	<class name="org.gfbio.model.impl.BasketImpl" table="gfbio_Basket">
+		<id name="basketID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="basketContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="queryJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.ColumnImpl" table="gfbio_Column">
+		<id name="columnID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="column_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.ContentImpl" table="gfbio_Content">
+		<id name="contentID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="columnID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rowID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="cellContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.DataProviderImpl" table="gfbio_DataProvider">
+		<id name="dataProviderID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="website" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="training" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="physicalobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="taxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="notaxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="livingobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="deadobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="sequencedata" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" table="gfbio_DataProvider_PersistentIdentifier">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK">
+			<key-property name="gfbioDataProvider" column="gfbio_dataprovider" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="gfbioPersistentIdentifier" column="gfbio_persistentidentifier" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+	</class>
+	<class name="org.gfbio.model.impl.Funding_InstitutionProjectImpl" table="gfbio_Funding_InstitutionProject">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Funding_InstitutionProjectPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingAgencyID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingProgramID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="institutionID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+	</class>
+	<class name="org.gfbio.model.impl.Funding_PersonProjectImpl" table="gfbio_Funding_PersonProject">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Funding_PersonProjectPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingAgencyID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="fundingProgramID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="personID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="personType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		</composite-id>
+	</class>
+	<class name="org.gfbio.model.impl.HeadImpl" table="gfbio_Head">
+		<id name="headID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="table_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="table_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
+		<id name="projectID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="parentProjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="extendeddata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.Project_ResearchObjectImpl" table="gfbio_Project_ResearchObject">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_ResearchObjectPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		</composite-id>
+	</class>
+	<class name="org.gfbio.model.impl.Project_UserImpl" table="gfbio_Project_User">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_UserPK">
+			<key-property name="projectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="userType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.ResearchObjectImpl" table="gfbio_ResearchObject">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.ResearchObjectPK">
+			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		</composite-id>
+		<property name="parentResearchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="label" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="extendeddata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="metadataID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.gfbio.model.impl.SubmissionImpl" table="gfbio_Submission">
+		<id name="submissionID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="archive" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="brokerSubmissionID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="archivePID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="archive_pid" />
+		<property name="archivePIDType" type="com.liferay.portal.dao.orm.hibernate.LongType" column="archive_pid_type" />
+		<property name="lastChanged" type="org.hibernate.type.TimestampType" column="last_changed" />
+		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="isPublic" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="is_public" />
+		<property name="publicAfter" type="org.hibernate.type.TimestampType" column="public_after" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="org.gfbio.model.impl.UserExtensionImpl" table="gfbio_UserExtension">
+		<id name="userID" type="long">
+			<generator class="assigned" />
+		</id>
+	</class>
+</hibernate-mapping>
