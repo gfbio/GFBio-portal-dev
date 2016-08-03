@@ -24,78 +24,78 @@ import java.util.Arrays;
  */
 public class ProjectServiceClpInvoker {
 	public ProjectServiceClpInvoker() {
-		_methodName116 = "getBeanIdentifier";
+		_methodName128 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes128 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName129 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes129 = new String[] { "java.lang.String" };
 
-		_methodName122 = "getProjectById";
+		_methodName134 = "getProjectById";
 
-		_methodParameterTypes122 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes134 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName123 = "checkProjectOnSubmissions";
+		_methodName135 = "checkProjectOnSubmissions";
 
-		_methodParameterTypes123 = new String[] { "long" };
+		_methodParameterTypes135 = new String[] { "long" };
 
-		_methodName124 = "createProject";
+		_methodName136 = "createProject";
 
-		_methodParameterTypes124 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes136 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName125 = "updateProject";
+		_methodName137 = "updateProject";
 
-		_methodParameterTypes125 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes137 = new String[] { "org.json.simple.JSONObject" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return ProjectServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			ProjectServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return ProjectServiceUtil.getProjectById((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			return ProjectServiceUtil.checkProjectOnSubmissions(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			return ProjectServiceUtil.createProject((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			return ProjectServiceUtil.updateProject((org.json.simple.JSONObject)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
+	private String _methodName134;
+	private String[] _methodParameterTypes134;
+	private String _methodName135;
+	private String[] _methodParameterTypes135;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
+	private String _methodName137;
+	private String[] _methodParameterTypes137;
 }

@@ -177,6 +177,19 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.SearchHistoryModelImpl">
+		<attributes>
+			<id name="searchHistoryID" />
+			<basic name="userID" />
+			<basic name="queryString" />
+			<basic name="lastModifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.SubmissionModelImpl">
 		<attributes>
 			<id name="submissionID" />
@@ -211,6 +224,18 @@
 	<mapped-superclass class="org.gfbio.model.impl.UserExtensionModelImpl">
 		<attributes>
 			<id name="userID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.UserSSOModelImpl">
+		<attributes>
+			<id name="userID" />
+			<basic name="token" />
+			<basic name="lastModifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -264,12 +289,20 @@
 		<table name="gfbio_ResearchObject" />
 		<attributes />
 	</entity>
+	<entity class="org.gfbio.model.impl.SearchHistoryImpl" name="SearchHistory">
+		<table name="gfbio_SearchHistory" />
+		<attributes />
+	</entity>
 	<entity class="org.gfbio.model.impl.SubmissionImpl" name="Submission">
 		<table name="gfbio_Submission" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.UserExtensionImpl" name="UserExtension">
 		<table name="gfbio_UserExtension" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.UserSSOImpl" name="UserSSO">
+		<table name="gfbio_UserSSO" />
 		<attributes />
 	</entity>
 </entity-mappings>

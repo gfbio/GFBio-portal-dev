@@ -108,39 +108,39 @@ public class Project_UserLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Project_User" };
 
-		_methodName132 = "getBeanIdentifier";
+		_methodName144 = "getBeanIdentifier";
 
-		_methodParameterTypes132 = new String[] {  };
+		_methodParameterTypes144 = new String[] {  };
 
-		_methodName133 = "setBeanIdentifier";
+		_methodName145 = "setBeanIdentifier";
 
-		_methodParameterTypes133 = new String[] { "java.lang.String" };
+		_methodParameterTypes145 = new String[] { "java.lang.String" };
 
-		_methodName138 = "getFullNamesAsString";
+		_methodName150 = "getFullNamesAsString";
 
-		_methodParameterTypes138 = new String[] { "org.json.simple.JSONArray" };
+		_methodParameterTypes150 = new String[] { "org.json.simple.JSONArray" };
 
-		_methodName139 = "getOwnerAndPiByProjectId";
+		_methodName151 = "getOwnerAndPiByProjectId";
 
-		_methodParameterTypes139 = new String[] { "long" };
+		_methodParameterTypes151 = new String[] { "long" };
 
-		_methodName140 = "getOwnerAndPiIdByProjectId";
+		_methodName152 = "getOwnerAndPiIdByProjectId";
 
-		_methodParameterTypes140 = new String[] { "long" };
+		_methodParameterTypes152 = new String[] { "long" };
 
-		_methodName141 = "getProjectIDList";
+		_methodName153 = "getProjectIDList";
 
-		_methodParameterTypes141 = new String[] { "long" };
+		_methodParameterTypes153 = new String[] { "long" };
 
-		_methodName142 = "updateProjectUser";
+		_methodName154 = "updateProjectUser";
 
-		_methodParameterTypes142 = new String[] {
+		_methodParameterTypes154 = new String[] {
 				"long", "long", "java.lang.String"
 			};
 
-		_methodName143 = "updateProjectUser";
+		_methodName155 = "updateProjectUser";
 
-		_methodParameterTypes143 = new String[] {
+		_methodParameterTypes155 = new String[] {
 				"long", "long", "java.util.Date", "java.util.Date",
 				"java.lang.String"
 			};
@@ -235,46 +235,46 @@ public class Project_UserLocalServiceClpInvoker {
 			return Project_UserLocalServiceUtil.updateProject_User((org.gfbio.model.Project_User)arguments[0]);
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return Project_UserLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			Project_UserLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return Project_UserLocalServiceUtil.getFullNamesAsString((org.json.simple.JSONArray)arguments[0]);
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return Project_UserLocalServiceUtil.getOwnerAndPiByProjectId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return Project_UserLocalServiceUtil.getOwnerAndPiIdByProjectId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return Project_UserLocalServiceUtil.getProjectIDList(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return Project_UserLocalServiceUtil.updateProjectUser(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
 		}
 
-		if (_methodName143.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return Project_UserLocalServiceUtil.updateProjectUser(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(), (java.util.Date)arguments[2],
 				(java.util.Date)arguments[3], (java.lang.String)arguments[4]);
@@ -315,20 +315,20 @@ public class Project_UserLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName132;
-	private String[] _methodParameterTypes132;
-	private String _methodName133;
-	private String[] _methodParameterTypes133;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
-	private String _methodName139;
-	private String[] _methodParameterTypes139;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
-	private String _methodName141;
-	private String[] _methodParameterTypes141;
-	private String _methodName142;
-	private String[] _methodParameterTypes142;
-	private String _methodName143;
-	private String[] _methodParameterTypes143;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
+	private String _methodName145;
+	private String[] _methodParameterTypes145;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
 }

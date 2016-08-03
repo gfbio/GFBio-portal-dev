@@ -100,64 +100,68 @@ public class BasketLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.Basket" };
 
-		_methodName132 = "getBeanIdentifier";
+		_methodName144 = "getBeanIdentifier";
 
-		_methodParameterTypes132 = new String[] {  };
+		_methodParameterTypes144 = new String[] {  };
 
-		_methodName133 = "setBeanIdentifier";
+		_methodName145 = "setBeanIdentifier";
 
-		_methodParameterTypes133 = new String[] { "java.lang.String" };
+		_methodParameterTypes145 = new String[] { "java.lang.String" };
 
-		_methodName138 = "getBasketById";
+		_methodName150 = "getBasketById";
 
-		_methodParameterTypes138 = new String[] { "long" };
+		_methodParameterTypes150 = new String[] { "long" };
 
-		_methodName139 = "getBasketsByIds";
+		_methodName151 = "getBasketsByIds";
 
-		_methodParameterTypes139 = new String[] { "long[][]" };
+		_methodParameterTypes151 = new String[] { "long[][]" };
 
-		_methodName140 = "getBasketsByUserAndPeriod";
+		_methodName152 = "getBasketsByUserAndPeriod";
 
-		_methodParameterTypes140 = new String[] { "long", "int" };
+		_methodParameterTypes152 = new String[] { "long", "int" };
 
-		_methodName141 = "getBasketsByUserId";
+		_methodName153 = "getBasketsByUserId";
 
-		_methodParameterTypes141 = new String[] { "long" };
+		_methodParameterTypes153 = new String[] { "long" };
 
-		_methodName142 = "getBasketsIdByUserAndPeriod";
+		_methodName154 = "getBasketsIdByUserAndPeriod";
 
-		_methodParameterTypes142 = new String[] { "long", "int" };
+		_methodParameterTypes154 = new String[] { "long", "int" };
 
-		_methodName143 = "getBasketsIdByUserId";
+		_methodName155 = "getBasketsIdByUserId";
 
-		_methodParameterTypes143 = new String[] { "long" };
+		_methodParameterTypes155 = new String[] { "long" };
 
-		_methodName144 = "updateBasket";
+		_methodName156 = "updateBasket";
 
-		_methodParameterTypes144 = new String[] {
+		_methodParameterTypes156 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName145 = "removeBasket";
+		_methodName157 = "removeBasket";
 
-		_methodParameterTypes145 = new String[] { "long", "long" };
+		_methodParameterTypes157 = new String[] { "long", "long" };
 
-		_methodName146 = "getStartDateFromPeriod";
+		_methodName158 = "getStartDateFromPeriod";
 
-		_methodParameterTypes146 = new String[] { "int" };
+		_methodParameterTypes158 = new String[] { "int" };
 
-		_methodName148 = "getBasketUsersIds";
+		_methodName160 = "getBasketUsersIds";
 
-		_methodParameterTypes148 = new String[] { "long" };
+		_methodParameterTypes160 = new String[] { "long" };
 
-		_methodName151 = "getUserDetail";
+		_methodName163 = "getUserDetail";
 
-		_methodParameterTypes151 = new String[] { "long" };
+		_methodParameterTypes163 = new String[] { "long" };
 
-		_methodName152 = "authorize";
+		_methodName164 = "authenticate";
 
-		_methodParameterTypes152 = new String[] { "long" };
+		_methodParameterTypes164 = new String[] { "java.lang.String" };
+
+		_methodName165 = "getToken";
+
+		_methodParameterTypes165 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -249,82 +253,87 @@ public class BasketLocalServiceClpInvoker {
 			return BasketLocalServiceUtil.updateBasket((org.gfbio.model.Basket)arguments[0]);
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return BasketLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			BasketLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return BasketLocalServiceUtil.getBasketById(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return BasketLocalServiceUtil.getBasketsByIds((long[])arguments[0]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return BasketLocalServiceUtil.getBasketsByUserAndPeriod(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return BasketLocalServiceUtil.getBasketsByUserId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName142.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return BasketLocalServiceUtil.getBasketsIdByUserAndPeriod(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName143.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return BasketLocalServiceUtil.getBasketsIdByUserId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName144.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return BasketLocalServiceUtil.updateBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(java.lang.String)arguments[4]);
 		}
 
-		if (_methodName145.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return BasketLocalServiceUtil.removeBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName146.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			return BasketLocalServiceUtil.getStartDateFromPeriod(((Integer)arguments[0]).intValue());
 		}
 
-		if (_methodName148.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
+		if (_methodName160.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes160, parameterTypes)) {
 			return BasketLocalServiceUtil.getBasketUsersIds(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName151.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
+		if (_methodName163.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes163, parameterTypes)) {
 			return BasketLocalServiceUtil.getUserDetail(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName152.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
-			return BasketLocalServiceUtil.authorize(((Long)arguments[0]).longValue());
+		if (_methodName164.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes164, parameterTypes)) {
+			return BasketLocalServiceUtil.authenticate((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName165.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes165, parameterTypes)) {
+			return BasketLocalServiceUtil.getToken();
 		}
 
 		throw new UnsupportedOperationException();
@@ -362,32 +371,34 @@ public class BasketLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName132;
-	private String[] _methodParameterTypes132;
-	private String _methodName133;
-	private String[] _methodParameterTypes133;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
-	private String _methodName139;
-	private String[] _methodParameterTypes139;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
-	private String _methodName141;
-	private String[] _methodParameterTypes141;
-	private String _methodName142;
-	private String[] _methodParameterTypes142;
-	private String _methodName143;
-	private String[] _methodParameterTypes143;
 	private String _methodName144;
 	private String[] _methodParameterTypes144;
 	private String _methodName145;
 	private String[] _methodParameterTypes145;
-	private String _methodName146;
-	private String[] _methodParameterTypes146;
-	private String _methodName148;
-	private String[] _methodParameterTypes148;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
 	private String _methodName151;
 	private String[] _methodParameterTypes151;
 	private String _methodName152;
 	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName156;
+	private String[] _methodParameterTypes156;
+	private String _methodName157;
+	private String[] _methodParameterTypes157;
+	private String _methodName158;
+	private String[] _methodParameterTypes158;
+	private String _methodName160;
+	private String[] _methodParameterTypes160;
+	private String _methodName163;
+	private String[] _methodParameterTypes163;
+	private String _methodName164;
+	private String[] _methodParameterTypes164;
+	private String _methodName165;
+	private String[] _methodParameterTypes165;
 }

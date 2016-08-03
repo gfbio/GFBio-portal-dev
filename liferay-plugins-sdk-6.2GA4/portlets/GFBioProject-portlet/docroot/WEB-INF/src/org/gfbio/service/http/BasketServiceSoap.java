@@ -179,12 +179,12 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.model.User getUserDetail(long userId)
+	public static java.lang.String getUserDetail(long userId)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.User returnValue = BasketServiceUtil.getUserDetail(userId);
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getUserDetail(userId);
 
-			return returnValue;
+			return returnValue.toString();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -193,9 +193,23 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static boolean authorize(long userId) throws RemoteException {
+	public static java.lang.String authenticate(java.lang.String token)
+		throws RemoteException {
 		try {
-			boolean returnValue = BasketServiceUtil.authorize(userId);
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.authenticate(token);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getToken() throws RemoteException {
+		try {
+			java.lang.String returnValue = BasketServiceUtil.getToken();
 
 			return returnValue;
 		}

@@ -46,10 +46,11 @@ import org.gfbio.service.persistence.Project_UserFinder;
 import org.gfbio.service.persistence.Project_UserPersistence;
 import org.gfbio.service.persistence.ResearchObjectFinder;
 import org.gfbio.service.persistence.ResearchObjectPersistence;
-import org.gfbio.service.persistence.Search_HistoryPersistence;
+import org.gfbio.service.persistence.SearchHistoryPersistence;
 import org.gfbio.service.persistence.SubmissionFinder;
 import org.gfbio.service.persistence.SubmissionPersistence;
 import org.gfbio.service.persistence.UserExtensionPersistence;
+import org.gfbio.service.persistence.UserSSOPersistence;
 
 import javax.sql.DataSource;
 
@@ -915,60 +916,60 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the search_ history local service.
+	 * Returns the search history local service.
 	 *
-	 * @return the search_ history local service
+	 * @return the search history local service
 	 */
-	public org.gfbio.service.Search_HistoryLocalService getSearch_HistoryLocalService() {
-		return search_HistoryLocalService;
+	public org.gfbio.service.SearchHistoryLocalService getSearchHistoryLocalService() {
+		return searchHistoryLocalService;
 	}
 
 	/**
-	 * Sets the search_ history local service.
+	 * Sets the search history local service.
 	 *
-	 * @param search_HistoryLocalService the search_ history local service
+	 * @param searchHistoryLocalService the search history local service
 	 */
-	public void setSearch_HistoryLocalService(
-		org.gfbio.service.Search_HistoryLocalService search_HistoryLocalService) {
-		this.search_HistoryLocalService = search_HistoryLocalService;
+	public void setSearchHistoryLocalService(
+		org.gfbio.service.SearchHistoryLocalService searchHistoryLocalService) {
+		this.searchHistoryLocalService = searchHistoryLocalService;
 	}
 
 	/**
-	 * Returns the search_ history remote service.
+	 * Returns the search history remote service.
 	 *
-	 * @return the search_ history remote service
+	 * @return the search history remote service
 	 */
-	public org.gfbio.service.Search_HistoryService getSearch_HistoryService() {
-		return search_HistoryService;
+	public org.gfbio.service.SearchHistoryService getSearchHistoryService() {
+		return searchHistoryService;
 	}
 
 	/**
-	 * Sets the search_ history remote service.
+	 * Sets the search history remote service.
 	 *
-	 * @param search_HistoryService the search_ history remote service
+	 * @param searchHistoryService the search history remote service
 	 */
-	public void setSearch_HistoryService(
-		org.gfbio.service.Search_HistoryService search_HistoryService) {
-		this.search_HistoryService = search_HistoryService;
+	public void setSearchHistoryService(
+		org.gfbio.service.SearchHistoryService searchHistoryService) {
+		this.searchHistoryService = searchHistoryService;
 	}
 
 	/**
-	 * Returns the search_ history persistence.
+	 * Returns the search history persistence.
 	 *
-	 * @return the search_ history persistence
+	 * @return the search history persistence
 	 */
-	public Search_HistoryPersistence getSearch_HistoryPersistence() {
-		return search_HistoryPersistence;
+	public SearchHistoryPersistence getSearchHistoryPersistence() {
+		return searchHistoryPersistence;
 	}
 
 	/**
-	 * Sets the search_ history persistence.
+	 * Sets the search history persistence.
 	 *
-	 * @param search_HistoryPersistence the search_ history persistence
+	 * @param searchHistoryPersistence the search history persistence
 	 */
-	public void setSearch_HistoryPersistence(
-		Search_HistoryPersistence search_HistoryPersistence) {
-		this.search_HistoryPersistence = search_HistoryPersistence;
+	public void setSearchHistoryPersistence(
+		SearchHistoryPersistence searchHistoryPersistence) {
+		this.searchHistoryPersistence = searchHistoryPersistence;
 	}
 
 	/**
@@ -1101,6 +1102,62 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	public void setUserExtensionPersistence(
 		UserExtensionPersistence userExtensionPersistence) {
 		this.userExtensionPersistence = userExtensionPersistence;
+	}
+
+	/**
+	 * Returns the user s s o local service.
+	 *
+	 * @return the user s s o local service
+	 */
+	public org.gfbio.service.UserSSOLocalService getUserSSOLocalService() {
+		return userSSOLocalService;
+	}
+
+	/**
+	 * Sets the user s s o local service.
+	 *
+	 * @param userSSOLocalService the user s s o local service
+	 */
+	public void setUserSSOLocalService(
+		org.gfbio.service.UserSSOLocalService userSSOLocalService) {
+		this.userSSOLocalService = userSSOLocalService;
+	}
+
+	/**
+	 * Returns the user s s o remote service.
+	 *
+	 * @return the user s s o remote service
+	 */
+	public org.gfbio.service.UserSSOService getUserSSOService() {
+		return userSSOService;
+	}
+
+	/**
+	 * Sets the user s s o remote service.
+	 *
+	 * @param userSSOService the user s s o remote service
+	 */
+	public void setUserSSOService(
+		org.gfbio.service.UserSSOService userSSOService) {
+		this.userSSOService = userSSOService;
+	}
+
+	/**
+	 * Returns the user s s o persistence.
+	 *
+	 * @return the user s s o persistence
+	 */
+	public UserSSOPersistence getUserSSOPersistence() {
+		return userSSOPersistence;
+	}
+
+	/**
+	 * Sets the user s s o persistence.
+	 *
+	 * @param userSSOPersistence the user s s o persistence
+	 */
+	public void setUserSSOPersistence(UserSSOPersistence userSSOPersistence) {
+		this.userSSOPersistence = userSSOPersistence;
 	}
 
 	/**
@@ -1364,12 +1421,12 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	protected ResearchObjectPersistence researchObjectPersistence;
 	@BeanReference(type = ResearchObjectFinder.class)
 	protected ResearchObjectFinder researchObjectFinder;
-	@BeanReference(type = org.gfbio.service.Search_HistoryLocalService.class)
-	protected org.gfbio.service.Search_HistoryLocalService search_HistoryLocalService;
-	@BeanReference(type = org.gfbio.service.Search_HistoryService.class)
-	protected org.gfbio.service.Search_HistoryService search_HistoryService;
-	@BeanReference(type = Search_HistoryPersistence.class)
-	protected Search_HistoryPersistence search_HistoryPersistence;
+	@BeanReference(type = org.gfbio.service.SearchHistoryLocalService.class)
+	protected org.gfbio.service.SearchHistoryLocalService searchHistoryLocalService;
+	@BeanReference(type = org.gfbio.service.SearchHistoryService.class)
+	protected org.gfbio.service.SearchHistoryService searchHistoryService;
+	@BeanReference(type = SearchHistoryPersistence.class)
+	protected SearchHistoryPersistence searchHistoryPersistence;
 	@BeanReference(type = org.gfbio.service.SubmissionLocalService.class)
 	protected org.gfbio.service.SubmissionLocalService submissionLocalService;
 	@BeanReference(type = org.gfbio.service.SubmissionService.class)
@@ -1384,6 +1441,12 @@ public abstract class BasketServiceBaseImpl extends BaseServiceImpl
 	protected org.gfbio.service.UserExtensionService userExtensionService;
 	@BeanReference(type = UserExtensionPersistence.class)
 	protected UserExtensionPersistence userExtensionPersistence;
+	@BeanReference(type = org.gfbio.service.UserSSOLocalService.class)
+	protected org.gfbio.service.UserSSOLocalService userSSOLocalService;
+	@BeanReference(type = org.gfbio.service.UserSSOService.class)
+	protected org.gfbio.service.UserSSOService userSSOService;
+	@BeanReference(type = UserSSOPersistence.class)
+	protected UserSSOPersistence userSSOPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

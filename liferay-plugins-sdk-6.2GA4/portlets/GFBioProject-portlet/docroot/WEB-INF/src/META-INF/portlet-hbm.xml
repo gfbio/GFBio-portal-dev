@@ -14,8 +14,10 @@
 	<import class="org.gfbio.model.Project_ResearchObject" />
 	<import class="org.gfbio.model.Project_User" />
 	<import class="org.gfbio.model.ResearchObject" />
+	<import class="org.gfbio.model.SearchHistory" />
 	<import class="org.gfbio.model.Submission" />
 	<import class="org.gfbio.model.UserExtension" />
+	<import class="org.gfbio.model.UserSSO" />
 	<class name="org.gfbio.model.impl.BasketImpl" table="gfbio_Basket">
 		<id name="basketID" type="long">
 			<generator class="assigned" />
@@ -130,6 +132,14 @@
 		<property name="extendeddata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metadataID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
+	<class name="org.gfbio.model.impl.SearchHistoryImpl" table="gfbio_SearchHistory">
+		<id name="searchHistoryID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="queryString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
 	<class name="org.gfbio.model.impl.SubmissionImpl" table="gfbio_Submission">
 		<id name="submissionID" type="long">
 			<generator class="assigned" />
@@ -150,5 +160,12 @@
 		<id name="userID" type="long">
 			<generator class="assigned" />
 		</id>
+	</class>
+	<class name="org.gfbio.model.impl.UserSSOImpl" table="gfbio_UserSSO">
+		<id name="userID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="token" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

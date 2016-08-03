@@ -100,31 +100,31 @@ public class UserExtensionLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "org.gfbio.model.UserExtension" };
 
-		_methodName132 = "getBeanIdentifier";
+		_methodName144 = "getBeanIdentifier";
 
-		_methodParameterTypes132 = new String[] {  };
+		_methodParameterTypes144 = new String[] {  };
 
-		_methodName133 = "setBeanIdentifier";
+		_methodName145 = "setBeanIdentifier";
 
-		_methodParameterTypes133 = new String[] { "java.lang.String" };
+		_methodParameterTypes145 = new String[] { "java.lang.String" };
 
-		_methodName138 = "getUserExtentionById";
+		_methodName150 = "getUserExtentionById";
 
-		_methodParameterTypes138 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes150 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName139 = "checkExistenceOfUserId";
+		_methodName151 = "checkExistenceOfUserId";
 
-		_methodParameterTypes139 = new String[] { "long" };
+		_methodParameterTypes151 = new String[] { "long" };
 
-		_methodName140 = "checkForIgnoredParameter";
+		_methodName152 = "checkForIgnoredParameter";
 
-		_methodParameterTypes140 = new String[] {
+		_methodParameterTypes152 = new String[] {
 				"java.lang.Object[][]", "java.util.Set"
 			};
 
-		_methodName141 = "constructUserExtentionJsonById";
+		_methodName153 = "constructUserExtentionJsonById";
 
-		_methodParameterTypes141 = new String[] { "com.liferay.portal.model.User" };
+		_methodParameterTypes153 = new String[] { "com.liferay.portal.model.User" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,36 +216,36 @@ public class UserExtensionLocalServiceClpInvoker {
 			return UserExtensionLocalServiceUtil.updateUserExtension((org.gfbio.model.UserExtension)arguments[0]);
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			UserExtensionLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.getUserExtentionById((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.checkExistenceOfUserId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.checkForIgnoredParameter((java.lang.Object[])arguments[0],
 				(java.util.Set<java.lang.String>)arguments[1]);
 		}
 
-		if (_methodName141.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes141, parameterTypes)) {
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return UserExtensionLocalServiceUtil.constructUserExtentionJsonById((com.liferay.portal.model.User)arguments[0]);
 		}
 
@@ -284,16 +284,16 @@ public class UserExtensionLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName132;
-	private String[] _methodParameterTypes132;
-	private String _methodName133;
-	private String[] _methodParameterTypes133;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
-	private String _methodName139;
-	private String[] _methodParameterTypes139;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
-	private String _methodName141;
-	private String[] _methodParameterTypes141;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
+	private String _methodName145;
+	private String[] _methodParameterTypes145;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
 }

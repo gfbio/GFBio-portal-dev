@@ -24,89 +24,89 @@ import java.util.Arrays;
  */
 public class SubmissionServiceClpInvoker {
 	public SubmissionServiceClpInvoker() {
-		_methodName116 = "getBeanIdentifier";
+		_methodName128 = "getBeanIdentifier";
 
-		_methodParameterTypes116 = new String[] {  };
+		_methodParameterTypes128 = new String[] {  };
 
-		_methodName117 = "setBeanIdentifier";
+		_methodName129 = "setBeanIdentifier";
 
-		_methodParameterTypes117 = new String[] { "java.lang.String" };
+		_methodParameterTypes129 = new String[] { "java.lang.String" };
 
-		_methodName122 = "getLatestPublicSubmissions";
+		_methodName134 = "getLatestPublicSubmissions";
 
-		_methodParameterTypes122 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes134 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName123 = "getSubmissionsByBrokerSubmissionId";
+		_methodName135 = "getSubmissionsByBrokerSubmissionId";
 
-		_methodParameterTypes123 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes135 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName124 = "getSubmissionsByResearchObjectId";
+		_methodName136 = "getSubmissionsByResearchObjectId";
 
-		_methodParameterTypes124 = new String[] { "org.json.simple.JSONObject" };
+		_methodParameterTypes136 = new String[] { "org.json.simple.JSONObject" };
 
-		_methodName125 = "createSubmission";
+		_methodName137 = "createSubmission";
 
-		_methodParameterTypes125 = new String[] { "java.lang.String" };
+		_methodParameterTypes137 = new String[] { "java.lang.String" };
 
-		_methodName126 = "updateSubmission";
+		_methodName138 = "updateSubmission";
 
-		_methodParameterTypes126 = new String[] { "java.lang.String" };
+		_methodParameterTypes138 = new String[] { "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return SubmissionServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			SubmissionServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName134.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
 			return SubmissionServiceUtil.getLatestPublicSubmissions((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName135.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
 			return SubmissionServiceUtil.getSubmissionsByBrokerSubmissionId((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			return SubmissionServiceUtil.getSubmissionsByResearchObjectId((org.json.simple.JSONObject)arguments[0]);
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			return SubmissionServiceUtil.createSubmission((java.lang.String)arguments[0]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName138.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
 			return SubmissionServiceUtil.updateSubmission((java.lang.String)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName116;
-	private String[] _methodParameterTypes116;
-	private String _methodName117;
-	private String[] _methodParameterTypes117;
-	private String _methodName122;
-	private String[] _methodParameterTypes122;
-	private String _methodName123;
-	private String[] _methodParameterTypes123;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
+	private String _methodName134;
+	private String[] _methodParameterTypes134;
+	private String _methodName135;
+	private String[] _methodParameterTypes135;
+	private String _methodName136;
+	private String[] _methodParameterTypes136;
+	private String _methodName137;
+	private String[] _methodParameterTypes137;
+	private String _methodName138;
+	private String[] _methodParameterTypes138;
 }

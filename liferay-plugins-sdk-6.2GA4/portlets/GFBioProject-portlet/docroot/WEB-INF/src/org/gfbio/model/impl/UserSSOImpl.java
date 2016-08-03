@@ -12,23 +12,23 @@
  * details.
  */
 
-package org.gfbio.model;
-
-import com.liferay.portal.model.PersistedModel;
+package org.gfbio.model.impl;
 
 /**
- * The extended model interface for the User_SSO service. Represents a row in the &quot;gfbio_User_SSO&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the UserSSO service. Represents a row in the &quot;gfbio_UserSSO&quot; database table, with each column mapped to a property of this class.
+ *
+ * <p>
+ * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gfbio.model.UserSSO} interface.
+ * </p>
  *
  * @author Marcel Froemming
- * @see User_SSOModel
- * @see org.gfbio.model.impl.User_SSOImpl
- * @see org.gfbio.model.impl.User_SSOModelImpl
- * @generated
  */
-public interface User_SSO extends User_SSOModel, PersistedModel {
+public class UserSSOImpl extends UserSSOBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link org.gfbio.model.impl.User_SSOImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never reference this class directly. All methods that expect a user s s o model instance should use the {@link org.gfbio.model.UserSSO} interface instead.
 	 */
+	public UserSSOImpl() {
+	}
 }
