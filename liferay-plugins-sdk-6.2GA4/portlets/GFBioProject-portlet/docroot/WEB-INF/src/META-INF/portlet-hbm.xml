@@ -14,6 +14,7 @@
 	<import class="org.gfbio.model.Project_ResearchObject" />
 	<import class="org.gfbio.model.Project_User" />
 	<import class="org.gfbio.model.ResearchObject" />
+	<import class="org.gfbio.model.ResearchObject_User" />
 	<import class="org.gfbio.model.SearchHistory" />
 	<import class="org.gfbio.model.Submission" />
 	<import class="org.gfbio.model.UserExtension" />
@@ -60,6 +61,23 @@
 		<property name="livingobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="deadobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="sequencedata" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="botanicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="mycologicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="zoologicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="paleontologicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="botanicalTissueObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="mycologicalTissueObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="zoologicalTissueObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="botanicalDnaSamples" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="mycologicalDnaSamples" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="zoologicalDnaSamples" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="botanicalObjectsInEthanol" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="mycologicalObjectsInEthanol" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="zoologicalObjectsInEthanol" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="botanicalMicroscopicSlides" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="mycologicalMicroscopicSlides" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="zoologicalMicroscopicSlides" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="otherObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" table="gfbio_DataProvider_PersistentIdentifier">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK">
@@ -131,6 +149,16 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="extendeddata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metadataID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="org.gfbio.model.impl.ResearchObject_UserImpl" table="gfbio_ResearchObject_User">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.ResearchObject_UserPK">
+			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="userType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.SearchHistoryImpl" table="gfbio_SearchHistory">
 		<id name="searchHistoryID" type="long">

@@ -59,6 +59,23 @@
 			<basic name="livingobjects" />
 			<basic name="deadobjects" />
 			<basic name="sequencedata" />
+			<basic name="botanicalObjects" />
+			<basic name="mycologicalObjects" />
+			<basic name="zoologicalObjects" />
+			<basic name="paleontologicalObjects" />
+			<basic name="botanicalTissueObjects" />
+			<basic name="mycologicalTissueObjects" />
+			<basic name="zoologicalTissueObjects" />
+			<basic name="botanicalDnaSamples" />
+			<basic name="mycologicalDnaSamples" />
+			<basic name="zoologicalDnaSamples" />
+			<basic name="botanicalObjectsInEthanol" />
+			<basic name="mycologicalObjectsInEthanol" />
+			<basic name="zoologicalObjectsInEthanol" />
+			<basic name="botanicalMicroscopicSlides" />
+			<basic name="mycologicalMicroscopicSlides" />
+			<basic name="zoologicalMicroscopicSlides" />
+			<basic name="otherObjects" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -177,6 +194,24 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.ResearchObject_UserModelImpl">
+		<id-class class="org.gfbio.service.persistence.ResearchObject_UserPK" />
+		<attributes>
+			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
+			<id name="userID" />
+			<basic name="startDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="userType" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.SearchHistoryModelImpl">
 		<attributes>
 			<id name="searchHistoryID" />
@@ -287,6 +322,10 @@
 	</entity>
 	<entity class="org.gfbio.model.impl.ResearchObjectImpl" name="ResearchObject">
 		<table name="gfbio_ResearchObject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.ResearchObject_UserImpl" name="ResearchObject_User">
+		<table name="gfbio_ResearchObject_User" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.SearchHistoryImpl" name="SearchHistory">

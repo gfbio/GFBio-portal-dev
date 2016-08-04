@@ -385,4 +385,48 @@ UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='ENA';
 UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='PANGAEA';
 
 
+----------------------------------------------------------------------------------------------
+-------------------------------------     user sso      --  --------------------
+----------------------------------------------------------------------------------------------
 
+
+DROP TABLE IF EXISTS
+     gfbio_usersso;
+
+CREATE TABLE gfbio_usersso
+(
+  userId bigint NOT NULL,
+  token text,
+  lastmodifieddate timestamp without time zone,
+  CONSTRAINT gfbio_usersso_pkey PRIMARY KEY (userId)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_usersso
+  OWNER TO liferay_gfbio;
+  
+  
+----------------------------------------------------------------------------------------------
+---------------------------------     researchobject user      -- 02.08.2016 -----------------
+----------------------------------------------------------------------------------------------
+
+
+CREATE TABLE gfbio_researchobject_user
+(
+  researchobjectid bigint NOT NULL,
+  userid bigint NOT NULL,
+  startdate timestamp with time zone,
+  enddate timestamp with time zone,
+  usertype character(40),
+  researchobjectversion integer,
+  CONSTRAINT gfbio_researchobject_user_pkey PRIMARY KEY (researchobjectid, userid),
+  CONSTRAINT gfbio_researchobject_fkey FOREIGN KEY (researchobjectid, researchobjectversion)
+      REFERENCES gfbio_researchobject (researchobjectid, researchobjectversion) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_researchobject_user
+  OWNER TO liferay_gfbio;

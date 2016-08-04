@@ -34,6 +34,7 @@ import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.ResearchObject_UserLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
@@ -470,7 +471,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenseids","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype"};
+		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenseids","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype", "submiterid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -512,7 +513,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			if (requestJson.containsKey("authorid") && check)
 				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
-			
+			else if (requestJson.containsKey("submiterid") && check)
+				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("submiterid"));
+
+			if (requestJson.containsKey("submiterid") && check)
+				check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("submiterid"), "owner");
 			
 			if (requestJson.containsKey("projectid") && check)
 				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
@@ -565,7 +570,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenseids","licenselabel", "name", "researchobjectid"};
+		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenseids","licenselabel", "name", "researchobjectid", "submiterid", "submitertype"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);

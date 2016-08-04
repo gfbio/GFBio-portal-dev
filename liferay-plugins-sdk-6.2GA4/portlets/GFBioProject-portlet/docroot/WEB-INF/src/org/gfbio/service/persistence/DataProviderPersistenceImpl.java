@@ -1440,6 +1440,23 @@ public class DataProviderPersistenceImpl extends BasePersistenceImpl<DataProvide
 		dataProviderImpl.setLivingobjects(dataProvider.isLivingobjects());
 		dataProviderImpl.setDeadobjects(dataProvider.isDeadobjects());
 		dataProviderImpl.setSequencedata(dataProvider.isSequencedata());
+		dataProviderImpl.setBotanicalObjects(dataProvider.isBotanicalObjects());
+		dataProviderImpl.setMycologicalObjects(dataProvider.isMycologicalObjects());
+		dataProviderImpl.setZoologicalObjects(dataProvider.isZoologicalObjects());
+		dataProviderImpl.setPaleontologicalObjects(dataProvider.isPaleontologicalObjects());
+		dataProviderImpl.setBotanicalTissueObjects(dataProvider.isBotanicalTissueObjects());
+		dataProviderImpl.setMycologicalTissueObjects(dataProvider.isMycologicalTissueObjects());
+		dataProviderImpl.setZoologicalTissueObjects(dataProvider.isZoologicalTissueObjects());
+		dataProviderImpl.setBotanicalDnaSamples(dataProvider.isBotanicalDnaSamples());
+		dataProviderImpl.setMycologicalDnaSamples(dataProvider.isMycologicalDnaSamples());
+		dataProviderImpl.setZoologicalDnaSamples(dataProvider.isZoologicalDnaSamples());
+		dataProviderImpl.setBotanicalObjectsInEthanol(dataProvider.isBotanicalObjectsInEthanol());
+		dataProviderImpl.setMycologicalObjectsInEthanol(dataProvider.isMycologicalObjectsInEthanol());
+		dataProviderImpl.setZoologicalObjectsInEthanol(dataProvider.isZoologicalObjectsInEthanol());
+		dataProviderImpl.setBotanicalMicroscopicSlides(dataProvider.isBotanicalMicroscopicSlides());
+		dataProviderImpl.setMycologicalMicroscopicSlides(dataProvider.isMycologicalMicroscopicSlides());
+		dataProviderImpl.setZoologicalMicroscopicSlides(dataProvider.isZoologicalMicroscopicSlides());
+		dataProviderImpl.setOtherObjects(dataProvider.isOtherObjects());
 
 		return dataProviderImpl;
 	}
