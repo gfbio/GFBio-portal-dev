@@ -1,19 +1,21 @@
+
+
 .aui{
 	
 	
 	background-color: white;
 	color: #818181;
-	font-family: sans-serif;
-	font-weight: 300;
-	font-size: 15px ;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	font-size: 16px ;
 	
 	
 	body{
 	
 		background-color: white;
-		font-family: sans-serif;
-		font-weight: 300;
-		font-size: 15px ;
+		font-family: 'Lato',sans-serif;
+		font-weight: 400;
+		font-size: 16px ;
 		color: #818181;
 		line-height:24px;
 		padding:0;
@@ -25,6 +27,8 @@
 	    -ms-transition: all 0.3s ease-out 0s;
 	    -o-transition: all 0.3s ease-out 0s;
 	    transition: all 0.3s ease-out 0s;
+	    
+	    font-weight: 400;
 		}
 
 		a, a:hover, a:focus, .btn:focus {
@@ -38,13 +42,13 @@
 		}
 		 h1{
 			font-size: 36px;
-			font-weight:100;
+			font-weight:300;
 			
 		}
 		
 		h2{
 			font-size: 30px;
-			font-weight:100;
+			font-weight:300;
 		}
 		
 		h3 {
@@ -83,12 +87,8 @@
 	
 	}
 	
-	img#logo-gfbio {
-	
-		
-		/*height: 60px;*/
-		width: 130px;
-		/*border-bottom: none;*/
+	img#logo-gfbio {		
+		width: 122px;
 		 
 	}
 	
@@ -141,7 +141,7 @@
 
 
 
-/* .btn-blue {
+.btn-blue {
     background-color: rgba(0, 158, 227, 0.78);
     background-color: rgba(52, 90, 162, 0.8);
     box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.15) inset;
@@ -157,11 +157,12 @@
     border-radius: 6px;
     color: #fff;
     padding: 12px 35px;
+    background: transparent;
 }
 
 .bg-blue {
     background-color: #345AA2;
-} */
+}
 
 /* Sweep To Right */
 .btn-effect {
@@ -255,56 +256,9 @@ textarea{
     box-shadow: none;
     color: #818181;
 }
-
-/**
-/*	Preloader
-/* ==========================================*/
-
-#preloader {
-    background-color: #fff;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-}
-
-/*Battery*/
-.loder-box {
-    background-color: rgba(0, 0, 0, 0.02);
-    border-radius: 1px;
-    height: 100px;
-    left: 50%;
-    margin-left: -64px;
-    margin-top: -50px;
-    position: absolute;
-    top: 50%;
-    width: 128px;
-}
-
-.battery {
-    width: 60px;
-    height: 25px;
-    top: 35%;
-    border: 1px #2E2E2E solid;
-    border-radius: 2px;
-    position: relative;
-    -webkit-animation: charge 5s linear infinite;
-    -moz-animation: charge 5s linear infinite;
-    animation: charge 5s linear infinite;
-    margin: 0 auto;
-}
-
-.battery:after {
-    background-color: #2E2E2E;
-    border-radius: 0 1px 1px 0;
-    content: "";
-    height: 10px;
-    position: absolute;
-    right: -5px;
-    top: 7px;
-    width: 3px;
-}	
 	
+
+
 /*==========================================================
 	Menu, Navigation
 ===========================================================*/	
@@ -322,6 +276,8 @@ textarea{
 
 	ul > li > a {
 		color:#555;
+		font-size: 15px;
+		font-weight: 400;
 	
 	}
 	
@@ -687,6 +643,7 @@ Search
 	}
 	
 }
+
 
 /*==========================================================
 Devices
@@ -1254,4 +1211,13 @@ Liferay fixes - Dockbar
  a.selected .active span{
  	color:#3D91FF;
  }
+ 
+}
+
+/*=========================================================
+Liferay fixes - deprecated classes
+=========================================================*/
+
+.overlay {
+    position: relative;
 }

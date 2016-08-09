@@ -625,18 +625,20 @@ $dockbarVerticalWidth: 240px;
 	.dockbar-vertical {
 		.icon-toggle-dockbar {
 			/*background: $standarLiferayBlue;*/
-			color: #555;
+			color: #666;
 			cursor: pointer;
 			display: block;
 			font-size: 25px;
-			height: 25px;
+			height: 40px;
 			left: 0;
-			padding: 3px 4px 4px;
+			padding: 5px;
 			position: fixed;
 			text-align: center;
 			top: 90px;
-			width: 25px;
+			width: 35px;
 			z-index: 9999;
+			background:#ffffff;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
 			@include border-radius(0 5px 5px 0);
 			@include transition(all 0.1s ease-in-out);

@@ -40,12 +40,7 @@ AUI().ready(
 				);
 			}
 		};
-		/*
-		var parentSearch = A.one('#page-search');
-		parentSearch.get('#search').remove(true);
-		
-		parentSearch.append('<button id="navbar-search-submit" type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>');
-	*/	
+	
 	}
 	
 	
