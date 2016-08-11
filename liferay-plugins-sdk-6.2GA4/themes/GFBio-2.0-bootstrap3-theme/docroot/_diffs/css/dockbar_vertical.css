@@ -804,9 +804,16 @@ $dockbarVerticalWidth: 240px;
 		}
 
 		.icon-toggle-dockbar {
-			height: 30px;
-			padding: 8px 4px 4px;
-			width: 30px;
+			height: 40px;
+			width: 40px;
+			padding: 6px;
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			left: unset;
+			float: right;
+			margin: 4px;
+			border-radius: 4px;
 		}
 
 		.navbar-static-top {
@@ -826,6 +833,18 @@ $dockbarVerticalWidth: 240px;
 				display: block;
 				height: auto;
 				overflow: visible;
+			}
+		}
+		
+		.portlet-dockbar{
+			.navbar{
+				display:none;
+			}
+			.navbar.over{
+				display:block;
+				top: 60px;
+				left: unset;
+				right: 0px;
 			}
 		}
 	}
