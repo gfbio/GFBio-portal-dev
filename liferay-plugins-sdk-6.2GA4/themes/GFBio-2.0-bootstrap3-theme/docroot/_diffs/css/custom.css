@@ -8,7 +8,8 @@
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
 	font-size: 16px ;
-	
+	line-height:24px;
+	padding:0;
 	
 	body{
 	
@@ -32,13 +33,18 @@
 		}
 
 		a, a:hover, a:focus, .btn:focus {
-		    text-decoration: none;
-		    outline: none;
+		    /*text-decoration: none;
+		    outline: none;*/
+		    color: rgb(60, 172, 228);
+			text-decoration: underline;
+			text-decoration-style: dotted;
 		}
 		
+		h1,h2,h3,h4,h5,
 		.h1, .h2, .h3, .h4, .h5, .h6 {
         font-family: 'Lato', sans-serif;
-			color:#666;
+			/*color:#666;*/
+			color:rgb(49, 86, 159);
 		}
 		 h1{
 			font-size: 36px;
@@ -232,6 +238,7 @@
 
 .btn-effect:hover, .btn-effect:focus, .btn-effect:active {
     color: #345AA2;
+    border-color: white;
 }
 
 .btn-effect:hover:before, .btn-effect:focus:before, .btn-effect:active:before {
@@ -278,6 +285,7 @@ textarea{
 		color:#555;
 		font-size: 15px;
 		font-weight: 400;
+		text-decoration: none;
 	
 	}
 	
@@ -330,7 +338,7 @@ h1.navbar-brand {
     -o-transition: all 0.8s ease 0s;
     transition: all 0.8s ease 0s;
 
-    background: url("../img/GFBio_logo_png_60x122.png") no-repeat center center;
+    background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;
     padding: 60px 122px 0 0 !important;
 
     /*background: url("../img/GFBio_logo_png_299x147.png") no-repeat center center;*/
@@ -349,7 +357,7 @@ h1.navbar-brand {
     -o-transition: all 0.8s ease 0s;
     transition: all 0.8s ease 0s;
 
-    background: url("../img/GFBio_logo_png_60x122.png") no-repeat center center;
+    background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;
     padding: 60px 122px 0 0 !important;
 }
 
@@ -517,6 +525,7 @@ div#navbar-search-wrapper {
     color: #666;
     font-size: 15px;
     padding: 10px 0 10px 10px;
+    text-decoration: none;
 }
 
 .yamm-content h4 {
@@ -529,6 +538,7 @@ div#navbar-search-wrapper {
 
 .yamm-content a:hover {
     color: #333;
+    text-decoration: none;
 }
 
 .yamm-content .tile-1 {
@@ -607,8 +617,12 @@ Search
 	float: right;
 	padding-top: 18px;
 	margin-left: 2em;
-	color: #999;
-	font-size:15px;
+	
+	a{
+		font-size:16px;
+		color: #333;
+    	text-decoration: none;
+	}
 }
 
 #page-search{
@@ -1059,9 +1073,9 @@ a.btn-footer:hover {
 
 div.toggler {
 	margin-top: 20px;
-	font: 15px sans-serif;
-	color: #39F;
-	cursor: pointer
+	cursor: pointer;
+	color: rgb(60, 172, 228);
+	
 }
 
 div.toggler:before {
@@ -1076,13 +1090,14 @@ div.toggler .ui-icon {
 	height: 0px;
 	weight:0px;
 }
+
 div.toggler.ui-state-active {
-	font-family: sans-serif;
-	color: #000
+	color: #818181;
 }
 
 div.toggler:hover {
-	color: #000
+	text-decoration: underline;
+	text-decoration-style: dotted;
 }
 
 div.toggler.ui-state-active:before {
@@ -1093,9 +1108,10 @@ div.toggler.ui-state-active:before {
 div.toggler.ui-state-default{
 	border: 0px;
 	background: none;
+	font-weight: 400;
 }
 div.toggler.ui-state-default a {
-	color: #555555;
+	color: #818181;
 	text-decoration: none;
 }
 div.toggler.ui-state-hover,
