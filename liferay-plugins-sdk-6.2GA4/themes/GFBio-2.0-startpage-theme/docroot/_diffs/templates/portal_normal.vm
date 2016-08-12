@@ -34,6 +34,12 @@
 
 	
 	<div class="container">
+		<!-- logo -->
+            <!--<a href="#body">
+                <h1 class="navbar-brand">
+                </h1>
+            </a>-->
+            <!-- /logo -->
 		<div id="logo-gfbio">
 				<a id="logo-gfbio-link" href="/">
 				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
