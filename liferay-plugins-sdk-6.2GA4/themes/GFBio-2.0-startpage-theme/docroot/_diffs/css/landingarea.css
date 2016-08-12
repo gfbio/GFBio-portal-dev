@@ -33,9 +33,33 @@
 .aui{
 	
 .site-content{
-	margin-top:0px;
+	margin-top:10px;
 }	
 
+figure, p, address {
+    margin: 0;
+}
+
+p {
+    line-height: 25px;
+}
+
+iframe {
+    border: 0;
+}
+
+a, a:hover, a:focus, .btn:focus {
+		    text-decoration: none;
+		    outline: none;
+		   
+		}
+		
+		h1,h2,h3,h4,h5,
+		.h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: 'Lato', sans-serif;
+			color:#666;
+		}
+		
 /**
 /*	Preloader
 /* ==========================================*/
@@ -592,7 +616,7 @@ ul.external {
     padding: 0;
     position: absolute;
     right: 0;
-    top: -47px;
+    top: -50px;
 
     -webkit-transition: all 0.4s ease 0s;
     -moz-transition: all 0.4s ease 0s;
