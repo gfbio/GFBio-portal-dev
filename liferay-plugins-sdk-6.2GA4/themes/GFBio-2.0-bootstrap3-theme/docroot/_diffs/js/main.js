@@ -40,7 +40,13 @@ AUI().ready(
 				);
 			}
 		};
-	
+		
+		// highlight the current url on navigation bar
+		for (var i = 0; i < document.links.length; i++) {
+		    if (document.links[i].href == document.URL) {
+		        document.links[i].className = 'menu-active';
+		    }
+		}
 	}
 	
 	

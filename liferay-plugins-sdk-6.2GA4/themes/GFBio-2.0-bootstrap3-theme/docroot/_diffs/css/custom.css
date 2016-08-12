@@ -281,6 +281,10 @@ textarea{
 	
 	}
 	
+	
+	ul > li > a.menu-active{
+			color:#337ab7;
+	}
 }
 
 #navigation {
