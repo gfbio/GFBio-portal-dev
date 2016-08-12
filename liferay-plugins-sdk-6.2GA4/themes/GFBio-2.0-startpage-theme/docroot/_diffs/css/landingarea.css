@@ -48,18 +48,7 @@ iframe {
     border: 0;
 }
 
-a, a:hover, a:focus, .btn:focus {
-		    text-decoration: none;
-		    outline: none;
-		   
-		}
-		
-		h1,h2,h3,h4,h5,
-		.h1, .h2, .h3, .h4, .h5, .h6 {
-        font-family: 'Lato', sans-serif;
-			color:#666;
-		}
-		
+
 /**
 /*	Preloader
 /* ==========================================*/
@@ -108,6 +97,9 @@ a, a:hover, a:focus, .btn:focus {
     top: 7px;
     width: 3px;
 }
+
+
+
 
 	
 /*=================================================================
@@ -562,6 +554,55 @@ a, a:hover, a:focus, .btn:focus {
     margin-left: 135px;
 }
 
+
+.sec-title {
+    margin-bottom: 50px;
+}
+
+.sec-title.white {
+    color: #fff;
+}
+
+.sec-title h2 {
+    font-size: 36px;
+    margin: 0 0 30px;
+    padding-bottom: 30px;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 300;
+    color:#666;
+}
+
+.sec-title.white h2 {
+    color: #fff;
+}
+
+.sec-title h2:after {
+    /*border-bottom: 1px solid #009ee3;*/
+    border-bottom: 2px solid rgba(129, 178, 72, 0.8);
+    content: "";
+    display: block;
+    left: 45%;
+    bottom: 0;
+    position: absolute;
+    width: 115px;
+}
+
+.sec-title.white h2:after {
+    border-bottom: 1px solid #fff;
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}	
+
+
+
+
+
 /*=================================================================
 	Portfolio
 ==================================================================*/
@@ -643,7 +684,8 @@ ul.external li a {
 }
 
 ul.external li a:hover {
-    background-color: #009EE3;
+    /*background-color: #009EE3;*/
+    background-color:rgb(60, 172, 228);
     color: #fff;
 }
 
