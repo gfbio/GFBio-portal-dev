@@ -31,31 +31,33 @@
 							#end
  							<div class="yamm-content">
                             	<div class="row">
-                                	<div class="col-md-6">
-										<li id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
-										<a class="$nav_child_css_class" aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
+                                	##<div class="col-md-6">
+										<ul class="list-unstyled">
+											<li id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
+											<a class="$nav_child_css_class" aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
 									
-									#if ($nav_child.hasChildren())
-										<ul class="level2" role="menu">
-											#foreach ($nav_child2 in $nav_child.getChildren())
-												#set ($nav_child2_attr_selected="")
-												#set ($nav_child2_css_class = "false")
-												
-												#if ($nav_child2.isSelected())
-													#set ($nav_child2_attr_selected="aria-selected='true'")
-													#set ($nav_child2_css_class = "selected")
+												#if ($nav_child.hasChildren())
+													<ul class="level2" role="menu">
+														#foreach ($nav_child2 in $nav_child.getChildren())
+															#set ($nav_child2_attr_selected="")
+															#set ($nav_child2_css_class = "false")
+															
+															#if ($nav_child2.isSelected())
+																#set ($nav_child2_attr_selected="aria-selected='true'")
+																#set ($nav_child2_css_class = "selected")
+															#end
+								
+															<li id="layout_$nav_child2.getLayoutId()" $nav_child2_attr_selected role="presentation">
+																<a class="$nav_child2_css_class" aria-labelledby="layout_$nav_child2.getLayoutId()" href="$nav_child2.getURL()" $nav_child2.getTarget() role="menuitem">$nav_child2.getName()</a>
+																	
+															</li>
+														#end
+													</ul>
 												#end
-					
-												<li id="layout_$nav_child2.getLayoutId()" $nav_child2_attr_selected role="presentation">
-													<a class="$nav_child2_css_class" aria-labelledby="layout_$nav_child2.getLayoutId()" href="$nav_child2.getURL()" $nav_child2.getTarget() role="menuitem">$nav_child2.getName()</a>
-														
-												</li>
-											#end
-										</ul>
-									#end
 									
-							   </li>
-							</div>
+							   				</li>
+							   			</ul>
+							##</div>
                             </div>
                         </div>
 						#end
