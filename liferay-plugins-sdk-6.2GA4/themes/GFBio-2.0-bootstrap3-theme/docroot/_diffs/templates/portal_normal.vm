@@ -36,7 +36,7 @@ $theme.include($body_top_include)
 	
 	<div class="container">
 		<div id="logo-gfbio">
-				<a id="logo-gfbio-link" href="/">
+				<a id="logo-gfbio-link" href="$portal_url">
 				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
 		</div>
 		

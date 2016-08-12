@@ -107,6 +107,7 @@ $dockbarVerticalWidth: 240px;
 					line-height: 31px;
 					margin: 0 5px 0 0;
 					padding: 6px 10px;
+					text-decoration:none;
 
 					&:focus, &:hover {
 						color: #FFF;
@@ -171,6 +172,7 @@ $dockbarVerticalWidth: 240px;
 						color: #FFF;
 						font-size: 0.9em;
 						font-weight: 300;
+						text-decoration:none;
 
 						&:focus, &:hover {
 							background: lighten($standarGrey, 20%);
