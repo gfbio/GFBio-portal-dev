@@ -218,7 +218,7 @@
 }
 
  .form-control, input.field[type="text"], input.field[type="password"]{
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
     border: 1px solid #ececec;
     border-radius: 0;
     box-shadow: none;
@@ -281,29 +281,14 @@ textarea{
     -o-transition: all 0.8s ease 0s;
     transition: all 0.8s ease 0s;
 
-    /*background-color: rgba(0,0,0,.3);*/
     background-color: transparent;
-    /*background-color: rgba(255, 255, 255, 0.3);*/
-
-    /* for dark backgroudimages */
+   
     color: #fff;
-    /*background-color: rgba(255, 255, 255, 1.0);*/
-    /*background-color: rgba(52, 90, 162, 1.0);*/
-    /*color: #666;*/
 
-    /*box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);*/
-    /*padding: 5px 0;*/
-    /*margin-top: 33%;*/
-
-    /* uncomment to enable collapsing two-row navi example  */
-    /*height: 7.5em;*/
-    
-    height:60px;
 }
 
 .navigation-shadow {
-    /* uncomment to enable collapsing two-row navi example  */
-    /*height: 3.5em !important;*/
+    
     background-color: #fff !important;
     color: #666 !important;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -324,11 +309,6 @@ h1.navbar-brand {
     background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;
     padding: 60px 122px 0 0 !important;
 
-    /*background: url("../img/GFBio_logo_png_299x147.png") no-repeat center center;*/
-    /*padding: 147px 299px 0 0 !important;*/
-
-    /*background: url(../img/GFBio_logo_174x86.png) no-repeat center center;*/
-    /*padding: 86px 174px 0 0 !important;*/
 
     margin: 0;
 }
@@ -348,37 +328,7 @@ h1.navbar-brand {
     /*padding-top: 5px;*/
 }
 
-/* uncomment to enable collapsing two-row navi example  */
-/*#nav-right-root {
-    -webkit-transition: all 0.8s ease 0s;
-    -moz-transition: all 0.8s ease 0s;
-    -ms-transition: all 0.8s ease 0s;
-    -o-transition: all 0.8s ease 0s;
-    transition: all 0.8s ease 0s;
-}
 
-#nav-right-root2 {
-    -webkit-transition: all 0.8s ease 0s;
-    -moz-transition: all 0.8s ease 0s;
-    -ms-transition: all 0.8s ease 0s;
-    -o-transition: all 0.8s ease 0s;
-    transition: all 0.8s ease 0s;
-}
-
-#navigation.navigation-shadow div.container #nav-right-root {
-    -moz-transform: translateX(264px) translateY(-4.28571em);
-    -ms-transform: translateX(264px) translateY(-4.28571em);
-    -webkit-transform: translateX(264px) translateY(-4.28571em);
-    transform: translateX(264px) translateY(-4.28571em)
-}
-
-#navigation.navigation-shadow div.container #nav-right-root2 {
-    -moz-transform: translateY(-4.28571em);
-    -ms-transform: translateY(-4.28571em);
-    -webkit-transform: translateY(-4.28571em);
-    transform: translateY(-4.28571em)
-}
-*/
 #nav-left {
     padding-left: 50px;
     height:60px;
@@ -604,8 +554,8 @@ Search
 	margin-left: 2em;
 	
 	a{
-		font-size:16px;
-		color: #333;
+		font-size:15px;
+		color: #666;
     	text-decoration: none;
 	}
 }
@@ -662,44 +612,6 @@ Devices
 
 
 
-/*=================================================================
-	Contact
-==================================================================*/
-
-/* .contact-form-helpdesk label{
-	display:none;
-}
-
-.contact-form-helpdesk legend{
-	display:none;
-}
-.contact-form-helpdesk .description{
-	display:none;
-}
-
-.contact-form-helpdesk textarea {
-    width: 100%;
-    height: 165px;
-}
-
-.contact-form-helpdesk .btn {
-    border-radius: 0;
-    border: 0;
-    position: relative;
-    text-transform: uppercase;
-    margin-top:10px;
-    background-color: rgba(0, 158, 227, 0.78);
-    background-color: rgba(52, 90, 162, 0.8);
-    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.15) inset;
-    padding: 15px 55px;
-    color: #fff;
-    border-radius: 6px;
-}
-
-.contact-form-helpdesk .btn-primary:hover {
-    background-color: rgba(129, 178, 72, 1.0);
-}
- */
 
 
 
