@@ -48,6 +48,9 @@ iframe {
     border: 0;
 }
 
+section {
+    padding: 70px 0;
+}
 
 /**
 /*	Preloader
