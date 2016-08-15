@@ -124,7 +124,9 @@
     border-radius: 6px;
 }
 
-
+.btn .btn-border{
+	width:auto;
+}
 
 .btn-border {
     border: 2px solid #fff;
