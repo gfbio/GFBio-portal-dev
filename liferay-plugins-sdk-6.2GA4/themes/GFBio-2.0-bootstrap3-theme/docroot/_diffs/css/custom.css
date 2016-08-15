@@ -945,6 +945,14 @@ Liferay fixes - Dockbar
  	color:#3D91FF;
  }
  
+ /* fix portlet controls*/ 
+ div.portlet-borderless-bar{
+ 	top:6px;
+ }
+ div.portlet-borderless-bar > span.portlet-title-default{
+ 	min-height:26px;
+ 	padding-top:2px;
+ }
 }
 
 /*=========================================================
