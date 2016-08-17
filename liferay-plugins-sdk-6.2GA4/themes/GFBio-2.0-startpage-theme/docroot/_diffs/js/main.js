@@ -114,6 +114,73 @@ AUI().ready(
 );
 		
 
+AUI().ready(
+		function(){
+	
+	/* ========================================================================= */
+    /*	Menu item highlighting
+     /* ========================================================================= */
+
+    jQuery('.aui #nav-left').singlePageNav({
+        offset: jQuery('.aui #nav-left').outerHeight(),
+        filter: ':not(.external)',
+        speed: 2000,
+        currentClass: 'current',
+        easing: 'easeInOutExpo',
+        updateHash: true,
+        beforeStart: function () {
+            console.log('begin scrolling');
+        },
+        onComplete: function () {
+            console.log('done scrolling');
+        }
+    });
+
+
+    // yamm megamenu
+    $(document).on('click', '.aui .yamm .dropdown-menu', function (e) {
+        e.stopPropagation()
+    });
+
+
+    // Dropdown Menu Fade
+    $(".dropdown").hover(
+        function () {
+            $('.aui .dropdown-menu', this).stop().fadeIn("slow");
+        },
+        function () {
+            $('.aui .dropdown-menu', this).stop().fadeOut("slow");
+        });
+
+
+    //$(".navbar-fixed-top").hide();
+
+
+    $(window).scroll(function () {
+
+        // TODO: FIXME: remove this diry hack ... it prevents shadow-class for submissio page ....
+        var useTransparent = true;
+        if (typeof transparentNaviOnLoad !== 'undefined') {
+            useTransparent = transparentNaviOnLoad;
+        }
+        if ($(window).scrollTop() > 100) {
+            if (useTransparent) {
+                $(".navbar-fixed-top").addClass("navigation-shadow");
+            }
+
+
+         } else {
+       
+              if (useTransparent) {
+                $(".navbar-fixed-top").removeClass("navigation-shadow");
+            }
+        }
+       
+    });
+	
+}
+		
+);
 
 
 

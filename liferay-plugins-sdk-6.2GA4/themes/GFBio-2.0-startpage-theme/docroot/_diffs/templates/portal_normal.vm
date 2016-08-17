@@ -35,15 +35,15 @@
 	
 	<div class="container">
 		<!-- logo -->
-            <!--<a href="#body">
+            <a href="$portal_url">
                 <h1 class="navbar-brand">
                 </h1>
-            </a>-->
+            </a>
             <!-- /logo -->
-		<div id="logo-gfbio">
+		<!--<div id="logo-gfbio">
 				<a id="logo-gfbio-link" href="$portal_url">
 				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
-		</div>
+		</div>-->
 		
 		<div id="nav">	
 			#if ($has_navigation || $is_signed_in)
@@ -62,7 +62,16 @@
          
           
           <div id="sign-in-link">
-            	<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
+            	
+            	#if ($show_sign_in)
+				
+					<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
+				
+				#end
+            	
+            	#if ($is_signed_in)
+					<a href="$sign_out_url" title="sign out">$sign_out_text</a>
+				#end
             	
             	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
        
@@ -88,120 +97,7 @@ $theme.include($body_top_include)
 #end
 
 <main class="site-content" role="main">
-		
-<!--
-<section id="home-slider">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 wow animated zoomIn" style="margin-top:15%;background:transparent">
-				<div class="row container">
-					<h1 class="landing-h1">Research Data Management</h1>
-					<span class="landing-h1-sub">Step by step through the Data Life Cycle.</span></div>
-
-					<div class="row">
-						<div class="col-sm-6">
-							<p class="landing-p">
-							Welcome to GFBio, the German Federation for Biological Data, a sustainable, service oriented, national data infrastructure facilitating data sharing for biological and environmental research.
-							</p>
-						</div>
-					</div>
-
-					<div class="row container"><!--s-->
-						<div class="col-xs-2" style="padding-left: 0;">
-							<a class="btn btn-border pull-left" href="#">Get more Information</a>
-						</div>
-
-						<div class="col-xs-9">&nbsp;</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-<!-- flex tiles -->
-
-			<div class="row container-fluid wow animated zoomIn" id="flex-wrap">
-
-				<div class="home-col home-1" id="home-1">
-					<div class="project">
-						<a href="submission.html">
-							<h1><span class="icon-landing-flex icon-upload4">&nbsp;</span></h1>
 	
-							<h3>Submit</h3>
-							
-	
-							<div class="hover">
-								<div class="hover-content">
-									<p><span>Submit</span>
-									Deposit data and specimens in dedicated long-term archives. </p>
-									<span class="icon-arrow icon-enter">&nbsp;</span>
-								</div>
-								
-							</div>
-						</a>
-					</div>
-				</div>
-
-				<div class="home-col home-1">
-					<div class="project">
-						<a href="#">
-
-							<h1><span class="icon-landing-flex icon-telescope">&nbsp;</span> </h1>
-	
-							<h3>Search</h3>
-							<div class="hover">
-								<div class="hover-content">
-									<p>
-										<span>Search</span> 
-										Start searching integrated datasets and archives. 
-									</p>
-										<span class="icon-arrow icon-enter">&nbsp;</span> 
-									
-								</div>
-								
-							</div>
-						</a>
-					</div>
-				</div>
-
-				<div class="home-col home-1">
-					<div class="project">
-						<a href="#">
-
-							<h1><span class="icon-landing-flex icon-gears">&nbsp;</span></h1>
-							<h3>Manage</h3>
-							<div class="hover">
-								<div class="hover-content">
-									<p><span>Manage</span> Prepare a custom Data Management Plan for your project or application. </p>
-									<span class="icon-arrow icon-enter">&nbsp;</span> 
-								</div>
-								
-							</div>
-						
-					   </a>
-					</div>
-			  </div>
-
-			<div class="home-col home-1">
-				<div class="project">
-					<a href="#">
-
-						<h1><span class="icon-landing-flex icon-tools">&nbsp;</span></h1>
-						<h3>Tools</h3>
-						<div class="hover">
-							<div class="hover-content">
-								<p><span>Tools</span> Biodiversity Management tools developed and supported by GFBio. </p>
-								<span class="icon-arrow icon-enter">&nbsp;</span> 
-							</div>
-							
-						</div>
-				    </a>
-				</div>
-			</div>
-		</div>
-<!--/ flex tiles -->
-
-</section>	
-		
 		
 		#if ($selectable)
 			$theme.include($content_include)
