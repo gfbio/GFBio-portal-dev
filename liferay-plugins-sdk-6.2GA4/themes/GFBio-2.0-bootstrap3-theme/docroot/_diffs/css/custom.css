@@ -20,6 +20,7 @@
 		color: #818181;
 		line-height:24px;
 		padding:0;
+		margin-top: -10px;
 	 
 	 
 	 a {
@@ -308,7 +309,9 @@ h1.navbar-brand {
     -o-transition: all 0.8s ease 0s;
     transition: all 0.8s ease 0s;
 
-    background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;
+    /*background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;*/
+    background: url('../images/gfbiologo-transparent.png') no-repeat center center;
+    
     padding: 60px 122px 0 0 !important;
 
 
@@ -322,7 +325,8 @@ h1.navbar-brand {
     -o-transition: all 0.8s ease 0s;
     transition: all 0.8s ease 0s;
 
-    background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;
+    /*background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;*/
+    background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;
     padding: 60px 122px 0 0 !important;
 }
 
@@ -632,7 +636,20 @@ Devices
 }
 
 
+/*=========================================================
+Breadcrumbs
+===========================================================*/
+.breadcrumb{
+	background: transparent;
+}
 
+.breadcrumb > li + li::before{
+	content: "";
+}
+
+.breadcrumb > li > a:hover, .breadcrumb > .menu-active,  .breadcrumb > .active{
+	color:#335AA3;
+}
 
 /*============================================================
 	Footer
@@ -917,7 +934,7 @@ Liferay fixes - Dockbar
 /* } */
 
  .form-group, .control-group{
- 	margin:5px;
+ 	margin:10px;
  }
  .input-field input{
     border-radius:0px !important;
