@@ -1,7 +1,7 @@
-﻿------------------------------------- UserSSO ------------------------------------- 
+------------------------------ UserSSO ------------------------------- 
 
 DROP TABLE IF EXISTS
-     gfbio_usersso;
+gfbio_usersso;
 
 CREATE TABLE gfbio_usersso
 (

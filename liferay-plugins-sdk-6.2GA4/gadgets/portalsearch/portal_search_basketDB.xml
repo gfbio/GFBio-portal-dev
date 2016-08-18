@@ -80,7 +80,6 @@
 					adjustGadgetHeight();
 					document.getElementById('gfbioSearchInput').focus();
 				});
-				
 			</script>
 		</html>
 	]]>
