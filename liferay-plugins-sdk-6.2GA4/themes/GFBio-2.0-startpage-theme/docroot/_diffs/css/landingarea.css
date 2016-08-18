@@ -561,6 +561,7 @@ section {
 
 .sec-title {
     margin-bottom: 50px;
+    background:transparent;
 }
 
 .sec-title.white {
@@ -661,12 +662,76 @@ section {
     color:#666;
 }
 
+/*=================================================================
+	Price
+==================================================================*/
+
+#social {
+    background-image: url('../images/unsplash_books.jpg');
+    padding: 0;
+}
+
+#social .overlay {
+    /*background-color: rgba(129, 178, 72, 0.7);*/
+    /*background-color: rgba(60, 172, 228, 0.8);*/
+    background-color: rgba(52, 90, 162, 0.75);
+    /*background-color: rgba(102, 102, 102, 0.75);*/
+    /*background: url("../img/slide_bg.png") repeat scroll 0 0 transparent;*/
+    padding: 100px 0 120px;
+
+}
+
+.social-button {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    background:transparent;
+}
+
+.social-button li {
+    display: inline-block;
+    background:transparent;
+}
+
+.social-button li:nth-child(1) {
+    margin: 0 75px;
+}
+
+.social-button li:nth-child(2) {
+    margin: 0 75px;
+}
+
+.social-button li a {
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    display: block;
+    height: 90px;
+    line-height: 96px;
+    width: 90px;
+
+    -webkit-transition: all 0.2s ease 0s;
+    -moz-transition: all 0.2s ease 0s;
+    -ms-transition: all 0.2s ease 0s;
+    -o-transition: all 0.2s ease 0s;
+    transition: all 0.2s ease 0s;
+}
+
+.social-button li a:hover {
+    /*rgba(52, 90, 162, 0.8);*/
+    /*rgba(129, 178, 72, 0.8);*/
+    color: rgba(60, 172, 228, 1.0);
+    border: 2px solid rgba(60, 172, 228, 1.0);
+}
+
+
 /*================================================================
 Contact
 ==============================================================*/
 .contact-details h3 {
     margin-top: 0;
-    border-bottom: 1px dotted rgba(52, 90, 162, 0.75);
+    border-bottom: 1px dotted rgba(52, 90, 162, 0.75);;
     font-weight: 400;
     margin-bottom: 15px;
     padding-bottom: 15px;

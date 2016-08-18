@@ -35,10 +35,10 @@ $theme.include($body_top_include)
 
 	
 	<div class="container">
-		<div id="logo-gfbio">
-				<a id="logo-gfbio-link" href="$portal_url">
-				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
-		</div>
+		<a href="$portal_url">
+                <h1 class="navbar-brand">
+                </h1>
+            </a>
 		
 		<div id="nav">	
 			#if ($has_navigation || $is_signed_in)
@@ -56,8 +56,17 @@ $theme.include($body_top_include)
           
          
           
+          
           <div id="sign-in-link">
-            	<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
+            	#if ($show_sign_in)
+				
+					<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
+				
+				#end
+            	
+            	#if ($is_signed_in)
+					<a href="$sign_out_url" title="sign out">$sign_out_text</a>
+				#end
             	
             	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
        
