@@ -65,12 +65,20 @@
             	
             	#if ($show_sign_in)
 				
-					<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
+					<a href="$sign_in_url" title="Please sign in or register!">
+						<i class="fa fa-sign-in" aria-hidden="true"></i>
+						
+						$sign_in_text
+					</a>
 				
 				#end
             	
             	#if ($is_signed_in)
-					<a href="$sign_out_url" title="sign out">$sign_out_text</a>
+					<a href="$sign_out_url" title="sign out">
+					<i class="fa fa-sign-out" aria-hidden="true"></i>
+					
+					$sign_out_text
+					</a>
 				#end
             	
             	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
