@@ -3,7 +3,7 @@
 
 <layout-templates>
 	<custom>
-		<layout-template id="gfbio-columns-1-2_container-1-layouttpl" name="1-2(Container)-1 Columns">
+		<layout-template id="gfbio-columns-1-2_container-1-layouttpl" name="1-2-1 Columns (50/50)">
 			<template-path>/gfbio-columns-1-2_container-1-layouttpl.tpl</template-path>
 			<wap-template-path>/gfbio-columns-1-2_container-1-layouttpl.wap.tpl</wap-template-path>
 			<thumbnail-path>/gfbio-columns-1-2_container-1-layouttpl.png</thumbnail-path>
