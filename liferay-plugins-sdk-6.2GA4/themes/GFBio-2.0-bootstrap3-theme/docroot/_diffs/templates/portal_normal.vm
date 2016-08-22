@@ -14,7 +14,6 @@
 <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">-->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
 
-
 #set ($dockbar = $theme.getSetting("dockbar-vertical"))
 
 #if ($dockbar == true)
@@ -22,6 +21,8 @@
 #end
 
 <body class="$css_class">
+
+
 
 <a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
 
@@ -34,10 +35,10 @@ $theme.include($body_top_include)
 
 	
 	<div class="container">
-		<div id="logo-gfbio">
-				<a id="logo-gfbio-link" href="/">
-				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
-		</div>
+		<a href="$portal_url">
+                <h1 class="navbar-brand">
+                </h1>
+            </a>
 		
 		<div id="nav">	
 			#if ($has_navigation || $is_signed_in)
@@ -55,8 +56,25 @@ $theme.include($body_top_include)
           
          
           
+          
           <div id="sign-in-link">
-            	<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
+            	#if ($show_sign_in)
+				
+					<a href="$sign_in_url" title="Please sign in or register!">
+						<i class="fa fa-sign-in" aria-hidden="true"></i>
+						
+						$sign_in_text
+					</a>
+				
+				#end
+            	
+            	#if ($is_signed_in)
+					<a href="$sign_out_url" title="sign out">
+					<i class="fa fa-sign-out" aria-hidden="true"></i>
+					
+					$sign_out_text
+					</a>
+				#end
             	
             	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
        
@@ -101,16 +119,10 @@ $theme.include($bottom_include)
 
 #js ("$javascript_folder/jquery-1.11.1.min.js")
 #js ("$javascript_folder/jquery-1.11.2-ui.min.js")
-#js ("$javascript_folder/jquery.ba-cond.min.js")
-#js ("$javascript_folder/jquery.fancybox.pack.js")
-#js ("$javascript_folder/jquery.parallax-1.1.3.js")
-#js ("$javascript_folder/jquery.singlePageNav.min.js")
-#js ("$javascript_folder/jquery.slitslider.js")
-#js ("$javascript_folder/modernizr-2.6.2.min.js")
-#js ("$javascript_folder/owl.carousel.min.js")
-#js ("$javascript_folder/wow.min.js")
+
 
 <script>
+
 (function($) {
     $(document).ready(function() {
       $(document).accordion({

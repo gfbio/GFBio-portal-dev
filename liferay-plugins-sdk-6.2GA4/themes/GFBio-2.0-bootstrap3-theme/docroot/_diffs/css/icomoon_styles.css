@@ -5404,4 +5404,7 @@ svg {
 	@extend .icon-windows2;
 	}
 	
+	.icon-download-alt{
+	@extend .icon-download3;
+	}
 }

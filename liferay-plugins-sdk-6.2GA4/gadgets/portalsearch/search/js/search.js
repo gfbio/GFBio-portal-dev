@@ -1,4 +1,5 @@
-var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+
+				var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
@@ -543,22 +544,41 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.metadatalink = getValueFromJSONObject(fields, "metadatalink", 0);
 		inner.datalink = getValueFromJSONObject(fields, "datalink", 0);
 		inner.format = getValueFromJSONObject(fields, "format", 0);
-		if (fields["html-1"]) { // this field is used only for displaying data
+		if (fields["html-1"]) { 
+			// this field is used only for displaying data
 			var html = fields["html-1"][0];
 			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
 			inner.html = writeShowHideFields(html);
-		} else
+		} 
+		else{
 			inner.html = "";
-
-		if (fields["xml"]) { // this field contains raw data, is used for basket
+		}
+		if (fields["xml"]) { 
+			// this field contains raw data, is used for basket
 			var xml = fields["xml"];
 			// creates object instantce of XMLtoJSON
 			var xml2json = new XMLtoJSON();
 			var json = xml2json.fromStr(xml);
 			inner.xml = json; //JSON.stringify(json);
-		} else
+			console.log('-----------------');
+						
+			if (isJArray(json.dataset["parentIdentifier"])){
+				inner.parentIdentifier = getValueFromJSONArray(json.dataset,"parentIdentifier");
+			}else{
+				inner.parentIdentifier = json.dataset["parentIdentifier"];
+			}
+			
+			inner.dcIdentifier = json.dataset["dc:identifier"];
+			
+			if (isJArray(json.dataset["dc:type"])){
+				inner.dcType = getValueFromJSONArray(json.dataset,"dc:type");
+			}else{
+				inner.dcType = json.dataset["dc:type"];
+			}
+			
+		} else{
 			inner.xml = "";
-
+		}
 		res.push(inner);
 		//console.log('parseReturnedJSONfromSearch:inner');
 		//console.log(inner);
@@ -811,6 +831,9 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"authors" : value.authors,
 		"description" : value.description,
 		"dataCenter" : value.dataCenter,
+		"dcType" : value.dcType,
+		"parentIdentifier": value.parentIdentifier,
+		"dcIdentifier": value.dcIdentifier,
 		"xml" : value.xml
 	};
 	return result;
@@ -1287,5 +1310,9 @@ function setCookie(name, value) {
 function deleteCookie(name)
 {
     document.cookie=name + "=null; path=/; expires=" + expired.toGMTString();
+}
+
+function isJArray(elm) {
+    return Object.prototype.toString.call(elm) === '[object Array]';
 }
 ///////////////////////////////////  End Misc functions  //////////////////////////////////

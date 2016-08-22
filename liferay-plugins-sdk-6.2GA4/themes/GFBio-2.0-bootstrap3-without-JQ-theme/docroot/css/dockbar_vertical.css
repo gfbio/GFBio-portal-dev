@@ -107,6 +107,7 @@ $dockbarVerticalWidth: 240px;
 					line-height: 31px;
 					margin: 0 5px 0 0;
 					padding: 6px 10px;
+					text-decoration:none;
 
 					&:focus, &:hover {
 						color: #FFF;
@@ -171,6 +172,7 @@ $dockbarVerticalWidth: 240px;
 						color: #FFF;
 						font-size: 0.9em;
 						font-weight: 300;
+						text-decoration:none;
 
 						&:focus, &:hover {
 							background: lighten($standarGrey, 20%);
@@ -625,18 +627,20 @@ $dockbarVerticalWidth: 240px;
 	.dockbar-vertical {
 		.icon-toggle-dockbar {
 			/*background: $standarLiferayBlue;*/
-			color: #555;
+			color: #666;
 			cursor: pointer;
 			display: block;
 			font-size: 25px;
-			height: 25px;
+			height: 40px;
 			left: 0;
-			padding: 3px 4px 4px;
+			padding: 5px;
 			position: fixed;
 			text-align: center;
 			top: 90px;
-			width: 25px;
+			width: 35px;
 			z-index: 9999;
+			background:#ffffff;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 
 			@include border-radius(0 5px 5px 0);
 			@include transition(all 0.1s ease-in-out);
@@ -802,9 +806,16 @@ $dockbarVerticalWidth: 240px;
 		}
 
 		.icon-toggle-dockbar {
-			height: 30px;
-			padding: 8px 4px 4px;
-			width: 30px;
+			height: 40px;
+			width: 40px;
+			padding: 6px;
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			left: unset;
+			float: right;
+			margin: 4px;
+			border-radius: 4px;
 		}
 
 		.navbar-static-top {
@@ -824,6 +835,18 @@ $dockbarVerticalWidth: 240px;
 				display: block;
 				height: auto;
 				overflow: visible;
+			}
+		}
+		
+		.portlet-dockbar{
+			.navbar{
+				display:none;
+			}
+			.navbar.over{
+				display:block;
+				top: 60px;
+				left: unset;
+				right: 0px;
 			}
 		}
 	}

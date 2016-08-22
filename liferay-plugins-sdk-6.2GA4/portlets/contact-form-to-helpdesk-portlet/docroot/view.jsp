@@ -27,7 +27,10 @@ String fromName = UserLocalServiceUtil.getUser(userID).getFirstName() + " " + Us
 
 String fromAddress = "";
 if (fromName.trim()!=""){
-	fromAddress = UserLocalServiceUtil.getUser(userID).getEmailAddress();
+	if(themeDisplay.isSignedIn()){
+		fromAddress = UserLocalServiceUtil.getUser(userID).getEmailAddress();
+	}
+		
 }
 
 String subject = portletPreferences.getValue("subject", StringPool.BLANK);

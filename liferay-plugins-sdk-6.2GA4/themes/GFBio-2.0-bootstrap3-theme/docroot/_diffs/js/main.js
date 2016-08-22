@@ -40,12 +40,13 @@ AUI().ready(
 				);
 			}
 		};
-		/*
-		var parentSearch = A.one('#page-search');
-		parentSearch.get('#search').remove(true);
 		
-		parentSearch.append('<button id="navbar-search-submit" type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>');
-	*/	
+		// highlight the current url on navigation bar
+		for (var i = 0; i < document.links.length; i++) {
+		    if (document.links[i].href == document.URL) {
+		        document.links[i].className = 'menu-active';
+		    }
+		}
 	}
 	
 	
