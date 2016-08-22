@@ -1,6 +1,11 @@
 package org.gfbio.submissionworkflow;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -10,6 +15,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.apache.commons.codec.binary.Base64;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
@@ -93,6 +99,10 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 			//starts getUserExtentionById of userExtention
 			if ("getuserbyid".toString().equals(request.getParameter("responseTarget").toString()))
 				getUserExtentionById(request, response);
+			
+			//start submission
+			if ("startsubmission".toString().equals(request.getParameter("responseTarget").toString()))
+				startSubmission(request, response);
 
 		}
 	}
@@ -219,6 +229,90 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		response.getWriter().write(responseJson.toString());
 
 	}
+	
+	public void startSubmission(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+		
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+
+		
+        String responseString = "";
+
+        try {
+
+            URL url = new
+            URL("http://helpdesk.gfbio.org/rest/api/2/issue/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept","application/json");
+           
+            String userpass = "uni-jena:GFBIOhelpdesk123";
+            String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
+            conn.addRequestProperty ("Authorization", basicAuth);
+          
+            String encodedData = getJSON_Body(parseJson);
+            OutputStream os = conn.getOutputStream();
+            os.write(encodedData.getBytes());
+            os.flush();       
+   
+            if (conn.getResponseCode() != 201)
+               throw new RuntimeException("Failed : HTTP error code : "+ conn.getResponseCode());
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+            String output;
+            System.out.println("Output from Server .... \n");
+            while ((output = br.readLine()) != null){
+                System.out.println(output);
+                responseString = responseString.concat(output);
+            } 
+
+            conn.disconnect();
+         } catch (Exception e) {e.printStackTrace();}
+       
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseString);
+		
+	}
+	
+	
+	//
+    @SuppressWarnings("unchecked")
+    private static String getJSON_Body(JSONObject responseJson){
+          
+        JSONObject json = new JSONObject();
+        JSONObject fields = new JSONObject();
+        JSONObject key = new JSONObject();
+        JSONObject name = new JSONObject();
+        JSONObject value = new JSONObject();
+               
+        //name.put("name", "Collection Data");
+       // name.put("name", "DMP");
+        name.put("name", "Data Submission");
+        key.put("key", "SAND");
+        //key.put("key", "DSUB");
+        value.put("value","DFG");  //Funding
+           
+        fields.put("project", key);
+        fields.put("summary", "Submission Request Test"); //Ticket name
+        fields.put("issuetype", name);
+        fields.put("customfield_10010", "sand/collection-data");
+        fields.put("customfield_10206", "Imaginary project title"); //
+        fields.put("customfield_10209", value);  //Funding
+
+        json.put("fields", fields);
+        
+        System.out.println(json.toString());
+           
+        return json.toString();
+    }
 	
 	
 }
