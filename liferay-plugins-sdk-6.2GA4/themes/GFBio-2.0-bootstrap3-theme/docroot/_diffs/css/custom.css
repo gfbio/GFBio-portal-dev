@@ -69,7 +69,7 @@
 
 		.text-link{
 		
-		 color: rgb(60, 172, 228);
+		 color: rgb(60, 172, 228); /*3CACE4*/
 		 text-decoration: underline;
 		 text-decoration-style: dotted;
 		}
@@ -310,7 +310,7 @@ h1.navbar-brand {
     transition: all 0.8s ease 0s;
 
     /*background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;*/
-    background: url('../images/gfbiologo-transparent.png') no-repeat center center;
+    background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;
     
     padding: 60px 122px 0 0 !important;
 
@@ -327,6 +327,7 @@ h1.navbar-brand {
 
     /*background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;*/
     background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;
+    
     padding: 60px 122px 0 0 !important;
 }
 
@@ -629,40 +630,60 @@ Devices
 	padding:0;
 }
 
-
-
-
-
-
-
-
-/*============================================================
-	Google Maps
+/*================================================================
+Contact
 ==============================================================*/
-
-#google-map {
-    padding: 0;
+.contact-details h3 {
+    margin-top: 0;
+    border-bottom: 1px dotted rgba(52, 90, 162, 0.75);;
+    font-weight: 400;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+    color:#666;
 }
 
-#map-canvas {
-    width: 100%;
-    height: 300px;
+.contact-details p {
+    line-height: 30px;
 }
+
+.contact-details p i {
+    margin-right: 10px;
+}
+
+.contact-details span {
+    display: block;
+    margin-left: 24px;
+}
+
+
+
 
 
 /*=========================================================
 Breadcrumbs
 ===========================================================*/
 .breadcrumb{
-	background: transparent;
+	background-color:#fcfcfc;
+	
 }
+
 
 .breadcrumb > li + li::before{
 	content: "";
 }
 
+
+.breadcrumb > li > a{
+	font-size:12px;
+	color:#818181;
+	text-decoration:underline;
+	text-decoration-style:dotted;
+}
+
 .breadcrumb > li > a:hover, .breadcrumb > .menu-active,  .breadcrumb > .active{
-	color:#335AA3;
+	/*color:#335AA3;*/ /*darkblue*/
+	color:#000000
 }
 
 /*============================================================
