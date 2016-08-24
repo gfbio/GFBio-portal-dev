@@ -48,9 +48,9 @@ iframe {
     border: 0;
 }
 
-section {
+/* section {
     padding: 70px 0;
-}
+} */
 
 /**
 /*	Preloader
@@ -561,6 +561,7 @@ section {
 
 .sec-title {
     margin-bottom: 50px;
+    margin-top:70px;
     background:transparent;
 }
 
@@ -723,33 +724,6 @@ section {
     /*rgba(129, 178, 72, 0.8);*/
     color: rgba(60, 172, 228, 1.0);
     border: 2px solid rgba(60, 172, 228, 1.0);
-}
-
-
-/*================================================================
-Contact
-==============================================================*/
-.contact-details h3 {
-    margin-top: 0;
-    border-bottom: 1px dotted rgba(52, 90, 162, 0.75);;
-    font-weight: 400;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    text-transform: uppercase;
-    color:#666;
-}
-
-.contact-details p {
-    line-height: 30px;
-}
-
-.contact-details p i {
-    margin-right: 10px;
-}
-
-.contact-details span {
-    display: block;
-    margin-left: 24px;
 }
 
 
