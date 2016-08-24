@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchResearchObject_UserException;
+import org.gfbio.model.ResearchObject;
 import org.gfbio.model.ResearchObject_User;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
@@ -92,12 +93,15 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 	}
 	
 	
-	//get a ID-List (Project_User-Object) of all project of a specific user
-	public List<ResearchObject_User> getResearchObjectIdList(long userID) {
-		List<ResearchObject_User> idList = null;
-		try {idList = researchObject_UserPersistence.findByUserID(userID);} 
-		catch (SystemException e) {e.printStackTrace();}
-		return idList;
+	//
+	public List <ResearchObject> getResearchObjectsByUserId (long userId){
+		return ResearchObject_UserFinderUtil.getResearchObjectsByUserId(userId);
+	}
+	
+	@Override
+	public List<ResearchObject_User> getResearchObjectIdList(long arg0) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
@@ -160,5 +164,8 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		
 		return check;
 	}
+
+
+
 
 }

@@ -28,6 +28,7 @@
 <%@ page import="org.gfbio.service.DataProviderLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.HeadLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
+<%@ page import="org.gfbio.service.ResearchObjectLocalServiceUtil" %>
 
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="org.json.simple.parser.JSONParser" %>

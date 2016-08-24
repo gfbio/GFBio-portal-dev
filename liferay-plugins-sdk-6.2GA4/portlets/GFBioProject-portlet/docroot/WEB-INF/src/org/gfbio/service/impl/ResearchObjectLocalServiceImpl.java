@@ -32,6 +32,7 @@ import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
+import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObject_UserLocalServiceUtil;
@@ -162,6 +163,26 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		return checkNullParent(responseJson);
 	}
 	
+	
+	//
+	public JSONArray getResearchObjectsByProjectId (long projectId){
+		return ProjectLocalServiceUtil.getResearchObjectsByProjectId(projectId);
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getResearchObjectsByUserId(long userId){
+		JSONArray researchObjectJSON = new JSONArray();
+		List <ResearchObject> researchObjectList = null;
+		researchObjectList =  ResearchObject_UserLocalServiceUtil.getResearchObjectsByUserId(userId);
+		if (researchObjectList.size() >0)
+			for (int i =0; i< researchObjectList.size();i++)
+				researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+		else
+			researchObjectJSON = null;
+		return researchObjectJSON;
+	}
 	
 	//
 	@SuppressWarnings({ "unchecked"})

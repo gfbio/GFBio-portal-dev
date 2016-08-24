@@ -474,7 +474,7 @@
 	</entity>
 	
 	
-	<!-- Relationship between Project and User -->
+	<!-- Relationship between ResearchObject and User -->
 
 	<entity name="ResearchObject_User" data-source="gfbioDataSource" local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="researchObjectID"			type="long"		primary="true" />
@@ -486,7 +486,7 @@
 
 		<finder name="researchObjectID"	return-type="Collection">			<finder-column name="researchObjectID" />												</finder>
 		<finder name="UserID" 			return-type="Collection">			<finder-column name="userID" />													</finder>
-		<finder name="findByPrimaryKey" return-type="ResearchObject_User">			<finder-column	name="researchObjectID" />			<finder-column	name="userID" />	</finder>
+		<finder name="findByPrimaryKey" return-type="ResearchObject_User">	<finder-column	name="researchObjectID" />			<finder-column	name="userID" />	</finder>
 	</entity>
 	
 

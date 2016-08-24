@@ -38,17 +38,26 @@
 				
 			<%
 				Long userID = PortalUtil.getUserId(request);
+				
 				List <Project> projectList = new ArrayList<Project>();
 				projectList = null;
 				try {projectList = ProjectLocalServiceUtil.getProjectList(userID);}
 				catch (NoSuchModelException e) {e.printStackTrace();}
 				catch (SystemException e) {e.printStackTrace();	}
+
+/*  				List <ResearchObject> roList = new ArrayList<ResearchObject>();
+				roList = null;
+				try {roList = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId(userID);}
+				catch (NoSuchModelException e) {e.printStackTrace();}
+				catch (SystemException e) {e.printStackTrace();	}  */
+
 			%>
+			
 	
 					
 			
 			<br>
-			Please select an existing project, <br>or choose nothing.
+			Please select an existing project, or choose nothing.
 			<br> 
 			
 			<form action="select.html" id="choProjForm">
@@ -61,18 +70,17 @@
 			</form>
 					
 			
-			<div id="chooseROX" class="swHide">	
-			
-				Please select an existing dataset, <br>or choose nothing.
+			Please select an existing dataset, or choose nothing.
 						
-				<form action='select.html' id="choROForm">
-					<select id='workflowChooseRO' style='width:90%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
-						<option value='none'> </option>
-					</select>
-				</form>	
-	
-			</div> 
-	
+			<form action='select.html' id="choROForm">
+				<select id='workflowChooseRO' style='width:90%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
+					<option value='none'> </option>
+<%--  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { %>
+						<option value="<%= roList.get(i).getResearchObjectID() %>"> <%= roList.get(i).getLabel() %> </option>
+					<%} } %>  --%>
+				</select>
+			</form>	
+
 
 	
 <%-- 		Please select a exploratory focus in order to start a submission workflow.

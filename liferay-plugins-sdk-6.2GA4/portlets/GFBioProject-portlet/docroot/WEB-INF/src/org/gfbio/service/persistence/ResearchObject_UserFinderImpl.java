@@ -3,7 +3,9 @@ package org.gfbio.service.persistence;
 
 import java.util.List;
 
+import org.gfbio.model.ResearchObject;
 import org.gfbio.model.ResearchObject_User;
+import org.gfbio.model.impl.ResearchObjectImpl;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -16,7 +18,8 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class ResearchObject_UserFinderImpl extends BasePersistenceImpl<ResearchObject_User> implements ResearchObject_UserFinder{
 	
 	public static String FINDER_CLASS_NAME_ENTITY = ResearchObject_UserFinderImpl.class.getName();
-	public static String GET_OWNERIDS_BY_RESEARCHOBJECTIDS = FINDER_CLASS_NAME_ENTITY + ".getOwnerIdsByResearchObjectIds";
+	public static String GET_OWNERIDS_BY_RESEARCHOBJECTIDS 	= FINDER_CLASS_NAME_ENTITY + ".getOwnerIdsByResearchObjectIds";
+	public static String GET_RESEARCHOBJECTS_BY_USERID 		= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectsByUserId";
 	
 	
 	//
@@ -34,6 +37,29 @@ public class ResearchObject_UserFinderImpl extends BasePersistenceImpl<ResearchO
 			qPos.add(researchObjectId);
 			qPos.add(researchObjectVersion);
 			return (List<Long>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public List<ResearchObject> getResearchObjectsByUserId(long userId) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_RESEARCHOBJECTS_BY_USERID);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+
+			queryObject.setCacheable(false);
+			queryObject.addEntity("ResearchObject", ResearchObjectImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(userId);
+			return (List<ResearchObject>) queryObject.list();
 		} catch (Exception e) {e.printStackTrace();}
 		finally {
 			closeSession(session);
