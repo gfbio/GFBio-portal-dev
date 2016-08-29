@@ -1019,25 +1019,34 @@ Liferay fixes - deprecated classes
  Responsive: Navbar
 =======================================================*/
 
-#mainNavigationToggle {
+.icon-toggle-menu {
   display: none; /* hide by default */
 }
-@import "mixins";
-@include respond-to(phone, tablet) {
-	#mainNavigationToggle {
-	    display: block; /* show only for phone and tablet viewports */
-	    float: left;
-		width: 40px;
-		height: 40px;
-		margin: 20px 10px;
-		padding: 6px 4px;
-	  }
-}
-
 // TABLETS AND BELOW
 // -----------------
+@import "mixins";
 @include respond-to(phone, tablet) {
 	.aui {
+		.icon-toggle-menu {
+			/* show only for phone and tablet viewports */
+		    display: block; 
+		    float: left;
+			width: 40px;
+			height: 40px;
+			margin: 4px;
+			padding: 6px;
+			position: fixed;
+			top: 5px;
+		    border-radius: 4px;
+		    color: #666;
+		    cursor: pointer;
+		    font-size: 25px;
+		    text-align: center;
+		    z-index: 9999;
+		    background: #fff;
+		    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+		    transition: all .1s ease-in-out;
+		  }
 		#navigation.open{
 			display: block;
 			top: 20px;
