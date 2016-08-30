@@ -14,6 +14,7 @@
 <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">-->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
 
+
 #set ($dockbar = $theme.getSetting("dockbar-vertical"))
 
 #if ($dockbar == true)
@@ -22,28 +23,21 @@
 
 <body class="$css_class">
 
-<!-- preloader -->
-	<div id="preloader">
-		<div class="loader-box">
-			<div class="battery">&nbsp;</div>
-		</div>
-	</div>
-<!-- end preloader -->
+<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
 
-<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
+$theme.include($body_top_include)
+	
+	
+<div class="container-fluid">
+
+	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
 
 	
 	<div class="container">
-		<!-- logo -->
-            <a href="$portal_url">
-                <h1 class="navbar-brand">
-                </h1>
-            </a>
-            <!-- /logo -->
-		<!--<div id="logo-gfbio">
-				<a id="logo-gfbio-link" href="$portal_url">
+		<div id="logo-gfbio">
+				<a id="logo-gfbio-link" href="/">
 				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
-		</div>-->
+		</div>
 		
 		<div id="nav">	
 			#if ($has_navigation || $is_signed_in)
@@ -62,24 +56,7 @@
          
           
           <div id="sign-in-link">
-            	
-            	#if ($show_sign_in)
-				
-					<a href="$sign_in_url" title="Please sign in or register!">
-						<i class="fa fa-sign-in" aria-hidden="true"></i>
-						
-						$sign_in_text
-					</a>
-				
-				#end
-            	
-            	#if ($is_signed_in)
-					<a href="$sign_out_url" title="sign out">
-					<i class="fa fa-sign-out" aria-hidden="true"></i>
-					
-					$sign_out_text
-					</a>
-				#end
+            	<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
             	
             	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
        
@@ -93,19 +70,13 @@
 	
 	
 	</header>
-
-
-
-<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
-
-$theme.include($body_top_include)
 	
 #if ($is_signed_in)
 	#dockbar()
 #end
-
-<main class="site-content" role="main">
 	
+<main class="site-content" role="main">
+	<!--<div id="content">-->
 		
 		#if ($selectable)
 			$theme.include($content_include)
@@ -118,13 +89,20 @@ $theme.include($body_top_include)
 		#end
 	
 
-
+	<!--</div>-->
 </main>
-
+</div>
 
 $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
+
+
+
+#js ("$javascript_folder/modernizr-2.6.2.min.js")
+#js ("$javascript_folder/owl.carousel.min.js")
+#js ("$javascript_folder/wow.min.js")
+
 
 
 

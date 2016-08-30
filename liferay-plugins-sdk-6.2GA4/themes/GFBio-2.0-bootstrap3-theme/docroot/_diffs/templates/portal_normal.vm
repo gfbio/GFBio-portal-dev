@@ -30,6 +30,9 @@ $theme.include($body_top_include)
 	
 	
 <div class="container-fluid">
+		<div id="mainNavigationToggle" class="btn btn-secondary">
+		    <i class="icon-menu"></i>
+		</div>
 
 	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
 
@@ -45,7 +48,6 @@ $theme.include($body_top_include)
 					#parse ("$full_templates_path/navigation.vm")
 			#end	
 		</div>
-		
 		
 		<!--<nav class="collapse navbar-collapse navbar-right" id="navsearch" role="navigation"> -->      
             <div id="page-search">
@@ -77,7 +79,6 @@ $theme.include($body_top_include)
 				#end
             	
             	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
-       
             	<!--<a href="$portal_url/web/gfbioboostrap3/sign-in" title="Please sign in or register!">Sign In</a>-->
         	</div>
           
@@ -149,8 +150,29 @@ $theme.include($bottom_include)
       }).keypress(function(event) {
         if (event.keyCode == 13) activate($(this));
       });
+      
+        var navigationToggleBtn = $('#mainNavigationToggle'); // get our toggle button
+        var navigationUl = $('#navigation'); // get default navigation ul element
+        if (navigationToggleBtn && navigationUl) { 
+        // do nothing when toggle button not present (user not signed in) or if navigation is not present
+        // otherwise assign simple function that'll toggle 'open' menu class on default navigation which will cause it to open, same for menu toggle button
+            navigationToggleBtn.on( 
+                'click',
+                function (event) {
+                	if (navigationUl.hasClass('open')){
+                		navigationToggleBtn.removeClass('open');
+                		navigationUl.removeClass('open');
+                		navigationUl.addClass('hide');
+                	}else{
+                		navigationToggleBtn.addClass('open');
+                		navigationUl.addClass('open');
+                		navigationUl.removeClass('hide');
+                	}
+                }
+            );}
     });
   })(jQuery);
+  
 </script>
 
 

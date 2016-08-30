@@ -1003,7 +1003,9 @@ Liferay fixes - Dockbar
  	min-height:26px;
  	padding-top:2px;
  }
-}
+ 
+ 
+}/*aui end*/
 
 /*=========================================================
 Liferay fixes - deprecated classes
@@ -1012,3 +1014,48 @@ Liferay fixes - deprecated classes
 .overlay {
     position: relative;
 }
+
+/*=====================================================
+ Responsive: Navbar
+=======================================================*/
+
+#mainNavigationToggle {
+  display: none; /* hide by default */
+}
+@import "mixins";
+@include respond-to(phone, tablet) {
+	#mainNavigationToggle {
+	    display: block; /* show only for phone and tablet viewports */
+	    float: left;
+		width: 40px;
+		height: 40px;
+		margin: 20px 10px;
+		padding: 6px 4px;
+	  }
+}
+
+// TABLETS AND BELOW
+// -----------------
+@include respond-to(phone, tablet) {
+	.aui {
+		#navigation.open{
+			display: block;
+			top: 20px;
+			height: auto;
+		}
+		#navigation{
+			display: none;
+		}
+		.navbar-inverse .navbar-collapse {
+			border: none;
+		} 
+		.navbar-fixed-top .navbar-collapse{
+			height: auto;
+			max-height: none !important;
+		}
+		.navbar-brand{
+			display: none;
+		}
+	}
+}	
+
