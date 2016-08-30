@@ -22,6 +22,12 @@
 
 <body class="$css_class">
 
+<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
+
+$theme.include($body_top_include)
+	
+	
+
 <!-- preloader -->
 	<div id="preloader">
 		<div class="loader-box">
@@ -30,20 +36,18 @@
 	</div>
 <!-- end preloader -->
 
-<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
+	<div id="mainNavigationToggle" class="btn btn-secondary">
+		    <i class="icon-menu"></i>
+		</div>
+
+	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header">
 
 	
 	<div class="container">
-		<!-- logo -->
-            <a href="$portal_url">
+		<a href="$portal_url">
                 <h1 class="navbar-brand">
                 </h1>
-            </a>
-            <!-- /logo -->
-		<!--<div id="logo-gfbio">
-				<a id="logo-gfbio-link" href="$portal_url">
-				<img id="logo-gfbio" src="$images_folder/gfbiologo-transparent.png"></a>
-		</div>-->
+        </a>
 		
 		<div id="nav">	
 			#if ($has_navigation || $is_signed_in)
@@ -51,32 +55,29 @@
 			#end	
 		</div>
 		
-		
-		<!--<nav class="collapse navbar-collapse navbar-right" id="navsearch" role="navigation"> -->      
-            <div id="page-search">
+	     <div id="page-search">
 				$theme.journalContentSearch()
-			</div>          
+		</div>          
           
-          <!--</nav> -->
-          
-         
-          
-          <div id="sign-in-link">
-            	
+       <div id="sign-in-link">
             	#if ($show_sign_in)
 				
-					<a href="$sign_in_url" title="Please sign in or register!">$sign_in_text</a>
+					<a href="$sign_in_url" title="Please sign in or register!">
+						<i class="fa fa-sign-in" aria-hidden="true"></i>
+						
+						$sign_in_text
+					</a>
 				
 				#end
             	
             	#if ($is_signed_in)
-					<a href="$sign_out_url" title="sign out">$sign_out_text</a>
+					<a href="$sign_out_url" title="sign out">
+					<i class="fa fa-sign-out" aria-hidden="true"></i>
+					
+					$sign_out_text
+					</a>
 				#end
-            	
-            	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
-       
-            	<!--<a href="$portal_url/web/gfbioboostrap3/sign-in" title="Please sign in or register!">Sign In</a>-->
-        	</div>
+           	</div>
           
 	 </div>	
 	 
@@ -96,7 +97,7 @@ $theme.include($body_top_include)
 	#dockbar()
 #end
 
-<main class="site-content" role="main">
+<main id="main" class="site-content" role="main">
 	
 		
 		#if ($selectable)
@@ -133,27 +134,6 @@ $theme.include($bottom_include)
 #js ("$javascript_folder/wow.min.js")
 
 <script>
-$(window).scroll(function () {
-
-    /* ========================================================================= */
-    /*	Fix Slider Height
-     /* ========================================================================= */
-
-
-    // Slider Height
-    // FIXME: why is there 15px gap on bottom of section ?
-    var slideHeight = $(window).height() + 15;
-    //console.log('slideHeight ' + slideHeight);
-
-    $('#home-slider, #slider, .sl-slider, .sl-content-wrapper, #generic-main').css('height', slideHeight);
-
-    $(window).resize(function () {
-        'use strict',
-            $('#home-slider, #slider, .sl-slider, .sl-content-wrapper, #generic-main').css('height', slideHeight);
-    });
-});
-
-
 jQuery(window).load(function () {
 
     $("#preloader").fadeOut("slow");
@@ -167,7 +147,6 @@ jQuery(window).load(function () {
 	wow.init();
 
 });
-
 
 (function($) {
     $(document).ready(function() {

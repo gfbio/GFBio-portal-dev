@@ -112,6 +112,48 @@ AUI().ready(
 		    });
 		}
 );
+	
+AUI().ready(
 		
+		function(){
+			
+			
+			$(window).scroll(function () {
+
+		        var useTransparent = true;
+		        if (typeof transparentNaviOnLoad !== 'undefined') {
+		            useTransparent = transparentNaviOnLoad;
+		        }
+		        if ($(window).scrollTop() > 100) {
+		         
+		            if (useTransparent) {
+		                $(".aui .navbar-fixed-top").addClass("navigation-shadow");
+		            }
+
+		        } else {
+		            
+		            if (useTransparent) {
+		                $(".aui .navbar-fixed-top").removeClass("navigation-shadow");
+		            }
+		        }
+		       
+		    });
+			
+});
+
+AUI.ready(
+		function(){
+			
+			// Dropdown Menu Fade
+		    $(".aui .dropdown").hover(
+		        function () {
+		            $('.aui .dropdown-menu', this).stop().fadeIn("slow");
+		        },
+		        function () {
+		            $('.aui .dropdown-menu', this).stop().fadeOut("slow");
+		        });
+			
+});
+
 
 
