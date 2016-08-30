@@ -32,9 +32,6 @@
 
 .aui{
 	
-.site-content{
-	margin-top:10px;
-}	
 
 figure, p, address {
     margin: 0;
@@ -51,6 +48,9 @@ iframe {
 section {
     padding: 70px 0;
 }
+
+
+
 
 /**
 /*	Preloader
@@ -102,14 +102,28 @@ section {
 }
 
 
+h1.navbar-brand {
+    -webkit-transition: all 0.8s ease 0s;
+    -moz-transition: all 0.8s ease 0s;
+    -ms-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
 
+    /*background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;*/
+    background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;
+    
+    padding: 60px 0 0 0 !important;
+	
+
+    margin: 0;
+}
 
 	
 /*=================================================================
 	Home Slider
 ==================================================================*/
 
-#home-slider {
+/* #home-slider {
     padding: 0;
     background-color: #fff;
 
@@ -119,7 +133,23 @@ section {
     background-size: cover;
     -o-background-size: cover;
     height:894px;
+} */
+
+#home-slider {
+
+   
+    padding: 0;
+   
+    background-color: #fff;
+
+    background: url('../images/unsplash_books_bw.jpg') top right no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height:564px;
 }
+
 
 #home-slider .btn {
     color: rgba(255, 255, 255, 1.0);
@@ -408,13 +438,48 @@ section {
     margin-right: -4px;
 }
 
+#big-logo-with-claim {
+    background: url('../images/gf_bio_logo_claim_370x208.png') no-repeat center center;
+    padding: 208px 370px 0 0 !important;
+}
+
+#claim-top-wrapper {
+    margin-top: 10%;
+    background:transparent;
+}
+
+#claim-header {
+    margin-top: 6%;
+}
+
+#claim-button-wrapper {
+    margin-top: 3%;
+    
+}
+
+.landing-area {
+    text-align: center;
+    
+    a{
+    	color:#666;
+    }
+}
+
+h3.landing-area {
+    font-weight: 400;
+}
+
+#claim-entry-points-wrapper {
+    margin-top: 12%;
+    background:transparent;
+}
+
 .landing {
     display: inline-block;
     color: #666; /* 666 */
     width: 200px;
     padding: 20px;
-    /*height: 250px;*/
-    /*border: 1px solid silver;*/
+  
     border-radius: 6px;
 }
 
@@ -437,9 +502,10 @@ section {
 
 .landing-h1 {
     /*color: #666;*/
-    color: rgba(255, 255, 255, 1.0);
+    color: #000000;
     font-weight: 300;
     font-size: 3.8em;
+    text-align:center;
 }
 
 .landing-h1-wrapper {
@@ -447,10 +513,10 @@ section {
 }
 
 .landing-h1-sub {
-    /*color: #666;*/
-    color: rgba(255, 255, 255, 1.0);
+    color: #666;
     font-size: 2.0em;
     font-weight: 300;
+    text-align:center;
 }
 
 .landing-p {
@@ -461,14 +527,13 @@ section {
     margin: 30px 0 30px 0;
 }
 
-.icon-landing-area {
-    display: block;
-    margin-bottom: 20px;
-    font-size: 72px;
-    color: inherit;
-    /*color: #345AA2;*/
-    /*color: inherit;*/
+
+.icon-landing-flex {
+    color: #666;
+    padding-left: 45px;
+    font-size: 2.4em;
 }
+
 
 .landing-footer {
     color: inherit;
@@ -476,12 +541,6 @@ section {
     font-weight: 300;
 }
 
-.parallax {
-    background-attachment: fixed;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
 /*=================================================================
 	About
@@ -620,11 +679,7 @@ section {
     font-size: 54px;
     line-height: 101px;
 
-    /*-webkit-transform: rotate(47deg);*/
-    /*-moz-transform: rotate(47deg);*/
-    /*-ms-transform: rotate(47deg);*/
-    /*-o-transform: rotate(47deg);*/
-    /*transform: rotate(47deg);*/
+ 
 
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
@@ -672,11 +727,7 @@ section {
 }
 
 #social .overlay {
-    /*background-color: rgba(129, 178, 72, 0.7);*/
-    /*background-color: rgba(60, 172, 228, 0.8);*/
-    background-color: rgba(52, 90, 162, 0.75);
-    /*background-color: rgba(102, 102, 102, 0.75);*/
-    /*background: url("../img/slide_bg.png") repeat scroll 0 0 transparent;*/
+     background-color: rgba(52, 90, 162, 0.75);
     padding: 100px 0 120px;
 
 }
@@ -719,9 +770,7 @@ section {
 }
 
 .social-button li a:hover {
-    /*rgba(52, 90, 162, 0.8);*/
-    /*rgba(129, 178, 72, 0.8);*/
-    color: rgba(60, 172, 228, 1.0);
+     color: rgba(60, 172, 228, 1.0);
     border: 2px solid rgba(60, 172, 228, 1.0);
 }
 
@@ -868,9 +917,22 @@ ul.external li a:hover {
 /*=========================================================
 Liferay fixes - content
 =========================================================*/
-.span12 #home-slider{
+#main{
+	margin-top: 10px;
+}
+
+#main .row-fluid{
+	margin-left:0px;
+	margin-right:0px;
+}
+
+#main .span12 {
 	padding-left:0px;
 	padding-right:0px;
-}
+} 
 	
+#main .footer{
+	margin:0;
+}	
+
 }
