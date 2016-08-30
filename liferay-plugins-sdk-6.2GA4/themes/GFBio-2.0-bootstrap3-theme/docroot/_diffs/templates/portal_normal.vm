@@ -95,7 +95,6 @@ $theme.include($body_top_include)
 #end
 
 <main class="site-content" role="main">
-	<!--<div id="content">-->
 		
 		#if ($selectable)
 			$theme.include($content_include)
@@ -108,7 +107,7 @@ $theme.include($body_top_include)
 		#end
 	
 
-	<!--</div>-->
+	
 </main>
 </div>
 
