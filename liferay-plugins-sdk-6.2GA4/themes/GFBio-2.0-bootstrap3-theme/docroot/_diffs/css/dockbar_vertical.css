@@ -571,7 +571,7 @@ $dockbarVerticalWidth: 240px;
 		    padding-left:  10px;
 		    padding-right: 10px;
 		  }
-		  #page-search, #sign-in-link{
+		  #page-search{
 		  	display: none;
 		  }
 		  #nav-left{
@@ -988,9 +988,8 @@ $dockbarVerticalWidth: 240px;
 			padding: 6px;
 			position: fixed;
 			top: 5px;
-			right: 10px;
-			left: unset;
-			float: right;
+			right: unset;
+			left: 20px;
 			margin: 4px;
 			border-radius: 4px;
 		}
@@ -1022,10 +1021,14 @@ $dockbarVerticalWidth: 240px;
 			.navbar.over{
 				display:block;
 				top: 60px;
-				left: unset;
-				right: 0px;
+				left: 0px;
+				right: unset;
 			}
 
+		}
+		#_145_navAccountControlsNavbarCollapse
+		{
+			margin-top: 40px;
 		}
 	}
 	

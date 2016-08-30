@@ -30,7 +30,7 @@ $theme.include($body_top_include)
 	
 	
 <div class="container-fluid">
-		<div id="mainNavigationToggle" class="icon-toggle-menu">
+		<div id="responsiveMenuToggle" class="icon-toggle-menu">
 		    <i class="fa fa-bars"></i>
 		</div>
 
@@ -151,28 +151,41 @@ $theme.include($bottom_include)
         if (event.keyCode == 13) activate($(this));
       });
       
-        var navigationToggleBtn = $('#mainNavigationToggle'); // get our toggle button
-        var navigationUl = $('#navigation'); // get default navigation ul element
-        if (navigationToggleBtn && navigationUl) { 
+        var menuToggleBtn = $('#responsiveMenuToggle'); // get our toggle button
+        var navigationDiv = $('#nav'); // get default navigation div element
+		var body = $('.aui body');
+        if (menuToggleBtn && navigationDiv) { 
         // do nothing when toggle button not present (user not signed in) or if navigation is not present
         // otherwise assign simple function that'll toggle 'open' menu class on default navigation which will cause it to open, same for menu toggle button
-            navigationToggleBtn.on( 
+            menuToggleBtn.on( 
                 'click',
                 function (event) {
-                	if (navigationUl.hasClass('open')){
-                		navigationToggleBtn.removeClass('open');
-                		navigationUl.removeClass('open');
-                		navigationUl.addClass('hide');
+                	if (navigationDiv.hasClass('open')){
+                		menuToggleBtn.removeClass('open');
+                		navigationDiv.removeClass('open');
+                		navigationDiv.addClass('hide');
+						body.removeClass('lfr-has-dockbar-vertical');
                 	}else{
-                		navigationToggleBtn.addClass('open');
-                		navigationUl.addClass('open');
-                		navigationUl.removeClass('hide');
+                		// expand the menu bar 
+                		menuToggleBtn.addClass('open');
+                		navigationDiv.addClass('open');
+                		navigationDiv.removeClass('hide');
+                		// hide dockbar
+						var portletDockbar = $('#_145_dockbar');
+						if (portletDockbar){
+							portletDockbar.removeClass('over');
+                		}
+						body.removeClass('lfr-has-dockbar-vertical');
                 	}
                 }
             );}
     });
   })(jQuery);
-  
+  window.onresize = function(event) {
+        var navigationDiv = $('#nav'); // get default navigation ul element
+        navigationDiv.removeClass('hide');
+        navigationDiv.removeClass('open');
+  };
 </script>
 
 

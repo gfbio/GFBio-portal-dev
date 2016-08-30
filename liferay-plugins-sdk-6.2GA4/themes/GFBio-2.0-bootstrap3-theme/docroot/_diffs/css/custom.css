@@ -1018,25 +1018,37 @@ Liferay fixes - deprecated classes
 /*=====================================================
  Responsive: Navbar
 =======================================================*/
-
-.icon-toggle-menu {
-  display: none; /* hide by default */
+@import "mixins";
+@include respond-to(screens) {
+	.aui{
+		.icon-toggle-menu {
+			display: none; /* hide by default */
+		}
+		#nav{
+			display: block;
+		}
+	}
 }
 // TABLETS AND BELOW
 // -----------------
-@import "mixins";
 @include respond-to(phone, tablet) {
 	.aui {
+		#navigation{ 
+			display: block;
+			margin-top:60px;
+		}
 		.icon-toggle-menu {
 			/* show only for phone and tablet viewports */
 		    display: block; 
-		    float: left;
 			width: 40px;
 			height: 40px;
 			margin: 4px;
 			padding: 6px;
 			position: fixed;
 			top: 5px;
+			right: 20px;
+/* 			float: right; */
+/* 			margin-top: 20px; */
 		    border-radius: 4px;
 		    color: #666;
 		    cursor: pointer;
@@ -1047,13 +1059,13 @@ Liferay fixes - deprecated classes
 		    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 		    transition: all .1s ease-in-out;
 		  }
-		#navigation.open{
+		#nav.open{
 			display: block;
-			top: 20px;
 			height: auto;
+		    transition: all .1s ease-in-out;
 		}
-		#navigation{
-			display: none;
+		#nav{
+			display: none; /* hide by default */
 		}
 		.navbar-inverse .navbar-collapse {
 			border: none;
@@ -1064,6 +1076,16 @@ Liferay fixes - deprecated classes
 		}
 		.navbar-brand{
 			display: none;
+/* 			position: fixed; */
+/* 			top: 0px; */
+/* 			left: 60px; */
+		}
+		#sign-in-link{
+			display: block;
+			position: fixed;
+			top: 0px;
+			right: 0px;
+			margin-right: 80px;
 		}
 	}
 }	
