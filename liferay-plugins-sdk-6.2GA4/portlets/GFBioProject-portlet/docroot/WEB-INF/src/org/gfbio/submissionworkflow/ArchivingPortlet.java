@@ -18,6 +18,7 @@ import javax.portlet.ResourceResponse;
 
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -60,11 +61,17 @@ public class ArchivingPortlet extends GenericPortlet {
 
 		response.setContentType("text/html");
 		
+		System.out.println(request.getParameter("responseTarget").toString());
+		
 		if (request.getParameter("responseTarget") != null) {
 
 			//choose a project
 			if ("choosePro".toString().equals(request.getParameter("responseTarget").toString()))
 				chooseProject(request, response);
+			
+			//getResearchObjectsOfUser
+			if ("getResearchObjectsOfUser".toString().equals(request.getParameter("responseTarget").toString()))
+				getResearchObjectsOfUser(request, response);
 
 			//new ResearchObject / sequence meta data over GCDJ Widget
 			if ("GCDJWidget".toString().equals(request.getParameter("responseTarget").toString()))
@@ -95,6 +102,28 @@ public class ArchivingPortlet extends GenericPortlet {
 						responseJson.put("researchobjects", ProjectLocalServiceUtil.getResearchObjectsByProjectId((long) parseJson.get("projectid")));
 				}else
 					responseJson.put("projectid", 0);
+			
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().write(responseJson.toString());
+		}
+	}
+	
+	
+	//
+	public void getResearchObjectsOfUser(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		JSONArray responseJson = new JSONArray();
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {
+			parseJson = (JSONObject) parser.parse(dataJson);
+		} catch (ParseException e) {e.printStackTrace();}
+
+		if (parseJson.containsKey("userid")) {
+			responseJson = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId((long) parseJson.get("userid"));
+
 			
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");

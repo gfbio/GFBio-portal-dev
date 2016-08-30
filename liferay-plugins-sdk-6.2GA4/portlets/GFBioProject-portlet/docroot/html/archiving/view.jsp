@@ -12,10 +12,14 @@
 
 <%@ include file="/html/init.jsp" %> <!-- library imports -->
 <%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
-<script  src="${pageContext.request.contextPath}/docroot/js/main.js"       			type="text/javascript"></script>  	<!--  main.js  imports -->
-<script  src="${pageContext.request.contextPath}/js/workflow.js"			    	type="text/javascript"></script>  	<!--  main.js  imports -->
-<link href="<%= request.getContextPath() %>/docroot/css/main.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
 
+<script  src="${pageContext.request.contextPath}/js/jquery-1.11.2-ui.min.js"       				type="text/javascript"></script>  <!--  main.js  imports -->
+<script  src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"       				type="text/javascript"></script>  <!--  main.js  imports -->
+<script  src="${pageContext.request.contextPath}/js/main.js"       			type="text/javascript"></script>  	<!--  main.js  imports -->
+<script  src="${pageContext.request.contextPath}/js/workflow.js"			    	type="text/javascript"></script>  	<!--  main.js  imports -->
+
+<link href="<%= request.getContextPath() %>/docroot/css/main.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
+<link href="<%= request.getContextPath() %>/docroot/css/form.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
 
 <input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 <input id="submissionCheck" type="hidden" value="true">
@@ -43,18 +47,12 @@
 				projectList = null;
 				try {projectList = ProjectLocalServiceUtil.getProjectList(userID);}
 				catch (NoSuchModelException e) {e.printStackTrace();}
-				catch (SystemException e) {e.printStackTrace();	}
-
-/*  				List <ResearchObject> roList = new ArrayList<ResearchObject>();
-				roList = null;
-				try {roList = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId(userID);}
-				catch (NoSuchModelException e) {e.printStackTrace();}
-				catch (SystemException e) {e.printStackTrace();	}  */
-
+				catch (SystemException e) {e.printStackTrace();	} 
+				 
+				JSONArray roList = new JSONArray();
+				roList = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId(userID); 
 			%>
-			
-	
-					
+		
 			
 			<br>
 			Please select an existing project, or choose nothing.
@@ -62,10 +60,10 @@
 			
 			<form action="select.html" id="choProjForm">
 				<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseWorkflowProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX', <%=PortalUtil.getUser(request).getUserId()%>)" >
-					<option selected="selected" value="none"> </option>
-					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
+					<option selected="selected" value="none">all datasets from user </option>
+ 					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
 						<option value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
-					<%} } %>
+					<%} } %>  
 				</select>
 			</form>
 					
@@ -75,11 +73,17 @@
 			<form action='select.html' id="choROForm">
 				<select id='workflowChooseRO' style='width:90%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
 					<option value='none'> </option>
-<%--  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { %>
-						<option value="<%= roList.get(i).getResearchObjectID() %>"> <%= roList.get(i).getLabel() %> </option>
-					<%} } %>  --%>
+  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
+  						JSONObject roJson =  new JSONObject();
+  						roJson = (JSONObject) roList.get(i);
+  						String label = (String) roJson.get("label");
+  						Long roId = (Long) roJson.get("researchobjectid"); %>
+  					    
+						<option value="<%= roId %>"> <%= label %> </option>
+					<%} } %>  
 				</select>
 			</form>	
+			
 
 
 	

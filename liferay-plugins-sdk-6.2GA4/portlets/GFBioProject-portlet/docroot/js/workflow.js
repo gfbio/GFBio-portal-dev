@@ -7,6 +7,7 @@ function chooseWorkflowProject(method, projectId  ,divId, userId){
 	workflowURL = document.getElementById('archivingURL').value;
 	var data = {};
 	data["projectid"] = Number(projectId);
+	data["userid"] = Number(userId);
 	ajaxActionRequest_ChooseWorkflowProject(workflowURL, method, data, divId,false);
 	sentProjectInformations(userId, projectId)
 }

@@ -10,6 +10,8 @@
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
+        <footer-portlet-javascript>/js/jquery-1.11.2.min.js</footer-portlet-javascript>
+        <footer-portlet-javascript>/js/jquery-1.11.2-ui.min.js</footer-portlet-javascript>
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -88,9 +90,13 @@
 	<portlet>
 		<portlet-name>workflowcollections</portlet-name>
 		<icon>/icon.png</icon>
+        <header-portlet-css>/css/main.css</header-portlet-css>
+        <header-portlet-javascript>/js/main.js</header-portlet-javascript>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
+        <footer-portlet-javascript>/js/jquery-1.11.2.min.js</footer-portlet-javascript>
+        <footer-portlet-javascript>/js/jquery-1.11.2-ui.min.js</footer-portlet-javascript>
 		<css-class-wrapper>
 			workflowcollections-portlet
 		</css-class-wrapper>

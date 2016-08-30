@@ -95,6 +95,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 	
 	//
 	public List <ResearchObject> getResearchObjectsByUserId (long userId){
+		System.out.println(": "+userId);
 		return ResearchObject_UserFinderUtil.getResearchObjectsByUserId(userId);
 	}
 	

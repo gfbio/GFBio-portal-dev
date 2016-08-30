@@ -83,18 +83,39 @@
 	
 	//
 	function ajaxActionRequest_ChooseWorkflowProject(archivingURL, method, data, divId, as) {
+		
+		if (data.projectid !=0){
+			console.log("project");
+			console.log(data);
 			$.ajax({
-			"type" : "POST",
-			"url": archivingURL.concat("/GFBioArchiving"),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : method
-			},
-			async: as,
-			success : function (data){
-				buildChooseRO(data, divId) ;
-			}
-		});
+				"type" : "POST",
+				"url": archivingURL.concat("/GFBioArchiving"),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(data),
+					"<portlet:namespace />responseTarget" : method
+				},
+				async: as,
+				success : function (data){
+					console.log (data);
+					buildChooseROOfProject(data, divId) ;
+				}
+			});
+		}else{
+			$.ajax({
+				"type" : "POST",
+				"url": archivingURL.concat("/GFBioArchiving"),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(data),
+					"<portlet:namespace />responseTarget" : "getResearchObjectsOfUser"
+				},
+				async: as,
+				success : function (data){
+					console.log ("user");
+					console.log (data);
+					buildChooseROOfUser(data);
+				}
+			});
+		}
 	}
 	
 	
@@ -108,7 +129,7 @@
 	
 	
 	//
-	function buildChooseRO(data, divId){
+	function buildChooseROOfProject(data, divId){
 
 		//cleanSubmissionWorkflow();
 			
@@ -121,16 +142,26 @@
 		var choRO = $("#".concat('workflowChooseRO'));
 		
 		if (data.projectid !=0){
-			div.attr("class", "swMain");
+			//div.attr("class", "swMain");
 			choRO.empty();
 			choRO.append("<option value='none'></option>");
 			for (i =0; i <roList.length;i++)
 				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" Version: "+ +roList[i].researchobjectversion+"</option>");
 			document.getElementById("workflowChooseRO").selectedIndex = 0;
 		}else{
-			div.attr("class", "swHide");
 			choRO.empty();
 		}
+	}
+	
+	function buildChooseROOfUser(data){
+		
+		var choRO = $("#".concat('workflowChooseRO'));
+		
+		choRO.empty();
+		choRO.append("<option value='none'></option>");
+		for (i =0; i <data.length;i++)
+			choRO.append("<option value='"+data[i].researchobjectid+"'>"+data[i].name+" Version: "+ +data[i].researchobjectversion+"</option>");
+		document.getElementById("workflowChooseRO").selectedIndex = 0;
 	}
 	
 	
