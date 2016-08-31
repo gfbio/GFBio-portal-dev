@@ -353,8 +353,8 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         
        //dataset informations
        // fields.put("customfield_10309",roJson.get("researchobjectid"));							//dataset id
-                fields.put("customfield_10201", roJson.get("name")); 						//dataset title
-                /* fields.put("customfield_10310", roJson.get("researchobjectversion")); 							//dataset version
+       fields.put("customfield_10201", roJson.get("name")); 						//dataset title
+       /* fields.put("customfield_10310", roJson.get("researchobjectversion")); 							//dataset version
         datasetlabelArray.add(roJson.get("label"));
         fields.put("customfield_10308", datasetlabelArray); 			//dataset label
         fields.put("customfield_10205", roJson.get("authornames")); 					//dataset author	
