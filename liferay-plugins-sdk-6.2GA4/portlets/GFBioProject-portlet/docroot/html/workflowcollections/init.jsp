@@ -101,7 +101,7 @@
 					"<input class='field lfr-input-text-container' 	id='cwf_project_name'	type='text'  value=''>"+
 				"</div>"+ 
 				"<div class='control-group'>"+
-					"<label class='control-label' 					id='cwf_project_pi_l'> Project label (like abbreviation of DFG ) </label>"+
+					"<label class='control-label' 					id='cwf_project_label_l'> Project label (like abbreviation of DFG ) </label>"+
 					"<input	class='field lfr-input-text-container'	id='cwf_project_label'	type='text'  value=''>"+
 				"</div>"+ 
 				"<div class='control-group'>"+
@@ -140,7 +140,7 @@
 				"<h4>Basic Informations</h4>"+
 				"</br>"+
 				
-				"<div class='swHide'>"+
+				"<div class='swMain'>"+
 					"<div class='control-group'>"+
 						"<label class='control-label'					id='cwf_ro_id'_l>Dataset id </label>"+
 						"<div	class='field lfr-input-text-container'	id='cwf_ro_id'></div>"+
@@ -221,7 +221,7 @@
 					"<span class='widthM' id='cwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save all informations</span></span>"+
 					"<span class='widthM' id='cwf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
 					"<span class='widthM' id='cwf_b_save' onclick='saveProjectInput()'>	<span class='btn btn-primary'>Save only project informations</span></span>"+
-					"<span class='widthM' id='cwf_b_start' onclick='test()'>			<span class='btn btn-primary'>Start submission</span></span>"+
+					"<span class='widthM' id='cwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
 				"</div>"					
 				
 			);
@@ -322,7 +322,7 @@
 					choMeta.append("<option id='cwf_ro_metadatalabel"+json.id+"' value='"+json.id+"'>"+json.label+"</option>");
 				}
 					
-				choMeta.append("<option value='other'>other</option>");
+				//choMeta.append("<option value='other'>other</option>");
  			}
  		});
 				
@@ -534,6 +534,29 @@
 		
 	}
 	
+	
+	
+	/////////////////////////////////////////////////////////////////////////////
+	
+	
+	//
+	function startSubmission(data){
+	
+		var url = document.getElementById('workflowcollectionsurl').value;
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : "startsubmission"
+			},
+			async: false,
+				success :  function (obj){
+					console.log("yeah");
+					console.log(obj);
+				}
+		});	
+	}
 
 	
 	

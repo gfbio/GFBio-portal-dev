@@ -54,32 +54,26 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 
 
 //
-function submitInput(){
+function submitInput(url){
 	
 	if (checkInput()){
-		var mrrJson = saveAllInput();
-
-		var researchObjectoJson = mrrJson.researchobjects;
-		//submissionregistryKontakt
-
-		var registryJson = buildSubmissionJsonForRegistry(researchObjectoJson);
-
-		Liferay.Service('/GFBioProject-portlet.submission/create-submission',
-			{
-				requestJson: '['.concat(JSON.stringify(registryJson)).concat(']')
-			},
-			function(obj) {
-				//sendMail(obj);
-			}
-		);
 		
+
+		var mrrJson = saveAllInput();
+		var registryJson = buildSubmissionJsonForRegistry(mrrJson.researchobjects);
+		var data ={};
+		data["mrr"]= mrrJson;
+		data["submissionregistry"]= registryJson;
+
+		startSubmission(data);
+	
 	}else{
 		console.log("=(");
 	}
 }
 
 
-//
+/*//
 function sendMail(obj) {
 	var uri='//helpdesk.gfbio.org/rest/api/6/issue/';
 
@@ -98,20 +92,20 @@ function sendMail(obj) {
 		 };
 
 	
-/*																					//http://host:port/context/rest/api-name/api-version/resource-name
+																					//http://host:port/context/rest/api-name/api-version/resource-name
 	curl -u admin:admin -X POST --data submitData -H "Content-Type: application/json" http:uri 
-	*/
+	
 	
 
-/*	$.ajax({
+	$.ajax({
 		  type: "POST",
 		  url: url,
 		  data: data,
 		  success: success,
 		  dataType: dataType
-		});*/
+		});
 
-}
+}*/
 
 
 //
@@ -223,6 +217,7 @@ function checkMinimalResearchObjectInput(){
 function createCwfResearchObject(projectJson){
 
 	var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
+
 	Liferay.Service('/GFBioProject-portlet.researchobject/create-research-object',
 		{
 			requestJson: '['.concat(JSON.stringify(researchObjectJson)).concat(']')

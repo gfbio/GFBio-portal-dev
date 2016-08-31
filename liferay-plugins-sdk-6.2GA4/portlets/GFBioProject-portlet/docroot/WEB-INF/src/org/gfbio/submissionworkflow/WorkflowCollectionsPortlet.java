@@ -74,6 +74,8 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 
 		response.setContentType("text/html");
 		
+		System.out.println("yeah");
+		
 		if (request.getParameter("responseTarget") != null) {
 
 			//starts getCompleteProjectById of project
@@ -230,16 +232,24 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 
 	}
 	
-	public void startSubmission(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
-		
+   
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    public String startSubmission (ResourceRequest request, ResourceResponse response){
+    	
+		JSONArray responseJson = new JSONArray();
 		String dataJson = request.getParameter("data");
 		JSONParser parser = new JSONParser();
 		JSONObject parseJson = new JSONObject();
 		try {parseJson = (JSONObject) parser.parse(dataJson);}
 		catch (ParseException e) {e.printStackTrace();}
-
 		
-        String responseString = "";
+		System.out.println("Es hat begonnen");
+		System.out.println(parseJson);
+		
+        String response2 = "";
 
         try {
 
@@ -258,7 +268,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
             conn.addRequestProperty ("Authorization", basicAuth);
           
-            String encodedData = getJSON_Body(parseJson);
+            String encodedData = getJSON_Body((JSONObject) parseJson.get("mrr"));
             OutputStream os = conn.getOutputStream();
             os.write(encodedData.getBytes());
             os.flush();       
@@ -269,49 +279,106 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
             String output;
             System.out.println("Output from Server .... \n");
             while ((output = br.readLine()) != null){
-                System.out.println(output);
-                responseString = responseString.concat(output);
+            	System.out.println("output");
+            	System.out.println(output);
+                response2 = response2.concat(output);
             } 
 
             conn.disconnect();
          } catch (Exception e) {e.printStackTrace();}
        
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(responseString);
-		
-	}
-	
-	
-	//
+        return response2;
+    }
+   
+   
     @SuppressWarnings("unchecked")
-    private static String getJSON_Body(JSONObject responseJson){
-          
+    private static String getJSON_Body(JSONObject requestJson){
+        
+    	//JSONObject exdataJson = new JSONObject();
+    	//JSONObject exdataJsonProject = new JSONObject();
+    	//JSONArray  roArray = new JSONArray();
+    	JSONObject roJson = new JSONObject();
+    	JSONObject exdataJsonRO = new JSONObject();
+    	
+    	//exdataJsonProject = (JSONObject) requestJson.get("extendeddata");
+    	//roArray = (JSONObject) requestJson.get("researchobjects");
+    	roJson = (JSONObject) requestJson.get("researchobjects");
+    	exdataJsonRO = (JSONObject) roJson.get("extendeddata");
+    	
         JSONObject json = new JSONObject();
         JSONObject fields = new JSONObject();
-        JSONObject key = new JSONObject();
-        JSONObject name = new JSONObject();
-        JSONObject value = new JSONObject();
-               
-        //name.put("name", "Collection Data");
-       // name.put("name", "DMP");
-        name.put("name", "Data Submission");
-        key.put("key", "SAND");
-        //key.put("key", "DSUB");
-        value.put("value","DFG");  //Funding
-           
-        fields.put("project", key);
-        fields.put("summary", "Submission Request Test"); //Ticket name
-        fields.put("issuetype", name);
-        fields.put("customfield_10010", "sand/collection-data");
-        fields.put("customfield_10206", "Imaginary project title"); //
-        fields.put("customfield_10209", value);  //Funding
-
-        json.put("fields", fields);
         
-        System.out.println(json.toString());
+        JSONObject project = new JSONObject();
+        JSONObject issuetype = new JSONObject();
+        JSONObject reporter = new JSONObject();
+        
+        JSONArray keywordArray = new JSONArray();
+        JSONArray projectlabelArray = new JSONArray();
+        JSONObject submitter = new JSONObject();
+        JSONArray datasetlabelArray = new JSONArray();
+        JSONObject metadata = new JSONObject();
+        JSONArray metadataArray = new JSONArray();
+        JSONObject license = new JSONObject();
+        JSONArray nagojaArray = new JSONArray();
+        JSONObject nagoja = new JSONObject();
+        
+        
+               
+        //ticket basic informations
+        project.put("key", "SAND");
+        fields.put("project", project);
+        issuetype.put("name", "Data Submission");
+        fields.put("issuetype", issuetype);	
+        reporter.put("name", "testuser1");
+        fields.put("reporter", reporter);	
+        fields.put("customfield_10010", "sand"+"/"+"collection-data2");
+        fields.put("summary", "Automated Data Submission");
+
+        //project informations
+        fields.put("customfield_10302", (long) requestJson.get("projectid"));								//project id
+        fields.put("customfield_10206", requestJson.get("name"));		//project title
+        projectlabelArray.add(requestJson.get("label"));
+        fields.put("customfield_10300", projectlabelArray);				//project label
+        fields.put("customfield_10207", "test PI");						//project PI
+        fields.put("customfield_10301",  requestJson.get("description"));			//project description
+        keywordArray.add("bioKeywordTest");
+        fields.put("customfield_10306", keywordArray);					//keywords
+
+        
+        //submission information
+        fields.put("customfield_10304", "submitter id");				//submitter id
+        submitter.put("name", "testuser1");
+        fields.put("customfield_10305", submitter);						//submitter name
+        //fields.put("customfield_10309", "1");							//submitter mail
+        
+       //dataset informations
+       // fields.put("customfield_10309",roJson.get("researchobjectid"));							//dataset id
+                fields.put("customfield_10201", roJson.get("name")); 						//dataset title
+                /* fields.put("customfield_10310", roJson.get("researchobjectversion")); 							//dataset version
+        datasetlabelArray.add(roJson.get("label"));
+        fields.put("customfield_10308", datasetlabelArray); 			//dataset label
+        fields.put("customfield_10205", roJson.get("authornames")); 					//dataset author	
+        fields.put("customfield_10311", exdataJsonRO.get("datacollectiontime")); 			//dataset collection time
+        fields.put("customfield_10208", roJson.get("description"));	//dataset description
+        fields.put("customfield_10307", exdataJsonRO.get("publications"));		//related publications
+        metadata.put("value", "Darwin Core");
+        metadataArray.add(metadata);
+        fields.put("customfield_10229", metadataArray);					//metadata shema description
+        nagoja.put("value", "Nagoya");
+        nagojaArray.add(nagoja);
+        fields.put("customfield_10216", nagojaArray);					//nagoja Question        
+        license.put("value", "CC BY");
+        fields.put("customfield_10202", license);						//license Question
+*/
+        json.put("fields", fields);
+
+        //System.out.println(json);
+        String response = json.toJSONString();
+        System.out.println("json-test: "+response);
+        response = response.replaceAll("\\\\", "");
+        System.out.println("json-test: "+response);
            
-        return json.toString();
+        return response;
     }
 	
 	
