@@ -49,6 +49,9 @@ section {
     padding: 70px 0;
 }
 
+ #main{
+	margin-top: 10px;
+}
 
 
 
@@ -157,7 +160,6 @@ h1.navbar-brand {
     background-color: #2c59a0;
 	text-transform: uppercase;
 	padding: 12px 35px;
-	margin-bottom:15px;
 	text-decoration:none;
 }
 
@@ -914,25 +916,5 @@ ul.external li a:hover {
     padding-top: 0;
 }
 
-/*=========================================================
-Liferay fixes - content
-=========================================================*/
-#main{
-	margin-top: 10px;
-}
-
-#main .row-fluid{
-	margin-left:0px;
-	margin-right:0px;
-}
-
-#main .span12 {
-	padding-left:0px;
-	padding-right:0px;
-} 
-	
-#main .footer{
-	margin:0;
-}	
 
 }

@@ -29,10 +29,10 @@
 $theme.include($body_top_include)
 	
 	
-<div class="container-fluid">
 		<div id="responsiveMenuToggle" class="icon-toggle-menu">
 		    <i class="fa fa-bars"></i>
 		</div>
+
 
 	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
 
@@ -94,7 +94,7 @@ $theme.include($body_top_include)
 	#dockbar()
 #end
 
-<main class="site-content" role="main">
+<main id="main" class="site-content" role="main">
 		
 		#if ($selectable)
 			$theme.include($content_include)
@@ -109,7 +109,7 @@ $theme.include($body_top_include)
 
 	
 </main>
-</div>
+
 
 $theme.include($body_bottom_include)
 
@@ -123,8 +123,10 @@ $theme.include($bottom_include)
 
 <script>
 
+
 (function($) {
     $(document).ready(function() {
+    
       $(document).accordion({
         // Put custom options here
         heightStyle: 'content',
@@ -185,6 +187,7 @@ $theme.include($bottom_include)
         navigationDiv.removeClass('hide');
         navigationDiv.removeClass('open');
   };
+  
 </script>
 
 
