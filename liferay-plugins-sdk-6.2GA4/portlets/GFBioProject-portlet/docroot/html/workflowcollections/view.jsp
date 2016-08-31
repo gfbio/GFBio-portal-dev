@@ -12,21 +12,24 @@
 
 <%@ include file="/html/init.jsp" %> <!-- library imports -->
 <%@ include file="/html/workflowcollections/init.jsp" %> <!-- library imports -->
-<%-- <script  src="${pageContext.request.contextPath}/js/jquery-1.11.2-ui.min.js"       				type="text/javascript"></script>  <!--  main.js  imports -->
-<script  src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"       				type="text/javascript"></script>  <!--  main.js  imports --> --%>
 <script  src="${pageContext.request.contextPath}/js/main.js"       				type="text/javascript"></script>  <!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/workflowcollections.js"     type="text/javascript"></script>  <!--  main.js  imports -->
 <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" 	type="text/css"> <!-- main.css imports -->
 
+<%if (PortalUtil.getUser(request)!=null){ %>
 
-
-<input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
-<input type="hidden" class="widthL" id="workflowcollectionsurl"  	value="<%=workflowcollectionsURL %>" />
-
-
-
-
-
-<div id="collections"></div>
+	<script>
+		$(document).ready(function() {
+			var div =   $("#collections");
+			var data = {"userid":Number(themeDisplay.getUserId())};
+			buildCollectionsForm(data, div);
+			fillDefaultInformations(data, div);
+		});
+	</script>
 	
+	<input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
+	<input type="hidden" class="widthL" id="workflowcollectionsurl"  	value="<%=workflowcollectionsURL %>" />
+
+	<div id="collections"></div>
+<%} %>	
 

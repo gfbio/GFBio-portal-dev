@@ -68,12 +68,12 @@
 	
 	
 	//build default collection workflow without project or researchobject data
-	$(document).ready(function() {
+/* 	$(document).ready(function() {
 		var div =   $("#collections");
 		var data = {"userid":Number(themeDisplay.getUserId())};
 		buildCollectionsForm(data, div);
 		fillDefaultInformations(data, div);
-	});
+	}); */
 	
 	
 	
@@ -140,7 +140,7 @@
 				"<h4>Basic Informations</h4>"+
 				"</br>"+
 				
-				"<div class='swMain'>"+
+				"<div class='swHide'>"+
 					"<div class='control-group'>"+
 						"<label class='control-label'					id='cwf_ro_id'_l>Dataset id </label>"+
 						"<div	class='field lfr-input-text-container'	id='cwf_ro_id'></div>"+

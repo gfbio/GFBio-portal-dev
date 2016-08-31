@@ -268,7 +268,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
             conn.addRequestProperty ("Authorization", basicAuth);
           
-            String encodedData = getJSON_Body((JSONObject) parseJson.get("mrr"));
+            String encodedData = getJSON_Body((JSONObject) parseJson);
             OutputStream os = conn.getOutputStream();
             os.write(encodedData.getBytes());
             os.flush();       
@@ -294,16 +294,23 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
     @SuppressWarnings("unchecked")
     private static String getJSON_Body(JSONObject requestJson){
         
+    	JSONObject projectJson = new JSONObject();
+    	JSONObject researchObjectJson = new JSONObject();
+    	JSONObject submitterJson = new JSONObject();
+    	
     	//JSONObject exdataJson = new JSONObject();
     	//JSONObject exdataJsonProject = new JSONObject();
     	//JSONArray  roArray = new JSONArray();
-    	JSONObject roJson = new JSONObject();
+    	
     	JSONObject exdataJsonRO = new JSONObject();
     	
+    	submitterJson = (JSONObject) requestJson.get("submissionregistry");
+    	projectJson = (JSONObject) requestJson.get("mrr");
+    	researchObjectJson = (JSONObject) projectJson.get("researchobjects");
     	//exdataJsonProject = (JSONObject) requestJson.get("extendeddata");
     	//roArray = (JSONObject) requestJson.get("researchobjects");
-    	roJson = (JSONObject) requestJson.get("researchobjects");
-    	exdataJsonRO = (JSONObject) roJson.get("extendeddata");
+    	
+    	exdataJsonRO = (JSONObject) researchObjectJson.get("extendeddata");
     	
         JSONObject json = new JSONObject();
         JSONObject fields = new JSONObject();
@@ -335,12 +342,12 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         fields.put("summary", "Automated Data Submission");
 
         //project informations
-        fields.put("customfield_10302", (long) requestJson.get("projectid"));								//project id
-        fields.put("customfield_10206", requestJson.get("name"));		//project title
-        projectlabelArray.add(requestJson.get("label"));
+        fields.put("customfield_10302", (long) projectJson.get("projectid"));								//project id
+        fields.put("customfield_10206", projectJson.get("name"));		//project title
+        projectlabelArray.add(projectJson.get("label"));
         fields.put("customfield_10300", projectlabelArray);				//project label
         fields.put("customfield_10207", "test PI");						//project PI
-        fields.put("customfield_10301",  requestJson.get("description"));			//project description
+        fields.put("customfield_10301",  projectJson.get("description"));			//project description
         keywordArray.add("bioKeywordTest");
         fields.put("customfield_10306", keywordArray);					//keywords
 
@@ -353,13 +360,13 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         
        //dataset informations
        // fields.put("customfield_10309",roJson.get("researchobjectid"));							//dataset id
-       fields.put("customfield_10201", roJson.get("name")); 						//dataset title
-       /* fields.put("customfield_10310", roJson.get("researchobjectversion")); 							//dataset version
-        datasetlabelArray.add(roJson.get("label"));
+       fields.put("customfield_10201", researchObjectJson.get("name")); 						//dataset title
+       /*fields.put("customfield_10310", researchObjectJson.get("researchobjectversion")); 							//dataset version
+        datasetlabelArray.add(researchObjectJson.get("label"));
         fields.put("customfield_10308", datasetlabelArray); 			//dataset label
-        fields.put("customfield_10205", roJson.get("authornames")); 					//dataset author	
-        fields.put("customfield_10311", exdataJsonRO.get("datacollectiontime")); 			//dataset collection time
-        fields.put("customfield_10208", roJson.get("description"));	//dataset description
+        fields.put("customfield_10205", researchObjectJson.get("authornames")); 					//dataset author	
+        */fields.put("customfield_10311", exdataJsonRO.get("datacollectiontime")); 			//dataset collection time
+        fields.put("customfield_10208", researchObjectJson.get("description"));	//dataset description
         fields.put("customfield_10307", exdataJsonRO.get("publications"));		//related publications
         metadata.put("value", "Darwin Core");
         metadataArray.add(metadata);
@@ -369,7 +376,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         fields.put("customfield_10216", nagojaArray);					//nagoja Question        
         license.put("value", "CC BY");
         fields.put("customfield_10202", license);						//license Question
-*/
+       /* */
         json.put("fields", fields);
 
         //System.out.println(json);

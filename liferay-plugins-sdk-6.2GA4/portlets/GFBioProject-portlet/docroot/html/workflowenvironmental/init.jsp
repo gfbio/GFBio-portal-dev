@@ -31,13 +31,13 @@
 	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
 
-	//build default collection workflow without project or researchobject data
+/* 	//build default collection workflow without project or researchobject data
 	$(document).ready(function() {
 		var div =   $("#environmental");
 		var data = {"userid":Number(themeDisplay.getUserId())};
 		buildEnvironmentalForm(data, div);
 		fillDefaultInformations(data, div);
-	});
+	}); */
 
 	
 

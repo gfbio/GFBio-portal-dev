@@ -13,21 +13,22 @@
 		
 <script type="text/javascript" src="http://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>
 
-
+<%if (PortalUtil.getUser(request)==null){ %>
+	
+	<div class="portlet-msg-alert">
+		Only logged in users get access to the different submission workflows. Please <span style="color:#006400;">sign in</span> to continue the process. 
+	</div>
+<%}else { %>
    
-<div id="please_dont_kill_my_css" ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
+	<div id="please_dont_kill_my_css" ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
+		
+	    {{ addToConfig('authorization',  '<%=WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"pub2") %>') }}
+	    {{ addToConfig('submittingUser', '<%=PortalUtil.getUserId(request) %>')}}
+		
+	    <enawidget>    </enawidget>
+	</div>
 
-<%= WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"dev")%>
-    {{ addToConfig('authorization',  '<%=WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"dev") %>') }}
-    {{ addToConfig('submittingUser', '<%=PortalUtil.getUserId(request) %>')}}
-
-    <enawidget>    </enawidget>
-    
-    
-
-</div>
-
-
+<%} %>
 
 
 

@@ -14,21 +14,29 @@
 <script  src="${pageContext.request.contextPath}/js/main.js"       								type="text/javascript"></script>  <!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/workflowenvironmental.js"     				type="text/javascript"></script>  <!--  main.js  imports -->
  
-<%-- <script  src="${pageContext.request.contextPath}/js/jquery/jquery-1.11.1.min.js"       			type="text/javascript"></script>  	<!--  main.js  imports -->
-<script  src="${pageContext.request.contextPath}/js/jquery/jquery-1.11.2-ui.min.js"       		type="text/javascript"></script>  	<!--  main.js  imports --> --%>
-
- <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" 					type="text/css"> <!-- main.css imports -->
+<link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" 					type="text/css"> <!-- main.css imports -->
 	 
-
-<input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
-<input type="hidden" class="widthL" id="workflowenvironmentalurl"  	value="<%=workflowenvironmentalURL %>" />
+<%if (PortalUtil.getUser(request)!=null){ %>
 
 
-
-
-
-<div id="environmental" class="projectportlet"></div>
 	
+	<input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
+	<input type="hidden" class="widthL" id="workflowenvironmentalurl"  	value="<%=workflowenvironmentalURL %>" />
+	
+	<div id="environmental" class="projectportlet"></div>
+	
+	
+		<script>
+		//build default collection workflow without project or researchobject data
+	 		$(document).ready(function() {
+			var div =   $("#environmental");
+			var data = {"userid":Number(themeDisplay.getUserId())};
+			buildEnvironmentalForm(data, div);
+			fillDefaultInformations(data, div);
+		}); 
+
+	</script>
+<%} %>	
 
 
 

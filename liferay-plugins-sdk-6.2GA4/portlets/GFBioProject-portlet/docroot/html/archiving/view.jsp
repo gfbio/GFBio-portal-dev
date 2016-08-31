@@ -13,8 +13,6 @@
 <%@ include file="/html/init.jsp" %> <!-- library imports -->
 <%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
 
-<%-- <script  src="${pageContext.request.contextPath}/js/jquery-1.11.2-ui.min.js"       				type="text/javascript"></script>  <!--  main.js  imports -->
-<script  src="${pageContext.request.contextPath}/js/jquery-1.11.2.min.js"       				type="text/javascript"></script>  <!--  main.js  imports --> --%>
 <script  src="${pageContext.request.contextPath}/js/main.js"       			type="text/javascript"></script>  	<!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/workflow.js"			    	type="text/javascript"></script>  	<!--  main.js  imports -->
 
@@ -50,6 +48,7 @@
 				catch (SystemException e) {e.printStackTrace();	} 
 				 
 				JSONArray roList = new JSONArray();
+				roList = null;
 				roList = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId(userID); 
 			%>
 		
@@ -73,14 +72,15 @@
 			<form action='select.html' id="choROForm">
 				<select id='workflowChooseRO' style='width:90%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
 					<option value='none'> </option>
-  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
-  						JSONObject roJson =  new JSONObject();
-  						roJson = (JSONObject) roList.get(i);
-  						String label = (String) roJson.get("label");
-  						Long roId = (Long) roJson.get("researchobjectid"); %>
-  					    
-						<option value="<%= roId %>"> <%= label %> </option>
-					<%} } %>  
+					<% if (roList != null){ %>
+	  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
+	  						JSONObject roJson =  new JSONObject();
+	  						roJson = (JSONObject) roList.get(i);
+	  						String label = (String) roJson.get("label");
+	  						Long roId = (Long) roJson.get("researchobjectid"); %>
+	  					    
+							<option value="<%= roId %>"> <%= label %> </option>
+						<%} }} %>  
 				</select>
 			</form>	
 			
