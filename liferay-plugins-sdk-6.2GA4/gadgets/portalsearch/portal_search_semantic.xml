@@ -73,8 +73,15 @@
 				$(document).ready(function() {
 					listenToEnterPress();
 					setAutoComplete();
+					//TODO: Check if there's any input cookie stored
+					if(getCookie("gfbioSearchInput")==null){
 					// no keyword, no filter
 					showLatestTenDataset("","");
+					} else{
+						var searchbox = document.getElementById("gfbioSearchInput");
+						searchbox.value = getCookie("gfbioSearchInput");
+						newQuery(false);
+					}
 				});
 				
 				$( document ).ajaxComplete(function( event, xhr, settings ) {

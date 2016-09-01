@@ -1259,7 +1259,6 @@ function XMLtoJSON() {
  */
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
-		//var res = "";
 		var jArr = jObj[name];
 		if (jArr.length >1){
 		    return jArr;
@@ -1267,12 +1266,6 @@ function getValueFromJSONArray(jObj, name) {
 		    return jArr[0];
 		}
 		else return "";
-		/*for (var i = 0; i < jArr.length; i++) {
-			res += jArr[i];
-			if (i < jArr.length - 1)
-				res += "; ";
-		}
-		return res;*/
 	} else
 		return "";
 }
