@@ -563,17 +563,23 @@ function parseReturnedJSONfromSearch(datasrc) {
 			console.log('-----------------');
 						
 			if (isJArray(json.dataset["parentIdentifier"])){
-				inner.parentIdentifier = getValueFromJSONArray(json.dataset,"parentIdentifier");
+				inner.parentIdentifier = getStringFromJSONArray(json.dataset,"parentIdentifier");
 			}else{
 				inner.parentIdentifier = json.dataset["parentIdentifier"];
 			}
 			
 			inner.dcIdentifier = json.dataset["dc:identifier"];
-			
 			if (isJArray(json.dataset["dc:type"])){
-				inner.dcType = getValueFromJSONArray(json.dataset,"dc:type");
+				inner.dcType = "Unit";
+				inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
 			}else{
-				inner.dcType = json.dataset["dc:type"];
+				if (json.dataset["dc:type"] == "Dataset"){
+					inner.dcType = "Dataset";
+					inner.unitType ="";
+				}else{
+					inner.dcType = "Unit";
+					inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
+				}
 			}
 			
 		} else{
@@ -832,6 +838,7 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"description" : value.description,
 		"dataCenter" : value.dataCenter,
 		"dcType" : value.dcType,
+		"unitType" : value.unitType,
 		"parentIdentifier": value.parentIdentifier,
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
@@ -1260,16 +1267,28 @@ function XMLtoJSON() {
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var jArr = jObj[name];
-		if (jArr.length >1){
+		if (jArr.length >=1){
 		    return jArr;
-		}else if (jArr.length =1){
-		    return jArr[0];
 		}
 		else return "";
 	} else
 		return "";
 }
 
+function getStringFromJSONArray(jObj, name) {
+	if (jObj[name] !== undefined) {
+		var res = "";
+		var jArr = jObj[name];
+		for (var i=0; i<jArr.length; i++){
+			res += jArr[i];
+			if (i != jArr.length-1){
+				res += ";";
+			}
+		}
+		return res;
+	} else
+		return "";
+}
 /*
  * Description: Read value[ind] from a JSONObject
  */
