@@ -834,6 +834,7 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"dcType" : value.dcType,
 		"parentIdentifier": value.parentIdentifier,
 		"dcIdentifier": value.dcIdentifier,
+		"parameter": value.parameter,
 		"xml" : value.xml
 	};
 	return result;
@@ -1258,14 +1259,20 @@ function XMLtoJSON() {
  */
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
-		var res = "";
+		//var res = "";
 		var jArr = jObj[name];
-		for (var i = 0; i < jArr.length; i++) {
+		if (jArr.length >1){
+		    return jArr;
+		}else if (jArr.length =1){
+		    return jArr[0];
+		}
+		else return "";
+		/*for (var i = 0; i < jArr.length; i++) {
 			res += jArr[i];
 			if (i < jArr.length - 1)
 				res += "; ";
 		}
-		return res;
+		return res;*/
 	} else
 		return "";
 }
