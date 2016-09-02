@@ -1012,7 +1012,7 @@ Liferay fixes - Dockbar
 Liferay fixes - deprecated classes
 =========================================================*/
 .overlay {
-    position: relative;
+    position: absolute;
 }
 
 

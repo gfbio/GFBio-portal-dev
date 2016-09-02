@@ -1267,12 +1267,11 @@ function XMLtoJSON() {
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var jArr = jObj[name];
-		if (jArr.length >=1){
+		if (jArr.length > 0){
 		    return jArr;
 		}
-		else return "";
-	} else
-		return "";
+	} 
+	return [];
 }
 
 function getStringFromJSONArray(jObj, name) {

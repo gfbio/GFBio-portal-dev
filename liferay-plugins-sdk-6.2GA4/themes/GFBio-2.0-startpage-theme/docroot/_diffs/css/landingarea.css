@@ -49,11 +49,20 @@ section {
     padding: 70px 0;
 }
 
- #main{
-	margin-top: 10px;
+
+
+@import "mixins";
+@include respond-to(screens) { 
+	#main{
+		margin-top: 10px;
+	}
 }
 
-
+@include respond-to(phone, tablet) {
+	#main{
+		margin-top: -14px;
+	}
+}
 
 /**
 /*	Preloader
