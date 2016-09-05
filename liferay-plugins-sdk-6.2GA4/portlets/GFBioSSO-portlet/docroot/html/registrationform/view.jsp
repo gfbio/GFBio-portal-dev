@@ -52,7 +52,8 @@ if (firstname=="" || lastname==""){
 		var firstname = document.getElementById("firstname").value;
 		var lastname = document.getElementById("lastname").value;
 		if (user=="" || mail=="" || firstname=="" || lastname==""){
-        	msg.innerHTML = "<font color='#ff0000'>Your information is incomplete, the user cannot be added.<font color='#ff0000'>";
+        	msg.innerHTML = "<font color='#ff0000'>Your information is incomplete, the user cannot be added. "
+        	+"Please update your Username, Email, First Name, and Last Name on your account settings.<font color='#ff0000'>";
 			return false;
 		}
 		msg.innerHTML = "";
