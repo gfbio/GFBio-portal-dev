@@ -7,11 +7,12 @@
 	</div>
 
 	<div class="portlet-layout row-fluid">
-		<div class="portlet-column portlet-column-first span4" id="column-2">
-			$processor.processColumn("column-2", "portlet-column-content portlet-column-content-first")
+		<!-- make the right column goes on top in mobile view -->
+		<div class="portlet-column row-fluid col-md-8 col-md-push-4" id="column-2">
+			$processor.processColumn("column-2", "portlet-column-content")
 		</div>
-		<div class="portlet-column span8" id="column-3">
-			$processor.processColumn("column-3", "portlet-column-content portlet-column-content-last")
+		<div class="portlet-column row-fluid col-md-4 col-md-pull-8" id="column-3">
+			$processor.processColumn("column-3", "portlet-column-content")
 		</div>
 	</div>
 	
