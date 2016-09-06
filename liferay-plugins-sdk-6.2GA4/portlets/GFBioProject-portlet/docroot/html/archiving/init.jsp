@@ -4,13 +4,15 @@
 	
 	
 	//Message from Hide Managment
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		
 		Liferay.on('gadget:gfbio.archiving.update', function(data) {
 			if (!(data == undefined))
 				if (data.updateproject==true){
 					var choPro = $("#".concat("workflowChoPro"));
-					choPro.append("<option value='"+data.projectid+"'>"+data.projectlabel+"</option>");
+					choPro.append("<option id='workflowChoPro"+data.projectid+"' value='"+data.projectid+"'>"+data.projectlabel+"</option>");
+					document.getElementById("workflowChoPro"+data.projectid).checked=true;
+					//console.log(document.getElementById("workflowChoPro"+data.projectid).checked);
 				}
 		});
 	});
@@ -42,8 +44,6 @@
 	
 	//
 	function sentProjectInformations(userId, projectId){
-		console.log("user: "+userId);
-		console.log("project "+projectId);
 		var toSubmit = {
 			"userid"   : userId,
 			"projectid"   : projectId,
@@ -85,8 +85,6 @@
 	function ajaxActionRequest_ChooseWorkflowProject(archivingURL, method, data, divId, as) {
 		
 		if (data.projectid !=0){
-			console.log("project");
-			console.log(data);
 			$.ajax({
 				"type" : "POST",
 				"url": archivingURL.concat("/GFBioArchiving"),
@@ -96,7 +94,6 @@
 				},
 				async: as,
 				success : function (data){
-					console.log (data);
 					buildChooseROOfProject(data, divId) ;
 				}
 			});
@@ -110,8 +107,6 @@
 				},
 				async: as,
 				success : function (data){
-					console.log ("user");
-					console.log (data);
 					buildChooseROOfUser(data);
 				}
 			});
@@ -122,7 +117,7 @@
 /////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
 	
-	$( document ).ready(function() {
+	AUI().ready(function(A){
 		 document.getElementById("workflowChoPro").selectedIndex = 0;
 		 //document.getElementById("choWorkflow").selectedIndex = 0;
 	});

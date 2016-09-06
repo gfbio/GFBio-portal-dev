@@ -173,20 +173,14 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray getResearchObjectsByUserId(long userId){
-		System.out.println("------------------------");
-		System.out.println(userId);
 		JSONArray researchObjectJSON = new JSONArray();
 		List <ResearchObject> researchObjectList = null;
 		researchObjectList =  ResearchObject_UserLocalServiceUtil.getResearchObjectsByUserId(userId);
-		System.out.println("------------------------");
-		System.out.println(researchObjectList.toString());
 		if (researchObjectList.size() >0)
 			for (int i =0; i< researchObjectList.size();i++)
 				researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
 		else
 			researchObjectJSON = null;
-		System.out.println(researchObjectJSON);
-		System.out.println("------------------------");
 		return researchObjectJSON;
 	}
 	

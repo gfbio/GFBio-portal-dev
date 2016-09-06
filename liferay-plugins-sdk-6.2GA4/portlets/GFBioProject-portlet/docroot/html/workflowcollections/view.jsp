@@ -18,18 +18,9 @@
 
 <%if (PortalUtil.getUser(request)!=null){ %>
 
-	<script>
-		$(document).ready(function() {
-			var div =   $("#collections");
-			var data = {"userid":Number(themeDisplay.getUserId())};
-			buildCollectionsForm(data, div);
-			fillDefaultInformations(data, div);
-		});
-	</script>
-	
 	<input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
 	<input type="hidden" class="widthL" id="workflowcollectionsurl"  	value="<%=workflowcollectionsURL %>" />
 
 	<div id="collections"></div>
-<%} %>	
 
+<%} %>	

@@ -74,10 +74,18 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 
 		response.setContentType("text/html");
 		
-		System.out.println("yeah");
-		
 		if (request.getParameter("responseTarget") != null) {
-
+			
+			
+			//
+			if ("createproject".toString().equals(request.getParameter("responseTarget").toString()))
+				createProject(request, response);
+			
+			//
+			if ("createresearchobject".toString().equals(request.getParameter("responseTarget").toString()))
+				createResearchObject(request, response);			
+			
+			
 			//starts getCompleteProjectById of project
 			if ("getfullnames".toString().equals(request.getParameter("responseTarget").toString()))
 				getFullNamesAsString(request, response);
@@ -109,6 +117,10 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		}
 	}
 	
+	
+	
+	
+	///////////////////////////////////////////////get functions //////////////////////////////////////////////////
 
 	//
 	@SuppressWarnings("unchecked")
@@ -125,7 +137,6 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 				responseJson.put("projectpi", Project_UserLocalServiceUtil.getFullNamesAsString(Project_UserLocalServiceUtil.getOwnerAndPiByProjectId((long) parseJson.get("projectid"))));
 			else
 				responseJson.put("projectpi", "");
-			
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
 	        response.getWriter().write(responseJson.toString());
@@ -148,7 +159,6 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 				responseJson = ProjectLocalServiceUtil.getCompleteProjectById(parseJson);
 			else
 				responseJson.put("projectid", 0);
-			
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
 	        response.getWriter().write(responseJson.toString());
@@ -163,12 +173,10 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		String dataJson = request.getParameter("data");
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
-
 		try {parseJson = (JSONArray) parser.parse(dataJson);}
 		catch (ParseException e) {e.printStackTrace();}
 
 		responseJson = ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById(parseJson);
-
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
@@ -185,13 +193,11 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		JSONObject parseJson = new JSONObject();
 		try {parseJson = (JSONObject) parser.parse(dataJson);}
 		catch (ParseException e) {e.printStackTrace();}
-
+		
 		responseJson = ContentLocalServiceUtil.getRowInformationsOfRelationshipsOfSpecificCellContent(parseJson);
-
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
-
 	}
     
 	
@@ -206,11 +212,9 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		catch (ParseException e) {e.printStackTrace();}
 
 		responseJson = HeadLocalServiceUtil.getTableAsJSONArrayByName(parseJson);
-
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
-
 	}
 	
 	
@@ -225,31 +229,76 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		catch (ParseException e) {e.printStackTrace();}
 
 		responseJson = UserExtensionLocalServiceUtil.getUserExtentionById(parseJson);
-
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
-
 	}
 	
    
+	
+	////////////////////////////////////////////////////////////// update functions //////////////////////////////////////////
+	
+	
+	//
+	public void createProject (ResourceRequest request, ResourceResponse response){
+    	
+         String responseString = "";
+		
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+
+		responseString = (ProjectLocalServiceUtil.createProjectByJson(parseJson)).toString();
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		try {response.getWriter().write(responseString);}
+		catch (IOException e) {e.printStackTrace();}
+
+	}
+	
+	
+	//
+	public void createResearchObject (ResourceRequest request, ResourceResponse response){
+    	
+        String responseString = "";
+		
+		String dataJson = request.getParameter("data");
+		JSONParser parser = new JSONParser();
+		JSONObject parseJson = new JSONObject();
+		try {parseJson = (JSONObject) parser.parse(dataJson);}
+		catch (ParseException e) {e.printStackTrace();}
+	
+		responseString = (ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson)).toString();
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		try {response.getWriter().write(responseString);}
+		catch (IOException e) {e.printStackTrace();}
+
+	}
+	
+	
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    public String startSubmission (ResourceRequest request, ResourceResponse response){
+    public void startSubmission (ResourceRequest request, ResourceResponse response){
     	
-		JSONArray responseJson = new JSONArray();
+    	System.out.println("startSubmission");
+    	
 		String dataJson = request.getParameter("data");
 		JSONParser parser = new JSONParser();
 		JSONObject parseJson = new JSONObject();
 		try {parseJson = (JSONObject) parser.parse(dataJson);}
 		catch (ParseException e) {e.printStackTrace();}
 		
-		System.out.println("Es hat begonnen");
-		System.out.println(parseJson);
 		
-        String response2 = "";
+		
+		
+        String responseString = "";
 
         try {
 
@@ -281,37 +330,50 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
             while ((output = br.readLine()) != null){
             	System.out.println("output");
             	System.out.println(output);
-                response2 = response2.concat(output);
+                responseString = responseString.concat(output);
             } 
 
             conn.disconnect();
          } catch (Exception e) {e.printStackTrace();}
        
-        return response2;
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		try {response.getWriter().write(responseString);}
+		catch (IOException e) {e.printStackTrace();}
     }
    
    
-    @SuppressWarnings("unchecked")
+    //
+    @SuppressWarnings({ "unchecked", "unused" })
     private static String getJSON_Body(JSONObject requestJson){
-        
-    	JSONObject projectJson = new JSONObject();
-    	JSONObject researchObjectJson = new JSONObject();
-    	JSONObject submitterJson = new JSONObject();
     	
-    	//JSONObject exdataJson = new JSONObject();
-    	//JSONObject exdataJsonProject = new JSONObject();
-    	//JSONArray  roArray = new JSONArray();
-    	
-    	JSONObject exdataJsonRO = new JSONObject();
-    	
-    	submitterJson = (JSONObject) requestJson.get("submissionregistry");
+		JSONParser parser = new JSONParser();
+
+		System.out.println("request: "+requestJson);
+		
+		//preparation data source
+		
+		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
+    	
+		JSONObject submitterJson = new JSONObject();
+    	submitterJson = UserExtensionLocalServiceUtil.getUserExtentionById((JSONObject) requestJson.get("submissionregistry"));
+    	
+    	String extendeddata ="";
+    	JSONObject extendeddataJsonProject = new JSONObject();
+    	extendeddata = (String) projectJson.get("extendeddata");
+		try {extendeddataJsonProject = (JSONObject) parser.parse(extendeddata);}
+		catch (ParseException e) {e.printStackTrace();}
+
+    	JSONObject researchObjectJson = new JSONObject();
     	researchObjectJson = (JSONObject) projectJson.get("researchobjects");
-    	//exdataJsonProject = (JSONObject) requestJson.get("extendeddata");
-    	//roArray = (JSONObject) requestJson.get("researchobjects");
+		
+		JSONObject extendeddataJsonResearchObject = new JSONObject();
+		extendeddataJsonResearchObject = (JSONObject) researchObjectJson.get("extendeddata");
     	
-    	exdataJsonRO = (JSONObject) researchObjectJson.get("extendeddata");
-    	
+		
+		//preparation data target
+		
         JSONObject json = new JSONObject();
         JSONObject fields = new JSONObject();
         
@@ -321,7 +383,6 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         
         JSONArray keywordArray = new JSONArray();
         JSONArray projectlabelArray = new JSONArray();
-        JSONObject submitter = new JSONObject();
         JSONArray datasetlabelArray = new JSONArray();
         JSONObject metadata = new JSONObject();
         JSONArray metadataArray = new JSONArray();
@@ -330,62 +391,181 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         JSONObject nagoja = new JSONObject();
         
         
-               
         //ticket basic informations
         project.put("key", "SAND");
         fields.put("project", project);
         issuetype.put("name", "Data Submission");
         fields.put("issuetype", issuetype);	
-        reporter.put("name", "testuser1");
+        //reporter.put("name", "marcel.froemming@uni-jena.de");
+
+        reporter.put("name", submitterJson.get("emailaddress"));
         fields.put("reporter", reporter);	
         fields.put("customfield_10010", "sand"+"/"+"collection-data2");
         fields.put("summary", "Automated Data Submission");
 
+        
         //project informations
-        fields.put("customfield_10302", (long) projectJson.get("projectid"));								//project id
-        fields.put("customfield_10206", projectJson.get("name"));		//project title
+        
+        //project id
+        fields.put("customfield_10302", (long) projectJson.get("projectid"));					
+        
+        //project title
+        fields.put("customfield_10206", projectJson.get("name"));								
+        
+        //project label
         projectlabelArray.add(projectJson.get("label"));
-        fields.put("customfield_10300", projectlabelArray);				//project label
-        fields.put("customfield_10207", "test PI");						//project PI
-        fields.put("customfield_10301",  projectJson.get("description"));			//project description
-        keywordArray.add("bioKeywordTest");
-        fields.put("customfield_10306", keywordArray);					//keywords
+        fields.put("customfield_10300", projectlabelArray);										
+        
+        //project PI
+        fields.put("customfield_10207", extendeddataJsonProject.get("pi"));						
+        
+        //project description
+        fields.put("customfield_10301", projectJson.get("description"));						
+  
+        //project Keywords
+        if (projectJson.containsKey("dcrtids")){
+        	
+        	JSONObject commandJson = new JSONObject();
+        	commandJson.put("entitytablename","gfbio_type");
+        	commandJson.put("relationtablename","gfbio_category_type");
+        	commandJson.put("entitytablecellcontent","research field");
+        	JSONArray allKeywordsArray = new JSONArray();
+        	allKeywordsArray = ContentLocalServiceUtil.getRowInformationsOfRelationshipsOfSpecificCellContent(commandJson);
+        	
+        	String dcrtlabels = "";
+        	JSONArray dcrtidArray = new JSONArray();
+        	String dcrtids = (String) projectJson.get("dcrtids");
+    		try {dcrtidArray = (JSONArray) parser.parse("["+dcrtids+"]");}
+    		catch (ParseException e) {e.printStackTrace();}
+    		
+    		for (int i =0; i< dcrtidArray.size();i++){
+    			int j =0;
+    			while (j <allKeywordsArray.size()){
+    				JSONObject keywordInformations =  (JSONObject) allKeywordsArray.get(j);
+    				if ((String.valueOf((long) dcrtidArray.get(i))).equals((String) keywordInformations.get("id"))){
+    					dcrtlabels = dcrtlabels.concat((String)keywordInformations.get("name"));
+    					if (i < dcrtidArray.size()-1)
+    						dcrtlabels = dcrtlabels.concat(", ");
+    					j = allKeywordsArray.size();
+    				}else
+    					j = j+1;
+    		}	}
+        	keywordArray.add(dcrtlabels);
+        	fields.put("customfield_10306", keywordArray);											
+        }
 
+
+        //dataset informations
         
-        //submission information
-        fields.put("customfield_10304", "submitter id");				//submitter id
-        submitter.put("name", "testuser1");
-        fields.put("customfield_10305", submitter);						//submitter name
-        //fields.put("customfield_10309", "1");							//submitter mail
+        //dataset id 
+        fields.put("customfield_10309",String.valueOf((long) researchObjectJson.get("researchobjectid")));						
         
-       //dataset informations
-       // fields.put("customfield_10309",roJson.get("researchobjectid"));							//dataset id
-       fields.put("customfield_10201", researchObjectJson.get("name")); 						//dataset title
-       /*fields.put("customfield_10310", researchObjectJson.get("researchobjectversion")); 							//dataset version
+        //dataset title
+        fields.put("customfield_10201", researchObjectJson.get("name")); 						
+        
+        //dataset version
+        fields.put("customfield_10310", String.valueOf((long) researchObjectJson.get("researchobjectversion"))); 							
+        
+        //dataset label
         datasetlabelArray.add(researchObjectJson.get("label"));
-        fields.put("customfield_10308", datasetlabelArray); 			//dataset label
-        fields.put("customfield_10205", researchObjectJson.get("authornames")); 					//dataset author	
-        */fields.put("customfield_10311", exdataJsonRO.get("datacollectiontime")); 			//dataset collection time
-        fields.put("customfield_10208", researchObjectJson.get("description"));	//dataset description
-        fields.put("customfield_10307", exdataJsonRO.get("publications"));		//related publications
-        metadata.put("value", "Darwin Core");
-        metadataArray.add(metadata);
-        fields.put("customfield_10229", metadataArray);					//metadata shema description
-        nagoja.put("value", "Nagoya");
-        nagojaArray.add(nagoja);
-        fields.put("customfield_10216", nagojaArray);					//nagoja Question        
-        license.put("value", "CC BY");
-        fields.put("customfield_10202", license);						//license Question
-       /* */
-        json.put("fields", fields);
+        fields.put("customfield_10308", datasetlabelArray); 			
+        
+        //dataset description
+        fields.put("customfield_10208", researchObjectJson.get("description"));	
+        
+        //dataset author
+        if (extendeddataJsonResearchObject.containsKey("authornames"))
+        	if (!(extendeddataJsonResearchObject.get("authornames").equals("")))
+        		fields.put("customfield_10205", extendeddataJsonResearchObject.get("authornames")); 						
 
-        //System.out.println(json);
-        String response = json.toJSONString();
-        System.out.println("json-test: "+response);
-        response = response.replaceAll("\\\\", "");
-        System.out.println("json-test: "+response);
-           
-        return response;
+        //dataset collection time
+        if (extendeddataJsonResearchObject.containsKey("datacollectiontime"))
+        	if (!(extendeddataJsonResearchObject.get("datacollectiontime").equals("")))
+        		fields.put("customfield_10311", extendeddataJsonResearchObject.get("datacollectiontime")); 			
+        
+        //related publications
+        if (extendeddataJsonResearchObject.containsKey("publications"))
+        	if (!(extendeddataJsonResearchObject.get("publications").equals("")))
+        		fields.put("customfield_10307", extendeddataJsonResearchObject.get("publications"));		
+        
+       //metadata shema description
+        if (researchObjectJson.containsKey("metadataid")){
+            
+            String metadataName = "";
+			JSONArray metadataValueArray = new JSONArray();
+            
+			String matadataId ="";
+			if (((researchObjectJson.get("metadataid").getClass()).toString()).equals("class java.lang.Long"))
+            	matadataId = String.valueOf((long) researchObjectJson.get("metadataid"));
+            else
+            	matadataId = (String) researchObjectJson.get("metadataid");
+            
+            		
+            JSONObject commandJson = new JSONObject();
+            commandJson.put("tablename","gfbio_metadata");
+            JSONArray allMetadataArray = new JSONArray();
+            allMetadataArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
+
+       		int i =0;
+       		while (i <allMetadataArray.size()){
+       			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
+        		if ((matadataId.equals((String) metadataInformations.get("id")))){
+        			metadataName = (String)metadataInformations.get("label");
+       				i = allMetadataArray.size();
+        		}else
+        			i = i+1;
+        	}
+
+            metadata.put("value", metadataName);
+            metadataArray.add(metadata);
+            fields.put("customfield_10229", metadataArray);	
+        }
+               
+      //nagoja Question 	
+      if (extendeddataJsonResearchObject.containsKey("nagoja"))
+    	  if (!(extendeddataJsonResearchObject.get("nagoja").equals("")))
+    		  if (extendeddataJsonResearchObject.get("nagoja").equals("yes")){
+    			  nagoja.put("value", "Nagoja");
+    			  nagojaArray.add(nagoja);
+    			  fields.put("customfield_10216", nagojaArray);
+    		  }
+			       
+	      //license Question
+	      if (researchObjectJson.containsKey("licenseids")){
+	    	  
+		      	JSONObject commandJson = new JSONObject();
+		      	commandJson.put("tablename","gfbio_license");
+		      	JSONArray allLicensesArray = new JSONArray();
+		      	allLicensesArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
+		      	String licenseName = "";
+		      	JSONArray licenseArray = new JSONArray();
+		      	String licenseids = (String) researchObjectJson.get("licenseids");
+		  		try {licenseArray = (JSONArray) parser.parse("["+licenseids+"]");}
+		  		catch (ParseException e) {e.printStackTrace();}
+		  		
+		  		for (int i =0; i< licenseArray.size();i++){
+		  			int j =0;
+		  			while (j <allLicensesArray.size()){
+		  				JSONObject keywordInformations =  (JSONObject) allLicensesArray.get(j);
+		  				if ((String.valueOf((long) licenseArray.get(i))).equals((String) keywordInformations.get("id"))){
+		  					licenseName = licenseName.concat((String)keywordInformations.get("label"));
+		  					if (i < licenseArray.size()-1)
+		  						licenseName = licenseName.concat(", ");
+		  					j = allLicensesArray.size();
+		  				}else
+		  					j = j+1;
+		  		}	}
+		        license.put("value", licenseName);
+		        fields.put("customfield_10202", license);											
+	      }
+	      
+	      json.put("fields", fields);
+	
+	      String response = json.toJSONString();
+	      response = response.replaceAll("\\\\", "");
+	      //System.out.println("json-test: "+response);
+	           
+	     return response;
     }
 	
 	

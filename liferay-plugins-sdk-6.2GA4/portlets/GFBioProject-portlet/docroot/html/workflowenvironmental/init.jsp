@@ -5,7 +5,7 @@
 
 			 
 	//Message from Hide Managment
-	$(document).ready(function() {
+	AUI().ready(function(A){ 
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			
 			var div =   $("#environmental");
@@ -31,13 +31,14 @@
 	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
 
-/* 	//build default collection workflow without project or researchobject data
-	$(document).ready(function() {
-		var div =   $("#environmental");
+ 	//build default collection workflow without project or researchobject data
+	AUI().ready(function(A){
+		console.log("todo");
+ 		var div =   $("#environmental");
 		var data = {"userid":Number(themeDisplay.getUserId())};
 		buildEnvironmentalForm(data, div);
-		fillDefaultInformations(data, div);
-	}); */
+		fillDefaultInformations(data, div); 
+	}); 
 
 	
 

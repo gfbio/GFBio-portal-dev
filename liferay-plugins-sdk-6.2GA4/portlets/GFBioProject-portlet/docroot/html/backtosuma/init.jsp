@@ -1,7 +1,7 @@
 <script>
 
 	//
-	$(document).ready(function() {	
+	AUI().ready(function(A){	
 		var backtosubmissionManager =   $("#backtosubmissionManager");
 		backtosubmissionManager.attr("class", "swHide");	
 		var data = {"view" : "swHide",
@@ -11,7 +11,7 @@
 	
 	
 	//Message from Submission Manager
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		
 		Liferay.on('gadget:gfbio.submissionmanager.datasubmission', function(data) {
 			if (data == undefined){}

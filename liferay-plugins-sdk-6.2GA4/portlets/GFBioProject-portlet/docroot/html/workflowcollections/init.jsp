@@ -7,7 +7,7 @@
 
 		
 /* 	//Message from Hide Managment
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			var div =   $("#collections");
 			if (data == undefined || !(data.workflow==="collections")){
@@ -29,13 +29,19 @@
 	 */
 	 
 	//Message from Hide Managment
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			
 			var div =   $("#collections");
 			
 			if (data.projectid==0){
-				fillDefaultInformations(data, div);
+				if (data.researchobjectid==0){
+					fillDefaultInformations(data, div);
+				}else{
+					if (document.getElementById("cwf_ro_id").innerHTML!= 0)
+						fillDefaultResearchObjectInformations(data, div);
+					fillResearchObjectInformations(data, div);
+				}
 			}else{
 				if (data.researchobjectid==0){
 					if (document.getElementById("cwf_project_id").innerHTML!= 0)
@@ -48,6 +54,22 @@
 					fillResearchObjectInformations(data, div);
 				}
 			}
+				
+	
+/* 			if (data.projectid==0){
+				fillDefaultInformations(data, div);
+			}else{
+				if (data.researchobjectid==0){
+					if (document.getElementById("cwf_project_id").innerHTML!= 0)
+						fillDefaultInformations(data, div);
+					fillProjectInformations(data, div);
+					fillDefaultResearchObjectInformations(data, div);
+				}else{
+					if (document.getElementById("cwf_ro_id").innerHTML!= 0)
+						fillDefaultResearchObjectInformations(data, div);
+					fillResearchObjectInformations(data, div);
+				}
+			} */
 		});
 	});	 
 	 
@@ -68,12 +90,12 @@
 	
 	
 	//build default collection workflow without project or researchobject data
-/* 	$(document).ready(function() {
+	AUI().ready(function(A){
 		var div =   $("#collections");
 		var data = {"userid":Number(themeDisplay.getUserId())};
 		buildCollectionsForm(data, div);
 		fillDefaultInformations(data, div);
-	}); */
+	});	
 	
 	
 	
@@ -212,10 +234,6 @@
 				"<div class='row' id='cwf_lf_comentarField'>"+
 				"</div>"+
 				"</br>"+
-				
-/* 				"<div class='row'>"+
-					"<input type='button' class='widthM' id='cwf_b_start' 		value='start submission' 				onclick='submitInput()'>"+
-				"</div>"+ */
 				
 				"<div class='row'>"+
 					"<span class='widthM' id='cwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save all informations</span></span>"+
@@ -427,14 +445,17 @@
 				},
 				async: false,
 	 			success :  function (obj){
-
 					document.getElementById("cwf_project_id").innerHTML= obj.projectid;
 					document.getElementById("cwf_project_name").value= obj.name;
 					document.getElementById("cwf_project_label").value= obj.label;
 					document.getElementById("cwf_project_description").value= obj.description;
-					var json = JSON.parse(obj.categoryid);
-					for (i=0;i<json.length;i++)
-						document.getElementById("cwf_project_keywords"+json[i]).checked= "checked";
+					
+					if (obj.hasOwnProperty('categoryid')) {
+						var json = JSON.parse(obj.categoryid);
+						for (i=0;i<json.length;i++)
+							document.getElementById("cwf_project_keywords"+json[i]).checked= "checked";
+					}
+					
 	 			}
 	 		});
 	 		
@@ -471,7 +492,7 @@
 				},
 				async: false,
 	 			success :  function (obj){
-	 						
+	 				
 	 				var div =   $("#cwf_ro_metadatalabel_v");
 					var json = obj[0];
 					var ed = json.extendeddata;
@@ -523,9 +544,11 @@
 						document.getElementById("cwf_ro_nagojano").checked = true;
 					}
 					
-					var licenseJson = JSON.parse(json.licenseid);
-					for (i=0;i<licenseJson.length;i++)
-						document.getElementById("cwf_ro_licenses"+licenseJson[i]).checked= "checked";
+					if (json.hasOwnProperty('licenseid')) {
+						var licenseJson = JSON.parse(json.licenseid);
+						for (i=0;i<licenseJson.length;i++)
+							document.getElementById("cwf_ro_licenses"+licenseJson[i]).checked= "checked";
+					}
 
 	 			}
 	 		});
@@ -543,6 +566,7 @@
 	function startSubmission(data){
 	
 		var url = document.getElementById('workflowcollectionsurl').value;
+
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowCollectionsPortlet'),
@@ -552,12 +576,78 @@
 			},
 			async: false,
 				success :  function (obj){
-					console.log("yeah");
 					console.log(obj);
 				}
 		});	
 	}
 
+	
+	//
+	function createCwfProject(){
+		var projectJson = buildProjectJsonForCreate();
+		var url = document.getElementById('workflowcollectionsurl').value;
+		
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(projectJson),
+				"<portlet:namespace />responseTarget" : "createproject"
+			},
+			async: false,
+			success :  function (obj){
+				if (obj.projectid >0){
+					sentWorkflowUpdate(true, obj.projectid, projectJson.label, false);
+					document.getElementById("cwf_project_id").innerHTML= obj.projectid;
+					
+					if (document.getElementById("cwf_project_name").value =="")
+						document.getElementById("cwf_project_name").value = document.getElementById("cwf_project_label").value;
+					if (document.getElementById("cwf_project_label").value=="")
+						document.getElementById("cwf_project_label").value = document.getElementById("cwf_project_name").value;
+									
+					projectJson["projectid"]= Number (obj.projectid);
+				}
+			}
+		});	
+		return projectJson;
+
+	}
+	
+	
+	//
+	function createCwfResearchObject(projectJson){
+
+		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
+		var url = document.getElementById('workflowcollectionsurl').value;
+
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(researchObjectJson),
+				"<portlet:namespace />responseTarget" : "createresearchobject"
+			},
+			async: false,
+			success :  function (obj){
+				if (obj.researchobjectid >0){
+					document.getElementById("cwf_ro_id").innerHTML= obj.researchobjectid;
+					document.getElementById("cwf_ro_version").innerHTML= obj.researchobjectversion;
+					
+					if (document.getElementById("cwf_ro_name").value =="")
+						document.getElementById("cwf_ro_name").value = document.getElementById("cwf_ro_label").value;
+					if (document.getElementById("cwf_ro_label").value=="")
+						document.getElementById("cwf_ro_label").value = document.getElementById("cwf_ro_name").value;
+					
+					researchObjectJson["projectid"]=Number(projectJson.projectid);
+					researchObjectJson["researchobjectid"]=Number(obj.researchobjectid);
+					researchObjectJson["researchobjectversion"]=Number(obj.researchobjectversion);
+
+
+				}
+			}
+		});
+		return researchObjectJson;
+	}
 	
 	
 </script>

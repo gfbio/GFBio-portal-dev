@@ -404,7 +404,7 @@ function reload() {
 
 
 //
-$(document).ready(function(){
+AUI().ready(function(A){
 	if ($('ul#verticalNav li a').length && $('div.section').length ) {
 		$('div.section').css( 'display', 'none' );
 		$('ul#verticalNav li a').click(function() {
