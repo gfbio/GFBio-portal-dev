@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * Portlet implementation class registrationForm
@@ -51,10 +52,10 @@ public class registrationForm extends GenericPortlet {
 		usersContainer = PropsUtil.get("ldap.base.dn");
 		admindn = PropsUtil.get("ldap.security.principal");
 		admincred = PropsUtil.get("ldap.security.credentials");
-		log.info(ldapUri);
+		/*log.info(ldapUri);
 		log.info(usersContainer);
 		log.info(admindn);
-		log.info(admincred);
+		log.info(admincred);*/
 
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
 				"com.sun.jndi.ldap.LdapCtxFactory");
@@ -100,7 +101,8 @@ public class registrationForm extends GenericPortlet {
 
 			boolean userAdded = addUser(user, password);
 			if (userAdded) {
-				String successMsg = "Account updated Successfully!";
+				UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
+				String successMsg = "Account updated Successfully! Please sign out and sign in again with your new password.";
 				SessionMessages.add(actionRequest, "request_processed",
 						successMsg);
 			}

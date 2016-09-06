@@ -36,9 +36,10 @@ $theme.include($body_top_include)
 	</div>
 <!-- end preloader -->
 
-	<div id="mainNavigationToggle" class="btn btn-secondary">
-		    <i class="icon-menu"></i>
+	<div id="responsiveMenuToggle" class="icon-toggle-menu">
+		    <i class="fa fa-bars"></i>
 		</div>
+
 
 	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header">
 
@@ -174,8 +175,12 @@ jQuery(window).load(function () {
       }).keypress(function(event) {
         if (event.keyCode == 13) activate($(this));
       });
+      
     });
+  
+  
   })(jQuery);
+  
 </script>
 
 

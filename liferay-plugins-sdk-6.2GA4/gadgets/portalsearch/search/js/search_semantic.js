@@ -204,8 +204,9 @@ function newQuery(clearBasket) {
 	$('#tableId').DataTable().clear();
 	// read search keywords
 	var keyword = document.getElementById("gfbioSearchInput").value;
+	setCookie("gfbioSearchInput", keyword);
 	var filter = [];
-	// reset facet gadgeet
+	// reset facet gadget
 	if (gadgets.Hub.isConnected())
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
 	// autocomplete from the textbox doesn't automatically closed
@@ -539,23 +540,43 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.metadatalink = getValueFromJSONObject(fields, "metadatalink", 0);
 		inner.datalink = getValueFromJSONObject(fields, "datalink", 0);
 		inner.format = getValueFromJSONObject(fields, "format", 0);
-		if (fields["html-1"]) { // this field is used only for displaying data
+		if (fields["html-1"]) { 
+			// this field is used only for displaying data
 			var html = fields["html-1"][0];
 			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
 			html = writeShowHideFields(html);
 			inner.html = hilightResult(html);
-		} else
+		} else{
 			inner.html = "";
-
-		if (fields["xml"]) { // this field contains raw data, is used for basket
+		}
+		if (fields["xml"]) { 
+			// this field contains raw data, is used for basket
 			var xml = fields["xml"];
 			// creates object instantce of XMLtoJSON
 			var xml2json = new XMLtoJSON();
 			var json = xml2json.fromStr(xml);
 			inner.xml = json; //JSON.stringify(json);
-		} else
+			if (isJArray(json.dataset["parentIdentifier"])){
+				inner.parentIdentifier = getStringFromJSONArray(json.dataset,"parentIdentifier");
+			}else{
+				inner.parentIdentifier = json.dataset["parentIdentifier"];
+			}
+			inner.dcIdentifier = json.dataset["dc:identifier"];
+			if (isJArray(json.dataset["dc:type"])){
+				inner.dcType = "Unit";
+				inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
+			}else{
+				if (json.dataset["dc:type"] == "Dataset"){
+					inner.dcType = "Dataset";
+					inner.unitType ="";
+				}else{
+					inner.dcType = "Unit";
+					inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
+				}
+			}
+		} else{
 			inner.xml = "";
-	
+		}
 		res.push(inner);
 		//console.log('parseReturnedJSONfromSearch:inner');
 		//console.log(inner);
@@ -808,6 +829,11 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"authors" : value.authors,
 		"description" : value.description,
 		"dataCenter" : value.dataCenter,
+		"dcType" : value.dcType,
+		"unitType" : value.unitType,
+		"parentIdentifier": value.parentIdentifier,
+		"dcIdentifier": value.dcIdentifier,
+		"parameter": value.parameter,
 		"xml" : value.xml
 	};
 	return result;
@@ -867,9 +893,9 @@ function updateMap() {
 	// Add query message in JSON format
 	var queryJSON = document.getElementById("queryJSON").value;
 	jsonData.queryStr = queryJSON;
-	//console.log(':Search: fire selected data: ' + JSON.stringify(jsonData));
 	addBasket();
 	if (gadgets.Hub.isConnected()) {
+		//console.log(':Search: fire selected data: ' + JSON.stringify(jsonData));
 		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
 	}
 }
@@ -1248,17 +1274,25 @@ function XMLtoJSON() {
  */
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined){
+		var jArr = jObj[name];
+		if (jArr.length > 0){
+		    return jArr;
+		}
+	} 
+	return [];
+}
+function getStringFromJSONArray(jObj, name) {
+	if (jObj[name] !== undefined) {
 		var res = "";
 		var jArr = jObj[name];
-		for(var i=0; i <jArr.length; i++)
-		{
-		   res += jArr[i];
-		   if(i<jArr.length-1)
-			   res += "; ";
+		for (var i=0; i<jArr.length; i++){
+			res += jArr[i];
+			if (i != jArr.length-1){
+				res += ";";
+			}
 		}
 		return res;
-	}
-	else
+	} else
 		return "";
 }
 
@@ -1282,6 +1316,31 @@ function toggleParametersField() {
 		adjustGadgetHeight();
 	});
 };
+
+function getCookie(name) {
+	var re = new RegExp(name + "=([^;]+)");
+	var value = re.exec(document.cookie);
+	console.log('getCookie:'+name);
+	console.log(value);
+	return (value != null) ? unescape(value[1]) : null;
+}
+
+function setCookie(name, value) {
+	var today = new Date();
+	var expiry = new Date(today.getTime() + 7 * 24 * 3600 * 1000); // plus 7 days
+	document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+	console.log('setCookie:'+name);
+	console.log(value);
+}  
+
+function deleteCookie(name)
+{
+    document.cookie=name + "=null; path=/; expires=" + expired.toGMTString();
+}
+
+function isJArray(elm) {
+    return Object.prototype.toString.call(elm) === '[object Array]';
+}
 ///////////////////////////////////  End Misc functions  //////////////////////////////////
 
 

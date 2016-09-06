@@ -107,9 +107,9 @@
 		 
 	}
 	
-	.site-content{
+	/* .site-content{
 		margin-top:80px;
-	}
+	} */
 	
 .btn-primary{
 	text-decoration:none;
@@ -268,12 +268,13 @@ textarea{
 	
 	ul > li > a.menu-active{
 			/*color:#337ab7;*/
-			color:#335AA3;
+			/*color:#335AA3;*/
 	}
 	
 	ul > li > a:hover{
 			
-			color:#335AA3;
+			/*color:#335AA3;*/
+			color:#000000;
 	}
 }
 
@@ -703,9 +704,9 @@ Breadcrumbs
     padding-top: 4rem; 
     
     /*Liferay portlet-body column-1 fix*/
-    margin-left:-15px;
+    /* margin-left:-15px;
     margin-right:-15px;
-    
+     */
 }
 
 .footer h3 {
@@ -1010,10 +1011,29 @@ Liferay fixes - Dockbar
 /*=========================================================
 Liferay fixes - deprecated classes
 =========================================================*/
-
 .overlay {
-    position: relative;
+    position: absolute;
 }
+
+
+/*=========================================================
+Liferay fixes - content
+=========================================================*/
+#main{
+	margin-top: 80px;
+}
+
+#main .row-fluid{
+	margin-left:0px;
+	margin-right:0px;
+}
+
+#main .span12 {
+	padding-left:0px;
+	padding-right:0px;
+} 
+	
+
 
 /*=====================================================
  Responsive: Navbar
@@ -1088,5 +1108,4 @@ Liferay fixes - deprecated classes
 			margin-right: 80px;
 		}
 	}
-}	
-
+}

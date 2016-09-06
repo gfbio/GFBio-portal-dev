@@ -21,7 +21,7 @@
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery.dataTables.js"	type="text/javascript"></script>
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/spectrum.js"	type="text/javascript"></script>
-				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/search_semantic.js?eer=123"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/search_semantic.js?gerr=123"	type="text/javascript"></script>
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery-ui.css" />
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/dataTables.jqueryui.css" />
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery.dataTables.css" />
@@ -73,8 +73,15 @@
 				$(document).ready(function() {
 					listenToEnterPress();
 					setAutoComplete();
+					//TODO: Check if there's any input cookie stored
+					if(getCookie("gfbioSearchInput")==null){
 					// no keyword, no filter
 					showLatestTenDataset("","");
+					} else{
+						var searchbox = document.getElementById("gfbioSearchInput");
+						searchbox.value = getCookie("gfbioSearchInput");
+						newQuery(false);
+					}
 				});
 				
 				$( document ).ajaxComplete(function( event, xhr, settings ) {
