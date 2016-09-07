@@ -548,28 +548,63 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 --------------------------------------     license      -- 07.09.2016 ---------------------
 --------------------------------------------------------------------------------------------
 
-
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Other License' 											WHERE 	contentid =1466;
 UPDATE 	gfbio_content 	SET cellcontent = 'other' 													WHERE 	contentid =1467;
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Zero' 									WHERE 	contentid =1470;
 UPDATE 	gfbio_content 	SET cellcontent = 'CC0' 													WHERE 	contentid =1471;
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution' 							WHERE 	contentid =1474;
 UPDATE 	gfbio_content 	SET cellcontent = 'CC BY' 													WHERE 	contentid =1475;
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-ShareAlike' 				WHERE 	contentid =1478;
 UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-SA' 												WHERE 	contentid =1479;
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NoDerivs' 					WHERE 	contentid =1482;
 UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC-SA' 											WHERE 	contentid =1483;
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NonCommercial' 				WHERE 	contentid =1486;
 UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC' 												WHERE 	contentid =1487;
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NonCommercial-ShareAlike' 	WHERE 	contentid =1490;
 UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC-SA' 											WHERE 	contentid =1491;
-
 UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NonCommercial-NoDerivs' 	WHERE 	contentid =1904;
 UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC-ND' 											WHERE 	contentid =1905;
+
+
+--------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content ----------------------------------
+--------------------------------------     metadata      -- 07.09.2016 ---------------------
+--------------------------------------------------------------------------------------------
+
+UPDATE 	gfbio_content 	SET cellcontent = 'ABCD' 													WHERE 	contentid =1808;
+UPDATE 	gfbio_content 	SET cellcontent = 'ABCD 2.06' 												WHERE 	contentid =1809;
+UPDATE 	gfbio_content 	SET cellcontent = 'Dublin Core' 											WHERE 	contentid =1814;
+UPDATE 	gfbio_content 	SET cellcontent = 'Dublin Core (Metadata Elements Set V1.1)' 				WHERE 	contentid =1815;
+UPDATE 	gfbio_content 	SET cellcontent = 'EDM' 													WHERE 	contentid =1826;
+UPDATE 	gfbio_content 	SET cellcontent = 'EDM (Europeana Data Model V5.2.5)' 						WHERE 	contentid =1827;
+UPDATE 	gfbio_content 	SET cellcontent = 'EML' 													WHERE 	contentid =1832;
+UPDATE 	gfbio_content 	SET cellcontent = 'EML (Ecological Metadata Language V2.1.1)' 				WHERE 	contentid =1833;
+UPDATE 	gfbio_content 	SET cellcontent = 'ESE' 													WHERE 	contentid =1838;
+UPDATE 	gfbio_content 	SET cellcontent = 'ESE (Europeana Semantic Elements V3.4.1)' 				WHERE 	contentid =1839;
+UPDATE 	gfbio_content 	SET cellcontent = 'INSPIRE' 												WHERE 	contentid =1850;
+UPDATE 	gfbio_content 	SET cellcontent = 'INSPIRE (VO (EG) Nr. 1205/2008)' 						WHERE 	contentid =1851;
+UPDATE 	gfbio_content 	SET cellcontent = 'BCO' 													WHERE 	contentid =1868;
+UPDATE 	gfbio_content 	SET cellcontent = 'Biological Collections Ontology (BCO)' 					WHERE 	contentid =1869;
+UPDATE 	gfbio_content 	SET cellcontent = 'BEFDATA' 												WHERE 	contentid =1880;
+UPDATE 	gfbio_content 	SET cellcontent = 'Biodiversity Ecosystem Functioning Data (BEFDATA)' 		WHERE 	contentid =1881;
+UPDATE 	gfbio_content 	SET cellcontent = 'ChEBI' 													WHERE 	contentid =1886;
+UPDATE 	gfbio_content 	SET cellcontent = 'Chemical Entities of Biological Interest (ChEBI)' 		WHERE 	contentid =1887;
+UPDATE 	gfbio_content 	SET cellcontent = 'GEOREGION' 												WHERE 	contentid =1892;
+UPDATE 	gfbio_content 	SET cellcontent = 'Geographic Region Ontology (GEOREGION)' 					WHERE 	contentid =1893;
+UPDATE 	gfbio_content 	SET cellcontent = 'PATO' 													WHERE 	contentid =1898;
+UPDATE 	gfbio_content 	SET cellcontent = 'Phenotypic Quality Ontology (PATO)' 						WHERE 	contentid =1899;
+
+Delete FROM gfbio_content WHERE  rowid = 1873;
+
+
+
+
+
+
+
+
+
+
+
+
+
