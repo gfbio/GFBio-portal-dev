@@ -1019,13 +1019,14 @@ function addColorPicker() {
 				var col = this.parentElement;
 				var row = col.parentElement;
 				var tb = $('#tableId').DataTable();
-				var metadatalink = tb.rows().data()[row.rowIndex - 1].metadataLink;
+				var metadatalink = tb.rows().data()[row.rowIndex - 1].metadatalink;
 				// loop compare with the link in basket
 				$.each(jsonData.selected, function (index, result) {
 					var selectedLink = result['metadatalink'];
 					if (selectedLink == metadatalink) {
 						// if found the link, update row detail
 						jsonData.selected[index].color = color.toHexString();
+						
 					}
 				});
 				basket.value = JSON.stringify(jsonData);
