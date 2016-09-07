@@ -22,5 +22,7 @@
 	<input type="hidden" class="widthL" id="workflowcollectionsurl"  	value="<%=workflowcollectionsURL %>" />
 
 	<div id="collections"></div>
+	
+	<div ><br></div>
 
 <%} %>	

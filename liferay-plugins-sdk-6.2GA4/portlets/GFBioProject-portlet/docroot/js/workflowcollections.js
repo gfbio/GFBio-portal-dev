@@ -112,16 +112,16 @@ function checkInput(){
 	if (document.getElementById("cwf_ro_description").value=="") 				{	check = false; document.getElementById("cwf_ro_description_l").className="labelFalse";			document.getElementById("cwf_ro_description").className="inputTextContainerFalse";}			else{document.getElementById("cwf_ro_description_l").className="control-label";			document.getElementById("cwf_ro_description").className="field lfr-input-text-container";}
 	if (document.getElementById("cwf_ro_metadatalabel").value=="none") 			{	check = false; document.getElementById("cwf_ro_metadatalabel_l").className="labelFalse";		document.getElementById("cwf_ro_metadatalabel").className="inputTextContainerFalse";}		else{document.getElementById("cwf_ro_metadatalabel_l").className="control-label";		document.getElementById("cwf_ro_metadatalabel").className="field lfr-input-text-container";}
 	
-	if (!(document.getElementById("cwf_ro_nagojayes").checked==false) &&
-		!(document.getElementById("cwf_ro_nagojano").checked==false) ) 		{	check = false; 
+	if (!(document.getElementById("cwf_ro_nagoyayes").checked==false) &&
+		!(document.getElementById("cwf_ro_nagoyano").checked==false) ) 		{	check = false; 
 		
-																					document.getElementById("cwf_ro_nagoja_l").className="labelFalse";
-																					document.getElementById("cwf_ro_nagojayes").className="labelFalse";
-																					document.getElementById("cwf_ro_nagojano").className="labelFalse";
+																					document.getElementById("cwf_ro_nagoya_l").className="labelFalse";
+																					document.getElementById("cwf_ro_nagoyayes").className="labelFalse";
+																					document.getElementById("cwf_ro_nagoyano").className="labelFalse";
 																				}else{
-																					document.getElementById("cwf_ro_nagoja_l").className="control-label";
-																					document.getElementById("cwf_ro_nagojayes").className="control-label";
-																					document.getElementById("cwf_ro_nagojano").className="control-label";
+																					document.getElementById("cwf_ro_nagoya_l").className="control-label";
+																					document.getElementById("cwf_ro_nagoyayes").className="control-label";
+																					document.getElementById("cwf_ro_nagoyano").className="control-label";
 																				}
 	//if (document.getElementById("cwf_ro_license").value=="none") 				{	check = false; document.getElementById("cwf_ro_license_l").className="rowLatofalse";			document.getElementById("cwf_ro_license").className="inputTextContainerFalse";}				else{document.getElementById("cwf_ro_license_l").className="field lfr-input-text-container";}
 
@@ -308,9 +308,8 @@ function buildCommonProjectJson(){
 	if (projectLabel=="")
 		projectLabel = projectName;
 
-	var extendetdata ={
-		"pi": document.getElementById("cwf_project_pi").value//need a solution	
-	}
+	var extendetdata = {};
+	extendetdata["pi"] = document.getElementById("cwf_project_pi").value;
 
 	var projectJson = {
 		"name":projectName,
@@ -341,6 +340,7 @@ function buildResearchObjectJsonForUpdate(projectJson){
 function buildResearchObjectJsonForCreate(projectJson){
 	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	researchObjectJson["metadataid"]= Number(document.getElementById("cwf_ro_metadatalabel").value);
+	researchObjectJson["licenseid"] = Number(document.getElementById("cwf_ro_licenselabel").value);
 	return researchObjectJson;
 }
 
@@ -353,9 +353,10 @@ function buildCommonResearchObjectJson(projectJson){
 	if (roName =="")	roName = roLabel;
 	if (roLabel=="")	roLabel = roName;
 	
-	var nagoja ="";
-	if (document.getElementById("cwf_ro_nagojano").checked)		nagoja = 'no';
-	else														nagoja = document.getElementById("cwf_ro_nagojadetails").value;
+	var nagoya ="";
+	if (document.getElementById("cwf_ro_nagoyano").checked)		nagoya = 'no';
+	else														nagoya = 'yes';
+	//else														nagoya = document.getElementById("cwf_ro_nagoyadetails").value;
 
 	var authornames = (document.getElementById("cwf_ro_author").value).trim();
 	if (authornames.charAt(authornames.length-1)==',')
@@ -365,7 +366,7 @@ function buildCommonResearchObjectJson(projectJson){
 	var extendetdata = {
 		"publications":document.getElementById("cwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("cwf_ro_dct").value,
-		"nagoja": nagoja
+		"nagoya": nagoya
 	}
 
 	var researchObjectJson = {
@@ -377,12 +378,13 @@ function buildCommonResearchObjectJson(projectJson){
 		"projectid": projectJson.projectid
 	};
 
-	var licenseJson =[];
+/*	var licenseJson =[];
 	for (i =0; i<document.getElementsByName("licenses").length;i++)
 		if (document.getElementsByName("licenses")[i].checked)
 			licenseJson.push(document.getElementsByName("licenses")[i].value);
 	
 	if (!(licenseJson.toString()==""))
-		researchObjectJson["licenseids"] = licenseJson.toString();
+		researchObjectJson["licenseids"] = licenseJson.toString();*/
+	
 	return researchObjectJson;
 }

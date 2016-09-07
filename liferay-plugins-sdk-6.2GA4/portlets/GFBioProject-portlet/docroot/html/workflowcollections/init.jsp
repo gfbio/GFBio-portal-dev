@@ -107,14 +107,14 @@
 			div.append(
 				"<h2>Submission of Collection data</h2>"+
 				"</br>"+
-				"<h3>Project Informations</h3>"+
+				"<h3>Project Information</h3>"+
 				"</br>"+
-				"<h4>Basic Informations</h4>"+
+				"<h4>Basic Information</h4>"+
 				"</br>"+
 				
 				"<div class='swHide'>"+
 					"<div class='control-group'>"+
-						"<label class='control-label' 					id='cwf_project_id_l'> project id </label>"+
+						"<label class='control-label' 					id='cwf_project_id_l'> Project id </label>"+
 						"<div class='field lfr-input-text-container' 	id='cwf_project_id'></div>"+
 					"</div>"+
 				"</div>"+
@@ -131,14 +131,14 @@
 					"<input class='field lfr-input-text-container' 	id='cwf_project_pi'		type='text'  value=''>"+
 				"</div>"+
 				"<div class='control-group'>"+
-					"<label class='control-label' 				    id='cwf_project_description_l'> project abstract </label>"+
+					"<label class='control-label' 				    id='cwf_project_description_l'> Project abstract </label>"+
 					"<input class='field lfr-input-text-container' 	id='cwf_project_description'  type='text'  value=''>"+
 				"</div>"+
 
 				"</br>"+
 				"<h4>Optional Keywords</h4>"+
 				"<div id='cwf_project_keywords'></div>"+
-				"<h3>submitter information</h3>"+
+				"<h3>Submitter information</h3>"+
 				"</br>"+
 				
 				"<div class='swHide'>"+
@@ -159,7 +159,7 @@
 				"</br>"+
 				"<h3>Dataset Information</h3>"+
 				"</br>"+
-				"<h4>Basic Informations</h4>"+
+				"<h4>Basic Information</h4>"+
 				"</br>"+
 				
 				"<div class='swHide'>"+
@@ -218,17 +218,30 @@
 				"</br>"+	
 				
 				"<div class='control-group'>"+
-					"<label class='control-label' id='cwf_ro_nagoja_l'> Dataset is subject to the Nagoja Protocol? </label>"+
+					"<label class='control-label' id='cwf_ro_nagoya_l'> Dataset is subject to the Nagoya Protocol? </label>"+
 					"<div class='field lfr-input-text-container'>"+
 					 	"<fieldset>"+ 
-							"<input class='field lfr-input-text-container' type='radio' id='cwf_ro_nagojayes' name='cwf_ro_nagoja' value='yes'>	 yes </br>"+ 
-							"<input class='field lfr-input-text-container' type='radio' id='cwf_ro_nagojano'  name='cwf_ro_nagoja' value='no'>		 no  </br>"+ 
+							"<input class='field lfr-input-text-container' type='radio' id='cwf_ro_nagoyayes' name='cwf_ro_nagoya' value='yes'>	 yes </br>"+ 
+							"<input class='field lfr-input-text-container' type='radio' id='cwf_ro_nagoyano'  name='cwf_ro_nagoya' value='no'>		 no  </br>"+ 
 						"</fieldset>"+
 					"</div>"+
-					"<div style='clear:left' id='cwf_ro_nagojadiv'></div>"+
+					"<div style='clear:left' id='cwf_ro_nagoyadiv'></div>"+
 				"</div>"+
 				
-				"<div id='cwf_ro_licenses'></div>"+
+/* 				"<div id='cwf_ro_licenses'></div>"+ */
+				
+				"<div class='control-group' >"+
+					"<label class='control-label' 					id='cwf_ro_license_l'> Appropriate license   </label>"+
+					"<div 	class='field lfr-input-text-container' 	id='cwf_ro_license_v' type='text'  value=''>"+
+						"<form action='select.html'>"+
+							"<select id='cwf_ro_licenselabel' name='<portlet:namespace/>cwf_ro_licenselabel' size='1' style='width:90%'>"+
+								"<option value='none'></option>"+
+							"</select>"+
+						"</form>"+
+					"</div>"+
+				"</div>"+
+				
+				
 						
 				"</br>"+
 				"<div class='row' id='cwf_lf_comentarField'>"+
@@ -236,29 +249,29 @@
 				"</br>"+
 				
 				"<div class='row'>"+
-					"<span class='widthM' id='cwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save all informations</span></span>"+
+					"<span class='widthM' id='cwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save all information</span></span>"+
 					"<span class='widthM' id='cwf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
-					"<span class='widthM' id='cwf_b_save' onclick='saveProjectInput()'>	<span class='btn btn-primary'>Save only project informations</span></span>"+
+					"<span class='widthM' id='cwf_b_save' onclick='saveProjectInput()'>	<span class='btn btn-primary'>Save only project information</span></span>"+
 					"<span class='widthM' id='cwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
 				"</div>"					
 				
 			);
 		}
-		document.getElementById("cwf_ro_nagojayes").onclick = function() {
-			var radioNagoja = $("#".concat('cwf_ro_nagojadiv'));
-			radioNagoja.empty();
-			radioNagoja.append(
+/* 		document.getElementById("cwf_ro_nagoyayes").onclick = function() {
+			var radioNagoya = $("#".concat('cwf_ro_nagoyadiv'));
+			radioNagoya.empty();
+			radioNagoya.append(
 				"</br>"+
 				"<div class='control-group'>"+
-					"<label class='control-label' 					id='cwf_ro_nagojadetails_l'> URL to details </label>"+
-					"<input class='field lfr-input-text-container'	id='cwf_ro_nagojadetails' type='text'  value=''>"
+					"<label class='control-label' 					id='cwf_ro_nagoyadetails_l'> URL to details </label>"+
+					"<input class='field lfr-input-text-container'	id='cwf_ro_nagoyadetails' type='text'  value=''>"
 			);
-		};
-		document.getElementById("cwf_ro_nagojano").onclick = function() {
-			var radioNagoja = $("#".concat('cwf_ro_nagojadiv'));
-			radioNagoja.empty();
+		}; */
+/* 		document.getElementById("cwf_ro_nagoyano").onclick = function() {
+			var radioNagoya = $("#".concat('cwf_ro_nagoyadiv'));
+			radioNagoya.empty();
 			
-		};
+		}; */
 	}
 	
 	
@@ -377,9 +390,9 @@
  		document.getElementById("cwf_ro_publications").value= "";
  		document.getElementById("cwf_ro_metadatalabel").selectedIndex = 0;
  		document.getElementById("cwf_pd_id").innerHTML= 0;
-		document.getElementById("cwf_ro_nagojano").checked = true;
-		var radioNagoja = $("#".concat('cwf_ro_nagojadiv'));
-		radioNagoja.empty();
+		document.getElementById("cwf_ro_nagoyano").checked = true;
+		var radioNagoya = $("#".concat('cwf_ro_nagoyadiv'));
+		radioNagoya.empty();
 		
 		ajaxData = {"tablename":"gfbio_license"};
  		$.ajax({
@@ -391,13 +404,25 @@
 			},
 			async: false,
  			success :  function (obj){
-				var divLi = $("#".concat('cwf_ro_licenses'));
+/* 				var divLi = $("#".concat('cwf_ro_licenses'));
 				divLi.empty();
 				divLi.append("<label class='control-label' id='cwf_ro_licenses_l'> Please select the appropriate licenses </label>");
 				for (i=0; i < obj.length;i++)
 					divLi.append(
 						"</br><input class='field lfr-input-text-container' type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='licenses' value='"+obj[i].id+"'> "+obj[i].name
-					);		
+					);	 */	
+				console.log(obj);	
+ 				var divLi = $("#".concat('cwf_ro_licenselabel'));
+				divLi.empty();
+				divLi.append("<option value='none'></option>");
+				for (i =0; i <obj.length;i++){
+					var json = obj[i];
+					if (json.label == "CC BY")
+						divLi.append("<option id='cwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.name+"</option>");
+					else	
+						divLi.append("<option id='cwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+
+				}
  			}
  		});
 			
@@ -533,15 +558,15 @@
 					
 					
 
-					if (extendeddata.nagoja !=null){
-						if (extendeddata.nagoja == "no"){
-							document.getElementById("cwf_ro_nagojano").checked = true;
+					if (extendeddata.nagoya !=null){
+						if (extendeddata.nagoya == "no"){
+							document.getElementById("cwf_ro_nagoyano").checked = true;
 						}else{
-							document.getElementById("cwf_ro_nagojayes").checked = true;
-							document.getElementById("cwf_ro_nagojayes").value =extendeddata.nagoja;
+							document.getElementById("cwf_ro_nagoyayes").checked = true;
+							document.getElementById("cwf_ro_nagoyayes").value =extendeddata.nagoya;
 						}
 					}else{
-						document.getElementById("cwf_ro_nagojano").checked = true;
+						document.getElementById("cwf_ro_nagoyano").checked = true;
 					}
 					
 					if (json.hasOwnProperty('licenseid')) {
@@ -565,6 +590,10 @@
 	//
 	function startSubmission(data){
 	
+		console.log("start datasubmission");
+		console.log(data);
+		console.log(JSON.stringify(data));
+		
 		var url = document.getElementById('workflowcollectionsurl').value;
 
 		$.ajax({
