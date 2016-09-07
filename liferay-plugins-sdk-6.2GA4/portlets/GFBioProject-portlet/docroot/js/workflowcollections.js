@@ -23,12 +23,24 @@ function saveProjectInput(){
 		if (checkMinimalProjectInput())
 			projectJson = updateCwfProject();
 	}
+	
+	if (projectJson.projectid > 0){
+		var commentarField = $("#".concat('cwf_lf_comentarField'));
+		commentarField.empty();
+		commentarField.append("Data were stored.");
+		setTimeout(function(){commentarField.empty();}, 5000);
+	}else{
+		var commentarField = $("#".concat('cwf_lf_comentarField'));
+		commentarField.empty();
+		commentarField.append("Failed to save the data.");
+	}
 	return projectJson;
 }
 
 
 //
 function saveResearchObjectInput(projectJson){
+	
 	if (document.getElementById("cwf_ro_id").innerHTML==0){
 		if (checkMinimalResearchObjectInput())
 			researchObjectJson = createCwfResearchObject(projectJson);
@@ -36,7 +48,20 @@ function saveResearchObjectInput(projectJson){
 		if (checkMinimalResearchObjectInput())
 			researchObjectJson = updateCwfResearchObject(projectJson);
 	}
+	
 	projectJson["researchobjects"]= researchObjectJson;
+	
+	if (researchObjectJson.researchobjectid >0){
+		var commentarField = $("#".concat('cwf_lf_comentarField'));
+		commentarField.empty();
+		commentarField.append("Data were stored.");
+		setTimeout(function(){commentarField.empty();}, 5000);
+	}else{
+		var commentarField = $("#".concat('cwf_lf_comentarField'));
+		commentarField.empty();
+		commentarField.append("Failed to save the data.");
+	}
+	
 	return projectJson;
 }
 
@@ -64,69 +89,41 @@ function submitInput(url){
 		var data ={};
 		data["mrr"]= mrrJson;
 		data["submissionregistry"]= registryJson;
-
-		startSubmission(data);
 	
+		startSubmission(data);
 	}else{
 		console.log("=(");
 	}
 }
 
 
-/*//
-function sendMail(obj) {
-	var uri='//helpdesk.gfbio.org/rest/api/6/issue/';
-
-	var submitData = {
-		    "fields": {
-		        "project":
-		        { 
-		           "key": "TEST"
-		        },
-		        "summary": "REST ye merry gentlemen.",
-		        "description": "Creating of an issue using project keys and issue type names using the REST API",
-		        "issuetype": {
-		           "name": "Bug"
-		        }
-		    }
-		 };
-
-	
-																					//http://host:port/context/rest/api-name/api-version/resource-name
-	curl -u admin:admin -X POST --data submitData -H "Content-Type: application/json" http:uri 
-	
-	
-
-	$.ajax({
-		  type: "POST",
-		  url: url,
-		  data: data,
-		  success: success,
-		  dataType: dataType
-		});
-
-}*/
-
-
 //
 function checkInput(){
 	var check = true;
-	if (document.getElementById("cwf_project_name").value=="") 					{	check = false; document.getElementById("cwf_project_name_l").className="rowLatofalse";}			else{document.getElementById("cwf_project_name_l").className="rowLato";}
-	if (document.getElementById("cwf_project_label").value=="") 				{	check = false; document.getElementById("cwf_project_label_l").className="rowLatofalse";}		else{document.getElementById("cwf_project_label_l").className="rowLato";}
-	if (document.getElementById("cwf_project_pi").value=="") 					{	check = false; document.getElementById("cwf_project_pi_l").className="rowLatofalse";}			else{document.getElementById("cwf_project_pi_l").className="rowLato";}
-	if (document.getElementById("cwf_project_description").value=="") 			{	check = false; document.getElementById("cwf_project_description_l").className="rowLatofalse";}	else{document.getElementById("cwf_project_description_l").className="rowLato";}
+	if (document.getElementById("cwf_project_name").value=="") 					{	check = false; document.getElementById("cwf_project_name_l").className="labelFalse";			document.getElementById("cwf_project_name").className="inputTextContainerFalse";}			else{document.getElementById("cwf_project_name_l").className="control-label";			document.getElementById("cwf_project_name").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_project_label").value=="") 				{	check = false; document.getElementById("cwf_project_label_l").className="labelFalse";			document.getElementById("cwf_project_label").className="inputTextContainerFalse";}			else{document.getElementById("cwf_project_label_l").className="control-label";			document.getElementById("cwf_project_label").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_project_pi").value=="") 					{	check = false; document.getElementById("cwf_project_pi_l").className="labelFalse";				document.getElementById("cwf_project_pi").className="inputTextContainerFalse";}				else{document.getElementById("cwf_project_pi_l").className="control-label";				document.getElementById("cwf_project_pi").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_project_description").value=="") 			{	check = false; document.getElementById("cwf_project_description_l").className="labelFalse";		document.getElementById("cwf_project_description").className="inputTextContainerFalse";}	else{document.getElementById("cwf_project_description_l").className="control-label";	document.getElementById("cwf_project_description").className="field lfr-input-text-container";}
 	
-	if (document.getElementById("cwf_ro_name").value=="") 						{	check = false; document.getElementById("cwf_ro_name_l").className="rowLatofalse";}				else{document.getElementById("cwf_ro_name_l").className="rowLato";}
-	if (document.getElementById("cwf_ro_label").value=="") 						{	check = false; document.getElementById("cwf_ro_label_l").className="rowLatofalse";}				else{document.getElementById("cwf_ro_label_l").className="rowLato";}
-	if (document.getElementById("cwf_ro_author").value=="") 					{	check = false; document.getElementById("cwf_ro_author_l").className="rowLatofalse";}			else{document.getElementById("cwf_ro_author_l").className="rowLato";}
-	if (document.getElementById("cwf_ro_dct").value=="") 						{	check = false; document.getElementById("cwf_ro_dct_l").className="rowLatofalse";}				else{document.getElementById("cwf_ro_dct_l").className="rowLato";}
-	if (document.getElementById("cwf_ro_description").value=="") 				{	check = false; document.getElementById("cwf_ro_description_l").className="rowLatofalse";}		else{document.getElementById("cwf_ro_description_l").className="rowLato";}
-	if (document.getElementById("cwf_ro_metadatalabel").value=="none") 			{	check = false; document.getElementById("cwf_ro_metadatalabel_l").className="rowLatofalse";}		else{document.getElementById("cwf_ro_metadatalabel_l").className="rowLato";}
+	if (document.getElementById("cwf_ro_name").value=="") 						{	check = false; document.getElementById("cwf_ro_name_l").className="labelFalse";					document.getElementById("cwf_ro_name").className="inputTextContainerFalse";}				else{document.getElementById("cwf_ro_name_l").className="control-label";				document.getElementById("cwf_ro_name").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_ro_label").value=="") 						{	check = false; document.getElementById("cwf_ro_label_l").className="labelFalse";				document.getElementById("cwf_ro_label").className="inputTextContainerFalse";}				else{document.getElementById("cwf_ro_label_l").className="control-label";				document.getElementById("cwf_ro_label").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_ro_author").value=="") 					{	check = false; document.getElementById("cwf_ro_author_l").className="labelFalse";				document.getElementById("cwf_ro_author").className="inputTextContainerFalse";}				else{document.getElementById("cwf_ro_author_l").className="control-label";				document.getElementById("cwf_ro_author").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_ro_dct").value=="") 						{	check = false; document.getElementById("cwf_ro_dct_l").className="labelFalse";					document.getElementById("cwf_ro_dct").className="inputTextContainerFalse";}					else{document.getElementById("cwf_ro_dct_l").className="control-label";					document.getElementById("cwf_ro_dct").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_ro_description").value=="") 				{	check = false; document.getElementById("cwf_ro_description_l").className="labelFalse";			document.getElementById("cwf_ro_description").className="inputTextContainerFalse";}			else{document.getElementById("cwf_ro_description_l").className="control-label";			document.getElementById("cwf_ro_description").className="field lfr-input-text-container";}
+	if (document.getElementById("cwf_ro_metadatalabel").value=="none") 			{	check = false; document.getElementById("cwf_ro_metadatalabel_l").className="labelFalse";		document.getElementById("cwf_ro_metadatalabel").className="inputTextContainerFalse";}		else{document.getElementById("cwf_ro_metadatalabel_l").className="control-label";		document.getElementById("cwf_ro_metadatalabel").className="field lfr-input-text-container";}
 	
-	if (!(document.getElementById("cwf_ro_nagojayes").checked=="checked") &&
-		!(document.getElementById("cwf_ro_nagojano").checked=="checked") &&
-		  document.getElementById("cwf_ro_nagojadiv").value=="") 				{	check = false; document.getElementById("cwf_ro_nagoja_l").className="rowLatofalse";}			else{document.getElementById("cwf_ro_nagoja_l").className="rowLato";}
-	//if (document.getElementById("cwf_ro_license").value=="none") 				{	check = false; document.getElementById("cwf_ro_license_l").className="rowLatofalse";}			else{document.getElementById("cwf_ro_license_l").className="rowLato";}
+	if (!(document.getElementById("cwf_ro_nagoyayes").checked==false) &&
+		!(document.getElementById("cwf_ro_nagoyano").checked==false) ) 		{	check = false; 
+		
+																					document.getElementById("cwf_ro_nagoya_l").className="labelFalse";
+																					document.getElementById("cwf_ro_nagoyayes").className="labelFalse";
+																					document.getElementById("cwf_ro_nagoyano").className="labelFalse";
+																				}else{
+																					document.getElementById("cwf_ro_nagoya_l").className="control-label";
+																					document.getElementById("cwf_ro_nagoyayes").className="control-label";
+																					document.getElementById("cwf_ro_nagoyano").className="control-label";
+																				}
+	//if (document.getElementById("cwf_ro_license").value=="none") 				{	check = false; document.getElementById("cwf_ro_license_l").className="rowLatofalse";			document.getElementById("cwf_ro_license").className="inputTextContainerFalse";}				else{document.getElementById("cwf_ro_license_l").className="field lfr-input-text-container";}
 
 	if (!check){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
@@ -158,14 +155,14 @@ function checkMinimalProjectInput(){
 	var check = true;
 	if (document.getElementById("cwf_project_name").value=="" && document.getElementById("cwf_project_label").value==""){
 		check = false; 
-		document.getElementById("cwf_project_label_l").className="rowLatofalse";
-		document.getElementById("cwf_project_name_l").className="rowLatofalse";
+		document.getElementById("cwf_project_label_l").className="labelFalse";
+		document.getElementById("cwf_project_name_l").className="labelFalse";
 	}else{
-		document.getElementById("cwf_project_label_l").className="rowLato";
-		document.getElementById("cwf_project_name_l").className="rowLato";
+		document.getElementById("cwf_project_label_l").className="control-label";
+		document.getElementById("cwf_project_name_l").className="control-label";
 	}
 	
-	if (document.getElementById("cwf_project_description").value=="") 			{	check = false; document.getElementById("cwf_project_description_l").className="rowLatofalse";}	else{document.getElementById("cwf_project_description_l").className="rowLato";}
+	if (document.getElementById("cwf_project_description").value=="") 			{	check = false; document.getElementById("cwf_project_description_l").className="labelFalse";}	else{document.getElementById("cwf_project_description_l").className="control-label";}
 
 	if (!check){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
@@ -187,14 +184,14 @@ function checkMinimalResearchObjectInput(){
 	var check = true;
 	if (document.getElementById("cwf_ro_name").value=="" && document.getElementById("cwf_ro_label").value==""){
 		check = false; 
-		document.getElementById("cwf_ro_label_l").className="rowLatofalse";
-		document.getElementById("cwf_ro_name_l").className="rowLatofalse";
+		document.getElementById("cwf_ro_label_l").className="labelFalse";
+		document.getElementById("cwf_ro_name_l").className="labelFalse";
 	}else{
-		document.getElementById("cwf_ro_label_l").className="rowLato";
-		document.getElementById("cwf_ro_name_l").className="rowLato";
+		document.getElementById("cwf_ro_label_l").className="control-label";
+		document.getElementById("cwf_ro_name_l").className="control-label";
 	}
 	
-	if (document.getElementById("cwf_ro_metadatalabel").value=="none") 			{	check = false; document.getElementById("cwf_ro_metadatalabel_l").className="rowLatofalse";}		else{document.getElementById("cwf_ro_metadatalabel_l").className="rowLato";}
+	if (document.getElementById("cwf_ro_metadatalabel").value=="none") 			{	check = false; document.getElementById("cwf_ro_metadatalabel_l").className="labelFalse";}		else{document.getElementById("cwf_ro_metadatalabel_l").className="control-label";}
 	
 	if (!check){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
@@ -212,43 +209,6 @@ function checkMinimalResearchObjectInput(){
 
 
 //save
-
-
-function createCwfResearchObject(projectJson){
-
-	var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
-
-	Liferay.Service('/GFBioProject-portlet.researchobject/create-research-object',
-		{
-			requestJson: '['.concat(JSON.stringify(researchObjectJson)).concat(']')
-		},
-		function(obj) {
-			var json = obj[0];
-			if (json.researchobjectid >0){
-				document.getElementById("cwf_ro_id").innerHTML= json.researchobjectid;
-				document.getElementById("cwf_ro_version").innerHTML= json.researchobjectversion;
-				
-				if (document.getElementById("cwf_ro_name").value =="")
-					document.getElementById("cwf_ro_name").value = document.getElementById("cwf_ro_label").value;
-				if (document.getElementById("cwf_ro_label").value=="")
-					document.getElementById("cwf_ro_label").value = document.getElementById("cwf_ro_name").value;
-				
-				researchObjectJson["researchobjectid"]=json.researchobjectid;
-				researchObjectJson["researchobjectversion"]=json.researchobjectversion;
-
-				var commentarField = $("#".concat('cwf_lf_comentarField'));
-				commentarField.empty();
-				commentarField.append("Data were stored.");
-				setTimeout(function(){commentarField.empty();}, 5000);
-			}else{
-				var commentarField = $("#".concat('cwf_lf_comentarField'));
-				commentarField.empty();
-				commentarField.append("Failed to save the data.");
-			}
-		}
-	);
-	return researchObjectJson;
-}
 
 
 //
@@ -283,38 +243,6 @@ function updateCwfResearchObject(projectJson){
 	return researchObjectJson;
 }
 
-
-//
-function createCwfProject(){
-	var projectJson = buildProjectJsonForCreate();
-	Liferay.Service('/GFBioProject-portlet.project/create-project',
-		{
-			requestJson: projectJson
-		},
-		function(obj) {
-			if (obj.projectid >0){
-				sentWorkflowUpdate(true, obj.projectid, projectJson.label, false);
-				document.getElementById("cwf_project_id").innerHTML= obj.projectid;
-				
-				if (document.getElementById("cwf_project_name").value =="")
-					document.getElementById("cwf_project_name").value = document.getElementById("cwf_project_label").value;
-				if (document.getElementById("cwf_project_label").value=="")
-					document.getElementById("cwf_project_label").value = document.getElementById("cwf_project_name").value;
-				
-				projectJson["projectid"]=obj.projectid;
-				var commentarField = $("#".concat('cwf_lf_comentarField'));
-				commentarField.empty();
-				commentarField.append("Data were stored.");
-				setTimeout(function(){commentarField.empty();}, 5000);
-			}else{
-				var commentarField = $("#".concat('cwf_lf_comentarField'));
-				commentarField.empty();
-				commentarField.append("Failed to save the data.");
-			}
-		}
-	);
-	return projectJson;
-}
 
 
 //
@@ -380,9 +308,8 @@ function buildCommonProjectJson(){
 	if (projectLabel=="")
 		projectLabel = projectName;
 
-	var extendetdata ={
-		"pi": document.getElementById("cwf_project_pi").value//need a solution	
-	}
+	var extendetdata = {};
+	extendetdata["pi"] = document.getElementById("cwf_project_pi").value;
 
 	var projectJson = {
 		"name":projectName,
@@ -404,7 +331,7 @@ function buildResearchObjectJsonForUpdate(projectJson){
 	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	researchObjectJson["researchobjectid"]= Number(document.getElementById("cwf_ro_id").innerHTML);
 	researchObjectJson["researchobjectversion"]= Number(document.getElementById("cwf_ro_version").innerHTML);
-
+	researchObjectJson["metadataid"]= document.getElementById("cwf_ro_metadatalabel").value;
 	return researchObjectJson;
 }
 
@@ -413,6 +340,7 @@ function buildResearchObjectJsonForUpdate(projectJson){
 function buildResearchObjectJsonForCreate(projectJson){
 	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	researchObjectJson["metadataid"]= Number(document.getElementById("cwf_ro_metadatalabel").value);
+	researchObjectJson["licenseid"] = Number(document.getElementById("cwf_ro_licenselabel").value);
 	return researchObjectJson;
 }
 
@@ -425,9 +353,10 @@ function buildCommonResearchObjectJson(projectJson){
 	if (roName =="")	roName = roLabel;
 	if (roLabel=="")	roLabel = roName;
 	
-	var nagoja ="";
-	if (document.getElementById("cwf_ro_nagojano").checked)		nagoja = 'no';
-	else														nagoja = document.getElementById("cwf_ro_nagojadetails").value;
+	var nagoya ="";
+	if (document.getElementById("cwf_ro_nagoyano").checked)		nagoya = 'no';
+	else														nagoya = 'yes';
+	//else														nagoya = document.getElementById("cwf_ro_nagoyadetails").value;
 
 	var authornames = (document.getElementById("cwf_ro_author").value).trim();
 	if (authornames.charAt(authornames.length-1)==',')
@@ -437,7 +366,7 @@ function buildCommonResearchObjectJson(projectJson){
 	var extendetdata = {
 		"publications":document.getElementById("cwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("cwf_ro_dct").value,
-		"nagoja": nagoja
+		"nagoya": nagoya
 	}
 
 	var researchObjectJson = {
@@ -449,12 +378,13 @@ function buildCommonResearchObjectJson(projectJson){
 		"projectid": projectJson.projectid
 	};
 
-	var licenseJson =[];
+/*	var licenseJson =[];
 	for (i =0; i<document.getElementsByName("licenses").length;i++)
 		if (document.getElementsByName("licenses")[i].checked)
 			licenseJson.push(document.getElementsByName("licenses")[i].value);
 	
 	if (!(licenseJson.toString()==""))
-		researchObjectJson["licenseids"] = licenseJson.toString();
+		researchObjectJson["licenseids"] = licenseJson.toString();*/
+	
 	return researchObjectJson;
 }

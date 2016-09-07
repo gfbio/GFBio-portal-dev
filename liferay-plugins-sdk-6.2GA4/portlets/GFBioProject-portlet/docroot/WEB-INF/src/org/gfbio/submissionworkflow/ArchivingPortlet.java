@@ -61,8 +61,6 @@ public class ArchivingPortlet extends GenericPortlet {
 
 		response.setContentType("text/html");
 		
-		System.out.println(request.getParameter("responseTarget").toString());
-		
 		if (request.getParameter("responseTarget") != null) {
 
 			//choose a project

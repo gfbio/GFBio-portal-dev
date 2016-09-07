@@ -15,6 +15,7 @@ function chooseWorkflowProject(method, projectId  ,divId, userId){
 
 //
 function chooseWorkflowResearchObject( userId, projectId, researchObjectId){
+	console.log("choose RO");
 	if (projectId == "none")
 		projectId =0;
 	if (researchObjectId == "none")

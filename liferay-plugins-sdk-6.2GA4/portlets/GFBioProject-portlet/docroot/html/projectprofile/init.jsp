@@ -42,7 +42,7 @@
 	
 	
 	//Message from hide managment
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		Liferay.on('gadget:gfbio.submissionmanager.hidemanagment', function(data) {
 		
 			if (data == undefined){}
@@ -55,7 +55,7 @@
 	
 	
 	//Message from Submission Manager
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		Liferay.on('gadget:gfbio.submissionmanager.projectprofile', function(data) {
 			
 			if (data == undefined){}

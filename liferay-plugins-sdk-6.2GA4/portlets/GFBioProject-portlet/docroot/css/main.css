@@ -41,3 +41,17 @@
 
 	div .section {display: none}
 	div .section .active {display: block}
+	
+ 	.inputTextContainerFalse{
+	    margin-bottom: 10px;
+	    border: 1px solid darkred;
+	    border-radius: 0;
+	    box-shadow: none;
+	    color:darkred;
+	    height: 50px;
+	    width :100%;
+	}  
+	
+	.labelFalse{
+		color:darkred;
+	}

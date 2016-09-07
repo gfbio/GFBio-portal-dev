@@ -13,7 +13,7 @@
 <%@ include file="/html/init.jsp" %> <!-- library imports -->
 <%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
 
-<script  src="${pageContext.request.contextPath}/js/main.js"       			type="text/javascript"></script>  	<!--  main.js  imports -->
+<script  src="${pageContext.request.contextPath}/js/main.js"       					type="text/javascript"></script>  	<!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/workflow.js"			    	type="text/javascript"></script>  	<!--  main.js  imports -->
 
 <link href="<%= request.getContextPath() %>/docroot/css/main.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
@@ -59,9 +59,9 @@
 			
 			<form action="select.html" id="choProjForm">
 				<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseWorkflowProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX', <%=PortalUtil.getUser(request).getUserId()%>)" >
-					<option selected="selected" value="none">all datasets from user </option>
+					<option selected="selected" value="none">All project independent datasets of user</option>
  					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
-						<option value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
+						<option id="<%= "workflowChoPro"+projectList.get(i).getProjectID() %>" value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
 					<%} } %>  
 				</select>
 			</form>
