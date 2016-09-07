@@ -1015,6 +1015,9 @@ Liferay fixes - deprecated classes
     position: absolute;
 }
 
+.journal-content-article > .parallax > .overlay {
+    position: relative;
+}
 
 /*=========================================================
 Liferay fixes - content
