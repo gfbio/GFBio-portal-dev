@@ -86,6 +86,9 @@ function submitInput(url){
 
 		var mrrJson = saveAllInput();
 		var registryJson = buildSubmissionJsonForRegistry(mrrJson.researchobjects);
+		
+		startSubmissionRegistry(registryJson);
+		
 		var data ={};
 		data["mrr"]= mrrJson;
 		data["submissionregistry"]= registryJson;

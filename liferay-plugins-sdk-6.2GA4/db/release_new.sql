@@ -542,3 +542,34 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1906','8','26','1903','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1907','8','26','1903','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1908','8','27','1903','');
+
+--------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content ----------------------------------
+--------------------------------------     license      -- 07.09.2016 ---------------------
+--------------------------------------------------------------------------------------------
+
+
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Other License' 											WHERE 	contentid =1466;
+UPDATE 	gfbio_content 	SET cellcontent = 'other' 													WHERE 	contentid =1467;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Zero' 									WHERE 	contentid =1470;
+UPDATE 	gfbio_content 	SET cellcontent = 'CC0' 													WHERE 	contentid =1471;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution' 							WHERE 	contentid =1474;
+UPDATE 	gfbio_content 	SET cellcontent = 'CC BY' 													WHERE 	contentid =1475;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-ShareAlike' 				WHERE 	contentid =1478;
+UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-SA' 												WHERE 	contentid =1479;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NoDerivs' 					WHERE 	contentid =1482;
+UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC-SA' 											WHERE 	contentid =1483;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NonCommercial' 				WHERE 	contentid =1486;
+UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC' 												WHERE 	contentid =1487;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NonCommercial-ShareAlike' 	WHERE 	contentid =1490;
+UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC-SA' 											WHERE 	contentid =1491;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution-NonCommercial-NoDerivs' 	WHERE 	contentid =1904;
+UPDATE 	gfbio_content 	SET cellcontent = 'CC BY-NC-ND' 											WHERE 	contentid =1905;

@@ -247,6 +247,9 @@
 				"<div class='row' id='cwf_lf_comentarField'>"+
 				"</div>"+
 				"</br>"+
+				"<div class='row' id='cwf_lf_submissioncomentarField'>"+
+				"</div>"+
+				"</br>"+
 				
 				"<div class='row'>"+
 					"<span class='widthM' id='cwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save all information</span></span>"+
@@ -404,14 +407,7 @@
 			},
 			async: false,
  			success :  function (obj){
-/* 				var divLi = $("#".concat('cwf_ro_licenses'));
-				divLi.empty();
-				divLi.append("<label class='control-label' id='cwf_ro_licenses_l'> Please select the appropriate licenses </label>");
-				for (i=0; i < obj.length;i++)
-					divLi.append(
-						"</br><input class='field lfr-input-text-container' type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='licenses' value='"+obj[i].id+"'> "+obj[i].name
-					);	 */	
-				console.log(obj);	
+
  				var divLi = $("#".concat('cwf_ro_licenselabel'));
 				divLi.empty();
 				divLi.append("<option value='none'></option>");
@@ -589,10 +585,6 @@
 	
 	//
 	function startSubmission(data){
-	
-		console.log("start datasubmission");
-		console.log(data);
-		console.log(JSON.stringify(data));
 		
 		var url = document.getElementById('workflowcollectionsurl').value;
 
@@ -604,9 +596,44 @@
 				"<portlet:namespace />responseTarget" : "startsubmission"
 			},
 			async: false,
-				success :  function (obj){
-					console.log(obj);
-				}
+			success :  function (obj){
+				console.log(obj);
+				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
+				commentarField.empty();
+				commentarField.append("<div>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. The ID of this Submission is "+obj.key+"</div>");
+				setTimeout(function(){commentarField.empty();}, 25000);
+			},
+			error :  function (obj){
+				console.log(obj);
+				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
+				commentarField.empty();
+				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support.</div>");
+				setTimeout(function(){commentarField.empty();}, 25000);
+
+			},		
+		});	
+	}
+	
+	
+	//
+	function startSubmissionRegistry(data){
+		var url = document.getElementById('workflowcollectionsurl').value;
+
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : "createsubmissionregistry"
+			},
+			async: false,
+			success :  function (obj){
+				console.log(obj);
+				var commentarField = $("#".concat('cwf_lf_comentarField'));
+				commentarField.empty();
+				commentarField.append("<div>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. The ID of this Submission is "+obj.key+"</div>");
+				setTimeout(function(){commentarField.empty();}, 25000);
+			}		
 		});	
 	}
 
@@ -639,7 +666,6 @@
 			}
 		});	
 		return projectJson;
-
 	}
 	
 	
