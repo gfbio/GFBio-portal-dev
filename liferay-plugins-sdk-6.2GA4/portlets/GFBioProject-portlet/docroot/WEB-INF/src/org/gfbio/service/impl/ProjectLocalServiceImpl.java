@@ -386,6 +386,12 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Boolean check = false;
 		long projectId = 0;
 		JSONObject responseJson = new JSONObject();
+		
+
+		System.out.println("------------------------------");
+		System.out.println(requestJson);
+		System.out.println("------------------------------");
+		
 		Set<String> set = new HashSet<String>();
 		String [] keySet = {"projectid","name", "label", "extendeddata", "description", "parentprojectid", "startdate", "enddate", "status", "dcrtid", "dcrtids"};
 		for (int i = 0; i< keySet.length;i++)
@@ -442,12 +448,14 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			if (requestJson.containsKey("dcrtids") && check){
 				if (requestJson.get("dcrtids").getClass().toString().equals("class java.lang.String")){
 					String dcrtidsString =  (String) requestJson.get("dcrtids");
+					System.out.println(dcrtidsString);
 					if (!((dcrtidsString.substring(0,0)).equals("[")))
 						dcrtidsString = "[".concat(dcrtidsString).concat("]");
 					JSONParser parser = new JSONParser();
 					JSONArray parseJson = new JSONArray();
 					try {parseJson = (JSONArray) parser.parse(dcrtidsString);} 
 					catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+					System.out.println(parseJson);
 					check = updateCategories(projectId, parseJson);
 				}else
 					check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
@@ -559,18 +567,32 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	//
 	public Boolean updateCategories (long projectId, JSONArray requestJson){
+		System.out.println(requestJson);
 		Boolean check = false;
 		JSONArray responseJson = new JSONArray();
 		
 		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_category_project", projectId))
 			try {responseJson = ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_project"), Long.toString(projectId));} 
 			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		System.out.println(responseJson);
 		if (responseJson.size()>0)
-			for (int i =0; i < responseJson.size();i++)
+			for (int i =0; i < responseJson.size();i++){
+				System.out.println(Long.toString((Long) responseJson.get(i)));
 				ContentLocalServiceUtil.deleteRelationContentByCellContent(Long.toString(projectId), Long.toString((Long) responseJson.get(i)) );
+			}
+		
+		//wait(1000);
+/*		try {
+			TimeUnit.MILLISECONDS.sleep( 2000 );
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}*/
 
-		for (int i =0; i <requestJson.size();i++)
+		
+		for (int i =0; i <requestJson.size();i++){
+			System.out.println(i + ": "+(long) requestJson.get(i));
 			check = updateCategory( projectId, (long) requestJson.get(i));
+		}
 		return check;
 	}	
 	

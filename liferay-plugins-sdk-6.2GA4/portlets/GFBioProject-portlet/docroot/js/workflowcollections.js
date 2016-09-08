@@ -83,16 +83,20 @@ function submitInput(url){
 	
 	if (checkInput()){
 		
-
 		var mrrJson = saveAllInput();
 		var registryJson = buildSubmissionJsonForRegistry(mrrJson.researchobjects);
-		var data ={};
-		data["mrr"]= mrrJson;
-		data["submissionregistry"]= registryJson;
-	
-		startSubmission(data);
-	}else{
-		console.log("=(");
+			
+		startSubmissionRegistry(registryJson);
+		
+		if(document.getElementById("cwf_lf_submissioncomentarField").className != 'portlet-msg-error'){
+			var data ={};
+			data["mrr"]= mrrJson;
+			data["submissionregistry"]= registryJson;
+
+			startSubmission(data);
+		}
+		
+
 	}
 }
 
@@ -320,7 +324,7 @@ function buildCommonProjectJson(){
 
 	if (!(dcrtJson.toString()==""))
 		projectJson["dcrtids"] = dcrtJson.toString();
-
+	
 	return projectJson;
 }
 

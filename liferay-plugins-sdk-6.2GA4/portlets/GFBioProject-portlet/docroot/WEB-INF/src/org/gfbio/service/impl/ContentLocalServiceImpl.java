@@ -97,6 +97,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	//
 	public void deleteRelationContentByCellContent(String cellcontent1, String cellcontent2 ){
 		long rowId = getRowIdOfRelation(cellcontent1, cellcontent2);
+		//System.out.println(cellcontent1 + " | "+cellcontent2+ " | "+rowId);
 		deleteContentsByRowId (rowId);
 	}
 	
