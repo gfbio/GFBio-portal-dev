@@ -1,0 +1,79 @@
+<!-- FIXME: move element styles to css classes or selectors-->
+<section id="submission-fork" style="padding: 70px 0;">
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+<h1 style="border-style:none">Submit Your Data to a Public Repository</h1>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-12" style="margin-top: -20px">
+<h4>Why?</h4>
+
+<p>Making your data publicly available, as a part of a publication or not, is good scientific practice. In addition, you also get a Persistent Identifier (e.g. DOI) which you can use to cite your data and get credits when other do so.</p>
+
+<h4>Which repository?</h4>
+
+<p>Which repository is best suited to your data depends on the data itself. We offer several custom workflows depending on the (primary) data type. See the detailed descriptions below.</p>
+
+<h4>Standards matter!</h4>
+
+<p>Standardization of the data and its description (a.k.a. meta-data) is of key importance, so that your data is easily discoverable and comparable to similar data sets.</p>
+
+<h4>How to proceed?</h4>
+
+<ol>
+	<li><a class="text-link" href="/login">Sign in</a> (if you are not forwarded back to this page automatically, please use 'Data-&gt;Submit' form the navigation menu).</li>
+	<li>Choose the type of data you want to submit and start the respective workflow.</li>
+	<li>Describe and upload your data. Our curators will review it, import it and contact you in case they need further assistance from you.</li>
+	<li>Once your data is published, you will receive a persistent identifier (PID), which can be used to cite your data.</li>
+</ol>
+<!-- p class="bg-warning">Only signed in users can make submissions. Please <a class="text-link" href="/login">sign in</a> now.</p --></div>
+</div>
+<!--style="background-color: #f5f5f5"-->
+
+<div class="row" style="border-bottom: 2px dashed #81B248; border-top: 2px dashed #81B248;"><!--  for fluid laylout --><!--<div class="col-md-2"></div>-->
+<div class="col-md-3 subm-tile" data-toggle="tooltip" title="Coming soon...">
+<div id="generic" style="border-style:none">
+<h2 style="color:#818181;font-weight: 400">Generic</h2>
+<span class="icon-submission">?</span>
+
+<p>Note sure where your data should go? Describe it and we will help you decide!</p>
+</div>
+</div>
+
+<div class="col-md-3 subm-tile" data-toggle="tooltip" title="Click here to start a submission!">
+<div id="collections" style="border-style:none">
+<h2><a href="/data/submit/collections">Collections</a></h2>
+<a href="/data/submit/collections"><i class="fa fa-pagelines" style="font-size: 5em; margin: 20px 0 10px 0;">&nbsp;</i> </a>
+
+<p><a href="/data/submit/collections">Deposit occurrence and taxon data in one of our dedicated data centers.</a></p>
+</div>
+</div>
+
+<div class="col-md-3 subm-tile" data-toggle="tooltip" title="Coming soon...">
+<div id="environmental" style="border-style:none">
+<h2 style="color:#818181;font-weight: 400">Environmental</h2>
+<span class="icon-submission">?</span>
+
+<p>Deposit environmental data in PANGAEA</p>
+</div>
+</div>
+
+<div class="col-md-3 subm-tile" data-toggle="tooltip" title="Click here to start a submission!">
+<div id="molecular" style="border-style:none">
+<h2><a href="/data/submit/molecular">Molecular</a></h2>
+<a href="/data/submit/molecular"><span class="icon-submission">?</span> </a>
+
+<p><a href="/data/submit/molecular">Deposit molecular sequence data in the European Nucleotide Archive.</a></p>
+</div>
+</div>
+<!--  for fluid laylout --><!--<div class="col-md-2"></div>--></div>
+</div>
+</section>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
