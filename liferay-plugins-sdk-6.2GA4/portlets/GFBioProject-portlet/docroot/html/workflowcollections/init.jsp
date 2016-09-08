@@ -228,7 +228,6 @@
 					"<div style='clear:left' id='cwf_ro_nagoyadiv'></div>"+
 				"</div>"+
 				
-/* 				"<div id='cwf_ro_licenses'></div>"+ */
 				
 				"<div class='control-group' >"+
 					"<label class='control-label' 					id='cwf_ro_license_l'> Appropriate license   </label>"+
@@ -391,7 +390,47 @@
  		document.getElementById("cwf_ro_dct").value= "";
  		document.getElementById("cwf_ro_description").value= "";
  		document.getElementById("cwf_ro_publications").value= "";
+ 		
+ 		
+ 		
+ 		
  		document.getElementById("cwf_ro_metadatalabel").selectedIndex = 0;
+ 		
+  		var div =   $("#cwf_ro_metadatalabel_v");
+		div.empty();
+		div.append(
+			"<form action='select.html'>"+
+				"<select id='cwf_ro_metadatalabel' name='<portlet:namespace/>cwf_ro_metadatalabel' size='1' style='width:90%'>"+
+					"<option value='none'></option>"+
+				"</select>"+
+			"</form>"
+		);
+		
+ 		ajaxData = {"tablename":"gfbio_metadata"};
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "gettablebyname"
+			},
+			async: false,
+ 			success :  function (obj){
+ 				var choMeta = $("#".concat('cwf_ro_metadatalabel'));
+				choMeta.empty();
+				choMeta.append("<option value='none'></option>");
+				for (i =0; i <obj.length;i++){
+					var json = obj[i];
+					choMeta.append("<option id='cwf_ro_metadatalabel"+json.id+"' value='"+json.id+"'>"+json.label+"</option>");
+				}
+ 			}
+ 		}); 
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
  		document.getElementById("cwf_pd_id").innerHTML= 0;
 		document.getElementById("cwf_ro_nagoyano").checked = true;
 		var radioNagoya = $("#".concat('cwf_ro_nagoyadiv'));
@@ -585,7 +624,7 @@
 	
 	//
 	function startSubmission(data){
-		
+			
 		var url = document.getElementById('workflowcollectionsurl').value;
 
 		$.ajax({
@@ -597,14 +636,12 @@
 			},
 			async: false,
 			success :  function (obj){
-				console.log(obj);
 				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
 				commentarField.empty();
 				commentarField.append("<div>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. The ID of this Submission is "+obj.key+"</div>");
 				setTimeout(function(){commentarField.empty();}, 25000);
 			},
 			error :  function (obj){
-				console.log(obj);
 				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
 				commentarField.empty();
 				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support.</div>");
@@ -617,6 +654,8 @@
 	
 	//
 	function startSubmissionRegistry(data){
+		
+
 		var url = document.getElementById('workflowcollectionsurl').value;
 
 		$.ajax({
@@ -628,11 +667,22 @@
 			},
 			async: false,
 			success :  function (obj){
-				console.log(obj);
-				var commentarField = $("#".concat('cwf_lf_comentarField'));
-				commentarField.empty();
-				commentarField.append("<div>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. The ID of this Submission is "+obj.key+"</div>");
-				setTimeout(function(){commentarField.empty();}, 25000);
+				if (!obj.hasOwnProperty("ERROR")){
+					var commentarField = $("#".concat('cwf_lf_comentarField'));
+					commentarField.empty();
+					commentarField.append("<div id='cwf_lf_subreg'>Submission entry is written in the registry.</div>");
+					setTimeout(function(){commentarField.empty();}, 5000);
+				}else{
+					var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
+					document.getElementById("cwf_lf_submissioncomentarField").className="portlet-msg-error";
+					commentarField.empty();
+					commentarField.append("<div>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
+					setTimeout(function(){
+						commentarField.empty();
+						document.getElementById("cwf_lf_submissioncomentarField").className="row";;
+					}, 25000);
+				}
+					
 			}		
 		});	
 	}

@@ -60,7 +60,7 @@ public class WorkflowENAPortlet extends GenericPortlet {
 		String token ="";
 		JSONParser parser = new JSONParser();	
 		//File file = new File(path +"html\\workflowena\\token.txt");
-		File file = new File(path +"..\\..\\server_specific_identification\\token.txt");
+		File file = new File(path +"..\\..\\..\\server_specific_identification\\token.txt");
 		FileInputStream fis = null;
 		
 		try {

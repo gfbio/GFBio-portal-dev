@@ -12,7 +12,6 @@
 					var choPro = $("#".concat("workflowChoPro"));
 					choPro.append("<option id='workflowChoPro"+data.projectid+"' value='"+data.projectid+"'>"+data.projectlabel+"</option>");
 					document.getElementById("workflowChoPro"+data.projectid).checked=true;
-					//console.log(document.getElementById("workflowChoPro"+data.projectid).checked);
 				}
 		});
 	});

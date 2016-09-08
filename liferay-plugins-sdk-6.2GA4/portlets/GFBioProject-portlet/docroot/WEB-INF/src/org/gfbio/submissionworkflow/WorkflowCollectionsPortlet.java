@@ -296,7 +296,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		JSONObject parseJson = new JSONObject();
 		try {parseJson = (JSONObject) parser.parse(dataJson);}
 		catch (ParseException e) {e.printStackTrace();}
-	
+				
 		responseString = (SubmissionLocalServiceUtil.createSubmission(parseJson)).toString();
 		
 		response.setContentType("application/json");
@@ -366,12 +366,17 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
     @SuppressWarnings({ "unchecked", "unused" })
     private static String getJSON_Body(JSONObject requestJson){
     	
+
 		JSONParser parser = new JSONParser();
 		
 		//preparation data source
 		
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
+    	
+/*    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+    	System.out.println(projectJson);
+    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");*/
     	
 		JSONObject submitterJson = new JSONObject();
     	submitterJson = UserExtensionLocalServiceUtil.getUserExtentionById((JSONObject) requestJson.get("submissionregistry"));
@@ -508,12 +513,11 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
             String metadataName = "";
 			JSONArray metadataValueArray = new JSONArray();
             
-			String matadataId ="";
+			String metadataId ="";
 			if (((researchObjectJson.get("metadataid").getClass()).toString()).equals("class java.lang.Long"))
-            	matadataId = String.valueOf((long) researchObjectJson.get("metadataid"));
+            	metadataId = String.valueOf((long) researchObjectJson.get("metadataid"));
             else
-            	matadataId = (String) researchObjectJson.get("metadataid");
-            
+            	metadataId = (String) researchObjectJson.get("metadataid");
             		
             JSONObject commandJson = new JSONObject();
             commandJson.put("tablename","gfbio_metadata");
@@ -523,13 +527,18 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
        		int i =0;
        		while (i <allMetadataArray.size()){
        			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
-        		if ((matadataId.equals((String) metadataInformations.get("id")))){
+        		if ((metadataId.equals((String) metadataInformations.get("id")))){
         			metadataName = (String)metadataInformations.get("label");
        				i = allMetadataArray.size();
-        		}else
-        			i = i+1;
+        		}else{
+        			if ((metadataId.equals((String) metadataInformations.get("label")))){
+            			metadataName = (String)metadataInformations.get("label");
+           				i = allMetadataArray.size();
+        			}else{
+        				i = i+1;
+        			}
+        		}
         	}
-
             metadata.put("value", metadataName);
             metadataArray.add(metadata);
             fields.put("customfield_10229", metadataArray);	
@@ -580,6 +589,10 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 	      
 	      json.put("fields", fields);
 	
+/*	      System.out.println("---------------------");
+	      System.out.println("submission: "+json);
+	      System.out.println("---------------------");*/
+	      
 	      String response = json.toJSONString();
 	      response = response.replaceAll("\\\\", "");
 	           

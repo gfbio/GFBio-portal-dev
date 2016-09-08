@@ -597,11 +597,20 @@ UPDATE 	gfbio_content 	SET cellcontent = 'Phenotypic Quality Ontology (PATO)' 		
 Delete FROM gfbio_content WHERE  rowid = 1873;
 
 
+--------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content ----------------------------------
+--------------------------------------     metadata      -- 08.09.2016 ---------------------
+--------------------------------------------------------------------------------------------
 
+-- delete others by Metadata, because this is not part of this release
+Delete FROM gfbio_content WHERE  rowid = 1801; 
 
-
-
-
+-- we integrate other in this release
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1800','11','30' ,'1801','1800');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1802','11','31' ,'1801','other');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1803','11','32' ,'1801','other');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1804','11','33' ,'1801','');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1805','11','34' ,'1801','');
 
 
 
