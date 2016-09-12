@@ -17,6 +17,7 @@ package org.gfbio.service.impl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -25,21 +26,27 @@ import com.liferay.portal.kernel.json.JSONObject;
 // if using org.json, the response message in liferay webservice will be incomplete 
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.gfbio.NoSuchBasketException;
 import org.gfbio.model.Basket;
+import org.gfbio.model.UserSSO;
+import org.gfbio.service.UserSSOServiceUtil;
 import org.gfbio.service.base.BasketLocalServiceBaseImpl;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
 
 /**
  * The implementation of the basket local service.
@@ -63,8 +70,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// get a basket from basket's Id
 
-	public JSONArray getBasketById(long basketId) throws SystemException,
-			NoSuchModelException {
+	public JSONArray getBasketById(long basketId) throws SystemException, NoSuchModelException {
 		JSONArray jBasket = JSONFactoryUtil.createJSONArray();
 		try {
 
@@ -80,13 +86,11 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// get baskets from baskets' Ids
 
-	public JSONArray getBasketsByIds(long[] basketIds)
-			throws NoSuchModelException, SystemException {
+	public JSONArray getBasketsByIds(long[] basketIds) throws NoSuchModelException, SystemException {
 		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
 		try {
 			;
-			List<Basket> basketList = this.basketPersistence
-					.findByBasketIds(basketIds);
+			List<Basket> basketList = this.basketPersistence.findByBasketIds(basketIds);
 			jBasketList = convertBasketListToJSONArray(basketList);
 		} catch (Exception e) {
 			System.out.println(e.toString());
@@ -99,8 +103,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	// get list of all baskets of a specific user updated within a specific
 	// period
 
-	public JSONArray getBasketsByUserAndPeriod(long userId, int period)
-			throws NoSuchModelException, SystemException {
+	public JSONArray getBasketsByUserAndPeriod(long userId, int period) throws NoSuchModelException, SystemException {
 		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
 		try {
 			List<Basket> basketList = null;
@@ -108,8 +111,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basketList = basketPersistence.findByUserId(userId);
 			else {
 				Date startDate = getStartDateFromPeriod(period);
-				basketList = basketPersistence.findByUserIdSince(userId,
-						startDate);
+				basketList = basketPersistence.findByUserIdSince(userId, startDate);
 			}
 			jBasketList = convertBasketListToJSONArray(basketList);
 		} catch (Exception e) {
@@ -122,8 +124,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// get list of all baskets of a specific user
 
-	public JSONArray getBasketsByUserId(long userId) throws SystemException,
-			NoSuchModelException {
+	public JSONArray getBasketsByUserId(long userId) throws SystemException, NoSuchModelException {
 
 		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
 		try {
@@ -140,8 +141,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	// get list of all baskets' Ids of a specific user updated within a specific
 	// period
 
-	public JSONArray getBasketsIdByUserAndPeriod(long userId, int period)
-			throws NoSuchModelException, SystemException {
+	public JSONArray getBasketsIdByUserAndPeriod(long userId, int period) throws NoSuchModelException, SystemException {
 		JSONArray jBasketIdList = JSONFactoryUtil.createJSONArray();
 		try {
 			List<Basket> basketList = new ArrayList<Basket>();
@@ -149,8 +149,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basketList = basketPersistence.findByUserId(userId);
 			else {
 				Date startDate = getStartDateFromPeriod(period);
-				basketList = basketPersistence.findByUserIdSince(userId,
-						startDate);
+				basketList = basketPersistence.findByUserIdSince(userId, startDate);
 			}
 
 			for (int i = 0; i < basketList.size(); i++) {
@@ -169,8 +168,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// get list of all baskets' Id of a specific user
 
-	public JSONArray getBasketsIdByUserId(long userId) throws SystemException,
-			NoSuchModelException {
+	public JSONArray getBasketsIdByUserId(long userId) throws SystemException, NoSuchModelException {
 
 		JSONArray jBasketIdList = JSONFactoryUtil.createJSONArray();
 		try {
@@ -192,8 +190,8 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// update or create a new project
 
-	public long updateBasket(long basketId, long userId, String name,
-			String basketContent, String queryJSON) throws SystemException {
+	public long updateBasket(long basketId, long userId, String name, String basketContent, String queryJSON)
+			throws SystemException {
 
 		Basket basket = null;
 		try {
@@ -217,8 +215,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 			// create new basket
 
-			basket = basketPersistence.create(CounterLocalServiceUtil
-					.increment(getModelClassName()));
+			basket = basketPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
 			basket.setUserID(userId);
 			basket.setName(name);
 			Date now = new java.util.Date();
@@ -232,8 +229,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return basket.getBasketID();
 	}
 
-	public Basket removeBasket(long basketId, long userId)
-			throws SystemException, NoSuchModelException {
+	public Basket removeBasket(long basketId, long userId) throws SystemException, NoSuchModelException {
 		Basket basket = null;
 		try {
 			if (isUserAdmin(userId)) {
@@ -327,8 +323,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	public Map<Long, String> getBasketUsersIds(long userId) throws Exception {
 		Map<Long, String> users = new HashMap<Long, String>();
 		if (isUserAdmin(userId)) {
-			List<User> user_list = UserLocalServiceUtil.getUsers(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			List<User> user_list = UserLocalServiceUtil.getUsers(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			for (User user : user_list) {
 				long uId = user.getUserId();
 				String uName = user.getFullName();
@@ -357,7 +352,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				JSONArray jaBasket = JSONFactoryUtil.createJSONArray();
 				jaBasket.put(jBasket);
 				jObj.put("basketContent", jaBasket);
-				
+
 				String strQuery = basket.getQueryJSON();
 				JSONObject jQuery = JSONFactoryUtil.createJSONObject(strQuery);
 				JSONArray jaQuery = JSONFactoryUtil.createJSONArray();
@@ -379,5 +374,88 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			jArr.put(jBasket);
 		}
 		return jArr;
+	}
+
+	public JSONArray getUserDetail(long userId) throws PortalException, SystemException {
+
+		JSONArray res = JSONFactoryUtil.createJSONArray();
+		long currentUserId = PrincipalThreadLocal.getUserId();
+		boolean adminRole = isUserAdmin(currentUserId);
+		if (adminRole)
+			System.out.println("This user is admin");
+		if (adminRole || (currentUserId == userId)) {
+			System.out.println("authen success");
+			User user = UserLocalServiceUtil.getUser(userId);
+			JSONObject juser = JSONFactoryUtil.createJSONObject();
+			juser.put("createDate", user.getCreateDate());
+			juser.put("emailAddress", user.getEmailAddress());
+			juser.put("firstName", user.getFirstName());
+			juser.put("lastName", user.getLastName());
+			juser.put("screenName", user.getScreenName());
+			juser.put("jobTitle", user.getJobTitle());
+			juser.put("lastLoginDate", user.getLastLoginDate());
+			juser.put("userId", user.getUserId());
+			res.put(juser);
+			return res;
+		} else
+			return null;
+	}
+
+	public JSONArray authenticate(String token) throws Exception {
+		JSONArray res = JSONFactoryUtil.createJSONArray();
+		long userID = PrincipalThreadLocal.getUserId();
+
+		// return 0 : success, 1 : token expired,
+		// 2 : no record found, 3 non-admin user,
+		// 4 : unknown error ;
+		int auth = UserSSOServiceUtil.authenticateToken(token, userID);
+		System.out.println("This user is admin");
+		User user = UserLocalServiceUtil.getUser(userID);
+		// PermissionChecker checker =
+		// PermissionCheckerFactoryUtil.create(user);
+		// boolean isSigned = checker.isSignedIn();
+		JSONObject jres = JSONFactoryUtil.createJSONObject();
+		jres.put("success", auth);
+		if (auth == 0) {
+			UserSSO sso = userSSOPersistence.findByToken(token);
+			long tokenOwner = sso.getUserID();
+			jres.put("userid", tokenOwner);
+		} else {
+			jres.put("userid", 0);
+		}
+		res.put(jres);
+
+		return res;
+	}
+
+	public String getToken() {
+		long userID = PrincipalThreadLocal.getUserId();
+		String token = UserSSOServiceUtil.getToken(userID);
+		return token;
+	}
+
+	private static String encryptText(String text) {
+		String sha1 = "";
+		try {
+			MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+			crypt.reset();
+			crypt.update(text.getBytes("UTF-8"));
+			sha1 = byteToHex(crypt.digest());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return sha1;
+	}
+
+	private static String byteToHex(final byte[] hash) {
+		Formatter formatter = new Formatter();
+		for (byte b : hash) {
+			formatter.format("%02x", b);
+		}
+		String result = formatter.toString();
+		formatter.close();
+		return result;
 	}
 }

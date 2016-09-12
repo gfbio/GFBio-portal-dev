@@ -349,7 +349,6 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray createSubmission (JSONArray requestJson){
-		System.out.println("SubReg (local): "  +requestJson);
 		JSONArray responseJson = new JSONArray();
 		
 		for (int i =0; i <requestJson.size();i++)
@@ -362,9 +361,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createSubmission (JSONObject requestJson){
-		
-		System.out.println("SubReg (local) i: "+requestJson);
-		
+			
 		Boolean check = false;
 		JSONObject keyJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
@@ -583,8 +580,6 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				submission = getSubmission(submissionid);
 			} catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
 
-		System.out.println("|"+archive+"|");
-		System.out.println("|"+brokerSubmissionId+"|");
 		if (submission == null)
 			try {
 				submission = submissionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));

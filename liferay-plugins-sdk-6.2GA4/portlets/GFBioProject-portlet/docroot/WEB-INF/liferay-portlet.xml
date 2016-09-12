@@ -88,6 +88,8 @@
 	<portlet>
 		<portlet-name>workflowcollections</portlet-name>
 		<icon>/icon.png</icon>
+        <header-portlet-css>/css/main.css</header-portlet-css>
+        <header-portlet-javascript>/js/main.js</header-portlet-javascript>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
@@ -104,8 +106,17 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>workflowena-portlet</css-class-wrapper>
 	</portlet>
-	
-	
+	<portlet>
+		<portlet-name>workflow-environmental</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>
+			workflow-environmental-portlet
+		</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

@@ -93,8 +93,19 @@ function visibleShow(j) {
 
 
 //
+function visibleShowWithFullId(j) {
+	document.getElementById(j).className = "swMain";
+};
+
+
+//
 function visibleHide(j) {
-	document.getElementById("hide_".concat(j)).className = "swHide";
+	document.getElementById(j).className  = "swHide";
+};
+
+//
+function visibleHideWithFullId(j) {
+	document.getElementById(j).className  = "swHide";
 };
 
 
@@ -393,7 +404,7 @@ function reload() {
 
 
 //
-$(document).ready(function(){
+AUI().ready(function(A){
 	if ($('ul#verticalNav li a').length && $('div.section').length ) {
 		$('div.section').css( 'display', 'none' );
 		$('ul#verticalNav li a').click(function() {

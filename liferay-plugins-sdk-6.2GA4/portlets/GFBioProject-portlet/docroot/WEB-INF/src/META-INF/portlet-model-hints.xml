@@ -29,6 +29,29 @@
 		<field name="address" type="String" />
 		<field name="website" type="String" />
 		<field name="training" type="String" />
+		<field name="physicalobjects" type="boolean" />
+		<field name="taxonbased" type="boolean" />
+		<field name="notaxonbased" type="boolean" />
+		<field name="livingobjects" type="boolean" />
+		<field name="deadobjects" type="boolean" />
+		<field name="sequencedata" type="boolean" />
+		<field name="botanicalObjects" type="boolean" />
+		<field name="mycologicalObjects" type="boolean" />
+		<field name="zoologicalObjects" type="boolean" />
+		<field name="paleontologicalObjects" type="boolean" />
+		<field name="botanicalTissueObjects" type="boolean" />
+		<field name="mycologicalTissueObjects" type="boolean" />
+		<field name="zoologicalTissueObjects" type="boolean" />
+		<field name="botanicalDnaSamples" type="boolean" />
+		<field name="mycologicalDnaSamples" type="boolean" />
+		<field name="zoologicalDnaSamples" type="boolean" />
+		<field name="botanicalObjectsInEthanol" type="boolean" />
+		<field name="mycologicalObjectsInEthanol" type="boolean" />
+		<field name="zoologicalObjectsInEthanol" type="boolean" />
+		<field name="botanicalMicroscopicSlides" type="boolean" />
+		<field name="mycologicalMicroscopicSlides" type="boolean" />
+		<field name="zoologicalMicroscopicSlides" type="boolean" />
+		<field name="otherObjects" type="boolean" />
 	</model>
 	<model name="org.gfbio.model.DataProvider_PersistentIdentifier">
 		<field name="gfbioDataProvider" type="long" />
@@ -71,9 +94,9 @@
 	<model name="org.gfbio.model.Project_User">
 		<field name="projectID" type="long" />
 		<field name="userID" type="long" />
-		<field name="usertype" type="String" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
+		<field name="userType" type="String" />
 	</model>
 	<model name="org.gfbio.model.ResearchObject">
 		<field name="researchObjectID" type="long" />
@@ -84,6 +107,20 @@
 		<field name="description" type="String" />
 		<field name="extendeddata" type="String" />
 		<field name="metadataID" type="long" />
+	</model>
+	<model name="org.gfbio.model.ResearchObject_User">
+		<field name="researchObjectID" type="long" />
+		<field name="researchObjectVersion" type="int" />
+		<field name="userID" type="long" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+		<field name="userType" type="String" />
+	</model>
+	<model name="org.gfbio.model.SearchHistory">
+		<field name="searchHistoryID" type="long" />
+		<field name="userID" type="long" />
+		<field name="queryString" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Submission">
 		<field name="submissionID" type="long" />
@@ -101,5 +138,10 @@
 	</model>
 	<model name="org.gfbio.model.UserExtension">
 		<field name="userID" type="long" />
+	</model>
+	<model name="org.gfbio.model.UserSSO">
+		<field name="userID" type="long" />
+		<field name="token" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 </model-hints>

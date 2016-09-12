@@ -28,7 +28,9 @@
 <%@ page import="org.gfbio.service.DataProviderLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.HeadLocalServiceUtil" %>
 <%@ page import="org.gfbio.service.ProjectLocalServiceUtil" %>
+<%@ page import="org.gfbio.service.ResearchObjectLocalServiceUtil" %>
 
+<%@ page import="org.json.simple.JSONArray" %> 
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="org.json.simple.parser.JSONParser" %>
 <%@ page import="org.json.simple.parser.ParseException" %>
@@ -71,7 +73,7 @@
 	
 
 	//GCDJ Submit Answer
-	$(document).ready(function() {
+	AUI().ready(function(A) {
 		Liferay.on('gadget:gfbio.archiving.submit', function(topic, data, subscriberData) {
 			if (data == undefined){}
 			else
@@ -177,7 +179,7 @@
 	
 	
 	//Message from hide managment
-	$(document).ready(function() {
+	AUI().ready(function(A) {
 		Liferay.on('gadget:gfbio.submissionmanager.hidemanagment', function(data) {
 			
 			if (data == undefined){}
@@ -190,7 +192,7 @@
 	
 	
 	//Message from Submission Manager
-	$(document).ready(function() {
+	AUI().ready(function(A) {
 		Liferay.on('gadget:gfbio.submissionmanager.datasubmission', function(data) {
 			
 			if (data == undefined){}

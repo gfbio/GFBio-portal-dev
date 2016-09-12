@@ -21,6 +21,7 @@ public class DataProviderFinderImpl extends BasePersistenceImpl<DataProvider> im
 	public static String GET_DATAPROVIDERID_BY_LABEL 	= FINDER_CLASS_NAME_ENTITY + ".getDataProviderIdByLabel";
 	public static String GET_LABEL_BY_ID 				= FINDER_CLASS_NAME_ENTITY + ".getLabelById";
 	public static String GET_LABELS 					= FINDER_CLASS_NAME_ENTITY + ".getLabels";
+	public static String GET_NAME_BY_ID 				= FINDER_CLASS_NAME_ENTITY + ".getNameById";
 
 	
 	//
@@ -82,6 +83,31 @@ public class DataProviderFinderImpl extends BasePersistenceImpl<DataProvider> im
 
 			queryObject.setCacheable(false);
 			queryObject.addScalar("label", Type.STRING);
+
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(dataProviderId);
+			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "rawtypes" })
+	public List getNameById(long dataProviderId) {
+
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_NAME_BY_ID);
+
+			SQLQuery queryObject = session.createSQLQuery(sql);
+
+			queryObject.setCacheable(false);
+			queryObject.addScalar("name", Type.STRING);
 
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(dataProviderId);

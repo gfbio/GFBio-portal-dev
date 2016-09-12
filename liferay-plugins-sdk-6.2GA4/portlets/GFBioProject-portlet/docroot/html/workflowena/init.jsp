@@ -10,13 +10,19 @@
 <%@ page import="com.liferay.portal.kernel.exception.SystemException" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 
+<%@ page import="java.io.File" %>
+
+<%@ page import="org.gfbio.submissionworkflow.WorkflowENAPortlet" %>
+
+
+
 <script>
 
 
 	/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
 	
-	//Message from Hide Managment
+/* 	//Message from Hide Managment
 	$(document).ready(function() {
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			var submissionManager =   $("#ena");
@@ -26,6 +32,6 @@
 				submissionManager.attr("class", "swMain");
 		});
 	});
-	
+	 */
 	
 </script>

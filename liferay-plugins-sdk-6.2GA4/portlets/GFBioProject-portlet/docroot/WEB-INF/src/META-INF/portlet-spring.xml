@@ -109,6 +109,22 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.ResearchObject_UserLocalService" class="org.gfbio.service.impl.ResearchObject_UserLocalServiceImpl" />
+	<bean id="org.gfbio.service.ResearchObject_UserService" class="org.gfbio.service.impl.ResearchObject_UserServiceImpl" />
+	<bean id="org.gfbio.service.persistence.ResearchObject_UserPersistence" class="org.gfbio.service.persistence.ResearchObject_UserPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.persistence.ResearchObject_UserFinder" class="org.gfbio.service.persistence.ResearchObject_UserFinderImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.SearchHistoryLocalService" class="org.gfbio.service.impl.SearchHistoryLocalServiceImpl" />
+	<bean id="org.gfbio.service.SearchHistoryService" class="org.gfbio.service.impl.SearchHistoryServiceImpl" />
+	<bean id="org.gfbio.service.persistence.SearchHistoryPersistence" class="org.gfbio.service.persistence.SearchHistoryPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.SubmissionLocalService" class="org.gfbio.service.impl.SubmissionLocalServiceImpl" />
 	<bean id="org.gfbio.service.SubmissionService" class="org.gfbio.service.impl.SubmissionServiceImpl" />
 	<bean id="org.gfbio.service.persistence.SubmissionPersistence" class="org.gfbio.service.persistence.SubmissionPersistenceImpl" parent="basePersistence">
@@ -122,6 +138,12 @@
 	<bean id="org.gfbio.service.UserExtensionLocalService" class="org.gfbio.service.impl.UserExtensionLocalServiceImpl" />
 	<bean id="org.gfbio.service.UserExtensionService" class="org.gfbio.service.impl.UserExtensionServiceImpl" />
 	<bean id="org.gfbio.service.persistence.UserExtensionPersistence" class="org.gfbio.service.persistence.UserExtensionPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.UserSSOLocalService" class="org.gfbio.service.impl.UserSSOLocalServiceImpl" />
+	<bean id="org.gfbio.service.UserSSOService" class="org.gfbio.service.impl.UserSSOServiceImpl" />
+	<bean id="org.gfbio.service.persistence.UserSSOPersistence" class="org.gfbio.service.persistence.UserSSOPersistenceImpl" parent="basePersistence">
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>

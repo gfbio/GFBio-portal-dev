@@ -32,8 +32,10 @@ import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
+import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.ResearchObject_UserLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
@@ -163,9 +165,30 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
+	public JSONArray getResearchObjectsByProjectId (long projectId){
+		return ProjectLocalServiceUtil.getResearchObjectsByProjectId(projectId);
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getResearchObjectsByUserId(long userId){
+		JSONArray researchObjectJSON = new JSONArray();
+		List <ResearchObject> researchObjectList = null;
+		researchObjectList =  ResearchObject_UserLocalServiceUtil.getResearchObjectsByUserId(userId);
+		if (researchObjectList.size() >0)
+			for (int i =0; i< researchObjectList.size();i++)
+				researchObjectJSON.add(ResearchObjectLocalServiceUtil.constructResearchObjectJson(researchObjectList.get(i)));
+		else
+			researchObjectJSON = null;
+		return researchObjectJSON;
+	}
+	
+	//
 	@SuppressWarnings({ "unchecked"})
 	public JSONArray getResearchObjectsByParent (JSONObject requestJson){
 		
+	
 		JSONArray responseJson = new JSONArray();
 		Set<String> set = new HashSet<String>();
 		set.add("researchobjectid");
@@ -349,6 +372,16 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "id");
 					if (columnId != 0)
 						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
+					
+					//mail
+					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "mail");
+					if (columnId != 0)
+						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
+					
+					//orcid
+					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "orcid");
+					if (columnId != 0)
+						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
 				}
 			}
 		}
@@ -470,7 +503,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenseids","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype"};
+		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenseids","licenselabel", "metadataid", "name","parentresearchobjectid", "projectid", "researchobjecttype", "submiterid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -512,7 +545,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			if (requestJson.containsKey("authorid") && check)
 				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
-			
+			else if (requestJson.containsKey("submiterid") && check)
+				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("submiterid"));
+
+			if (requestJson.containsKey("submiterid") && check)
+				check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("submiterid"), "owner");
 			
 			if (requestJson.containsKey("projectid") && check)
 				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
@@ -565,7 +602,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenseids","licenselabel", "name", "researchobjectid"};
+		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenseids","licenselabel", "name", "researchobjectid", "submiterid", "submitertype"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);

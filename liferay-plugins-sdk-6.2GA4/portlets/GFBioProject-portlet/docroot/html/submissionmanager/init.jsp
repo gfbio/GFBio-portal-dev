@@ -164,7 +164,7 @@
 	
 	
 	//Message from Hide Managment
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		Liferay.on('gadget:gfbio.submissionmanager.hidemanagment', function(data) {
 		
 			if (data == undefined || !data.suma){}
@@ -177,7 +177,7 @@
 	
 	
 	//
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		var newProject = $("#"+newProjectId);
 		newProject.on("click",startNewProject); 
 	});

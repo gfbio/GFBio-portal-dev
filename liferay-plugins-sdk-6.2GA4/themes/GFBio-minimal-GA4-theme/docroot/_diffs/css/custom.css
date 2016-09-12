@@ -909,7 +909,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 /* ---------- Responsive Styles ------*/
 
+ @media ( max-width:600px) {
+	
+}
 
+	
+		
 
 /* @media ( max-width:500px) {
 	

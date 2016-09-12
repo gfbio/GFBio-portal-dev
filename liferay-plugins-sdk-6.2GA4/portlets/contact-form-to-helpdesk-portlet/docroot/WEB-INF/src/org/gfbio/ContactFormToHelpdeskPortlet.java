@@ -423,7 +423,15 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 			return false;
 		}
 	}
-
+    
+	public boolean isValidEmailAddress(String email) {
+        String ePattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+    
 	protected boolean sendEmail(
 		long companyId, Map<String, String> fieldsMap,
 		PortletPreferences preferences) {
@@ -433,19 +441,27 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 				"emailFromAddress", StringPool.BLANK);
 			String emailFromName = preferences.getValue(
 					"emailFromName", StringPool.BLANK);
-			//System.out.println("FromAddress:" +emailFromAddress);
-			//System.out.println("FromName:" +emailFromName);
-			
+			System.out.println("FromAddress:" +emailFromAddress);
+			System.out.println("FromName:" +emailFromName);
+			System.out.println(isValidEmailAddress(emailFromAddress));
 			String emailAddresses = preferences.getValue("emailAddress", StringPool.BLANK);
 			//System.out.println("To:" +emailAddresses);
-			
-			if (Validator.isNull(emailAddresses)) {
+				
+			if (Validator.isNull(emailAddresses) ) {
 				_log.error(
 					"The web form email cannot be sent because no email " +
 						"address is configured");
 			
 
 				return false;
+			}
+			if (!isValidEmailAddress(emailFromAddress)){
+				_log.error(
+						"The web form email cannot be sent because invalid email " +
+							"address is provided");
+				
+
+					return false;				
 			}
 						
 			InternetAddress fromAddress = new InternetAddress(emailFromAddress,emailFromName);

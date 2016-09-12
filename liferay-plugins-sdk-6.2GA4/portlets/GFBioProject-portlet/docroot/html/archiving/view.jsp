@@ -12,19 +12,18 @@
 
 <%@ include file="/html/init.jsp" %> <!-- library imports -->
 <%@ include file="/html/archiving/init.jsp" %> <!-- library imports -->
-<script  src="${pageContext.request.contextPath}/docroot/js/main.js"       			type="text/javascript"></script>  	<!--  main.js  imports -->
+
+<script  src="${pageContext.request.contextPath}/js/main.js"       					type="text/javascript"></script>  	<!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/workflow.js"			    	type="text/javascript"></script>  	<!--  main.js  imports -->
+
 <link href="<%= request.getContextPath() %>/docroot/css/main.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
+<link href="<%= request.getContextPath() %>/docroot/css/form.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
 
-<script>
-	$( document ).ready(function() {
-		$("#choWorkflow option[value='none']").attr("selected","selected");
-	}); 
-</script>
-
+<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
+<input id="submissionCheck" type="hidden" value="true">
 
 <body >
-
+	<div id="msgid"></div>
 
 	<div id="dataSubmission">
 		<%if (PortalUtil.getUser(request)==null){ %>
@@ -41,44 +40,54 @@
 				
 			<%
 				Long userID = PortalUtil.getUserId(request);
+				
 				List <Project> projectList = new ArrayList<Project>();
 				projectList = null;
 				try {projectList = ProjectLocalServiceUtil.getProjectList(userID);}
 				catch (NoSuchModelException e) {e.printStackTrace();}
-				catch (SystemException e) {e.printStackTrace();	}
+				catch (SystemException e) {e.printStackTrace();	} 
+				 
+				JSONArray roList = new JSONArray();
+				roList = null;
+				roList = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId(userID); 
 			%>
-	
-				<div id="chooseROX" class="swHide">		
+		
 			
-				 			<br>
-				Please select an existing project, <br>or choose nothing.
-				<br> 
+			<br>
+			Please select an existing project, or choose nothing.
+			<br> 
 			
-				<form action="select.html" id="choProjForm">
-					<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseProjProProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX')" >
-						<option selected="selected" value="none"> </option>
-						<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
-								<option value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
-						<%} } %>
-					</select>
-				</form>
+			<form action="select.html" id="choProjForm">
+				<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseWorkflowProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX', <%=PortalUtil.getUser(request).getUserId()%>)" >
+					<option selected="selected" value="none">All project independent datasets of user</option>
+ 					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
+						<option id="<%= "workflowChoPro"+projectList.get(i).getProjectID() %>" value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
+					<%} } %>  
+				</select>
+			</form>
 					
 			
-
-			
-				Please select an existing dataset, <br>or choose nothing.
+			Please select an existing dataset, or choose nothing.
 						
-				<form action='select.html' id="choROForm">
-					<select id='workflowChooseRO' style='width:90%' name='<portlet:namespace/>workflowChooseRO' size='1'  onclick="cleanSubmissionWorkflow()">
-						<option value='none'> </option>
-					</select>
-				</form>	
-	
-			</div> 
-	
+			<form action='select.html' id="choROForm">
+				<select id='workflowChooseRO' style='width:90%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
+					<option value='none'> </option>
+					<% if (roList != null){ %>
+	  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
+	  						JSONObject roJson =  new JSONObject();
+	  						roJson = (JSONObject) roList.get(i);
+	  						String label = (String) roJson.get("label");
+	  						Long roId = (Long) roJson.get("researchobjectid"); %>
+	  					    
+							<option value="<%= roId %>"> <%= label %> </option>
+						<%} }} %>  
+				</select>
+			</form>	
+			
+
 
 	
-			Please select a exploratory focus in order to start a submission workflow.
+<%-- 		Please select a exploratory focus in order to start a submission workflow.
 			<br>
 			<input id="archivingURL" type="hidden" value="<%= archivingURL %>">
 			<input id="submissionCheck" type="hidden" value="true">
@@ -87,10 +96,10 @@
 				<select  id="choWorkflow" style="width:90%" name="<portlet:namespace />choWorkflow"   size="1" onclick="startSubmissionWorkflow(this.form.choWorkflow.options[this.form.choWorkflow.selectedIndex].value, choROForm.workflowChooseRO.options[choROForm.workflowChooseRO.selectedIndex].value, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, <%=PortalUtil.getUser(request).getUserId()%>)">
 					<option  value="none"> </option>
 					<option  value="ena">Molecular Sequence Data</option>
- 					<!-- <option  value="collections">Collections</option>  -->
+ 					<option  value="collections">Collections</option>
 				</select>
 			</form>
-			<br>
+			<br> --%>
 	
 		<%} %>
 	</div>

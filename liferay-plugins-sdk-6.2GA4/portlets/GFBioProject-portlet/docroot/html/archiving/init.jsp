@@ -4,13 +4,14 @@
 	
 	
 	//Message from Hide Managment
-	$(document).ready(function() {
+	AUI().ready(function(A){
 		
 		Liferay.on('gadget:gfbio.archiving.update', function(data) {
 			if (!(data == undefined))
 				if (data.updateproject==true){
 					var choPro = $("#".concat("workflowChoPro"));
-					choPro.append("<option value='"+data.projectid+"'>"+data.projectlabel+"</option>");
+					choPro.append("<option id='workflowChoPro"+data.projectid+"' value='"+data.projectid+"'>"+data.projectlabel+"</option>");
+					document.getElementById("workflowChoPro"+data.projectid).checked=true;
 				}
 		});
 	});
@@ -39,7 +40,27 @@
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
 	}
 	
-
+	
+	//
+	function sentProjectInformations(userId, projectId){
+		var toSubmit = {
+			"userid"   : userId,
+			"projectid"   : projectId,
+			"researchobjectid"   : 0,
+		}
+		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
+	}
+	
+	
+	//
+	function sentResearchObjectInformations(userId, projectId, researchObjectId) {
+ 		var toSubmit = {
+ 			"userid"   : userId,
+ 			"projectid"   : projectId,
+ 			"researchobjectid"   : researchObjectId,
+		};
+		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
+	}
 	
 		
 	//
@@ -60,36 +81,51 @@
 	
 	
 	//
-	function ajaxActionRequest_ChooseProjProProject(archivingURL, method, data, divId, as) {
+	function ajaxActionRequest_ChooseWorkflowProject(archivingURL, method, data, divId, as) {
+		
+		if (data.projectid !=0){
 			$.ajax({
-			"type" : "POST",
-			"url": archivingURL.concat("/GFBioArchiving"),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : method
-			},
-			async: as,
-			success : function (data){
-				buildChooseRO(data, divId) ;
-			}
-		});
+				"type" : "POST",
+				"url": archivingURL.concat("/GFBioArchiving"),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(data),
+					"<portlet:namespace />responseTarget" : method
+				},
+				async: as,
+				success : function (data){
+					buildChooseROOfProject(data, divId) ;
+				}
+			});
+		}else{
+			$.ajax({
+				"type" : "POST",
+				"url": archivingURL.concat("/GFBioArchiving"),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(data),
+					"<portlet:namespace />responseTarget" : "getResearchObjectsOfUser"
+				},
+				async: as,
+				success : function (data){
+					buildChooseROOfUser(data);
+				}
+			});
+		}
 	}
 	
 	
 /////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
 	
-	$( document ).ready(function() {
-		 console.log( "ready!" );
+	AUI().ready(function(A){
 		 document.getElementById("workflowChoPro").selectedIndex = 0;
-		 document.getElementById("choWorkflow").selectedIndex = 0;
+		 //document.getElementById("choWorkflow").selectedIndex = 0;
 	});
 	
 	
 	//
-	function buildChooseRO(data, divId){
-		
-		cleanSubmissionWorkflow();
+	function buildChooseROOfProject(data, divId){
+
+		//cleanSubmissionWorkflow();
 			
 		if (data.researchobjects == undefined)
 			var roList = [];
@@ -100,16 +136,26 @@
 		var choRO = $("#".concat('workflowChooseRO'));
 		
 		if (data.projectid !=0){
-			div.attr("class", "swMain");
+			//div.attr("class", "swMain");
 			choRO.empty();
 			choRO.append("<option value='none'></option>");
 			for (i =0; i <roList.length;i++)
 				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" Version: "+ +roList[i].researchobjectversion+"</option>");
 			document.getElementById("workflowChooseRO").selectedIndex = 0;
 		}else{
-			div.attr("class", "swHide");
 			choRO.empty();
 		}
+	}
+	
+	function buildChooseROOfUser(data){
+		
+		var choRO = $("#".concat('workflowChooseRO'));
+		
+		choRO.empty();
+		choRO.append("<option value='none'></option>");
+		for (i =0; i <data.length;i++)
+			choRO.append("<option value='"+data[i].researchobjectid+"'>"+data[i].name+" Version: "+ +data[i].researchobjectversion+"</option>");
+		document.getElementById("workflowChooseRO").selectedIndex = 0;
 	}
 	
 	

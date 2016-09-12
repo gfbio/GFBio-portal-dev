@@ -9,6 +9,7 @@
 <%@ page import="com.liferay.portal.NoSuchModelException" %>
 <%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
+<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %>
 
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -17,7 +18,8 @@
 <%@ page import="javax.portlet.RenderResponse" %>
 
 <%@ page import="org.gfbio.idmg.dcst.DCSTPortlet" %>
-<%@ page import="org.gfbio.model.Project" %>
+<%@ page import="org.gfbio.model.DataProvider" %>
+<%@ page import="org.gfbio.idmg.dcst.dao.GCategory" %>
 
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="org.json.simple.parser.JSONParser" %>

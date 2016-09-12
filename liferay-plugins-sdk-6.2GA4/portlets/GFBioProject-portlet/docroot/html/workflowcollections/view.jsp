@@ -15,20 +15,14 @@
 <script  src="${pageContext.request.contextPath}/js/main.js"       				type="text/javascript"></script>  <!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/workflowcollections.js"     type="text/javascript"></script>  <!--  main.js  imports -->
 <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" 	type="text/css"> <!-- main.css imports -->
-		
 
-<input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
-<input type="hidden" class="widthL" id="workflowcollectionsurl"  	value="<%=workflowcollectionsURL %>" />
+<%if (PortalUtil.getUser(request)!=null){ %>
 
+	<input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
+	<input type="hidden" class="widthL" id="workflowcollectionsurl"  	value="<%=workflowcollectionsURL %>" />
 
-<body >
-
-	<div id="collections" class="swHide">
-		
-
-		
-		
-
-	</div>
+	<div id="collections"></div>
 	
-</body>
+	<div ><br></div>
+
+<%} %>	
