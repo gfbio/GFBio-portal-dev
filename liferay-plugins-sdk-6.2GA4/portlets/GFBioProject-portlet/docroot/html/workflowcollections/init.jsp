@@ -425,12 +425,7 @@
 				}
  			}
  		}); 
- 		
- 		
- 		
- 		
- 		
- 		
+
  		document.getElementById("cwf_pd_id").innerHTML= 0;
 		document.getElementById("cwf_ro_nagoyano").checked = true;
 		var radioNagoya = $("#".concat('cwf_ro_nagoyadiv'));

@@ -19,6 +19,7 @@
 <%@ page import="javax.portlet.PortletPreferences" %>
 <%@ page import="javax.portlet.RenderResponse" %>
 
+
 <%@ page import="org.gfbio.model.Head" %>
 <%@ page import="org.gfbio.model.Content" %>
 <%@ page import="org.gfbio.model.Column" %>
