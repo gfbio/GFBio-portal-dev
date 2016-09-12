@@ -372,6 +372,16 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "id");
 					if (columnId != 0)
 						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
+					
+					//mail
+					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "mail");
+					if (columnId != 0)
+						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
+					
+					//orcid
+					columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "orcid");
+					if (columnId != 0)
+						check = ContentLocalServiceUtil.updateContent (0, headId, columnId, rowId, "");
 				}
 			}
 		}

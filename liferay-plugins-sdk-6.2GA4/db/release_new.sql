@@ -614,6 +614,9 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 
 
 
+--------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content ----------------------------------
+--------------------------------------     metadata      -- 08.09.2016 ---------------------
+--------------------------------------------------------------------------------------------
 
-
-
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label)VALUES(10,'GFBio Collections','GFBio collections');
