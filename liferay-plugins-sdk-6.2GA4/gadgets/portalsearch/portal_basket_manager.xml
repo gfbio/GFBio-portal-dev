@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="Basket Manager" author="gfbiodev"
+			author_email="dev@gfbio.org" >
+		<Require feature="pubsub-2">
+			<Param name="topics">
+				<![CDATA[
+        <Topic title="GFBio Basket Manager" name="gfbio.basket.selectedData" publish="true" subscribe="true"/>
+          ]]>
+			</Param>
+		</Require>
+		<Require feature="dynamic-height" />
+	</ModulePrefs>
+	<Content type="html">
+			<![CDATA[
+		<html style="min-height: 350px;">
+			<head  lang="en">
+				<meta charset="UTF-8">
+				<title>GFBio Basket Manager</title>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery-ui.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/basketmanager.css" />
+				<script>
+					$(function() {
+						getUserList();
+						createDeleteDialog();
+					});
+					
+					function getUserList(){
+						var currentUID = parent.Liferay.ThemeDisplay.getUserId();
+						var currentUName =	parent.Liferay.ThemeDisplay.getUserName();	
+						// TODO: update the return value to JSON
+						parent.Liferay.Service(
+						  '/GFBioProject-portlet.basket/get-basket-users-ids',
+						  {
+							userId: currentUID
+						  },
+						  function(obj) {
+							var i = 0;
+							var userSelect = document.getElementById('userSelect');
+							for(var key in obj){
+								var option = document.createElement("option");
+								option.value = key;
+								option.text = obj[key];
+								userSelect.add(option);
+								if (key == currentUID) {
+									console.log(key);
+									userSelect.value = key;
+									getBaskets();
+								}
+								i++;
+							}
+							if (i==0){
+								// the current user has no right to see other users
+								var option = document.createElement("option");
+								option.value = currentUID;
+								option.text = currentUName;
+								option.select = "selected";
+								userSelect.add(option);
+								userSelect.disabled = true;
+								getBaskets();
+							}else{
+								userSelect.disabled = false;
+							}
+						  }
+						);
+					}
+					
+					function getBaskets(){
+						var uID = document.getElementById('userSelect').value;
+						var period = document.getElementById('periodSelect').value;
+						// TODO: update the return value to JSON
+						parent.Liferay.Service(
+						'/GFBioProject-portlet.basket/get-baskets-by-user-and-period',
+						  {
+							userId: uID,
+							period: period
+						  },
+						  function(obj) { // return obj is JSONArray
+							var basketsHTML = "";
+							for(var key in obj){
+								//console.log(obj[key]);
+								var basket = obj[key];
+								basketsHTML += writeBasketsHTML(basket);
+							}
+							var isAccordion = $("#baskets").hasClass("ui-accordion");
+							if (isAccordion) $( "#baskets" ).accordion("destroy");
+							document.getElementById('baskets').innerHTML = basketsHTML;
+							var icons = {
+							  header: "ui-icon-circle-arrow-e",
+							  activeHeader: "ui-icon-circle-arrow-s"
+							};
+							$( "#baskets" ).accordion({
+							    icons: icons,
+							    collapsible: true,
+								activate: function(event, ui) {
+									adjust();
+								},
+								create( event, ui ){
+									adjust();
+								}
+							});    
+							$( "#toggle" ).button().click(function() {
+							  if ( $( "#baskets" ).accordion( "option", "icons" ) ) {
+								$( "#baskets" ).accordion( "option", "icons", null );
+							  } else {
+								$( "#baskets" ).accordion( "option", "icons", icons );
+							  }
+							});
+							$('#baskets .action-button').hover(
+								function() {
+									$(this).addClass('ui-state-hover');
+								},
+								function() {
+									$(this).removeClass('ui-state-hover');
+								}
+							);
+							
+							$('#baskets .action-button a').click(function () {
+								var evt = $(this).attr("href");
+								if (evt.indexOf('delete')==0){
+									var bID = evt.substring(7);
+									document.getElementById('selectedBasketID').value = bID;
+									$( "#deleteConfirmDialog" ).dialog( "open" );
+								}
+								else if (evt.indexOf('save')==0){
+									var bID = evt.substring(5);
+									document.getElementById('selectedBasketID').value = bID;
+									var basketName = document.getElementById(bID+'.name').value;
+									var bJSON = document.getElementById(bID+'.basketContent').value;
+									var qJSON = document.getElementById(bID+'.queryJSON').value;
+									parent.Liferay.Service(
+									  '/GFBioProject-portlet.basket/update-basket',
+									  {
+										basketID: bID,
+										userID: uID,
+										name: basketName,
+										basketContent: JSON.stringify(JSON.parse(bJSON)),
+										queryJSON: JSON.stringify(JSON.parse(qJSON))
+									  },
+									  function(obj){
+										console.log(obj);
+										getBaskets();
+									  }
+									);
+								}
+								else if (evt.indexOf('load')==0){
+									var bID = evt.substring(5);
+									var bJSON = document.getElementById(bID+'.basketContent').value;
+									var qJSON = document.getElementById(bID+'.queryJSON').value;
+									var jsonData = {};
+									jsonData.basketID = bID;
+									jsonData.basketContent = bJSON;
+									jsonData.query = qJSON;
+									if (gadgets.Hub.isConnected()){
+										gadgets.Hub.publish('gfbio.search.basketData', jsonData);
+									}
+								}
+								return false;
+							});
+						  }
+						);
+						adjust();
+					}
+					
+					function writeBasketsHTML(basket){
+						// create header of row containing: name/id/delete/save/load buttons
+						var basketsHTML = "<h3>"+basket.name+" : "+basket.basketID+
+											"<p style='float: right;margin-top: 0px;margin-bottom: 0px;'><span class='action-button' title='Delete basket'><a href='delete:"+
+											basket.basketID+"' class='ui-icon 	ui-icon-closethick'>Delete</a></span>"+
+											"<span class='action-button' title='Save change'><a href='save:"+
+											basket.basketID+"' class='ui-icon 	ui-icon-disk'>Save</a></span>"+
+											"<span class='action-button' title='Load basket'><a href='load:"+
+											basket.basketID+"' class='ui-icon ui-icon-circle-check'>Load</a></span></p>"+"</h3>";
+											
+						basketsHTML += "<div><table>";
+						
+						basketsHTML += "<tr><td width='10%'>ID:</td><td>"+basket.basketID;
+						basketsHTML += "</td></tr>";
+						
+						var timestamp = basket.lastModifiedDate;
+						//var mod = new Date(timestamp)
+						
+						basketsHTML += "<tr><td width='10%'>Last Modified:</td><td>"+timestamp;
+						basketsHTML += "</td></tr>";
+						
+						basketsHTML += "<tr><td width='10%'>Name:</td><td>"+
+								"<input id='"+basket.basketID+".name' type='text' "+
+								"style='width:100%' value='"+basket.name+"'/>";
+						basketsHTML += "</td></tr>";
+						
+						console.log('writeBasketsHTML');
+						console.log(basket);
+						var basketObj = basket.basketContent;
+						basketsHTML += "<tr><td width='10%'>JSON:</td><td></td></tr>"+
+										"<tr><td colspan='2'>"+
+										"<textarea id='"+basket.basketID+".basketContent' "+
+										"style='width:100%' rows='6'>"+
+										JSON.stringify(basketObj,null,4)+"</textarea>";
+						basketsHTML += "</td></tr>";
+						
+						var queryObj = basket.queryJSON;
+						basketsHTML += "<tr><td width='10%'>Query:</td><td></td></tr>"+
+										"<tr><td colspan='2'>"+
+										"<textarea id='"+basket.basketID+".queryJSON' "+
+										"style='width:100%' rows='6'>"+
+										JSON.stringify(queryObj,null,4)+"</textarea>";
+						basketsHTML += "</td></tr>";
+						
+						//basketsHTML += "<tr><td width='10%'>User ID:</td><td>"+basket.userID;
+						//basketsHTML += "</td></tr>";
+						
+						basketsHTML += "</table></div>";
+						return basketsHTML;
+					}
+					
+					function createDeleteDialog(){
+						$( "#deleteConfirmDialog" ).dialog({      
+						  autoOpen: false,
+						  resizable: false,
+						  height:180,
+						  modal: true,
+						  buttons: {
+							"Delete basket": function() {
+								var uID = parent.Liferay.ThemeDisplay.getUserId();
+								var bID = document.getElementById('selectedBasketID').value;
+								console.log(bID);
+								parent.Liferay.Service(
+								  '/GFBioProject-portlet.basket/remove-basket',
+								  {
+									basketID: bID,
+									userID: uID
+								  }, 
+								  function(obj){
+									console.log(obj);
+									getBaskets();
+								   }
+								);
+								$( this ).dialog( "close" );
+							},
+							Cancel: function() {
+							  $( this ).dialog( "close" );
+							}
+						  }
+						});
+					}
+					
+					function adjust() {
+					   //console.log('auto adjust height');
+					   var height = $('#input').height()+$('#baskets').height()+50;
+					   var width = $('#baskets').width();
+					   if (height < 350){ 
+							height = 350;
+					   }
+						gadgets.window.adjustHeight(height);
+					   if (width <250){
+							var elms = document.getElementsByClassName("ui-accordion-header");
+							for (var i=0; i<elms.length; i++){
+								if ($(elms[i]).hasClass('ui-accordion-header-active')){
+									$(elms[i]).removeClass("wide-header");
+									$(elms[i]).addClass("narrow-header");
+								}else{
+									$(elms[i]).removeClass("narrow-header");
+									$(elms[i]).addClass("wide-header");
+								}
+							}
+					   }else{
+							$('.ui-accordion-header').removeClass("narrow-header");
+							$('.ui-accordion-header').addClass("wide-header");
+					   }
+					}
+				</script>
+			</head>
+			<body style="margin: 0px;"> 
+				<div id="input">
+					<p>
+					<label for="userSelect">User:
+					<select name="userSelect" id="userSelect" onchange="getBaskets();">
+					</select></label>
+					</p>
+					<p>
+					<label for="periodSelect">Baskets created since
+					<select name="periodSelect" id="periodSelect" onchange="getBaskets();">
+						<option value="0" selected="selected">All</option>
+						<option value="1">1 day</option>
+						<option value="2">2 days</option>
+						<option value="10">1 week</option>
+						<option value="20">2 weeks</option>
+						<option value="100">1 month</option>
+						<option value="200">2 months</option>
+						<option value="300">3 months</option>
+						<option value="600">6 months</option>
+						<option value="1000">1 year</option>
+						<option value="2000">2 years</option>
+						<option value="3000">3 years</option>
+					</select></label>
+					</p>
+				</div>
+				 <div id="baskets">
+				</div>
+				 
+				<div id="deleteConfirmDialog" title="Delete Basket">
+				    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This basket will be permanently deleted and cannot be recovered. Are you sure?</p></div>
+				</div>
+				<input id="selectedBasketID" type="hidden" value=""/>
+			</body>
+		</html>
+	]]>
+		</Content>
+</Module>
