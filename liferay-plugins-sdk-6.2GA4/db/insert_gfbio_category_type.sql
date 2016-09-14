@@ -40,3 +40,8 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1548','6','16','1547','1524');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1549','6','15','1550','1520');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1551','6','16','1550','1524');
+
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1711','6','15','1712','1696');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1713','6','16','1712','1524');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1714','6','15','1715','1701');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1716','6','16','1715','1524');

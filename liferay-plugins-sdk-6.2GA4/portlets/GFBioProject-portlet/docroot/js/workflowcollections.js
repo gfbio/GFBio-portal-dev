@@ -382,13 +382,6 @@ function buildCommonResearchObjectJson(projectJson){
 		"projectid": projectJson.projectid
 	};
 
-/*	var licenseJson =[];
-	for (i =0; i<document.getElementsByName("licenses").length;i++)
-		if (document.getElementsByName("licenses")[i].checked)
-			licenseJson.push(document.getElementsByName("licenses")[i].value);
-	
-	if (!(licenseJson.toString()==""))
-		researchObjectJson["licenseids"] = licenseJson.toString();*/
 	
 	return researchObjectJson;
 }

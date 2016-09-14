@@ -1,7 +1,7 @@
 ------------------------------- Project / Research Object -----------------------
 
 DROP TABLE IF EXISTS
-     gfbio_project_researchobject;
+     gfbio_project_researchobject CASCADE;
 
 CREATE TABLE gfbio_project_researchobject
 (

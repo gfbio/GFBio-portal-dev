@@ -18,6 +18,3 @@ WITH (
 );
 ALTER TABLE gfbio_column
   OWNER TO liferay_gfbio;
-  
-  
-  

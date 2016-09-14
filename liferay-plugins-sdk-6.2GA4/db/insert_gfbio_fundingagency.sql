@@ -23,5 +23,3 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('50','16','websit
 
 
 ------------------------------------- Content Table Content -------------------------------------
-
-

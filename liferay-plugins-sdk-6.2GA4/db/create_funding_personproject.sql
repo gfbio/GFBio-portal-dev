@@ -1,4 +1,7 @@
+----------------------------     funding / institution project      -------------------------
 
+DROP TABLE IF EXISTS
+     gfbio_funding_personproject CASCADE;
 
 CREATE TABLE gfbio_funding_personproject
 (

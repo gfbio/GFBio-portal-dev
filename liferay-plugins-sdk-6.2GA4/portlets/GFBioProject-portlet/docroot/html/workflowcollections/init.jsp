@@ -54,22 +54,6 @@
 					fillResearchObjectInformations(data, div);
 				}
 			}
-				
-	
-/* 			if (data.projectid==0){
-				fillDefaultInformations(data, div);
-			}else{
-				if (data.researchobjectid==0){
-					if (document.getElementById("cwf_project_id").innerHTML!= 0)
-						fillDefaultInformations(data, div);
-					fillProjectInformations(data, div);
-					fillDefaultResearchObjectInformations(data, div);
-				}else{
-					if (document.getElementById("cwf_ro_id").innerHTML!= 0)
-						fillDefaultResearchObjectInformations(data, div);
-					fillResearchObjectInformations(data, div);
-				}
-			} */
 		});
 	});	 
 	 

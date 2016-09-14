@@ -22,5 +22,3 @@ WITH (
 );
 ALTER TABLE gfbio_researchobject
   OWNER TO liferay_gfbio;
-
-  

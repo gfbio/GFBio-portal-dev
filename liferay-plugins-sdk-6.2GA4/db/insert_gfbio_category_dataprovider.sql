@@ -24,8 +24,6 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('18','7','gfbio_d
 ------------------------------------- Content Table Content -------------------------------------
 
 
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1568','7','17','1569','1492');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1570','7','18','1569','3');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1571','7','17','1572','1500');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1573','7','18','1572','3');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1574','7','17','1575','1512');
@@ -54,8 +52,6 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1609','7','18','1608','5');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1610','7','17','1611','1492');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1612','7','18','1611','6');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1613','7','17','1614','1508');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1615','7','18','1614','6');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1616','7','17','1617','1512');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1618','7','18','1617','6');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1619','7','17','1620','1516');
@@ -68,8 +64,6 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1630','7','18','1629','7');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1631','7','17','1632','1516');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1633','7','18','1632','7');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1634','7','17','1635','1512');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1636','7','18','1635','8');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1637','7','17','1638','1516');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1639','7','18','1638','8');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1640','7','17','1641','1492');
@@ -100,3 +94,52 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1678','7','18','1677','2');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1679','7','17','1680','1516');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1681','7','18','1680','2');
+
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1720','7','17','1721','1696');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1722','7','18','1721','1');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1724','7','17','1725','1504');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1726','7','18','1725','1');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1728','7','17','1729','1508');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1730','7','18','1729','1');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1732','7','17','1733','1520');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1734','7','18','1733','1');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1736','7','17','1737','1701');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1738','7','18','1737','2');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1739','7','17','1740','1520');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1741','7','18','1740','2');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1742','7','17','1743','1520');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1744','7','18','1743','3');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1745','7','17','1746','1504');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1747','7','18','1746','4');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1748','7','17','1749','1701');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1750','7','18','1749','4');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1754','7','17','1755','1496');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1756','7','18','1755','5');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1757','7','17','1758','1500');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1759','7','18','1758','5');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1760','7','17','1761','1504');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1762','7','18','1761','5');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1763','7','17','1764','1508');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1765','7','18','1764','5');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1766','7','17','1767','1520');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1768','7','18','1767','5');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1769','7','17','1770','1496');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1771','7','18','1770','6');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1772','7','17','1773','1500');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1774','7','18','1773','6');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1775','7','17','1776','1520');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1777','7','18','1776','6');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1778','7','17','1779','1496');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1780','7','18','1779','7');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1781','7','17','1782','1500');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1783','7','18','1782','7');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1784','7','17','1785','1504');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1786','7','18','1785','7');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1787','7','17','1788','1520');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1789','7','18','1788','7');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1790','7','17','1791','1496');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1792','7','18','1791','8');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1793','7','17','1794','1520');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1795','7','18','1794','8');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1796','7','17','1797','1701');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1798','7','18','1797','9');

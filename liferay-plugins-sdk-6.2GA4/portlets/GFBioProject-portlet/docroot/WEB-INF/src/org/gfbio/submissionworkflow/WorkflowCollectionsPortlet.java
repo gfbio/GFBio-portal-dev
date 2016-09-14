@@ -414,6 +414,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         
         
         //ticket basic informations
+        //project.put("key", "DSUB");
         project.put("key", "SAND");
         fields.put("project", project);
         issuetype.put("name", "Data Submission");
@@ -421,13 +422,20 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         reporter.put("name", submitterJson.get("emailaddress"));
         fields.put("reporter", reporter);	
         fields.put("customfield_10010", "sand"+"/"+"collection-data2");
+        //fields.put("customfield_10010", "dsub"+"/"+"collection");
         fields.put("summary", "Automated Data Submission");
 
         
         //project informations
         
         //project id
-        fields.put("customfield_10302", (long) projectJson.get("projectid"));					
+        
+        //project id
+        if (projectJson.containsKey("projectid"))
+        	if (!(String.valueOf((long) projectJson.get("projectid"))).equals("0"));
+        		fields.put("customfield_10314", String.valueOf((long) projectJson.get("projectid")));	
+        
+        //fields.put("customfield_10302", (long) projectJson.get("projectid"));					
         
         //project title
         fields.put("customfield_10206", projectJson.get("name"));								

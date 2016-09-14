@@ -12,8 +12,9 @@ set PGPASSWORD=test
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_column.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_project_researchobject.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_project_user.sql
+"%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_researchobject_user.sql
+"%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_usersso.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  insert_gfbio_dataprovider.sql
-
 
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_content.sql
 

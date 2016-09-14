@@ -61,3 +61,12 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1557','1','22','1513','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1558','1','22','1517','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1559','1','22','1521','');
+
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1696','1','1' ,'1697','1696');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1698','1','2' ,'1697','Algae & Protists');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1699','1','3' ,'1697','Algae & Protists');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1700','1','22','1697','');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1701','1','1' ,'1702','1701');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1703','1','2' ,'1702','Bacteriology, Virology');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1704','1','3' ,'1702','Bacteriology, Virology');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1705','1','22','1702','');

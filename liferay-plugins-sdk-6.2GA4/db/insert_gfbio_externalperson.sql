@@ -22,4 +22,3 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('40','13','orcid'
 
 
 ------------------------------------- Content Table Content -------------------------------------
-
