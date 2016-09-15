@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs
+        title="GCDJ Submit"
+        
+        author="gfbiodev"
+        author_email="dev@gfbio.org"
+        height="900"
+
+        scrolling="true">
+        <Require feature="pubsub-2">
+            <Param name="topics">
+                <Topic title="GCDJ Submit" name="gfbio.archiving.submit"        subscribe="true" publish="true"/>
+             </Param>
+       </Require>
+     </ModulePrefs>   
+    <Content type="html">
+    <![CDATA[
+        <html style="height: 100%;">
+            <head  lang="en">
+                <meta charset="UTF-8">
+				<title>GCDJ Submit</title>
+				
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/jquery-2.1.3.min.js"></script>
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/handlebars-1.3.0.min.js"></script>
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/jquery-ui.min.js"></script>
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/jquery-ui-timepicker-addon.min.js"></script>
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/jquery-ui-sliderAccess.js"></script>
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/bootstrap.min.js"></script>
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/alpaca.js"></script>
+                <script src="http://alni.mpi-bremen.de/static/gcdj_widget/js/gcdj_widget.js"></script>
+
+                <link rel="stylesheet" href="http://alni.mpi-bremen.de/static/gcdj_widget/css/gcdj_widget.css"> 
+				
+				<style type="text/css">
+                    	.swHide {display: none}
+	                    .swMain{display: block}
+                </style>
+
+                <script type="text/javascript">
+               
+                    window.addEventListener("mouseover", listenerSubmit, false);
+                    
+                    function listenerSubmit(){
+                        document.getElementsByName("submit").item(0).addEventListener("click", gcdjSubmit, false);
+                    }
+                    
+
+                    gadgets.HubSettings.onConnect = function(hub, suc, err) {
+    				    gadgets.Hub.subscribe("gfbio.archiving.submit", receiveRequest);
+    				};
+    				
+    				function receiveRequest(topic, data, subscriberData) {
+        				var hidecode = data.hidecode;
+        				projId = data.projId;
+        				if (data.showhide == "show"){
+        					visibleShow(hidecode);
+        				}else{
+        				    visibleHide(hidecode);
+        				}
+    				}
+               
+                    
+                    var targetContainerId = "target_1";
+    			    var checkListFormAction = "gfbio.archiving.gcdjsubmit";
+    				var validateUsingWebservice = false;
+    				var postRenderAction = function () {
+    				
+						var submit_buttons = $("button[type='submit']");
+							if (submit_buttons.length > 0) {
+								submit_buttons[0]['name'] = 'submit';
+						}
+                    }
+    				    
+    				  
+    				
+
+    				
+    				function showhide(j) {
+		                document.getElementById("hide_".concat(j)).className = (document.getElementById("hide_".concat(j)).className=="swMain") ? "swHide" : "swMain";
+		            };
+		            
+		            
+		            function visibleShow(j) {
+		                console.log("hide_".concat(j));
+		                document.getElementById("hide_".concat(j)).className = "swMain";
+	                };
+	                
+		
+	                function visibleHide(j) {
+					console.log("hide_".concat(j));
+		                document.getElementById("hide_".concat(j)).className = "swHide";
+                	};
+		            
+
+		            
+		            function gcdjSubmit(){
+		                window.removeEventListener("mouseover", listenerSubmit, false);
+		                var gcdjson = globalForm.getValue();
+						add_missing_keys(gcdjson);
+                        //var gcdjson = $.extend({}, formJson['Environmental-Packages'], formJson['MIxS-Checklists']);
+		                var jsondata = JSON.stringify(gcdjson);
+		                gadgets.Hub.publish('gfbio.archiving.submit', jsondata);
+					};
+					
+					/**
+					 * Processing the form-keys in boolean_fields and attach them to the gcdjson-propery.
+					 * @param gcdjson
+					 */
+					function add_missing_keys(gcdjson) {
+						'use strict';
+						for (var key in boolean_fields) {
+							if ($.inArray(boolean_fields[key], gcdjson) === -1) {
+								gcdjson[boolean_fields[key]] = false;
+							}
+						}
+					}
+
+				
+                </script>
+            </head>
+            
+				<div id="hide_-21" class="swHide">
+
+				    <div id="target_1"></div>
+	            </div>
+	            
+	            
+        </html>
+    ]]>
+    </Content>
+</Module>

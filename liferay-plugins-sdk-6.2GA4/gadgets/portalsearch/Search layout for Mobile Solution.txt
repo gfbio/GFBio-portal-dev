@@ -1,0 +1,27 @@
+Add the following to the Javascript of the page to move column 2 to appear on top of column 1, when the device screen is narrow.
+
+---------------------------------------------------------------------------
+
+setLayoutForMobileScreen();
+
+$(window).resize(function() {
+	setLayoutForMobileScreen();
+});
+function setLayoutForMobileScreen(){
+   width = $(window).width();
+   
+   if (width <600){
+      if ($("#column-2").prevAll($("#column-1")).length !== 0){
+         $("#column-1").remove().insertAfter($("#column-2"));
+      }
+      // else do nothing
+   }
+   else{
+      if ($("#column-1").prevAll($("#column-2")).length !== 0){
+         $("#column-2").remove().insertAfter($("#column-1"));   
+      }
+      // else do nothing
+   }
+}
+
+---------------------------------------------------------------------------

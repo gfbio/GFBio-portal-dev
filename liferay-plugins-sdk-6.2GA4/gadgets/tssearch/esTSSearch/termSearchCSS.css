@@ -1,0 +1,32 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+
+#widget {
+	font-family: 'Roboto' !important;
+	font-size: 12px;
+	color: #333;
+	background-color: transparent;
+}
+
+table {
+	/* 	margin-left: 50px; */
+	
+}
+
+table,td,tr {
+	border-collapse: collapse;
+}
+
+td {
+	border-bottom: 1px solid #B3ACAC;
+	padding-right: 25px;
+}
+
+#headline {
+	font-weight: bold;
+	/* 	margin-left: 10px; */
+}
+
+#uri {
+	color: blue;
+	font-weight: normal;
+}
