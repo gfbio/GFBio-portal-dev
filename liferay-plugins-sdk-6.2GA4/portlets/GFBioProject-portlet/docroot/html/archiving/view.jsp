@@ -34,9 +34,14 @@
 	
 		<%}else { %>
 	
+			
+			<div>
 			<p>
-			<h1>Submission Workflows</h1>
-			<p>
+			<br>
+			<br>
+			<br>
+			</p>
+			</div>
 				
 			<%
 				Long userID = PortalUtil.getUserId(request);

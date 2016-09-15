@@ -5,6 +5,19 @@
 		
 	td{	text-align:left; }
 	label{cursor:default;}
+	
+	.portlet-success	{
+		background-color: #f1fbd1;
+		border: 1px solid #f1d875;
+		border-color: #bce830; 
+		border-radius: 2px;
+		color: #488f06; 
+ 		cursor: auto !important; 
+		margin: 20px 0; 
+		padding: 8px 35px 8px 14px;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+		word-wrap: break-word; 
+	}
 
 	.swHide {display: none}
 	.swMain{display: block}

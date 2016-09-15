@@ -24,5 +24,5 @@
 	<div id="collections"></div>
 	
 	<div ><br></div>
-
+	
 <%} %>	
