@@ -30,4 +30,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE gfbio_submission
-  OWNER TO liferay_gfbio;  
+  OWNER TO liferay_gfbio; 

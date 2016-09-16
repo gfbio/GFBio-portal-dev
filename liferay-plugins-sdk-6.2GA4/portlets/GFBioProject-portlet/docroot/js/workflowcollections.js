@@ -27,12 +27,12 @@ function saveProjectInput(){
 	if (projectJson.projectid > 0){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Data were stored.");
+		commentarField.append("<div class='portlet-success'>Data were stored.</div>");
 		setTimeout(function(){commentarField.empty();}, 5000);
 	}else{
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Failed to save the data.");
+		commentarField.append("<div class='portlet-msg-error'>Failed to save the data.</div>");
 	}
 	return projectJson;
 }
@@ -54,12 +54,12 @@ function saveResearchObjectInput(projectJson){
 	if (researchObjectJson.researchobjectid >0){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Data were stored.");
+		commentarField.append("<div class='portlet-success'>Data were stored.</div>");
 		setTimeout(function(){commentarField.empty();}, 5000);
 	}else{
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Failed to save the data.");
+		commentarField.append("<div class='portlet-msg-error'>Failed to save the data.</div>");
 	}
 	
 	return projectJson;
@@ -132,11 +132,11 @@ function checkInput(){
 	if (!check){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Please fill the empty / red fields.");
+		commentarField.append("<div class='portlet-msg-error'>Please fill the empty fields.</div>");
 	}else{
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Checking complete");
+		commentarField.append("<div class='portlet-success'>Checking complete</div>");
 		setTimeout(function(){commentarField.empty();}, 5000);
 	}
 		
@@ -171,11 +171,11 @@ function checkMinimalProjectInput(){
 	if (!check){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Please fill the empty / red fields.");
+		commentarField.append("<div class='portlet-msg-error'>Please fill the empty fields.</div>");
 	}else{
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Checking complete");
+		commentarField.append("<div class='portlet-success'>Checking complete</div>");
 		setTimeout(function(){commentarField.empty();}, 5000);
 	}
 	return check;
@@ -200,11 +200,11 @@ function checkMinimalResearchObjectInput(){
 	if (!check){
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Please fill the empty / red fields.");
+		commentarField.append("<div class='portlet-msg-error'>Please fill the empty fields.</div>");
 	}else{
 		var commentarField = $("#".concat('cwf_lf_comentarField'));
 		commentarField.empty();
-		commentarField.append("Checking complete");
+		commentarField.append("<div class='portlet-success'>Checking complete</div>");
 		setTimeout(function(){commentarField.empty();}, 5000);
 	}
 
@@ -235,12 +235,12 @@ function updateCwfResearchObject(projectJson){
 				
 				var commentarField = $("#".concat('cwf_lf_comentarField'));
 				commentarField.empty();
-				commentarField.append("Data were stored.");
+				commentarField.append("<div class='portlet-success'>Data were stored.</div>");
 				setTimeout(function(){commentarField.empty();}, 5000);
 			}else{
 				var commentarField = $("#".concat('cwf_lf_comentarField'));
 				commentarField.empty();
-				commentarField.append("Failed to save the data.");
+				commentarField.append("<div class='portlet-msg-error'>Failed to save the data.</div>");
 			}
 		}
 	);
@@ -267,12 +267,12 @@ function updateCwfProject(){
 					document.getElementById("cwf_project_label").value = document.getElementById("cwf_project_name").value;
 				
 				commentarField.empty();
-				commentarField.append("Data were stored.");
+				commentarField.append("<div class='portlet-success'>Data were stored.</div>");
 				setTimeout(function(){commentarField.empty();}, 5000);
 			}else{
 				var commentarField = $("#".concat('cwf_lf_comentarField'));
 				commentarField.empty();
-				commentarField.append("Failed to save the data.");
+				commentarField.append("<div class='portlet-msg-error'>Failed to save the data.</div>");
 			}
 		}
 	);
@@ -382,13 +382,6 @@ function buildCommonResearchObjectJson(projectJson){
 		"projectid": projectJson.projectid
 	};
 
-/*	var licenseJson =[];
-	for (i =0; i<document.getElementsByName("licenses").length;i++)
-		if (document.getElementsByName("licenses")[i].checked)
-			licenseJson.push(document.getElementsByName("licenses")[i].value);
-	
-	if (!(licenseJson.toString()==""))
-		researchObjectJson["licenseids"] = licenseJson.toString();*/
 	
 	return researchObjectJson;
 }

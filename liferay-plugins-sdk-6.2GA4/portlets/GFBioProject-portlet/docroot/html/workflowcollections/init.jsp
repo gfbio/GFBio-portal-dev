@@ -54,22 +54,6 @@
 					fillResearchObjectInformations(data, div);
 				}
 			}
-				
-	
-/* 			if (data.projectid==0){
-				fillDefaultInformations(data, div);
-			}else{
-				if (data.researchobjectid==0){
-					if (document.getElementById("cwf_project_id").innerHTML!= 0)
-						fillDefaultInformations(data, div);
-					fillProjectInformations(data, div);
-					fillDefaultResearchObjectInformations(data, div);
-				}else{
-					if (document.getElementById("cwf_ro_id").innerHTML!= 0)
-						fillDefaultResearchObjectInformations(data, div);
-					fillResearchObjectInformations(data, div);
-				}
-			} */
 		});
 	});	 
 	 
@@ -425,12 +409,7 @@
 				}
  			}
  		}); 
- 		
- 		
- 		
- 		
- 		
- 		
+
  		document.getElementById("cwf_pd_id").innerHTML= 0;
 		document.getElementById("cwf_ro_nagoyano").checked = true;
 		var radioNagoya = $("#".concat('cwf_ro_nagoyadiv'));
@@ -638,7 +617,7 @@
 			success :  function (obj){
 				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
 				commentarField.empty();
-				commentarField.append("<div>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. The ID of this Submission is "+obj.key+"</div>");
+				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. The ID of this Submission is "+obj.key+"</div>");
 				setTimeout(function(){commentarField.empty();}, 25000);
 			},
 			error :  function (obj){
@@ -670,13 +649,13 @@
 				if (!obj.hasOwnProperty("ERROR")){
 					var commentarField = $("#".concat('cwf_lf_comentarField'));
 					commentarField.empty();
-					commentarField.append("<div id='cwf_lf_subreg'>Submission entry is written in the registry.</div>");
+					commentarField.append("<div class='portlet-success' id='cwf_lf_subreg'>Submission entry is written in the registry.</div>");
 					setTimeout(function(){commentarField.empty();}, 5000);
 				}else{
 					var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
 					document.getElementById("cwf_lf_submissioncomentarField").className="portlet-msg-error";
 					commentarField.empty();
-					commentarField.append("<div>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
+					commentarField.append("<div class='portlet-msg-error'>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
 					setTimeout(function(){
 						commentarField.empty();
 						document.getElementById("cwf_lf_submissioncomentarField").className="row";;

@@ -1,6 +1,6 @@
 ------------------------------------- Data Provider ------------------------------------- 
 
-DROP TABLE IF EXISTS
+DROP TABLE IF EXISTS 
      gfbio_dataprovider CASCADE;
 
 CREATE TABLE gfbio_dataprovider
@@ -12,12 +12,29 @@ CREATE TABLE gfbio_dataprovider
   address text,
   website character(150),
   training text,
-  physicalobjects bit,
-  taxonbased bit,
-  notaxonbased bit,
-  livingobjects bit,
-  deadobjects bit,
-  sequencedata bit,
+  physicalobjects boolean,
+  taxonbased boolean,
+  notaxonbased boolean,
+  livingobjects boolean,
+  deadobjects boolean,
+  sequencedata boolean,
+  botanicalobjects boolean,
+  mycologicalobjects boolean,
+  zoologicalobjects boolean,
+  paleontologicalobjects boolean,
+  botanicaltissueobjects boolean,
+  mycologicaltissueobjects boolean,
+  zoologicaltissueobjects boolean,
+  botanicaldnasamples boolean,
+  mycologicaldnasamples boolean,
+  zoologicaldnasamples boolean,
+  botanicalobjectsinethanol boolean,
+  mycologicalobjectsinethanol boolean,
+  zoologicalobjectsinethanol boolean,
+  botanicalmicroscopicslides boolean,
+  mycologicalmicroscopicslides boolean,
+  zoologicalmicroscopicslides boolean,
+  otherobjects boolean,
   CONSTRAINT gfbio_dataprovider_pkey PRIMARY KEY (dataproviderid),
   CONSTRAINT gfbio_dataprovider_label_key UNIQUE (label)
 )

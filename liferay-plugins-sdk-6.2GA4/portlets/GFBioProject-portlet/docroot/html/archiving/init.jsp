@@ -138,7 +138,7 @@
 		if (data.projectid !=0){
 			//div.attr("class", "swMain");
 			choRO.empty();
-			choRO.append("<option value='none'></option>");
+			choRO.append("<option value='none' selected=true></option>");
 			for (i =0; i <roList.length;i++)
 				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" Version: "+ +roList[i].researchobjectversion+"</option>");
 			document.getElementById("workflowChooseRO").selectedIndex = 0;

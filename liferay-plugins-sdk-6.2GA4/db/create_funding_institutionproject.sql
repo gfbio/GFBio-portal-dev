@@ -1,8 +1,7 @@
-
----------------------------------------------------------------------------------------------
 ----------------------------     funding / institution project      -------------------------
----------------------------------------------------------------------------------------------
 
+DROP TABLE IF EXISTS
+     gfbio_funding_institutionproject CASCADE;
 
 CREATE TABLE gfbio_funding_institutionproject
 (
@@ -28,6 +27,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE gfbio_funding_institutionproject
-  OWNER TO liferay_gfbio;
-
-  
+  OWNER TO liferay_gfbio; 

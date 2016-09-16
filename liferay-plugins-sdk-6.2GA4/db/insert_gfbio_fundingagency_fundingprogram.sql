@@ -19,4 +19,3 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('56','18','gfbio_
 
 
 ------------------------------------- Content Table Content -------------------------------------
-

@@ -56,7 +56,6 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		Set<String> set = new HashSet<String>();
 		set.add("userid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
-		
 		if (requestJson.containsKey("userid"))
 			try {
 				responseJson = constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)requestJson.get("userid")));
