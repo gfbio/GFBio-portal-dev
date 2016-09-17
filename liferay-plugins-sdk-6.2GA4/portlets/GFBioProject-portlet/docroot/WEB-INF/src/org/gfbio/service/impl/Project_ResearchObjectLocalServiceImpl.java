@@ -85,9 +85,8 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 		Project_ResearchObject relation = null;
 		Project_ResearchObjectPK pk = new Project_ResearchObjectPK(projectID, researchObjectID, researchObjectVersion);
 
-		try {
-			relation = project_ResearchObjectPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchProject_ResearchObjectException | SystemException e) {System.out.println("no enitity with pk: "+pk+" is found");	}
+		try {relation = project_ResearchObjectPersistence.findByPrimaryKey(pk);} 
+		catch (NoSuchProject_ResearchObjectException | SystemException e) {System.out.println("no enitity with pk: "+pk+" is found");	}
 
 		if (relation == null) 
 			relation = project_ResearchObjectPersistence.create(pk);

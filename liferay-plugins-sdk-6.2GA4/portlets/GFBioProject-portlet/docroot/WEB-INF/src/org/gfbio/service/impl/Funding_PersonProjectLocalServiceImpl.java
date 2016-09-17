@@ -143,8 +143,8 @@ public class Funding_PersonProjectLocalServiceImpl	extends Funding_PersonProject
 		Funding_PersonProject relation = null;
 		Funding_PersonProjectPK pk = new Funding_PersonProjectPK(projectId, fundingAgencyId, fundingProgramId, personId, personType);
 					
-		try {relation = funding_PersonProjectPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchFunding_PersonProjectException | SystemException e1) {System.out.println("no enitity with pk: "+pk+" is found");	}
+		try {relation = funding_PersonProjectPersistence.findByPrimaryKey(pk);} 
+		catch (NoSuchFunding_PersonProjectException | SystemException e1) {System.out.println("no enitity with pk: "+pk+" is found");	}
 						
 		if (relation == null) 
 			relation = funding_PersonProjectPersistence.create(pk);

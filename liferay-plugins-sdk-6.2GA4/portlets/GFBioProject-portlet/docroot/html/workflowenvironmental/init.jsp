@@ -1,25 +1,31 @@
 <script>
 
 
-	/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
+/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
-			 
-	//Message from Hide Managment
-	AUI().ready(function(A){ 
+
+ 	//Message from Hide Managment
+	AUI().ready(function(A){
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			
 			var div =   $("#environmental");
 			
 			if (data.projectid==0){
-				fillDefaultInformations(data, div);
+				if (data.researchobjectid==0){
+					fillDefaultInformations(data, div);
+				}else{
+					if (document.getElementById("ewf_ro_id").innerHTML!= 0)
+						fillDefaultResearchObjectInformations(data, div);
+					fillResearchObjectInformations(data, div);
+				}
 			}else{
 				if (data.researchobjectid==0){
-					if (document.getElementById("cwf_project_id").innerHTML!= 0)
+					if (document.getElementById("ewf_project_id").innerHTML!= 0)
 						fillDefaultInformations(data, div);
 					fillProjectInformations(data, div);
 					fillDefaultResearchObjectInformations(data, div);
 				}else{
-					if (document.getElementById("cwf_ro_id").innerHTML!= 0)
+					if (document.getElementById("ewf_ro_id").innerHTML!= 0)
 						fillDefaultResearchObjectInformations(data, div);
 					fillResearchObjectInformations(data, div);
 				}
@@ -27,36 +33,31 @@
 		});
 	});	
 	
-		
-	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 	
+	//fire to update information to generally worflow portlet
+	function sentWorkflowUpdate(project, projectId, projectLabel, researchObject) {
+		var toUpdate = {
+			"updateproject" : project,
+			"projectid" : projectId,
+			"projectlabel" : projectLabel,
+			"updateresearchobject"   : researchObject,
+		};
+		Liferay.fire('gadget:gfbio.archiving.update', toUpdate);
+	} 
+	
+	
+	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 
- 	//build default collection workflow without project or researchobject data
+	
+	//build default environmental workflow without project or researchobject data
 	AUI().ready(function(A){
-		console.log("todo");
- 		var div =   $("#environmental");
+		var div =   $("#environmental");
 		var data = {"userid":Number(themeDisplay.getUserId())};
 		buildEnvironmentalForm(data, div);
-		fillDefaultInformations(data, div); 
-	}); 
-
+		fillDefaultInformations(data, div);
+	});	
 	
-
-/* 	**: automatic
-	* : manditory
-	-	Project **: PANGAEA Data Archiving & Publication 
-	-	Issue Type**: Data Submission Data Submission 
-	X	Summary* : Data submission 2016-07-07T08:22:38Z (Marcel Frömming, Uni Jena)
-	X	Atuhor(s)* : Frömming, Marcel
-	X	Title: 
-	X	Description: 
-	/	Keywords:
-		Attachment
-	X	License: CC...
-		Labels: Begin typing to find and create labels or press down to select a suggested label. Context of the data submission, e.g. PROJECT, institute, etc. Labels have to be one word!
-	X	Data used/published in the following article/manuscript: 
-
- */
+	
 	
 	//
 	function buildEnvironmentalForm(data, div){
@@ -64,176 +65,158 @@
 		if (data.userid != 0){
 
 			div.append(
-				"<h2>Submission of Environmental data</h2>"+
-				"</br>"+
-				"<h3>Project Informations</h3>"+
-				"</br>"+
-				"<h4>Basic Informations</h4>"+
-				"</br>"+
+				"<h2>Environmental Submission Workflow</h2>"+
 				
-				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_project_id_l'> project id </div>"+
-					"<div class='rowField' id='cwf_project_id'></div>"+
+				"<div class='swHide'>"+
+					"<div class='control-group'>"+
+						"<label class='control-label' 					id='ewf_project_id_l'> Project id </label>"+
+						"<div class='field lfr-input-text-container' 	id='ewf_project_id'></div>"+
+					"</div>"+
 				"</div>"+
-				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_project_name_l'> project title </div>"+
-					"<div class='rowField'><input type='text' id='cwf_project_name' value=''></div>"+
+				"<div class='swHide'>"+
+ 					"<div class='control-group'>"+
+						"<div class='control-label' > Submitter id </div>"+
+						"<div class='field lfr-input-text-container' id='ewf_user_id'></div>"+
+					"</div>"+
 				"</div>"+
-				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_project_label_l'> project label </br>(like abbreviation of DFG )</div>"+
-					"<div class='rowField'><input type='text' id='cwf_project_label' value=''></div>"+
+				"<div class='swHide'>"+
+					"<div class='control-group'>"+
+						"<label class='control-label'> Submitter mail </label>"+
+						"<div class='field lfr-input-text-container' id='ewf_user_mail' ></div>"+
+					"</div>"+ 
 				"</div>"+
-				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_project_authors_l'> authors</div>"+
-					"<div class='rowField'><input type='text' id='cwf_project_authors' value=''></div>"+
-				"</div>"+
-				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_project_description_l'> project abstract </div>"+
-					"<div class='rowField'><textarea rows='5' id='cwf_project_description'></textarea></div>"+
-				"</div>"+
-				
-				"</br>"+
-				"<h4>Optional Keywords</h4>"+
-				"<div id='cwf_project_keywords'></div>"+
-				
-				"<h3>DataSet Informations</h3>"+
 
-				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_ro_publications_l'> related publications </div>"+
-					"<div class='rowField'><input type='text' id='cwf_ro_publications' value=''></div>"+
-				"</div>"+
-			
-				"<div class='row'>"+
-					"<div class='rowLato' id='cwf_pd_id_l'> file id </div>"+
-					"<div class='rowField' id='cwf_pd_id'></div>"+
-				"</div>"+
-				
-				"<div class='row'>"+
-				"<div class='rowLato' id='cwf_ro_morinformations_l'> further information </div>"+
-				"<div class='rowField'><input type='text' id='cwf_ro_morinformation' value=''></div>"+
-			"</div>"+
-				
-				"</br>"+				
-				"<h4>Licence Information of Dataset</h4>"+
-				"</br>"+	
-				
-				"<div class='row'>Please select the appropriate licenses </div>"+
-				"<div id='cwf_ro_licenses'></div>"+
-						
-				"</br>"+
-				"<div class='row' id='cwf_lf_comentarField'>"+
-				"</div>"+
+				"<h3>Dataset Information</h3>"+
+
 				"</br>"+
 				
+				"<div class='swHide'>"+
+					"<div class='control-group'>"+
+						"<label class='control-label'					id='ewf_ro_id'_l>Dataset id </label>"+
+						"<div	class='field lfr-input-text-container'	id='ewf_ro_id'></div>"+
+					"</div>"+
+				"</div>"+
+				"<div class='control-group'>"+
+					"<label class='control-label' 				   	id='ewf_ro_name_l'>Title </label>"+
+					"<input	class='field lfr-input-text-container'	id='ewf_ro_name' type='text'  value=''>"+
+				"</div >"+
+				"<div class='swHide'>"+
+					"<div class='control-group'>"+
+						"<label class='control-label' 				   	id='ewf_ro_version_l'>Version </label>"+
+						"<div	class='field lfr-input-text-container'	id='ewf_ro_version'></div>"+
+					"</div>"+
+				"</div>"+
+				"<div class='control-group'>"+
+					"<label	class='control-label' 					id='ewf_ro_description_l'> Description </label>"+
+					"<input	class='field lfr-input-text-container'	id='ewf_ro_description' type='text' value='' >"+
+				"</div>"+
+				"<div class='control-group'>"+
+					"<label class='control-label' 					id='ewf_ro_author_l'> Authors </label>"+
+					"<input class='field lfr-input-text-container' 	id='ewf_ro_author' 	type='text'  value=''>"+
+				"</div>"+
+				"<div class='control-group' >"+
+					"<label class='control-label' 					id='ewf_ro_license_l'> License   </label>"+
+					"<div 	class='field lfr-input-text-container' 	id='ewf_ro_license_v' type='text'  value=''>"+
+						"<form action='select.html'>"+
+							"<select id='ewf_ro_licenselabel' name='<portlet:namespace/>ewf_ro_licenselabel' size='1' style='width:90%'>"+
+								"<option value='none'></option>"+
+							"</select>"+
+						"</form>"+
+					"</div>"+
+				"</div>"+
+				"<div class='control-group'>"+
+					"<label class='control-label' 					id='ewf_ro_publications_l'> Related publications </label>"+
+					"<input class='field lfr-input-text-container'	id='ewf_ro_publications' type='text'  value=''>"+
+				"</div>"+
+
+				"</br>"+
+				"<div class='row' id='ewf_lf_comentarField'></div></br>"+
+				"<div class='row' id='ewf_lf_submissioncomentarField'></div>"+
+				
 				"<div class='row'>"+
-					"<span class='widthM' id='cwf_b_save' 		onclick='saveProjectInput()' >	<span class='btn btn-primary'>Save only project informations</span></span>"+
-					"<span class='widthM' id='cwf_b_save' 		onclick='saveAllInput()' >		<span class='btn btn-primary'>Save all informations</span></span>"+
-					"<span class='widthM' id='cwf_b_validate' 	onclick='checkInput()' >		<span class='btn btn-primary'>Checking for completeness</span></span>"+
-					"<span class='widthM' id='cwf_b_start' 		onclick='submitInput()' >		<span class='btn btn-primary'>Start submission</span></span>"+
-				"</div>"
+					//"<span class='widthM' id='ewf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
+					"<span class='widthM' id='ewf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
+					"<span class='widthM' id='ewf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
+				"</div>"					
+				
 			);
 		}
 	}
 	
 	
-	//default fill function of collections submission workflow
+	//default fill function of environmental submission workflow
 	function fillDefaultInformations(data, div){
 		fillDefaultProjectInformations(data, div);
-		//fillDefaultSubmitterInformations(data, div);
+		fillDefaultSubmitterInformations(data, div);
 		fillDefaultResearchObjectInformations(data, div);
 	}
 	
 	
-	//default fill function of collections submission workflow
+	
+	//default fill function of environmental submission workflow
 	function fillDefaultProjectInformations(data, div){
 
-		var url = document.getElementById('workflowenvironmentalurl').value;
-		var ajaxData = {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
-
-		document.getElementById("cwf_project_id").innerHTML= 0;
-		document.getElementById("cwf_project_name").value= "";
-		document.getElementById("cwf_project_label").value= "";
-		document.getElementById("cwf_project_description").value= "";
-		
- 		$.ajax({
-			"type" : "POST",
-			"url": url.concat('/WorkflowPangaeaPortlet'),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(ajaxData),
-				"<portlet:namespace />responseTarget" : "getresearchfieldinformations"
-			},
-			async: false,
- 			success :  function (obj){
-				var divKey = $("#".concat('cwf_project_keywords'));
-				divKey.empty();
-
-				for (i=0; i < obj.length;i++){
-					if (i < obj.length-1){
-						var j = i+1;
-						divKey.append(
-							"<div class='row'>"+
-								"<div class='rowLato'>"+
-									"<input type='checkbox' id='cwf_project_keywords"+obj[i].id+"' name='keywords' value='"+obj[i].id+"'> "+obj[i].name+
-								"</div>"+
-								"<div class='rowField'>"+
-									"<input type='checkbox' id='cwf_project_keywords"+obj[j].id+"' name='keywords' value='"+obj[j].id+"'> "+obj[j].name+
-								"</div>"+
-							"</div>"
-						);
-						i = i+1;
-					}else{
-						divKey.append(
-							"<div class='row'>"+
-								"<div class='rowLato'>"+
-									"<input type='checkbox' id='cwf_project_keywords"+obj[i].id+"' name='keywords' value='"+obj[i].id+"'> "+obj[i].name+
-								"</div>"+
-							"</div>"
-						);
-					}
-				}
-			} 
-		}); 
-	
+		document.getElementById("ewf_project_id").innerHTML= 0;
 	}
 	
-			
+	
 	//
 	function fillDefaultResearchObjectInformations(data, div){
 	
 		var url = document.getElementById('workflowenvironmentalurl').value;
 	
- 		document.getElementById("cwf_ro_publications").value= "";
- 		document.getElementById("cwf_pd_id").innerHTML= 0;
+		document.getElementById("ewf_ro_id").innerHTML= 0;
+		document.getElementById("ewf_ro_version").innerHTML= 1;
+		document.getElementById("ewf_ro_name").value= "";
+		
+		var ajaxData = {"userid":data.userid};
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowEnvironmentalPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "getuserbyid"
+			},
+			async: false,
+ 			success :  function (obj){
+				document.getElementById("ewf_ro_author").value= obj.fullname.concat(",");
+ 			}
+ 		});
+ 		
+ 		document.getElementById("ewf_ro_description").value= "";
+ 		document.getElementById("ewf_ro_publications").value= "";
+		
 		
 		ajaxData = {"tablename":"gfbio_license"};
  		$.ajax({
 			"type" : "POST",
-			"url": url.concat('/WorkflowPangaeaPortlet'),
+			"url": url.concat('/WorkflowEnvironmentalPortlet'),
 			"data" : {
 				"<portlet:namespace />data" : JSON.stringify(ajaxData),
 				"<portlet:namespace />responseTarget" : "gettablebyname"
 			},
 			async: false,
  			success :  function (obj){
-				var divLi = $("#".concat('cwf_ro_licenses'));
+
+ 				var divLi = $("#".concat('ewf_ro_licenselabel'));
 				divLi.empty();
-				for (i=0; i < obj.length;i++)
-					divLi.append(
-						"<div class='row'>"+
-								"<input type='checkbox' id='cwf_ro_licenses"+obj[i].id+"' name='licenses' value='"+obj[i].id+"'> "+obj[i].name+
-						"</div>"
-					);		
+				divLi.append("<option value='none'></option>");
+				for (i =0; i <obj.length;i++){
+					var json = obj[i];
+					if (json.label == "CC BY")
+						divLi.append("<option id='ewf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.name+"</option>");
+					else	
+						divLi.append("<option id='ewf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+				}
  			}
  		});
-			
 	}
-	
-	/* 
+
 	
 	//
 	function fillDefaultSubmitterInformations(data, div){
 		
-		var url = document.getElementById('workflowcollectionsurl').value;
+		var url = document.getElementById('workflowenvironmentalurl').value;
 		var ajaxData = {"userid":data.userid};
 		
  		$.ajax({
@@ -245,139 +228,151 @@
 			},
 			async: false,
  			success :  function (obj){
-				document.getElementById("cwf_user_id").innerHTML= data.userid;
-				document.getElementById("cwf_user_name").innerHTML= obj.fullname;
-				document.getElementById("cwf_user_mail").innerHTML= obj.emailaddress;
+				document.getElementById("ewf_user_id").innerHTML= obj.userid;
+				document.getElementById("ewf_user_mail").innerHTML= obj.emailaddress;
  			}
  		});
 	}
 	
 	
-
-	
-	//default fill function of collections submission workflow
+	//default fill function of environmental submission workflow
 	function fillProjectInformations(data, div){
-		
-		var url = document.getElementById('workflowcollectionsurl').value;
-		if (Number(data.projectid)!=0){
-			var ajaxData = {"projectid": Number(data.projectid)};
-	 		$.ajax({
-				"type" : "POST",
-				"url": url.concat('/WorkflowCollectionsPortlet'),
-				"data" : {
-					"<portlet:namespace />data" : JSON.stringify(ajaxData),
-					"<portlet:namespace />responseTarget" : "getproject"
-				},
-				async: false,
-	 			success :  function (obj){
-
-					document.getElementById("cwf_project_id").innerHTML= obj.projectid;
-					document.getElementById("cwf_project_name").value= obj.name;
-					document.getElementById("cwf_project_label").value= obj.label;
-					document.getElementById("cwf_project_description").value= obj.description;
-					var json = JSON.parse(obj.categoryid);
-					for (i=0;i<json.length;i++)
-						document.getElementById("cwf_project_keywords"+json[i]).checked= "checked";
-	 			}
-	 		});
-	 		
-	 		
-			ajaxData = {"projectid": Number(data.projectid)};
-	 		$.ajax({
-				"type" : "POST",
-				"url": url.concat('/WorkflowCollectionsPortlet'),
-				"data" : {
-					"<portlet:namespace />data" : JSON.stringify(ajaxData),
-					"<portlet:namespace />responseTarget" : "getfullnames"
-				},
-				async: false,
-	 			success :  function (obj){
-	 				document.getElementById("cwf_project_pi").value= obj.projectpi;
-	 			}
-	 		});
-		}
+		if (Number(data.projectid)!=0)
+			document.getElementById("ewf_project_id").innerHTML= data.projectid;
 	}
 	
 	
 	//
 	function fillResearchObjectInformations(data, div){
 
-		var url = document.getElementById('workflowcollectionsurl').value;
+		var url = document.getElementById('workflowenvironmentalurl').value;
 		if (Number(data.researchobjectid)!=0){
 			var ajaxData = [{"researchobjectid":Number(data.researchobjectid)}];
 	 		$.ajax({
 				"type" : "POST",
-				"url": url.concat('/WorkflowCollectionsPortlet'),
+				"url": url.concat('/WorkflowEnvironmentalPortlet'),
 				"data" : {
 					"<portlet:namespace />data" : JSON.stringify(ajaxData),
 					"<portlet:namespace />responseTarget" : "getresearchobjectbyid"
 				},
 				async: false,
 	 			success :  function (obj){
-	 						
-	 				var div =   $("#cwf_ro_metadatalabel_v");
+	 				
 					var json = obj[0];
 					var ed = json.extendeddata;
 					for (i=0;i<ed.length/2;i++)
 						ed = ed.replace("'",'"');
 					var extendeddata = JSON.parse(ed);
 					
-					document.getElementById("cwf_ro_id").innerHTML= json.researchobjectid;
-					document.getElementById("cwf_ro_version").innerHTML= json.researchobjectversion;
-					document.getElementById("cwf_ro_name").value= json.name;
-					document.getElementById("cwf_ro_label").value= json.label;
+					document.getElementById("ewf_ro_id").innerHTML= json.researchobjectid;
+					document.getElementById("ewf_ro_version").innerHTML= json.researchobjectversion;
+					document.getElementById("ewf_ro_name").value= json.name;
+					document.getElementById("ewf_ro_label").value= json.label;
 					
 					if (extendeddata.datacollectiontime !=null)
-						document.getElementById("cwf_ro_dct").value= extendeddata.datacollectiontime;
+						document.getElementById("ewf_ro_dct").value= extendeddata.datacollectiontime;
 					else
-						document.getElementById("cwf_ro_dct").value= "";
+						document.getElementById("ewf_ro_dct").value= "";
 					
-					document.getElementById("cwf_ro_description").value= json.description;
-					div.empty();
-					div.append(json.metadatalabel+
-						"<div class='rowField'><input type='hidden' id='cwf_ro_metadatalabel' value='"+json.metadatalabel+"'></div>"
-					);
+					document.getElementById("ewf_ro_description").value= json.description;
 
 					if (json.authorname != null){
 						var author = (json.authorname).substring(1, (json.authorname.length)-1);
 						for (i=0;i<author.length/2;i++)
 							author = author.replace('"','');
-						document.getElementById("cwf_ro_author").value= author;
+						document.getElementById("ewf_ro_author").value= author;
 					}else{
-						document.getElementById("cwf_ro_author").value= "";
+						document.getElementById("ewf_ro_author").value= "";
 					}
-					
 					
 					if (extendeddata.publications !=null)
-						document.getElementById("cwf_ro_publications").value= extendeddata.publications;
+						document.getElementById("ewf_ro_publications").value= extendeddata.publications;
 					else
-						document.getElementById("cwf_ro_publications").value= "";
+						document.getElementById("ewf_ro_publications").value= "";
 					
-					
-
-					if (extendeddata.nagoja !=null){
-						if (extendeddata.nagoja == "no"){
-							document.getElementById("cwf_ro_nagojano").checked = true;
-						}else{
-							document.getElementById("cwf_ro_nagojayes").checked = true;
-							document.getElementById("cwf_ro_nagojayes").value =extendeddata.nagoja;
-						}
-					}else{
-						document.getElementById("cwf_ro_nagojano").checked = true;
+					if (json.hasOwnProperty('licenseid')) {
+						var licenseJson = JSON.parse(json.licenseid);
+						for (i=0;i<licenseJson.length;i++)
+							document.getElementById("ewf_ro_licenses"+licenseJson[i]).checked= "checked";
 					}
-					
-					var licenseJson = JSON.parse(json.licenseid);
-					for (i=0;i<licenseJson.length;i++)
-						document.getElementById("cwf_ro_licenses"+licenseJson[i]).checked= "checked";
 
 	 			}
 	 		});
 		}
 		
 		
-	} */
+	}
+	
+	
+	//
+	function createEwfResearchObject(projectJson){
+
+		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
+		var url = document.getElementById('workflowenvironmentalurl').value;
+
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowEnvironmentalPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(researchObjectJson),
+				"<portlet:namespace />responseTarget" : "createresearchobject"
+			},
+			async: false,
+			success :  function (obj){
+				if (obj.researchobjectid >0){
+					document.getElementById("ewf_ro_id").innerHTML= obj.researchobjectid;
+					document.getElementById("ewf_ro_version").innerHTML= obj.researchobjectversion;
+					
+					if (document.getElementById("ewf_ro_name").value =="")
+						document.getElementById("ewf_ro_name").value = document.getElementById("ewf_ro_label").value;
+
+					if (projectJson.projectid!=0)
+						researchObjectJson["projectid"]=Number(projectJson.projectid);
+					researchObjectJson["researchobjectid"]=Number(obj.researchobjectid);
+					researchObjectJson["researchobjectversion"]=Number(obj.researchobjectversion);
+				}
+			}
+		});
+		return researchObjectJson;
+	}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////
+	
+	
+	//
+	function startSubmission(data){
+			
+		var url = document.getElementById('workflowenvironmentalurl').value;
+		
+		data["path"]= document.getElementById("ewf_user_path").innerHTML;
+
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowEnvironmentalPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : "startsubmission"
+			},
+			async: false,
+			success :  function (obj){
+				var commentarField = $("#".concat('ewf_lf_submissioncomentarField'));
+				commentarField.empty();
+				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. </div>");
+				setTimeout(function(){commentarField.empty();}, 25000);
+			},
+			error :  function (obj){
+				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
+				commentarField.empty();
+				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support.</div>");
+				setTimeout(function(){commentarField.empty();}, 25000);
+
+			},		
+		});	
+	}
+	
+	
 	
 
-	
-	
+
 </script>

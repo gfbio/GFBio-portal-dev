@@ -405,7 +405,7 @@ public class WorkflowGeneric extends GenericPortlet {
         	fields.put("customfield_10202", license);
         }
 	      
-        fields.put("fooo", "fooo");
+        //fields.put("fooo", "fooo");
 	      
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("submitterid"));

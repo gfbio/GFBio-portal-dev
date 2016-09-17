@@ -83,8 +83,8 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		Boolean check =false;
 		User user = null;
 		
-		try {user = userPersistence.findByPrimaryKey(userId);
-		} catch (NoSuchUserException | SystemException e) {System.out.println("No user exists with the primary key "+userId);}
+		try {user = userPersistence.findByPrimaryKey(userId);} 
+		catch (NoSuchUserException | SystemException e) {System.out.println("No user exists with the primary key "+userId);}
 		
 		if (user !=null)
 			check = true;

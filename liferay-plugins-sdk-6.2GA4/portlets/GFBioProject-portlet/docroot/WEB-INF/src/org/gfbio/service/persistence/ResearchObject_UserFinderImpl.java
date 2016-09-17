@@ -48,7 +48,7 @@ public class ResearchObject_UserFinderImpl extends BasePersistenceImpl<ResearchO
 	//
 	@SuppressWarnings("unchecked")
 	public List<ResearchObject> getResearchObjectsByUserId(long userId) {
-		System.out.println(". "+userId);
+
 		Session session = null;
 		try {
 			session = openSession();

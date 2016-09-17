@@ -86,7 +86,7 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
-		System.out.println(requestJson);
+
 		if (requestJson.containsKey("projectid") && requestJson.containsKey("fundingagencyid") && requestJson.containsKey("fundingprogramid")&& requestJson.containsKey("institutionid"))
 			check = saveUpdateFunding_InstitutionProject((long) requestJson.get("projectid"), (long) requestJson.get("fundingagencyid"), (long) requestJson.get("fundingprogramid"), (long) requestJson.get("institutionid"));
 		
@@ -133,8 +133,8 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 		Funding_InstitutionProject relation = null;
 		Funding_InstitutionProjectPK pk = new Funding_InstitutionProjectPK(projectId, fundingAgencyId, fundingProgramId, institutionId);
 					
-		try {relation = funding_InstitutionProjectPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchFunding_InstitutionProjectException | SystemException e1) {System.out.println("no enitity with pk: "+pk+" is found");}
+		try {relation = funding_InstitutionProjectPersistence.findByPrimaryKey(pk);	}
+		catch (NoSuchFunding_InstitutionProjectException | SystemException e1) {System.out.println("no enitity with pk: "+pk+" is found");}
 
 		if (relation == null) 
 			relation = funding_InstitutionProjectPersistence.create(pk);

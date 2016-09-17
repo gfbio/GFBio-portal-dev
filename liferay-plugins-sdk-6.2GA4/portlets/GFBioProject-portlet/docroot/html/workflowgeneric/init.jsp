@@ -305,7 +305,6 @@
 			},
 			async: false,
  			success :  function (obj){
- 				console.log(obj);
 				document.getElementById("gwf_user_id").innerHTML= obj.userid;
 				document.getElementById("gwf_user_mail").innerHTML= obj.emailaddress;
  			}
@@ -392,11 +391,9 @@
 	//
 	function createGwfResearchObject(projectJson){
 
-		console.log("create?");
 		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
-		
 		var url = document.getElementById('workflowgenericurl').value;
-		console.log(researchObjectJson);
+
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
@@ -406,8 +403,7 @@
 			},
 			async: false,
 			success :  function (obj){
-				console.log("test");
-				console.log(obj);
+
 				if (obj.researchobjectid >0){
 					document.getElementById("gwf_ro_id").innerHTML= obj.researchobjectid;
 					document.getElementById("gwf_ro_version").innerHTML= obj.researchobjectversion;
@@ -451,7 +447,7 @@
 			success :  function (obj){
 				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
-				commentarField.append("<div>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. </div>");
+				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. </div>");
 				setTimeout(function(){commentarField.empty();}, 25000);
 			},
 			error :  function (obj){
