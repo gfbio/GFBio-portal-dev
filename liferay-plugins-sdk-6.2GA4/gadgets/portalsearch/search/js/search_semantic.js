@@ -1,6 +1,7 @@
 var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var TSAPI = "http://terminologies.gfbio.org/api/terminologies/";
-var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
+var cartDiv = "<div id='cart' class='cart_unselected' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
+var ratingDiv = "<div id='ratingDiv' title='Please give us the feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
 /*
@@ -107,7 +108,7 @@ function showLatestTenDataset(filter, yearRange) {
 					"class" : "color-control",
 					"sortable" : false,
 					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
 				}
 			],
 			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', 
@@ -121,6 +122,7 @@ function showLatestTenDataset(filter, yearRange) {
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
+					setRatingBar();
 				}
 			},
 			// define the event after each table row is created
@@ -134,7 +136,28 @@ function showLatestTenDataset(filter, yearRange) {
 	// activate the row click event (broadcast a message to mini-map)
 	onRowClick();
 };
-
+function setRatingBar(){
+	$('.ratebar').barrating('show',
+		{theme:'bars-horizontal',
+		reverse: true,
+		initialRating: null,
+		hoverState: false,
+		onSelect: function(value, text, event) {
+		if (typeof(event) !== 'undefined') {
+			// rating was selected by a user
+			console.log(event.target);
+			// TODO:call jsonws
+		} else {
+			// rating was selected programmatically
+			// by calling `set` method
+			console.log(value);
+		}
+	}});
+	// remove all "selected" css to show as "unselected" by default
+	$(".br-widget a").removeClass('br-selected');
+	// remove default "selected text", if any
+	$(".br-current-rating").empty();
+}
 /*
  * Description: Get latest dataset with (or without) filtering option, no keyword.
  * Input: JSONArray filter : filter option (Authors, Region, Data Center) 
@@ -266,7 +289,7 @@ function getSearchResult(keyword, filter, yearRange) {
 					"class" : "color-control",
 					"sortable" : false,
 					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
 				}
 			],
 			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
@@ -278,7 +301,8 @@ function getSearchResult(keyword, filter, yearRange) {
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
-					toggleParametersField()
+					toggleParametersField();
+					setRatingBar();
 				}
 			},
 			// define the event after each table row is created
@@ -291,6 +315,7 @@ function getSearchResult(keyword, filter, yearRange) {
 		});
 	// activate the row click event
 	onRowClick();
+	
 }
 
 /*
@@ -1465,7 +1490,7 @@ function getSemanticSearchResult(keywordArr, filter, yearRange) {
 					"class" : "color-control",
 					"sortable" : false,
 					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
 				}
 			],
 			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
@@ -1478,6 +1503,7 @@ function getSemanticSearchResult(keywordArr, filter, yearRange) {
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
+					setRatingBar();
 				}
 				$("body").toggleClass("wait");
 			},
@@ -1606,5 +1632,11 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 			"filter" : filterObj
 		}
 	};
+}
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.indexOf(searchString, position) === position;
+  };
 }
 ///////////////////////////////////  End Semantic functions  /////////////////////////////////////

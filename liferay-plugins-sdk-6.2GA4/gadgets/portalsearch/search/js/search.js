@@ -1334,4 +1334,11 @@ function deleteCookie(name)
 function isJArray(elm) {
     return Object.prototype.toString.call(elm) === '[object Array]';
 }
+
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.indexOf(searchString, position) === position;
+  };
+}
 ///////////////////////////////////  End Misc functions  //////////////////////////////////
