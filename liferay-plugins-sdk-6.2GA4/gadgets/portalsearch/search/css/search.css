@@ -31,9 +31,10 @@ label, input, button {
 	background-color: #eee;
 }
 #SemanticQueryButton{
-	background:url('../images/magnifierplus.png') no-repeat center center;
-    width:16px;
-	background-color: #eee;
+	background:url('../images/ico-search.png') no-repeat center center;
+	width:24px;
+	height:24px;
+	border: none;
 }
 
 span.hilight{
