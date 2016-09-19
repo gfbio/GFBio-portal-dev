@@ -199,7 +199,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			// update basket
 
 			basket = basketPersistence.findByPrimaryKey(basketId);
-			if (isUserAdmin(userId)) {
+			//if (isUserAdmin(userId)) {
 				basket.setUserID(userId);
 				basket.setName(name);
 				Date now = new java.util.Date();
@@ -207,9 +207,9 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basket.setBasketContent(basketContent);
 				basket.setQueryJSON(queryJSON);
 				super.updateBasket(basket);
-			} else {
+			//} else {
 				System.out.println("No admin rights. Operation aborted.");
-			}
+			//}
 
 		} catch (NoSuchBasketException e) {
 
