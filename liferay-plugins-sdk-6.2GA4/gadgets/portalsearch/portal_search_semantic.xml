@@ -21,11 +21,13 @@
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery-1.10.2-ui.js"	type="text/javascript"></script>
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery.dataTables.js"	type="text/javascript"></script>
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/spectrum.js"	type="text/javascript"></script>
+				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/jquery.barrating.min.js" type="text/javascript"></script>
 				<script src="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/js/search_semantic.js?gerr=123"	type="text/javascript"></script>
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery-ui.css" />
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/dataTables.jqueryui.css" />
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/jquery.dataTables.css" />
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/spectrum.css" />
+				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/bars-horizontal.css" />
 				<link rel="stylesheet"	href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbioGA4/search/css/search.css" />
 			</head>
 			<body style="min-height:350px;">
@@ -44,7 +46,7 @@
 						</span>
 						<span></span>
 						<input id="SemanticQueryButton" name="SemanticQueryButton"
-						type="button" value="" class="acButton"
+						type="button" value="" 
 						title="This will include semantic terms, including more relevant results, but could take longer processing time."
 						onclick="javascript:semanticQuery(true);" />
 						</span>

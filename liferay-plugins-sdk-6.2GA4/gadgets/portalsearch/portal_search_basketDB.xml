@@ -51,6 +51,7 @@
 				<input id="basketID" type="hidden" value="0"/>
 			</body>
 			<script type="text/javascript">
+				$=jQuery;
 				gadgets.HubSettings.onConnect = function(hub, suc, err) {
 					gadgets.Hub.subscribe("gfbio.search.facetfilter", applyFacetFilter);
 					gadgets.Hub.subscribe("gfbio.search.basketData", loadBasket);
