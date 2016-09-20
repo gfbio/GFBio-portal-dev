@@ -184,7 +184,7 @@ public class WorkflowGeneric extends GenericPortlet {
         try {
 
             URL url = new
-            URL("http://c103-170.cloud.gwdg.de/brokerage/submissions/pangaea");
+            URL("http://c103-170.cloud.gwdg.de/brokerage/submissions/generic");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setDoInput(true);
