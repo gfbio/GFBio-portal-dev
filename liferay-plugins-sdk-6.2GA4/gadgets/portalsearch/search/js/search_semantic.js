@@ -1,7 +1,7 @@
 var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var TSAPI = "http://terminologies.gfbio.org/api/terminologies/";
 var cartDiv = "<div id='cart' class='cart_unselected' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
-var ratingDiv = "<div id='ratingDiv' title='Please give us the feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
+var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
 /*
@@ -315,7 +315,6 @@ function getSearchResult(keyword, filter, yearRange) {
 		});
 	// activate the row click event
 	onRowClick();
-	
 }
 
 /*
@@ -1341,7 +1340,6 @@ function toggleParametersField() {
 		adjustGadgetHeight();
 	});
 };
-
 function getCookie(name) {
 	var re = new RegExp(name + "=([^;]+)");
 	var value = re.exec(document.cookie);
@@ -1349,7 +1347,6 @@ function getCookie(name) {
 	console.log(value);
 	return (value != null) ? unescape(value[1]) : null;
 }
-
 function setCookie(name, value) {
 	var today = new Date();
 	var expiry = new Date(today.getTime() + 7 * 24 * 3600 * 1000); // plus 7 days
@@ -1357,12 +1354,10 @@ function setCookie(name, value) {
 	console.log('setCookie:'+name);
 	console.log(value);
 }  
-
 function deleteCookie(name)
 {
     document.cookie=name + "=null; path=/; expires=" + expired.toGMTString();
 }
-
 function isJArray(elm) {
     return Object.prototype.toString.call(elm) === '[object Array]';
 }
