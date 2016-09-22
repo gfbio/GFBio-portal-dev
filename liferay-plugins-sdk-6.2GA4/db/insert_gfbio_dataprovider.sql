@@ -236,7 +236,7 @@ UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='SMNS';
 UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='SNSB';
 UPDATE gfbio_dataprovider SET otherobjects = true WHERE label ='ZFMK';
 UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='ENA';
-UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='PANGAEA'
+UPDATE gfbio_dataprovider SET otherobjects = false WHERE label ='PANGAEA';
 
 --Question 5
 UPDATE gfbio_dataprovider SET sequencedata = false WHERE label ='BGBM';
