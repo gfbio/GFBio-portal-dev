@@ -62,15 +62,17 @@ $theme.include($body_top_include)
           <div id="sign-in-link">
             	#if ($show_sign_in)
 				
-					<a href="$sign_in_url" title="Please sign in or register!">
+					<a href="$sign_in_url?saveLastPath=0" title="Please sign in or register!">
 						<i class="fa fa-sign-in" aria-hidden="true"></i>
 						
 						$sign_in_text
 					</a>
 				
 				#end
-            	
+				
             	#if ($is_signed_in)
+					<span id="userGreeting">$user.greeting</span>
+					</br>
 					<a href="$sign_out_url" title="sign out">
 					<i class="fa fa-sign-out" aria-hidden="true"></i>
 					

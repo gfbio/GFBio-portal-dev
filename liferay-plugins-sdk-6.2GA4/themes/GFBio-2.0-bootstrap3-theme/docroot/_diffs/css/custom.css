@@ -556,12 +556,20 @@ div.yamm-content > div > .mega-lifecycle a:hover {
 /*==============================================================
 Search
 ==============================================================*/
+#userGreeting{
+	font-size:12px;
+	padding-right:1rem;
+	color: #666;
+	
+}
 #sign-in-link{
 	float: right;
-	padding-top: 18px;
+	padding-top: 10px;
 	margin-right: 2em;
 	
+	
 	a{
+		
 		font-size:15px;
 		color: #666;
     	text-decoration: none;
@@ -1042,6 +1050,9 @@ Liferay fixes - content
  Responsive: Navbar
 =======================================================*/
 @import "mixins";
+$breakpoint_phone: 768px;
+$breakpoint_tablet: 997px;
+
 @include respond-to(screens) {
 	.aui{
 		.icon-toggle-menu {

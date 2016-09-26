@@ -3,3 +3,4 @@
 ##set ($sign_in_url = $propsUtil.get("sign_in_url"))
 #set ($sign_in_url = "/sign-in")
 #set ($sign_out_text = "Sign Out")
+#set ($user.greeting = "Welcome " + $user.firstName +" to GFBio!")

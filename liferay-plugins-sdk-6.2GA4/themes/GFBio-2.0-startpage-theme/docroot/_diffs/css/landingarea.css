@@ -559,7 +559,7 @@ h3.landing-area {
 
 
 #about {
-    background-image: url('../images/Datacenter.jpg');
+    background-image: url('../images/Datacenter_small.jpg');
     padding: 0;
     color: #fff;
 }
@@ -733,7 +733,7 @@ h3.landing-area {
 ==================================================================*/
 
 #social {
-    background-image: url('../images/unsplash_books.jpg');
+    background-image: url('../images/unsplash_books_small.jpg');
     padding: 0;
 }
 

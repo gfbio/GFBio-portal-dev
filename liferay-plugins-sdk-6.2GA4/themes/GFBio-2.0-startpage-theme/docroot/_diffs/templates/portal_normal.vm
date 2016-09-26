@@ -5,7 +5,7 @@
 <html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
 
 <head>
-	<title>$the_title - $company_name</title>
+	<title>$company_name - $the_title</title>
 
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
@@ -63,7 +63,7 @@ $theme.include($body_top_include)
        <div id="sign-in-link">
             	#if ($show_sign_in)
 				
-					<a href="$sign_in_url" title="Please sign in or register!">
+					<a href="$sign_in_url?saveLastPath=0" title="Please sign in or register!">
 						<i class="fa fa-sign-in" aria-hidden="true"></i>
 						
 						$sign_in_text
@@ -72,6 +72,8 @@ $theme.include($body_top_include)
 				#end
             	
             	#if ($is_signed_in)
+            		<span id="userGreeting">$user.greeting</span>
+					</br>
 					<a href="$sign_out_url" title="sign out">
 					<i class="fa fa-sign-out" aria-hidden="true"></i>
 					
