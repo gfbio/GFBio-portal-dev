@@ -316,7 +316,7 @@ h1.navbar-brand {
     padding: 60px 122px 0 0 !important;
 	
 
-    margin: 0;
+   margin: 0px 0px 5px 0px;
 }
 
 .navigation-shadow h1.navbar-brand {
@@ -330,6 +330,8 @@ h1.navbar-brand {
     background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;
     
     padding: 60px 122px 0 0 !important;
+    margin: 0px 0px 5px 0px;
+    
 }
 
 #nav-left, #nav-right, #nav-right2 {
@@ -564,7 +566,6 @@ Search
 }
 #sign-in-link{
 	float: right;
-	padding-top: 10px;
 	margin-right: 2em;
 	
 	
@@ -581,6 +582,12 @@ Search
 	 margin-right:5px;
 	
 	}
+}
+#notSignedIn{
+	padding-top:25px;
+}
+#signedIn{
+	padding-top:5px;
 }
 
 #page-search{
@@ -617,9 +624,7 @@ Search
     	 color: rgba(52, 90, 162, 0.7);
 	}
 	
-	/* .form-control,  input.field[type="password"]{
-		margin-bottom:0px;
-	} */
+
 	
 }
 
