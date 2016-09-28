@@ -48,15 +48,6 @@ $theme.include($body_top_include)
 					#parse ("$full_templates_path/navigation.vm")
 			#end	
 		</div>
-		
-		<!--<nav class="collapse navbar-collapse navbar-right" id="navsearch" role="navigation"> -->      
-            <div id="page-search">
-				$theme.journalContentSearch()
-			</div>          
-          
-          <!--</nav> -->
-          
-         
           
           
          <div id="sign-in-link">
