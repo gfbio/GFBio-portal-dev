@@ -1,0 +1,304 @@
+<Module>
+	<ModulePrefs title="data life cycle svg widget" height="700" author="K. Opasjumruskit" author_email="gfbio@gfbio.org">
+		<Require feature="dynamic-height"/>
+		<Locale lang="en" country="us"/>
+	</ModulePrefs>
+	<Content type="html" width="80%">
+		<![CDATA[
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Data Life Cycle</title>
+
+<script type="text/javascript" src="http://gfbio-db1.inf-bb.uni-jena.de/DataLifeCycle/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="http://gfbio-db1.inf-bb.uni-jena.de/DataLifeCycle/jquery.cycle.all.js"></script>
+
+<script type="text/javascript">
+	
+	function prevMouseLeave(){
+		document.getElementById('labelprev').style.color = '#0e56a4';
+		document.getElementById('prev').style.background = '#0e56a4';
+	}
+	
+	function nextMouseLeave(){
+		document.getElementById('labelnext').style.color = '#0e56a4';
+		document.getElementById('next').style.background = '#0e56a4';
+	}
+
+	
+	$(function(){
+		
+		$('#play').click(function() { $('#slider').cycle('resume');
+			document.getElementById('labelplay').style.color = '#77b941';
+			document.getElementById('play').style.background = '#77b941';
+			document.getElementById('labelpause').style.color = '#0e56a4';
+			document.getElementById('pause').style.background = '#0e56a4';
+			return false; });
+		
+		$('#pause').click(function() { $('#slider').cycle('pause'); 
+			document.getElementById('labelpause').style.color = '#77b941';
+			document.getElementById('pause').style.background = '#77b941';
+			document.getElementById('labelplay').style.color = '#0e56a4';
+			document.getElementById('play').style.background = '#0e56a4';
+			return false; });
+			
+		$('#next').click(function() {  
+			document.getElementById('labelnext').style.color = '#77b941';
+			document.getElementById('next').style.background = '#77b941';
+		});
+		
+		$('#prev').click(function() {  
+			document.getElementById('labelprev').style.color = '#77b941';
+			document.getElementById('prev').style.background = '#77b941';
+		});
+		
+		
+
+	$('#slider').cycle({
+		
+		slideExpr: '.slide',
+		//fx:			'scrollHorz',
+		//next:		'#next',
+		//prev:		'#prev',
+		//pager:		'#pager',
+		//timeout:	5000,
+		slideResize:	0
+		
+		
+	});
+	
+    gadgets.window.adjustHeight();
+});
+</script>
+
+
+<style type="text/css">
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+.clearfix:after {
+	clear: both;
+}
+.clearfix {
+	*zoom: 1;
+}
+
+.leftpic {
+	float: left;
+	margin-right:6px;
+	margin-left:6px;
+}
+
+.lefttxt {
+	float: left;
+	margin-right:8px;
+
+}
+
+#hero {
+
+}
+
+#slider {	
+	width: 60%;
+	margin-left: 24%;
+	display: block;
+	position: relative;
+	top: 60px;
+	overflow: hidden;
+}
+
+#play {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	display: block;
+	top: 0;
+	right: 44px;
+	background: #77b941;
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#labelplay {
+	font-family: Georgia;
+	font-weight: bold;
+	font-size: 13px;
+	width: 30px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	top: 38px;
+	right: 49px;
+	color: #77b941;
+	z-index: 999;
+}
+
+.pause {
+	float:left;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	display: block;
+	top: 0;
+	right: 88px;
+	background: #0e56a4;;
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+.labelpause {
+	float:left;
+	font-family: Georgia;
+	font-weight: bold;
+	font-size: 13px;
+	width: 37px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	top: 38px;
+	right: 89px;
+	color: #0e56a4;
+	z-index: 999;
+}
+
+#next {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	display: block;
+	top: 0;
+	right: 0;
+	background: #0e56a4;
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#labelnext {
+	font-family: Georgia;
+	font-weight: bold;
+	font-size: 13px;
+	width: 37px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	top: 38px;
+	right: 1px;
+	color: #0e56a4;;
+	z-index: 999;
+}
+
+#prev {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	display: block;
+	top: 0;
+	right: 133px;
+	background: #0e56a4;
+	color: #FFF;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#labelprev {
+	font-family: Georgia;
+	font-weight: bold;
+	font-size: 13px;
+	width: 37px;
+	height: 18px;
+	line-height: 18px;
+	text-align: center;
+	display: block;
+	top: 38px;
+	right: 135px;
+	color: #0e56a4;
+	z-index: 999;
+}
+
+#pager {
+	margin: 0px auto;
+	width:160px;
+	display: block;
+	cursor: pointer;
+	z-index: 999;
+}
+
+#pager a {
+	font-size: .0em;
+	color: transparent;
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	position: relative;
+	border: 1px solid #0e56a4;
+	border-radius: 20px;
+	background: transparent;
+	margin: 10px;
+}
+
+#pager a.activeSlide { background: #77b941; border: 2px solid #77b941;}
+
+</style>
+</head>
+
+<body>
+
+<!--<div style="width:700px;margin-left:auto;margin-right:auto;">-->
+
+<div id="hero">
+	
+	<div style="margin: 0px auto; width:180px">
+	<div class="clearfix">
+	<!--Menusymbole -->
+	<div class="leftpic" id="prev" onclick="prevOnClick()" onmouseleave="prevMouseLeave()">&#60;</div>
+    <div class="pause leftpic" id="pause">&#10073;&#10073;</div> <!--Symbol, "Labelpause"= Descriptive Text -->
+    <div class="leftpic" id="play">&#9658;</div>
+    <div class="leftpic" id="next" onmouseleave="nextMouseLeave()">&#62;</div>
+	</div>
+	
+	
+	<div class="clearfix">
+	<!--Menutexte -->
+	<div class="lefttxt" id="labelprev">Prev</div>
+	<div class="labelpause lefttxt" id="labelpause">Pause</div>
+	<div class="lefttxt" id="labelplay">Play</div>
+	<div class="lefttxt" id="labelnext">Next</div>
+	</div>
+	</div>
+	
+	<!--Pager -->
+	<div id="pager"></div>
+
+	<div id="slider">
+		<img src="http://gfbio-db1.inf-bb.uni-jena.de/DataLifeCycle/dummy.gif" width="100%">
+		<object class="slide"  width="100%" data="http://gfbio-db1.inf-bb.uni-jena.de/DataLifeCycle/Data_Life_Cycle_1.svg"></object>
+		<object class="slide"  width="100%" data="http://gfbio-db1.inf-bb.uni-jena.de/DataLifeCycle/Data_Life_Cycle_2.svg"></object>
+		<object class="slide"  width="100%" data="http://gfbio-db1.inf-bb.uni-jena.de/DataLifeCycle/Data_Life_Cycle_3.svg"></object>
+		<object class="slide"  width="100%" data="http://gfbio-db1.inf-bb.uni-jena.de/DataLifeCycle/Data_Life_Cycle_4.svg"></object>
+	<!--</div><!--End--Items-->
+		
+    </div><!--End--Slider-->
+	
+
+</div><!--End--Hero-->
+</div>
+</body>
+</html>
+    ]]>
+	</Content>
+
+</Module>
