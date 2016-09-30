@@ -1,4 +1,4 @@
-<nav class="$nav_css_class collapse navbar-collapse navbar-left" role="navigation">
+<nav class="$nav_css_class navbar-collapse navbar-left collapse" role="navigation">
 ##<nav class="$nav_css_class" id="header-menue" role="navigation">
 
 	<ul id="nav-left" class="nav navbar-nav" aria-label="#language ("site-pages")" role="menubar">
@@ -16,11 +16,11 @@
 				#set ($nav_item_attr_has_popup="aria-haspopup='true'")
 			#end
 
-			<li id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
-				<a class="$nav_item_css_class" aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span class="menuitem">$nav_item.icon() $nav_item.getName()&nbsp; #if ($nav_item.hasChildren())<i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>#end</span></a>
+			<li id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation" class="dropdown yamm">
+				<a class="$nav_item_css_class dropdown-toggle" data-toggle="dropdown" aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span class="menuitem">$nav_item.icon() $nav_item.getName()&nbsp; #if ($nav_item.hasChildren())<i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>#end</span></a>
 
 				#if ($nav_item.hasChildren())
-					<ul class="dropdown-menu list-unstyled">
+					<ul class="dropdown-menu">
 						#foreach ($nav_child in $nav_item.getChildren())
 							#set ($nav_child_attr_selected="")
 							#set ($nav_child_css_class = "false")
@@ -31,7 +31,7 @@
 							#end
  							<div class="yamm-content">
                             	<div class="row">
-                                	##<div class="col-md-6">
+                                	<div class="col-md-6">
 										<ul class="list-unstyled">
 											<li id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
 											<a class="$nav_child_css_class" aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
@@ -57,7 +57,7 @@
 									
 							   				</li>
 							   			</ul>
-							##</div>
+							</div>
                             </div>
                         </div>
 						#end

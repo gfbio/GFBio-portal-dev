@@ -32,7 +32,8 @@ $theme.include($body_top_include)
 		<div id="responsiveMenuToggle" class="icon-toggle-menu">
 		    <i class="fa fa-bars"></i>
 		</div>
-
+		
+	
 
 	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
 

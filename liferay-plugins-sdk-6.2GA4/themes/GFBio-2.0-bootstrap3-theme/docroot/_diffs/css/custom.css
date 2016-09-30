@@ -1056,28 +1056,28 @@ Liferay fixes - content
 =======================================================*/
 @import "mixins";
 $breakpoint_phone: 768px;
-$breakpoint_tablet: 997px;
+$breakpoint_tablet: 979px;
 
 @include respond-to(screens) {
 	.aui{
 		.icon-toggle-menu {
-			display: none; /* hide by default */
+			display: none; 
 		}
 		#nav{
 			display: block;
 		}
 	}
-}
+} 
 // TABLETS AND BELOW
 // -----------------
 @include respond-to(phone, tablet) {
 	.aui {
-		#navigation{ 
+		 #navigation{ 
 			display: block;
 			margin-top:60px;
 		}
 		.icon-toggle-menu {
-			/* show only for phone and tablet viewports */
+			
 		    display: block; 
 			width: 40px;
 			height: 40px;
@@ -1086,8 +1086,8 @@ $breakpoint_tablet: 997px;
 			position: fixed;
 			top: 5px;
 			right: 20px;
-/* 			float: right; */
-/* 			margin-top: 20px; */
+			float: right;
+			margin-top: 20px;
 		    border-radius: 4px;
 		    color: #666;
 		    cursor: pointer;
@@ -1097,14 +1097,14 @@ $breakpoint_tablet: 997px;
 		    background: #fff;
 		    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 		    transition: all .1s ease-in-out;
-		  }
+		  } 
 		#nav.open{
 			display: block;
 			height: auto;
 		    transition: all .1s ease-in-out;
 		}
 		#nav{
-			display: none; /* hide by default */
+			display: none; 
 		}
 		.navbar-inverse .navbar-collapse {
 			border: none;
@@ -1115,10 +1115,9 @@ $breakpoint_tablet: 997px;
 		}
 		.navbar-brand{
 			display: none;
-/* 			position: fixed; */
-/* 			top: 0px; */
-/* 			left: 60px; */
+
 		}
+	
 		#sign-in-link{
 			display: block;
 			position: fixed;
