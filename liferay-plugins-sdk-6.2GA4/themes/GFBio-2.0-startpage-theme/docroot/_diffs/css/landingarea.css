@@ -559,7 +559,7 @@ h3.landing-area {
 
 
 #about {
-    background-image: url('../images/Datacenter.jpg');
+    background-image: url('../images/Datacenter_small.jpg');
     padding: 0;
     color: #fff;
 }
@@ -733,7 +733,7 @@ h3.landing-area {
 ==================================================================*/
 
 #social {
-    background-image: url('../images/unsplash_books.jpg');
+    background-image: url('../images/unsplash_books_small.jpg');
     padding: 0;
 }
 
@@ -926,4 +926,289 @@ ul.external li a:hover {
 }
 
 
+/*============================================================
+	Responsive Styles
+ ============================================================*/
+
+/*============================================================
+	For Small Desktop
+==============================================================*/
+
+@media (min-width: 980px) and (max-width: 1150px) {
+
+    /*about*/
+    #about .welcome-block img {
+        margin-bottom: 30px;
+    }
+
+    /* portfolio */
+    figcaption.mask {
+        bottom: -151px;
+    }
+
+    #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
 }
+
+/*============================================================
+	Tablet (Portrait) Design for a width of 768px
+==============================================================*/
+
+@media (min-width: 768px) and (max-width: 979px) {
+
+    /* home slider  */
+    .landing-h1 {
+    	font-size:3em;
+    }
+    .landing-h1-sub{
+    	font-size:1.7em;
+    }
+     #home-slider .btn{
+    	 margin-bottom:0.5em;
+     }
+    
+    .caption-content h2 {
+        font-size: 40px;
+    }
+
+    .caption-content p {
+        font-size: 25px;
+    }
+
+    .caption-content strong {
+        font-size: 45px;
+    }
+
+    /* about */
+    .recent-works {
+        margin-bottom: 50px;
+    }
+
+    .service-item {
+        margin-bottom: 50px;
+    }
+
+    /* portfolio */
+    .portfolio-item {
+        width: 48%;
+    }
+
+    /* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+     #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
+}
+
+/*============================================================
+	Mobile (Portrait) Design for a width of 320px
+==============================================================*/
+
+@media only screen and (max-width: 767px) {
+
+    body {
+        font-size: 14px;
+    }
+    .landing-h1 {
+    	font-size:2.5em;
+    }
+    .landing-h1-sub{
+    	font-size:1.3em;
+    }
+     #home-slider .btn{
+    	 margin-bottom:0.5em;
+     }
+
+    .parallax {
+        background-position: centet tip !important;
+    }
+
+    .sec-title h2 {
+        font-size: 25px;
+    }
+
+    .sec-title h2:after {
+        left: 30%;
+    }
+
+    /* slider */
+    .caption-content h2 {
+        font-size: 18px;
+    }
+
+    .caption-content > span {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .caption-content p {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    .caption-content strong {
+        font-size: 22px;
+    }
+
+    /* about */
+    .recent-works {
+        margin-bottom: 85px;
+    }
+
+    #about h3 {
+        font-size: 18px;
+        margin: 0 0 35px !important;
+    }
+
+    #about .owl-buttons {
+        margin-top: 20px;
+    }
+
+    #about .message-body {
+        margin-bottom: 45px;
+    }
+
+    #about .welcome-block img {
+        margin: 0 25px 15px 0;
+    }
+
+    /* service */
+    .service-item {
+        width: 100%;
+    }
+
+    /*portfolio*/
+    .portfolio-item {
+        margin: 0 auto 10px;
+        font-size: 14px;
+        width: 280px;
+    }
+
+    figcaption.mask {
+        bottom: -107px;
+        color: #fff;
+        padding: 15px;
+    }
+
+    /* lightbox */
+    .fancybox-title h3 {
+        font-size: 20px;
+    }
+
+    .fancybox-title p {
+        font-size: 14px;
+    }
+
+  
+
+    /* follow us */
+    .social-button li:nth-child(2) {
+        margin: 0 25px;
+    }
+
+    .social-button li a {
+        height: 65px;
+        line-height: 71px;
+        width: 65px;
+    }
+
+    /* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+
+    /* footer */
+    .footer-content {
+        width: 100%;
+    }
+
+    .footer-social ul li {
+        margin: 0 7px;
+    }
+    
+     #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
+ 
+}
+
+/*============================================================
+	Mobile (Landscape) Design for a width of 480px
+==============================================================*/
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	
+    .sec-title h2:after {
+        left: 38%;
+    }
+
+    /* home slider */
+    .caption-content h2 {
+        font-size: 35px;
+    }
+
+    .caption-content p {
+        font-size: 25px;
+    }
+
+    .caption-content strong {
+        font-size: 35px;
+    }
+
+    /*about*/
+    #about .welcome-block h3 {
+        margin: 0 0 35px;
+    }
+
+    /* service */
+    .service-item {
+        margin: 0 auto 50px;
+        width: 55%;
+    }
+
+    /* portfolio */
+    .portfolio-item {
+        width: 48%;
+    }
+
+    figcaption.mask {
+        bottom: -132px;
+    }
+
+    /* social */
+    .social-button li:nth-child(2) {
+        margin: 0 50px;
+    }
+
+    .social-button li a {
+        height: 90px;
+        line-height: 96px;
+        width: 90px;
+    }
+
+
+
+    /* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+
+    /* footer */
+    .footer-content {
+        width: 380px;
+    }
+    
+     #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
+    
+}
+
+
+
+}
+
+

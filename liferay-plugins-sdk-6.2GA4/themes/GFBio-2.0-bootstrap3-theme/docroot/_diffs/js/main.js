@@ -97,6 +97,3 @@ AUI().ready(
 	}
 
 );
-// ------------- End responsive menu class------------------//
-
-

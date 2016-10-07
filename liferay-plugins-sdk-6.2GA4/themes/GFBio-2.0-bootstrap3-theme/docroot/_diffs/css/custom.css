@@ -316,7 +316,7 @@ h1.navbar-brand {
     padding: 60px 122px 0 0 !important;
 	
 
-    margin: 0;
+   margin: 0px 0px 5px 0px;
 }
 
 .navigation-shadow h1.navbar-brand {
@@ -330,6 +330,8 @@ h1.navbar-brand {
     background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;
     
     padding: 60px 122px 0 0 !important;
+    margin: 0px 0px 5px 0px;
+    
 }
 
 #nav-left, #nav-right, #nav-right2 {
@@ -556,12 +558,19 @@ div.yamm-content > div > .mega-lifecycle a:hover {
 /*==============================================================
 Search
 ==============================================================*/
+#userGreeting{
+	font-size:12px;
+	padding-right:1rem;
+	color: #666;
+	
+}
 #sign-in-link{
 	float: right;
-	padding-top: 18px;
 	margin-right: 2em;
 	
+	
 	a{
+		
 		font-size:15px;
 		color: #666;
     	text-decoration: none;
@@ -573,6 +582,12 @@ Search
 	 margin-right:5px;
 	
 	}
+}
+#notSignedIn{
+	padding-top:25px;
+}
+#signedIn{
+	padding-top:5px;
 }
 
 #page-search{
@@ -609,9 +624,7 @@ Search
     	 color: rgba(52, 90, 162, 0.7);
 	}
 	
-	/* .form-control,  input.field[type="password"]{
-		margin-bottom:0px;
-	} */
+
 	
 }
 
@@ -1042,26 +1055,29 @@ Liferay fixes - content
  Responsive: Navbar
 =======================================================*/
 @import "mixins";
+$breakpoint_phone: 768px;
+$breakpoint_tablet: 979px;
+
 @include respond-to(screens) {
 	.aui{
 		.icon-toggle-menu {
-			display: none; /* hide by default */
+			display: none; 
 		}
 		#nav{
 			display: block;
 		}
 	}
-}
+} 
 // TABLETS AND BELOW
 // -----------------
 @include respond-to(phone, tablet) {
 	.aui {
-		#navigation{ 
+		 #navigation{ 
 			display: block;
 			margin-top:60px;
 		}
 		.icon-toggle-menu {
-			/* show only for phone and tablet viewports */
+			
 		    display: block; 
 			width: 40px;
 			height: 40px;
@@ -1070,8 +1086,8 @@ Liferay fixes - content
 			position: fixed;
 			top: 5px;
 			right: 20px;
-/* 			float: right; */
-/* 			margin-top: 20px; */
+			float: right;
+			margin-top: 20px;
 		    border-radius: 4px;
 		    color: #666;
 		    cursor: pointer;
@@ -1081,14 +1097,14 @@ Liferay fixes - content
 		    background: #fff;
 		    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 		    transition: all .1s ease-in-out;
-		  }
+		  } 
 		#nav.open{
 			display: block;
 			height: auto;
 		    transition: all .1s ease-in-out;
 		}
 		#nav{
-			display: none; /* hide by default */
+			display: none; 
 		}
 		.navbar-inverse .navbar-collapse {
 			border: none;
@@ -1099,10 +1115,9 @@ Liferay fixes - content
 		}
 		.navbar-brand{
 			display: none;
-/* 			position: fixed; */
-/* 			top: 0px; */
-/* 			left: 60px; */
+
 		}
+	
 		#sign-in-link{
 			display: block;
 			position: fixed;

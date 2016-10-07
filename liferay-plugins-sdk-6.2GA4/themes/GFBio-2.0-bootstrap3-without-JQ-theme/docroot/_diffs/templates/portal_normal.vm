@@ -48,39 +48,40 @@ $theme.include($body_top_include)
 					#parse ("$full_templates_path/navigation.vm")
 			#end	
 		</div>
-		
-		<!--<nav class="collapse navbar-collapse navbar-right" id="navsearch" role="navigation"> -->      
-            <div id="page-search">
-				$theme.journalContentSearch()
-			</div>          
-          
-          <!--</nav> -->
-          
-         
           
           
-          <div id="sign-in-link">
+         <div id="sign-in-link">
+            	
+            	
             	#if ($show_sign_in)
-				
-					<a href="$sign_in_url" title="Please sign in or register!">
+				<div id="notSignedIn">
+					<a href="$sign_in_url?saveLastPath=0" title="Please sign in or register!">
 						<i class="fa fa-sign-in" aria-hidden="true"></i>
 						
 						$sign_in_text
 					</a>
-				
+				</div>
 				#end
+				
+            	
             	
             	#if ($is_signed_in)
+            	<div id="signedIn">
+            		<span id="userGreeting">$user.greeting</span>
+					</br>
 					<a href="$sign_out_url" title="sign out">
 					<i class="fa fa-sign-out" aria-hidden="true"></i>
 					
 					$sign_out_text
 					</a>
+				</div>
 				#end
+         		
             	
             	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
             	<!--<a href="$portal_url/web/gfbioboostrap3/sign-in" title="Please sign in or register!">Sign In</a>-->
-        	</div>
+ 			</div>
+          
           
 	 </div>	
 	 
