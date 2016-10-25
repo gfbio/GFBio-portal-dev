@@ -728,4 +728,42 @@
 	}
 	
 	
+	
+	////////////////////////////////////////////////////////////////// upload tests
+	
+	
+	function testSubmit(){
+	
+		var url = document.getElementById('workflowcollectionsurl').value;
+		
+		var fileSelect = document.getElementById('file-select');
+		var files = fileSelect.files;
+		var formData = new FormData();
+		for (var i = 0; i < files.length; i++) 
+		  	formData.append('file', files[i]);
+
+		console.log(formData.getAll('file'));
+	  	
+/* 		var json = {};
+		json["<portlet:namespace />responseTarget"] = "uploadfile";
+		console.log(json);
+		formData.append('json', json);
+		console.log(formData.getAll('json')); */
+	  	
+
+ 		$.ajax({
+ 			"url": url.concat('/WorkflowCollectionsPortlet'),
+ 			"type" : "POST",
+			processData: false,
+			contentType: false,
+			"data" : formData,
+			async: false,
+			success :  function (){
+				console.log("yeah");
+			} 
+		});
+
+	}
+	
+	
 </script>

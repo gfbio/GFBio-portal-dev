@@ -53,20 +53,6 @@ public class TableBuilder extends GenericPortlet {
 	//
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)	throws IOException, PortletException {
 		
-		
-/*		Boolean check;
-		check = HeadLocalServiceUtil.updateParentRelationTable(0, "gfbio_type");
-		System.out.println(check);*/
-		
-		
-/*		long headId = 1;
-		long contentId1 = 1;
-		long contentId2 = 40;
-		
-		HeadLocalServiceUtil.updateParentRelationTableWithContent(headId, contentId1, contentId2);
-		
-		*/
-	
 		include(viewTemplate, renderRequest, renderResponse);
 	}
 
