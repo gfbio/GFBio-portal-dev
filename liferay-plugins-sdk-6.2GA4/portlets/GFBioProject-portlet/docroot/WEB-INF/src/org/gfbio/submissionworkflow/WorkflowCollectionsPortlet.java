@@ -1,48 +1,41 @@
 package org.gfbio.submissionworkflow;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PortalUtil;
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 
-
-
-
-
-
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletRequest;
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.portlet.PortletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
@@ -55,12 +48,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * Portlet implementation class WorkflowCollectionsPortlet
  */
+
 public class WorkflowCollectionsPortlet extends GenericPortlet {
 	
     protected String viewTemplate;
@@ -102,6 +94,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 
 		System.out.println("Schranke 1");
 		response.setContentType("text/html");
+		System.out.println(request.getResourceID());
 		System.out.println(request.getAttributeNames().toString());
 		System.out.println(request.getPortletInputStream().toString());
 
@@ -168,94 +161,96 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		}else{
 			System.out.println("Schranke 4");
 			
+			File file = null;
+			file = new File("test");
 			
-			
-/*			 final HttpServletRequest originalHttpServletRequest = portalService.getOriginalHttpServletRequest(request);
-		        final boolean multipartContent = FileUploadBase.isMultipartContent(new ServletRequestContext(originalHttpServletRequest));
-		        if (multipartContent) {
-		            // Create a factory for disk-based file items
-		            DiskFileItemFactory factory = new DiskFileItemFactory();
-		            // Set factory constraints
-		            factory.setSizeThreshold(10000000);
-		            factory.setRepository("C:\\Users\\froemm\\Desktop\\");
-		            // Create a new file upload handler
-		            ServletFileUpload upload = new ServletFileUpload(factory);
-		            // Set overall request size constraint
-		            upload.setSizeMax(10000000);
+			final HttpServletRequest originalHttpServletRequest = getOriginalHttpServletRequest(request);
+		    final boolean multipartContent = FileUploadBase.isMultipartContent(new ServletRequestContext(originalHttpServletRequest));
+		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getAttributeNames().toString());
+		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getCharacterEncoding());
+		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getContentLength());
+		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getContentType());
+		    
+		    if (multipartContent) {
+		    	
+		    	System.out.println("Schranke 4 2 "+multipartContent);
+		    	
+		    	// Create a factory for disk-based file items
+		        DiskFileItemFactory factory = new DiskFileItemFactory();
+		        
+		        System.out.println("Schranke 4 3");
+		        // Set factory constraints
+		        factory.setSizeThreshold(10000000);
+		        factory.setRepository(file);
+		        
+		        System.out.println("Schranke 4 4 "+factory.toString());
+		        
+		        // Create a new file upload handler
+		        ServletFileUpload upload = new ServletFileUpload(factory);
+		        
+		        System.out.println("Schranke 4 5 " + upload.toString());
+		            
+		        // Set overall request size constraint
+		        upload.setSizeMax(10000000);
 
-		            List<FileItem> items = upload.parseRequest(originalHttpServletRequest);
+		        System.out.println("Schranke 4 6");
+		        
+		        List<FileItem> items = null;
+		        try {
+		        	System.out.println("Schranke 4 6 1");
+		        	items = upload.parseRequest(originalHttpServletRequest);
+		        	System.out.println("Schranke 4 6 2");
+		        } catch (FileUploadException e1) {
+		        	// TODO Auto-generated catch block
+		        	e1.printStackTrace();
+		        }
+		        
+		        System.out.println("Schranke 4 7");
 
-		            // Process the uploaded items
-		            Iterator<FileItem> iter = items.iterator();
-		            while (iter.hasNext()) {
-		                FileItem thisItem = (FileItem) iter.next();
-		                final String fieldName = thisItem.getFieldName();
-		                // if an element is a form field
-		                if (thisItem.isFormField()) {
-		                    if (fieldName.equals("yourfieldformparam")) {
-		                        String value = thisItem.getString();
-		                        // Do something with the value
-		                    }
-		                } else {
-		                    // if its an attachment you can do...
-		                    String fileName = item.getName();
-		                    String contentType = item.getContentType();
-		                    boolean isInMemory = item.isInMemory();
-		                    long sizeInBytes = item.getSize();
+		        // Process the uploaded items
+		        Iterator<FileItem> iter = items.iterator();
+		        while (iter.hasNext()) {
+		        	
+			        System.out.println("Schranke 4 8 " +iter);
+		        	
+		        	FileItem thisItem = (FileItem) iter.next();
+		        	final String fieldName = thisItem.getFieldName();
+		        	
+			        System.out.println("Schranke 4 9 " +fieldName );
+		        	
+		        	// if an element is a form field
+		        	if (thisItem.isFormField()) {
+		        		
+				        System.out.println("Schranke 4 10");
+				        
+		        		if (fieldName.equals("yourfieldformparam")) {
+		    		        System.out.println("Schranke 4 11");
+		        			String value = thisItem.getString();
+		        			
+		        			// Do something with the value
+		        		}
+		        	} else {
 
-		                    File fileOut = File.createTempFile(IMieiPagamentiConstants.FILE_PREFIX, null);
-		                    // delete on jvm exit
-		                    fileOut.deleteOnExit();
-		                    // write the file
-		                    thisItem.write(fileOut);
-
-		                    //...
-		                }
-		            }
-		        }*/
-
-
-/*			PortletSession session = request.getPortletSession(true);
-			DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-			PortletFileUpload portletFileUpload = new PortletFileUpload(diskFileItemFactory);
-			
-
-			
-			try {
-				while (portletFileUpload. .parseRequest(request).iterator().hasNext()) {
-					FileItem fileItem = (FileItem) portletFileUpload.parseRequest(request).iterator().next();
-					byte[] data = fileItem.get();
-					session.setAttribute("photo",data,PortletSession.APPLICATION_SCOPE);
-				}
-			}catch (FileUploadException e) {
-				System.out.println(": " + e.getMessage());
-			}*/
+				        File fileOut = new File("C:/Users/froemm/Desktop/Neuer Ordner (2)/".concat(thisItem.getName()));
+		        		fileOut.deleteOnExit();
+		        		try {thisItem.write(fileOut);} 
+		        		catch (Exception e) {e.printStackTrace();}
+		        	}
+		        }
+		    }
 		}
 	}
 	
-/*	public HttpServletRequest getOriginalHttpServletRequest(PortletRequest request) {
-        return PortalUtil.getOriginalServletRequest(getHttpServletRequest(request));
-    }*/
 	
 	
-	public void processAction(ActionRequest req, ActionResponse res)	throws IOException, PortletException {
-		
-		System.out.println("Schranke 5");
-
-		PortletSession session = req.getPortletSession(true);
-		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-		PortletFileUpload portletFileUpload = new PortletFileUpload(diskFileItemFactory);
-		try {
-			while (portletFileUpload.parseRequest(req).iterator().hasNext()) {
-				FileItem fileItem = (FileItem) portletFileUpload.parseRequest(req).iterator().next();
-				byte[] data = fileItem.get();
-				session.setAttribute("photo",data,PortletSession.APPLICATION_SCOPE);
-			}
-		}catch (FileUploadException e) {
-			System.out.println(": " + e.getMessage());
-		}
-
-	}
+	
+	
+	public HttpServletRequest getOriginalHttpServletRequest(PortletRequest request) {
+		System.out.println("Schranke 4 0");
+        return PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request));
+    }
+	
+	
 
 	
 	
