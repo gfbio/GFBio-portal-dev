@@ -149,3 +149,18 @@ table.dataTable thead th{
 	padding:0px 0px 0px 40px!important;
 	margin:0px !important;
 }
+
+#dialogFacet{
+	background-color:white;
+}
+
+.br-theme-bars-horizontal .br-widget {
+  width: 36px!important;
+}
+.br-theme-bars-horizontal .br-widget a {
+  width: 36px!important;
+}
+.br-theme-bars-horizontal .br-widget .br-current-rating {
+  width: 36px!important;
+  font-size: 12px!important;
+}

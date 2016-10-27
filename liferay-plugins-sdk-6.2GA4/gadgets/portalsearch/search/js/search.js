@@ -1,5 +1,5 @@
 
-				var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+				var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
@@ -23,7 +23,7 @@ function setAutoComplete() {
 		minLength : 1,
 		delay : 0,
 		source : function (request, response) {
-			$.ajax('http://ws.pangaea.de/es/portals/_suggest', {
+			$.ajax('//ws.pangaea.de/es/portals/_suggest', {
 				contentType : 'application/json; charset=UTF-8',
 				type : 'POST',
 				data : JSON.stringify({

@@ -1,5 +1,5 @@
-var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
-var TSAPI = "http://terminologies.gfbio.org/api/terminologies/";
+var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
 var cartDiv = "<div id='cart' class='cart_unselected' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 
