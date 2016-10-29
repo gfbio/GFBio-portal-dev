@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcst.dao;
+package org.gfbio.idmg.dcrt.dao;
 
 public class GCategory {
 
