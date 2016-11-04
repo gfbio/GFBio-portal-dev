@@ -218,9 +218,11 @@ function newQuery(clearBasket) {
 
 	// clear visualBasket if the clearBasket flag is true
 	var visualBasket = document.getElementById("visualBasket");
-	if (clearBasket)
+	if (clearBasket){
 		visualBasket.value = "";
-
+		document.getElementById("basketID").value = 0; 
+		//create a new basket for every query
+	}
 	// send content of visual basket to the mini-map gadget
 	updateMap();
 }
@@ -635,6 +637,7 @@ function addBasket() {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
+		console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
