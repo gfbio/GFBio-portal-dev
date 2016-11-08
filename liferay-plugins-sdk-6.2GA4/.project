@@ -136,6 +136,15 @@
 			</matcher>
 		</filter>
 		<filter>
+			<id>1478595945652</id>
+			<name>portlets</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-contact-form-to-helpdesk-portlet</arguments>
+			</matcher>
+		</filter>
+		<filter>
 			<id>1466602122091</id>
 			<name>themes</name>
 			<type>10</type>

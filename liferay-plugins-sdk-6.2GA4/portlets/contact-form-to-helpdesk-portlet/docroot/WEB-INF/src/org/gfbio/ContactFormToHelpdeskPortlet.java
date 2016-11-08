@@ -116,10 +116,13 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 		
 		String emailFromAddress = actionRequest.getParameter("fromAddress");
 		String emailFromName = actionRequest.getParameter("fromName");
+		String emailSubject = actionRequest.getParameter("fromSubject");
+		System.out.println("subject: "+emailSubject);
 		
 		//System.out.println("emailFromAddress: "+emailFromAddress);
 		preferences.setValue("emailFromAddress",emailFromAddress);
 		preferences.setValue("emailFromName",emailFromName);
+		preferences.setValue("emailSubject", emailSubject);
 		
 		boolean requireCaptcha = GetterUtil.getBoolean(
 			preferences.getValue("requireCaptcha", StringPool.BLANK));
@@ -150,23 +153,24 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 			}
 		}
 		
+		//validation of fix fields (emailFromName, emailFromAddress, subject) 
+		
 		//check if emailAddress is ok
 		String[] emailAdresses = WebFormUtil.split(preferences.getValue("emailFromAddress", StringPool.BLANK));
 
-		if (emailAdresses.length == 0) {
-			SessionErrors.add(actionRequest, "emailAddressRequired");
-			System.out.println("EmailAddressRequired");
+		Set<String> validationFixFieldsErrors = null;
+		try {
+			validationFixFieldsErrors = validateFixFields(emailAdresses,emailFromName, emailSubject);
 		}
+		catch (Exception e) {
+			SessionErrors.add(
+				actionRequest, "validationScriptError", e.getMessage().trim());
 
-		for (String emailAdress : emailAdresses) {
-			emailAdress = emailAdress.trim();
-
-			if (!Validator.isEmailAddress(emailAdress)) {
-				SessionErrors.add(actionRequest, "emailAddressInvalid");
-				System.out.println("EmailAddressRequired");
-			}
+			return;
 		}
-
+		
+		
+	
 
 		Map<String, String> fieldsMap = new LinkedHashMap<String, String>();
 
@@ -202,7 +206,7 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 		
 		
 
-		if (validationErrors.isEmpty()) {
+		if (validationErrors.isEmpty() && validationFixFieldsErrors.isEmpty()) {
 			boolean emailSuccess = true;
 			boolean databaseSuccess = true;
 			boolean fileSuccess = true;
@@ -243,6 +247,9 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 			for (String badField : validationErrors) {
 				SessionErrors.add(actionRequest, "error" + badField);
 			}
+			for (String badField : validationFixFieldsErrors) {
+				SessionErrors.add(actionRequest, badField);
+			}
 		}
 		
 		
@@ -252,6 +259,37 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 
 			actionResponse.sendRedirect(successURL);
 		}
+	}
+
+	private Set<String> validateFixFields(String[] emailAdresses, String emailFromName, String emailSubject) {
+		Set<String> validationFixFieldsErrors = new HashSet<String>();
+		
+		if (emailAdresses.length == 0) {
+			validationFixFieldsErrors.add("emailAddressRequired");
+			System.out.println("EmailAddressRequired");
+		}
+
+		for (String emailAdress : emailAdresses) {
+			emailAdress = emailAdress.trim();
+
+			if (!isValidEmailAddress(emailAdress)) {		
+				validationFixFieldsErrors.add("emailAddressInvalid");
+				System.out.println("EmailAddressInvalid");
+			}
+		}
+		
+		if (Validator.isNull(emailFromName)) {
+			validationFixFieldsErrors.add("emailFromNameRequired");
+			System.out.println("EmailFromNameRequired");
+		}
+		
+		if (Validator.isNull(emailSubject)) {
+			validationFixFieldsErrors.add("emailSubjectRequired");
+			System.out.println("EmailSubjectRequired");
+		}
+		
+		return validationFixFieldsErrors;
+		
 	}
 
 	@Override
@@ -445,8 +483,11 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 			System.out.println("FromName:" +emailFromName);
 			System.out.println(isValidEmailAddress(emailFromAddress));
 			String emailAddresses = preferences.getValue("emailAddress", StringPool.BLANK);
-			//System.out.println("To:" +emailAddresses);
+			String emailSubject = preferences.getValue("emailSubject",  StringPool.BLANK);
+			System.out.println("EmailSubject:" +emailSubject);
 				
+			
+			/*
 			if (Validator.isNull(emailAddresses) ) {
 				_log.error(
 					"The web form email cannot be sent because no email " +
@@ -460,19 +501,18 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 						"The web form email cannot be sent because invalid email " +
 							"address is provided");
 				
-
 					return false;				
-			}
+			}*/
+			
 						
 			InternetAddress fromAddress = new InternetAddress(emailFromAddress,emailFromName);
 			InternetAddress[] toAddress= InternetAddress.parse(emailAddresses);
 			 
-			String subject = preferences.getValue("subject", StringPool.BLANK);
 			String body = getMailBody(fieldsMap);
 			
 
 			MailMessage mailMessage = new MailMessage(
-					fromAddress, subject, body, false);
+					fromAddress, emailSubject, body, false);
 			
 	
 			mailMessage.setTo(toAddress);

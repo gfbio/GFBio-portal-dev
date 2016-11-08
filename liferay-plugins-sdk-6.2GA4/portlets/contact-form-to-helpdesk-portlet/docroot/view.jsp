@@ -33,8 +33,8 @@ if (fromName.trim()!=""){
 		
 }
 
-String subject = portletPreferences.getValue("subject", StringPool.BLANK);
-
+String fromSubject = portletPreferences.getValue("fromSubject", StringPool.BLANK);
+String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErrorMessage", StringPool.BLANK);
 
 %>
 
@@ -66,12 +66,16 @@ String subject = portletPreferences.getValue("subject", StringPool.BLANK);
 		</c:if>
 		
 		
-		<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
-		<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />
-			
+		<liferay-ui:error key="emailFromNameRequired" message="please-enter-a-from-name" />	
 		<aui:input cssClass="lfr-input-text-container" label="name-from" name="fromName" value="<%= fromName %>" placeholder="Your Name..."/>
+		
+		<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />		
 		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..."/>
-		<aui:input cssClass="lfr-input-text-container" label="subject" name="subject" value="<%= subject %>" placeholder="Subject..." />
+		
+		<liferay-ui:error key="emailSubjectRequired" message="please-enter-a-subject" />
+		<aui:input cssClass="lfr-input-text-container" label="subject-from" name="fromSubject" value="<%= fromSubject %>" placeholder="Your Subject..." />
+	 	
 	 
 		
 
