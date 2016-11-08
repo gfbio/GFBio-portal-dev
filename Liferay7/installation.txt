@@ -1,0 +1,30 @@
+
+**************************
+*** JPM4J installation ***
+**************************
+- download jpm4j (https://github.com/jpm4j/jpm4j.installers/blob/master/dist/biz.aQute.jpm.run.jar)
+- copy it to the directory where you want to have it
+- open a command line in this folder
+- type in the following command:
+
+java -jar biz.aQute.jpm.run.jar -g init
+
+- add C:/JPM4J/bin to your path
+- check if jpm is working: open a command line and type "jpm use", is expected to show the JPM4J home and bin
+
+***************************
+*** Blade Client ***
+***************************
+- install the BLade client with the following command: 
+
+jpm install com.liferay.blade.cli
+
+- check if blade has been installed
+
+blade version
+
+******************************
+*** Creating a Liferay Workspace with Blade CLI ***
+******************************
+
+blade init MyFirstWorkspace
