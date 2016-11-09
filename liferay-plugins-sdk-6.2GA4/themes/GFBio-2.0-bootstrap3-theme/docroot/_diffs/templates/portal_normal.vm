@@ -124,10 +124,9 @@ $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
 
-
+</body>
 
 <script>
-
 
 (function($) {
     $(document).ready(function() {
@@ -160,9 +159,4 @@ $theme.include($bottom_include)
   })(jQuery);
   
 </script>
-
-
-
-</body>
-
 </html>
