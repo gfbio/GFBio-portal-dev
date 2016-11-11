@@ -77,116 +77,71 @@ AUI()
 				});
 
 // ------------- Responsive menu class------------------//
-AUI()
-		.ready(
-				function() {
-					var menuToggleBtn = $('#responsiveMenuToggle'); // get our
-																	// toggle
-																	// button
-					var navigationDiv = $('#nav'); // get default navigation
-													// div element
-					var body = $('.aui body');
-					var navItems = $('li.dropdown');
-					if (menuToggleBtn && navigationDiv) {
-						// do nothing when toggle button not present (user not
-						// signed in) or if
-						// navigation is not present
-						// otherwise assign simple function that'll toggle
-						// 'open' menu class on
-						// default navigation which will cause it to open, same
-						// for menu toggle
-						// button
-						menuToggleBtn.on('click', function(event) {
-							if (navigationDiv.hasClass('open')) {
-								menuToggleBtn.removeClass('open');
-								navigationDiv.removeClass('open');
-								navigationDiv.addClass('hide');
-								body.removeClass('lfr-has-dockbar-vertical');
-							} else {
-								// expand the menu bar
-								menuToggleBtn.addClass('open');
-								navigationDiv.addClass('open');
-								navigationDiv.removeClass('hide');
-								// hide dockbar
-								var portletDockbar = $('#_145_dockbar');
-								if (portletDockbar) {
-									portletDockbar.removeClass('over');
-								}
-								body.removeClass('lfr-has-dockbar-vertical');
-							}
-						}
-
-						);
-						/*
-						 * #965 Responsive layout: second tier menu is not
-						 * working on mobile device
-						 */
-						navItems.on("click", navMenuOnMobile);
-						/*navItems.hover(function() {// show submenu
-							var li = $(this)[0];
-							// assume that we have only 1 ul/menu item
-							if (li.children.length > 1) {
-								var ul = li.children[1];
-								ul.style.display = 'block';
-							}
-						}, function() {// hide submenu on mouseleave
-							var li = $(this)[0];
-							// assume that we have only 1 ul/menu item
-							if (li.children.length > 1) {
-								var ul = li.children[1];
-								ul.style.display = 'none';
-							}
-						});*/
-
-					}
-
-					function navMenuOnMobile() {
-						// toggle the submenu
-						var li = $(this)[0];
-						// assume that we have only 1 ul/menu item
-						if (li.children.length > 1) {
-							var ul = li.children[1];
-							// and each ul has [0]<a> [1]<ul>=submenu item
-							if (ul.offsetParent === null) {
-								ul.style.display = 'block';
-								console.log('*************************');
-								// close all others' submenus
-								var menuItems = $('li.dropdown');
-								for ( var i in menuItems) {
-									var item = menuItems[i];
-									if (item === li) {
-										// if the item is the clicked one
-										// do nothing
-									} else {
-										if ((item.tagName == "LI")
-												&& (item.classList
-														.contains("dropdown"))
-												&& (item.classList
-														.contains("yamm"))
-												&& (item.children.length > 1)) {
-											var otherul = item.children[1];
-											if (otherul.offsetParent === null) {
-												// do nothing
-											} else {
-												// hide them
-												otherul.style.display = 'none';
-											}
-										}
-									}
-								}
-							} else {
-								ul.style.display = 'none';
-							}
-						}
-					}
-					// clear all the extension class from mobile responsive
-					// layout
-					window.onresize = function(event) {
-						var navigationDiv = $('#nav'); // get default
-														// navigation ul element
-						navigationDiv.removeClass('hide');
-						navigationDiv.removeClass('open');
-					};
+AUI().ready(function() {
+	var menuToggleBtn = $('#responsiveMenuToggle'); // get our
+	// toggle
+	// button
+	var navigationDiv = $('#nav'); // get default navigation
+	// div element
+	var body = $('.aui body');
+	if (menuToggleBtn && navigationDiv) {
+		// do nothing when toggle button not present (user not
+		// signed in) or if
+		// navigation is not present
+		// otherwise assign simple function that'll toggle
+		// 'open' menu class on
+		// default navigation which will cause it to open, same
+		// for menu toggle
+		// button
+		menuToggleBtn.on('click', function(event) {
+			if (navigationDiv.hasClass('open')) {
+				menuToggleBtn.removeClass('open');
+				navigationDiv.removeClass('open');
+				navigationDiv.addClass('hide');
+				body.removeClass('lfr-has-dockbar-vertical');
+			} else {
+				// expand the menu bar
+				menuToggleBtn.addClass('open');
+				navigationDiv.addClass('open');
+				navigationDiv.removeClass('hide');
+				// hide dockbar
+				var portletDockbar = $('#_145_dockbar');
+				if (portletDockbar) {
+					portletDockbar.removeClass('over');
 				}
+				body.removeClass('lfr-has-dockbar-vertical');
+			}
+		}
 
 		);
+		/*
+		 * #965 Responsive layout: second tier menu is not working on mobile
+		 * device
+		 */
+		$('.dropdown').on('mouseenter mouseleave', function() {
+			if ($(document).width() > 979){
+				$(this).toggleClass("open");
+			}
+		});
+		$('.dropdown').on('tap', function() {
+			if ($(document).width() <= 979){
+			$(this).toggleClass("open");
+			}
+		});
+		$('.dropdown').on('click', function() {
+			if ($(document).width() <= 979){
+			$(this).toggleClass("open");
+			}
+		});
+	}
+	// clear all the extension class from mobile responsive
+	// layout
+	window.onresize = function(event) {
+		var navigationDiv = $('#nav'); // get default
+		// navigation ul element
+		navigationDiv.removeClass('hide');
+		navigationDiv.removeClass('open');
+	};
+}
+
+);
