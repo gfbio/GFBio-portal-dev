@@ -684,10 +684,12 @@
 				if (obj.projectid >0){
 					sentWorkflowUpdate(true, obj.projectid, projectJson.label, false);
 					document.getElementById("cwf_project_id").innerHTML= obj.projectid;
+					
 					if (document.getElementById("cwf_project_name").value =="")
 						document.getElementById("cwf_project_name").value = document.getElementById("cwf_project_label").value;
 					if (document.getElementById("cwf_project_label").value=="")
 						document.getElementById("cwf_project_label").value = document.getElementById("cwf_project_name").value;
+									
 					projectJson["projectid"]= Number (obj.projectid);
 				}
 			}
@@ -714,13 +716,17 @@
 				if (obj.researchobjectid >0){
 					document.getElementById("cwf_ro_id").innerHTML= obj.researchobjectid;
 					document.getElementById("cwf_ro_version").innerHTML= obj.researchobjectversion;
+					
 					if (document.getElementById("cwf_ro_name").value =="")
 						document.getElementById("cwf_ro_name").value = document.getElementById("cwf_ro_label").value;
 					if (document.getElementById("cwf_ro_label").value=="")
 						document.getElementById("cwf_ro_label").value = document.getElementById("cwf_ro_name").value;
+					
 					researchObjectJson["projectid"]=Number(projectJson.projectid);
 					researchObjectJson["researchobjectid"]=Number(obj.researchobjectid);
 					researchObjectJson["researchobjectversion"]=Number(obj.researchobjectversion);
+
+
 				}
 			}
 		});

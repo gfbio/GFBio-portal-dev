@@ -1,5 +1,5 @@
 
-				var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+				var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
@@ -23,7 +23,7 @@ function setAutoComplete() {
 		minLength : 1,
 		delay : 0,
 		source : function (request, response) {
-			$.ajax('//ws.pangaea.de/es/portals/_suggest', {
+			$.ajax('http://ws.pangaea.de/es/portals/_suggest', {
 				contentType : 'application/json; charset=UTF-8',
 				type : 'POST',
 				data : JSON.stringify({
@@ -218,11 +218,9 @@ function newQuery(clearBasket) {
 
 	// clear visualBasket if the clearBasket flag is true
 	var visualBasket = document.getElementById("visualBasket");
-	if (clearBasket){
+	if (clearBasket)
 		visualBasket.value = "";
-		document.getElementById("basketID").value = 0; 
-		//create a new basket for every query
-	}
+
 	// send content of visual basket to the mini-map gadget
 	updateMap();
 }
@@ -637,7 +635,6 @@ function addBasket() {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
-		console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
@@ -1336,12 +1333,5 @@ function deleteCookie(name)
 
 function isJArray(elm) {
     return Object.prototype.toString.call(elm) === '[object Array]';
-}
-
-if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
-    position = position || 0;
-    return this.indexOf(searchString, position) === position;
-  };
 }
 ///////////////////////////////////  End Misc functions  //////////////////////////////////

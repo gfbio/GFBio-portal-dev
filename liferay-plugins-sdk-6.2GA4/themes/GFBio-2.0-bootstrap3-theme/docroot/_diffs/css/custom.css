@@ -1076,13 +1076,8 @@ $breakpoint_tablet: 979px;
 			display: block;
 			margin-top:60px;
 		}
-		.dropdown-toggle{ 
-		/*#965 Responsive layout: 
-		second tier menu is not working on mobile device*/
-			display:inline-block !important;
-			width:auto;
-		}
 		.icon-toggle-menu {
+			
 		    display: block; 
 			width: 40px;
 			height: 40px;

@@ -34,8 +34,7 @@
                                 	<div class="col-md-6">
 										<ul class="list-unstyled">
 											<li id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
-											<a class="$nav_child_css_class" aria-labelledby="layout_$nav_child.getLayoutId()" 
-											href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
+											<a class="$nav_child_css_class" aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
 									
 												#if ($nav_child.hasChildren())
 													<ul class="level2" role="menu">

@@ -110,9 +110,9 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return BasketLocalServiceUtil.updateBasket(basketId, userId, name, basketContent, queryJSON);
 	}
 
-	public Basket removeBasket(long basketId)
+	public Basket removeBasket(long basketId, long userId)
 			throws NoSuchModelException, SystemException {
-		return BasketLocalServiceUtil.removeBasket(basketId);
+		return BasketLocalServiceUtil.removeBasket(basketId,userId);
 	}
 	
 	public Map<Long,String> getBasketUsersIds(long userId) throws Exception{

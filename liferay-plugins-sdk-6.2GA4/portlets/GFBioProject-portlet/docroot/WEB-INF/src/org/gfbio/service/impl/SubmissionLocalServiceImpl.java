@@ -386,8 +386,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 					long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 
 					if (submissionid !=0)
-						try {submission = submissionPersistence.findByPrimaryKey(submissionid);} 
-						catch (SystemException | NoSuchModelException e) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+						try {
+							submission = submissionPersistence.findByPrimaryKey(submissionid);
+						} catch (SystemException | NoSuchModelException e) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
 
 					if (submission==null){
 
@@ -575,8 +576,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
 		Submission submission = null;
 		if (submissionid !=0)
-			try {submission = getSubmission(submissionid);}
-			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+			try {
+				submission = getSubmission(submissionid);
+			} catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
 
 		if (submission == null)
 			try {
@@ -605,8 +607,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
 		Submission submission = null;
 		if (submissionid !=0)
-			try {submission = getSubmission(submissionid);}
-			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+			try {
+				submission = getSubmission(submissionid);
+			} catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
 
 		if (submission == null)
 			try {
@@ -651,8 +654,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
 		Submission submission = null;
 		if (submissionid !=0)
-			try {submission = getSubmission(submissionid);}
-			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+			try {
+				submission = getSubmission(submissionid);
+			} catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
 
 		if (submission == null)
 			try {

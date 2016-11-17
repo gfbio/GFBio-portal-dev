@@ -7,7 +7,7 @@
 		<portlet id="archiving"></portlet>
 		<portlet id="back-to-su-ma"></portlet>
 		<portlet id="data-provider-managment"></portlet>
-		 <portlet id="dcrt"></portlet>
+		<portlet id="dcst"></portlet>
 		<portlet id="new-project"></portlet>
 		<portlet id="project-profile"></portlet>
 		<portlet id="submission-manager"></portlet>

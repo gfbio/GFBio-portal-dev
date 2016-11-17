@@ -104,8 +104,9 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 		Project_User relation = null;
 		Project_UserPK pk = new Project_UserPK(projectId, userId);
 
-		try {relation = project_UserPersistence.findByPrimaryKey(pk);} 
-		catch (NoSuchProject_UserException | SystemException e) {System.out.println("Entry in Project does not exist with 'projectId' "+projectId+ " and 'userid' " + userId + " and will be create now");}
+		try {
+			relation = project_UserPersistence.findByPrimaryKey(pk);
+		} catch (NoSuchProject_UserException | SystemException e) {System.out.println("Entry in Project does not exist with 'projectId' "+projectId+ " and 'userid' " + userId + " and will be create now");}
 
 		if (relation == null) {
 			relation = project_UserPersistence.create(pk);

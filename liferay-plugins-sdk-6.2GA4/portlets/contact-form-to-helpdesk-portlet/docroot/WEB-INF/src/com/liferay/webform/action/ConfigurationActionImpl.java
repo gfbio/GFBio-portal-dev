@@ -227,7 +227,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		boolean sendAsEmail = GetterUtil.getBoolean(
 			getParameter(actionRequest, "sendAsEmail"));
-		//String subject = getParameter(actionRequest, "subject");
+		String subject = getParameter(actionRequest, "subject");
 
 		boolean saveToDatabase = GetterUtil.getBoolean(
 			getParameter(actionRequest, "saveToDatabase"));
@@ -240,9 +240,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		if (sendAsEmail) {
-			/*if (Validator.isNull(subject)) {
+			if (Validator.isNull(subject)) {
 				SessionErrors.add(actionRequest, "subjectRequired");
-			}*/
+			}
 
 			String[] emailAdresses = WebFormUtil.split(
 				getParameter(actionRequest, "emailAddress"));

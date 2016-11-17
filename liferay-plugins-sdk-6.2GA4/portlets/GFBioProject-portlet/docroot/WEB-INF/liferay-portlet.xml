@@ -23,15 +23,17 @@
 			data-provider-managment-portlet
 		</css-class-wrapper>
 	</portlet>
-	 <portlet>
-		<portlet-name>dcrt</portlet-name>
+
+	<portlet>
+		<portlet-name>dcst</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
-		<css-class-wrapper>dcrt-portlet</css-class-wrapper>
+		<css-class-wrapper>dcst-portlet</css-class-wrapper>
      </portlet>
+	
 	<portlet>
 		<portlet-name>new-project</portlet-name>
 		<icon>/icon.png</icon>

@@ -31,10 +31,9 @@ label, input, button {
 	background-color: #eee;
 }
 #SemanticQueryButton{
-	background:url('../images/ico-search.png') no-repeat center center;
-	width:24px;
-	height:24px;
-	border: none;
+	background:url('../images/magnifierplus.png') no-repeat center center;
+    width:16px;
+	background-color: #eee;
 }
 
 span.hilight{
@@ -148,19 +147,4 @@ table.dataTable thead th{
 	background-color: transparent;
 	padding:0px 0px 0px 40px!important;
 	margin:0px !important;
-}
-
-#dialogFacet{
-	background-color:white;
-}
-
-.br-theme-bars-horizontal .br-widget {
-  width: 36px!important;
-}
-.br-theme-bars-horizontal .br-widget a {
-  width: 36px!important;
-}
-.br-theme-bars-horizontal .br-widget .br-current-rating {
-  width: 36px!important;
-  font-size: 12px!important;
 }

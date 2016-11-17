@@ -10,10 +10,6 @@
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
 	$theme.include($top_head_include)
-
-	#js ("http://code.jquery.com/jquery-1.11.1.min.js")
-	#js ("http://code.jquery.com/ui/1.11.2/jquery-ui.min.js")
-	
 </head>
 <!--<link href="https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">-->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
@@ -124,9 +120,14 @@ $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
 
-</body>
+
+
+#js ("$javascript_folder/jquery-1.11.1.min.js")
+#js ("$javascript_folder/jquery-1.11.2-ui.min.js")
+
 
 <script>
+
 
 (function($) {
     $(document).ready(function() {
@@ -159,4 +160,9 @@ $theme.include($bottom_include)
   })(jQuery);
   
 </script>
+
+
+
+</body>
+
 </html>

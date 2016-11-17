@@ -27,12 +27,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
-
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -196,10 +197,9 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		try {
 
 			// update basket
+
 			basket = basketPersistence.findByPrimaryKey(basketId);
-			long ownerId = basket.getUserID();
-			long currentUser = getLoggedInUserId();
-			if (isUserAdmin(currentUser) || ownerId == currentUser) {
+			if (isUserAdmin(userId)) {
 				basket.setUserID(userId);
 				basket.setName(name);
 				Date now = new java.util.Date();
@@ -208,7 +208,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basket.setQueryJSON(queryJSON);
 				super.updateBasket(basket);
 			} else {
-				System.out.println("This user has no rights. Operation aborted.");
+				System.out.println("No admin rights. Operation aborted.");
 			}
 
 		} catch (NoSuchBasketException e) {
@@ -229,16 +229,13 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return basket.getBasketID();
 	}
 
-	public Basket removeBasket(long basketId) throws SystemException, NoSuchModelException {
+	public Basket removeBasket(long basketId, long userId) throws SystemException, NoSuchModelException {
 		Basket basket = null;
 		try {
-			basket = basketPersistence.findByPrimaryKey(basketId);
-			long ownerId = basket.getUserID();
-			long userId = getLoggedInUserId();
-			if (isUserAdmin(userId) || ownerId == userId) {
+			if (isUserAdmin(userId)) {
 				basket = basketPersistence.remove(basketId);
 			} else {
-				System.out.println("This user has no rights. Operation aborted.");
+				System.out.println("No admin rights. Operation aborted.");
 			}
 
 		} catch (Exception e) {
@@ -321,23 +318,6 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			e.printStackTrace();
 		}
 		return isAdmin;
-	}
-
-	public static long getLoggedInUserId() {
-		try {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
-			if (null == serviceContext) {
-				System.out.println("ServiceContext is unavailable, returning default user");
-				long companyId = PortalUtil.getDefaultCompanyId();
-				long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
-				return defaultUserId;
-			}
-
-			return serviceContext.getUserId();
-		} catch (Exception e) {
-			System.out.println(e);
-			return 0;
-		}
 	}
 
 	public Map<Long, String> getBasketUsersIds(long userId) throws Exception {
@@ -452,6 +432,21 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		long userID = PrincipalThreadLocal.getUserId();
 		String token = UserSSOServiceUtil.getToken(userID);
 		return token;
+	}
+
+	private static String encryptText(String text) {
+		String sha1 = "";
+		try {
+			MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+			crypt.reset();
+			crypt.update(text.getBytes("UTF-8"));
+			sha1 = byteToHex(crypt.digest());
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return sha1;
 	}
 
 	private static String byteToHex(final byte[] hash) {

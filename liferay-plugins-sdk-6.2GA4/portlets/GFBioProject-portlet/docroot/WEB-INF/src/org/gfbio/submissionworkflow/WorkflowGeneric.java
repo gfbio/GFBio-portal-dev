@@ -184,7 +184,7 @@ public class WorkflowGeneric extends GenericPortlet {
         try {
 
             URL url = new
-            URL("http://c103-170.cloud.gwdg.de/brokerage/submissions/generic");
+            URL("http://c103-170.cloud.gwdg.de/brokerage/submissions/pangaea");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
             conn.setDoInput(true);
@@ -405,7 +405,7 @@ public class WorkflowGeneric extends GenericPortlet {
         	fields.put("customfield_10202", license);
         }
 	      
-        //fields.put("fooo", "fooo");
+        fields.put("fooo", "fooo");
 	      
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("submitterid"));

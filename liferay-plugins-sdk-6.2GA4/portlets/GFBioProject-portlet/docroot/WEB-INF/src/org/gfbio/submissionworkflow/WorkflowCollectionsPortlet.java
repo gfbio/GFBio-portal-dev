@@ -414,15 +414,15 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         
         
         //ticket basic informations
-        //project.put("key", "DSUB");
-        project.put("key", "SAND");
+        project.put("key", "DSUB");
+        //project.put("key", "SAND");
         fields.put("project", project);
         issuetype.put("name", "Data Submission");
         fields.put("issuetype", issuetype);	
         reporter.put("name", submitterJson.get("emailaddress"));
         fields.put("reporter", reporter);	
-        fields.put("customfield_10010", "sand"+"/"+"collection-data2");
-        //fields.put("customfield_10010", "dsub"+"/"+"collection");
+        //fields.put("customfield_10010", "sand"+"/"+"collection-data2");
+        fields.put("customfield_10010", "dsub"+"/"+"collection");
         fields.put("summary", "Automated Data Submission");
 
         
