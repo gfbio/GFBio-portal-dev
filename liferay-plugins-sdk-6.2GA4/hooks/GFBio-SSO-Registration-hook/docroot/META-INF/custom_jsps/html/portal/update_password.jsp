@@ -102,11 +102,9 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 			</aui:fieldset>
 
 			<div class="portlet-msg-info">
-				Please be informed that this credential will be applied to <a
-					href="https://helpdesk.gfbio.org/servicedesk/customer/portals">Help
-					Center (JIRA)</a>.</br> If you already have a JIRA account, please use this
-				password.</br> In case you registered with JIRA with a different
-				email, please contact us.
+			Please note that you can use the same username and password to access the GFBio Help Center. </br>
+			If you already have a Help Center account with a different email, please <a
+			href="//helpdesk.gfbio.org/servicedesk/customer/portal/5/create/50">contact us</a>.
 			</div>
 
 			<aui:button-row>
