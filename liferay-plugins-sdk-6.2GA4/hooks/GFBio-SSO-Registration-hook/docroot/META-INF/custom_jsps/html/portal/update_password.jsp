@@ -101,7 +101,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 				<aui:input class="lfr-input-text-container" label="enter-again" name="password2" type="password" />
 			</aui:fieldset>
 
-			<div class="portlet-msg-info">
+			<div class="portlet-msg-info">	
 			Please note that you can use the same username and password to access the GFBio Help Center. </br>
 			If you already have a Help Center account with a different email, please <a
 			href="//helpdesk.gfbio.org/servicedesk/customer/portal/5/create/50">contact us</a>.
