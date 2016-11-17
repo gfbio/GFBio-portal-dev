@@ -10,6 +10,15 @@
 	</natures>
 	<filteredResources>
 		<filter>
+			<id>1479384558115</id>
+			<name>hooks</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-GFBio-SSO-Registration-hook</arguments>
+			</matcher>
+		</filter>
+		<filter>
 			<id>1470043681538</id>
 			<name>layouttpl</name>
 			<type>10</type>
@@ -133,6 +142,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-true-false-GFBioProject-portlet</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1478595945652</id>
+			<name>portlets</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-true-false-contact-form-to-helpdesk-portlet</arguments>
 			</matcher>
 		</filter>
 		<filter>
