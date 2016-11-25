@@ -1,5 +1,5 @@
-var searchAPI = 'http://ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
-var TSAPI = "http://terminologies.gfbio.org/api/terminologies/";
+var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
 var cartDiv = "<div id='cart' class='cart_unselected' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 
@@ -24,7 +24,7 @@ function setAutoComplete() {
 		minLength : 1,
 		delay : 0,
 		source : function (request, response) {
-			$.ajax('http://ws.pangaea.de/es/portals/_suggest', {
+			$.ajax('//ws.pangaea.de/es/portals/_suggest', {
 				contentType : 'application/json; charset=UTF-8',
 				type : 'POST',
 				data : JSON.stringify({
@@ -428,15 +428,11 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 
 	if (yearRange == "") {
 		if (filterArray != "") {
-			filterObj = {
-				"and" : {
-					"filters" : filterArray
-				}
-			};
+			filterObj = filterArray;
 		} else {
 			return {
-				"filtered" : {
-					"query" : queryObj
+				"bool" : {
+					"must" : queryObj
 				}
 			};
 		}
@@ -445,24 +441,21 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		var minYear = yearRange.substring(0, splitPos);
 		var maxYear = yearRange.substring(splitPos + 3);
 		console.log(minYear + "-" + maxYear);
-		filterObj = [{
-				"and" : {
-					"filters" : filterArray
-				}
-			}, {
+		yearFilter = {
 				"range" : {
 					"citation_yearFacet" : {
 						"gte" : minYear,
 						"lte" : maxYear
 					}
 				}
-			}
-		]
+			};
+		filterObj = filterArray;
+		filterObj.push(yearFilter);
 	}
 
 	return {
-		"filtered" : {
-			"query" : queryObj,
+		"bool" : {
+			"must" : queryObj,
 			"filter" : filterObj
 		}
 	};
@@ -1267,8 +1260,7 @@ function XMLtoJSON() {
 						if (content!=""){
 							js_obj = content;
 						}
-					}
-					else
+					} else
 						js_obj[nodeName] = setJsonObj(item);
 				} else {
 					if (typeof(js_obj[nodeName].push) == "undefined") {

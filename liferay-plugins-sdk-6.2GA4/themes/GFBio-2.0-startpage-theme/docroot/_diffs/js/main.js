@@ -205,6 +205,26 @@ AUI().ready(
 		        }
 		        
 		    );}
+
+		/*
+		 * #965 Responsive layout: second tier menu is not working on mobile
+		 * device
+		 */
+		$('.dropdown').on('mouseenter mouseleave', function() {
+			if ($(document).width() > 979){
+				$(this).toggleClass("open");
+			}
+		});
+		$('.dropdown').on('tap', function() {
+			if ($(document).width() <= 979){
+			$(this).toggleClass("open");
+			}
+		});
+		$('.dropdown').on('click', function() {
+			if ($(document).width() <= 979){
+			$(this).toggleClass("open");
+			}
+		});
 		// clear all the extension class from mobile responsive layout
 		window.onresize = function(event) {
 		    var navigationDiv = $('#nav'); // get default navigation ul element

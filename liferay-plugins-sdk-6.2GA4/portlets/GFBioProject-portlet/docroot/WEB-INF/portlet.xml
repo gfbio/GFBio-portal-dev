@@ -100,13 +100,13 @@
 		</security-role-ref>
 	</portlet>
 	
-	<portlet>
-		<portlet-name>dcst</portlet-name>
-		<display-name>DataCenterSelectionTool</display-name>
-		<portlet-class>org.gfbio.idmg.dcst.DCSTPortlet</portlet-class>
+	 <portlet>
+		<portlet-name>dcrt</portlet-name>
+		<display-name>Data Center Recommendation Tool</display-name>
+		<portlet-class>org.gfbio.idmg.dcrt.DCRTPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
-			<value>/html/dcst/view.jsp</value>
+			<value>/html/dcrt/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -114,8 +114,8 @@
 			<portlet-mode>view</portlet-mode>
 		</supports>
 		<portlet-info>
-			<title>DataCenterSelectionTool</title>
-			<short-title>DCST</short-title>
+			<title>Data Center Recommendation Tool</title>
+			<short-title>DCRT</short-title>
 			<keywords/>
 		</portlet-info>
 		<security-role-ref>
@@ -130,7 +130,7 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
-	</portlet> <!--End DCST Portlet  -->
+	</portlet>
 	
 	<portlet>
 		<portlet-name>new-project</portlet-name>

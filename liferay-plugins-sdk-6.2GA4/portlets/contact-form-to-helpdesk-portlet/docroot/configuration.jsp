@@ -74,7 +74,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 				<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />
 				<liferay-ui:error key="fileNameInvalid" message="please-enter-a-valid-path-and-file-name" />
 				<liferay-ui:error key="handlingRequired" message="please-select-an-action-for-the-handling-of-form-data" />
-				<liferay-ui:error key="subjectRequired" message="please-enter-a-subject" />
+				<!--<liferay-ui:error key="subjectRequired" message="please-enter-a-subject" />-->
 
 				<aui:input label="send-as-email" name="preferences--sendAsEmail--" type="checkbox" value="<%= sendAsEmail %>" />
 
@@ -86,7 +86,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
  --%>
 				<aui:input cssClass="lfr-input-text-container" helpMessage="add-email-addresses-separated-by-commas" label="addresses-to" name="preferences--emailAddress--" value="<%= emailAddress %>" />
 
-				<aui:input cssClass="lfr-input-text-container" name="preferences--subject--" value="<%= subject %>" />
+				<!--<aui:input cssClass="lfr-input-text-container" name="preferences--subject--" value="<%= subject %>" />-->
 
 			</aui:fieldset>
 

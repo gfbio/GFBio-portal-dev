@@ -69,25 +69,27 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 		log.info("Hook on update user.");
 		User user = super.getUser(userId);
 		try {
-			if (!isReservedEmail(user)) {
+//			if (!isReservedEmail(user)) {
 				// If the email is used by the backend (e.g. Portal mail
-				// settings),
-				// the password should not be updated
-				user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
-						reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
-						languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId,
-						male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-						msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
-						userGroupRoles, userGroupIds, serviceContext);
-				log.info("breakpoint 0");
-			}
-			if (newPassword1.trim() != "" && newPassword1 != null) {
+				// settings), the password should not be updated
+//			}
+			user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
+					reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
+					languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId,
+					male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
+					msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+					userGroupRoles, userGroupIds, serviceContext);
+			log.info("breakpoint 0");
+			if (newPassword1.trim() != "" && newPassword1 != null && 
+					newPassword1!=newPassword2) {
 				updatePassword(userId, newPassword1, newPassword2, false);
 				log.info("breakpoint 1");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.info("breakpoint 2");
 			log.error(e.toString());
+			return null;
 		}
 
 		return user;
@@ -101,6 +103,7 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 		User user = super.getUser(userId);
 		try {
 			LDAPaddUser(user, password1);
+			URLBasicAuth.urlAuth(user.getEmailAddress(), password1);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.toString());
@@ -125,7 +128,7 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 		givenName.add(user.getFirstName());
 		surname.add(user.getLastName());
 		email.add(user.getEmailAddress());
-		pwd.add(encrypt(password));
+		pwd.add(encryptSHA(password));
 		for (int i = 0; i < organizations.size(); i++) {
 			log.info("Organizations: " + organizations.get(i).getName());
 			jobTitle.add(organizations.get(i).getName());
@@ -172,8 +175,11 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 						new java.util.Date());
 				return true;
 			}
-
+			log.info("check point x");
 			ctx.createSubcontext(fullCN, attrs);
+			log.info("AddUser: added entry x " + fullCN + ".");
+			UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
+			return true;
 		} catch (InvalidAttributeValueException e) {
 			log.info("AddUser: added entry " + fullCN + ".");
 			log.info(attrs);
@@ -188,7 +194,7 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 		return false;
 	}
 
-	public static String encrypt(String pwdPlainText) throws Exception {
+	public static String encryptSHA(String pwdPlainText) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA");
 		md.update(pwdPlainText.getBytes("UTF8"));
 
@@ -198,6 +204,7 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 		return result;
 	}
 
+	
 	public boolean isReservedEmail(User user) throws Exception {
 		long companyId = user.getCompanyId();
 		String emailAddress = user.getEmailAddress();
