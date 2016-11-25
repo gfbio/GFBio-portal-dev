@@ -237,10 +237,10 @@ public class WorkflowEnvironmental extends GenericPortlet {
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
     	
-/*    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
+    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
     	System.out.println(requestJson);
     	System.out.println(projectJson);
-    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");*/
+    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
 
     	JSONObject researchObjectJson = new JSONObject();
     	researchObjectJson = (JSONObject) projectJson.get("researchobjects");
@@ -333,7 +333,7 @@ public class WorkflowEnvironmental extends GenericPortlet {
         	fields.put("customfield_10202", license);
         }
 	      
-        //fields.put("fooo", "fooo");
+        fields.put("fooo", "fooo");
 	      
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("submitterid"));
@@ -341,9 +341,9 @@ public class WorkflowEnvironmental extends GenericPortlet {
         catch (IOException | PortletException e) {e.printStackTrace();}
        
 	
-/*        System.out.println("---------------------");
+        System.out.println("---------------------");
         System.out.println("submission: "+json);
-        System.out.println("---------------------");*/
+        System.out.println("---------------------");
 	      
         String response = json.toJSONString();
         response = response.replaceAll("\\\\", "");

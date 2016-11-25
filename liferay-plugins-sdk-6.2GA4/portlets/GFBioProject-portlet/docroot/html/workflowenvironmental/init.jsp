@@ -347,6 +347,8 @@
 		
 		data["path"]= document.getElementById("ewf_user_path").innerHTML;
 
+		console.log(data);
+		
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowEnvironmentalPortlet'),

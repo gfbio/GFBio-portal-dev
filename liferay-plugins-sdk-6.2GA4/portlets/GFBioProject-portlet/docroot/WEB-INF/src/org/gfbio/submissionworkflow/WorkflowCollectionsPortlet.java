@@ -5,16 +5,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -92,31 +88,36 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
     //
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
-		System.out.println("Schranke 1");
 		response.setContentType("text/html");
-		System.out.println(request.getResourceID());
-		System.out.println(request.getAttributeNames().toString());
-		System.out.println(request.getPortletInputStream().toString());
+		
+/*		System.out.println();
+		System.out.println("-----------------------------------------");
+		System.out.println("01 "+request.getContentLength());
+		System.out.println("02 "+request.getContentType());
+		System.out.println("03 "+request.getCharacterEncoding());
+		System.out.println("04 "+request.getMethod());
+		System.out.println("05 "+request.getResourceID());
+		System.out.println("06 "+request.getResponseContentType());
+		System.out.println("07 "+request.getRemoteUser());
+		System.out.println("08 "+request.getResourceID());
+		System.out.println("09 "+request.isRequestedSessionIdValid());
+		System.out.println("10 "+request.getAttributeNames().toString());
+		System.out.println("11 "+request.getParameterMap().keySet());
+		System.out.println("12 "+request.getPortletSession());
+		System.out.println("13 "+request.getPrivateParameterMap().keySet().toString());
+		System.out.println("14 "+request.getPublicParameterMap().keySet().toString());
+		System.out.println("15 "+request.getPropertyNames());
+		System.out.println("16 "+request.getPropertyNames().toString());
+		System.out.println("-----------------------------------------");		
+		System.out.println();	*/	
+		
 
-		System.out.println(request.getResponseContentTypes());
-		System.out.println(request.getContentLength());
-
-		System.out.println(request.getScheme());
-		System.out.println(request.toString());
-		System.out.println(request.getParameterMap().keySet().toString());
-		
-		
-			
-		
 		if (request.getParameter("responseTarget") != null) {
-			
-			System.out.println("Schranke 2");
-			
-			//
+					
+/*			//
 			if ("uploadfile".toString().equals(request.getParameter("responseTarget").toString())){
 				uploadFile(request, response);			
-			}
-			
+			}*/
 			
 			//
 			if ("createproject".toString().equals(request.getParameter("responseTarget").toString()))
@@ -159,85 +160,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 				startSubmission(request, response);
 
 		}else{
-			System.out.println("Schranke 4");
-			
-			File file = null;
-			file = new File("test");
-			
-			final HttpServletRequest originalHttpServletRequest = getOriginalHttpServletRequest(request);
-		    final boolean multipartContent = FileUploadBase.isMultipartContent(new ServletRequestContext(originalHttpServletRequest));
-		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getAttributeNames().toString());
-		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getCharacterEncoding());
-		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getContentLength());
-		    System.out.println("Schranke 4 1 "+originalHttpServletRequest.getContentType());
-		    
-		    if (multipartContent) {
-		    	
-		    	System.out.println("Schranke 4 2 "+multipartContent);
-		    	
-		    	// Create a factory for disk-based file items
-		        DiskFileItemFactory factory = new DiskFileItemFactory();
-		        
-		        System.out.println("Schranke 4 3");
-		        // Set factory constraints
-		        factory.setSizeThreshold(10000000);
-		        factory.setRepository(file);
-		        
-		        System.out.println("Schranke 4 4 "+factory.toString());
-		        
-		        // Create a new file upload handler
-		        ServletFileUpload upload = new ServletFileUpload(factory);
-		        
-		        System.out.println("Schranke 4 5 " + upload.toString());
-		            
-		        // Set overall request size constraint
-		        upload.setSizeMax(10000000);
-
-		        System.out.println("Schranke 4 6");
-		        
-		        List<FileItem> items = null;
-		        try {
-		        	System.out.println("Schranke 4 6 1");
-		        	items = upload.parseRequest(originalHttpServletRequest);
-		        	System.out.println("Schranke 4 6 2");
-		        } catch (FileUploadException e1) {
-		        	// TODO Auto-generated catch block
-		        	e1.printStackTrace();
-		        }
-		        
-		        System.out.println("Schranke 4 7");
-
-		        // Process the uploaded items
-		        Iterator<FileItem> iter = items.iterator();
-		        while (iter.hasNext()) {
-		        	
-			        System.out.println("Schranke 4 8 " +iter);
-		        	
-		        	FileItem thisItem = (FileItem) iter.next();
-		        	final String fieldName = thisItem.getFieldName();
-		        	
-			        System.out.println("Schranke 4 9 " +fieldName );
-		        	
-		        	// if an element is a form field
-		        	if (thisItem.isFormField()) {
-		        		
-				        System.out.println("Schranke 4 10");
-				        
-		        		if (fieldName.equals("yourfieldformparam")) {
-		    		        System.out.println("Schranke 4 11");
-		        			String value = thisItem.getString();
-		        			
-		        			// Do something with the value
-		        		}
-		        	} else {
-
-				        File fileOut = new File("C:/Users/froemm/Desktop/Neuer Ordner (2)/".concat(thisItem.getName()));
-		        		fileOut.deleteOnExit();
-		        		try {thisItem.write(fileOut);} 
-		        		catch (Exception e) {e.printStackTrace();}
-		        	}
-		        }
-		    }
+			uploadFile(request, response);
 		}
 	}
 	
@@ -246,7 +169,6 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 	
 	
 	public HttpServletRequest getOriginalHttpServletRequest(PortletRequest request) {
-		System.out.println("Schranke 4 0");
         return PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request));
     }
 	
@@ -437,6 +359,66 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 	}
 	
 	
+	
+	public void uploadFile (ResourceRequest request, ResourceResponse response){
+		
+		File file = null;
+		file = new File("test");
+		final HttpServletRequest originalHttpServletRequest = getOriginalHttpServletRequest(request);
+	    final boolean multipartContent = FileUploadBase.isMultipartContent(new ServletRequestContext(originalHttpServletRequest));
+
+	    
+	    if (multipartContent) {
+	    	    	
+	        DiskFileItemFactory factory = new DiskFileItemFactory();
+	        factory.setSizeThreshold(10000000);
+	        factory.setRepository(file);
+	        ServletFileUpload upload = new ServletFileUpload(factory);
+	        upload.setSizeMax(10000000);
+	        
+	        List<FileItem> items = null;
+	        try {items = upload.parseRequest(originalHttpServletRequest);}
+	        catch (FileUploadException e1) {e1.printStackTrace(); }
+	        
+	        System.out.println(items.size());
+	        System.out.println(originalHttpServletRequest.getContentLength());
+	        System.out.println(originalHttpServletRequest.getContextPath());
+	        System.out.println(originalHttpServletRequest.getLocalName());
+	        System.out.println(originalHttpServletRequest.getParameterNames().toString());
+	        System.out.println(originalHttpServletRequest.getParameterMap().keySet().toString());
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_state"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_lifecycle"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_resource_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_l_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_col_count"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_col_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_cacheability"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_mode"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_v_l_s_g_id"));
+	        
+	        Iterator<FileItem> iter = items.iterator();
+	        while (iter.hasNext()) {
+	        	
+	        	FileItem thisItem = (FileItem) iter.next();
+//	        	final String fieldName = thisItem.getFieldName();
+
+	        	if (thisItem.isFormField()) {
+			        
+/*	        		if (fieldName.equals("yourfieldformparam")) {
+	        			String value = thisItem.getString();
+	        		}*/
+	        	} else {
+			        File fileOut = new File("C:/Users/froemm/Desktop/Neuer Ordner (2)/".concat(thisItem.getName()));
+	        		fileOut.deleteOnExit();
+	        		try {thisItem.write(fileOut);} 
+	        		catch (Exception e) {e.printStackTrace();}
+	        	}
+	        }
+	    }
+	}
+
+	
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -503,11 +485,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
-    	
-/*    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
-    	System.out.println(projectJson);
-    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");*/
-    	
+    	    	
 		JSONObject submitterJson = new JSONObject();
     	submitterJson = UserExtensionLocalServiceUtil.getUserExtentionById((JSONObject) requestJson.get("submissionregistry"));
     	
@@ -554,12 +532,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         fields.put("customfield_10010", "sand"+"/"+"collection-data2");
         //fields.put("customfield_10010", "dsub"+"/"+"collection");
         fields.put("summary", "Automated Data Submission");
-
-        
-        //project informations
-        
-        //project id
-        
+     
         //project id
         if (projectJson.containsKey("projectid"))
         	if (!(String.valueOf((long) projectJson.get("projectid"))).equals("0"));
@@ -723,13 +696,9 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		
 	      }
 	      
-	      //fields.put("fooo", "fooo");
-	      
 	      json.put("fields", fields);
-	
-/*	      System.out.println("---------------------");
-	      System.out.println("submission: "+json);
-	      System.out.println("---------------------");*/
+
+	      System.out.println(json.toString());
 	      
 	      String response = json.toJSONString();
 	      response = response.replaceAll("\\\\", "");
@@ -737,9 +706,6 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 	     return response;
     }
 	
-    
-    public void uploadFile (ResourceRequest request, ResourceResponse response){
-    	System.out.println("Schranke 3");
-    }
+
 	
 }
