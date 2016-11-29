@@ -36,7 +36,6 @@ import com.liferay.portal.util.PortalUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,7 +186,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return jBasketIdList;
 	}
 
-	// update or create a new project
+	// update or create a new basket
 
 	public long updateBasket(long basketId, long userId, String name, String basketContent, String queryJSON)
 			throws SystemException {
@@ -323,7 +322,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return isAdmin;
 	}
 
-	public static long getLoggedInUserId() {
+	public long getLoggedInUserId() {
 		try {
 			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 			if (null == serviceContext) {
@@ -430,7 +429,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		// 4 : unknown error ;
 		int auth = UserSSOServiceUtil.authenticateToken(token, userID);
 		System.out.println("This user is admin");
-		User user = UserLocalServiceUtil.getUser(userID);
+		// User user = UserLocalServiceUtil.getUser(userID);
 		// PermissionChecker checker =
 		// PermissionCheckerFactoryUtil.create(user);
 		// boolean isSigned = checker.isSignedIn();
@@ -454,13 +453,13 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		return token;
 	}
 
-	private static String byteToHex(final byte[] hash) {
-		Formatter formatter = new Formatter();
-		for (byte b : hash) {
-			formatter.format("%02x", b);
-		}
-		String result = formatter.toString();
-		formatter.close();
-		return result;
-	}
+//	private static String byteToHex(final byte[] hash) {
+//		Formatter formatter = new Formatter();
+//		for (byte b : hash) {
+//			formatter.format("%02x", b);
+//		}
+//		String result = formatter.toString();
+//		formatter.close();
+//		return result;
+//	}
 }
