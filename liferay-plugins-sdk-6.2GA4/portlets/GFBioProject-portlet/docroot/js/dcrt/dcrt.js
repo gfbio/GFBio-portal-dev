@@ -1,65 +1,64 @@
-/////////////////////////////////////////   hide/show scripts  //////////////////////////////////////////////
+/*global $*/
 
 //
-function hideswitch(i,j) {
-	visibleStateChoose(i);
-	visibleStateChoose(j);
-};
+function show(j) {
+	'use strict';
+	
+	$(j).show();
+}
+
+//
+function hide(j) {
+    'use strict';
+    
+	$(j).hide();
+	$('[name="' + j + '"]').each(function () {
+        this.checked = false;
+    });
+}
+
+//
+function hideswitch(i, j) {
+    'use strict';
+    
+	$(i).toggle();
+	$(j).toggle();
+}
 
 
 //
 function showhide(j) {
-	visibleStateChoose(j);
-};
-
-//
-function visibleStateChoose(j) {
-	(document.getElementById(j).className=="swHide") ? visibleShow(j) : visibleHide(j);
-}
-
-
-//
-function visibleShow(j) {
-	document.getElementById(j).className = "swMain";
-};
-
-
-//
-function visibleHide(j) {
-	document.getElementById(j).className = "swHide";
-	var ele = document.getElementsByName(j);
-    for(var i=0;i<ele.length;i++) {
-        ele[i].checked = false;
-    }
-};
-
-//
-function visibleHideMore(elements) {
-    elements = elements.length ? elements : [elements];
-    for (var index = 0; index < elements.length; index++) {
-        visibleHide(elements[index]);
-    }
+    'use strict';
+    
+	$(j).toggle();
 }
 
 //
 function hideFirstLevelLeft() {
-	visibleHide('materialSelection');
-    visibleHideMore(['taxon', 'alive']);
+    'use strict';
+    
+	hide('#materialSelection');
+	hide('#taxon');
+	hide('#alive');
 }
 
 
 //
 function hideFirstLevelRight() {
-	visibleHide('categorySelection');
-    visibleHide('sequenced');
+    'use strict';
+    
+	hide('#categorySelection');
+    hide('#sequenced');
 }
 
 //
-function hideCategory(selection) {
-	if (selection == "noselection") {
-		document.getElementById("categories").className = "swHide";
-	}
-}
+//function hideCategory(selection) {
+//    'use strict';
+//    
+//	if (selection === "noselection") {
+//		hide('#categories');
+//	}
+//}
 
 //
 //function categoryalert(label) {

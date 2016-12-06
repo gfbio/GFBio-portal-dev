@@ -132,6 +132,38 @@
 		</security-role-ref>
 	</portlet>
 	
+    <portlet>
+		<portlet-name>dmpt</portlet-name>
+		<display-name>Data Management Plan Tool</display-name>
+		<portlet-class>org.gfbio.idmg.dmpt.DMPTPortlet</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/dmpt/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>Data Management Plan Tool</title>
+			<short-title>DMPT</short-title>
+			<keywords/>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+    
 	<portlet>
 		<portlet-name>new-project</portlet-name>
 		<display-name>GFBio New Project</display-name>

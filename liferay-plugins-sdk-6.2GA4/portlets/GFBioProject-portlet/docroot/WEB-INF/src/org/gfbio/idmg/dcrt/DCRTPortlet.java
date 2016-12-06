@@ -95,7 +95,7 @@ public class DCRTPortlet extends MVCPortlet {
 			ResourceResponse resourceResponse) throws IOException,
 			PortletException {
 		//Category-DropDown Selection
-		String category = resourceRequest.getParameter("val");
+		String category = resourceRequest.getParameter("category");
 		_log.info("Category " + category);
 		//Radio-Inputs
 		String physical = resourceRequest.getParameter("physical");
@@ -132,8 +132,18 @@ public class DCRTPortlet extends MVCPortlet {
 		//Material-DropDown Selection
 		String material = resourceRequest.getParameter("material");
 		_log.info("Material " + material);
+		//Radio-Inputs
+		String physical = resourceRequest.getParameter("physical");
+		String taxon = resourceRequest.getParameter("taxon");
+		String alive = resourceRequest.getParameter("alive");
+		String sequenced = resourceRequest.getParameter("sequenced");
 		
-		List <DataProvider> recommendedProviders = setRecommendedProvidersForMaterial(material);
+		List <DataProvider> recommendedProviders;
+		if (material.equals("noselection")) {
+			recommendedProviders = setRecommendedProviders(physical, taxon, alive, sequenced);
+		} else {
+			recommendedProviders = setRecommendedProvidersForMaterial(material);
+		}
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
@@ -365,103 +375,103 @@ public class DCRTPortlet extends MVCPortlet {
 		List<DataProvider> allProviders = getDataProviders();
 		List<DataProvider> recommendedProviders = new ArrayList<>();
 		
-		if (material.equals(GMaterial.BOTANICAL)) {
+		if (material.equals(GMaterial.BOTANICAL.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isBotanicalObjects()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.BOTANICAL_DNA)) {
+		} else if (material.equals(GMaterial.BOTANICAL_DNA.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isBotanicalDnaSamples()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.BOTANICAL_ETHANOL)) {
+		} else if (material.equals(GMaterial.BOTANICAL_ETHANOL.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isBotanicalObjectsInEthanol()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.BOTANICAL_MICROSCOPIC)) {
+		} else if (material.equals(GMaterial.BOTANICAL_MICROSCOPIC.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isBotanicalMicroscopicSlides()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.BOTANICAL_TISSUE)) {
+		} else if (material.equals(GMaterial.BOTANICAL_TISSUE.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isBotanicalTissueObjects()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL)) {
+		} else if (material.equals(GMaterial.MYCOLOGICAL.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isMycologicalObjects()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_DNA)) {
+		} else if (material.equals(GMaterial.MYCOLOGICAL_DNA.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isMycologicalDnaSamples()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_ETHANOL)) {
+		} else if (material.equals(GMaterial.MYCOLOGICAL_ETHANOL.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isMycologicalObjectsInEthanol()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_MICROSCOPIC)) {
+		} else if (material.equals(GMaterial.MYCOLOGICAL_MICROSCOPIC.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isMycologicalMicroscopicSlides()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_TISSUE)) {
+		} else if (material.equals(GMaterial.MYCOLOGICAL_TISSUE.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isMycologicalTissueObjects()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.PALEONTOLOGICAL)) {
+		} else if (material.equals(GMaterial.PALEONTOLOGICAL.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isPaleontologicalObjects()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL)) {
+		} else if (material.equals(GMaterial.ZOOLOGICAL.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isZoologicalObjects()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_DNA)) {
+		} else if (material.equals(GMaterial.ZOOLOGICAL_DNA.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isZoologicalDnaSamples()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_ETHANOL)) {
+		} else if (material.equals(GMaterial.ZOOLOGICAL_ETHANOL.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isZoologicalObjectsInEthanol()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_MICROSCOPIC)) {
+		} else if (material.equals(GMaterial.ZOOLOGICAL_MICROSCOPIC.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isZoologicalMicroscopicSlides()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_TISSUE)) {
+		} else if (material.equals(GMaterial.ZOOLOGICAL_TISSUE.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isZoologicalTissueObjects()) {
 					recommendedProviders.add(d);
 				}
 			}
-		} else if (material.equals(GMaterial.OTHER_OBJECTS)) {
+		} else if (material.equals(GMaterial.OTHER_OBJECTS.toString())) {
 			for (DataProvider d : allProviders) {
 				if (d.isOtherObjects()) {
 					recommendedProviders.add(d);

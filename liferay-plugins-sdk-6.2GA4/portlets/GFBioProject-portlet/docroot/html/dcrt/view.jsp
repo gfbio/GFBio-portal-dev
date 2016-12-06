@@ -1,7 +1,6 @@
 <%@ include file="/html/dcrt/init.jsp" %>
 
 <script  src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"       type="text/javascript"></script> <!--  dcrt.js  imports -->
-<%-- <script  src="<%=request.getContextPath()%>/js/jquery-1.12.3.min.js"       type="text/javascript"></script>   --%>
 <link href="<%=request.getContextPath()%>/css/dcrt.css" rel="stylesheet" type="text/css"> <!-- dcrt.css imports -->
 
 
@@ -13,6 +12,7 @@
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
+<portlet:resourceURL var="ajaxUrlMaterial" id="material" />
 <portlet:resourceURL var="ajaxUrlContact" id="contact" />
 <portlet:resourceURL var="ajaxUrlSubmission" id="submission" />
 <portlet:resourceURL var="ajaxUrlDetails" id="details" />
@@ -56,15 +56,13 @@ $(document).ready(function () {
 	$("input[type='radio']").click(function () {
     
 
-   	    document.getElementById("category").selectedIndex = 0;   	
+   	    $("#category").val("default");
+   	    $("#material").val("default");
+   	    
     	physicalval = $("input[name='physical']:checked").val();
     	taxonval = $("input[name='taxon']:checked").val();
     	aliveval = $("input[name='alive']:checked").val();
     	sequencedval = $("input[name='sequenced']:checked").val();
-     	console.log(physicalval);
-     	console.log(taxonval);
-     	console.log(aliveval);
-     	console.log(sequencedval);
     	
     	var response = '';
         $.ajax({
@@ -78,7 +76,7 @@ $(document).ready(function () {
 		            },
 		            success: function(text) {
 	                     response = text;
-	                     document.getElementById("result").innerHTML = response;
+	                     $("#result").html(response);
 	                     //ajaxForContactButtons();
 	                     //ajaxForSubmissionButtons();
 	                }
@@ -88,26 +86,21 @@ $(document).ready(function () {
 
  
 $(document).ready(function () {
-    $(document.getElementById("category")).on('change', function () {
+    $($("#category")).on('change', function () {
     	   
-    	var e = document.getElementById("category");
-    	var category = e.options[e.selectedIndex].value;
+    	var category = $("#category").val();
     	
     	physicalval = $("input[name='physical']:checked").val();
     	taxonval = $("input[name='taxon']:checked").val();
     	aliveval = $("input[name='alive']:checked").val();
     	sequencedval = $("input[name='sequenced']:checked").val();
-    	console.log(physicalval);
-     	console.log(taxonval);
-     	console.log(aliveval);
-     	console.log(sequencedval);
     	
     	var response = '';
         $.ajax({
 		            "method": "POST",
 		            "url": '<%=ajaxUrlCategory%>',
 		            "data": {
-		            	"<portlet:namespace />val": category,
+		            	"<portlet:namespace />category": category,
 		            	"<portlet:namespace />physical": physicalval,
 		            	"<portlet:namespace />taxon": taxonval,
 		            	"<portlet:namespace />alive": aliveval,
@@ -115,7 +108,39 @@ $(document).ready(function () {
 		            },
 		            success: function(text) {
 	                     response = text;
-	                     document.getElementById("result").innerHTML = response;
+	                     $("#result").html(response);
+	                     //ajaxForContactButtons();
+	                     //ajaxForSubmissionButtons();
+	                }
+	               
+        });
+    });
+});
+
+$(document).ready(function () {
+    $($("#material")).on('change', function () {
+    	   
+    	var material = $("#material").val();
+    	
+    	physicalval = $("input[name='physical']:checked").val();
+    	taxonval = $("input[name='taxon']:checked").val();
+    	aliveval = $("input[name='alive']:checked").val();
+    	sequencedval = $("input[name='sequenced']:checked").val();
+    	
+    	var response = '';
+        $.ajax({
+		            "method": "POST",
+		            "url": '<%=ajaxUrlMaterial%>',
+		            "data": {
+		            	"<portlet:namespace />material": material,
+		            	"<portlet:namespace />physical": physicalval,
+		            	"<portlet:namespace />taxon": taxonval,
+		            	"<portlet:namespace />alive": aliveval,
+		            	"<portlet:namespace />sequenced": sequencedval
+		            },
+		            success: function(text) {
+	                     response = text;
+	                     $("#result").html(response);
 	                     //ajaxForContactButtons();
 	                     //ajaxForSubmissionButtons();
 	                }
@@ -161,7 +186,6 @@ function buttonClickHandler(url) {
 
 <%
 List<GCategory> categories = DCRTPortlet.getCategoryList();
-
 List<GMaterial> materials = DCRTPortlet.getMaterials();
 %>
 
@@ -172,44 +196,44 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 			<li id="physical" style="margin-left: 20px;">
 				Do you want to submit physical objects along with your data?
 				<div style="display:block;">
-					<input name="physical" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleShowWithFullId('taxon'); visibleHide('categorySelection'); hideFirstLevelRight();" />
+					<input name="physical" style="margin-bottom: 7px" type="radio" value="true" onClick="show('#taxon'); hide('#categorySelection'); hideFirstLevelRight();" />
 					Yes
 				</div>
 				<div style="display:block;">
-					<input name="physical" style="margin-bottom: 7px" type="radio" value="false" onClick="visibleShowWithFullId('sequenced'); visibleHide('materialSelection'); hideFirstLevelLeft();" />
+					<input name="physical" style="margin-bottom: 7px" type="radio" value="false" onClick="show('#sequenced'); hide('#materialSelection'); hideFirstLevelLeft();" />
 					No
 				</div>
 			</li>
 			<li id="taxon" style="margin-left: 20px;" class="swHide">
 				Do you have taxon-based or not taxon-based objects additional to your data?
 				<div style="display:block;">
-					<input name="taxon" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleShowWithFullId('alive'); visibleHide('materialSelection'); " />
+					<input name="taxon" style="margin-bottom: 7px" type="radio" value="true" onClick="show('#alive'); hide('#materialSelection'); " />
 					Taxon-based
 				</div>
 				<div style="display:block;">
-					<input name="taxon" style="margin-bottom: 7px" type="radio" value="false" onClick="visibleShowWithFullId('alive'); visibleHide('materialSelection'); " />
+					<input name="taxon" style="margin-bottom: 7px" type="radio" value="false" onClick="show('#alive'); hide('#materialSelection'); " />
 					Non taxon-based
 				</div>
 			</li>
 			<li id="alive" style="margin-left: 20px;" class="swHide">
 				Is your object dead or alive?
 				<div style="display:block;">
-					<input name="alive" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleHideWithFullId('materialSelection');" />
+					<input name="alive" style="margin-bottom: 7px" type="radio" value="true" onClick="hide('#materialSelection');" />
 					Alive
 				</div>
 				<div style="display:block;">
-					<input name="alive" style="margin-bottom: 7px" type="radio" value="false" onClick="visibleShowWithFullId('materialSelection');" />
+					<input name="alive" style="margin-bottom: 7px" type="radio" value="false" onClick="show('#materialSelection');" />
 					Dead
 				</div>
 			</li>
 			<li id="sequenced" style="margin-left: 20px;" class="swHide">
 				Do you have primarily sequenced data?
 				<div style="display:block;">
-					<input name="sequenced" style="margin-bottom: 7px" type="radio" value="true" onClick="visibleHideWithFullId('categorySelection');" />
+					<input name="sequenced" style="margin-bottom: 7px" type="radio" value="true" onClick="hide('#categorySelection');" />
 					Yes
 				</div>
 				<div style="display:block;">
-					<input name="sequenced" style="margin-bottom: 7px" type="radio" value="false" onClick="visibleShowWithFullId('categorySelection');" />
+					<input name="sequenced" style="margin-bottom: 7px" type="radio" value="false" onClick="show('#categorySelection');" />
 					No
 				</div>
 			</li>
@@ -220,7 +244,7 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 				<h4>Select Category</h4>
 				
 				<select id="category" name="category" >
-					<option selected="selected" label="Select" value="noselection" />
+					<option selected="selected" label="Select" value="default" />
 					<%
 					for(GCategory c : categories) {
 					%>
@@ -236,7 +260,7 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
  				<h4>Which kind of material would you deliver?</h4>
 				
 				<select id="material" name="material" >
-					<option selected="selected" label="Select" value="noselection" />
+					<option selected="selected" label="Select" value="default" />
 					<%
 					for(GMaterial m : materials) {
 					%>
