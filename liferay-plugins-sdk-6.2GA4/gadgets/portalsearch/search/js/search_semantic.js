@@ -1,6 +1,6 @@
 var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
-var cartDiv = "<div id='cart' class='cart_unselected' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
+var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
@@ -145,8 +145,12 @@ function setRatingBar(){
 		onSelect: function(value, text, event) {
 		if (typeof(event) !== 'undefined') {
 			// rating was selected by a user
-			console.log(event.target);
+			var div = event.target.parentElement.parentElement.parentElement;
+			var resultRow = div.parentElement.parentElement;
+			console.log();
+			console.log(value);
 			// TODO:call jsonws
+			// saveSearchFeedback(datasetDetail,datasetRank,rating)
 		} else {
 			// rating was selected programmatically
 			// by calling `set` method
@@ -241,6 +245,12 @@ function newQuery(clearBasket) {
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
 		visualBasket.value = "";
+	// Save query to DB
+	if (keyword != "" && clearBasket){
+		console.log('New query is made.');
+		saveSearchHistory(keyword,filter);
+		document.getElementById("filters").value = filterObj;
+	}
 	
 	// send content of visual basket to the mini-map gadget
 	updateMap();
@@ -317,6 +327,45 @@ function getSearchResult(keyword, filter, yearRange) {
 	onRowClick();
 }
 
+function saveSearchHistory(keyword,filter){
+		//TODO: overwrite the record, if the same keyword and filter are added
+		var recordid = 0; //For a new record
+		var uid = parent.Liferay.ThemeDisplay.getUserId();
+		console.log('saveSearchHistory');
+		parent.Liferay.Service(
+			'/GFBio-Search-Service-portlet.searchhistory/update-search-history', {
+			searchHistoryId : recordid,
+			userID : uid,
+			queryString : keyword,
+			queryFilter : filter
+		},
+			function (obj) {
+				console.log('Query is recorded.');
+			//if (!isNaN(obj)) {}
+		});
+}
+function saveSearchFeedback(datasetDetail,datasetRank,rating){
+		//TODO: overwrite the record, if the same keyword, filter, rank are added
+		var keyword = document.getElementById("gfbioSearchInput").value;
+		var filter = document.getElementById("filters").value;
+		var recordid = 0; //For a new record
+		var uid = parent.Liferay.ThemeDisplay.getUserId();
+		console.log('saveSearchFeedback');
+		parent.Liferay.Service(
+			'/GFBio-Search-Service-portlet.searchfeedback/update-search-feedback', {
+			searchHistoryId : recordid,
+			userID : uid,
+			queryString : keyword,
+			queryFilter : filter,
+			datasetDetail : datasetDetail,
+			datasetRank: datsetRank,
+			rating: rating
+		},
+			function (obj) {
+				console.log('Rating is recorded.');
+			//if (!isNaN(obj)) {}
+		});
+}
 /*
  * Description: Get search result from submitted keyword with (or without) filtering option
  * Input: String keyword : search keyword  
@@ -362,8 +411,8 @@ function submitQueryToServer(keyword, filter, yearRange) {
 				result.iTotalRecords = result.hits.total;
 				result.iTotalDisplayRecords = result.hits.total;
 				result.data = res;
-				console.log("submitQueryToServer");
-				console.log(result);
+				//console.log("submitQueryToServer");
+				//console.log(result);
 				// return result object
 				fnCallback(result);
 			}
@@ -426,7 +475,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	}
 	var filterObj;
 
-	if (yearRange == "") {
+	if (yearRange.trim() == "") {
 		if (filterArray != "") {
 			filterObj = filterArray;
 		} else {
@@ -440,7 +489,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		var splitPos = yearRange.indexOf(' - ');
 		var minYear = yearRange.substring(0, splitPos);
 		var maxYear = yearRange.substring(splitPos + 3);
-		console.log(minYear + "-" + maxYear);
+		//console.log(minYear + "-" + maxYear);
 		yearFilter = {
 				"range" : {
 					"citation_yearFacet" : {
@@ -539,7 +588,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 		var score = datasrc[i]._score;
 		var fields = datasrc[i].fields;
 		inner.score = score;
-	    //console.log('parseReturnedJSONfromSearch:fields');
+		//console.log('parseReturnedJSONfromSearch:fields');
 		//console.log(fields);
 		inner.title = getValueFromJSONObject(fields, "citation_title", 0);
 		inner.authors = getValueFromJSONArray(fields, "citation_authors");
@@ -722,6 +771,14 @@ function filterQuery(filter, yearRange) {
 		getSearchResult(keyword, filter, yearRange);
 	} else {
 		showLatestTenDataset(filter, yearRange);
+	}
+	// Save query to DB
+	if (keyword != ""){
+		console.log('Filtered query.');
+		var filterObj = filter;
+		filterObj.push(yearRange);
+		saveSearchHistory(keyword,filterObj);
+		document.getElementById("filters").value = filterObj;
 	}
 }
 /////////////////////////////// End Facet filter functions /////////////////////////////////
@@ -1071,7 +1128,7 @@ function showCartIcon(nRow, aData) {
 		// read the current row number and get a div for the cart
 		var elmRow = $(nRow);
 		var elmTD = $(elmRow[0].lastElementChild);
-		var elmDiv = $(elmTD[0].lastElementChild);
+		var elmDiv =$($(elmTD[0]).find('#cart')[0]);
 		// show the cart's div
 		elmDiv.removeClass('invisible');
 	}
@@ -1335,16 +1392,16 @@ function toggleParametersField() {
 function getCookie(name) {
 	var re = new RegExp(name + "=([^;]+)");
 	var value = re.exec(document.cookie);
-	console.log('getCookie:'+name);
-	console.log(value);
+	//console.log('getCookie:'+name);
+	//console.log(value);
 	return (value != null) ? unescape(value[1]) : null;
 }
 function setCookie(name, value) {
 	var today = new Date();
 	var expiry = new Date(today.getTime() + 7 * 24 * 3600 * 1000); // plus 7 days
 	document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
-	console.log('setCookie:'+name);
-	console.log(value);
+	//console.log('setCookie:'+name);
+	//console.log(value);
 }  
 function deleteCookie(name)
 {
@@ -1376,6 +1433,11 @@ function semanticQuery(clearBasket) {
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
 		visualBasket.value = "";
+	// Save query to DB
+	if (keyword != ""){
+		console.log('New Semantic query made.')
+		saveSearchHistory(keyword,filter);
+	}
 	
 	// send content of visual basket to the mini-map gadget
 	updateMap();
@@ -1512,13 +1574,13 @@ function semanticQueryToServer(keyword, filter, yearRange) {
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
 		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
 
-		console.log("semanticQueryToServer");
+		//console.log("semanticQueryToServer");
 		// Construct query message in JSON format
 		var queryfield = createQueryFieldArray();
 		var booleanQuery = getBooleanQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(booleanQuery);
 		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
-		console.log(completeQuery);
+		//console.log(completeQuery);
 		// Store query string for sending to VAT
 		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
 
@@ -1545,8 +1607,8 @@ function semanticQueryToServer(keyword, filter, yearRange) {
 				result.iTotalRecords = result.hits.total;
 				result.iTotalDisplayRecords = result.hits.total;
 				result.data = res;
-				console.log("submitQueryToServer");
-				console.log(result);
+				//console.log("submitQueryToServer");
+				//console.log(result);
 				
 				// return result object
 				fnCallback(result);
@@ -1597,7 +1659,7 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		var splitPos = yearRange.indexOf(' - ');
 		var minYear = yearRange.substring(0, splitPos);
 		var maxYear = yearRange.substring(splitPos + 3);
-		console.log(minYear + "-" + maxYear);
+		//console.log(minYear + "-" + maxYear);
 		filterObj = [{
 				"and" : {
 					"filters" : filterArray

@@ -422,7 +422,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		var splitPos = yearRange.indexOf(' - ');
 		var minYear = yearRange.substring(0, splitPos);
 		var maxYear = yearRange.substring(splitPos + 3);
-		console.log(minYear + "-" + maxYear);
+		//console.log(minYear + "-" + maxYear);
 		yearFilter = {
 				"range" : {
 					"citation_yearFacet" : {
@@ -629,7 +629,7 @@ function addBasket() {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
-		console.log("addBasket:"+basketid);
+		//console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
@@ -884,8 +884,8 @@ function updateMap() {
 	jsonData.queryStr = queryJSON;
 	addBasket();
 	if (gadgets.Hub.isConnected()) {
-		console.log(':Search: fire selected data: ');
-		console.log(jsonData);
+		//console.log(':Search: fire selected data: ');
+		//console.log(jsonData);
 		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
 	}
 }

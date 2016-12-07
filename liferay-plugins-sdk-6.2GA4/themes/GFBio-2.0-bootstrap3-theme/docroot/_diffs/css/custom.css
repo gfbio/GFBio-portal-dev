@@ -222,7 +222,7 @@
 
  .form-control, input.field[type="text"], input.field[type="password"]{
     margin-bottom: 10px;
-    border: 1px solid #ececec;
+    border: 1px solid /*#ececec;*/#bdbdbd;
     border-radius: 0;
     box-shadow: none;
     color: #818181;
@@ -230,7 +230,7 @@
 } 
 
 textarea{
-    border: 1px solid #ececec !important; 
+    border: 1px solid /*#ececec;*/#bdbdbd !important; 
     border-radius: 0;
     box-shadow: none;
     color: #818181;
