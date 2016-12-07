@@ -490,43 +490,6 @@
 	</entity>
 	
 
-	<!-- Search History -->
-
-	<entity name="SearchHistory" data-source="gfbioDataSource"
-		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
-		tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="searchHistoryID" type="long" primary="true" />
-		<column name="userID" type="long" />
-		<column name="queryString" type="String" />
-		<column name="lastModifiedDate" type="Date" />
-
-		<order by="desc">
-			<order-column name="lastModifiedDate" />
-		</order>
-
-		<finder name="SearchHistoryID" return-type="SearchHistory">
-			<finder-column name="searchHistoryID" />
-		</finder>
-		<finder name="SearchHistoryIDs" return-type="Collection">
-			<finder-column name="searchHistoryID"
-				arrayable-operator="OR" />
-		</finder>
-		<finder name="UserID" return-type="Collection">
-			<finder-column name="userID" />
-		</finder>
-		<finder name="UserIDSince" return-type="Collection">
-			<finder-column name="userID" />
-			<finder-column name="lastModifiedDate" comparator="&gt;" />
-		</finder>
-		<finder name="QueryMessage" return-type="Collection">
-			<finder-column name="queryString" comparator="LIKE" />
-		</finder>
-		<finder name="QueryMessageSince" return-type="Collection">
-			<finder-column name="queryString" comparator="LIKE" />
-			<finder-column name="lastModifiedDate" comparator="&gt;" />
-		</finder>
-	</entity>
-
 	<!-- User SSO -->
 
 	<entity name="UserSSO" data-source="gfbioDataSource"

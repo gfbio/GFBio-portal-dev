@@ -730,7 +730,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 	
 	//
-	public long createResearchObject (String name, String label, String extendedData) throws SystemException{
+	private  long createResearchObject (String name, String label, String extendedData) throws SystemException{
 
 		long researchObjectId = 0;
 		int researchObjectVersion = 1;

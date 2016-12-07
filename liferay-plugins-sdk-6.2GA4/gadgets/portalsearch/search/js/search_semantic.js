@@ -145,8 +145,12 @@ function setRatingBar(){
 		onSelect: function(value, text, event) {
 		if (typeof(event) !== 'undefined') {
 			// rating was selected by a user
-			//console.log(event.target);
+			var div = event.target.parentElement.parentElement.parentElement;
+			var resultRow = div.parentElement.parentElement;
+			console.log();
+			console.log(value);
 			// TODO:call jsonws
+			// saveSearchFeedback(datasetDetail,datasetRank,rating)
 		} else {
 			// rating was selected programmatically
 			// by calling `set` method
@@ -241,6 +245,12 @@ function newQuery(clearBasket) {
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
 		visualBasket.value = "";
+	// Save query to DB
+	if (keyword != "" && clearBasket){
+		console.log('New query is made.');
+		saveSearchHistory(keyword,filter);
+		document.getElementById("filters").value = filterObj;
+	}
 	
 	// send content of visual basket to the mini-map gadget
 	updateMap();
@@ -317,6 +327,45 @@ function getSearchResult(keyword, filter, yearRange) {
 	onRowClick();
 }
 
+function saveSearchHistory(keyword,filter){
+		//TODO: overwrite the record, if the same keyword and filter are added
+		var recordid = 0; //For a new record
+		var uid = parent.Liferay.ThemeDisplay.getUserId();
+		console.log('saveSearchHistory');
+		parent.Liferay.Service(
+			'/GFBio-Search-Service-portlet.searchhistory/update-search-history', {
+			searchHistoryId : recordid,
+			userID : uid,
+			queryString : keyword,
+			queryFilter : filter
+		},
+			function (obj) {
+				console.log('Query is recorded.');
+			//if (!isNaN(obj)) {}
+		});
+}
+function saveSearchFeedback(datasetDetail,datasetRank,rating){
+		//TODO: overwrite the record, if the same keyword, filter, rank are added
+		var keyword = document.getElementById("gfbioSearchInput").value;
+		var filter = document.getElementById("filters").value;
+		var recordid = 0; //For a new record
+		var uid = parent.Liferay.ThemeDisplay.getUserId();
+		console.log('saveSearchFeedback');
+		parent.Liferay.Service(
+			'/GFBio-Search-Service-portlet.searchfeedback/update-search-feedback', {
+			searchHistoryId : recordid,
+			userID : uid,
+			queryString : keyword,
+			queryFilter : filter,
+			datasetDetail : datasetDetail,
+			datasetRank: datsetRank,
+			rating: rating
+		},
+			function (obj) {
+				console.log('Rating is recorded.');
+			//if (!isNaN(obj)) {}
+		});
+}
 /*
  * Description: Get search result from submitted keyword with (or without) filtering option
  * Input: String keyword : search keyword  
@@ -426,7 +475,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	}
 	var filterObj;
 
-	if (yearRange == "") {
+	if (yearRange.trim() == "") {
 		if (filterArray != "") {
 			filterObj = filterArray;
 		} else {
@@ -722,6 +771,14 @@ function filterQuery(filter, yearRange) {
 		getSearchResult(keyword, filter, yearRange);
 	} else {
 		showLatestTenDataset(filter, yearRange);
+	}
+	// Save query to DB
+	if (keyword != ""){
+		console.log('Filtered query.');
+		var filterObj = filter;
+		filterObj.push(yearRange);
+		saveSearchHistory(keyword,filterObj);
+		document.getElementById("filters").value = filterObj;
 	}
 }
 /////////////////////////////// End Facet filter functions /////////////////////////////////
@@ -1073,7 +1130,6 @@ function showCartIcon(nRow, aData) {
 		var elmTD = $(elmRow[0].lastElementChild);
 		var elmDiv =$($(elmTD[0]).find('#cart')[0]);
 		// show the cart's div
-		console.log(elmDiv);
 		elmDiv.removeClass('invisible');
 	}
 }
@@ -1377,6 +1433,11 @@ function semanticQuery(clearBasket) {
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
 		visualBasket.value = "";
+	// Save query to DB
+	if (keyword != ""){
+		console.log('New Semantic query made.')
+		saveSearchHistory(keyword,filter);
+	}
 	
 	// send content of visual basket to the mini-map gadget
 	updateMap();

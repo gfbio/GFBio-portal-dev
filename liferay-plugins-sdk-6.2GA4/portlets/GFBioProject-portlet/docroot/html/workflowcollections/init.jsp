@@ -728,4 +728,75 @@
 	}
 	
 	
+	
+	////////////////////////////////////////////////////////////////// upload tests
+	
+	
+	function testSubmit(){
+	
+		var url = document.getElementById('workflowcollectionsurl').value;
+		var formData = new FormData();
+		
+		var id = '10';
+		var version = '1';
+		var text = id +";" +version;
+		
+/* 		var textFile = null;
+		var makeTextFile = function (text) {
+			var data = new Blob([text], {type: 'text/plain'});
+
+		    // If we are replacing a previously generated file we need to
+		    // manually revoke the object URL to avoid memory leaks.
+		    if (textFile !== null) {
+		    	window.URL.revokeObjectURL(textFile);
+		    }
+
+		    textFile = window.URL.createObjectURL(data);
+
+		    return textFile;
+		  }; */
+		
+
+		  var txtFile = "test.txt";
+		  var file = new File(txtFile);
+		  var str = text;
+
+		  file.open("w"); // open file with write access
+//		  file.writeln("First line of text");
+//		  file.writeln("Second line of text " + str);
+		  file.write(str);
+		  file.close();
+
+		  
+		formData.append('file', txtFile);
+		  
+		var fileSelect = document.getElementById('file-select');
+		var files = fileSelect.files;
+		for (var i = 0; i < files.length; i++) 
+		  	formData.append('file', files[i]);
+
+		console.log(formData.getAll('file'));
+	  	
+/*  		var json = {};
+		json["<portlet:namespace />responseTarget"] = "uploadfile";
+		console.log(json);
+		formData.append('json', json);
+		console.log(formData.getAll('json'));  */
+	  	
+
+ 		$.ajax({
+ 			"url": url.concat('/WorkflowCollectionsPortlet'),
+ 			"type" : "POST",
+			processData: false,
+			contentType: false,
+			"data" : formData,
+			async: false,
+			success :  function (){
+				console.log("yeah");
+			} 
+		});
+
+	}
+	
+	
 </script>

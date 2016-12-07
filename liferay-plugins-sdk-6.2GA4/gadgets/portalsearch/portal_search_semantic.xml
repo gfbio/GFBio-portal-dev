@@ -59,6 +59,7 @@
 				<input id="queryJSON" type="hidden" value=""/>
 				<input id="basketID" type="hidden" value="0"/>
 				<input id="semanticTerms" type="hidden" value=""/>
+				<input id="filters" type="hidden" value=""/>
 			</body>
 			<script type="text/javascript">
 				$=jQuery;
