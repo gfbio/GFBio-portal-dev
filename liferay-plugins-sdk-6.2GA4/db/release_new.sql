@@ -185,3 +185,18 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('2055','6','16' ,'2054','2005');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('2056','6','15' ,'2057','2000');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('2058','6','16' ,'2057','2005');
+
+---------------------------------------------------------------------------------------------
+---------------------------------      data provider      -- 07.12.2016 ---------------------
+---------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_dataprovider ADD COLUMN providertype character(75);
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='PANGAEA';
