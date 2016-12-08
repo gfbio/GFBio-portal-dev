@@ -63,6 +63,13 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		return responseJson;
 	}
 	
+	public List<DataProvider> getDataProviderByProviderType(String providerType){
+		List<DataProvider> dataProvider = null;
+		try {dataProvider = dataProviderPersistence.findByProviderType(providerType);}
+		catch (SystemException e) {e.printStackTrace();}
+		return dataProvider;
+	}
+	
 	
 	//
 	public long getDataProviderIdByLabel (String label){

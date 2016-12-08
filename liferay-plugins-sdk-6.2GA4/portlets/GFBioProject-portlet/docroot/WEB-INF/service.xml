@@ -182,22 +182,15 @@
 		<column name="mycologicalMicroscopicSlides" type="boolean" />	
 		<column name="zoologicalMicroscopicSlides" type="boolean" />	
 		<column name="otherObjects" type="boolean" />	
+		
+		<column name="providerType" type="String" />	
 
+		<order by="asc">			<order-column name="name" />			</order>
 
-
-		<order by="asc">
-			<order-column name="name" />
-		</order>
-
-		<finder name="Name" return-type="Collection">
-			<finder-column name="name" />
-		</finder>
-		<finder name="Label" return-type="DataProvider">
-			<finder-column name="label" />
-		</finder>
-		<finder name="DataProviderID" return-type="DataProvider">
-			<finder-column name="dataProviderID" />
-		</finder>
+		<finder name="Name" 			return-type="Collection">			<finder-column name="name" />				</finder>
+		<finder name="Label" 			return-type="DataProvider">			<finder-column name="label" />				</finder>
+		<finder name="DataProviderID" 	return-type="DataProvider">			<finder-column name="dataProviderID" />		</finder>
+		<finder name="ProviderType"		return-type="Collection">			<finder-column name="providerType" />		</finder>
 	</entity>
 
 
