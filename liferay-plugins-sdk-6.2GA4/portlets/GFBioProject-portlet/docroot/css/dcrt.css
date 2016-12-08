@@ -20,33 +20,40 @@ input[type="radio"] {
    	border-bottom: 10px solid;
    	border-color: transparent;
 }
+
+.dcrttable {
+  	justify-content: center;
+	margin-bottom: 15px;
+	padding-bottom: 5px !important;
+	border-bottom: 1px solid #ddd;
+}
 	
 .dcrtbutton {
-	border: 3px;
+	border: 2px;
    	border-style: solid;
    	border-color: #FCFCFC;
-   	border-radius: 10px;
+   	border-radius: 8px;
    	box-shadow: 0px 3px 5px #888;
-   	width: 140px;
    	height: 30px;
-   	color: white;
-  	padding: 4px 12px;
+   	color: white !important;
    	text-align: center;
+   	vertical-align: middle;
 	text-decoration: none;
    	display: inline-block;
-   	font-size: 12px !important;
-  	margin: 4px 2px;
-   	cursor: pointer;
-   }
+   	font-size: 13px !important;
+}
     
 .dcrtbutton.contact {
    	background-color: #3cace4;
+   	width: 65px;
 }
 	
 .dcrtbutton.submission {
    	background-color: #87b54b;
+   	width: 85px;
 }
 
 .dcrtbutton.details {
    	background-color: #3e66ad;
+   	width: 65px;
 }

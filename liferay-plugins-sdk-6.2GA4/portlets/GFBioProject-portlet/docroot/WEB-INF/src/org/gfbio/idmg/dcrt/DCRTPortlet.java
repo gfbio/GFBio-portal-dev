@@ -171,20 +171,17 @@ public class DCRTPortlet extends MVCPortlet {
 		_log.info(name);
 		
 		writer.print(
-			tr().withClass("dcrttr").with(
-				th().attr("style", "width: 20%; padding-right: 5px;").with(
-					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 60px;")
+			div().withClass("row dcrttable").with(
+				div().withClass("col-xs-3 col-sm-2 col-lg-2").with(
+					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
-				th().attr("style", "width: 40%").with(
+				div().withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 25px;").with(
 					span().withId(name).withText(name)
 				),
-				th().attr("style", "width: 12%").with(
-					button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label)
-				),
-				th().attr("style", "width: 16%").with(
-					button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton").withType("button").withValue(label)
-				),
-				th().attr("style", "width: 12%").with(
+				div().withClass("col-xs-12 col-sm-5 col-lg-4 ").attr("style", "text-align: center; align-self: center;").with(
+						button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label),
+						button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
+						.withType("button").attr("style", "margin-left: 1px; margin-right: 1px").withValue(label),
 						button().withClass("dcrtbutton details").withText("Details").withName("detailsButton").withType("button").withValue(label)
 				)
 			).render()
@@ -193,7 +190,7 @@ public class DCRTPortlet extends MVCPortlet {
 		
 		writer.println("</table>");
 		
-//		Old way for generating HTML output
+//		Old way of generating HTML output
 //		writer.println("<div style=\"display:block; margin-bottom: 10px;\">");
 //		writer.println("<img src=\"/GFBioProject-portlet/images/" + label + ".jpg\" alt=\"" + label + "\" style=\"width:60px;height:46px;\">");
 //		writer.println("<span id=\"" + name + "\" >" + name + "</span>");

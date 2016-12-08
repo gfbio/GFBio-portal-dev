@@ -13,11 +13,6 @@
 <script type="text/javascript" >
 
 $( document ).ready(function() {
-	$("input:radio").attr("checked", false);
-	 document.getElementById("category").selectedIndex = 0;
-}); 
-
-$( document ).ready(function() {
 	$("input[name=physical]").click(function () {
 		$("input[name=taxon]").attr("checked", false);
 		$("input[name=sequenced]").attr("checked", false);
@@ -182,6 +177,7 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 %>
 
 <div class="container-fluid" >
+	<h1>Data Center Recommendation Tool</h1>
 	<div class="row">
 		<div id="left" class="col-md-4" > <!-- style="display: block; float: left; margin-right: 20px; width: 35%; margin-left: 0%;" -->
 			
@@ -268,7 +264,7 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 		
 		<div id="right" class="col-md-8" > <!-- style="display: block; float: left; width: 720px; margin-right: 0%;" -->
 			<div>
-				<h3 style="text-align: center">Data Provider Recommendations</h3>
+				<h3 style="text-align: center">Data Center Recommendation</h3>
 			</div>
 			<div id="result" style="text-align: left">
 				No choice has been made
