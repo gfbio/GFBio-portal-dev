@@ -1,16 +1,80 @@
+﻿**********************************************
+*** Liferay 7 Theme-Generator Introduction ***
+**********************************************
+
+- based on the tutorial on https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/introduction-to-themes
+- theme generator for theme automation process
+- (ant and other programs could be used aswell)
+- using gulp for build and deploy
+
+STARTING POINT:	https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/themes-generator
+
+**********************************************
+*** Node JS and the NPM, Yeoman and Gulp ***
+**********************************************
+
+- node js necessary for working with the theme generator
+- https://nodejs.org/en/
+- command line: "node -v" should respond v4.2.2 or newer
+
+Setup npm (node package manager) runtime environment:
+	(1) create .npmn file in users home directory
+	- In the .npmrc file, specify a prefix property like this one: prefix=/Users/[username]/.npm-packages
+	- prefix value is based on your users home directory --> location you specify is where global npm packages will be installed
+	- set Node.js NPM_PACKAGES and NODE_PATH system environment variables with values like these based on the prefix value you just specified.
+		NPM_PACKAGES=/Users/[username]/.npm-packages (same as prefix value)
+		NODE_PATH=${NODE_PATH}:${NPM_PACKAGES}/lib/node_modules
+	
+	(2) npm installation also installs YEOMAN and GULP (creation and deploy) executables to ${NPM_PACKAGES}/bin on UNIX and to %NPM_PACKAGES% on Windows
+		--> add directory to your system path
+		--> example on UNIX:	PATH=${PATH}:${NPM_PACKAGES}/bin 
+		
+	(3) install YEOMAN and GULP globally  via command line:	npm install -g yo gulp
+	
+************************************************
+*** Theme-Generator ***
+************************************************
+
+- command line:	npm install -g generator-liferay-theme
+
+For Windows User - Sass required:
+	- Sass from node-sass (requires Visual Studio) or Sass from Ruby
+	(1) Sass from node-sass:
+		- requires node-gyp (requires Python and Visual Studio)
+		- node-gyp install instruction (we didn't try out):	https://github.com/nodejs/node-gyp#installation
+		
+	(2) Sass from Ruby and Compass:
+		- install Ruby via Ruby-installer:	http://rubyinstaller.org/
+		- install compass via command line:	gem install sass compass
+			--> there could be trouble,you could need a .pem file since gem-hosts changed and certificates and permissions also (we had a cacert.pem)
+			--> they´re about to fix this problem so maybe not necessary and already working, else google is your best friend
+	
+
+
+********************************************
+*** Your first Theme via Theme-Generator ***
+********************************************
+
+- https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/themes-generator
+- open command line in directory in which you want to create the theme (new folder will be created)
+- command line:	yo liferay-theme
+- enter in order:	name, theme-id (or enter for default), version of liferay (to select)
+
 
 **************************
 *** JPM4J installation ***
 **************************
 - download jpm4j (https://github.com/jpm4j/jpm4j.installers/blob/master/dist/biz.aQute.jpm.run.jar)
 - copy it to the directory where you want to have it
-- open a command line in this folder
+- open a command line in this folder (shift+rightclick --> open command at this location)
 - type in the following command:
 
 java -jar biz.aQute.jpm.run.jar -g init
 
 - add C:/JPM4J/bin to your path
 - check if jpm is working: open a command line and type "jpm use", is expected to show the JPM4J home and bin
+
+- run "jpm install bnd"
 
 ***************************
 *** Blade Client ***
@@ -19,12 +83,64 @@ java -jar biz.aQute.jpm.run.jar -g init
 
 jpm install com.liferay.blade.cli
 
+- (if it does not work, check out git for possible updates https://github.com/liferay/liferay-blade-cli/)
+
 - check if blade has been installed
 
-blade version
+	- cmd: blade version
+
+
+Note: For Windows users, the blade update command does not work. This is because Windows cannot update a file that is currently in use. To bypass this issue, you can use JPM to update your version of Blade CLI:
+
+jpm install -f com.liferay.blade.cli
+
+
+NOTE: Blade is your all in one - cmd Tool (in comparison to LiferayIDE in Eclipse).. startup server.. deploy etc pp
+
+--> https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/blade-cli
+
 
 ******************************
 *** Creating a Liferay Workspace with Blade CLI ***
 ******************************
+Quote "This is the official way to create Liferay 7.0 modules using Gradle. 
+For those developers that still want to develop WAR-style plugins using the Plugins SDK, this way is also supported using a Liferay Workspace."
 
-blade init MyFirstWorkspace
+* a liferay workspace for all your custom projects 
+
+open command line where you want to setup your liferay7 workspace (shift+rightclick --> open cmd here):
+	- enter "blade init [Workspace Name]"
+	- want to send it to co-worker etc?
+		- cmd "./gradlew distBundle[Zip|Tar]" and get the compressed file
+		- Your distribution file is available from the workspace’s /build directory
+
+if you want to run your modules against a Liferay Test-Server modify
+	- gradle.properties file
+
+
+SETUP your Liferay Instance in Working Directory:
+
+	- cmd:	gradlew initBundle
+******************************
+*** Creating a Liferay Workspace in Eclipse // Working with it
+******************************
+
+Therefore stick to 
+https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-a-liferay-workspace-with-liferay-ide
+
+
+**********************************
+*** Creating Theme Contributor with Blade CLI
+*********************************************
+
+ - https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/theme-contributor-template
+
+command line where you want to create:
+	- blade create -t theme-contributor [--contributorType contributorType] [-p packageName] projectName
+	- e.g.:	blade create -t theme-contributor --contributorType my-contributor -p com.liferay.docs.theme.contributor my-theme-contributor
+
+
+**********************************
+*** Creating a new Portlet with Blade CLI
+**********************************
+	
