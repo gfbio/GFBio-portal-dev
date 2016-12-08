@@ -14,19 +14,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 
-<%@ page import="javax.portlet.PortletPreferences" %>
-<%@ page import="javax.portlet.RenderResponse" %>
-
-<%@ page import="org.gfbio.idmg.dcrt.DCRTPortlet" %>
-<%@ page import="org.gfbio.model.DataProvider" %>
-<%@ page import="org.gfbio.idmg.dcrt.dao.GCategory" %>
-<%@ page import="org.gfbio.idmg.dcrt.dao.GMaterial" %>
-
-<%@ page import="org.json.simple.JSONObject" %>
-<%@ page import="org.json.simple.parser.JSONParser" %>
-<%@ page import="org.json.simple.parser.ParseException" %>
-
-
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />

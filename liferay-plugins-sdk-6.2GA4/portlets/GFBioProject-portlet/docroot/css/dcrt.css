@@ -2,9 +2,18 @@
 .swHide {
 	display: none
 }
-.swMain{
+.swMain {
 	display: block
 }
+
+div[name="question"] { 
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+
+input[type="radio"] {
+ 	margin-bottom: 7px;	
+}	
 	
 .dcrttr {
 	border-top: 10px solid;
