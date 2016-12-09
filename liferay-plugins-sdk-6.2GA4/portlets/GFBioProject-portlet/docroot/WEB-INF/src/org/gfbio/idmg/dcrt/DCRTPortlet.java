@@ -54,6 +54,8 @@ public class DCRTPortlet extends MVCPortlet {
 			ajaxContactButton(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("submission")) {
 			ajaxSubmissionButton(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("details")) {
+			ajaxSubmissionButton(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -178,7 +180,7 @@ public class DCRTPortlet extends MVCPortlet {
 				div().withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 25px;").with(
 					span().withId(name).withText(name)
 				),
-				div().withClass("col-xs-12 col-sm-5 col-lg-4 ").attr("style", "text-align: center; align-self: center;").with(
+				div().withClass("col-xs-12 col-sm-5 col-lg-4").attr("style", "text-align: center;").with(
 						button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label),
 						button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
 						.withType("button").attr("style", "margin-left: 1px; margin-right: 1px").withValue(label),

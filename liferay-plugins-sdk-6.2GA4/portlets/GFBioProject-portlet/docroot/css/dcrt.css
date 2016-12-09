@@ -41,11 +41,18 @@ input[type="radio"] {
 	text-decoration: none;
    	display: inline-block;
    	font-size: 13px !important;
+   	outline: none;
 }
     
 .dcrtbutton.contact {
    	background-color: #3cace4;
    	width: 65px;
+}
+.dcrtbutton.default {
+   	background-color: #3cace4;
+   	width: 65px;
+   	position: relative;
+   	right: 76px;
 }
 	
 .dcrtbutton.submission {
