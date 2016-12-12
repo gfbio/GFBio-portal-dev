@@ -452,5 +452,100 @@
     
     
     
+<!--     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowInformationOfRelationshipsOfSpecificCellContent">
+	    <![CDATA[    
+    		select 
+				gfbio_column.column_name AS column,
+				gfbio_content.cellcontent AS content
+			from
+				public.gfbio_content 
+			INNER JOIN 
+				public.gfbio_column  
+			ON
+				gfbio_column.columnid = gfbio_content.columnid 
+			where
+				rowid in
+				(
+					SELECT 
+						rowid 
+					FROM 
+						public.gfbio_content
+					where	
+						contentid in 
+						(
+							SELECT 
+								CAST(cellcontent as bigint) AS contentid
+							FROM 
+								public.gfbio_content
+							WHERE 
+								rowid in
+								(
+									SELECT 
+										rowid 
+									FROM 
+										public.gfbio_content
+									WHERE
+										headid = ? AND
+										cellcontent in 
+										(
+											SELECT
+												CAST(contentid as text)
+											FROM
+												public.gfbio_content
+											WHERE
+												rowid in 
+												(  
+													SELECT 
+														rowid 
+													FROM 
+											  			public.gfbio_content
+													WHERE
+											  			headid = ? AND
+											  			cellcontent = ?
+												)	AND
+										   		columnid in 
+												(
+													SELECT 
+														columnid 
+													FROM 
+														public.gfbio_column
+													WHERE
+														column_name ='id'
+												)
+										)
+								) AND
+								cellcontent not in 
+								(
+									SELECT
+										CAST(contentid as text)
+									FROM
+										public.gfbio_content
+									WHERE
+								  		rowid in 
+										(  
+											SELECT 
+												rowid 
+											FROM 
+												public.gfbio_content
+											WHERE
+												headid = ? AND
+												cellcontent = ?	
+										) AND
+									   	columnid in 
+										(
+											SELECT 
+												columnid 
+											FROM 
+												public.gfbio_column
+											WHERE
+												column_name ='id'
+										)
+								)
+					)
+				)
+		]]>
+    </sql>    --> 
+    
+    
     
 </custom-sql>

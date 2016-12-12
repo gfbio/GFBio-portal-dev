@@ -437,6 +437,23 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	}
 	
 	
+	//
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public JSONArray getRowInformationOfRelationshipsOfSpecificCellContent(long relationTableHeadId, long entitiyTableHeadId, String entityTableCellContent){
+		System.out.println(relationTableHeadId+ " |"+ entitiyTableHeadId+ " |"+entityTableCellContent);
+		
+		JSONArray responseJson = new JSONArray();;
+		List responseList = null;
+		responseList = getContentIdsOfRelationshipsOfSpecificCellContent (relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
+		if (responseList.size()>0)
+			for (int i =0; i < responseList.size();i++)
+				responseJson.add(getRowInformationById(ContentLocalServiceUtil.getRowIdById((long)responseList.get(i))));
+		else
+			responseJson.add("Error: No relationsships exists, with this conditions.");
+		return responseJson;
+	} 
+	
+	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
 	
