@@ -13,11 +13,6 @@
 <script type="text/javascript" >
 
 $( document ).ready(function() {
-	$("input:radio").attr("checked", false);
-	 document.getElementById("category").selectedIndex = 0;
-}); 
-
-$( document ).ready(function() {
 	$("input[name=physical]").click(function () {
 		$("input[name=taxon]").attr("checked", false);
 		$("input[name=sequenced]").attr("checked", false);
@@ -67,10 +62,8 @@ $(document).ready(function () {
 		            	"<portlet:namespace />sequenced": sequencedval
 		            },
 		            success: function(text) {
-	                     response = text;
-	                     $("#result").html(response);
-	                     //ajaxForContactButtons();
-	                     //ajaxForSubmissionButtons();
+	                    response = text;
+	                    $("#result").html(response);
 	                }
         });
     });
@@ -78,7 +71,7 @@ $(document).ready(function () {
 
  
 $(document).ready(function () {
-    $($("#category")).on('change', function () {
+    $("#category").on('change', function () {
     	   
     	var category = $("#category").val();
     	
@@ -99,10 +92,8 @@ $(document).ready(function () {
 		            	"<portlet:namespace />sequenced": sequencedval
 		            },
 		            success: function(text) {
-	                     response = text;
-	                     $("#result").html(response);
-	                     //ajaxForContactButtons();
-	                     //ajaxForSubmissionButtons();
+	                    response = text;
+	                    $("#result").html(response);
 	                }
 	               
         });
@@ -110,7 +101,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $($("#material")).on('change', function () {
+    $("#material").on('change', function () {
     	   
     	var material = $("#material").val();
     	
@@ -133,30 +124,34 @@ $(document).ready(function () {
 		            success: function(text) {
 	                     response = text;
 	                     $("#result").html(response);
-	                     //ajaxForContactButtons();
-	                     //ajaxForSubmissionButtons();
 	                }
 	               
         });
     });
 });
 
-function ajaxForContactButtons () {
-    $("button[name=contactButton]").on('click', buttonClickHandler(<%="'" + ajaxUrlContact + "'"%>));
-};
+$(document).ready(function () {
+    $("div#result").on('click', 'button[name=contactButton]', function () {
+    	buttonClickHandler(<%="'" + ajaxUrlContact + "'"%>, $(this));
+    });
+});
 
-function ajaxForSubmissionButtons() {
-    $("button[name=submissionButton]").on('click', buttonClickHandler(<%="'" + ajaxUrlSubmission + "'"%>));
-};
+$(document).ready(function () {
+    $("div#result").on('click', "button[name=submissionButton]", function () {
+    	buttonClickHandler(<%="'" + ajaxUrlSubmission + "'"%>, $(this));
+    });
+});
 
-function ajaxForDetailButtons() {
-    $("button[name=detailButton]").on('click', buttonClickHandler(<%="'" + ajaxUrlDetails + "'"%>));
-};
+$(document).ready(function () {
+    $("div#result").on('click', "button[name=detailsButton]", function () {
+    	buttonClickHandler(<%="'" + ajaxUrlDetails + "'"%>, $(this));
+    });
+});
 
-function buttonClickHandler(url) {
+function buttonClickHandler(url, btn) {
 	
-	buttonValue = $(this).attr("value");
-	buttonText = $(this).attr("text");
+	buttonValue = btn.attr("value");
+	buttonText = btn.html();
 	
 	var response = '';
     $.ajax({
@@ -182,6 +177,7 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 %>
 
 <div class="container-fluid" >
+	<h1>Data Center Recommendation Tool</h1>
 	<div class="row">
 		<div id="left" class="col-md-4" > <!-- style="display: block; float: left; margin-right: 20px; width: 35%; margin-left: 0%;" -->
 			
@@ -266,12 +262,26 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 			</div>
 		</div>
 		
-		<div id="right" class="col-md-8" > <!-- style="display: block; float: left; width: 720px; margin-right: 0%;" -->
+		<div id="right" class="col-md-8" > 
 			<div>
-				<h3 style="text-align: center">Data Provider Recommendations</h3>
+				<h3 style="text-align: center">Data Center Recommendation</h3>
 			</div>
 			<div id="result" style="text-align: left">
 				No choice has been made
+			</div>
+			<div id="defaultResult" style="text-align: left">
+				<h3>Doesn't found an appropriate Data Center?</h3>
+				<div class="row dcrttable">
+					<div class="col-xs-3 col-sm-2 col-lg-2">
+						<img src="/GFBioProject-portlet/images/contact.jpg" style="width: 80px;"/>
+					</div>
+					<div class="col-xs-9 col-sm-5 col-lg-6" style="padding-left: 25px; padding-top: 8px;">
+						<span>GFBio Contact</span>
+					</div>
+					<div class="col-xs-12 col-sm-5 col-lg-4" style="text-align: center; padding-top: 8px;">
+						<button type="button" value="GFBioContact" name="contactButton" class="dcrtbutton default">Contact</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
