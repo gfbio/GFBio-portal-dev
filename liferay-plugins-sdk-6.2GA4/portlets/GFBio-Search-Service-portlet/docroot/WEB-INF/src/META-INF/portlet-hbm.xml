@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="org.gfbio.model.SearchFeedback" />
+	<import class="org.gfbio.model.SearchHistory" />
+	<class name="org.gfbio.model.impl.SearchFeedbackImpl" table="gfbio_SearchFeedback">
+		<id name="searchFeedbackID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="queryString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="queryFilter" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="datasetDetail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="datasetRank" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="rating" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="org.gfbio.model.impl.SearchHistoryImpl" table="gfbio_SearchHistory">
+		<id name="searchHistoryID" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="queryString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="queryFilter" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

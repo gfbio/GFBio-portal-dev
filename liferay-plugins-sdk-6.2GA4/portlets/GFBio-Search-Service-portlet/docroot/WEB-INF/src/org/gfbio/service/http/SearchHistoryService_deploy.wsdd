@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_gfbio_SearchHistoryService" provider="java:RPC" style="rpc" use="encoded">
+		<typeMapping xmlns:ns="http://model.gfbio.org" qname="ns:SearchHistorySoap" type="java:org.gfbio.model.SearchHistorySoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getSearchHistoryById" qname="operNS:getSearchHistoryById" returnQName="getSearchHistoryByIdReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="searchHistoryId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getSearchHistoryByQueryString" qname="operNS:getSearchHistoryByQueryString" returnQName="getSearchHistoryByQueryStringReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryString" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getSearchHistoryByUserId" qname="operNS:getSearchHistoryByUserId" returnQName="getSearchHistoryByUserIdReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getSearchHistoryIdByPeriod" qname="operNS:getSearchHistoryIdByPeriod" returnQName="getSearchHistoryIdByPeriodReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="period" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getSearchHistoryIdByQueryStringAndPeriod" qname="operNS:getSearchHistoryIdByQueryStringAndPeriod" returnQName="getSearchHistoryIdByQueryStringAndPeriodReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryString" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="period" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getSearchHistoryIdByUserAndPeriod" qname="operNS:getSearchHistoryIdByUserAndPeriod" returnQName="getSearchHistoryIdByUserAndPeriodReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="period" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://model.gfbio.org" name="removeSearchHistory" qname="operNS:removeSearchHistory" returnQName="removeSearchHistoryReturn" returnType="rtns:SearchHistorySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="searchHistoryId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.gfbio.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateSearchHistory" qname="operNS:updateSearchHistory" returnQName="updateSearchHistoryReturn" returnType="rtns:long" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="searchHistoryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="userId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryString" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="queryFilter" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="getSearchHistoryById getSearchHistoryByQueryString getSearchHistoryByUserId getSearchHistoryIdByPeriod getSearchHistoryIdByQueryStringAndPeriod getSearchHistoryIdByUserAndPeriod removeSearchHistory updateSearchHistory" />
+		<parameter name="className" value="org.gfbio.service.http.SearchHistoryServiceSoap" />
+		<parameter name="schemaUnqualified" value="http://model.gfbio.org" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="SearchHistoryServiceSoap" />
+		<parameter name="wsdlServiceElement" value="SearchHistoryServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_gfbio_SearchHistoryService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.gfbio.org" />
+	</service>
+</deployment>

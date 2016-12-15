@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="org.gfbio.service.SearchFeedbackLocalService" class="org.gfbio.service.impl.SearchFeedbackLocalServiceImpl" />
+	<bean id="org.gfbio.service.SearchFeedbackService" class="org.gfbio.service.impl.SearchFeedbackServiceImpl" />
+	<bean id="org.gfbio.service.persistence.SearchFeedbackPersistence" class="org.gfbio.service.persistence.SearchFeedbackPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.SearchHistoryLocalService" class="org.gfbio.service.impl.SearchHistoryLocalServiceImpl" />
+	<bean id="org.gfbio.service.SearchHistoryService" class="org.gfbio.service.impl.SearchHistoryServiceImpl" />
+	<bean id="org.gfbio.service.persistence.SearchHistoryPersistence" class="org.gfbio.service.persistence.SearchHistoryPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+</beans>
