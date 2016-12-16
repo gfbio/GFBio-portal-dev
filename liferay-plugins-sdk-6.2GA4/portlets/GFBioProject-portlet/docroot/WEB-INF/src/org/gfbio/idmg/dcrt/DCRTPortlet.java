@@ -244,7 +244,7 @@ public class DCRTPortlet extends MVCPortlet {
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println("DataCenter: " + dataCenter);
+		writer.println(response);
 		
 		writer.flush();
 		writer.close();
@@ -259,15 +259,12 @@ public class DCRTPortlet extends MVCPortlet {
 		_log.info("Submission Button Method reached!");
 		
 		//Get Button Value
-		String value = resourceRequest.getParameter("value");
-		String text = resourceRequest.getParameter("text");
-		
-		_log.info("Value: " + value + ", Text: " + text);
+		String dataCenter = resourceRequest.getParameter("dataCenter");
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println("Hello submission: " + value + ", " + text);
+		writer.println("Submission: " + dataCenter);
 		
 		writer.flush();
 		writer.close();
@@ -281,15 +278,12 @@ public class DCRTPortlet extends MVCPortlet {
 		_log.info("Detail Button Method reached!");
 		
 		//Get Button Value
-		String value = resourceRequest.getParameter("value");
-		String text = resourceRequest.getParameter("text");
-		
-		_log.info("Value: " + value + ", Text: " + text);
+		String dataCenter = resourceRequest.getParameter("dataCenter");
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println("Hello submission: " + value + ", " + text);
+		writer.println("Details: " + dataCenter);
 		
 		writer.flush();
 		writer.close();
