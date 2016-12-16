@@ -16,6 +16,13 @@ import org.gfbio.NoSuchHeadException;
 import org.gfbio.idmg.dcrt.dao.GCategory;
 import org.gfbio.idmg.dcrt.dao.GContentDAO;
 import org.gfbio.idmg.dcrt.dao.GMaterial;
+import org.gfbio.idmg.dcrt.jiraclient.JIRAApi;
+import org.gfbio.idmg.dcrt.jiraclient.connection.Communicator;
+import org.gfbio.idmg.dcrt.jiraclient.model.Fields;
+import org.gfbio.idmg.dcrt.jiraclient.model.Issue;
+import org.gfbio.idmg.dcrt.jiraclient.model.IssueType;
+import org.gfbio.idmg.dcrt.jiraclient.model.Project;
+import org.gfbio.idmg.dcrt.jiraclient.model.Reporter;
 import org.gfbio.model.Column;
 import org.gfbio.model.Content;
 import org.gfbio.model.DataProvider;
@@ -24,6 +31,7 @@ import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -55,7 +63,7 @@ public class DCRTPortlet extends MVCPortlet {
 		} else if (resourceRequest.getResourceID().equals("submission")) {
 			ajaxSubmissionButton(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("details")) {
-			ajaxSubmissionButton(resourceRequest, resourceResponse);
+			ajaxDetailsButton(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -177,8 +185,8 @@ public class DCRTPortlet extends MVCPortlet {
 				div().withClass("col-xs-3 col-sm-2 col-lg-2").with(
 					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
-				div().withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 25px;").with(
-					span().withId(name).withText(name)
+				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 25px;").with(
+					span().withId(name).withName("dataCenter").withText(name)
 				),
 				div().withClass("col-xs-12 col-sm-5 col-lg-4").attr("style", "text-align: center;").with(
 						button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label),
@@ -207,16 +215,36 @@ public class DCRTPortlet extends MVCPortlet {
 			PortletException {
 		_log.info("Contact Button Method reached!");
 		
-		//Get Button Value
-		String value = resourceRequest.getParameter("value");
-		String text = resourceRequest.getParameter("text");
+		//Get Data Center
+		String dataCenter = resourceRequest.getParameter("dataCenter");
 		
-		_log.info("Value: " + value + ", Text: " + text);
-
+		//Get Radio-Inputs
+		String physical = resourceRequest.getParameter("physical");
+		String taxon = resourceRequest.getParameter("taxon");
+		String alive = resourceRequest.getParameter("alive");
+		String sequenced = resourceRequest.getParameter("sequenced");
+		
+		_log.info("DataCenter: " + dataCenter + "Physical: " + physical + ", Taxon: " + taxon + ", Alive: " + alive + ", Sequenced: " + sequenced);
+		
+		//Create Issue
+		Project project = new Project("SAND");
+		IssueType issuetype = new IssueType("DMP");
+		Reporter reporter = new Reporter("testuser1");
+		Fields fields = new Fields(project, "DMP Request via REST API", issuetype, reporter, dataCenter, null, null, null, null, null, null);
+		Issue issue = new Issue(fields);
+		
+		//JIRA Request
+		Communicator communicator = new Communicator();
+		JIRAApi jiraApi = new JIRAApi(communicator);
+		
+		String response = jiraApi.createDataCenterTicket(issue);
+		_log.info(response);
+		
+		//Response
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println("Hello contact: " + value + ", " + text);
+		writer.println("DataCenter: " + dataCenter);
 		
 		writer.flush();
 		writer.close();
@@ -244,6 +272,28 @@ public class DCRTPortlet extends MVCPortlet {
 		writer.flush();
 		writer.close();
 
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+	//Method for Submission Button
+	private void ajaxDetailsButton(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws IOException,
+	PortletException {
+		_log.info("Detail Button Method reached!");
+		
+		//Get Button Value
+		String value = resourceRequest.getParameter("value");
+		String text = resourceRequest.getParameter("text");
+		
+		_log.info("Value: " + value + ", Text: " + text);
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+		
+		writer.println("Hello submission: " + value + ", " + text);
+		
+		writer.flush();
+		writer.close();
+		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 	
@@ -485,12 +535,9 @@ public class DCRTPortlet extends MVCPortlet {
 	
 	public static List<DataProvider> getDataProviders() {
 		List<DataProvider> providers = null;
-		try {
-			providers = DataProviderLocalServiceUtil.getDataProviders(0,
-					DataProviderLocalServiceUtil.getDataProvidersCount());
-		} catch (SystemException e) {
-			_log.error("Something went wrong in DataProviderLocalServiceUtil!", e);
-		}
+		
+		providers = DataProviderLocalServiceUtil.getDataProviderByProviderType("GFBio Archive");
+		
 		return providers;
 	}
 	
@@ -505,28 +552,27 @@ public class DCRTPortlet extends MVCPortlet {
 	}
 
 	public static List<GCategory> getCategoryList() {
-		GContentDAO content = getCategoryContent();
-		List<GCategory> categories = new ArrayList<GCategory>();
+		
+		JSONArray json = null;
+	    long relationTableHeadId =  6;
+	    long entitiyTableHeadId = 5;
+	    String entityTableCellContent = "material kind";
+	    json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
+	        
+		List<GCategory> categories = transformJsonArrayToGcategory(json);
 
-		GCategory category;
-		for (HashMap<Long, String> map : content.getContents()) {
-			category = new GCategory();
-			for (Long key : map.keySet()) {
-				if (key == 1) {
-					Long id = Long.parseLong(map.get(key));
-					category.setId(id);
-				}
-				if (key == 2) {
-					category.setName(map.get(key));
-				}
-				if (key == 3) {
-					category.setLabel(map.get(key));
-				}
-			}
-			categories.add(category);
-		}
 		return categories;
 	}
+	
+	public static List<GCategory> transformJsonArrayToGcategory(JSONArray categoryJson){
+        List<GCategory> categories = new ArrayList<GCategory>();
+        
+        if (categoryJson.size() >0)
+            for (int i = 0; i < categoryJson.size(); i++)
+                categories.add(new GCategory((JSONObject)categoryJson.get(i)));
+        
+        return categories;
+    }
 
 	public static void getTypeContent() {
 

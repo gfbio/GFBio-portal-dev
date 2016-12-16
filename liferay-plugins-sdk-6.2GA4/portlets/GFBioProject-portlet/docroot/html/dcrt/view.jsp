@@ -1,7 +1,7 @@
 <%@ include file="/html/dcrt/init.jsp" %>
 
 <script  src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"       type="text/javascript"></script> <!--  dcrt.js  imports -->
-<link href="<%=request.getContextPath()%>/css/dcrt.css" rel="stylesheet" type="text/css"> <!-- dcrt.css imports -->
+<link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css" rel="stylesheet" type="text/css"> <!-- dcrt.css imports -->
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
@@ -38,6 +38,12 @@ $( document ).ready(function() {
 	})
 }); 
 
+$(document).ready(function () {
+	$("input[name=physical]").on("click", function (event) {
+		$("div#defaultResult").show();
+		$("input[name=physical]").off(event);
+	})
+});
 
 $(document).ready(function () {
 	$("input[type='radio']").click(function () {
@@ -153,17 +159,22 @@ function buttonClickHandler(url, btn) {
 	buttonValue = btn.attr("value");
 	buttonText = btn.html();
 	
+	dataCenter = btn.parent().parent().find("span[name='dataCenter']").text();
+	
 	var response = '';
     $.ajax({
 	            "method": "POST",
 	            "url": url,
 	            "data": {
-	            	"<portlet:namespace />value": buttonValue,
-	            	"<portlet:namespace />text": buttonText,
+	            	"<portlet:namespace />dataCenter": dataCenter,
+	            	"<portlet:namespace />physical": physicalval,
+	            	"<portlet:namespace />taxon": taxonval,
+	            	"<portlet:namespace />alive": aliveval,
+	            	"<portlet:namespace />sequenced": sequencedval
 	            },
 	            success: function(text) {
                      response = text;
-                     alert("Values: " + text);
+                     //alert("Values: " + text);
                 }
                
     });
@@ -264,13 +275,13 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 		
 		<div id="right" class="col-md-8" > 
 			<div>
-				<h3 style="text-align: center">Data Center Recommendation</h3>
+				<h3 style="text-align: center; margin-bottom: 20px;">Data Center Recommendation</h3>
 			</div>
 			<div id="result" style="text-align: left">
 				No choice has been made
 			</div>
-			<div id="defaultResult" style="text-align: left">
-				<h3>Doesn't found an appropriate Data Center?</h3>
+			<div id="defaultResult" name="defaultContact" style="text-align: left" class="swHide">
+				<h4 style="margin-bottom: 20px;">No appropriate Data Center found?</h4>
 				<div class="row dcrttable">
 					<div class="col-xs-3 col-sm-2 col-lg-2">
 						<img src="/GFBioProject-portlet/images/contact.jpg" style="width: 80px;"/>
