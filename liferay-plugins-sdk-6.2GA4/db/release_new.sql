@@ -209,6 +209,9 @@ UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='PANGA
 ---------------------------------------------------------------------------------------------
 
 
+ALTER TABLE gfbio_researchobject ADD COLUMN researchobjecttype character varying(75);
+ALTER TABLE gfbio_researchobject ADD COLUMN licenseid bigint;
+
 SELECT
 	*
 INTO 
@@ -233,7 +236,7 @@ FROM
 			CAST(public.gfbio_researchobject.researchobjectid as text) = public.gfbio_content.cellcontent AND
 			licenseInformation.rowid = public.gfbio_content.rowid AND
 			licenseInformation.cellcontent != public.gfbio_content.cellcontent
-	) AS temp_roWithLicense
+	) AS temp_roWithLicense;
 
 	
 DO
