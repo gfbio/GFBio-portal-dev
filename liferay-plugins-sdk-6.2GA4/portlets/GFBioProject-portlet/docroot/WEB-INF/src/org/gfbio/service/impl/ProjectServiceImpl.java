@@ -41,6 +41,15 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	
 	
 	//
+	public JSONObject getCheckProjectOnSubmissions(JSONObject requestJson){
+
+		JSONObject responseJson = new JSONObject();
+		responseJson = ProjectLocalServiceUtil.checkProjectOnSubmissions(requestJson);
+		return responseJson;
+	}
+	
+	
+	//
 	public JSONObject getProjectById (JSONObject requestJson){
 
 		JSONObject responseJson = new JSONObject();
@@ -53,12 +62,6 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
-	//
-	public Boolean checkProjectOnSubmissions(long projectId){
-		return ProjectLocalServiceUtil.checkProjectOnSubmissions(projectId);
-	}
-	
-
 	//
 	public JSONObject createProject(JSONObject requestJson) {
 

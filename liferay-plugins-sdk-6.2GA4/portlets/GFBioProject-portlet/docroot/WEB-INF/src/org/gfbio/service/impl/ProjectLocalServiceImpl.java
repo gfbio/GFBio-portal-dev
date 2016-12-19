@@ -42,7 +42,7 @@ import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ProjectFinderUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
 
 /**
  * The implementation of the project local service.
@@ -183,6 +183,26 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
+
+	//--------------------------------------------- Manage Helper Functions ---------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject checkProjectOnSubmissions(JSONObject idJson){
+		JSONObject answerJson = new JSONObject();
+		if (idJson.containsKey("projectid"))
+			if (idJson.get("projectid").getClass().toString().equals("class java.lang.Long"))
+				answerJson.put("check", (Boolean) ProjectFinderUtil.checkProjectOnSubmissions((long)idJson.get("projectid")).get(0));
+			else
+				answerJson.put("error", "The content of 'id' is not from class 'long'");
+		else
+			answerJson.put("error", "There is no 'id' in the request.");
+		return answerJson;
+	}
+	
+	
+	//------------------------------------------------- Helper Functions ------------------------------------------------//	
 	
 	//
 	public Boolean checkProjectOnId(long projectId) {
@@ -278,7 +298,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		long projectId = 0;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "description", "parentprojectid", "userid", "startdate", "enddate", "status", "dcrtid", "dcrtids"};
+		String [] keySet = {"name", "label", "extendeddata", "description", "parentprojectid", "userid", "startdate", "enddate", "status"}; //currently no keys: "dcrtid", "dcrtids"
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -336,7 +356,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			if (requestJson.containsKey("status") && check)
 				check = updateStatus(projectId, (String) requestJson.get("status"));
 			
-			if (requestJson.containsKey("dcrtids") && check){
+/*			if (requestJson.containsKey("dcrtids") && check){
 				if (requestJson.get("dcrtids").getClass().toString().equals("class java.lang.String")){
 					String dcrtidsString =  (String) requestJson.get("dcrtids");
 					if (!((dcrtidsString.substring(0,0)).equals("[")))
@@ -348,10 +368,10 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 					check = updateCategories(projectId, parseJson);
 				}else
 					check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
-			}
+			}*/
 			
-			if (requestJson.containsKey("dcrtid") && check)
-				check = updateCategory(projectId, (long) requestJson.get("dcrtid"));
+/*			if (requestJson.containsKey("dcrtid") && check)
+				check = updateCategory(projectId, (long) requestJson.get("dcrtid"));*/
 
 			if (check){
 				responseJson.put("projectid", projectId);
@@ -386,90 +406,90 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Boolean check = false;
 		long projectId = 0;
 		JSONObject responseJson = new JSONObject();
-		
-
-/*		System.out.println("------------------------------");
-		System.out.println(requestJson);
-		System.out.println("------------------------------");*/
-		
+			
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"projectid","name", "label", "extendeddata", "description", "parentprojectid", "startdate", "enddate", "status", "dcrtid", "dcrtids"};
+		String [] keySet = {"projectid","name", "label", "extendeddata", "description", "parentprojectid", "startdate", "enddate", "status", }; //currently no keys: "dcrtid", "dcrtids"
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
 		if ((requestJson.containsKey("name") || requestJson.containsKey("label")) && requestJson.containsKey("description")&& requestJson.containsKey("projectid")){
 
-			String name  = "";
-			String label = "";
-			if (!(requestJson.containsKey("name")))
-				name = ((String) requestJson.get("label")).trim();
-			else
-				name = ((String) requestJson.get("name")).trim();
-			if (!(requestJson.containsKey("label")))
-				label = ((String) requestJson.get("name")).trim();
-			else
-				label = ((String) requestJson.get("label")).trim();		
-			String description =((String)  requestJson.get("description")).trim();
-			
-			projectId = updateProject((long) requestJson.get("projectid"), name, label, description);;
-			if (projectId !=0)
-				check = true;
-			
-			if (requestJson.containsKey("parentprojectid") && check)
-				check = updateParentProjectByIds(projectId, (long) requestJson.get("parentprojectid"));
-			
-			if (requestJson.containsKey("extendeddata") && check)
-				check = updateExtendedData(projectId, (String) requestJson.get("extendeddata"));
-			
-			if (requestJson.containsKey("startdate") && check){
-				if (requestJson.get("startdate").getClass().toString().equals("class java.lang.String"))
-					try {
-						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
-						check = updateStartDate(projectId, dateFormat.parse((String) requestJson.get("startdate")));	
-					} catch (ParseException e) {e.printStackTrace();}
+			if (checkProjectOnId((long) requestJson.get("projectid"))){
+				
+				String name  = "";
+				String label = "";
+				if (!(requestJson.containsKey("name")))
+					name = ((String) requestJson.get("label")).trim();
 				else
-					check = updateStartDate(projectId, new Date ((long) requestJson.get("startdate")));
-			}
-			
-			if (requestJson.containsKey("enddate") && check){
-				if (requestJson.get("enddate").getClass().toString().equals("class java.lang.String"))
-					try {
-						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
-						check = updateEndDate(projectId, dateFormat.parse((String) requestJson.get("enddate")));	
-					} catch (ParseException e) {e.printStackTrace();}
+					name = ((String) requestJson.get("name")).trim();
+				if (!(requestJson.containsKey("label")))
+					label = ((String) requestJson.get("name")).trim();
 				else
-					check = updateStartDate(projectId, new Date ((long) requestJson.get("enddate")));
-			}
-			
-			if (requestJson.containsKey("status") && check)
-				check = updateStatus(projectId, (String) requestJson.get("status"));
-			
-			if (requestJson.containsKey("dcrtids") && check){
-				if (requestJson.get("dcrtids").getClass().toString().equals("class java.lang.String")){
-					String dcrtidsString =  (String) requestJson.get("dcrtids");
+					label = ((String) requestJson.get("label")).trim();		
+				String description =((String)  requestJson.get("description")).trim();
+				
+				projectId = updateProject((long) requestJson.get("projectid"), name, label, description);;
+				if (projectId !=0)
+					check = true;
+				
+				if (requestJson.containsKey("parentprojectid") && check)
+					check = updateParentProjectByIds(projectId, (long) requestJson.get("parentprojectid"));
+				
+				if (requestJson.containsKey("extendeddata") && check)
+					check = updateExtendedData(projectId, (String) requestJson.get("extendeddata"));
+				
+				if (requestJson.containsKey("startdate") && check){
+					if (requestJson.get("startdate").getClass().toString().equals("class java.lang.String"))
+						try {
+							DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
+							check = updateStartDate(projectId, dateFormat.parse((String) requestJson.get("startdate")));	
+						} catch (ParseException e) {e.printStackTrace();}
+					else
+						check = updateStartDate(projectId, new Date ((long) requestJson.get("startdate")));
+				}
+				
+				if (requestJson.containsKey("enddate") && check){
+					if (requestJson.get("enddate").getClass().toString().equals("class java.lang.String"))
+						try {
+							DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
+							check = updateEndDate(projectId, dateFormat.parse((String) requestJson.get("enddate")));	
+						} catch (ParseException e) {e.printStackTrace();}
+					else
+						check = updateStartDate(projectId, new Date ((long) requestJson.get("enddate")));
+				}
+				
+				if (requestJson.containsKey("status") && check)
+					check = updateStatus(projectId, (String) requestJson.get("status"));
+				
+	/*			if (requestJson.containsKey("dcrtids") && check){
+					if (requestJson.get("dcrtids").getClass().toString().equals("class java.lang.String")){
+						String dcrtidsString =  (String) requestJson.get("dcrtids");
 
-					if (!((dcrtidsString.substring(0,0)).equals("[")))
-						dcrtidsString = "[".concat(dcrtidsString).concat("]");
-					JSONParser parser = new JSONParser();
-					JSONArray parseJson = new JSONArray();
-					try {parseJson = (JSONArray) parser.parse(dcrtidsString);} 
-					catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+						if (!((dcrtidsString.substring(0,0)).equals("[")))
+							dcrtidsString = "[".concat(dcrtidsString).concat("]");
+						JSONParser parser = new JSONParser();
+						JSONArray parseJson = new JSONArray();
+						try {parseJson = (JSONArray) parser.parse(dcrtidsString);} 
+						catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
 
-					check = updateCategories(projectId, parseJson);
+						check = updateCategories(projectId, parseJson);
+					}else
+						check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
+				}*/
+				
+	/*			if (requestJson.containsKey("dcrtid") && check)
+					check = updateCategory(projectId, (long) requestJson.get("dcrtid"));*/
+
+				if (check){
+					responseJson.put("projectid", projectId);
 				}else
-					check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
-			}
-			
-			if (requestJson.containsKey("dcrtid") && check)
-				check = updateCategory(projectId, (long) requestJson.get("dcrtid"));
-
-			if (check){
-				responseJson.put("projectid", projectId);
+					responseJson.put("ERROR:", "ERROR: create project is failed.");
 			}else
-				responseJson.put("ERROR:", "ERROR: create project is failed.");
+				responseJson.put("ERROR:", "ERROR: The id "+(long) requestJson.get("projectid")+" is not a 'projectid' in our database");
+			
 		}else{
-			String errorString = "ERROR: To create a project, the json need minimal 'userid', 'description' and 'name' or 'label'  as Strings. ";
+			String errorString = "ERROR: To update a project, the json need minimal 'projectid', 'description' and 'name' or 'label'  as Strings. ";
 			if (!requestJson.containsKey("name"))
 				errorString = errorString.concat(" 'name',");
 			if (!requestJson.containsKey("label"))
@@ -492,7 +512,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public long createProject (long userId, String name, String label, String description) throws SystemException{
+	private long createProject (long userId, String name, String label, String description) throws SystemException{
 		long projectId = 0;
 		projectId =  updateProject(projectId, name, label, description) ;
 		return projectId;
@@ -500,7 +520,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public long  updateProject(long projectId, String name,String label,String description){
+	private long  updateProject(long projectId, String name,String label,String description){
 		
 		Project project = null;
 		long check =0;
@@ -524,48 +544,11 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	}
 	
 	
-	//
-	public long updateProject(long projectID, long userID, String name, String label, String description, String extendedData, Date startDate, Date endDate, String status) throws SystemException {
-
-		Project project = null;
-		try {
-			project = projectPersistence.findByPrimaryKey(projectID);
-		} catch (NoSuchProjectException e) {e.printStackTrace();}
-
-		//create new project
-		if (project == null) {
-			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-			project.setName(name);
-			project.setLabel(label);
-			project.setDescription(description);
-			project.setExtendeddata(extendedData);
-			project.setStartDate(startDate);
-			project.setEndDate(endDate);
-			project.setStatus(status);
-			super.updateProject(project);
-			Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate, "owner");
-		}
-		
-		//update project
-		else {
-			project.setName(name);
-			project.setLabel(label);
-			project.setDescription(description);
-			project.setExtendeddata(extendedData);
-			project.setStartDate(startDate);
-			project.setEndDate(endDate);
-			project.setStatus(status);
-			super.updateProject(project);
-		}
-		return project.getProjectID();
-	}
-	
-	
 	//-------------------------------  Update Attribute Functions ----------------------------------------------//
 	
 	
 	//
-	public Boolean updateCategories (long projectId, JSONArray requestJson){
+/*	private Boolean updateCategories (long projectId, JSONArray requestJson){
 
 		Boolean check = false;
 		JSONArray responseJson = new JSONArray();
@@ -579,27 +562,27 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 				ContentLocalServiceUtil.deleteRelationContentByCellContent(Long.toString(projectId), Long.toString((Long) responseJson.get(i)) );
 		
 		//wait(1000);
-/*		try {
+		try {
 			TimeUnit.MILLISECONDS.sleep( 2000 );
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 		for (int i =0; i <requestJson.size();i++)
 			check = updateCategory( projectId, (long) requestJson.get(i));
 
 		return check;
-	}	
+	}	*/
 	
 	
 	//
-	public Boolean updateCategory (long projectId, long categoryId){
+/*	private Boolean updateCategory (long projectId, long categoryId){
 		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_project", projectId, "gfbio_category", categoryId);
-	}
+	}*/
 	
 	
 	//
-	public Boolean updateEndDate(long projectId, Date endDate){
+	private Boolean updateEndDate(long projectId, Date endDate){
 	
 		Project project = null;
 		Boolean check = false;
@@ -620,7 +603,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public Boolean updateExtendedData(long projectId, String extendedData){
+	private Boolean updateExtendedData(long projectId, String extendedData){
 	
 		Project project = null;
 		Boolean check = false;
@@ -641,7 +624,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public Boolean updateParentProjectByIds(long projectId, long parentProjectId){
+	private Boolean updateParentProjectByIds(long projectId, long parentProjectId){
 	
 		Project project = null;
 		Boolean check = false;
@@ -662,7 +645,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public Boolean updateStartDate(long projectId, Date startDate){
+	private Boolean updateStartDate(long projectId, Date startDate){
 	
 		Project project = null;
 		Boolean check = false;
@@ -685,7 +668,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 	
 	//
-	public Boolean updateStatus(long projectId, String status){
+	private Boolean updateStatus(long projectId, String status){
 	
 		Project project = null;
 		Boolean check = false;

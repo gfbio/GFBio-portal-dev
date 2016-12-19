@@ -200,3 +200,63 @@ UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='SNSB'
 UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='ZFMK';
 UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='ENA';
 UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='PANGAEA';
+
+
+
+
+---------------------------------------------------------------------------------------------
+--------------------------------      research object      -- 16.12.2016 --------------------
+---------------------------------------------------------------------------------------------
+
+
+SELECT
+	*
+INTO 
+	temp_rowithlicense
+FROM
+	(
+		SELECT 
+			researchobjectid, researchobjectversion, CAST (licenseInformation.cellcontent as bigint) as templicenseid
+		FROM 
+			public.gfbio_researchobject, 
+			public.gfbio_content,
+			(
+				SELECT 
+					* 
+				FROM 
+					public.gfbio_content
+				WHERE
+					public.gfbio_content.headid = 20  
+			) AS licenseInformation
+		WHERE
+			public.gfbio_content.headid = 20 AND
+			CAST(public.gfbio_researchobject.researchobjectid as text) = public.gfbio_content.cellcontent AND
+			licenseInformation.rowid = public.gfbio_content.rowid AND
+			licenseInformation.cellcontent != public.gfbio_content.cellcontent
+	) AS temp_roWithLicense
+
+	
+DO
+$do$
+	DECLARE
+		r temp_roWithLicense%rowtype;
+	BEGIN
+		FOR r IN SELECT * FROM temp_roWithLicense 
+		LOOP
+			UPDATE
+				gfbio_researchobject 
+			SET 
+				licenseid = r.templicenseid 
+			WHERE 
+				researchobjectid= r.researchobjectid AND
+				researchobjectversion = r.researchobjectversion;
+		END LOOP;
+		RETURN;
+	END
+$do$
+LANGUAGE plpgsql;
+
+DROP TABLE temp_roWithLicense;
+DELETE FROM public.gfbio_content WHERE	headid=20;
+DELETE FROM public.gfbio_column  WHERE	headid=20;
+DELETE FROM public.gfbio_head  	 WHERE	headid=20;
