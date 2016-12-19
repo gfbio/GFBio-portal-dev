@@ -263,3 +263,11 @@ DROP TABLE temp_roWithLicense;
 DELETE FROM public.gfbio_content WHERE	headid=20;
 DELETE FROM public.gfbio_column  WHERE	headid=20;
 DELETE FROM public.gfbio_head  	 WHERE	headid=20;
+
+----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content ----------------------------------
+------------------------------------      category      -- 19.12.2016 ------------------------
+----------------------------------------------------------------------------------------------
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects' 											WHERE 	contentid =1922;
+UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects' 											WHERE 	contentid =1466;
