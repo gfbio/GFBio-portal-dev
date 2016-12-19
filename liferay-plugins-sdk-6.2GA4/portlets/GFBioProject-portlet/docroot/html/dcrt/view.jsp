@@ -7,7 +7,6 @@
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
-<portlet:resourceURL var="ajaxUrlMaterial" id="material" />
 <portlet:resourceURL var="ajaxUrlContact" id="contact" />
 <portlet:resourceURL var="ajaxUrlSubmission" id="submission" />
 <portlet:resourceURL var="ajaxUrlDetails" id="details" />
@@ -121,9 +120,9 @@ $(document).ready(function () {
     	var response = '';
         $.ajax({
 		            "method": "POST",
-		            "url": '<%=ajaxUrlMaterial%>',
+		            "url": '<%=ajaxUrlCategory%>',
 		            "data": {
-		            	"<portlet:namespace />material": material,
+		            	"<portlet:namespace />category": material,
 		            	"<portlet:namespace />physical": physicalval,
 		            	"<portlet:namespace />taxon": taxonval,
 		            	"<portlet:namespace />alive": aliveval,
@@ -214,8 +213,8 @@ function buttonClickHandler(url, id) {
 </script>
 
 <%
-List<GCategory> categories = DCRTPortlet.getCategoryList();
-List<GMaterial> materials = DCRTPortlet.getMaterials();
+List<GCategory> categories = DCRTPortlet.getCategoryResearchFieldList();
+List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 %>
 
 <div id="dialog-confirm" title="Create Ticket" style="display: none;">
@@ -300,9 +299,9 @@ List<GMaterial> materials = DCRTPortlet.getMaterials();
 					<select id="material" name="material" >
 						<option selected="selected" label="Select" value="default" />
 						<%
-						for(GMaterial m : materials) {
+						for(GCategory m : materials) {
 						%>
-						<option label="<%=m.toString() %>" value="<%=m %>"><%=m.toString() %> </option>
+						<option label="<%=m.getName() %>" value="<%=m.getId() %>"><%=m.getName() %> </option>
 						<%
 						}
 						%>

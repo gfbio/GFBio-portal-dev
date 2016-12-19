@@ -3,7 +3,6 @@ package org.gfbio.idmg.dcrt;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +14,6 @@ import javax.portlet.ResourceResponse;
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.idmg.dcrt.dao.GCategory;
 import org.gfbio.idmg.dcrt.dao.GContentDAO;
-import org.gfbio.idmg.dcrt.dao.GMaterial;
 import org.gfbio.idmg.dcrt.jiraclient.JIRAApi;
 import org.gfbio.idmg.dcrt.jiraclient.connection.Communicator;
 import org.gfbio.idmg.dcrt.jiraclient.model.Fields;
@@ -56,8 +54,6 @@ public class DCRTPortlet extends MVCPortlet {
 			ajaxRadio(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("category")) {
 			ajaxCategory(resourceRequest, resourceResponse);
-		} else if (resourceRequest.getResourceID().equals("material")) {
-			ajaxMaterial(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("contact")) {
 			ajaxContactButton(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("submission")) {
@@ -118,41 +114,6 @@ public class DCRTPortlet extends MVCPortlet {
 			recommendedProviders = setRecommendedProviders(physical, taxon, alive, sequenced);
 		} else {
 			recommendedProviders = setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);
-		}
-		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-		
-		if(recommendedProviders.isEmpty()) {
-			writer.println("There are no data providers available");
-		} else {
-			dataproviderOutput(writer, recommendedProviders);
-		}
-		
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
-	}
-	
-	//Method for ajax functionality of Material DropDown
-	private void ajaxMaterial(ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse) throws IOException,
-			PortletException { 
-		//Material-DropDown Selection
-		String material = resourceRequest.getParameter("material");
-		_log.info("Material " + material);
-		//Radio-Inputs
-		String physical = resourceRequest.getParameter("physical");
-		String taxon = resourceRequest.getParameter("taxon");
-		String alive = resourceRequest.getParameter("alive");
-		String sequenced = resourceRequest.getParameter("sequenced");
-		
-		List <DataProvider> recommendedProviders;
-		if (material.equals("noselection")) {
-			recommendedProviders = setRecommendedProviders(physical, taxon, alive, sequenced);
-		} else {
-			recommendedProviders = setRecommendedProvidersForMaterial(material);
 		}
 		
 		resourceResponse.setContentType("text/html");
@@ -407,125 +368,6 @@ public class DCRTPortlet extends MVCPortlet {
 		Collections.sort(providersForCategory);
 		return providersForCategory;
 	}
-
-	public static List<GMaterial> getMaterials() {
-		
-		List<GMaterial> enumValues = Arrays.asList(GMaterial.values());
-		return enumValues;
-	}
-	
-	private List<DataProvider> setRecommendedProvidersForMaterial(String material) {
-		List<DataProvider> allProviders = getDataProviders();
-		List<DataProvider> recommendedProviders = new ArrayList<>();
-		
-		if (material.equals(GMaterial.BOTANICAL.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_DNA.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalDnaSamples()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_ETHANOL.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalObjectsInEthanol()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_MICROSCOPIC.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalMicroscopicSlides()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_TISSUE.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalTissueObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_DNA.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalDnaSamples()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_ETHANOL.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalObjectsInEthanol()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_MICROSCOPIC.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalMicroscopicSlides()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_TISSUE.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalTissueObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.PALEONTOLOGICAL.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isPaleontologicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_DNA.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalDnaSamples()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_ETHANOL.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalObjectsInEthanol()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_MICROSCOPIC.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalMicroscopicSlides()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_TISSUE.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalTissueObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.OTHER_OBJECTS.toString())) {
-			for (DataProvider d : allProviders) {
-				if (d.isOtherObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		}
-		
-		return recommendedProviders;
-	}
-
-	//private void 
 	
 	public static List<DataProvider> getDataProviders() {
 		List<DataProvider> providers = null;
@@ -545,13 +387,25 @@ public class DCRTPortlet extends MVCPortlet {
 		return categories;
 	}
 
-	public static List<GCategory> getCategoryList() {
+	public static List<GCategory> getCategoryResearchFieldList() {
 		
-		JSONArray json = null;
+		long relationTableHeadId =  6;
+	    long entitiyTableHeadId = 5;
+        String entityTableCellContent = "research field";
+	    JSONArray json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
+		
+        
+        List<GCategory> categories = transformJsonArrayToGcategory(json);
+        
+ 		return categories;
+	}
+	
+	public static List<GCategory> getCategoryMaterialList() {
+
 	    long relationTableHeadId =  6;
 	    long entitiyTableHeadId = 5;
 	    String entityTableCellContent = "material kind";
-	    json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
+	    JSONArray json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
 	        
 		List<GCategory> categories = transformJsonArrayToGcategory(json);
 
