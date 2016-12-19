@@ -2,9 +2,6 @@
 .swHide {
 	display: none
 }
-.swMain {
-	display: block
-}
 
 div[name="question"] { 
 	margin-left: 20px;
