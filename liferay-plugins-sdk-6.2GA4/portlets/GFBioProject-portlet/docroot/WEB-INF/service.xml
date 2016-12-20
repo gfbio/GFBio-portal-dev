@@ -243,7 +243,8 @@
 		<column name="description" type="String" />
 		<column name="extendeddata" type="String" />
 		<column name="metadataID" type="long" />
-		<column name="licenseID" type="long" />		
+		<column name="licenseID" type="long" />	
+		<column name="researchObjectType" type="String"/>	
 
 
 		<order by="asc">

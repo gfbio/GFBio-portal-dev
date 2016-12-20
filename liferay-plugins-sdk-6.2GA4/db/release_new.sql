@@ -271,3 +271,15 @@ DELETE FROM public.gfbio_head  	 WHERE	headid=20;
 
 UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects' 											WHERE 	contentid =1922;
 UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects' 											WHERE 	contentid =1466;
+
+
+----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content ----------------------------------
+------------------------------------      category      -- 20.12.2016 ------------------------
+----------------------------------------------------------------------------------------------
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects' 											WHERE 	contentid =1923;
+UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution' 								WHERE 	contentid =1466;
+
+UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects in ethanol' 								WHERE 	contentid =1937;
+UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects in ethanol'  								WHERE 	contentid =1938;

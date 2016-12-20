@@ -92,11 +92,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion")){
 			ResearchObject researchObject = null;
-			try {
-				researchObject = researchObjectPersistence.findByIDAndVersion((long) requestJson.get("researchobjectid"), (int) ((long) requestJson.get("researchobjectversion")));
-			} catch (NoSuchResearchObjectException | SystemException e1) {
-				responseJson.put("ERROR", "ERROR: This 'researchobjectid' with this 'researchobjectversion' don't exist.");	
-			}
+			try {researchObject = researchObjectPersistence.findByIDAndVersion((long) requestJson.get("researchobjectid"), (int) ((long) requestJson.get("researchobjectversion")));} 
+			catch (NoSuchResearchObjectException | SystemException e1) {responseJson.put("ERROR", "ERROR: This 'researchobjectid' with this 'researchobjectversion' don't exist.");	}
 			if (researchObject != null)
 				responseJson = constructResearchObjectJson(researchObject);
 		}else{
@@ -451,18 +448,35 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public JSONObject constructResearchObjectJson (ResearchObject researchObject){
 		JSONObject json = new JSONObject();
 		if (researchObject != null){
-			json.put("researchobjectid", researchObject.getResearchObjectID());
-			json.put("researchobjectversion", researchObject.getResearchObjectVersion());		
-			json.put("name", researchObject.getName());
-			json.put("label", researchObject.getLabel());
 			json.put("description", researchObject.getDescription());
 			json.put("extendeddata", researchObject.getExtendeddata());
-			json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
-			json.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
+			json.put("label", researchObject.getLabel());
+			json.put("licenseid", researchObject.getLicenseID());	
 			json.put("metadataid", researchObject.getMetadataID());	
+			json.put("name", researchObject.getName());
+			json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
+			json.put("researchobjectid", researchObject.getResearchObjectID());
+			json.put("researchobjecttype", researchObject.getResearchObjectType());
+			json.put("researchobjectversion", researchObject.getResearchObjectVersion());		
 		}
 		return checkNullParent(json);
 	}
+	
+	
+	//
+	public JSONObject constructExtendedResearchObjectJson (ResearchObject researchObject){
+		JSONObject json = new JSONObject();
+		json = constructResearchObjectJson (researchObject);
+		json.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
+		
+		
+		//{"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "projectid", "researchobjecttype", "submitterid"}
+
+		
+		
+		return checkNullParent(json);
+	}
+	
 	
 	
 	//
@@ -578,15 +592,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			}else
 				responseJson.put("ERROR:", "ERROR: create research object is failed.");
 		}else{
-			String errorString = "ERROR: To create a Research Object, the json need minimal 'name', 'label', 'extendeddata' and 'researchobjecttype' as Strings. ";
+			String errorString = "ERROR: To create a Research Object, the json need minimal 'name' or 'label' and 'description', 'researchobjecttype' as Strings and 'projectid' or 'submitterid' as long." ;
 			if (!requestJson.containsKey("name"))
-				errorString = errorString.concat(" 'name',");
-			if (!requestJson.containsKey("label"))
-				errorString = errorString.concat(" 'label',");
+				if (!requestJson.containsKey("label"))
+					errorString = errorString.concat(" 'label' or 'name,");
 			if (!requestJson.containsKey("description"))
 				errorString = errorString.concat(" 'description',");
 			if (!requestJson.containsKey("researchobjecttype"))
 				errorString = errorString.concat(" 'researchobjecttype',");
+			if (!requestJson.containsKey("submitterid"))
+				if (!requestJson.containsKey("projectid"))
+					errorString = errorString.concat(" 'submitterid' or 'projectid,");
 			errorString = errorString.substring(0, errorString.length()-1).concat(" are not correct");
 			responseJson.put("ERROR", errorString);
 		}
@@ -788,10 +804,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	private Boolean updateAuthorIds (long researchObjectId, int researchObjectVersion, String authorNames){
-		
 		Boolean check = false;
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
+		
 		try {parseJson = (JSONArray) parser.parse(authorNames);}
 		catch (ParseException e) {e.printStackTrace();}
 		
@@ -817,10 +833,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 		if (researchObject != null){
 			researchObject.setExtendeddata(extendedData);
-			try {
-				super.updateResearchObject(researchObject);
-				check = true;
-			} catch (SystemException e) {e.printStackTrace();}
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
 		}
 		return check;
 	}
@@ -837,10 +851,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 		if (researchObject != null){
 			researchObject.setDescription(description);
-			try {
-				super.updateResearchObject(researchObject);
-				check = true;
-			} catch (SystemException e) {e.printStackTrace();}
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
 		}
 		return check;
 	}
@@ -865,17 +877,14 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 		
-		try {
-			researchObject = getResearchObject(pk);
-		} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		try {researchObject = getResearchObject(pk);}
+		catch (PortalException | SystemException e1) {e1.printStackTrace();}
 
 		if (researchObject!=null){
 			researchObject.setLicenseID(licenseId);
 
-			try {
-				super.updateResearchObject(researchObject);
-				check = true;
-			} catch (SystemException e) {e.printStackTrace();}
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
 		}
 		
 		return check;
@@ -901,17 +910,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 		
-		try {
-			researchObject = getResearchObject(pk);
-		} catch (PortalException | SystemException e1) {e1.printStackTrace();}
+		try {researchObject = getResearchObject(pk);}
+		catch (PortalException | SystemException e1) {e1.printStackTrace();}
 
 		if (researchObject!=null){
 			researchObject.setMetadataID(metadataId);
-
-			try {
-				super.updateResearchObject(researchObject);
-				check = true;
-			} catch (SystemException e) {e.printStackTrace();}
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
 		}
 		
 		return check;
@@ -930,10 +935,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 		if (researchObject != null){
 			researchObject.setParentResearchObjectID(parentResearchObjectId);
-			try {
-				super.updateResearchObject(researchObject);
-				check = true;
-			} catch (SystemException e) {e.printStackTrace();}
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
 		}
 		return check;
 	}
@@ -942,11 +945,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	private Boolean updateResearchObjectType (long researchObjectId, int researchObjectVersion, String researchObjectType){
 		Boolean check = false;
-		JSONObject hccJson= new JSONObject();
-		hccJson = checkHCCBackground("gfbio_metadata", "label", researchObjectType);
+		ResearchObject researchObject = null;
+		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 		
-		if ((boolean) hccJson.get("check"))
-			check =  updateMetadataId(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
+		try {researchObject = getResearchObject(pk);}
+		catch (PortalException | SystemException e1) {e1.printStackTrace();}
+
+		if (researchObject!=null){
+			researchObject.setResearchObjectType(researchObjectType);
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
+		}
 
 		return check;
 	}
