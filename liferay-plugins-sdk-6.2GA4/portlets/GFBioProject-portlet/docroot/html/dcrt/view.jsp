@@ -1,9 +1,10 @@
 <%@ include file="/html/dcrt/init.jsp" %>
 
-<script  src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"       type="text/javascript"></script> <!--  dcrt.js  imports -->
 <script  src="<%=request.getContextPath()%>/js/dcrt/jquery-ui.min.js"       type="text/javascript"></script> <!--  jquery-ui.js  imports -->
-<link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css" rel="stylesheet" type="text/css"> <!-- dcrt.css imports -->
+<script  src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"       type="text/javascript"></script> <!--  dcrt.js  imports -->
+
 <link href="<%=request.getContextPath()%>/css/dcrt/jquery-ui.min.css" rel="stylesheet" type="text/css"> <!-- jquery-ui.css imports -->
+<link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css" rel="stylesheet" type="text/css"> <!-- dcrt.css imports -->
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
@@ -145,7 +146,8 @@ $(document).ready(function () {
     		autoOpen: false,
     	    resizable: false,
     	    height: "auto",
-    	    modal: false,
+    	    modal: true,
+    	    dialogClass: "contact-dialog",
     	    buttons: {
     	        Yes: function() {
     	          $(this).dialog( "close" );
@@ -199,6 +201,7 @@ function buttonClickHandler(url, id) {
                  	     height: "auto",
                  	     width: "auto",
                  	     modal: false,
+                 	     dialogClass: "contact-dialog",
                          buttons: {
                            Ok: function() {
                              $( this ).dialog("close");
@@ -219,13 +222,21 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 
 <div id="dialog-confirm" title="Create Ticket" style="display: none;">
 	<p><span class="ui-icon ui-icon-contact" style="float:left; margin:12px 12px 20px 0;"></span>Do you want to create a JIRA Ticket?</p>
+	<form>
+	    <fieldset>
+		    <label for="name">Name</label>
+		    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+		    <label for="email">Email</label>
+		    <input type="text" name="email" id="email" class="text ui-widget-content ui-corner-all">
+	     </fieldset>
+     </form> 
 </div>
 <div id="dialog-success" title="Create Ticket" style="display: none;">
 	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;"></span></p>
 </div>
 
 <div class="container-fluid" >
-	<h1>Data Center Recommendation Tool</h1>
+	<h1 style="text-align: center;">Data Center Recommendation Tool</h1>
 	<div class="row">
 		<div id="left" class="col-md-4" > <!-- style="display: block; float: left; margin-right: 20px; width: 35%; margin-left: 0%;" -->
 			

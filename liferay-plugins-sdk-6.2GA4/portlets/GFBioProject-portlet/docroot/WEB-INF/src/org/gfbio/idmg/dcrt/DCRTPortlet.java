@@ -85,7 +85,7 @@ public class DCRTPortlet extends MVCPortlet {
 				physical, taxon, alive, sequenced);
 		_log.info("============RECOMMENDED=DATAPROVIDERS============ ");
 		if (recommendedProviders.isEmpty()) {
-			writer.println("There are no providers available");
+			writer.println("For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
 			dataproviderOutput(writer, recommendedProviders);
 		}
@@ -120,7 +120,7 @@ public class DCRTPortlet extends MVCPortlet {
 		PrintWriter writer = resourceResponse.getWriter();
 		
 		if(recommendedProviders.isEmpty()) {
-			writer.println("There are no data providers available");
+			writer.println("For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
 			dataproviderOutput(writer, recommendedProviders);
 		}
