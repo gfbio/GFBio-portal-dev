@@ -42,8 +42,6 @@ import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectPK;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  * The implementation of the research object local service.
@@ -90,48 +88,28 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
-		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion")){
+		if (requestJson.containsKey("researchobjectid")){ 
 			ResearchObject researchObject = null;
-			try {researchObject = researchObjectPersistence.findByIDAndVersion((long) requestJson.get("researchobjectid"), (int) ((long) requestJson.get("researchobjectversion")));} 
-			catch (NoSuchResearchObjectException | SystemException e1) {responseJson.put("ERROR", "ERROR: This 'researchobjectid' with this 'researchobjectversion' don't exist.");	}
-			if (researchObject != null)
-				responseJson = constructResearchObjectJson(researchObject);
-		}else{
-			if (requestJson.containsKey("researchobjectid")){
-				ResearchObject researchObject = null;
+			
+			if ( requestJson.containsKey("researchobjectversion"))
+				try {researchObject = researchObjectPersistence.findByIDAndVersion((long) requestJson.get("researchobjectid"), (int) ((long) requestJson.get("researchobjectversion")));} 
+				catch (NoSuchResearchObjectException | SystemException e1) {responseJson.put("ERROR", "ERROR: This 'researchobjectid' with this 'researchobjectversion' don't exist.");	}
+			else
 				researchObject = getLatestResearchObjectById((long) requestJson.get("researchobjectid"));
-				if (researchObject != null)
-					responseJson = constructResearchObjectJson(researchObject);
-				else
-					responseJson.put("ERROR", "ERROR: This 'researchobjectid' don't exist.");
-			}else
-				responseJson.put("ERROR", "ERROR: No key 'researchobjectid' exist.");
-		}
-		
-		if (responseJson.containsKey("metadataid"))
-			responseJson.put("metadatalabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("metadataid")),"label"));
 
-		
-		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_license_researchobject", (long) responseJson.get("researchobjectid")))
-			try {responseJson.put("licenseid", (ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_license_researchobject"), (Long.toString((long) responseJson.get("researchobjectid"))))).toString());}
-			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
-		
-		
-		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson_researchobject", (long) responseJson.get("researchobjectid")))
-			try {responseJson.put("authorid", ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_externalperson_researchobject"), (Long.toString((long) responseJson.get("researchobjectid")))));}
-			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
-		
-		
-		if (responseJson.containsKey("authorid")){
-			JSONArray idArray = (JSONArray) responseJson.get("authorid");
-			JSONArray labelArray = new JSONArray();
-			for (int i =0; i <idArray.size();i++)
-				labelArray.add(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById((long) idArray.get(i) ),"name"));
-			responseJson.put("authorname", labelArray.toString());
-		}
-		
+			System.out.println(researchObject);
+			if (researchObject != null)
+				responseJson = constructExtendedResearchObjectJson(researchObject);
+			else
+				responseJson.put("ERROR", "ERROR: This 'researchobjectid' don't exist.");
+		}else
+			responseJson.put("ERROR", "ERROR: No key 'researchobjectid' exist.");
+	
+
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING",ignoreParameter);
+		
+		System.out.println(responseJson);
 		
 		return checkNullParent(responseJson);
 	}
@@ -446,35 +424,79 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructResearchObjectJson (ResearchObject researchObject){
-		JSONObject json = new JSONObject();
+		JSONObject responseJson = new JSONObject();
 		if (researchObject != null){
-			json.put("description", researchObject.getDescription());
-			json.put("extendeddata", researchObject.getExtendeddata());
-			json.put("label", researchObject.getLabel());
-			json.put("licenseid", researchObject.getLicenseID());	
-			json.put("metadataid", researchObject.getMetadataID());	
-			json.put("name", researchObject.getName());
-			json.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
-			json.put("researchobjectid", researchObject.getResearchObjectID());
-			json.put("researchobjecttype", researchObject.getResearchObjectType());
-			json.put("researchobjectversion", researchObject.getResearchObjectVersion());		
+			responseJson.put("description", researchObject.getDescription());
+			responseJson.put("extendeddata", researchObject.getExtendeddata());
+			responseJson.put("label", researchObject.getLabel());
+			responseJson.put("licenseid", researchObject.getLicenseID());	
+			responseJson.put("metadataid", researchObject.getMetadataID());	
+			responseJson.put("name", researchObject.getName());
+			responseJson.put("parentresearchobjectid", researchObject.getParentResearchObjectID());
+			responseJson.put("researchobjectid", researchObject.getResearchObjectID());
+			responseJson.put("researchobjecttype", researchObject.getResearchObjectType());
+			responseJson.put("researchobjectversion", researchObject.getResearchObjectVersion());		
 		}
-		return checkNullParent(json);
+		return checkNullParent(responseJson);
 	}
 	
 	
 	//
+	@SuppressWarnings("unchecked")
 	public JSONObject constructExtendedResearchObjectJson (ResearchObject researchObject){
-		JSONObject json = new JSONObject();
-		json = constructResearchObjectJson (researchObject);
-		json.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
+		JSONObject responseJson = new JSONObject();
+		
+		System.out.println("1: "+responseJson);
+		
+		responseJson = constructResearchObjectJson (researchObject);
+		
+		System.out.println("2: "+responseJson);
+		
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson_researchobject", (long) responseJson.get("researchobjectid")))
+			try {responseJson.put("authorid", ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_externalperson_researchobject"), (Long.toString((long) responseJson.get("researchobjectid")))));}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		
+		System.out.println("3: "+responseJson);
+		
+		
+		if (responseJson.containsKey("authorid")){
+			JSONArray idArray = (JSONArray) responseJson.get("authorid");
+			JSONArray labelArray = new JSONArray();
+			for (int i =0; i <idArray.size();i++)
+				labelArray.add(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById((long) idArray.get(i) ),"name"));
+			for (int i =0;i<labelArray.size();i++)
+				System.out.println(labelArray.get(i));
+			responseJson.put("authorname", labelArray.toString());
+		}
+		
+		System.out.println("4: "+responseJson);
+		
+		responseJson.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
+		
+		System.out.println("5: "+responseJson);
+		
+		if (responseJson.containsKey("metadataid"))
+			responseJson.put("metadatalabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("metadataid")),"label"));
+
+		
+		System.out.println("6: "+responseJson);
+		
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_license_researchobject", (long) responseJson.get("researchobjectid")))
+			try {responseJson.put("licenseid", (ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_license_researchobject"), (Long.toString((long) responseJson.get("researchobjectid"))))).toString());}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+		
+		System.out.println("7: "+responseJson);
+
+		
+		
+		
 		
 		
 		//{"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "projectid", "researchobjecttype", "submitterid"}
 
 		
 		
-		return checkNullParent(json);
+		return checkNullParent(responseJson);
 	}
 	
 	
@@ -511,7 +533,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createResearchObjectByJson(JSONObject requestJson){
-		
 		Boolean check = false;
 		long researchObjectId = 0;
 		int researchObjectVersion = 1;
@@ -524,6 +545,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		if ((requestJson.containsKey("name") || requestJson.containsKey("label")) && requestJson.containsKey("description") && requestJson.containsKey("researchobjecttype") && (requestJson.containsKey("submitterid") || requestJson.containsKey("projectid"))){
 
+			// mandatory
+			
 			String name  = "";
 			String label = "";
 			if (!(requestJson.containsKey("name")))
@@ -542,7 +565,15 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				if (researchObjectId !=0)
 					check = true;
 			} catch (SystemException e) {e.printStackTrace();}
+			
+			
+			if(requestJson.containsKey("researchobjecttype") && check){
+				System.out.println("4");
+				check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
+			}
 
+			
+			// optional
 				
 			if (requestJson.containsKey("authorid") && check)
 				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
@@ -551,9 +582,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			if(requestJson.containsKey("authormail") && check)
 				check = updateAuthorId(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim());
-			
+					
 			if(requestJson.containsKey("authornames") && check)
-				updateAuthorIds(researchObjectId, researchObjectVersion, ((String) requestJson.get("authornames")).trim());
+				updateAuthorIds(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")));
 			
 			if(requestJson.containsKey("extendeddata") && check)
 				updateExtendedData(researchObjectId, researchObjectVersion, ((String) requestJson.get("extendeddata")).trim());
@@ -576,8 +607,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			if (requestJson.containsKey("projectid") && check)
 				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
 
-			if(requestJson.containsKey("researchobjecttype") && check)
-				check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
 	
 			if (requestJson.containsKey("submitterid") && check)
 				check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("submitterid"), "owner");
@@ -684,7 +713,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 								
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("authornames") && check)
-							updateAuthorIds(researchObjectId, researchObjectVersion, ((String) requestJson.get("authornames")).trim());
+							updateAuthorIds(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("authornames"));
 				
 						//no check request, because: if exists a license-ro-relation, than check is false 
 						if(requestJson.containsKey("authormail") && check)
@@ -803,17 +832,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
-	private Boolean updateAuthorIds (long researchObjectId, int researchObjectVersion, String authorNames){
+	private Boolean updateAuthorIds (long researchObjectId, int researchObjectVersion, JSONArray authorNames){
 		Boolean check = false;
-		JSONParser parser = new JSONParser();
-		JSONArray parseJson = new JSONArray();
 		
-		try {parseJson = (JSONArray) parser.parse(authorNames);}
-		catch (ParseException e) {e.printStackTrace();}
-		
-		for (int i=0; i < parseJson.size();i++){
+		for (int i=0; i < authorNames.size();i++){
 			JSONObject hccJson= new JSONObject();
-			hccJson = checkHCCBackground("gfbio_externalperson", "name", (String) parseJson.get(i));
+			hccJson = checkHCCBackground("gfbio_externalperson", "name", (String) authorNames.get(i));
 			if ((boolean) hccJson.get("check"))
 				check =  updateAuthorId(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
 		}
@@ -944,19 +968,19 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	private Boolean updateResearchObjectType (long researchObjectId, int researchObjectVersion, String researchObjectType){
+		
 		Boolean check = false;
 		ResearchObject researchObject = null;
 		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
 		
 		try {researchObject = getResearchObject(pk);}
 		catch (PortalException | SystemException e1) {e1.printStackTrace();}
-
+		
 		if (researchObject!=null){
 			researchObject.setResearchObjectType(researchObjectType);
 			try {super.updateResearchObject(researchObject); check = true;}
 			catch (SystemException e) {e.printStackTrace();}
 		}
-
 		return check;
 	}
 	
