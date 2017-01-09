@@ -1,4 +1,13 @@
-﻿**********************************************
+﻿*********************************************
+*** Software Requirements ***
+********************************************
+- Java SDK 8_101 or higher
+- Liferay IDE 3.1.0. or higher (Eclipse-Mars Liferay IDE bundle)
+
+
+-------------------------------------------------------------------------------------------------
+
+**********************************************
 *** Liferay 7 Theme-Generator Introduction ***
 **********************************************
 
@@ -60,6 +69,7 @@ For Windows User - Sass required:
 - command line:	yo liferay-theme
 - enter in order:	name, theme-id (or enter for default), version of liferay (to select)
 
+----------------------------------------------------------------------------------------------------------------
 
 **************************
 *** JPM4J installation ***
@@ -121,15 +131,21 @@ if you want to run your modules against a Liferay Test-Server modify
 SETUP your Liferay Instance in Working Directory:
 
 	- cmd:	gradlew initBundle
-******************************
+***************************************************************
 *** Creating a Liferay Workspace in Eclipse // Working with it
-******************************
+**************************************************************
 
 Therefore stick to 
 https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-a-liferay-workspace-with-liferay-ide
 
 
-**********************************
+
+********************************************
+*** Creating Theme Contributor with Liferay IDE
+*********************************************
+
+
+********************************************
 *** Creating Theme Contributor with Blade CLI
 *********************************************
 
