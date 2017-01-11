@@ -5,7 +5,6 @@ public class Issue {
 	public Fields fields;
 
 	public Issue(Fields fields) {
-		super();
 		this.fields = fields;
 	}
 

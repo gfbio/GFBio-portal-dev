@@ -5,7 +5,6 @@ public class Project {
 	public String key;
 
 	public Project(String key) {
-		super();
 		this.key = key;
 	}
 

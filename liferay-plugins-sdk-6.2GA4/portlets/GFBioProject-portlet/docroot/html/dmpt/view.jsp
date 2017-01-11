@@ -1,12 +1,10 @@
 <%@ include file="/html/dmpt/init.jsp"%>
 
 <script src="<%=request.getContextPath()%>/js/dmpt/jquery.steps.min.js"	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/dmpt/jquery.validate.min.js" type="text/javascript"></script>
-<!--  steps  imports -->
+<script src="<%=request.getContextPath()%>/js/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/dmpt/dmpt.js"	type="text/javascript"></script>
 
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
-<!-- dmpt.css imports -->
 <link href="<%=request.getContextPath()%>/css/dmpt/jquery-steps.css"	rel="stylesheet" type="text/css">
 
 <script type="text/javascript">     

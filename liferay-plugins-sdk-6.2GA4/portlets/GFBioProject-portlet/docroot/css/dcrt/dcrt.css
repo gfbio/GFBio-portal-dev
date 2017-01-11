@@ -13,8 +13,8 @@ input[type="radio"] {
 }	
 
 input.dialogtext { 
-	margin-bottom:12px; 
-	width:95%; 
+	margin-bottom: 10px; 
+	width: 100%; 
 	padding: .4em; 
 }
 	
@@ -33,19 +33,28 @@ input.dialogtext {
 
 .ui-dialog.contact-dialog {
 	box-shadow:0px 0px 3px #888;
-	border-radius: 8px;
 }
 
-.ui-dialog.contact-dialog ui-widget-header {
-	border-radius: 8px;
+.ui-dialog.contact-dialog .ui-widget-header {
+	border-radius: 2px;
+	background: #3cace4;
+}
+	
+.ui-widget-overlay { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 110%; 
+    background: #aaaaaa;
+    opacity: 0.4;
 }
 	
 .dcrtbutton {
-	border: 2px;
+	border: 1px;
    	border-style: solid;
    	border-color: #FCFCFC;
-   	border-radius: 8px;
-   	box-shadow: 0px 2px 5px #888;
+   	box-shadow: 0px 1px 5px #888;
    	height: 30px;
    	color: white !important;
    	text-align: center;
@@ -54,6 +63,11 @@ input.dialogtext {
    	display: inline-block;
    	font-size: 13px !important;
    	outline: none;
+}
+
+.dcrtbutton:hover {
+	border: 0px;
+	box-shadow: 0px 1px 10px #888;
 }
     
 .dcrtbutton.contact {
@@ -75,4 +89,18 @@ input.dialogtext {
 .dcrtbutton.details {
    	background-color: #3e66ad;
    	width: 65px;
+}
+
+.error {
+    border: 1px solid #f00;
+    box-shadow: 0 0 2px #f00 !important;
+}
+
+.valid {
+    border: 1px solid #009c96;
+    box-shadow: 0 0 2px #009c96 !important;
+}
+
+.custom .row {
+	margin-left: 0;
 }
