@@ -147,8 +147,8 @@ function setRatingBar(){
 			// rating was selected by a user
 			var div = event.target.parentElement.parentElement.parentElement;
 			var resultRow = div.parentElement.parentElement;
-			console.log();
-			console.log(value);
+			//console.log(div);
+			//console.log(value);
 			// TODO:call jsonws
 			// saveSearchFeedback(datasetDetail,datasetRank,rating)
 		} else {
@@ -247,7 +247,7 @@ function newQuery(clearBasket) {
 		visualBasket.value = "";
 	// Save query to DB
 	if (keyword != "" && clearBasket){
-		console.log('New query is made.');
+		//console.log('New query is made.');
 		saveSearchHistory(keyword,filter);
 		document.getElementById("filters").value = filterObj;
 	}
@@ -331,7 +331,7 @@ function saveSearchHistory(keyword,filter){
 		//TODO: overwrite the record, if the same keyword and filter are added
 		var recordid = 0; //For a new record
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
-		console.log('saveSearchHistory');
+		//console.log('saveSearchHistory');
 		parent.Liferay.Service(
 			'/GFBio-Search-Service-portlet.searchhistory/update-search-history', {
 			searchHistoryId : recordid,
@@ -474,7 +474,6 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		};
 	}
 	var filterObj;
-
 	if (yearRange.trim() == "") {
 		if (filterArray != "") {
 			filterObj = filterArray;
@@ -774,7 +773,7 @@ function filterQuery(filter, yearRange) {
 	}
 	// Save query to DB
 	if (keyword != ""){
-		console.log('Filtered query.');
+		//console.log('Filtered query.');
 		var filterObj = filter;
 		filterObj.push(yearRange);
 		saveSearchHistory(keyword,filterObj);
@@ -945,10 +944,10 @@ function writeShowHideFields(orgHTML) {
 }
 function hilightResult(orgHTML){
 	var semanticTerms = document.getElementById("semanticTerms").value;
-	var semList = semanticTerms.split("|");
+	var semList = semanticTerms.split(/[\s,\|]+/);
 	var newHTML = orgHTML;
 	for (var i=0; i<semList.length; i++){
-		if (semList[i].trim() != ""){
+		if ((semList[i].trim() != "") && (semList[i].trim() != "and")){
 			if (newHTML.toLowerCase().indexOf(semList[i].toLowerCase())>=0){
 				var query = new RegExp("(\\b" + semList[i] + "\\b)", "gim");
 				//var temp = orgHTML.replace(/(<div>|<\/div>)/igm, "");
@@ -1130,6 +1129,7 @@ function showCartIcon(nRow, aData) {
 		var elmTD = $(elmRow[0].lastElementChild);
 		var elmDiv =$($(elmTD[0]).find('#cart')[0]);
 		// show the cart's div
+		//console.log(elmDiv);
 		elmDiv.removeClass('invisible');
 	}
 }
