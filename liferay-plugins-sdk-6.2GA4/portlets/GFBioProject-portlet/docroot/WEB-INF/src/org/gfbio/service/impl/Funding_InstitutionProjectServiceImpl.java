@@ -14,9 +14,8 @@
 
 package org.gfbio.service.impl;
 
-import org.gfbio.service.Funding_InstitutionProjectLocalServiceUtil;
 import org.gfbio.service.base.Funding_InstitutionProjectServiceBaseImpl;
-import org.json.simple.JSONObject;
+
 
 /**
  * The implementation of the funding_ institution project remote service.
@@ -34,9 +33,6 @@ import org.json.simple.JSONObject;
  */
 public class Funding_InstitutionProjectServiceImpl	extends Funding_InstitutionProjectServiceBaseImpl {
 	
-	public JSONObject createFunding_InstitutionProject(JSONObject requestJson){
-		
-		return Funding_InstitutionProjectLocalServiceUtil.createFunding_InstitutionProject(requestJson);
-	}
+
 	
 }

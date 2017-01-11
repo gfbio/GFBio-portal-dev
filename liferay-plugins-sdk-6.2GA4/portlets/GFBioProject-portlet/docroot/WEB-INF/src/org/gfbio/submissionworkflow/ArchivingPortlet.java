@@ -71,9 +71,9 @@ public class ArchivingPortlet extends GenericPortlet {
 			if ("getResearchObjectsOfUser".toString().equals(request.getParameter("responseTarget").toString()))
 				getResearchObjectsOfUser(request, response);
 
-			//new ResearchObject / sequence meta data over GCDJ Widget
+/*			//new ResearchObject / sequence meta data over GCDJ Widget
 			if ("GCDJWidget".toString().equals(request.getParameter("responseTarget").toString()))
-				newResearchObject(request, response);
+				newResearchObject(request, response);*/
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class ArchivingPortlet extends GenericPortlet {
 	}
 
 
-	public void newResearchObject(ResourceRequest request, ResourceResponse response) {
+/*	public void newResearchObject(ResourceRequest request, ResourceResponse response) {
 		long researchObjectID = 0;
 		long projectID = Long.valueOf(request.getParameter("projId")).longValue();
 
@@ -145,7 +145,7 @@ public class ArchivingPortlet extends GenericPortlet {
 		String data = json.toString();
 
 		researchObjectID = ResearchObjectLocalServiceUtil.updateResearchObjectWithProject(projectID, researchObjectID, 1, name, label, data, "test");
-	}
+	}*/
 
 
 

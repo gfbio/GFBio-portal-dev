@@ -77,7 +77,7 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONObject createFunding_InstitutionProject(JSONObject requestJson){
+	public JSONObject createFundingInstitutionProject(JSONObject requestJson){
 		
 		Boolean check = false;
 		JSONObject responseJson = new JSONObject();
@@ -88,7 +88,7 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 
 		if (requestJson.containsKey("projectid") && requestJson.containsKey("fundingagencyid") && requestJson.containsKey("fundingprogramid")&& requestJson.containsKey("institutionid"))
-			check = saveUpdateFunding_InstitutionProject((long) requestJson.get("projectid"), (long) requestJson.get("fundingagencyid"), (long) requestJson.get("fundingprogramid"), (long) requestJson.get("institutionid"));
+			check = saveUpdateFundingInstitutionProject((long) requestJson.get("projectid"), (long) requestJson.get("fundingagencyid"), (long) requestJson.get("fundingprogramid"), (long) requestJson.get("institutionid"));
 		
 		if (check){
 			responseJson.put("projectid", (long) requestJson.get("projectid"));
@@ -109,7 +109,7 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 	
 	
 	//update or create a new Relationship between a Project and a Research Object
-	public Boolean saveUpdateFunding_InstitutionProject(long projectId, long fundingAgencyId, long fundingProgramId, long institutionId) {
+	public Boolean saveUpdateFundingInstitutionProject(long projectId, long fundingAgencyId, long fundingProgramId, long institutionId) {
 
 		Boolean check = false;
 		check = ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_fundingagency", fundingAgencyId);
@@ -119,7 +119,7 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 			if (check){
 				check = ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_institution", institutionId);
 				if (check)
-					check = updateFunding_InstitutionProject(projectId, fundingAgencyId, fundingProgramId, institutionId);
+					check = updateFundingInstitutionProject(projectId, fundingAgencyId, fundingProgramId, institutionId);
 			}
 		}
 		return check;
@@ -127,7 +127,7 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 		
 		
 	//update or create a new Relationship between a Project and a Research Object
-	public Boolean updateFunding_InstitutionProject(long projectId, long fundingAgencyId, long fundingProgramId, long institutionId) {
+	public Boolean updateFundingInstitutionProject(long projectId, long fundingAgencyId, long fundingProgramId, long institutionId) {
 
 		Boolean check = false;
 		Funding_InstitutionProject relation = null;

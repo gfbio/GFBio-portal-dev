@@ -86,11 +86,13 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	
 	//
 	public JSONArray createResearchObject(String requestJson){
+
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
+
 		try {parseJson = (JSONArray) parser.parse(requestJson);}
 		catch (ParseException e) {e.printStackTrace();}
-		
+
 		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
 	}
 	

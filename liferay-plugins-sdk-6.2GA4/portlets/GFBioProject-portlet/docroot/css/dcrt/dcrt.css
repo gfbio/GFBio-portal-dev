@@ -2,9 +2,6 @@
 .swHide {
 	display: none
 }
-.swMain {
-	display: block
-}
 
 div[name="question"] { 
 	margin-left: 20px;
@@ -14,6 +11,12 @@ div[name="question"] {
 input[type="radio"] {
  	margin-bottom: 7px;	
 }	
+
+input.dialogtext { 
+	margin-bottom:12px; 
+	width:95%; 
+	padding: .4em; 
+}
 	
 .dcrttr {
 	border-top: 10px solid;
@@ -27,13 +30,22 @@ input[type="radio"] {
 	padding-bottom: 5px !important;
 	border-bottom: 1px solid #ddd;
 }
+
+.ui-dialog.contact-dialog {
+	box-shadow:0px 0px 3px #888;
+	border-radius: 8px;
+}
+
+.ui-dialog.contact-dialog ui-widget-header {
+	border-radius: 8px;
+}
 	
 .dcrtbutton {
 	border: 2px;
    	border-style: solid;
    	border-color: #FCFCFC;
    	border-radius: 8px;
-   	box-shadow: 0px 3px 5px #888;
+   	box-shadow: 0px 2px 5px #888;
    	height: 30px;
    	color: white !important;
    	text-align: center;
