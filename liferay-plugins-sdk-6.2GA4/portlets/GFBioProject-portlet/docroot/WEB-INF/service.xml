@@ -219,11 +219,24 @@
 	</entity>
 
 
+	<!-- Primary Data -->
+
+	<entity name="PrimaryData" data-source="gfbioDataSource" 
+		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
+		tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="primaryDataID" 			type="long" 	db-name="primarydataid"		primary="true" />
+		<column name="name" 					type="String" 	db-name="name"/>
+		<column name="path" 					type="String" 	db-name="path"/>
+
+		<order by="asc">			<order-column name="name" />		</order>
+
+		<finder name="PrimaryDataID" 			return-type="PrimaryData">	<finder-column name="primaryDataID" />				</finder>
+	</entity>
+
 
 	<!-- Research Object -->
 
-	<entity name="ResearchObject" data-source="gfbioDataSource"
-		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
+	<entity name="ResearchObject" data-source="gfbioDataSource"	local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="researchObjectID" 		type="long" 	db-name="researchobjectid"			primary="true" />
 		<column name="researchObjectVersion" 	type="int" 		db-name="researchobjectversion"		primary="true" />
@@ -250,12 +263,12 @@
 
 	<!-- Submission (Registry) -->
 
-	<entity name="Submission" data-source="gfbioDataSource" uuid="false"
+	<entity name="Submission" data-source="gfbioDataSource" 
 		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="submissionID" 			type="long" 	db-name="submissionid"				primary="true" />
-		<column name="researchObjectID" 		type="long" 	db-name="researchobjectversion"/>
-		<column name="researchObjectVersion" 	type="long" 	db-name="last_changed"/>
+		<column name="researchObjectID" 		type="long" 	db-name="researchobjectid"/>
+		<column name="researchObjectVersion" 	type="long" 	db-name="researchobjectversion"/>
 		<column name="archive" 					type="String" 	db-name="archive"/>
 		<column name="brokerSubmissionID" 		type="String" 	db-name="brokersubmissionid"/>
 		<column name="archivePID" 				type="String" 	db-name="archive_pid" />
@@ -458,6 +471,20 @@
 		<finder name="LastModifiedDate" return-type="UserSSO">
 			<finder-column name="lastModifiedDate" />
 		</finder>
+	</entity>
+	
+	
+	<!-- Relationship between Primary Data and Research Object -->
+
+	<entity name="PrimaryData_ResearchObject" data-source="gfbioDataSource"	local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="primaryDataID" 			type="long" 		primary="true" />
+		<column name="researchObjectID" 		type="long" 		primary="true" />
+		<column name="researchObjectVersion" 	type="int" 			primary="true" />
+
+		<finder name="PrimaryDataID" 				return-type="Collection">	<finder-column name="primaryDataID" />															</finder>
+		<finder name="ResearchObjectID" 			return-type="Collection">	<finder-column name="researchObjectID" />													</finder>
+		<finder name="ResearchObjectIDAndVersion"	return-type="Collection">	<finder-column name="researchObjectID" />	<finder-column name="researchObjectVersion" />	</finder>
+
 	</entity>
 
 

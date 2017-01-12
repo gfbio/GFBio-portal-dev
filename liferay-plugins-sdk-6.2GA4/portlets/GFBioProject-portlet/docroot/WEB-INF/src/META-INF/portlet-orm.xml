@@ -76,6 +76,7 @@
 			<basic name="mycologicalMicroscopicSlides" />
 			<basic name="zoologicalMicroscopicSlides" />
 			<basic name="otherObjects" />
+			<basic name="providerType" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -130,18 +131,47 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.PrimaryDataModelImpl">
+		<attributes>
+			<id name="primaryDataID">
+				<column name="PRIMARYDATAID" />
+			</id>
+			<basic name="name" />
+			<basic name="path" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.PrimaryData_ResearchObjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.PrimaryData_ResearchObjectPK" />
+		<attributes>
+			<id name="primaryDataID" />
+			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.ProjectModelImpl">
 		<attributes>
-			<id name="projectID" />
-			<basic name="parentProjectID" />
+			<id name="projectID">
+				<column name="PROJECTID" />
+			</id>
+			<basic name="parentProjectID">
+				<column name="PARENTPROJECTID" />
+			</basic>
 			<basic name="name" />
 			<basic name="label" />
 			<basic name="extendeddata" />
 			<basic name="description" />
 			<basic name="startDate">
+				<column name="STARTDATE" />
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="endDate">
+				<column name="ENDDATE" />
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="status" />
@@ -181,14 +211,28 @@
 	<mapped-superclass class="org.gfbio.model.impl.ResearchObjectModelImpl">
 		<id-class class="org.gfbio.service.persistence.ResearchObjectPK" />
 		<attributes>
-			<id name="researchObjectID" />
-			<id name="researchObjectVersion" />
-			<basic name="parentResearchObjectID" />
+			<id name="researchObjectID">
+				<column name="RESEARCHOBJECTID" />
+			</id>
+			<id name="researchObjectVersion">
+				<column name="RESEARCHOBJECTVERSION" />
+			</id>
+			<basic name="parentResearchObjectID">
+				<column name="PARENTRESEARCHOBJECTID" />
+			</basic>
 			<basic name="name" />
 			<basic name="label" />
 			<basic name="description" />
 			<basic name="extendeddata" />
-			<basic name="metadataID" />
+			<basic name="metadataID">
+				<column name="METADATAID" />
+			</basic>
+			<basic name="licenseID">
+				<column name="LICENSEID" />
+			</basic>
+			<basic name="researchObjectType">
+				<column name="RESEARCHOBJECTTYPE" />
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -212,26 +256,21 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.SearchHistoryModelImpl">
-		<attributes>
-			<id name="searchHistoryID" />
-			<basic name="userID" />
-			<basic name="queryString" />
-			<basic name="lastModifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.SubmissionModelImpl">
 		<attributes>
-			<id name="submissionID" />
-			<basic name="researchObjectID" />
-			<basic name="researchObjectVersion" />
+			<id name="submissionID">
+				<column name="SUBMISSIONID" />
+			</id>
+			<basic name="researchObjectID">
+				<column name="RESEARCHOBJECTID" />
+			</basic>
+			<basic name="researchObjectVersion">
+				<column name="RESEARCHOBJECTVERSION" />
+			</basic>
 			<basic name="archive" />
-			<basic name="brokerSubmissionID" />
+			<basic name="brokerSubmissionID">
+				<column name="BROKERSUBMISSIONID" />
+			</basic>
 			<basic name="archivePID">
 				<column name="ARCHIVE_PID" />
 			</basic>
@@ -242,7 +281,9 @@
 				<column name="LAST_CHANGED" />
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="userID" />
+			<basic name="userID">
+				<column name="USERID" />
+			</basic>
 			<basic name="isPublic">
 				<column name="IS_PUBLIC" />
 			</basic>
@@ -308,6 +349,14 @@
 		<table name="gfbio_Head" />
 		<attributes />
 	</entity>
+	<entity class="org.gfbio.model.impl.PrimaryDataImpl" name="PrimaryData">
+		<table name="gfbio_PrimaryData" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.PrimaryData_ResearchObjectImpl" name="PrimaryData_ResearchObject">
+		<table name="gfbio_PrimaryData_ResearchObject" />
+		<attributes />
+	</entity>
 	<entity class="org.gfbio.model.impl.ProjectImpl" name="Project">
 		<table name="gfbio_Project" />
 		<attributes />
@@ -326,10 +375,6 @@
 	</entity>
 	<entity class="org.gfbio.model.impl.ResearchObject_UserImpl" name="ResearchObject_User">
 		<table name="gfbio_ResearchObject_User" />
-		<attributes />
-	</entity>
-	<entity class="org.gfbio.model.impl.SearchHistoryImpl" name="SearchHistory">
-		<table name="gfbio_SearchHistory" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.SubmissionImpl" name="Submission">

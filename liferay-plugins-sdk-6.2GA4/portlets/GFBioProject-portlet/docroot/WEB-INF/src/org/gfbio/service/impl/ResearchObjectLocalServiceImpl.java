@@ -375,6 +375,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	}
 	
 	
+	//
 	@SuppressWarnings("unchecked")
 	public JSONObject checkNullParent(JSONObject json){
 		
@@ -464,14 +465,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			JSONArray labelArray = new JSONArray();
 			for (int i =0; i <idArray.size();i++)
 				labelArray.add(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById((long) idArray.get(i) ),"name"));
+			System.out.println(labelArray);
 			for (int i =0;i<labelArray.size();i++)
 				System.out.println(labelArray.get(i));
-			responseJson.put("authorname", labelArray.toString());
+			responseJson.put("authorname", labelArray);
 		}
 		
 		System.out.println("4: "+responseJson);
-		
-		responseJson.put("researchobjecttype", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(researchObject.getMetadataID()), "label"));
 		
 		System.out.println("5: "+responseJson);
 		
@@ -480,14 +480,23 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 		
 		System.out.println("6: "+responseJson);
-		
-		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_license_researchobject", (long) responseJson.get("researchobjectid")))
-			try {responseJson.put("licenseid", (ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_license_researchobject"), (Long.toString((long) responseJson.get("researchobjectid"))))).toString());}
-			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
-		
-		System.out.println("7: "+responseJson);
 
+		if (responseJson.containsKey("licenseid"))
+			responseJson.put("licenselabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("licenseid")),"label"));
+
+		System.out.println("7: "+responseJson);
 		
+		//primärdataid + primärdata name
+
+		System.out.println("8: "+responseJson);
+		
+		//categories
+		
+		System.out.println("9: "+responseJson);
+		
+		//alle submissioninformationen -> in submission-klasse
+
+		System.out.println("10: "+responseJson);
 		
 		
 		

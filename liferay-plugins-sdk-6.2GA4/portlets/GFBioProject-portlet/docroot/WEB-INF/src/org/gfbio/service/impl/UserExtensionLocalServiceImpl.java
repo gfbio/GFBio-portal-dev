@@ -56,10 +56,10 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		Set<String> set = new HashSet<String>();
 		set.add("userid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
 		if (requestJson.containsKey("userid"))
-			try {
-				responseJson = constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)requestJson.get("userid")));
-			} catch (NoSuchUserException | SystemException e) {e.printStackTrace();	responseJson.put("ERROR", e);}
+			try {responseJson = constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)requestJson.get("userid")));}
+			catch (NoSuchUserException | SystemException e) {e.printStackTrace();	responseJson.put("ERROR", e);}
 		else
 			responseJson.put("ERROR", "No key 'userid' exist.");
 		
@@ -68,6 +68,40 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		
 		return responseJson;
 	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONObject getUserExtentionByEmailAdress(JSONObject requestJson){
+		
+		JSONObject responseJson = new JSONObject();
+		Set<String> set = new HashSet<String>();
+		set.add("emailaddress");
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
+		if (requestJson.containsKey("emailaddress")){
+			User user = null;
+			try {user =	userPersistence.findByEmailAddress(((String) requestJson.get("emailaddress")).trim()).get(0);} 
+			catch (SystemException e) {e.printStackTrace();}
+			
+			if (user != null)
+				try {responseJson =constructUserExtentionJsonById(user);
+				} catch (NoSuchUserException | SystemException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			else
+				responseJson.put("ERROR", "Loading user information is faild.");
+				
+		}else
+			responseJson.put("ERROR", "No parameter 'emailaddress' exist.");
+		
+		if (!ignoreParameter.equals(""))
+			responseJson.put("WARNING",ignoreParameter);
+		
+		return responseJson;
+	}
+	
 	
 	
 	//----------------------------------- Get Functions --------------------------------------------------//
