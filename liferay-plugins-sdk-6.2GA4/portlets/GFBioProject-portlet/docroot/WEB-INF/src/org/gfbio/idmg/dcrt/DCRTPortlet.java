@@ -16,6 +16,8 @@ import org.gfbio.idmg.dcrt.dao.GCategory;
 import org.gfbio.idmg.dcrt.dao.GContentDAO;
 import org.gfbio.idmg.dcrt.jiraclient.JIRAApi;
 import org.gfbio.idmg.dcrt.jiraclient.connection.Communicator;
+import org.gfbio.idmg.dcrt.jiraclient.model.Assignee;
+import org.gfbio.idmg.dcrt.jiraclient.model.Customfield_10217;
 import org.gfbio.idmg.dcrt.jiraclient.model.Fields;
 import org.gfbio.idmg.dcrt.jiraclient.model.Issue;
 import org.gfbio.idmg.dcrt.jiraclient.model.IssueType;
@@ -147,12 +149,12 @@ public class DCRTPortlet extends MVCPortlet {
 					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
 				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 25px;").with(
-					span().withId(name).withName("dataCenter").withText(name)
+					span().withId(label).withName("dataCenter").withText(name)
 				),
 				div().withClass("col-xs-12 col-sm-5 col-lg-4").attr("style", "text-align: center;").with(
 						button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label),
 						button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
-						.withType("button").attr("style", "margin-left: 1px; margin-right: 1px").withValue(label),
+						.withType("button").attr("style", "margin-left: 2px; margin-right: 2px").withValue(label),
 						button().withClass("dcrtbutton details").withText("Details").withName("detailsButton").withType("button").withValue(label)
 				)
 			).render()
@@ -185,13 +187,43 @@ public class DCRTPortlet extends MVCPortlet {
 		String alive = resourceRequest.getParameter("alive");
 		String sequenced = resourceRequest.getParameter("sequenced");
 		
+		//Get Category
+		String category = resourceRequest.getParameter("category");
+		
+		//Get Dialog Inputs
+		String name = resourceRequest.getParameter("contactName");
+		String email = resourceRequest.getParameter("contactEmail");
+		String message = resourceRequest.getParameter("message");
+		
 		_log.info("DataCenter: " + dataCenter + "Physical: " + physical + ", Taxon: " + taxon + ", Alive: " + alive + ", Sequenced: " + sequenced);
+		_log.info("Category: " + category + "Name: " + name + ", Email: " + email + ", Message: " + message);
 		
 		//Create Issue
 		Project project = new Project("SAND");
-		IssueType issuetype = new IssueType("DMP");
+		IssueType issuetype = new IssueType("Question");
 		Reporter reporter = new Reporter("testuser1");
-		Fields fields = new Fields(project, "DMP Request via REST API", issuetype, reporter, dataCenter, null, null, null, null, null, null);
+		String summary = "Data Center Recommendation Request";
+		
+		String user;
+		if (dataCenter.equals("ENA")) {
+			user = "brokeragent";
+		} else if (dataCenter.equals("GFBio")) {
+			user = "";
+		} else {
+			user = dataCenter.toLowerCase();
+		}
+		Assignee assignee = new Assignee(user);
+		
+		
+		List<Customfield_10217> dataCentres = new ArrayList<>();
+		dataCentres.add(new Customfield_10217(dataCenter));
+		
+		String customfield_10010 = "sand/dcrt-request";
+		String customfield_10500 = "Physical objects: " + physical + "\nTaxon based: " + taxon + 
+				"\nAlive: " + alive + "\nPrimarily sequence Data: " + sequenced + "\nCategory: " + category;
+		
+		Fields fields = new Fields(project, summary, issuetype, reporter, message, 
+				assignee, customfield_10010, dataCentres, customfield_10500);
 		Issue issue = new Issue(fields);
 		
 		//JIRA Request

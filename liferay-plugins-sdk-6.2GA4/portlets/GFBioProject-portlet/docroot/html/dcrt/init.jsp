@@ -20,7 +20,6 @@
 <%@ page import="org.gfbio.idmg.dcrt.DCRTPortlet" %>
 <%@ page import="org.gfbio.model.DataProvider" %>
 <%@ page import="org.gfbio.idmg.dcrt.dao.GCategory" %>
-<%@ page import="org.gfbio.idmg.dcrt.dao.GContentDAO" %>
 
 <%@ page import="org.json.simple.JSONObject" %>
 <%@ page import="org.json.simple.parser.JSONParser" %>

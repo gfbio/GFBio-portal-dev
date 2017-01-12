@@ -5,7 +5,6 @@ public class Reporter {
 	public String name;
 
 	public Reporter(String name) {
-		super();
 		this.name = name;
 	}
 
