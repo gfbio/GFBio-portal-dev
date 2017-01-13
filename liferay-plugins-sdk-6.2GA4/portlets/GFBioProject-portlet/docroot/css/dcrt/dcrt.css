@@ -62,7 +62,7 @@ input.dialogtext {
 	text-decoration: none;
    	display: inline-block;
    	font-size: 13px !important;
-   	outline: none;
+   	border-radius: 3px;
 }
 
 .dcrtbutton:hover {
@@ -103,4 +103,24 @@ input.dialogtext {
 
 .custom .row {
 	margin-left: 0;
+}
+
+.custom-dialog button {
+	text-align: center;
+   	border-radius: 3px;
+   	padding: .2em 1em;
+}
+
+.custom-dialog-success div.ui-dialog-buttonset {
+	float: none !important;
+	text-align: center;
+}
+
+.custom-dialog-success div.ui-dialog-buttonpane {
+	margin-top: 0;
+	padding: 0;
+}
+
+.custom-dialog-success button {
+	margin: .5em 0 .5em 0 !important;
 }
