@@ -29,63 +29,63 @@
 				}
 			},
 			rules : {
-                types : {
-					required: true,
-		            minlength: 1
-				},
-				nature : {
-					required: true,
-		            minlength: 1
-				},
-                email : {
-                    required: true,
-                    email: true
-                },
-                phoneNumber : {
-                    required: false,
-                    number: true
-                },
-                typesOther: {
-                    required: {
-                        depends: function(element) {
-                            return $("#types-cb").is(":checked");
-                        }
-                    }
-                },
-                funding: {
-                    notEqual: "select"
-                },
-                fundingOther: {
-                    required: {
-                        depends: function(element) {
-                            return $("#funding").val() == "other";
-                        }
-                    }
-                },
-                policies: {
-                    required: true
-                },
-                policyOther: {
-                    required: {
-                        depends: function(element) {
-                            return $("#policies").val() == "other";
-                        }
-                    }
-                },
-				dataformat: {
-                    required: true
-                },
-                dataformatOther: {
-                    required: {
-                        depends: function(element) {
-                            return $("#dataformat-cb").is(":checked");
-                        }
-                    }
-                },
-                documentated: {
-                    required: true,
-                    minlength: 1
-                }
+//                 types : {
+// 					required: true,
+// 		            minlength: 1
+// 				},
+// 				nature : {
+// 					required: true,
+// 		            minlength: 1
+// 				},
+//                 email : {
+//                     required: true,
+//                     email: true
+//                 },
+//                 phoneNumber : {
+//                     required: false,
+//                     number: true
+//                 },
+//                 typesOther: {
+//                     required: {
+//                         depends: function(element) {
+//                             return $("#types-cb").is(":checked");
+//                         }
+//                     }
+//                 },
+//                 funding: {
+//                     notEqual: "select"
+//                 },
+//                 fundingOther: {
+//                     required: {
+//                         depends: function(element) {
+//                             return $("#funding").val() == "other";
+//                         }
+//                     }
+//                 },
+//                 policies: {
+//                     required: true
+//                 },
+//                 policyOther: {
+//                     required: {
+//                         depends: function(element) {
+//                             return $("#policies").val() == "other";
+//                         }
+//                     }
+//                 },
+// 				dataformat: {
+//                     required: true
+//                 },
+//                 dataformatOther: {
+//                     required: {
+//                         depends: function(element) {
+//                             return $("#dataformat-cb").is(":checked");
+//                         }
+//                     }
+//                 },
+//              documentated: {
+//                  required: true,
+//                  minlength: 1
+//              }
 			}
 		});
 		form.children("div").steps({
@@ -131,6 +131,17 @@
                 $("#volumeSlider").on("input change", showDataVolume);
                 $("#datasetSlider").on("input change", showNumberOfDatasets);
                 
+                $("#sensitive").click(handleSensitive);
+                $("#sensitiveOther").hide();
+                
+                $("#metadataOther").click(handleMetadataOther);
+                $("#metadataDesc").hide();
+                
+                $("input[name='restriction']").on("change", handleRestriction);
+                $("#accessYes").hide();
+                
+                $("#archives").on("change", handleArchives);
+                $("#archiveOther").hide();
             }
         })
 	});
@@ -145,7 +156,7 @@
 				<div>
 					<label for="name">What's the official name of your research project?</label>
                     <div class="answer_div">
-					   <input id="name" name="projectName" type="text" class="required" placeholder="Project Name"/>
+					   <input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
 				    </div>
                 </div>
                 <div class="question_div">
@@ -212,14 +223,16 @@
                 <div class="question_div">
                     <label>Provide your project abstract or describe your work and the data involved.</label>
                     <div id="projectAbstract" class="answer_div">
-                        <textarea id="abstract" class="required" rows="5" cols="100" placeholder="Project Abstract"></textarea>
+                    <!-- required -->
+                        <textarea id="abstract" rows="5" cols="100" placeholder="Project Abstract"></textarea> 
                     </div>
                 </div>
                 <div class="question_div">
                     <label>Who is/are the principal investigator/s?</label>
                     <div class="answer_div block">
                         <div id="principal">
-                            <input id="firstInput" name="investigator" type="text" class="inputtext required" 
+                        <!-- required -->
+                            <input id="firstInput" name="investigator" type="text"  
                                    placeholder="Principal Investigator" />
                         </div>
                         <div style="margin-top: 5px;">
@@ -231,14 +244,15 @@
                     <label>Who is responsible for the project data?</label>
                     <div id="responsible" class="answer_div" style="overflow: auto;">
                         <div style="width: 100%">
-                            <input id="responsibleName" name="responsibleName" type="text" class="required inputtext fl" placeholder="Name" onfocus="getPrincipal()" />
-                            <input name="email" type="email" class="inputtext mlten fl" placeholder="E-Mail"/>
+                        <!-- required -->
+                            <input id="responsibleName" name="responsibleName" type="text" class="fl" placeholder="Name" onfocus="getPrincipal()" />
+                            <input name="email" type="email" class="ml10 fl" placeholder="E-Mail"/>
                         </div>
                         <div>
                             
                         </div>
                         <div class="fl" style="width: 100%" >
-                            <input name="phoneNumber" type="tel" class="inputtext" placeholder="Phone Number"/> 
+                            <input name="phoneNumber" type="tel" placeholder="Phone Number"/> 
                         </div>
                     </div>
                 </div>
@@ -256,8 +270,8 @@
                             <option label="None" value="none" />
                         </select>
                         <div>
-                        <input id="fundingLink" type="text" class="inputtext_long" placeholder="Link your funding call or programme"/>
-                        <input id="fundingOther" name="fundingOther" type="text" class="inputtext_long" placeholder="Please name the funding you apply for"/>
+                        	<input id="fundingLink" type="text" class="inputtext_long" placeholder="Link your funding call or programme"/>
+                        	<input id="fundingOther" name="fundingOther" type="text" class="inputtext_long" placeholder="Please name the funding you apply for"/>
                         </div>
                     </div>
                 </div>
@@ -272,8 +286,8 @@
                             <option label="None" value="none" />
                         </select>
                         <div>
-                        <input id="policyOther" name="policyOther" type="text" class="inputtext_long" placeholder="Other Research Data Policy and Guideline"/>
-                        <input id="policyLink" type="text" class="inputtext_long" placeholder="Link Research Data Policy or Guideline"/>
+	                        <input id="policyOther" name="policyOther" type="text" class="inputtext_long" placeholder="Other Research Data Policy and Guideline"/>
+	                        <input id="policyLink" type="text" class="inputtext_long" placeholder="Link Research Data Policy or Guideline"/>
                         </div>
                     </div>   
                 </div>
@@ -338,14 +352,14 @@
                 </div>
                 <div class="question_div">
                     <label>Please estimate the data volume you will create.</label>
-                    <div id="dataVolume" class="answer_div">
+                    <div id="dataVolume" class="answer_div slider_w25">
                         <input id="volumeSlider" type="range" min="0" max="40" value="0" step="10"/>
                         <span id="volume" class="fs_small">&lt; 1GB</span>
                     </div>
                 </div>
                 <div class="question_div">
                     <label>Please estimate the number of data sets (files) you will create.</label>
-                    <div id="datasetNumber" class="answer_div">
+                    <div id="datasetNumber" class="answer_div slider_w25">
                         <input id="datasetSlider" type="range" min="0" max="40" value="0" step="10"/>
                         <span id="datasets" class="fs_small">&lt; 10</span>
                     </div>
@@ -353,7 +367,8 @@
                 <div class="question_div">
                     <label>What standards, methodologies or tools for data collection will you use (e.g. Diversity Workbench, BExIS)?</label>
                     <div id="methodologies" class="answer_div">
-                        <textarea id="methodologies" class="required" rows="5" cols="100" placeholder="Standards, methodologies and tools"></textarea>
+                    <!-- required -->
+                        <textarea id="methodologies" rows="5" cols="100" placeholder="Standards, methodologies and tools"></textarea>
                     </div>
                 </div>
 			</section>
@@ -361,25 +376,51 @@
 			<section>
 				<div class="question_div">
                     <label>What metadata will accompany the data?</label>
-                    <div id="metadata" class="answer_div flex fl_w20">
-                        <div>
+                    <div id="metadata" class="answer_div flex">
+                        <div class="fl_w25">
                             <div>
-                                <input name="dataformat" type="checkbox"/>
+                                <input name="metadata" type="checkbox"/>
                                 <label>ABCD 2.06</label>
                             </div>
                             <div>
-                                <input name="dataformat" type="checkbox"/>
+                                <input name="metadata" type="checkbox"/>
                                 <label>Dublin Core (Metadata Elements Set V1.1)</label>
                             </div>
                             <div>
-                                <input name="dataformat" type="checkbox"/>
+                                <input name="metadata" type="checkbox"/>
                                 <label>Darwin Core</label>
                             </div>
                             <div>
-                                <input id="dataformat-cb" name="dataformat" type="checkbox"/>
+                                <input name="metadata" type="checkbox"/>
+                                <label>EDM (European Data Model V5.2.5)</label>
+                            </div>
+                            <div>
+                                <input name="metadata" type="checkbox"/>
+                                <label>EML (Ecological Metadata Language V2.1.1)</label>
+                            </div>
+                            <div>
+                                <input name="metadata" type="checkbox"/>
+                                <label>ESE (European Semantic Elements V3.4.1)</label>
+                            </div>
+                            <div>
+                                <input name="metadata" type="checkbox"/>
+                                <label>MIxS</label>
+                            </div>
+                            <div>
+                                <input name="metadata" type="checkbox"/>
+                                <label>INSPIRE (VO (EG) Nr. 1205&2008)</label>
+                            </div>
+                            <div>
+                                <input name="metadata" type="checkbox"/>
+                                <label>ISO 19115</label>
+                            </div>
+                            <div>
+                                <input id="metadataOther" name="metadata" type="checkbox"/>
                                 <label>Other</label>
                             </div>
                         </div>
+                       	<textarea id="metadataDesc" rows="3" cols="100" 
+                       	placeholder="Describe your type of documentation which will accompany the data."></textarea>
                     </div>
                 </div>
 			</section>
@@ -387,30 +428,121 @@
 			<section>
 				<div class="question_div">
                     <label>Will you collect sensitive data?</label>
+                    <div id="sensitiveData" class="answer_div">
+                       	<select id="sensitive" name="sensitive" multiple="multiple" size="6">
+                           <option label="Nagoya Protocol" value="individual" />
+                           <option label="Red List" value="coordinated" />
+                           <option label="Personally Identifiable Information" value="excellence" />
+                           <option label="Other" value="other" />
+                           <option label="Uncertain" value="uncertain" />
+                           <option label="None" value="none" />
+                       	</select>
+                       	<div>
+                			<input id="sensitiveOther" name="sensitiveOther" type="text" class="inputtext_long" 
+                        	placeholder="Other sensitive data"/>
+                       </div>
+                   </div>
                 </div>
 				<div class="question_div">
                     <label>How will your data be licensed for reuse?</label>
                 </div>
 				<div class="question_div">
                     <label>Do you need access restriction for your data?</label>
+                    <div id="accessRestriction" class="answer_div fs_small">
+                        <label>
+                            <input class="radio_input" name="restriction"
+                            type="radio" value="yes" />
+                            Yes
+                        </label>
+                        <label style="margin-left: 10px;">
+                            <input class="radio_input" name="restriction"
+                            type="radio" value="no" />
+                            No
+                        </label>
+                        <div id="accessYes">
+                        	<label>For how long do you need exclusive use of the data?</label>
+                        	<input id="accessHowLong" name="accessHowLong" type="text" class="inputtext_long" 
+                        	placeholder="Other sensitive data"/>
+                        	<label>Why do you need exclusive use of the data?</label>
+                        	<input id="accessWhy" name="accessWhy" type="text" class="inputtext_long" 
+                        	placeholder="Other sensitive data"/>
+                       </div>
+                    </div>
                 </div>
 			</section>
             <h3>Preservation and Sharing</h3>
 			<section>
 				<div class="question_div">
                     <label>Where will your data be archived?</label>
+                    <div id="dataArchives" class="answer_div">
+                        <select id="archives" name="sensitive" multiple="multiple" size="6">
+                            <option label="GFBio Consortium" value="gfbio" />
+                            <option label="DSMZ" value="dsmz" />
+                            <option label="ENA" value="ena" />
+                            <option label="MfN" value="mfn" />
+                            <option label="PANGAEA" value="pangaea" />
+                            <option label="SMNS" value="smns" />
+                            <option label="SNSB" value="snsb" />
+                            <option label="ZFMK" value="zfmk" />
+                            <option label="Other" value="other" />
+                        </select>
+                        <div>
+	                        <input id="archiveOther" name="archiveOther" type="text" class="inputtext_long" 
+	                        placeholder="Other archive"/>
+                        </div>
+                    </div>
                 </div>
 				<div class="question_div">
                     <label>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?</label>
+                    <div id="persistentIdentifier" class="answer_div fs_small">
+                        <label>
+                            <input class="radio_input" name="pid"
+                            type="radio" value="yes" />
+                            Yes (recommended)
+                        </label>
+                        <label>
+                            <input class="radio_input" name="pid"
+                            type="radio" value="no" />
+                            No
+                        </label>
+                        <label>
+                            <input class="radio_input" name="pid"
+                            type="radio" value="dontknow" />
+                            Don't know yet
+                        </label>
+                    </div>
                 </div>
 				<div class="question_div">
                     <label>Do you need help estimating the cost and effort for data management?</label>
+                    <div id="needHelp" class="answer_div fs_small">
+                        <label>
+                            <input class="radio_input" name="help"
+                            type="radio" value="yes" />
+                            Yes
+                        </label>
+                        <label style="margin-left: 10px;">
+                            <input class="radio_input" name="help"
+                            type="radio" value="no" />
+                            No
+                        </label>
+                    </div>
                 </div>
 			</section>
             <h3>GFBio Services</h3>
 			<section>
                 <div class="question_div">
                     <label>What GFBio services are you interested in?</label>
+                    <div id="gfbioServices" class="answer_div">
+                        <select id="services" name="services" multiple="multiple" size="7">
+                            <option label="Data Management Plan (DMP) Support" value="dmp" />
+                            <option label="Datamanagement Support" value="supportManagement" />
+                            <option label="Data Anlaysis" value="analysis" />
+                            <option label="Data Curation" value="curation" />
+                            <option label="Support in Managing Data Related to a Publication" value="supportPublication" />
+                            <option label="Data Publication" value="publication" />
+                            <option label="Data Management Training" value="training" />
+                        </select>
+                    </div>
                 </div>
 			</section>
 		</div>

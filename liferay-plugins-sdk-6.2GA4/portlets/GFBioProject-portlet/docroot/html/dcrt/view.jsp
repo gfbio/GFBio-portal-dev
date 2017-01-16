@@ -302,14 +302,14 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 					</div>
 				</div>
 				<div id="taxon" name="question" class="swHide">
-					Do you have taxon-based or not taxon-based objects additional to your data?
+					Do you have taxon-based objects in addition to your data?
 					<div style="display:block;">
 						<input name="taxon" type="radio" value="true" onClick="show('#alive'); hide('#materialSelection'); " />
-						Taxon-based
+						Yes
 					</div>
 					<div style="display:block;">
 						<input name="taxon" type="radio" value="false" onClick="show('#alive'); hide('#materialSelection'); " />
-						Non taxon-based
+						No
 					</div>
 				</div>
 				<div id="alive" name="question" class="swHide">
@@ -324,7 +324,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 					</div>
 				</div>
 				<div id="sequenced" name="question" class="swHide">
-					Do you have primarily sequenced data?
+					Do you have mainly sequenced data?
 					<div style="display:block;">
 						<input name="sequenced" type="radio" value="true" onClick="hide('#categorySelection');" />
 						Yes
@@ -387,7 +387,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 						<span id="GFBio" name="dataCenter" >GFBio Contact</span>
 					</div>
 					<div class="col-xs-12 col-sm-5 col-lg-4" style="text-align: center; padding-top: 8px;">
-						<button type="button" value="GFBioContact" name="contactButton" class="dcrtbutton default">Contact</button>
+						<button type="button" value="German Federation for Biological Data (GFBio)" name="contactButton" class="dcrtbutton default">Contact</button>
 					</div>
 				</div>
 			</div>
