@@ -162,16 +162,21 @@
 					"</div>"+
 				"</div>"+
 
+				"<h3>Dataset Upload</h3>"+
+				
+				
 				"</br>"+
 				"<div class='row' id='gwf_lf_comentarField'></div></br>"+
 				"<div class='row' id='gwf_lf_submissioncomentarField'></div>"+
+
+				
+				
 				
 				"<div class='row'>"+
-					"<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
+					/* "<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
 					"<span class='widthM' id='gwf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
-					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
-				"</div>"					
-				
+					 */"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
+				"</div>"
 			);
 		}
 	}
