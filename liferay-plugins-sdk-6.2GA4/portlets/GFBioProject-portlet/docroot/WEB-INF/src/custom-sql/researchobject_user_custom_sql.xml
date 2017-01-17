@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
+
+    <sql id="org.gfbio.service.persistence.ResearchObject_UserFinderImpl.getCheckOfResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_researchobject_user
+			 WHERE
+			 researchobjectid = ? AND
+			 researchobjectversion = ?
+		]]>
+    </sql>
+
     <sql id="org.gfbio.service.persistence.ResearchObject_UserFinderImpl.getOwnerIdsByResearchObjectIds">
 	    <![CDATA[
 			SELECT 
@@ -34,6 +47,18 @@
 			  				gfbio_researchobject_user.userid = ?)AS iq
 					WHERE pos=1
 				)
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ResearchObject_UserFinderImpl.getUserIdsByResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+			  gfbio_researchobject_user.userid
+			FROM 
+			  public.gfbio_researchobject_user
+			WHERE
+			  gfbio_researchobject_user.researchobjectid = ? and
+			  gfbio_researchobject_user.researchobjectversion = ?
 		]]>
     </sql>
 

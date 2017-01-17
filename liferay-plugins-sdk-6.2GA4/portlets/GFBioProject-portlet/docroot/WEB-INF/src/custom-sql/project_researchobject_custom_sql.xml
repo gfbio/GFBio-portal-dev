@@ -32,14 +32,23 @@
 					FROM 
 					  public.gfbio_project_researchobject
 					WHERE
-					  gfbio_project_researchobject.projectid = ?) 
+					  gfbio_project_researchobject.projectid = ?) AND
+					  			researchobjectversion in
+				(
+					SELECT 
+						gfbio_project_researchobject.researchobjectversion
+					FROM 
+						public.gfbio_project_researchobject
+					WHERE
+						gfbio_project_researchobject.projectid = ?
+				)
 					  )AS iq
 			
 			WHERE pos=1
 		]]>
     </sql>
     
-   <sql id="org.gfbio.service.persistence.Project_ResearchObjectFinderImpl.getProjectIdByResearchObjectIdAndVersion">
+   <sql id="org.gfbio.service.persistence.Project_ResearchObjectFinderImpl.getProjectIdsByResearchObjectIdAndVersion">
 	    <![CDATA[
 			SELECT 
 			  gfbio_project_researchobject.projectid
