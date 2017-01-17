@@ -61,10 +61,10 @@ $(document).ready(function () {
 		            "method": "POST",
 		            "url": '<%=ajaxUrlRadio%>',
 		            "data": {
-		            	"<portlet:namespace />physical": physicalval,
-		            	"<portlet:namespace />taxon": taxonval,
-		            	"<portlet:namespace />alive": aliveval,
-		            	"<portlet:namespace />sequenced": sequencedval
+		            	physical: physicalval,
+		            	taxon: taxonval,
+		            	alive: aliveval,
+		            	sequenced: sequencedval
 		            },
 		            success: function(text) {
 	                    response = text;
@@ -101,11 +101,11 @@ function categoryChange(category) {
 	            "method": "POST",
 	            "url": '<%=ajaxUrlCategory%>',
 	            "data": {
-	            	"<portlet:namespace />category": category,
-	            	"<portlet:namespace />physical": physicalval,
-	            	"<portlet:namespace />taxon": taxonval,
-	            	"<portlet:namespace />alive": aliveval,
-	            	"<portlet:namespace />sequenced": sequencedval
+	            	category: category,
+	            	physical: physicalval,
+	            	taxon: taxonval,
+	            	alive: aliveval,
+	            	sequenced: sequencedval
 	            },
 	            success: function(text) {
                     response = text;
@@ -143,7 +143,7 @@ function openConfirmDialog(defaultContact, btnId) {
 	    height: "auto",
 	    modal: true,
 	    close: clearForm,
-	    dialogClass: "contact-dialog",
+	    dialogClass: "contact-dialog custom-dialog",
 	    buttons: {
 	        'Create Ticket': function() {
 	        	if ( $("#dialogForm").valid() ) {
@@ -189,31 +189,32 @@ function createJiraTicket(defaultContact, id) {
 	            "method": "POST",
 	            "url": '<%=ajaxUrlContact%>',
 	            "data": {
-	            	"<portlet:namespace />dataCenter": dataCenter,
-	            	"<portlet:namespace />dataCenterList": {dataCenterList:dataCenterList},
-	            	"<portlet:namespace />physical": physicalval,
-	            	"<portlet:namespace />taxon": taxonval,
-	            	"<portlet:namespace />alive": aliveval,
-	            	"<portlet:namespace />sequenced": sequencedval,
-	            	"<portlet:namespace />category": category,
-	            	"<portlet:namespace />contactName": contactName,
-	            	"<portlet:namespace />contactEmail": contactEmail,
-	            	"<portlet:namespace />message": message
+	            	dataCenter: 	dataCenter,
+	            	dataCenterList: dataCenterList,
+	            	physical: 		physicalval,
+	            	taxon: 			taxonval,
+	            	alive: 			aliveval,
+	            	sequenced: 		sequencedval,
+	            	category: 		category,
+	            	contactName: 	contactName,
+	            	contactEmail: 	contactEmail,
+	            	message: 		message
 	            },
 	            success: function(text) {
                      var response = text;
+                     console.info(response);
                      var succcessButton = $("#dialog-success").dialog({
                     	 autoOpen: false,
                     	 resizable: false,
                  	     width: "auto",
                  	     modal: true,
-                 	     dialogClass: "contact-dialog",
+                 	     dialogClass: "contact-dialog custom-dialog custom-dialog-success",
                          buttons: {
                            Ok: function() {
                              $( this ).dialog("close");
                            }
                          }
-                       }).html(response).dialog('open');
+                       }).dialog('open');
                 }
                
     });
@@ -278,8 +279,9 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 	     </fieldset>
      </form>
 </div>
-<div id="dialog-success" title="Create Ticket" style="display: none;">
-	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;"></span></p>
+<div id="dialog-success" title="Create Ticket" style="display: none;" >
+	<span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;" ></span>
+	<p>Your JIRA Ticket was successfully created.</p>
 </div>
 
 <div class="container-fluid custom" >
@@ -300,14 +302,14 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 					</div>
 				</div>
 				<div id="taxon" name="question" class="swHide">
-					Do you have taxon-based or not taxon-based objects additional to your data?
+					Do you have taxon-based objects in addition to your data?
 					<div style="display:block;">
 						<input name="taxon" type="radio" value="true" onClick="show('#alive'); hide('#materialSelection'); " />
-						Taxon-based
+						Yes
 					</div>
 					<div style="display:block;">
 						<input name="taxon" type="radio" value="false" onClick="show('#alive'); hide('#materialSelection'); " />
-						Non taxon-based
+						No
 					</div>
 				</div>
 				<div id="alive" name="question" class="swHide">
@@ -322,7 +324,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 					</div>
 				</div>
 				<div id="sequenced" name="question" class="swHide">
-					Do you have primarily sequenced data?
+					Do you have mainly sequenced data?
 					<div style="display:block;">
 						<input name="sequenced" type="radio" value="true" onClick="hide('#categorySelection');" />
 						Yes
@@ -379,13 +381,13 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 				<h4 style="margin-bottom: 20px;">No appropriate Data Center found?</h4>
 				<div class="row dcrttable">
 					<div class="col-xs-3 col-sm-2 col-lg-2">
-						<img src="/GFBioProject-portlet/images/contact.jpg" style="width: 80px;"/>
+						<img src="/GFBioProject-portlet/images/gfbio_contact.jpg" style="width: 80px;"/>
 					</div>
 					<div class="col-xs-9 col-sm-5 col-lg-6" style="padding-left: 25px; padding-top: 8px;">
-						<span>GFBio Contact</span>
+						<span id="GFBio" name="dataCenter" >GFBio Contact</span>
 					</div>
 					<div class="col-xs-12 col-sm-5 col-lg-4" style="text-align: center; padding-top: 8px;">
-						<button type="button" value="GFBioContact" name="contactButton" class="dcrtbutton default">Contact</button>
+						<button type="button" value="German Federation for Biological Data (GFBio)" name="contactButton" class="dcrtbutton default">Contact</button>
 					</div>
 				</div>
 			</div>

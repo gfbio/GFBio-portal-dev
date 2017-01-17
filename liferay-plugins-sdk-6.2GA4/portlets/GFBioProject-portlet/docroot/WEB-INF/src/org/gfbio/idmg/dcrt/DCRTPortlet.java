@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import static j2html.TagCreator.*;
@@ -135,7 +136,6 @@ public class DCRTPortlet extends MVCPortlet {
 	
 	private void dataproviderOutput(PrintWriter writer, List<DataProvider> providers) {
 		
-		//ContainerTag htmlTable = new ContainerTag("tr");
 		writer.println("<table style=\"width: 100%;\">");
 		
 		for (DataProvider dp : providers) {
@@ -148,7 +148,7 @@ public class DCRTPortlet extends MVCPortlet {
 				div().withClass("col-xs-3 col-sm-2 col-lg-2").with(
 					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
-				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 25px;").with(
+				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 1.5em;").with(
 					span().withId(label).withName("dataCenter").withText(name)
 				),
 				div().withClass("col-xs-12 col-sm-5 col-lg-4").attr("style", "text-align: center;").with(
@@ -163,13 +163,6 @@ public class DCRTPortlet extends MVCPortlet {
 		
 		writer.println("</table>");
 		
-//		Old way of generating HTML output
-//		writer.println("<div style=\"display:block; margin-bottom: 10px;\">");
-//		writer.println("<img src=\"/GFBioProject-portlet/images/" + label + ".jpg\" alt=\"" + label + "\" style=\"width:60px;height:46px;\">");
-//		writer.println("<span id=\"" + name + "\" >" + name + "</span>");
-//		writer.println("<button class=\"dcrtbutton contact\">Test</button>");
-//		writer.println("<button class=\"dcrtbutton submission\">Test</button>");
-//		writer.println("</div>");
 	}
 	
 	//Method for Contact Button
@@ -204,26 +197,38 @@ public class DCRTPortlet extends MVCPortlet {
 		Reporter reporter = new Reporter("testuser1");
 		String summary = "Data Center Recommendation Request";
 		
+		//User for assignee value 
 		String user;
+		
 		if (dataCenter.equals("ENA")) {
 			user = "brokeragent";
-		} else if (dataCenter.equals("GFBio")) {
-			user = "";
 		} else {
 			user = dataCenter.toLowerCase();
 		}
+		
+		List<Customfield_10217> dataCenters = new ArrayList<>();
+		if (dataCenter.equals("GFBio")) {
+			user = "";
+			//Get List of all possible Data Centers if GFBio default contact is used
+			String[] dcs = resourceRequest.getParameterValues("dataCenterList[]"); 
+			for (int i = 0; i < dcs.length; i++) {
+				if (!dcs[i].equals("GFBio")) {
+					dataCenters.add(new Customfield_10217(dcs[i]));
+				}
+			}
+		} else {
+			dataCenters.add(new Customfield_10217(dataCenter));
+		}
+		
+		//Set assignee for the ticket
 		Assignee assignee = new Assignee(user);
-		
-		
-		List<Customfield_10217> dataCentres = new ArrayList<>();
-		dataCentres.add(new Customfield_10217(dataCenter));
 		
 		String customfield_10010 = "sand/dcrt-request";
 		String customfield_10500 = "Physical objects: " + physical + "\nTaxon based: " + taxon + 
 				"\nAlive: " + alive + "\nPrimarily sequence Data: " + sequenced + "\nCategory: " + category;
 		
 		Fields fields = new Fields(project, summary, issuetype, reporter, message, 
-				assignee, customfield_10010, dataCentres, customfield_10500);
+				assignee, customfield_10010, dataCenters, customfield_10500);
 		Issue issue = new Issue(fields);
 		
 		//JIRA Request

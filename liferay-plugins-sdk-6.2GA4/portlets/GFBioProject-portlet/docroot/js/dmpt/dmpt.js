@@ -120,6 +120,59 @@ function handlePolicy(event) {
     }
 }
 
+function handleMetadataOther(event) {
+	'use strict';
+    
+    if ($(event.target).is(':checked')) {
+        $("#metadataDesc").show("slow");
+    } else {
+        $("#metadataDesc").hide();
+        $("#metadataDesc").val("");
+    }
+}
+
+function handleSensitive(event) {
+	'use strict';
+	
+	var selection = $(event.target).val(),
+		other = $("#sensitiveOther");
+	if ($.inArray("other", selection) !== -1) {
+		other.show("slow");
+	} else {
+		other.hide();
+		other.val("");
+	}
+}
+
+function handleRestriction(event) {
+	'use strict';
+	
+	var selection = $(event.target).val(),
+		howLong = $("#accessHowLong"),
+		why = $("#accessWhy"),
+		div = $("#accessYes");
+	if (selection === "yes") {
+		div.show("slow");
+	} else {
+		div.hide();
+		howLong.val("");
+		why.val("");
+	}
+}
+
+function handleArchives(event) {
+	'use strict';
+	
+	var selection = $(event.target).val(),
+		other = $("#archiveOther");
+	if ($.inArray("other", selection) !== -1) {
+		other.show("slow");
+	} else {
+		other.hide();
+		other.val("");
+	}
+}
+
 function showDataVolume(event) {
     'use strict';
     
