@@ -21,9 +21,14 @@ import java.util.List;
 import org.gfbio.NoSuchProject_ResearchObjectException;
 import org.gfbio.model.Project_ResearchObject;
 import org.gfbio.model.ResearchObject;
+import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.Project_ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.Project_ResearchObjectPK;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 /**
@@ -46,6 +51,44 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray  getProjectIdsByResearchObject (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			List <Long> responseList = null;
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);
+			
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
+				responseList = getProjectIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			else
+				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to project");
+			
+			JSONParser parser = new JSONParser();
+			try {responseJson = (JSONArray) parser.parse(responseList.toString());}
+			catch (ParseException e) {e.printStackTrace();}
+		
+		}else
+			responseJson.add("ERROR: The json need minimal 'researchobjectid'as long.");
+		
+		return responseJson;
+	}
+
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+	
 	//get a ID-List (Project_ResearchObject-Object) of all Research Objects of a specific Project
 	public List<Project_ResearchObject> getProjectIDList(long projectID) {
 		List<Project_ResearchObject> idList = null;
@@ -57,9 +100,17 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 	
 	
 	//
+	@SuppressWarnings("unchecked")
+	private List <Long> getProjectIdsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
+		return Project_ResearchObjectFinderUtil.getProjectIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+	}
+	
+	
+	//
 	public List <ResearchObject> getResearchObjectsByProjectId (long projectId){
 		return Project_ResearchObjectFinderUtil.getResearchObjectsByProjectId(projectId);
 	}
+	
 	
 	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////

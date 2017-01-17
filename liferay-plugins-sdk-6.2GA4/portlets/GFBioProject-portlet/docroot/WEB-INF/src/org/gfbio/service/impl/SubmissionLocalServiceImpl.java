@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  * The implementation of the submission local service.
@@ -132,6 +133,68 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		return responseJson;
 	}
 	
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONArray getSubmissionsByResearchObjectIdAndVersion (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		Set<String> set = new HashSet<String>();
+		set.add("researchobjectid");
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
+		if (requestJson.containsKey("researchobjectid")){
+			
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);		
+			
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
+				try {responseJson = constructSubmissionsJson(getSubmissionsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion));}
+				catch (SystemException e1) {e1.printStackTrace();responseJson.add("ERROR: Build Array is failed.");}
+			}else
+				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to primary data");
+		}
+		else
+			responseJson.add("ERROR: No key 'researchobjectid' exist.");
+		
+		if (!ignoreParameter.equals(""))
+			responseJson.add(ignoreParameter);
+		
+		return responseJson;
+	}
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONArray getSubmissionIdsByResearchObjectIdAndVersion (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);		
+			
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
+				responseJson = getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			}else
+				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to primary data");
+		}
+		else
+			responseJson.add("ERROR: No key 'researchobjectid' exist.");
+		
+		return responseJson;
+	}
+
 	
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
@@ -244,7 +307,33 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		return researchObjectVersion;
 	}
 	
+	
+	//
+	public String GetStatusByIds(long researchObjectId, int ResearchObjectVersion, String archive) {
+		return (String) SubmissionFinderUtil.getStatusByIds(researchObjectId, ResearchObjectVersion, archive).get(0);
+	}
+	
+	
+	//
+	public Submission getSubmission (long researchObjectId, int researchObjectVersion, String archive){
+		return SubmissionFinderUtil.getSubmission(researchObjectId, researchObjectVersion, archive).get(0);
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	private JSONArray getSubmissionIdsByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion){
+		JSONArray responseJson = new JSONArray();
+		List submissionIdList = SubmissionFinderUtil.getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		if (submissionIdList.size()>0){
+			JSONParser parser = new JSONParser();
+			try {responseJson = (JSONArray) parser.parse(submissionIdList.toString());}
+			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+		}
+		return responseJson;
+	}
 		
+	
 	//
 	public List<Submission> getSubmissionsByBrokerSubmissionId (String brokerSubmissionId) throws SystemException{
 		return submissionPersistence.findByBrokerSubmissionID(brokerSubmissionId);
@@ -258,9 +347,10 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 	
 	//
-	public String GetStatusByIds(long researchObjectId, int ResearchObjectVersion, String archive) {
-		return (String) SubmissionFinderUtil.getStatusByIds(researchObjectId, ResearchObjectVersion, archive).get(0);
+	private List<Submission> getSubmissionsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion) throws SystemException{
+		return submissionPersistence.findByResearchObjectIDAndVersion(researchObjectId, researchObjectVersion);
 	}
+	
 	
 	//
 	@SuppressWarnings("rawtypes")
@@ -270,12 +360,6 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submissionIdList.size()>0)
 			submissionid = (long) submissionIdList.get(0);
 		return submissionid;
-	}
-	
-	
-	//
-	public Submission getSubmission (long researchObjectId, int researchObjectVersion, String archive){
-		return SubmissionFinderUtil.getSubmission(researchObjectId, researchObjectVersion, archive).get(0);
 	}
 	
 	
@@ -299,6 +383,17 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			ignoredParameter ="";
 		
 		return ignoredParameter;
+	}
+	
+	
+	//
+	public Boolean checkResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  SubmissionFinderUtil.getCheckOfResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
 	}
 	
 	
