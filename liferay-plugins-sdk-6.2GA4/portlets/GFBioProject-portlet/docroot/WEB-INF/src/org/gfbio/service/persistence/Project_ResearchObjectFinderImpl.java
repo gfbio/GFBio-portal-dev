@@ -19,7 +19,7 @@ public class Project_ResearchObjectFinderImpl extends BasePersistenceImpl<Projec
 	
 	public static String FINDER_CLASS_NAME_ENTITY							 = Project_ResearchObjectFinderImpl.class.getName();
 	public static String GET_CHECK_OF_RESEARCHOBJECTID_AND_VERSION 			= FINDER_CLASS_NAME_ENTITY + ".getCheckOfResearchObjectIdAndVersion";
-	public static String GET_PROJECTID_BY_RESEARCHOBJECTID_AND_VERSION 		= FINDER_CLASS_NAME_ENTITY + ".getProjectIdByResearchObjectIdAndVersion";
+	public static String GET_PROJECTIDS_BY_RESEARCHOBJECTID_AND_VERSION 		= FINDER_CLASS_NAME_ENTITY + ".getProjectIdsByResearchObjectIdAndVersion";
 	public static String GET_RESEARCHOBJECTS_BY_PROJECTID 					= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectsByProjectId";
 
 	//
@@ -47,11 +47,11 @@ public class Project_ResearchObjectFinderImpl extends BasePersistenceImpl<Projec
 	
 	//
 	@SuppressWarnings("rawtypes")
-	public List getProjectIdByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
+	public List getProjectIdsByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = CustomSQLUtil.get(GET_PROJECTID_BY_RESEARCHOBJECTID_AND_VERSION);
+			String sql = CustomSQLUtil.get(GET_PROJECTIDS_BY_RESEARCHOBJECTID_AND_VERSION);
 			SQLQuery queryObject = session.createSQLQuery(sql);
 
 			queryObject.setCacheable(false);
@@ -69,7 +69,7 @@ public class Project_ResearchObjectFinderImpl extends BasePersistenceImpl<Projec
 	}
 	
 	
-	//get a list of heads that have IDs from start to end
+	//get a list of researchobjects that have a relation to a specific project. If more as one of research objects with the same ID has this relation, than the function get only the research object with the highest version.
 	@SuppressWarnings("unchecked")
 	public List<ResearchObject> getResearchObjectsByProjectId(long projectId) {
 		Session session = null;
@@ -82,6 +82,7 @@ public class Project_ResearchObjectFinderImpl extends BasePersistenceImpl<Projec
 			queryObject.addEntity("ResearchObject", ResearchObjectImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(projectId);
 			qPos.add(projectId);
 			return (List<ResearchObject>) queryObject.list();
 		} catch (Exception e) {e.printStackTrace();}

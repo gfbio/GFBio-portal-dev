@@ -21,7 +21,6 @@ import org.gfbio.NoSuchPrimaryDataException;
 import org.gfbio.model.PrimaryData;
 import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.PrimaryDataLocalServiceBaseImpl;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -76,13 +75,14 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
+
 	
 		
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
 	
 	//
-	public String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
+	private String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
 
 		String ignoredParameter = "WARNING:";
 		Boolean check = false;
@@ -101,9 +101,9 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	
 	//
 	@SuppressWarnings("unchecked")
-	public  JSONObject constructPrimaryDataJsonById (PrimaryData primaryData) throws NoSuchUserException, SystemException {
+	private  JSONObject constructPrimaryDataJsonById (PrimaryData primaryData) throws NoSuchUserException, SystemException {
 		JSONObject json = new JSONObject();
-		json.put("userid", primaryData.getPrimaryDataID());
+		json.put("primarydataid", primaryData.getPrimaryDataID());
 		json.put("name", primaryData.getName());
 		json.put("path", primaryData.getPath());
 		return json;
@@ -132,10 +132,7 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	@SuppressWarnings("unchecked")
 	public JSONObject createPrimaryData (JSONObject requestJson){
 			
-		Boolean check = false;
-		
-		System.out.println("1 "+check);
-		
+		Boolean check = false;	
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
 		String [] keySet = {"name", "path", "researchobjectid", "researchobjectversion"};
@@ -143,17 +140,12 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 
-		System.out.println("2 "+check);
 		
 		if (requestJson.containsKey("name") && requestJson.containsKey("path")){
-						
-			System.out.println("3 "+check);
 			
 			long primaryDataId = createKernelPrimaryData(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim());
 			if (primaryDataId !=0)
 				check = true;
-			
-			System.out.println("4 "+check);
 			
 			if (check && requestJson.containsKey("researchobjectid"))
 				if (requestJson.containsKey("researchobjectversion"))
@@ -161,13 +153,11 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 				else
 					check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"));
 			
-			System.out.println("9 "+check);
-			
 			if (check)
 				responseJson.put("primarydataid", primaryDataId);
 			else
 				responseJson.put("ERROR:", "ERROR: create primarydata entry is failed.");
-			
+
 		}else{
 			String errorString = "ERROR: Mandatory attribut";
 			if (!requestJson.containsKey("name"))

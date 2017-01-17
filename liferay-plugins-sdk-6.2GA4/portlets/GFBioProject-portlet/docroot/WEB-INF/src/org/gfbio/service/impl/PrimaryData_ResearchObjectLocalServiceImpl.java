@@ -18,10 +18,15 @@ import java.util.List;
 
 import org.gfbio.NoSuchPrimaryData_ResearchObjectException;
 import org.gfbio.model.PrimaryData_ResearchObject;
+import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.PrimaryData_ResearchObjectLocalServiceBaseImpl;
+import org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.PrimaryData_ResearchObjectPK;
-import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -40,17 +45,91 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil
  */
 public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_ResearchObjectLocalServiceBaseImpl {
+	
+	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
-	//get a ID-List (Project_ResearchObject-Object) of all Research Objects of a specific Project
-	public List<PrimaryData_ResearchObject> getRelationsByPrimaryDataId(long primaryDataId) {
-		List<PrimaryData_ResearchObject> idList = null;
-		try {idList = primaryData_ResearchObjectPersistence.findByPrimaryDataID(primaryDataId);}
-		catch (SystemException e) {e.printStackTrace();}
-		return idList;
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray  getPrimaryDatasIdsByResearchObject (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			List <Long> responseList = null;
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);
+			
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
+				responseList = getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			else
+				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to primary data");
+			
+			JSONParser parser = new JSONParser();
+			try {responseJson = (JSONArray) parser.parse(responseList.toString());}
+			catch (ParseException e) {e.printStackTrace();}
+		
+		}else
+			responseJson.add("ERROR: The json need minimal 'researchobjectid'as long.");
+		
+		return responseJson;
 	}
 	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getResearchObjectsByPrimaryDataId (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if (requestJson.containsKey("primarydataid")){
+			List <ResearchObject> responseList = null;
+			
+			responseList = getResearchObjectsByPrimaryDataId((long)requestJson.get("primarydataid"));
+
+			if (responseList.size()>0)
+				responseJson = ResearchObjectLocalServiceUtil.constructResearchObjectsJson(responseList);
+			else
+				responseJson.add("ERROR: primary data with ID "+ (long)requestJson.get("primarydataid") +" has no relation to a research object");
+			
+		}else
+			responseJson.add("ERROR: The json need minimal 'primarydataid' as long.");
+
+		
+		return responseJson;
+	}
+	
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unused")
+	private List <Long> getPrimaryDataIdsByResearchObjectId (long researchObjectId){
+		return getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId, ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId));
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	private List <Long> getPrimaryDataIdsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
+		return PrimaryData_ResearchObjectFinderUtil.getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+	}
+	
+	
+	//
+	private List<ResearchObject> getResearchObjectsByPrimaryDataId (long primaryDataId){
+		return PrimaryData_ResearchObjectFinderUtil.getResearchObjectsByPrimaryDataId(primaryDataId);
+	}
 	
 	
 	
@@ -61,15 +140,21 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 	public Boolean checkResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
 		
 		Boolean check = false;
-		List <Boolean> checkList =  Project_ResearchObjectFinderUtil.getCheckOfResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		List <Boolean> checkList =  PrimaryData_ResearchObjectFinderUtil.getCheckOfResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		
 		if (checkList.size()>0)
 			check = checkList.get(0);
+		
 		return check;
 	}
+	
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 
 
+	//-------------------------------- Manage Update Functions ----------------------------------------------//
+
+	
 	//update or create a new Relationship between a Primary Data and a Research Object
 	public Boolean updatePrimaryDataResearchObject(long primaryDataId, long researchObjectId) {
 		return updatePrimaryDataResearchObject(primaryDataId, researchObjectId, ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId));
@@ -80,8 +165,6 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 	public Boolean updatePrimaryDataResearchObject(long primaryDataId, long researchObjectId, int researchObjectVersion) {
 
 		Boolean check = false;
-
-		System.out.println("5 "+check);
 		
 		PrimaryData_ResearchObject relation = null;
 		PrimaryData_ResearchObjectPK pk = new PrimaryData_ResearchObjectPK(primaryDataId, researchObjectId, researchObjectVersion);
@@ -91,16 +174,15 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 		
 		if (relation == null) 
 			relation = primaryData_ResearchObjectPersistence.create(pk);
-
-		System.out.println("6 "+check);
 		
 		try {
 			super.updatePrimaryData_ResearchObject(relation);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
-
-		System.out.println("7 "+check);
 		
 		return check;
 	}
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
 }

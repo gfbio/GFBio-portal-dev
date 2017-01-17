@@ -283,3 +283,28 @@ UPDATE 	gfbio_content 	SET cellcontent = 'Creative Commons Attribution' 								
 
 UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects in ethanol' 								WHERE 	contentid =1937;
 UPDATE 	gfbio_content 	SET cellcontent = 'Botanical objects in ethanol'  								WHERE 	contentid =1938;
+
+--------------------------------------------------------------------------------------------
+------------------------      primary data / research object      -- 13.01.2017 ------------
+--------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_primarydata_researchobject ALTER COLUMN researchobjectversion TYPE smallint
+
+
+--------------------------------------------------------------------------------------------
+------------------------------------ Head, Cell & Content ----------------------------------
+---------------------------------     category / project      -- 16.01.2017 ----------------
+--------------------------------------------------------------------------------------------
+
+
+------------------------------------- Head Table Content -------------------------------------
+
+
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('20','gfbio_category_researchobject','relationship');
+
+
+------------------------------------- Column Table Content -------------------------------------
+
+
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('61','20','gfbio_category');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('62','20','gfbio_researchobject');

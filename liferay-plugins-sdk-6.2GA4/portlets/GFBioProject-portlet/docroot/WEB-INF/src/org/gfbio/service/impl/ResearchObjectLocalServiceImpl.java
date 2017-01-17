@@ -32,10 +32,12 @@ import org.gfbio.model.ResearchObject;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
+import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObject_UserLocalServiceUtil;
+import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
@@ -66,6 +68,35 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//-------------------------------- Manage Get Functions ----------------------------------------------//
 	
 	
+	
+	//get all user id's (direct and over the projects), that are related with  a research object. 
+	@SuppressWarnings("unchecked")
+	public JSONObject getAllUserIdsByResearchObject(JSONObject requestJson){
+		
+		JSONObject responseJson = new JSONObject();
+		
+		if (requestJson.containsKey("researchobjectid")){
+
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);
+					
+			if (ResearchObject_UserLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+				responseJson.put("direct", ResearchObject_UserLocalServiceUtil.getUserIdsByResearchObject(requestJson));
+			
+			if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+				responseJson.put("partofprojects", ProjectLocalServiceUtil.getUserIdsByResearchObject(requestJson));
+		}else
+			responseJson.put("ERROR","ERROR: The json need minimal 'researchobjectid'as long.");
+		
+		return responseJson;
+	}
+	
+	
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray getResearchObjectsAsJsonById(JSONArray requestJson){
@@ -83,7 +114,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"researchobjectid", "researchobjectversion"};
+		String [] keySet = {"researchobjectid", "researchobjectversion","kindofresponse"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -97,20 +128,22 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			else
 				researchObject = getLatestResearchObjectById((long) requestJson.get("researchobjectid"));
 
-			System.out.println(researchObject);
 			if (researchObject != null)
-				responseJson = constructExtendedResearchObjectJson(researchObject);
+				if (requestJson.containsKey("kindofresponse"))
+					if((((String)requestJson.get("kindofresponse")).trim()).equals("extended"))
+						responseJson = constructExtendedResearchObjectJson(researchObject);
+					else
+						responseJson = constructResearchObjectJson(researchObject);
+				else
+					responseJson = constructResearchObjectJson(researchObject);
 			else
 				responseJson.put("ERROR", "ERROR: This 'researchobjectid' don't exist.");
 		}else
 			responseJson.put("ERROR", "ERROR: No key 'researchobjectid' exist.");
 	
-
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING",ignoreParameter);
-		
-		System.out.println(responseJson);
-		
+				
 		return checkNullParent(responseJson);
 	}
 
@@ -206,7 +239,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		return checkNullParent(responseJson);
 	}
-
 	
 		
 	//----------------------------------- Get Functions --------------------------------------------------//
@@ -277,7 +309,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		long projectId =0;
 		if (checkResearchObjectId(researchObjectId))
-			projectId = (long) Project_ResearchObjectFinderUtil.getProjectIdByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion).get(0);
+			projectId = (long) Project_ResearchObjectFinderUtil.getProjectIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion).get(0);
 		return projectId;
 	}
 	
@@ -445,65 +477,55 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructExtendedResearchObjectJson (ResearchObject researchObject){
+
+		//basic research object data
 		JSONObject responseJson = new JSONObject();
-		
-		System.out.println("1: "+responseJson);
-		
 		responseJson = constructResearchObjectJson (researchObject);
+		long researchObjectId = (long) responseJson.get("researchobjectid");
+		int researchObjectVersion = (int)responseJson.get("researchobjectversion");
 		
-		System.out.println("2: "+responseJson);
+		//author ids
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson_researchobject", researchObjectId))
+			try {responseJson.put("authorids", ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_externalperson_researchobject"), (Long.toString(researchObjectId))));}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}		
 		
-		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson_researchobject", (long) responseJson.get("researchobjectid")))
-			try {responseJson.put("authorid", ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_externalperson_researchobject"), (Long.toString((long) responseJson.get("researchobjectid")))));}
-			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
-		
-		System.out.println("3: "+responseJson);
-		
-		
-		if (responseJson.containsKey("authorid")){
-			JSONArray idArray = (JSONArray) responseJson.get("authorid");
+		//author names
+		if (responseJson.containsKey("authorids")){
+			JSONArray idArray = (JSONArray) responseJson.get("authorids");
 			JSONArray labelArray = new JSONArray();
 			for (int i =0; i <idArray.size();i++)
 				labelArray.add(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById((long) idArray.get(i) ),"name"));
-			System.out.println(labelArray);
-			for (int i =0;i<labelArray.size();i++)
-				System.out.println(labelArray.get(i));
 			responseJson.put("authorname", labelArray);
 		}
-		
-		System.out.println("4: "+responseJson);
-		
-		System.out.println("5: "+responseJson);
-		
-		if (responseJson.containsKey("metadataid"))
-			responseJson.put("metadatalabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("metadataid")),"label"));
 
-		
-		System.out.println("6: "+responseJson);
-
+		//categories
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_category_researchobject",researchObjectId))
+			try {responseJson.put("categoryids",ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_researchobject"), (Long.toString(researchObjectId))));}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+	
+		//licenses
 		if (responseJson.containsKey("licenseid"))
 			responseJson.put("licenselabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("licenseid")),"label"));
 
-		System.out.println("7: "+responseJson);
-		
-		//primärdataid + primärdata name
+		//metadata
+		if (responseJson.containsKey("metadataid"))
+			responseJson.put("metadatalabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("metadataid")),"label"));
 
-		System.out.println("8: "+responseJson);
+		//primary data
+		if (PrimaryData_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+			responseJson.put("primarydataids", PrimaryData_ResearchObjectLocalServiceUtil.getPrimaryDatasIdsByResearchObject(responseJson));
 		
-		//categories
+		//projects
+		if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+			responseJson.put("projectids",Project_ResearchObjectLocalServiceUtil.getProjectIdsByResearchObject(responseJson));
 		
-		System.out.println("9: "+responseJson);
+		//submission
+		if (SubmissionLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+			responseJson.put("submissionids", SubmissionLocalServiceUtil.getSubmissionIdsByResearchObjectIdAndVersion(responseJson));
 		
-		//alle submissioninformationen -> in submission-klasse
-
-		System.out.println("10: "+responseJson);
-		
-		
-		
-		
-		//{"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "projectid", "researchobjecttype", "submitterid"}
-
-		
+		//user
+		if (ResearchObject_UserLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) || true)
+			responseJson.put("userids", getAllUserIdsByResearchObject(responseJson));
 		
 		return checkNullParent(responseJson);
 	}
@@ -577,7 +599,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			
 			if(requestJson.containsKey("researchobjecttype") && check){
-				System.out.println("4");
 				check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
 			}
 
