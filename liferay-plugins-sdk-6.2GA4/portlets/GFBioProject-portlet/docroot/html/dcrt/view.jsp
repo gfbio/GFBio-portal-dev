@@ -14,7 +14,7 @@
 <portlet:resourceURL var="ajaxUrlDetails" id="details" />
 	
 <script type="text/javascript" >
-
+  
 $( document ).ready(function() {
 	$("input[name=physical]").click(function () {
 		$("input[name=taxon]").attr("checked", false);
@@ -284,10 +284,10 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 	<p>Your JIRA Ticket was successfully created.</p>
 </div>
 
-<div class="container-fluid custom" >
-	<h1 style="text-align: center;">Data Center Recommendation Tool</h1>
+<div class="container custom" >
+	<h1>Data Center Recommendation Tool</h1>
 	<div class="row" >
-		<div id="left" class="col-md-4" > <!-- style="display: block; float: left; margin-right: 20px; width: 35%; margin-left: 0%;" -->
+		<div id="above" class="col-md-12" >
 			
 			<div style="margin-bottom: 10px; margin-top: 15px;">
 				<div id="physical" name="question" >
@@ -341,7 +341,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 					<h4>Please select a category</h4>
 					
 					<select id="category" name="category" >
-						<option selected="selected" label="Select" value="default" />
+						<option selected="selected" label="Select" value="default" >Select</option>
 						<%
 						for(GCategory c : categories) {
 						%>
@@ -357,7 +357,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 	 				<h4>Which kind of material would you deliver?</h4>
 					
 					<select id="material" name="material" >
-						<option selected="selected" label="Select" value="default" />
+						<option selected="selected" label="Select" value="default" >Select</option>
 						<%
 						for(GCategory m : materials) {
 						%>
@@ -369,10 +369,11 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 				</div>
 			</div>
 		</div>
-		
-		<div id="right" class="col-md-8" > 
+	</div>
+	<div>	
+		<div id="below" class="col-md-12" > 
 			<div>
-				<h3 style="text-align: center; margin-bottom: 20px;">Data Center Recommendation</h3>
+				<h3 style="margin-bottom: 20px;">Data Center Recommendation</h3>
 			</div>
 			<div id="result" style="text-align: left">
 				No choice has been made
