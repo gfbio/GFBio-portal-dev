@@ -3,6 +3,12 @@
 ********************************************
 - Java SDK 8_101 or higher
 - Liferay IDE 3.1.0. or higher (Eclipse-Mars Liferay IDE bundle)
+	Get the Liferay IDE here, use the milestone (https://web.liferay.com/downloads/liferay-projects/liferay-ide)
+
+For testing purposes (workspace) you have to initialize it with your own Liferay7 BundleVersion
+--> open cmd in the workspace, execute "blade initBundle" 
+(with it you´ll download the bundle, if not already in your user/.liferay/bundles folder and get it in contact with your workspace)
+standard set password is test/test, depending on how you setup your liferay instance) 
 
 
 -------------------------------------------------------------------------------------------------
@@ -138,6 +144,11 @@ SETUP your Liferay Instance in Working Directory:
 Therefore stick to 
 https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-a-liferay-workspace-with-liferay-ide
 
+1 Switch View to Liferay Workspace View
+2 in Project Explorer Create New - Liferay Workspace (Fill in Name, rather activate the Checkbox at download Bundle, else you´ll have to "blade initBundle" lateron in your workspace-cmd)
+3 just working if you have the newest Liferay IDE and Java installed (Else Sourceforge throws ssl handshake errors.. sadly)
+
+
 
 
 ********************************************
@@ -159,4 +170,46 @@ command line where you want to create:
 **********************************
 *** Creating a new Portlet with Blade CLI
 **********************************
+
+We mostly use the MVC Portlet (Model View Controler)
+*Liferay kind of implements an own version of this
+Read more on https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-an-mvc-portlet
+
+Further on you got 2 options:
+	1) Create via Command Line and blade (https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/using-the-mvc-portlet-template)
+	2) Create via Eclipse - New Liferay Module (edit name, type and create)
+
+If you created your first little Portlet, you should see in your Workspace under modules/YOURTESTPORTLET
+It should have the following folder-structure:
+	1 src/main/java
+	2 src/main/resources
+	3 JRE System Library
+	4 Project and External Dependencies
+	5 src
+	6 bnd.bnd
+	7 build.gradle
+
+Easily said number 1 is for editing the .java file and everything that contains logic or controlling code and stating when to use which jsp of number 2.
+Number 2 is for editing the look and feel  e.g. buttons, text, options.
+
+Number 5 will lateron contain Number 1 and 2 if deployed to the server
+
+
+After opening/importing the Workspace you have to deploy the Portlet to the Server if not already done.
+(drag&drop it to the Server instance (should already run) or via rightclicking)
+
+Finally implementing on your running instance:
+	1 Server has to run already
+	2 Portlet has to be deployed
+	3 if youre signed in on the instance, implement new portlets via the "Add"-Navigation /Applications/Sample/YOUR PORTLET
+		--> drag& drop it to the site where you want it to be
+
+The myJspTestportlet ist just for showing the frontend-work of the jsp files. No other logic included, but could be done via ActionMethods.
+Further Information in the Documentation or given when needed.
+
+Links:	http://www.javasavvy.com/liferay-7-portlet-tutorial/ (interesting lil tutorial on working with different .jsp files / portlet)
+
+
+
+
 	
