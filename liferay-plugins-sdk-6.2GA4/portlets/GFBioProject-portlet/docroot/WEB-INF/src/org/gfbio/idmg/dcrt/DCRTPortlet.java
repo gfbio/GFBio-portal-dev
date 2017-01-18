@@ -113,7 +113,7 @@ public class DCRTPortlet extends MVCPortlet {
 		String sequenced = resourceRequest.getParameter("sequenced");
 		
 		List <DataProvider> recommendedProviders;
-		if (category.equals("noselection")) {
+		if (category.equals("noselection") || category.equals("default")) {
 			recommendedProviders = setRecommendedProviders(physical, taxon, alive, sequenced);
 		} else {
 			recommendedProviders = setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);

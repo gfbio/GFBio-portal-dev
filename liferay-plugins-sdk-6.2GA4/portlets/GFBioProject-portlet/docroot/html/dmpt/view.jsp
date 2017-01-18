@@ -376,8 +376,8 @@
 			<section>
 				<div class="question_div">
                     <label>What metadata will accompany the data?</label>
-                    <div id="metadata" class="answer_div">
-                        <div class="fl_w25">
+                    <div id="metadata" class="answer_div block">
+                        <div class="w25">
                             <div>
                                 <input name="metadata" type="checkbox"/>
                                 <label>ABCD 2.06</label>
@@ -419,8 +419,10 @@
                                 <label>Other</label>
                             </div>
                         </div>
-                       	<textarea id="metadataDesc" rows="3" cols="100" 
-                       	placeholder="Describe your type of documentation which will accompany the data."></textarea>
+                        <div id="metadataDesc">
+	                       	<textarea rows="3" cols="100" disabled="disabled"
+	                       	placeholder="Describe your type of documentation which will accompany the data."></textarea>
+                       	</div>
                     </div>
                 </div>
 			</section>
