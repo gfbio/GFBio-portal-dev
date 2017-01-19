@@ -2,6 +2,8 @@ var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
+var showRating=0;
+var saveSearch=1;
 
 /////////////////////////////// Search initial functions ////////////////////////////////
 /*
@@ -108,7 +110,7 @@ function showLatestTenDataset(filter, yearRange) {
 					"class" : "color-control",
 					"sortable" : false,
 					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating)?ratingDiv:'')
 				}
 			],
 			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', 
@@ -122,7 +124,8 @@ function showLatestTenDataset(filter, yearRange) {
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
-					setRatingBar();
+					if (showRating){
+					setRatingBar();}
 				}
 			},
 			// define the event after each table row is created
@@ -145,9 +148,8 @@ function setRatingBar(){
 		onSelect: function(value, text, event) {
 		if (typeof(event) !== 'undefined') {
 			// rating was selected by a user
-			var div = event.target.parentElement.parentElement.parentElement;
-			var resultRow = div.parentElement.parentElement;
-			//console.log(div);
+			var parent = event.target.parentElement.parentElement.parentElement;
+			//console.log(parent.parentElement.parentElement);
 			//console.log(value);
 			// TODO:call jsonws
 			// saveSearchFeedback(datasetDetail,datasetRank,rating)
@@ -246,7 +248,7 @@ function newQuery(clearBasket) {
 	if (clearBasket)
 		visualBasket.value = "";
 	// Save query to DB
-	if (keyword != "" && clearBasket){
+	if (saveSearch && keyword != "" && clearBasket){
 		//console.log('New query is made.');
 		saveSearchHistory(keyword,filter);
 		document.getElementById("filters").value = filterObj;
@@ -299,7 +301,7 @@ function getSearchResult(keyword, filter, yearRange) {
 					"class" : "color-control",
 					"sortable" : false,
 					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating)?ratingDiv:'')
 				}
 			],
 			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
@@ -312,7 +314,8 @@ function getSearchResult(keyword, filter, yearRange) {
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
-					setRatingBar();
+					if (showRating){
+					setRatingBar();}
 				}
 			},
 			// define the event after each table row is created
@@ -772,7 +775,7 @@ function filterQuery(filter, yearRange) {
 		showLatestTenDataset(filter, yearRange);
 	}
 	// Save query to DB
-	if (keyword != ""){
+	if (saveSearch && keyword != ""){
 		//console.log('Filtered query.');
 		var filterObj = filter;
 		filterObj.push(yearRange);
@@ -1434,7 +1437,7 @@ function semanticQuery(clearBasket) {
 	if (clearBasket)
 		visualBasket.value = "";
 	// Save query to DB
-	if (keyword != ""){
+	if (saveSearch && keyword != ""){
 		console.log('New Semantic query made.')
 		saveSearchHistory(keyword,filter);
 	}
@@ -1539,7 +1542,7 @@ function getSemanticSearchResult(keywordArr, filter, yearRange) {
 					"class" : "color-control",
 					"sortable" : false,
 					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
+					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating)?ratingDiv:'')
 				}
 			],
 			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
@@ -1552,7 +1555,8 @@ function getSemanticSearchResult(keywordArr, filter, yearRange) {
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
-					setRatingBar();
+					if (showRating){
+					setRatingBar();}
 				}
 				$("body").toggleClass("wait");
 			},
