@@ -47,13 +47,22 @@ public class UserExtensionServiceImpl extends UserExtensionServiceBaseImpl {
 	 *@param test
 	 *@JSONWebService tester
 	 */
+	public JSONObject getUserByEmailAdress(JSONObject json) throws NoSuchModelException, SystemException {
+		return UserExtensionLocalServiceUtil.getUserExtentionByEmailAdress(json);
+	}
+	
+	
+	//
+	/**
+	 *@param test
+	 *@JSONWebService tester
+	 */
 	public JSONObject getUserById(JSONObject json) throws NoSuchModelException, SystemException {
 		return UserExtensionLocalServiceUtil.getUserExtentionById(json);
 	}
 	
-	public JSONObject getTest(JSONObject json) throws NoSuchModelException, SystemException {
-		return json;
-	}
+
+	
 	
 	
 }

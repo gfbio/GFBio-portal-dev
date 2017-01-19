@@ -16,6 +16,8 @@ import org.gfbio.idmg.dcrt.dao.GCategory;
 import org.gfbio.idmg.dcrt.dao.GContentDAO;
 import org.gfbio.idmg.dcrt.jiraclient.JIRAApi;
 import org.gfbio.idmg.dcrt.jiraclient.connection.Communicator;
+import org.gfbio.idmg.dcrt.jiraclient.model.Assignee;
+import org.gfbio.idmg.dcrt.jiraclient.model.Customfield_10217;
 import org.gfbio.idmg.dcrt.jiraclient.model.Fields;
 import org.gfbio.idmg.dcrt.jiraclient.model.Issue;
 import org.gfbio.idmg.dcrt.jiraclient.model.IssueType;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import static j2html.TagCreator.*;
@@ -110,7 +113,7 @@ public class DCRTPortlet extends MVCPortlet {
 		String sequenced = resourceRequest.getParameter("sequenced");
 		
 		List <DataProvider> recommendedProviders;
-		if (category.equals("noselection")) {
+		if (category.equals("noselection") || category.equals("default")) {
 			recommendedProviders = setRecommendedProviders(physical, taxon, alive, sequenced);
 		} else {
 			recommendedProviders = setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);
@@ -133,7 +136,6 @@ public class DCRTPortlet extends MVCPortlet {
 	
 	private void dataproviderOutput(PrintWriter writer, List<DataProvider> providers) {
 		
-		//ContainerTag htmlTable = new ContainerTag("tr");
 		writer.println("<table style=\"width: 100%;\">");
 		
 		for (DataProvider dp : providers) {
@@ -144,15 +146,15 @@ public class DCRTPortlet extends MVCPortlet {
 		writer.print(
 			div().withClass("row dcrttable").with(
 				div().withClass("col-xs-3 col-sm-2 col-lg-2").with(
-					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
+					img().withClass("img-zoom").withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
-				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 25px;").with(
-					span().withId(name).withName("dataCenter").withText(name)
+				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 1.5em;").with(
+					span().withId(label).withName("dataCenter").withText(name)
 				),
 				div().withClass("col-xs-12 col-sm-5 col-lg-4").attr("style", "text-align: center;").with(
 						button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label),
 						button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
-						.withType("button").attr("style", "margin-left: 1px; margin-right: 1px").withValue(label),
+						.withType("button").attr("style", "margin-left: 2px; margin-right: 2px").withValue(label),
 						button().withClass("dcrtbutton details").withText("Details").withName("detailsButton").withType("button").withValue(label)
 				)
 			).render()
@@ -161,13 +163,6 @@ public class DCRTPortlet extends MVCPortlet {
 		
 		writer.println("</table>");
 		
-//		Old way of generating HTML output
-//		writer.println("<div style=\"display:block; margin-bottom: 10px;\">");
-//		writer.println("<img src=\"/GFBioProject-portlet/images/" + label + ".jpg\" alt=\"" + label + "\" style=\"width:60px;height:46px;\">");
-//		writer.println("<span id=\"" + name + "\" >" + name + "</span>");
-//		writer.println("<button class=\"dcrtbutton contact\">Test</button>");
-//		writer.println("<button class=\"dcrtbutton submission\">Test</button>");
-//		writer.println("</div>");
 	}
 	
 	//Method for Contact Button
@@ -185,13 +180,55 @@ public class DCRTPortlet extends MVCPortlet {
 		String alive = resourceRequest.getParameter("alive");
 		String sequenced = resourceRequest.getParameter("sequenced");
 		
+		//Get Category
+		String category = resourceRequest.getParameter("category");
+		
+		//Get Dialog Inputs
+		String name = resourceRequest.getParameter("contactName");
+		String email = resourceRequest.getParameter("contactEmail");
+		String message = resourceRequest.getParameter("message");
+		
 		_log.info("DataCenter: " + dataCenter + "Physical: " + physical + ", Taxon: " + taxon + ", Alive: " + alive + ", Sequenced: " + sequenced);
+		_log.info("Category: " + category + "Name: " + name + ", Email: " + email + ", Message: " + message);
 		
 		//Create Issue
 		Project project = new Project("SAND");
-		IssueType issuetype = new IssueType("DMP");
+		IssueType issuetype = new IssueType("Question");
 		Reporter reporter = new Reporter("testuser1");
-		Fields fields = new Fields(project, "DMP Request via REST API", issuetype, reporter, dataCenter, null, null, null, null, null, null);
+		String summary = "Data Center Recommendation Request";
+		
+		//User for assignee value 
+		String user;
+		
+		if (dataCenter.equals("ENA")) {
+			user = "brokeragent";
+		} else {
+			user = dataCenter.toLowerCase();
+		}
+		
+		List<Customfield_10217> dataCenters = new ArrayList<>();
+		if (dataCenter.equals("GFBio")) {
+			user = "";
+			//Get List of all possible Data Centers if GFBio default contact is used
+			String[] dcs = resourceRequest.getParameterValues("dataCenterList[]"); 
+			for (int i = 0; i < dcs.length; i++) {
+				if (!dcs[i].equals("GFBio")) {
+					dataCenters.add(new Customfield_10217(dcs[i]));
+				}
+			}
+		} else {
+			dataCenters.add(new Customfield_10217(dataCenter));
+		}
+		
+		//Set assignee for the ticket
+		Assignee assignee = new Assignee(user);
+		
+		String customfield_10010 = "sand/dcrt-request";
+		String customfield_10500 = "Physical objects: " + physical + "\nTaxon based: " + taxon + 
+				"\nAlive: " + alive + "\nPrimarily sequence Data: " + sequenced + "\nCategory: " + category;
+		
+		Fields fields = new Fields(project, summary, issuetype, reporter, message, 
+				assignee, customfield_10010, dataCenters, customfield_10500);
 		Issue issue = new Issue(fields);
 		
 		//JIRA Request

@@ -6,6 +6,7 @@
     <sql file="custom-sql/dataprovider_custom_sql.xml"/>
     <sql file="custom-sql/dataprovider_persistentidentifier_custom_sql.xml"/>
     <sql file="custom-sql/head_custom_sql.xml"/>
+    <sql file="custom-sql/primarydata_researchobject_custom_sql.xml"/>
     <sql file="custom-sql/project_custom_sql.xml"/>
     <sql file="custom-sql/project_researchobject_custom_sql.xml"/>
     <sql file="custom-sql/project_user_custom_sql.xml"/>

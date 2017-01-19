@@ -5,7 +5,6 @@ public class IssueType {
 	public String name;
 	
 	public IssueType(String name) {
-		super();
 		this.name = name;
 	}
 

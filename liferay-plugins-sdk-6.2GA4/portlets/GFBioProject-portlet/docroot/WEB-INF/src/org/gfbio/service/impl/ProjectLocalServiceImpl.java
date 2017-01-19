@@ -42,6 +42,7 @@ import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ProjectFinderUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 
 /**
@@ -134,6 +135,45 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		return responseJson;
 	}
 	
+
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray  getUserIdsByResearchObject (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			List <Long> responseList = null;
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);
+			
+			if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
+				responseList = getUserIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			else
+				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to user");
+			
+			JSONParser parser = new JSONParser();
+			try {responseJson = (JSONArray) parser.parse(responseList.toString());}
+			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+
+		
+		}else
+			responseJson.add("ERROR: The json need minimal 'researchobjectid'as long.");
+		
+		return responseJson;
+	}	
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	private List <Long> getUserIdsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
+		return ProjectFinderUtil.getUserIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+	}
 	
 	//----------------------------------- Get Functions --------------------------------------------------//
 	

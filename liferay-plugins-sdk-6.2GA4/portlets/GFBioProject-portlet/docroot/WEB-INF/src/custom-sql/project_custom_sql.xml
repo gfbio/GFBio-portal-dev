@@ -12,6 +12,7 @@
 		]]>
     </sql>
     
+    
    <sql id="org.gfbio.service.persistence.ProjectFinderImpl.checkProjectOnSubmissions">
 	    <![CDATA[
 			SELECT 
@@ -24,6 +25,21 @@
 			  	gfbio_project_researchobject.researchobjectid = gfbio_submission.researchobjectid AND
 			  	gfbio_project_researchobject.projectid = ?
 		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ProjectFinderImpl.getUserIdsByResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+				DISTINCT  gfbio_project_user.userid
+			FROM 
+			  	public.gfbio_project_user, 
+			  	public.gfbio_project_researchobject
+			WHERE 
+			  	gfbio_project_researchobject.projectid = gfbio_project_user.projectid AND
+			 	gfbio_project_researchobject.researchobjectid =? AND
+			  	gfbio_project_researchobject.researchobjectversion = ?
+		]]>	
     </sql>
   
     

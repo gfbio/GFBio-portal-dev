@@ -11,6 +11,23 @@
     font-size: small;
 }
 
+.fl_w25 {
+	float: left;
+  	width: 25%;
+    font-size: small;
+}
+
+.w25 {
+  	width: 25%;
+    font-size: small;
+}
+
+.fl_w50 {
+	float: left;
+  	width: 50%;
+    font-size: small;
+}
+
 .other_input {
 	margin-left: 15px;
     float: right;
@@ -18,12 +35,28 @@
     width: initial;
 }
 
+.slider_w25 {
+	width: 25%;
+}
+
+div#metadata > div {
+	min-width: 275px;
+}
+
+div#persistentIdentifier > label {
+	display: block;
+}
+
+input[type="radio"] {
+	margin-right: 5px !important;
+}
+
 .df_input {
     padding-bottom: 3px;
     width: 60%;
 }
 
-.mlten {
+.ml10 {
     margin-left: 10px;
 }
 
@@ -54,11 +87,6 @@ input[type=button]:disabled {
     float: left; 
     margin-right: 3px;
     margin-bottom: 3px
-}
-
-.inputtext {
-    margin-top: 5px;
-    width: 15%;
 }
 
 .inputtext_long {

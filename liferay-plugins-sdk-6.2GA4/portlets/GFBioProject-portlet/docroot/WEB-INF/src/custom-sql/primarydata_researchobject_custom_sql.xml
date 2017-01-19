@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+   <sql id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl.getCheckOfResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_primarydata_researchobject
+			 WHERE
+			 researchobjectid = ? AND
+			 researchobjectversion = ?
+		]]>
+    </sql>
+
+
+    <sql id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl.getResearchObjectsByPrimaryDataId">
+	    <![CDATA[
+SELECT
+	* 
+FROM
+	(
+		SELECT 
+			*,
+			rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
+		FROM 
+			public.gfbio_researchobject
+		WHERE
+			researchobjectid in
+				(
+					SELECT 
+						gfbio_primarydata_researchobject.researchobjectid
+					FROM 
+						public.gfbio_primarydata_researchobject
+					WHERE
+						gfbio_primarydata_researchobject.primarydataid = ?
+				)AND 
+			researchobjectversion in
+				(
+					SELECT 
+						gfbio_primarydata_researchobject.researchobjectversion
+					FROM 
+						public.gfbio_primarydata_researchobject
+					WHERE
+						gfbio_primarydata_researchobject.primarydataid = ?
+				)
+	)AS iq
+WHERE
+	pos=1
+		]]>
+    </sql>
+    
+   <sql id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl.getPrimaryDataIdsByResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+			  gfbio_primarydata_researchobject.primarydataid
+			FROM 
+			  public.gfbio_primarydata_researchobject
+			WHERE
+			  gfbio_primarydata_researchobject.researchobjectid = ? and
+			  gfbio_primarydata_researchobject.researchobjectversion = ?
+		]]>
+    </sql>
+  
+    
+</custom-sql>
