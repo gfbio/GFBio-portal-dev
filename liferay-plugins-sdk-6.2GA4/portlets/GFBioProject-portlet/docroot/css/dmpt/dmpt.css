@@ -17,6 +17,17 @@
     font-size: small;
 }
 
+.w25 {
+  	width: 25%;
+    font-size: small;
+}
+
+.fl_w50 {
+	float: left;
+  	width: 50%;
+    font-size: small;
+}
+
 .other_input {
 	margin-left: 15px;
     float: right;

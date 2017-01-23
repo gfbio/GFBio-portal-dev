@@ -260,14 +260,14 @@
                     <label>For which funding are you applying?</label>
                     <div id="fundings" class="answer_div">
                         <select id="funding" name="funding">
-                            <option selected="selected" label="Select" value="select" />
-                            <option label="DFG Individual Grants Programmes" value="individual" />
-                            <option label="DFG Coordinated Programmes" value="coordinated" />
-                            <option label="DFG Excellence Strategy" value="excellence" />
-                            <option label="DFG Research Infrastructure" value="research" />
-                            <option label="DFG International Programmes" value="international" />
-                            <option label="Other" value="other" />
-                            <option label="None" value="none" />
+                            <option selected="selected" label="Select" value="select" >Select</option>
+                            <option value="individual" >DFG Individual Grants Programmes</option>
+                            <option value="coordinated" >DFG Coordinated Programmes</option>
+                            <option value="excellence" >DFG Excellence Strategy</option>
+                            <option value="research" >DFG Research Infrastructure</option>
+                            <option value="international" >DFG International Programmes</option>
+                            <option value="other" >Other</option>
+                            <option value="none" >None</option>
                         </select>
                         <div>
                         	<input id="fundingLink" type="text" class="inputtext_long" placeholder="Link your funding call or programme"/>
@@ -279,11 +279,11 @@
                     <label>Which policies or guideliness for research data management will you follow?</label>
                     <div id="follow-policies" class="answer_div">
                         <select id="policies" name="policies" multiple="multiple" size="5">
-                            <option label="DFG Guidelines on the Handling of Research Data" value="individual" />
-                            <option label="DFG Guidelines on the Handling of Research Data in Biodiversity Research" value="coordinated" />
-                            <option label="DFG Guidelines for Safeguarding Good Scientific Practice" value="excellence" />
-                            <option label="Other" value="other" />
-                            <option label="None" value="none" />
+                            <option value="individual" >DFG Guidelines on the Handling of Research Data</option>
+                            <option value="coordinated" >DFG Guidelines on the Handling of Research Data in Biodiversity Research</option>
+                            <option value="excellence" >DFG Guidelines for Safeguarding Good Scientific Practice</option>
+                            <option value="other" >Other</option>
+                            <option value="none" >None</option>
                         </select>
                         <div>
 	                        <input id="policyOther" name="policyOther" type="text" class="inputtext_long" placeholder="Other Research Data Policy and Guideline"/>
@@ -376,8 +376,8 @@
 			<section>
 				<div class="question_div">
                     <label>What metadata will accompany the data?</label>
-                    <div id="metadata" class="answer_div flex">
-                        <div class="fl_w25">
+                    <div id="metadata" class="answer_div block">
+                        <div class="w25">
                             <div>
                                 <input name="metadata" type="checkbox"/>
                                 <label>ABCD 2.06</label>
@@ -419,8 +419,10 @@
                                 <label>Other</label>
                             </div>
                         </div>
-                       	<textarea id="metadataDesc" rows="3" cols="100" 
-                       	placeholder="Describe your type of documentation which will accompany the data."></textarea>
+                        <div id="metadataDesc">
+	                       	<textarea rows="3" cols="100" disabled="disabled"
+	                       	placeholder="Describe your type of documentation which will accompany the data."></textarea>
+                       	</div>
                     </div>
                 </div>
 			</section>
@@ -430,12 +432,12 @@
                     <label>Will you collect sensitive data?</label>
                     <div id="sensitiveData" class="answer_div">
                        	<select id="sensitive" name="sensitive" multiple="multiple" size="6">
-                           <option label="Nagoya Protocol" value="individual" />
-                           <option label="Red List" value="coordinated" />
-                           <option label="Personally Identifiable Information" value="excellence" />
-                           <option label="Other" value="other" />
-                           <option label="Uncertain" value="uncertain" />
-                           <option label="None" value="none" />
+                           <option value="individual" >Nagoya Protocol</option>
+                           <option value="coordinated" >Red List</option>
+                           <option value="excellence" >Personally Identifiable Information</option>
+                           <option value="other" >Other</option>
+                           <option value="uncertain" >Uncertain</option>
+                           <option value="none" >None</option>
                        	</select>
                        	<div>
                 			<input id="sensitiveOther" name="sensitiveOther" type="text" class="inputtext_long" 
@@ -476,15 +478,15 @@
                     <label>Where will your data be archived?</label>
                     <div id="dataArchives" class="answer_div">
                         <select id="archives" name="sensitive" multiple="multiple" size="6">
-                            <option label="GFBio Consortium" value="gfbio" />
-                            <option label="DSMZ" value="dsmz" />
-                            <option label="ENA" value="ena" />
-                            <option label="MfN" value="mfn" />
-                            <option label="PANGAEA" value="pangaea" />
-                            <option label="SMNS" value="smns" />
-                            <option label="SNSB" value="snsb" />
-                            <option label="ZFMK" value="zfmk" />
-                            <option label="Other" value="other" />
+                            <option value="gfbio" >GFBio Consortium</option>
+                            <option value="dsmz" >DSMZ</option>
+                            <option value="ena" >ENA</option>
+                            <option value="mfn" >MfN</option>
+                            <option value="pangaea" >PANGAEA</option>
+                            <option value="smns" >SMNS</option>
+                            <option value="snsb" >SNSB</option>
+                            <option value="zfmk" >ZFMK</option>
+                            <option value="other" >Other</option>
                         </select>
                         <div>
 	                        <input id="archiveOther" name="archiveOther" type="text" class="inputtext_long" 
@@ -534,13 +536,13 @@
                     <label>What GFBio services are you interested in?</label>
                     <div id="gfbioServices" class="answer_div">
                         <select id="services" name="services" multiple="multiple" size="7">
-                            <option label="Data Management Plan (DMP) Support" value="dmp" />
-                            <option label="Datamanagement Support" value="supportManagement" />
-                            <option label="Data Anlaysis" value="analysis" />
-                            <option label="Data Curation" value="curation" />
-                            <option label="Support in Managing Data Related to a Publication" value="supportPublication" />
-                            <option label="Data Publication" value="publication" />
-                            <option label="Data Management Training" value="training" />
+                            <option value="dmp" >Data Management Plan (DMP) Support</option>
+                            <option value="supportManagement" >Datamanagement Support</option>
+                            <option value="analysis" >Data Anlaysis</option>
+                            <option value="curation" >Data Curation</option>
+                            <option value="supportPublication" >Support in Managing Data Related to a Publication</option>
+                            <option value="publication" >Data Publication</option>
+                            <option value="training" >Data Management Training</option>
                         </select>
                     </div>
                 </div>

@@ -113,7 +113,7 @@ public class DCRTPortlet extends MVCPortlet {
 		String sequenced = resourceRequest.getParameter("sequenced");
 		
 		List <DataProvider> recommendedProviders;
-		if (category.equals("noselection")) {
+		if (category.equals("noselection") || category.equals("default")) {
 			recommendedProviders = setRecommendedProviders(physical, taxon, alive, sequenced);
 		} else {
 			recommendedProviders = setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);
@@ -146,7 +146,7 @@ public class DCRTPortlet extends MVCPortlet {
 		writer.print(
 			div().withClass("row dcrttable").with(
 				div().withClass("col-xs-3 col-sm-2 col-lg-2").with(
-					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
+					img().withClass("img-zoom").withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
 				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 1.5em;").with(
 					span().withId(label).withName("dataCenter").withText(name)
