@@ -169,13 +169,13 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	@SuppressWarnings("unchecked")
-	public JSONArray getProjectByUser(JSONObject requestJson){
+	@SuppressWarnings({ "unchecked"})
+	public JSONArray getProjectsByUser(JSONObject requestJson){
 
 		JSONArray responseJson = new JSONArray();
 				
 		if (requestJson.containsKey("userid") || requestJson.containsKey("emailaddress")){
-			
+
 			long userId =0;
 			if (requestJson.containsKey("userid"))
 				userId = (long)requestJson.get("userid");
@@ -186,21 +186,25 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 					if (json.containsKey("userid"))
 						userId = (long) json.get("userid");
 				}
-			
+
 			if (userId !=0 && UserExtensionLocalServiceUtil.checkExistenceOfUserId(userId)){
 
 				JSONObject idJson = new JSONObject();
 				idJson.put("userid", userId);
-				JSONArray projectIdArray = Project_UserLocalServiceUtil.getProjectIdIdsByUserId(idJson);
+				JSONArray projectIdArray = Project_UserLocalServiceUtil.getProjectIdsByUserId(idJson);
+
 
 				if (requestJson.containsKey("kindofresponse"))
 					for (int i =0; i < projectIdArray.size();i++){
-						JSONObject json = (JSONObject) projectIdArray.get(i);
+
+						JSONObject json = new JSONObject();
+						if (((projectIdArray.get(i).getClass()).toString()).equals("class java.lang.Long"))
+							json.put("projectid", (long) projectIdArray.get(i));
+						else
+							json = (JSONObject) projectIdArray.get(i);
 						json.put("kindofresponse", requestJson.get("kindofresponse"));
 						projectIdArray.set(i, json);
-
 					}
-
 				responseJson = getProjectById(projectIdArray);
 			}
 			else

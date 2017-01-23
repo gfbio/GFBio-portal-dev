@@ -25,7 +25,6 @@ public class ProjectFinderImpl extends BasePersistenceImpl<Project> implements P
 	//
 	@SuppressWarnings({  "unchecked" })
 	public List<Boolean> getCheckOnId(long projectId) {
-		System.out.println("0 "+projectId);
 		Session session = null;
 		try {
 			session = openSession();

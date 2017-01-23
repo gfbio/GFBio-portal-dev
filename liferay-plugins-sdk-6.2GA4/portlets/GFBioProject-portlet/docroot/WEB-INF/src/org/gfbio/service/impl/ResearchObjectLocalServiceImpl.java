@@ -570,12 +570,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "projectid", "researchobjecttype", "submitterid"};
+		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "projectid", "researchobjecttype", "userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
-		if ((requestJson.containsKey("name") || requestJson.containsKey("label")) && requestJson.containsKey("description") && requestJson.containsKey("researchobjecttype") && (requestJson.containsKey("submitterid") || requestJson.containsKey("projectid"))){
+		if ((requestJson.containsKey("name") || requestJson.containsKey("label")) && requestJson.containsKey("description") && requestJson.containsKey("researchobjecttype") && (requestJson.containsKey("userid") || requestJson.containsKey("projectid"))){
 
 			// mandatory
 			
@@ -608,8 +608,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				
 			if (requestJson.containsKey("authorid") && check)
 				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
-			else if (requestJson.containsKey("submitterid") && check)
-				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("submitterid"));
+			else if (requestJson.containsKey("userid") && check)
+				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"));
 			
 			if(requestJson.containsKey("authormail") && check)
 				check = updateAuthorId(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim());
@@ -642,8 +642,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
 
 	
-			if (requestJson.containsKey("submitterid") && check)
-				check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("submitterid"), "owner");
+			if (requestJson.containsKey("userid") && check)
+				check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"), "owner");
 			
 
 	
@@ -655,7 +655,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			}else
 				responseJson.put("ERROR:", "ERROR: create research object is failed.");
 		}else{
-			String errorString = "ERROR: To create a Research Object, the json need minimal 'name' or 'label' and 'description', 'researchobjecttype' as Strings and 'projectid' or 'submitterid' as long." ;
+			String errorString = "ERROR: To create a Research Object, the json need minimal 'name' or 'label' and 'description', 'researchobjecttype' as Strings and 'projectid' or 'userid' as long." ;
 			if (!requestJson.containsKey("name"))
 				if (!requestJson.containsKey("label"))
 					errorString = errorString.concat(" 'label' or 'name,");
@@ -663,9 +663,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				errorString = errorString.concat(" 'description',");
 			if (!requestJson.containsKey("researchobjecttype"))
 				errorString = errorString.concat(" 'researchobjecttype',");
-			if (!requestJson.containsKey("submitterid"))
+			if (!requestJson.containsKey("userid"))
 				if (!requestJson.containsKey("projectid"))
-					errorString = errorString.concat(" 'submitterid' or 'projectid,");
+					errorString = errorString.concat(" 'userid' or 'projectid,");
 			errorString = errorString.substring(0, errorString.length()-1).concat(" are not correct");
 			responseJson.put("ERROR", errorString);
 		}
@@ -694,7 +694,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenselabel", "name", "researchobjectid", "submitterid", "submittertype"};
+		String [] keySet = {"authormail","authorid", "brokerobjectid", "description","extendeddata", "label","licenseid","licenselabel", "name", "researchobjectid", "userid", "submittertype"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);

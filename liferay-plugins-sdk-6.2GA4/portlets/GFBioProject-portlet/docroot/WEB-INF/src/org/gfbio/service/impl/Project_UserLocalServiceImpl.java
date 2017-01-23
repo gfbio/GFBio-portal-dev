@@ -53,7 +53,7 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONArray getProjectIdIdsByUserId (JSONObject requestJson){
+	public JSONArray getProjectIdsByUserId (JSONObject requestJson){
 		
 		JSONArray responseJson = new JSONArray();
 		if (requestJson.containsKey("userid"))
