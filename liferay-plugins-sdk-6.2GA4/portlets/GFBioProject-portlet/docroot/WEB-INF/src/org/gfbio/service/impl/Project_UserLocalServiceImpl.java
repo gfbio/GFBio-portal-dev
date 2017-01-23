@@ -48,6 +48,25 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getProjectIdIdsByUserId (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		if (requestJson.containsKey("userid"))
+			responseJson.addAll(getProjectIdIdsByUserId((long) requestJson.get("userid")));
+		else
+			responseJson.add("ERROR: No keys 'userid' exist.");	
+		
+		return(responseJson);
+	}
+	
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
+	
 	//
 	public String getFullNamesAsString(JSONArray requestJson){
 		String response ="";
@@ -58,6 +77,7 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 			response = response.substring(0, response.length()-2);
 		return response;
 	}
+	
 	
 	//
 	@SuppressWarnings({ "unchecked"})
@@ -85,11 +105,19 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 	
 	
 	//get a ID-List (Project_User-Object) of all project of a specific user
-	public List<Project_User> getProjectIDList(long userID) {
+	public List<Project_User> getProjectIdList(long userID) {
 		List<Project_User> idList = null;
 		try {idList = project_UserPersistence.findByUserID(userID);} 
 		catch (SystemException e) {e.printStackTrace();}
 		return idList;
+	}
+	
+	
+	//
+	private List<Long> getProjectIdIdsByUserId (long userId){
+		List <Long> projectList = null;
+		projectList = Project_UserFinderUtil.getProjectIdsByUserId(userId);
+		return projectList;
 	}
 	
 	
@@ -145,6 +173,13 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 		} catch (SystemException e) {e.printStackTrace();}
 		
 		return check;
+	}
+
+
+	@Override
+	public List<Project_User> getProjectIDList(long userID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

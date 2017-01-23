@@ -38,6 +38,7 @@ import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ProjectFinderUtil;
 import org.json.simple.JSONArray;
@@ -121,16 +122,93 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		
 		JSONObject responseJson = new JSONObject();
 		if (requestJson.containsKey("projectid")){
+			
 			long projectId = (long)requestJson.get("projectid");
 			if (checkProjectOnId(projectId)){
-				try {responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey(projectId));}
-				catch (NoSuchProjectException | SystemException e) {responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
+				
+				Project project = null;
+				try {project = projectPersistence.findByPrimaryKey(projectId);}
+				catch (NoSuchProjectException | SystemException e) {e.printStackTrace();responseJson.put("ERROR", "ERROR: Failed by load project.");}
+				
+				if (project != null)
+					
+					if(requestJson.containsKey("kindofresponse"))
+						
+						if((((String)requestJson.get("kindofresponse")).trim()).equals("reduced"))
+							responseJson = constructReducedProjectAsJson(project);
+						else
+							responseJson = constructProjectAsJson(project);
+					else
+						responseJson = constructProjectAsJson(project);
+				else
+					responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
+			}else
+				responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
+		}else
+			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+		
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getProjectById (JSONArray requestJson){
+
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++){
+			if (((requestJson.get(i).getClass()).toString()).equals("class java.lang.Long")){
+				JSONObject json = new JSONObject();
+				json.put("projectid", requestJson.get(i));
+				requestJson.set(i, json);
+			}
+			responseJson.add(getProjectById((JSONObject) requestJson.get(i)));
+		}
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getProjectByUser(JSONObject requestJson){
+
+		JSONArray responseJson = new JSONArray();
+				
+		if (requestJson.containsKey("userid") || requestJson.containsKey("emailaddress")){
+			
+			long userId =0;
+			if (requestJson.containsKey("userid"))
+				userId = (long)requestJson.get("userid");
+			else
+				if (UserExtensionLocalServiceUtil.checkExistenceOfUserMail(((String) requestJson.get("emailaddress")).trim())){				
+					JSONObject json = new JSONObject();
+					json = UserExtensionLocalServiceUtil.getUserExtentionByEmailAddress(requestJson);
+					if (json.containsKey("userid"))
+						userId = (long) json.get("userid");
+				}
+			
+			if (userId !=0 && UserExtensionLocalServiceUtil.checkExistenceOfUserId(userId)){
+
+				JSONObject idJson = new JSONObject();
+				idJson.put("userid", userId);
+				JSONArray projectIdArray = Project_UserLocalServiceUtil.getProjectIdIdsByUserId(idJson);
+
+				if (requestJson.containsKey("kindofresponse"))
+					for (int i =0; i < projectIdArray.size();i++){
+						JSONObject json = (JSONObject) projectIdArray.get(i);
+						json.put("kindofresponse", requestJson.get("kindofresponse"));
+						projectIdArray.set(i, json);
+
+					}
+
+				responseJson = getProjectById(projectIdArray);
 			}
 			else
-				responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
+				responseJson.add("ERROR: userid and emailaddress don't exist in the database.");
 		}
 		else
-			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
+			responseJson.add("ERROR: No keys 'userid' and 'emailaddress' exist.");		
+		
 		
 		return responseJson;
 	}
@@ -276,6 +354,17 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		else
 			ignoredParameter ="";
 		return ignoredParameter;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructReducedProjectAsJson (Project project){
+
+		JSONObject json = new JSONObject();
+		json.put("projectid", project.getProjectID());
+		json.put("name", project.getName());
+		return json;
 	}
 	
 	
@@ -627,9 +716,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setEndDate(endDate);
@@ -648,9 +736,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setExtendeddata(extendedData);
@@ -669,9 +756,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setParentProjectID(parentProjectId);
@@ -690,9 +776,8 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setStartDate(startDate);

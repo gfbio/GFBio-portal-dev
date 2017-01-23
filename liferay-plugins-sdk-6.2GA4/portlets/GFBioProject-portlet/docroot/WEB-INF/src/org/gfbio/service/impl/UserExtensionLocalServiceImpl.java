@@ -15,6 +15,7 @@
 package org.gfbio.service.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
@@ -72,27 +73,29 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	
 	//
 	@SuppressWarnings({ "unchecked"})
-	public JSONObject getUserExtentionByEmailAdress(JSONObject requestJson){
-		
+	public JSONObject getUserExtentionByEmailAddress(JSONObject requestJson){
+
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
 		set.add("emailaddress");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
-		
+
 		if (requestJson.containsKey("emailaddress")){
+
 			User user = null;
-			try {user =	userPersistence.findByEmailAddress(((String) requestJson.get("emailaddress")).trim()).get(0);} 
+			try {
+				List <User> userList = null;
+				userList = userPersistence.findByEmailAddress(((String) requestJson.get("emailaddress")).trim());
+				if (userList.size()>0 )
+					user =	userList.get(0);
+			} 
 			catch (SystemException e) {e.printStackTrace();}
-			
+						
 			if (user != null)
-				try {responseJson =constructUserExtentionJsonById(user);
-				} catch (NoSuchUserException | SystemException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				try {responseJson =constructUserExtentionJsonById(user);}
+				catch (NoSuchUserException | SystemException e) {e.printStackTrace();}
 			else
 				responseJson.put("ERROR", "Loading user information is faild.");
-				
 		}else
 			responseJson.put("ERROR", "No parameter 'emailaddress' exist.");
 		
@@ -111,7 +114,7 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
 	
-	//Is  userid a id of a user, then the Boolean is true
+	//Is  user id a id of a user, then the Boolean is true
 	public Boolean checkExistenceOfUserId (long userId){
 		
 		Boolean check =false;
@@ -126,6 +129,22 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		return check;
 	}
 	
+	
+	//Is  user mail a mail of a user, then the Boolean is true
+	public Boolean checkExistenceOfUserMail (String eMailAddress){
+		
+		Boolean check =false;
+		List <User> user = null;
+		
+		try {user = userPersistence.findByEmailAddress(eMailAddress);}
+		catch (SystemException e) {e.printStackTrace();System.out.println("No user exists with the primary key "+eMailAddress);}
+		
+		if (user !=null)
+			check = true;
+		
+		return check;
+	}
+
 	
 	//
 	public String checkForIgnoredParameter (Object[] objects, Set<String> keyList){

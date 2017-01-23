@@ -44,18 +44,18 @@ public class UserExtensionServiceImpl extends UserExtensionServiceBaseImpl {
 	
 	//
 	/**
-	 *@param test
-	 *@JSONWebService tester
+	 *@param 
+	 *@JSONWebService 
 	 */
-	public JSONObject getUserByEmailAdress(JSONObject json) throws NoSuchModelException, SystemException {
-		return UserExtensionLocalServiceUtil.getUserExtentionByEmailAdress(json);
+	public JSONObject getUserByEmailAddress(JSONObject json) throws NoSuchModelException, SystemException {
+		return UserExtensionLocalServiceUtil.getUserExtentionByEmailAddress(json);
 	}
 	
 	
 	//
 	/**
-	 *@param test
-	 *@JSONWebService tester
+	 *@param 
+	 *@JSONWebService 
 	 */
 	public JSONObject getUserById(JSONObject json) throws NoSuchModelException, SystemException {
 		return UserExtensionLocalServiceUtil.getUserExtentionById(json);

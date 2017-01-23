@@ -17,6 +17,7 @@ package org.gfbio.service.impl;
 
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.base.ProjectServiceBaseImpl;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -57,6 +58,12 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 		return responseJson;
 	}
 	
+	
+	public JSONArray getProjectByUser(JSONObject requstJson){
+		JSONArray responseJson = new JSONArray();
+		responseJson = ProjectLocalServiceUtil.getProjectByUser(requstJson);
+		return responseJson;
+	}
 	
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////

@@ -374,16 +374,9 @@
 		<column name="endDate" type="Date" />
 		<column name="userType" type="String" />
 
-		<finder name="ProjectID" return-type="Collection">
-			<finder-column name="projectID" />
-		</finder>
-		<finder name="UserID" return-type="Collection">
-			<finder-column name="userID" />
-		</finder>
-		<finder name="findByPrimaryKey" return-type="Project_User">
-			<finder-column name="projectID" />
-			<finder-column name="userID" />
-		</finder>
+		<finder name="ProjectID" 		return-type="Collection">		<finder-column name="projectID" />			</finder>
+		<finder name="UserID" 			return-type="Collection">		<finder-column name="userID" />				</finder>	
+		<finder name="findByPrimaryKey" return-type="Project_User">		<finder-column name="projectID" />			<finder-column name="userID" />		</finder>
 	</entity>
 
 
@@ -397,15 +390,9 @@
 		<column name="fundingProgramID" type="long" primary="true" />
 		<column name="institutionID" type="long" primary="true" />
 
-		<finder name="FundingAgencyID" return-type="Collection">
-			<finder-column name="fundingAgencyID" />
-		</finder>
-		<finder name="InstitutionID" return-type="Collection">
-			<finder-column name="institutionID" />
-		</finder>
-		<finder name="ProjectID" return-type="Collection">
-			<finder-column name="projectID" />
-		</finder>
+		<finder name="FundingAgencyID" 	return-type="Collection">	<finder-column name="fundingAgencyID" />		</finder>
+		<finder name="InstitutionID" 	return-type="Collection">	<finder-column name="institutionID" />			</finder>
+		<finder name="ProjectID" 		return-type="Collection">	<finder-column name="projectID" />				</finder>
 	</entity>
 
 

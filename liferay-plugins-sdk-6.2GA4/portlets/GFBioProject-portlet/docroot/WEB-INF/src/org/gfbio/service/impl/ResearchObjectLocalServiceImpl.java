@@ -564,6 +564,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createResearchObjectByJson(JSONObject requestJson){
+
 		Boolean check = false;
 		long researchObjectId = 0;
 		int researchObjectVersion = 1;
@@ -617,7 +618,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				updateAuthorIds(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")));
 			
 			if(requestJson.containsKey("extendeddata") && check)
-				updateExtendedData(researchObjectId, researchObjectVersion, ((String) requestJson.get("extendeddata")).trim());
+				if (((requestJson.get("extendeddata")).getClass()).equals("String"))
+					updateExtendedData(researchObjectId, researchObjectVersion, ((String) requestJson.get("extendeddata")).trim());
+				else
+					updateExtendedData(researchObjectId, researchObjectVersion, ((((JSONObject) requestJson.get("extendeddata"))).toJSONString()).trim());
 			
 			if(requestJson.containsKey("licenselabel") && check)
 				check = updateLicenseId(researchObjectId,  researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
