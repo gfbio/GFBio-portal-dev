@@ -35,6 +35,53 @@
 	} else {
 		passwordReset = BeanParamUtil.getBoolean(selUser, request, "passwordReset");
 	}
+
+	String passwordRules = "";
+	if (passwordPolicy.isCheckSyntax()) {
+		if (passwordPolicy.isAllowDictionaryWords()) {
+			passwordRules += "The new password should not contain dictionary words. ";
+		}
+		int passMinAlp = passwordPolicy.getMinAlphanumeric();
+		int passMinLen = passwordPolicy.getMinLength();
+		int passMinLowCase = passwordPolicy.getMinLowerCase();
+		int passMinNum = passwordPolicy.getMinNumbers();
+		int passMinSym = passwordPolicy.getMinSymbols();
+		int passMinUppCase = passwordPolicy.getMinUpperCase();
+			
+		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character(s)";
+		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
+			passwordRules += " consists of ";
+		if (passMinAlp>0) 
+			passwordRules += Integer.toString(passMinAlp)+" alphanumeric";
+		if (passMinLowCase>0) {
+			if (passMinAlp>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinLowCase)+" lowercase";
+		}
+		if (passMinUppCase>0) {
+			if (passMinAlp>0 || passMinLowCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinUppCase)+ " uppercase";
+		}
+		if (passMinNum>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinNum)+" numeric";
+		}
+		if (passMinSym>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0) 
+				passwordRules += ", ";
+			passwordRules += Integer.toString(passMinSym)+" symbol(s)";
+		}
+		passwordRules += ". ";
+		
+		String passRegex = passwordPolicy.getRegex();
+		if (!passRegex.isEmpty()) {
+			passwordRules += "\nPlease set your password following this regular expression: "
+							+passRegex+" ";
+		}
+	}
+
+	if (passwordPolicy.isHistory()) {
+		passwordRules += "The old password cannot be reused. ";
+	}
 %>
 <liferay-ui:error-marker key="errorSection" value="password" />
 
@@ -136,9 +183,14 @@
 			name="password0" size="30" type="password" />
 	</c:if>
 
+	<c:if test="<%=!passwordRules.isEmpty()%>">
+		<div class="icon-info"
+			style="position: relative; left: 240px; top: 50px;"
+			title="<%=passwordRules%>"></div>
+	</c:if>
+
 	<aui:input autocomplete="off" label="new-password" name="password1"
 		size="30" type="password" />
-
 	<aui:input autocomplete="off" label="enter-again" name="password2"
 		size="30" type="password">
 		<aui:validator name="equalTo">
@@ -155,9 +207,11 @@
 </aui:fieldset>
 
 <div class="portlet-msg-info">
-	Please note that you can use the same username and password to access the GFBio Help Center. </br>
-	If you already have a Help Center account with a different email, please <a
-		href="//helpdesk.gfbio.org/servicedesk/customer/portal/5/create/50">contact us</a>.
+	Please note that you can use the same username and password to access
+	the GFBio Help Center. </br> If you already have a Help Center account with
+	a different email, please <a
+		href="//helpdesk.gfbio.org/servicedesk/customer/portal/5/create/50">contact
+		us</a>.
 </div>
 
 <c:if
