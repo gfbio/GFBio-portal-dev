@@ -88,6 +88,103 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 	
 	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getStatusByResearchObjectId(JSONObject requestJson){
+		JSONArray responseJson = new JSONArray ();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			
+			if (ResearchObjectLocalServiceUtil.checkResearchObjectId(researchObjectId)){
+				
+				
+				List <Integer> researchObjectVersionList = null;
+				researchObjectVersionList = ResearchObjectLocalServiceUtil.getResearchObjectVersionsById(researchObjectId);
+				
+				for (int j = 0; j < researchObjectVersionList.size();j++){
+					
+					int researchObjectVersion = researchObjectVersionList.get(j);
+					
+					if(checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
+						JSONArray submissionIdJson = new JSONArray();
+						
+						submissionIdJson = getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+						for (int i =0;i<submissionIdJson.size();i++){
+							JSONObject responseElementJson = new JSONObject();
+							responseElementJson.put("researchobjectid", researchObjectId);
+							responseElementJson.put("researchobjectversion", researchObjectVersion);
+							responseElementJson.put("archive", getArchiveById((long) submissionIdJson.get(i)));
+							responseElementJson.put("status", getStatusById((long) submissionIdJson.get(i)));
+							responseJson.add(responseElementJson);
+						}
+					}else{
+						JSONObject responseElementJson = new JSONObject();
+						responseElementJson.put("researchobjectid", researchObjectId);
+						responseElementJson.put("researchobjectversion", researchObjectVersion);
+						responseElementJson.put("status", "is created");
+						responseJson.add(responseElementJson);
+					}
+				}
+				
+
+			}else{
+				JSONObject responseElementJson = new JSONObject();
+				responseElementJson.put("researchobjectid", researchObjectId);
+				responseElementJson.put("status", "is not created");
+				responseJson.add(responseElementJson);
+			}
+		}else
+			responseJson.add("ERROR: The json need minimal 'researchobjectid' as long. ");		
+		
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getStatusByResearchObjectIdAndVersion(JSONObject requestJson){
+		JSONArray responseJson = new JSONArray ();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			
+			if (ResearchObjectLocalServiceUtil.checkResearchObjectId(researchObjectId)){
+				int researchObjectVersion = getResearchObjectVersionFromJson(requestJson);
+				
+				if(checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
+					JSONArray submissionIdJson = new JSONArray();
+					submissionIdJson = getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+					for (int i =0;i<submissionIdJson.size();i++){
+						JSONObject responseElementJson = new JSONObject();
+						responseElementJson.put("researchobjectid", researchObjectId);
+						responseElementJson.put("researchobjectversion", researchObjectVersion);
+						responseElementJson.put("archive", getArchiveById((long) submissionIdJson.get(i)));
+						responseElementJson.put("status", getStatusById((long) submissionIdJson.get(i)));
+						responseJson.add(responseElementJson);
+					}
+				}else{
+					JSONObject responseElementJson = new JSONObject();
+					responseElementJson.put("researchobjectid", researchObjectId);
+					responseElementJson.put("researchobjectversion", researchObjectVersion);
+					responseElementJson.put("status", "is created");
+					responseJson.add(responseElementJson);
+				}
+			}else{
+				JSONObject responseElementJson = new JSONObject();
+				responseElementJson.put("researchobjectid", researchObjectId);
+				responseElementJson.put("status", "is not created");
+				responseJson.add(responseElementJson);
+			}
+		}else
+			responseJson.add("ERROR: The json need minimal 'researchobjectid' as long. ");		
+		
+		return responseJson;
+	}
+	
+	
+	//
 	@SuppressWarnings({ "unchecked"})
 	public JSONArray getSubmissionsByBrokerSubmissionId (JSONObject requestJson){
 		
@@ -96,9 +193,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		set.add("brokersubmissionid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		if (requestJson.containsKey("brokersubmissionid")){
-			try {
-				responseJson = constructSubmissionsJson(getSubmissionsByBrokerSubmissionId((String)requestJson.get("brokersubmissionid")));
-			} catch (SystemException e) {e.printStackTrace();}
+			try {responseJson = constructSubmissionsJson(getSubmissionsByBrokerSubmissionId((String)requestJson.get("brokersubmissionid")));}
+			catch (SystemException e) {e.printStackTrace();}
 			if (responseJson.toString().equals("[]"))
 				responseJson.add("ERROR: Failed by response submission registry");
 		}
@@ -119,17 +215,15 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		Set<String> set = new HashSet<String>();
 		set.add("researchobjectid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
-		if (requestJson.containsKey("researchobjectid")){
-			try {
-				responseJson = constructSubmissionsJson(getSubmissionsByResearchObjectId((long)requestJson.get("researchobjectid")));
-			} catch (SystemException e) {
-				e.printStackTrace();
-				responseJson.add("ERROR: Build Array is failed.");}
-			}
-			else
-				responseJson.add("ERROR: No key 'researchobjectid' exist.");
+		if (requestJson.containsKey("researchobjectid"))
+			try {responseJson = constructSubmissionsJson(getSubmissionsByResearchObjectId((long)requestJson.get("researchobjectid")));} 
+			catch (SystemException e) {	e.printStackTrace();responseJson.add("ERROR: Build Array is failed.");}
+		else
+			responseJson.add("ERROR: No key 'researchobjectid' exist.");
+		
 		if (!ignoreParameter.equals(""))
 			responseJson.add(ignoreParameter);
+		
 		return responseJson;
 	}
 	
@@ -140,23 +234,23 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		JSONArray responseJson = new JSONArray();
 		Set<String> set = new HashSet<String>();
-		set.add("researchobjectid");
+		String [] keySet = {"researchobjectid","researchobjectversion"};
+		for (int i = 0; i< keySet.length;i++)
+			set.add(keySet[i]);
+
+		
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
 		if (requestJson.containsKey("researchobjectid")){
 			
 			long researchObjectId = (long)requestJson.get("researchobjectid");
-			int researchObjectVersion = 0;
+			int researchObjectVersion = getResearchObjectVersionFromJson(requestJson);
 			
-			if (requestJson.containsKey("researchobjectversion"))
-				researchObjectVersion = (int) requestJson.get("researchobjectversion");
-			else
-				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);		
 			
-			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
 				try {responseJson = constructSubmissionsJson(getSubmissionsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion));}
 				catch (SystemException e1) {e1.printStackTrace();responseJson.add("ERROR: Build Array is failed.");}
-			}else
+			else
 				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to primary data");
 		}
 		else
@@ -167,6 +261,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		return responseJson;
 	}
+	
 	
 	//
 	@SuppressWarnings({ "unchecked"})
@@ -184,9 +279,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			else
 				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);		
 			
-			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
 				responseJson = getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
-			}else
+			else
 				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to primary data");
 		}
 		else
@@ -197,6 +292,18 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 
 	
 	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+	//get archive of an existing submission
+	@SuppressWarnings({"unchecked" })
+	private String getArchiveById(long submissionId){
+		List <String> archiveList = null;
+		String archive = "";
+		archiveList = SubmissionFinderUtil.getArchiveById(submissionId);
+		if (archiveList.size()>0)
+			archive = archiveList.get(0);
+		return 	archive;
+	}
 	
 		
 	//
@@ -289,13 +396,13 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (archivePId != null && !(archivePId.equals("")))
 			status = "archived";
 		else
-			status = GetStatusByIds(researchObjectId, researchObjectVersion, archive);
+			status = getStatusByIds(researchObjectId, researchObjectVersion, archive);
 		
 		return status;
 	}
 
 	
-	//
+	//get the latest research object version in the submission table, that is part of a specific submission
 	@SuppressWarnings("rawtypes")
 	public int getResearchObjectVersion ( long researchObjectId, String archive, String brokerSubmissionId) {
 		
@@ -308,19 +415,51 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	}
 	
 	
-	//
-	public String GetStatusByIds(long researchObjectId, int ResearchObjectVersion, String archive) {
+	
+	//get the research object version of the requestJson, or the latest version of the research object
+	private int getResearchObjectVersionFromJson(JSONObject requestJson){
+		int researchObjectVersion = 0;
+		
+		if (requestJson.containsKey("researchobjectversion"))
+			if ((((requestJson.get("researchobjectversion")).getClass()).toString()).equals("class java.lang.Long"))
+				researchObjectVersion = (int) ((long) requestJson.get("researchobjectversion"));
+			else
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+		else
+			researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById((long)requestJson.get("researchobjectid"));	
+		
+		return researchObjectVersion;
+	}
+	
+	
+	//get status of an existing submission
+	private String getStatusById(long submissionId){
+		String status ="";
+		Submission submission = null;
+		try {submission = getSubmission(submissionId);}
+		catch (PortalException | SystemException e) {e.printStackTrace();}
+		
+		if(submission != null)
+			status = getStatusByIds(submission.getResearchObjectID(), submission.getResearchObjectVersion(), submission.getArchive());
+			
+		return status;
+		
+	}
+	
+	
+	//get status of an existing submission
+	public String getStatusByIds(long researchObjectId, int ResearchObjectVersion, String archive) {
 		return (String) SubmissionFinderUtil.getStatusByIds(researchObjectId, ResearchObjectVersion, archive).get(0);
 	}
 	
 	
-	//
+	//get submission by research object id, research object version and archive <- the combination is unique
 	public Submission getSubmission (long researchObjectId, int researchObjectVersion, String archive){
 		return SubmissionFinderUtil.getSubmission(researchObjectId, researchObjectVersion, archive).get(0);
 	}
+		
 	
-	
-	//
+	//get all submissions of one specific research object with one specific version and different archives
 	@SuppressWarnings("rawtypes")
 	private JSONArray getSubmissionIdsByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion){
 		JSONArray responseJson = new JSONArray();
@@ -334,13 +473,13 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	}
 		
 	
-	//
+	//get all submissions with a specific broker submission id, over all research objects and archives in this one submission run. 
 	public List<Submission> getSubmissionsByBrokerSubmissionId (String brokerSubmissionId) throws SystemException{
 		return submissionPersistence.findByBrokerSubmissionID(brokerSubmissionId);
 	}
 	
 	
-	//
+	//get all submissions of one specific research object with over all versions and different archives
 	public List<Submission> getSubmissionsByResearchObjectId (long researchObjectId) throws SystemException{
 		return submissionPersistence.findByResearchObjectID(researchObjectId);
 	}
@@ -355,11 +494,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("rawtypes")
 	public long getSubmissionIdByIds(long researchObjectId, int researchObjectVersion, String archive) {
-		long submissionid =0;
+		long submissionId =0;
 		List submissionIdList = SubmissionFinderUtil.getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 		if (submissionIdList.size()>0)
-			submissionid = (long) submissionIdList.get(0);
-		return submissionid;
+			submissionId = (long) submissionIdList.get(0);
+		return submissionId;
 	}
 	
 	
@@ -478,11 +617,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				
 				if (DataProviderLocalServiceUtil.checkDataProviderLabel(archive)){
 				
-					long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
+					long submissionId = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
 
-					if (submissionid !=0)
-						try {submission = submissionPersistence.findByPrimaryKey(submissionid);} 
-						catch (SystemException | NoSuchModelException e) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+					if (submissionId !=0)
+						try {submission = submissionPersistence.findByPrimaryKey(submissionId);} 
+						catch (SystemException | NoSuchModelException e) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
 
 					if (submission==null){
 
@@ -667,11 +806,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateKernelSubmission (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, long userId){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
+		long submissionId = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
 		Submission submission = null;
-		if (submissionid !=0)
-			try {submission = getSubmission(submissionid);}
-			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+		if (submissionId !=0)
+			try {submission = getSubmission(submissionId);}
+			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
 
 		if (submission == null)
 			try {
@@ -697,11 +836,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateSubmission (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, String archivePId, long archivePIdType, Date lastChanged, long userId, String status){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
+		long submissionId = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
 		Submission submission = null;
-		if (submissionid !=0)
-			try {submission = getSubmission(submissionid);}
-			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+		if (submissionId !=0)
+			try {submission = getSubmission(submissionId);}
+			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
 
 		if (submission == null)
 			try {
@@ -743,11 +882,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Boolean updateSubmissionWithoutPId (long researchObjectId, int researchObjectVersion, String archive, String brokerSubmissionId, Date lastChanged, long userID, String status){
 		
 		Boolean check = false;
-		long submissionid = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
+		long submissionId = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim());
 		Submission submission = null;
-		if (submissionid !=0)
-			try {submission = getSubmission(submissionid);}
-			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionid+ " and will be create now");}
+		if (submissionId !=0)
+			try {submission = getSubmission(submissionId);}
+			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
 
 		if (submission == null)
 			try {

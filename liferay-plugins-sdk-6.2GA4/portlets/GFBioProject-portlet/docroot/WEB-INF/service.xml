@@ -268,7 +268,7 @@
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="submissionID" 			type="long" 	db-name="submissionid"				primary="true" />
 		<column name="researchObjectID" 		type="long" 	db-name="researchobjectid"/>
-		<column name="researchObjectVersion" 	type="long" 	db-name="researchobjectversion"/>
+		<column name="researchObjectVersion" 	type="int" 		db-name="researchobjectversion"/>
 		<column name="archive" 					type="String" 	db-name="archive"/>
 		<column name="brokerSubmissionID" 		type="String" 	db-name="brokersubmissionid"/>
 		<column name="archivePID" 				type="String" 	db-name="archive_pid" />

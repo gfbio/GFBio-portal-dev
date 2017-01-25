@@ -17,6 +17,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> implements SubmissionFinder{
 	
 	public static String FINDER_CLASS_NAME_ENTITY							= SubmissionFinderImpl.class.getName();
+	public static String GET_ARCHIVE_BY_ID									= FINDER_CLASS_NAME_ENTITY + ".getArchiveById";	
 	public static String GET_ARCHIVEPIDS_OF_ENA								= FINDER_CLASS_NAME_ENTITY + ".getArchivePIdsOfENA";
 	public static String GET_ARCHIVEPIDS_WITH_TYPE_OF_ENA					= FINDER_CLASS_NAME_ENTITY + ".getArchivePIdsWithTypeOfENA";
 	public static String GET_CHECK_OF_RESEARCHOBJECTID_AND_VERSION			= FINDER_CLASS_NAME_ENTITY + ".getCheckOfResearchObjectIdAndVersion";
@@ -32,6 +33,33 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 	public static String GET_SUBMISSIONIDS_BY_RESEARCHOBJECTID_AND_VERSION	= FINDER_CLASS_NAME_ENTITY + ".getSubmissionIdsByResearchObjectIdAndVersion";
 	
 
+	
+	//
+	@SuppressWarnings({  "rawtypes" })
+	public List getArchiveById(long submissionId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_ARCHIVE_BY_ID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("archive", Type.STRING);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(submissionId);
+			
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
 	
 	//
 	@SuppressWarnings({  "rawtypes" })

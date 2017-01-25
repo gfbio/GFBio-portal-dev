@@ -108,4 +108,15 @@
 		]]>
     </sql>
     
+        <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getResearchObjectVersionsById">
+	    <![CDATA[
+			SELECT 
+				researchobjectversion 
+			FROM 
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid = ? ;
+		]]>
+    </sql>
+    
 </custom-sql>

@@ -17,10 +17,7 @@
 
 
 <script>
-
-
 	/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
-
 	
 /* 	//Message from Hide Managment
 	$(document).ready(function() {

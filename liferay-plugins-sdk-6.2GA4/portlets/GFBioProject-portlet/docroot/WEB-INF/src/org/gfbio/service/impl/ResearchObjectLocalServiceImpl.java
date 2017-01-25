@@ -319,6 +319,15 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		return researchObjectPersistence.findByResearchObjectID(researchObjectId);
 	}
 	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public List<Integer> getResearchObjectVersionsById(long researchObjectId){
+		List <Integer> versionList =null;
+		versionList = ResearchObjectFinderUtil.getResearchObjectVersionsById(researchObjectId);
+		return versionList;
+	}
+	
 
 	//
 	public ResearchObject getTopParent(long researchObjectId) {
@@ -330,6 +339,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		return researchobject;
 	}
 	
+	
+
 		
 	////////////////////////////////////// Helper Functions ////////////////////////////////////////////////////
 	

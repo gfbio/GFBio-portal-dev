@@ -21,7 +21,7 @@
 <%}else { %>
    
    
-<!-- 		<div id="please_dont_kill_my_css" ng-app="enaWidget" ng-controller="AppCtrl as appctrl"> -->
+		<div id="please_dont_kill_my_css" ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
 			<div class="swHide">
 		   		{{ addToConfig('authorization',  'Token  <%=WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"token") %>') }}
 		    	{{ addToConfig('submittingUser', '<%=PortalUtil.getUserId(request) %>')}}
@@ -31,7 +31,3 @@
 	
 
 <%} %>
-
-
-
-

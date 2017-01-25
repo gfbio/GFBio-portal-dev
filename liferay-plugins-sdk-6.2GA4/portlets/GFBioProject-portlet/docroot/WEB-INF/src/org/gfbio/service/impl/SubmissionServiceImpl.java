@@ -47,6 +47,19 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 		return SubmissionLocalServiceUtil.getLatestXPublicSubmissionsByX(requestJson);
 	}
 	
+
+	//
+	public JSONArray getStatusByResearchObjectId (JSONObject requestJson){
+		return SubmissionLocalServiceUtil.getStatusByResearchObjectId(requestJson);
+	}
+	
+	
+	
+	//
+	public JSONArray getStatusByResearchObjectIdAndVersion (JSONObject requestJson){
+		return SubmissionLocalServiceUtil.getStatusByResearchObjectIdAndVersion(requestJson);
+	}
+	
 	
 	//
 	public JSONArray getSubmissionsByBrokerSubmissionId (JSONObject requestJson){
@@ -59,6 +72,12 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 	//
 	public JSONArray getSubmissionsByResearchObjectId (JSONObject requestJson){
 		return SubmissionLocalServiceUtil.getSubmissionsByResearchObjectId(requestJson);
+	}
+	
+	
+	//
+	public JSONArray getSubmissionsByResearchObjectIdAndVersion (JSONObject requestJson){
+		return SubmissionLocalServiceUtil.getSubmissionsByResearchObjectIdAndVersion(requestJson);
 	}
 	
 

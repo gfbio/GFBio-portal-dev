@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getArchiveById">
+	    <![CDATA[
+			SELECT 
+				gfbio_submission.archive
+			FROM 
+				public.gfbio_submission
+			WHERE
+				gfbio_submission.submissionid = ?
+
+		]]>
+    </sql>
+
+
     <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getArchivePIdsOfENA">
 	    <![CDATA[
 			SELECT 

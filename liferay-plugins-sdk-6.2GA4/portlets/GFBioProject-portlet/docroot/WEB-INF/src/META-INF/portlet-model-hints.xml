@@ -132,7 +132,7 @@
 	<model name="org.gfbio.model.Submission">
 		<field name="submissionID" type="long" />
 		<field name="researchObjectID" type="long" />
-		<field name="researchObjectVersion" type="long" />
+		<field name="researchObjectVersion" type="int" />
 		<field name="archive" type="String" />
 		<field name="brokerSubmissionID" type="String" />
 		<field name="archivePID" type="String" />

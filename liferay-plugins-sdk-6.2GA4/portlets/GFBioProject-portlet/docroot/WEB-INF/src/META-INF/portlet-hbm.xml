@@ -183,7 +183,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" column="researchobjectid" />
-		<property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.LongType" column="researchobjectversion" />
+		<property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="researchobjectversion" />
 		<property name="archive" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="brokerSubmissionID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="brokersubmissionid" />
 		<property name="archivePID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="archive_pid" />

@@ -24,6 +24,8 @@ public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObjec
 	public static String GET_DIRECT_PARENT 					= FINDER_CLASS_NAME_ENTITY + ".getDirectParent";
 	public static String GET_LATEST_RESEARCHOBJECT_BY_ID 	= FINDER_CLASS_NAME_ENTITY + ".getLatestResearchObjectById";
 	public static String GET_LATEST_VERSION_BY_ID 			= FINDER_CLASS_NAME_ENTITY + ".getLatestVersionById";	
+	public static String GET_RESEARCHOBJECTVERSIONS_BY_ID 	= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectVersionsById";	
+
 	
 	
 
@@ -149,6 +151,28 @@ public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObjec
 		try {
 			session = openSession();
 			String sql = CustomSQLUtil.get(GET_LATEST_RESEARCHOBJECT_BY_ID);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("researchObjectVersion", Type.INTEGER);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(researchObjectId);
+			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings({"rawtypes" })
+	public List getResearchObjectVersionsById(long researchObjectId) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_RESEARCHOBJECTVERSIONS_BY_ID);
 			SQLQuery queryObject = session.createSQLQuery(sql);
 			queryObject.setCacheable(false);
 			queryObject.addScalar("researchObjectVersion", Type.INTEGER);
