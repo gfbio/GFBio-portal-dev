@@ -263,7 +263,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
 	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 
-		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIDList(userID);
+		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIdList(userID);
 		List<Project> projectList = new ArrayList<Project>();
 		for (int i = 0; i<idList.size(); i++) 
 			projectList.add(projectPersistence.findByPrimaryKey(idList.get(i).getProjectID()));
