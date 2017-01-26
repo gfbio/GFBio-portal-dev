@@ -1,25 +1,36 @@
-1. Generate domain-key, account-key, domain-csr, and domain-key from https://zerossl.com
+1. Generate domain-key, account-key, domain-csr, and domain-crt from https://zerossl.com
 
-2. Create PKCS 12 file using your private key and CA signed certificate of it using OpenSSL.
-	openssl pkcs12 -export -in [path to certificate] -inkey [path to private key] -certfile [path to certificate ] -out testkeystore.p12
+2. Create PKCS 12 file using your private key (domain-key) and CA signed certificate of it using OpenSSL (https://www.openssl.org). 
+	openssl pkcs12 -export -in [path to certificate] -inkey [path to private key] -certfile [path to certificate ] -out mykeystore.p12
 
-3. Create JKS file using keytool command
-	keytool -importkeystore -srckeystore testkeystore.p12 -srcstoretype pkcs12 -destkeystore wso2carbon.jks -deststoretype JKS
+3. Create JKS file using keytool command (JAVA/jre/bin/)
+	keytool -importkeystore -srckeystore mykeystore.p12 -srcstoretype pkcs12 -destkeystore mykeystore.jks -deststoretype JKS
 
-4. Go to liferay/tomcat/conf folder, update server.xml file: 
-	4.1 redirect http to https
+4. Setup an update script (the created cert will be expired in 90 days and it can't be renewed before 10 days of expiration.)
+	4.1 Install Perl (Strawberry Perl -http://strawberryperl.com - portable version is recommended) in C:\Perl64 following this guide https://zerossl.com/installation.html
+		cpanm Crypt::LE -f
+	
+	4.2 Create a renewal.bat file under this folder:
+	
+		C:\Perl64\portableshell C:\Perl64\perl\site\bin\le.pl --key [path to account key] --csr [path to csr] --csr-key [path to domain key] --crt [path to domain crt] --domains [domain name] --path "C:\Program Files\Apache2.X\htdocs\.well-known\acme-challenge" --generate-missing --unlink --renew 10 --live
+	
+	4.3 Create a windows task scheduler to run the script every 12 weeks (84 days).
+	
+
+5. Go to liferay/tomcat/conf folder, update server.xml file: 
+	5.1 redirect http to https
 			<Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="443" URIEncoding="UTF-8" />
 	
-	4.2 specify the cert for https listener
+	5.2 specify the cert for https listener
 	<Connector port="443" protocol="org.apache.coyote.http11.Http11Protocol" 
 			URIEncoding="UTF-8" maxThreads="150" SSLEnabled="true" scheme="https" 
 			secure="true" clientAuth="false" sslProtocol="TLS" 
-			keystoreFile="path to testkeystore.p12" 
+			keystoreFile="path to mykeystore.jks" 
 			keystorePass="changeit" keyAlias="1" keyPass="changeit"/>
-5. Update web.xml to complete the redirect process.
-	5.1 Insert below script at the end of file under </welcome-file-list>, before </web-app>
+6. Update web.xml to complete the redirect process.
+	6.1 Insert below script at the end of file under </welcome-file-list>, before </web-app>
 	<security-constraint>
      <web-resource-collection>
         <web-resource-name>Protected Context</web-resource-name>
@@ -29,20 +40,9 @@
       <user-data-constraint>
          <transport-guarantee>CONFIDENTIAL</transport-guarantee>
       </user-data-constraint>
-</security-constraint>
+	</security-constraint>
 
-6. Restart Tomcat and check if http is redirected to https. (don't forget to open the firewall for port 443)
-
-7. Setup an update script (the created cert will be expired in 90 days and it can't be renewed before 10 days of expiration.)
-	7.1 Install Perl (Strawberry Perl portable recommended) in C:\Perl64 following this guide https://zerossl.com/installation.html
-		cpanm Crypt::LE -f
-	
-	7.2 Create a renewal.bat file under this folder:
-	
-		C:\Perl64\portableshell C:\Perl64\perl\site\bin\le.pl --key [path to account key] --csr [path to csr] --csr-key [path to domain key] --crt [path to domain crt] --domains [domain name] --path "C:\Program Files\Apache2.X\htdocs\.well-known\acme-challenge" --generate-missing --unlink --renew 10 --live
-	
-	7.3 Create a windows task scheduler to run the script every 12 weeks (84 days).
-	
+7. Restart Tomcat and check if http is redirected to https. (don't forget to open the firewall for port 443)
 	
 8. Opensocial gadgets and Liferay issue on HTTPS  https://web.liferay.com/community/forums/-/message_boards/message/13602321
 
@@ -79,7 +79,7 @@
 	</VirtualHost>
 
 10. In a Java application, if you call a web service via https, please download the ssl cert before open the URL connection.
-	10.1 Run the InstallCert.java to download SSL cert from the server to your local (development) machine.
+	10.1 Run the InstallCert.java (https://github.com/gfbio/GFBio-portal-dev/blob/development/liferay-plugins-sdk-6.2GA4/docs/InstallCert.java) to download SSL cert from the server to your local (development) machine.
 		The file jssecacerts will be created, locate the file.
 	
 	10.2 On the Java application, before conn.openConnection(), set the java trustStore as follows:   
