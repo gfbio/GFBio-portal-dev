@@ -733,6 +733,8 @@
 	
 	
 	function testSubmit(){
+		
+		console.log("1");
 	
 		var url = document.getElementById('workflowcollectionsurl').value;
 		var formData = new FormData();
@@ -740,33 +742,53 @@
 		var id = '10';
 		var version = '1';
 		var text = id +";" +version;
+				
+		console.log("2");
+		  console.log(text);
 		
-/* 		var textFile = null;
+ 		var textFile = null;
 		var makeTextFile = function (text) {
+			console.log("2.0.1");
 			var data = new Blob([text], {type: 'text/plain'});
-
+			console.log("2.0.2");
 		    // If we are replacing a previously generated file we need to
 		    // manually revoke the object URL to avoid memory leaks.
 		    if (textFile !== null) {
+				console.log("2.0.3");
 		    	window.URL.revokeObjectURL(textFile);
 		    }
 
+			console.log("2.0.4");
+			console.log(data);	
 		    textFile = window.URL.createObjectURL(data);
 
+			console.log("2.0.5");
+			  console.log(textFile);			
 		    return textFile;
-		  }; */
+		  }; 
+		  console.log("2.1");
+		  console.log(textFile);
 		
 
 		  var txtFile = "test.txt";
-		  var file = new File(txtFile);
+		  console.log("2.2");
+		  console.log(txtFile);
+		 //var file = new File(txtFile);
+		  var file = textFile;
+		  console.log("2.3");
+		  console.log(file);
 		  var str = text;
-
+		  console.log("2.4");
+		  console.log(str);
 		  file.open("w"); // open file with write access
 //		  file.writeln("First line of text");
 //		  file.writeln("Second line of text " + str);
 		  file.write(str);
+		  console.log("2.5");
 		  file.close();
+		  console.log("2.6");
 
+			console.log("3");
 		  
 		formData.append('file', txtFile);
 		  

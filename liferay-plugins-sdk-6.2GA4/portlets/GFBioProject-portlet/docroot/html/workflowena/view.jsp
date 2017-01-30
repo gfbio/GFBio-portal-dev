@@ -1,17 +1,23 @@
+
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <portlet:defineObjects />
 
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+    
 			
-	<%@ include file="/html/workflowena/init.jsp" %> <!-- library imports --> 
+<%@ include file="/html/workflowena/init.jsp" %> <!-- library imports --> 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ 
+<title>GFBio | Molecular Data Submission</title>
 		
-<!-- 	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type="text/css"> -->
-<%--   	<link href="${pageContext.request.contextPath}/css/ena-widget.css" 					rel="stylesheet" type="text/css">  --%>
-<!-- 	<link rel="stylesheet" type="text/css" href="https://colab.mpi-bremen.de/stash/projects/GFBIO/repos/ena_widget/browse/src/assets/css/debug.css?at=refs%2Fheads%2Ffeature%2FGFBIO-1395-remove-css-conflicts&raw"/> -->
-		<link rel="stylesheet" type="text/css" href="https://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.css" />
+
+<link href="//c103-171.cloud.gwdg.de/static/ui/molecular/main.css" rel="stylesheet">
 		
-<script type="text/javascript" src="https://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script>
+
 
 <%if (PortalUtil.getUser(request)==null){ %>
 	
@@ -20,14 +26,19 @@
 	</div>
 <%}else { %>
    
+
+		<div id="ui-molecular-data-submission"
+		     userid="<%=PortalUtil.getUserId(request) %>" token="<%=WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"token") %>"
+		     style="margin-top: 100px;">
+		</div> 
    
-		<div id="please_dont_kill_my_css" ng-app="enaWidget" ng-controller="AppCtrl as appctrl">
-			<div class="swHide">
-		   		{{ addToConfig('authorization',  'Token  <%=WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"token") %>') }}
-		    	{{ addToConfig('submittingUser', '<%=PortalUtil.getUserId(request) %>')}}
-			</div>
-		    <enawidget>    </enawidget>
-		</div>
 	
 
 <%} %>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"		integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7"		crossorigin="anonymous"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"		crossorigin="anonymous"></script>
+<script type="text/javascript" src="//c103-171.cloud.gwdg.de/static/ui/molecular/main.js"></script>
+
+<!-- <script type="text/javascript" src="https://c103-170.cloud.gwdg.de/static/ena_widget/assets/enaWidget.js"></script> -->

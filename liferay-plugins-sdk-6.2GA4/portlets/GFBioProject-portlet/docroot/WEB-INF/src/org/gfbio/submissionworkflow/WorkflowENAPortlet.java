@@ -45,12 +45,10 @@ public class WorkflowENAPortlet extends GenericPortlet {
 
         PortletRequestDispatcher portletRequestDispatcher =  getPortletContext().getRequestDispatcher(path);
 
-        if (portletRequestDispatcher == null) {
+        if (portletRequestDispatcher == null) 
             _log.error(path + " is not a valid include");
-        }
-        else {
+        else 
             portletRequestDispatcher.include(renderRequest, renderResponse);
-        }
     }
     
 
