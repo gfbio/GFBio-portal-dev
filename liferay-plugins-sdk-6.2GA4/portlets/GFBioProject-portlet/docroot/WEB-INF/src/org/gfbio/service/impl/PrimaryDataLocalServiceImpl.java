@@ -20,6 +20,7 @@ import java.util.Set;
 import org.gfbio.NoSuchPrimaryDataException;
 import org.gfbio.model.PrimaryData;
 import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
+import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.PrimaryDataLocalServiceBaseImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -131,6 +132,8 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createPrimaryData (JSONObject requestJson){
+		
+		System.out.println(requestJson);
 			
 		Boolean check = false;	
 		JSONObject responseJson = new JSONObject();
@@ -148,9 +151,10 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 				check = true;
 			
 			if (check && requestJson.containsKey("researchobjectid"))
-				if (requestJson.containsKey("researchobjectversion"))
-					check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"), (int)requestJson.get("researchobjectversion"));
-				else
+				if (requestJson.containsKey("researchobjectversion")){
+					int researchObjectVersion = ResearchObjectLocalServiceUtil.getResearchObjectVersionFromJson(requestJson);
+					check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"), researchObjectVersion);
+				}else
 					check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"));
 			
 			if (check)

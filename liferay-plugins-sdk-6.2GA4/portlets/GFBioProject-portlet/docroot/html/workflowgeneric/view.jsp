@@ -32,7 +32,11 @@
 		<%= getServletContext().getRealPath("/")%>
 	</div>
 	
-
+<!-- 	<form id="file-form">
+	  	<input type="file" id="file-select"  multiple/>
+ 		<button type="submit" id="upload-button">Upload</button> 
+	</form>
+	<span class='widthM' id='cwf_b_filetester' onclick='testSubmit()'>		<span class='btn btn-primary'>Test file</span></span> -->
 	
 	<br>
 

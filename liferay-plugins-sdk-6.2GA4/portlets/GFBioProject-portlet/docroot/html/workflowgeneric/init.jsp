@@ -166,9 +166,9 @@
 				
 				"<form id='file-form'>"+
 			  	"<input type='file' id='file-select'  multiple/>"+
-		 		"<button type='submit' id='upload-button'>Upload</button> "+
+// 		 		"<button type='submit' id='upload-button'>Upload</button> "+
 				"</form>"+
-				"<span class='widthM' id='cwf_b_filetester' onclick='testSubmit()'>		<span class='btn btn-primary'>Test file</span></span>"+
+				"<span class='widthM' id='gwf_b_filetester' onclick='testSubmit()'>		<span class='btn btn-primary'>Test file</span></span>"+
 			
 				
 				
@@ -180,10 +180,11 @@
 				
 				
 				"<div class='row'>"+
-					/* "<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
+/* 					"<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
 					"<span class='widthM' id='gwf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
-					 */"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
+ */					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
 				"</div>"
+
 			);
 		}
 	}
@@ -438,7 +439,84 @@
 	}
 	
 	
-	/////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////// upload tests
+	
+	
+	function testSubmit(){
+	
+			
+		var url = document.getElementById('workflowgenericurl').value;
+		var formData = new FormData();
+
+		var researchObjectId = 		Number(document.getElementById('gwf_ro_id').innerHTML);
+		var researchObjectVersion = Number(document.getElementById('gwf_ro_version').innerHTML);
+		var userId = 				Number(document.getElementById('gwf_user_id').innerHTML);
+		researchObjectId = 35301;
+		
+ 		var uploadInformation = new File(['{"researchobjectid":'+researchObjectId+',"researchobjectversion":'+researchObjectVersion+'}'], "uploadInformation.txt");
+ 		
+		console.log(uploadInformation);
+		formData.append('file', uploadInformation);
+
+		
+		var fileSelect = document.getElementById('file-select');
+		var files = fileSelect.files;
+		for (var i = 0; i < files.length; i++){ 
+		  	formData.append('file', files[i]);
+		  	console.log(files[i]);
+		}
+
+		
+		
+		console.log(formData);
+		
+		
+		
+		
+		
+		
+		
+ 		$.ajax({
+ 			"url": url.concat('/WorkflowCollectionsPortlet'),
+ 			"type" : "POST",
+			processData: false,
+			contentType: false,
+			"data" : formData,
+			async: false,
+			success :  function (){
+				
+				var name = "test.txt";
+				var path = userId+"/"+researchObjectId+"/"+researchObjectVersion+"/"+name;
+				
+				console.log("yeah");
+				console.log(userId);
+				console.log(researchObjectId);
+				console.log(researchObjectVersion);
+				var dataJson = {"researchobjectid":researchObjectId, "researchobjectversion":researchObjectVersion, "name":name, "path":path };
+				var data = [dataJson];
+				
+				console.log(data);
+				
+				
+				$.ajax({
+					"type" : "POST",
+					"url": url.concat('/WorkflowGenericPortlet'),
+					"data" : {
+						"<portlet:namespace />data" : JSON.stringify(data),
+						"<portlet:namespace />responseTarget" : "registerfileupload"
+					},
+					async: false,
+					success :  function (obj){
+						console.log("yeah");
+					}
+				});
+			} 
+		});
+	}
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////// submission
 	
 	
 	//

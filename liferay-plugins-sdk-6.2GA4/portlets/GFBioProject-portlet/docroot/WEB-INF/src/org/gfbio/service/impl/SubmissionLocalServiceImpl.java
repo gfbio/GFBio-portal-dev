@@ -151,7 +151,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			long researchObjectId = (long)requestJson.get("researchobjectid");
 			
 			if (ResearchObjectLocalServiceUtil.checkResearchObjectId(researchObjectId)){
-				int researchObjectVersion = getResearchObjectVersionFromJson(requestJson);
+				int researchObjectVersion = ResearchObjectLocalServiceUtil.getResearchObjectVersionFromJson(requestJson);
 				
 				if(checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
 					JSONArray submissionIdJson = new JSONArray();
@@ -244,7 +244,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (requestJson.containsKey("researchobjectid")){
 			
 			long researchObjectId = (long)requestJson.get("researchobjectid");
-			int researchObjectVersion = getResearchObjectVersionFromJson(requestJson);
+			int researchObjectVersion = ResearchObjectLocalServiceUtil.getResearchObjectVersionFromJson(requestJson);
 			
 			
 			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
@@ -413,24 +413,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		return researchObjectVersion;
 	}
-	
-	
-	
-	//get the research object version of the requestJson, or the latest version of the research object
-	private int getResearchObjectVersionFromJson(JSONObject requestJson){
-		int researchObjectVersion = 0;
 		
-		if (requestJson.containsKey("researchobjectversion"))
-			if ((((requestJson.get("researchobjectversion")).getClass()).toString()).equals("class java.lang.Long"))
-				researchObjectVersion = (int) ((long) requestJson.get("researchobjectversion"));
-			else
-				researchObjectVersion = (int) requestJson.get("researchobjectversion");
-		else
-			researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById((long)requestJson.get("researchobjectid"));	
-		
-		return researchObjectVersion;
-	}
-	
 	
 	//get status of an existing submission
 	private String getStatusById(long submissionId){

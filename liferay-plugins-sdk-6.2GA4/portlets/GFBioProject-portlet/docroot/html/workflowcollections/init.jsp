@@ -738,7 +738,7 @@
 	
 		var url = document.getElementById('workflowcollectionsurl').value;
 		var formData = new FormData();
-		
+		/* 		
 		var id = '10';
 		var version = '1';
 		var text = id +";" +version;
@@ -790,13 +790,21 @@
 
 			console.log("3");
 		  
+		 */
+		 var txtFile = "test.txt";
+		 
 		formData.append('file', txtFile);
-		  
+		 
 		var fileSelect = document.getElementById('file-select');
+		console.log (fileSelect);
+		
 		var files = fileSelect.files;
+		console.log (files);
+		
 		for (var i = 0; i < files.length; i++) 
 		  	formData.append('file', files[i]);
-
+		console.log (formData);
+		
 		console.log(formData.getAll('file'));
 	  	
 /*  		var json = {};
@@ -820,5 +828,7 @@
 
 	}
 	
+	
+
 	
 </script>

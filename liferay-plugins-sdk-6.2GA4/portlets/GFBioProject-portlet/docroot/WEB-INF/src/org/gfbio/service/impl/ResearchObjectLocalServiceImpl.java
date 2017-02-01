@@ -328,6 +328,22 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		return versionList;
 	}
 	
+	
+	//get the research object version of the requestJson, or the latest version of the research object
+	public int getResearchObjectVersionFromJson(JSONObject requestJson){
+		int researchObjectVersion = 0;
+		
+		if (requestJson.containsKey("researchobjectversion"))
+			if ((((requestJson.get("researchobjectversion")).getClass()).toString()).equals("class java.lang.Long"))
+				researchObjectVersion = (int) ((long) requestJson.get("researchobjectversion"));
+			else
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+		else
+			researchObjectVersion = getLatestVersionById((long)requestJson.get("researchobjectid"));	
+		
+		return researchObjectVersion;
+	}
+	
 
 	//
 	public ResearchObject getTopParent(long researchObjectId) {
