@@ -153,7 +153,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			if (ResearchObjectLocalServiceUtil.checkResearchObjectId(researchObjectId)){
 				
 				int researchObjectVersion = getResearchObjectVersionFromJson(requestJson);
-					
+				
 				if(checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
 					JSONArray submissionIdJson = new JSONArray();
 					submissionIdJson = getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
@@ -169,7 +169,10 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 					JSONObject responseElementJson = new JSONObject();
 					responseElementJson.put("researchobjectid", researchObjectId);
 					responseElementJson.put("researchobjectversion", researchObjectVersion);
-					responseElementJson.put("status", "is not created, but with version "+ResearchObjectLocalServiceUtil.getLatestVersionById((long)requestJson.get("researchobjectid")));
+					if (ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+						responseElementJson.put("status", "is created");
+					else
+						responseElementJson.put("status", "is created, with other version");
 					responseJson.add(responseElementJson);
 				}
 			}else{
