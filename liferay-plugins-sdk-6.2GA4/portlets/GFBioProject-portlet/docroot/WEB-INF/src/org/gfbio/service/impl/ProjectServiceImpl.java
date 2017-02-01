@@ -59,9 +59,9 @@ public class ProjectServiceImpl extends ProjectServiceBaseImpl {
 	}
 	
 	
-	public JSONArray getProjectsByUser(JSONObject requstJson){
+	public JSONArray getProjectsByUser(JSONObject requestJson){
 		JSONArray responseJson = new JSONArray();
-		responseJson = ProjectLocalServiceUtil.getProjectsByUser(requstJson);
+		responseJson = ProjectLocalServiceUtil.getProjectsByUser(requestJson);
 		return responseJson;
 	}
 	

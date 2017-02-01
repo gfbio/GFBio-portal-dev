@@ -188,7 +188,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
 		try {relation = researchObject_UserPersistence.findByPrimaryKey(pk);} 
-		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'projectId' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
+		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
 		if (relation == null) 
 			relation = researchObject_UserPersistence.create(pk);
@@ -212,7 +212,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
 		try {relation = researchObject_UserPersistence.findByPrimaryKey(pk);}
-		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'projectId' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
+		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
 		if (relation == null) 
 			relation = researchObject_UserPersistence.create(pk);
