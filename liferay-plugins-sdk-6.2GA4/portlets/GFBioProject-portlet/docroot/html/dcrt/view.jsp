@@ -21,19 +21,20 @@ $( document ).ready(function() {
 		$("input[name=sequenced]").attr("checked", false);
 		$("input[name=alive]").attr("checked", false);
 		$("input[name=material]").attr("checked", false);
-	})
-	
-	$("input[name=taxon]").click(function () {
-		$("input[name=sequenced]").attr("checked", false);
-		$("input[name=alive]").attr("checked", false);
-		$("input[name=material]").attr("checked", false);
+		$("div#below").show();
 	})
 	
 	$("input[name=alive]").click(function () {
 		$("input[name=sequenced]").attr("checked", false);
 		$("input[name=material]").attr("checked", false);
+		$("input[name=taxon]").attr("checked", false);
 	})
 	
+	$("input[name=taxon]").click(function () {
+		$("input[name=sequenced]").attr("checked", false);
+		$("input[name=material]").attr("checked", false);
+	})
+		
 	$("input[name=sequenced]").click(function () {
 		$("input[name=taxon]").attr("checked", false);
 		$("input[name=alive]").attr("checked", false);
@@ -293,7 +294,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 				<div id="physical" name="question" >
 					Do you want to submit physical objects along with your data?
 					<div style="display:block;">
-						<input name="physical" type="radio" value="true" onClick="show('#taxon'); hide('#categorySelection'); hideFirstLevelRight();" />
+						<input name="physical" type="radio" value="true" onClick="show('#alive'); hide('#categorySelection'); hideFirstLevelRight();" />
 						Yes
 					</div>
 					<div style="display:block;">
@@ -301,26 +302,26 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 						No
 					</div>
 				</div>
-				<div id="taxon" name="question" class="swHide">
-					Do you have taxon-based objects in addition to your data?
-					<div style="display:block;">
-						<input name="taxon" type="radio" value="true" onClick="show('#alive'); hide('#materialSelection'); " />
-						Yes
-					</div>
-					<div style="display:block;">
-						<input name="taxon" type="radio" value="false" onClick="show('#alive'); hide('#materialSelection'); " />
-						No
-					</div>
-				</div>
 				<div id="alive" name="question" class="swHide">
 					Is your object dead or alive?
 					<div style="display:block;">
-						<input name="alive" type="radio" value="true" onClick="hide('#materialSelection');" />
+						<input name="alive" type="radio" value="true" onClick="hide('#materialSelection'); hide('#taxon')" />
 						Alive
 					</div>
 					<div style="display:block;">
-						<input name="alive" type="radio" value="false" onClick="show('#materialSelection');" />
+						<input name="alive" type="radio" value="false" onClick="show('#taxon'); hide('#materialSelection');" />
 						Dead
+					</div>
+				</div>
+				<div id="taxon" name="question" class="swHide">
+					Do you have taxon-based objects in addition to your data?
+					<div style="display:block;">
+						<input name="taxon" type="radio" value="true" onClick="show('#materialSelection'); " />
+						Yes
+					</div>
+					<div style="display:block;">
+						<input name="taxon" type="radio" value="false" onClick="show('#materialSelection'); " />
+						No
 					</div>
 				</div>
 				<div id="sequenced" name="question" class="swHide">
@@ -371,24 +372,24 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 		</div>
 	</div>
 	<div>	
-		<div id="below" class="col-md-12" > 
+		<div id="below" class="swHide col-md-12"> 
 			<div>
 				<h3 style="margin-bottom: 20px;">Data Center Recommendation</h3>
 			</div>
 			<div id="result" style="text-align: left">
-				No choice has been made
+				
 			</div>
 			<div id="defaultResult" name="defaultContact" style="text-align: left" class="swHide">
-				<h4 style="margin-bottom: 20px;">No appropriate Data Center found?</h4>
+				<h4 style="margin-bottom: 20px;">Do you need support in selecting a suitable data center or do you have further questions concerning data management?<br/>Please get in contact with us:</h4>
 				<div class="row dcrttable">
 					<div class="col-xs-3 col-sm-2 col-lg-2">
-						<img src="/GFBioProject-portlet/images/gfbio_contact.jpg" style="width: 80px;"/>
+						<img src="/GFBioProject-portlet/images/gfbio_contact.jpg" style="width: 80px;" class="img-zoom"/>
 					</div>
-					<div class="col-xs-9 col-sm-5 col-lg-6" style="padding-left: 25px; padding-top: 8px;">
-						<span id="GFBio" name="dataCenter" >GFBio Contact</span>
+					<div class="col-xs-9 col-sm-6 col-lg-7" style="padding-left: 25px; padding-top: 8px;">
+						<span id="GFBio" name="dataCenter" >German Federation for Biological Data (GFBio)</span>
 					</div>
-					<div class="col-xs-12 col-sm-5 col-lg-4" style="text-align: center; padding-top: 8px;">
-						<button type="button" value="German Federation for Biological Data (GFBio)" name="contactButton" class="dcrtbutton default">Contact</button>
+					<div class="col-xs-12 col-sm-4 col-lg-3" style="text-align: center; padding-top: 8px;">
+						<button type="button" value="GFBioContact" name="contactButton" class="dcrtbutton default">Contact</button>
 					</div>
 				</div>
 			</div>

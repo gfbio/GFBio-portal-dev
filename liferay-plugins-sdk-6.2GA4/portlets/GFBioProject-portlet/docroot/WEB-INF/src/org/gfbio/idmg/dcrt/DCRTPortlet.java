@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import static j2html.TagCreator.*;
@@ -148,14 +147,15 @@ public class DCRTPortlet extends MVCPortlet {
 				div().withClass("col-xs-3 col-sm-2 col-lg-2").with(
 					img().withClass("img-zoom").withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
-				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 1.5em;").with(
+				div().withName("recommendation").withClass("col-xs-9 col-sm-6 col-lg-7").attr("style", "padding-left: 1.5em;").with(
 					span().withId(label).withName("dataCenter").withText(name)
 				),
-				div().withClass("col-xs-12 col-sm-5 col-lg-4").attr("style", "text-align: center;").with(
+				div().withClass("col-xs-12 col-sm-4 col-lg-3").attr("style", "text-align: center;").with(
 						button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label),
-						button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
-						.withType("button").attr("style", "margin-left: 2px; margin-right: 2px").withValue(label),
+						//button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
+						//.withType("button").attr("style", "margin-left: 2px; margin-right: 2px").withValue(label),
 						button().withClass("dcrtbutton details").withText("Details").withName("detailsButton").withType("button").withValue(label)
+						.attr("style", "margin-left: 2px;")
 				)
 			).render()
 		);
