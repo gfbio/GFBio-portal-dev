@@ -1452,7 +1452,7 @@ function getTSterms(keyword, filter, yearRange) {
 	//TODO: upgrade keyword split with double quote, or automatically parse terms
 	
 	//var keys = keyword.split(" ");
-	var nKeys = keys.length;
+	//var nKeys = keys.length;
 	var nRequest = 0;
 		//$.each(keys, function (ind, item) {
 		var item = keyword;
@@ -1463,20 +1463,20 @@ function getTSterms(keyword, filter, yearRange) {
 				dataType: 'json',
 				success: function (val) {
 					jArrSyn.push.apply(jArrSyn, readTSresults(item, val));
-					nRequest++;
+					//nRequest++;
 					console.log(nRequest);
-					if (nRequest == nKeys){ 
+					//if (nRequest == nKeys){ 
 						//if all keywords get semantic terms, then send to pansimple
 						semanticTerms = jArrSyn.join("|");
 						console.log('*********************************');
 						console.log(semanticTerms);
 						//TODO: check if jArrSyn.length > nKeys (contains only the original keyword)
-						if (jArrSyn.length <= nKeys) console.log('no semantic terms recieved, search again with included option.');
-						else{
+						//if (jArrSyn.length <= nKeys) console.log('no semantic terms recieved, search again with included option.');
+						//else{
 							document.getElementById("semanticTerms").value = semanticTerms;
 							getSemanticSearchResult(jArrSyn, filter, "");
-						}
-					}
+						//}
+					//}
 				},
 				error: function (e) {
 					console.log(e);
