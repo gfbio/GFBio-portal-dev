@@ -138,6 +138,10 @@ $(document).ready(function () {
 
 function openConfirmDialog(defaultContact, btnId) {
 	
+	var btn = $(btnId);
+	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
+	console.log("DataCenter: " + dataCenter);
+	
 	var confirmDialog = $("#dialog-confirm").dialog({
 		autoOpen: false,
 	    resizable: false,
@@ -145,11 +149,12 @@ function openConfirmDialog(defaultContact, btnId) {
 	    modal: true,
 	    close: clearForm,
 	    dialogClass: "contact-dialog custom-dialog",
+	    title: "DCRT Contact Request to " + dataCenter,
 	    buttons: {
-	        'Create Ticket': function() {
+	        'Send Ticket': function() {
 	        	if ( $("#dialogForm").valid() ) {
 	                $( this ).dialog( 'close' );
-	                createJiraTicket(defaultContact, btnId);
+	                createJiraTicket(defaultContact, dataCenter);
 	            }
 	    	},
 	        Cancel: function() {
@@ -161,13 +166,20 @@ function openConfirmDialog(defaultContact, btnId) {
 }
 
 function clearForm() {
-	//$('#dialogForm').resetForm();	
+	//$('#dialogForm').resetForm();
+	var form = $('#dialogForm');
+	$("input:text", form).each(function() {
+        this.value = "";
+        $(this).removeClass("error valid");
+	});
+	var textarea = $('textarea#message')
+	textarea.val("");
+    textarea.removeClass("error valid");
 }
 
-function createJiraTicket(defaultContact, id) {
+function createJiraTicket(defaultContact, dc) {
 	
-	var btn = $(id);
-	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
+	var dataCenter = dc;
 	
 	var contactName = $("input#contactName").val();
 	var contactEmail = $("input#contactEmail").val();
@@ -266,7 +278,7 @@ List<GCategory> categories = DCRTPortlet.getCategoryResearchFieldList();
 List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 %>
 
-<div id="dialog-confirm" title="DCRT Contact Request" style="display: none;">
+<div id="dialog-confirm" title="" style="display: none;">
 	<form id="dialogForm">
 	    <fieldset>
 		    <label for="contactName" style="display: block">Name</label>
@@ -280,9 +292,9 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 	     </fieldset>
      </form>
 </div>
-<div id="dialog-success" title="Create Ticket" style="display: none;" >
+<div id="dialog-success" title="Send Ticket" style="display: none;" >
 	<span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;" ></span>
-	<p>Your JIRA Ticket was successfully created.</p>
+	<p>Your JIRA Ticket have been successfully sent.</p>
 </div>
 
 <div class="container custom" >
