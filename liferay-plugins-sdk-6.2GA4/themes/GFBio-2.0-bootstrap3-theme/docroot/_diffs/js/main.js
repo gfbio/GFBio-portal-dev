@@ -149,7 +149,7 @@ AUI().ready(function() {
 AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 
 
-  A.all('.journal-content-article a[href^="http://"]').each(function(object) {
+  A.all('.journal-content-article a[href^="http://"],.journal-content-article a[href^="https://"]').each(function(object) {
     var link= object.html();
 
      if(link){

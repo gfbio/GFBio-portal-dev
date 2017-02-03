@@ -81,7 +81,10 @@
 		 text-decoration-style: none;
         }
 	
-		
+		.journal-content-article a.btn {
+		 color:#fff;
+		 text-decoration:none;
+		}
 		
 	}
 	
