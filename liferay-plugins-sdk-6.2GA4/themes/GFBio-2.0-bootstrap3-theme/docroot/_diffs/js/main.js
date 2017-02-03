@@ -158,3 +158,15 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 	}
   });
 });
+
+/*removes external icons from footer*/
+AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
+
+	A.all('.journal-content-article .footer a[href^="http://"]').each(function(object) {
+	    var linkText= object.text();
+
+	     if(linkText){
+	       object.html(linkText);
+		}
+	      });
+	});

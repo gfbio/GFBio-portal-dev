@@ -73,6 +73,13 @@
 		 text-decoration: underline;
 		 text-decoration-style: dotted;
 		} 
+		
+		.journal-content-article .footer a{
+		
+		 color: #fff;
+		 text-decoration: none;
+		 text-decoration-style: none;
+        }
 	
 		
 		
