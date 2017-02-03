@@ -191,6 +191,8 @@ public class DCRTPortlet extends MVCPortlet {
 		_log.info("DataCenter: " + dataCenter + "Physical: " + physical + ", Taxon: " + taxon + ", Alive: " + alive + ", Sequenced: " + sequenced);
 		_log.info("Category: " + category + "Name: " + name + ", Email: " + email + ", Message: " + message);
 		
+		message = "Name: " + name + "E-Mail: " + email + "Message: " + message;
+		
 		//Create Issue
 		Project project = new Project("SAND");
 		IssueType issuetype = new IssueType("Question");
