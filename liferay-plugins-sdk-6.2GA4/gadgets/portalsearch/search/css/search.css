@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Roboto);
 @import url("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css");
 
 input[type=search] {
@@ -30,14 +30,14 @@ label, input, button {
     width:24px;
 	height:24px;
 	border: none;
-	cursor: help;
+	cursor: pointer;
 }
 #SemanticQueryButton{
 	background:url('../images/ico-search-semantic.png') no-repeat center center;
 	width:24px;
 	height:24px;
 	border: none;
-	cursor: help;
+	cursor: pointer;
 }
 
 span.hilight{
@@ -84,7 +84,7 @@ a {
 		 text-decoration: underline;
 		 text-decoration-style: dotted;
 }
-a:focus , a:visited, a:hover{
+a:focus , a:visited{
     color: #333333;
     font-weight: bold;
 }
@@ -128,6 +128,7 @@ td.color-control {
 	text-align: center;
 	display: block;
 	position: absolute;
+	margin-left:-6px;
 }
 .invisible{
 	display:none !important;
