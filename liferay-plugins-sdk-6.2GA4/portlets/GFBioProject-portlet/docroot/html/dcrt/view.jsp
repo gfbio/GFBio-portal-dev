@@ -153,8 +153,8 @@ function openConfirmDialog(defaultContact, btnId) {
 	    buttons: {
 	        'Send Ticket': function() {
 	        	if ( $("#dialogForm").valid() ) {
-	                $( this ).dialog( 'close' );
-	                createJiraTicket(defaultContact, dataCenter);
+	              	createJiraTicket(defaultContact, dataCenter);
+	              	$( this ).dialog( 'close' );
 	            }
 	    	},
 	        Cancel: function() {
@@ -181,9 +181,9 @@ function createJiraTicket(defaultContact, dc) {
 	
 	var dataCenter = dc;
 	
-	var contactName = $("input#contactName").val();
-	var contactEmail = $("input#contactEmail").val();
-	var message = $("textarea#message").val();
+	var contactName = $('input#contactName').val();
+	var contactEmail = $('input#contactEmail').val();
+	var message = $('textarea#message').val();
 	
 	if(typeof category != "string") {
 		category = "None";
@@ -292,7 +292,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 	     </fieldset>
      </form>
 </div>
-<div id="dialog-success" title="Send Ticket" style="display: none;" >
+<div id="dialog-success" title="DCRT Request" style="display: none;" >
 	<span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;" ></span>
 	<p>Your JIRA Ticket have been successfully sent.</p>
 </div>

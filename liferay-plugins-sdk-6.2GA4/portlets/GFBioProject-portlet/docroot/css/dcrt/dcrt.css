@@ -43,7 +43,6 @@ input.dialogtext {
 }
 	
 .ui-widget-overlay { 
-    position: absolute; 
     top: 0; 
     left: 0; 
     width: 100%; 
@@ -121,10 +120,6 @@ input.dialogtext {
 .custom-dialog-success div.ui-dialog-buttonpane {
 	margin-top: 0;
 	padding: 0;
-}
-
-.custom-dialog-success button {
-	margin: .5em 0 .5em 0 !important;
 }
 
 .img-zoom {
