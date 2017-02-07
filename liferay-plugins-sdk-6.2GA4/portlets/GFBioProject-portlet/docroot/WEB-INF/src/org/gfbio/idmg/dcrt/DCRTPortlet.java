@@ -60,8 +60,6 @@ public class DCRTPortlet extends MVCPortlet {
 			ajaxContactButton(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("submission")) {
 			ajaxSubmissionButton(resourceRequest, resourceResponse);
-		} else if (resourceRequest.getResourceID().equals("details")) {
-			ajaxDetailsButton(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -269,25 +267,6 @@ public class DCRTPortlet extends MVCPortlet {
 		writer.flush();
 		writer.close();
 
-		super.serveResource(resourceRequest, resourceResponse);
-	}
-	//Method for Submission Button
-	private void ajaxDetailsButton(ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse) throws IOException,
-	PortletException {
-		_log.info("Detail Button Method reached!");
-		
-		//Get Button Value
-		String dataCenter = resourceRequest.getParameter("dataCenter");
-		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-		
-		writer.println("Details: " + dataCenter);
-		
-		writer.flush();
-		writer.close();
-		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 	

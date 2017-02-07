@@ -11,7 +11,6 @@
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
 <portlet:resourceURL var="ajaxUrlContact" id="contact" />
 <portlet:resourceURL var="ajaxUrlSubmission" id="submission" />
-<portlet:resourceURL var="ajaxUrlDetails" id="details" />
 	
 <script type="text/javascript" >
   
@@ -151,7 +150,7 @@ function openConfirmDialog(defaultContact, btnId) {
 	    dialogClass: "contact-dialog custom-dialog",
 	    title: "DCRT Contact Request to " + dataCenter,
 	    buttons: {
-	        'Send Ticket': function() {
+	        'Send Message': function() {
 	        	if ( $("#dialogForm").valid() ) {
 	              	createJiraTicket(defaultContact, dataCenter);
 	              	$( this ).dialog( 'close' );
@@ -166,7 +165,7 @@ function openConfirmDialog(defaultContact, btnId) {
 }
 
 function clearForm() {
-	//$('#dialogForm').resetForm();
+	//reset input fields and remove validation classes
 	var form = $('#dialogForm');
 	$("input:text", form).each(function() {
         this.value = "";
@@ -242,7 +241,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("div#result").on('click', "button[name=detailsButton]", function () {
     	var dataCenter = $(this).parent().parent().find("span[name='dataCenter']").attr("id");
-    	var link = "http://www.gfbio.org/about/data-centers#portfolio-" + dataCenter.toLowerCase();
+    	var link =  themeDisplay.getPortalURL() + "/about/data-centers#portfolio-" + dataCenter.toLowerCase();
     	window.open (
     		link,
     		'_blank' // open in a new window.
@@ -294,7 +293,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 </div>
 <div id="dialog-success" title="DCRT Request" style="display: none;" >
 	<span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;" ></span>
-	<p>Your JIRA Ticket have been successfully sent.</p>
+	<p>Your message have been successfully sent.</p>
 </div>
 
 <div class="container custom" >
