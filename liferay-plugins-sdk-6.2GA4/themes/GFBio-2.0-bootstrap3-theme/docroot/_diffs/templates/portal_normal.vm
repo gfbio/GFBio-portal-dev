@@ -142,7 +142,7 @@ $theme.include($bottom_include)
 			    active: index,
 			 });
 			$('html,body').animate({ //auto scroll
-			 	scrollTop: $(hash).offset().top-65
+			 	scrollTop: $(hash).offset().top-80
 			 //minus the menu height
 			});
 		}else{
