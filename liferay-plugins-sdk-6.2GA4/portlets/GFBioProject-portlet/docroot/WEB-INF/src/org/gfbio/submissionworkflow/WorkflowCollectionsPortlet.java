@@ -1,21 +1,37 @@
 package org.gfbio.submissionworkflow;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PortalUtil;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
@@ -28,12 +44,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * Portlet implementation class WorkflowCollectionsPortlet
  */
+
 public class WorkflowCollectionsPortlet extends GenericPortlet {
 	
     protected String viewTemplate;
@@ -75,8 +90,34 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 
 		response.setContentType("text/html");
 		
+/*		System.out.println();
+		System.out.println("-----------------------------------------");
+		System.out.println("01 "+request.getContentLength());
+		System.out.println("02 "+request.getContentType());
+		System.out.println("03 "+request.getCharacterEncoding());
+		System.out.println("04 "+request.getMethod());
+		System.out.println("05 "+request.getResourceID());
+		System.out.println("06 "+request.getResponseContentType());
+		System.out.println("07 "+request.getRemoteUser());
+		System.out.println("08 "+request.getResourceID());
+		System.out.println("09 "+request.isRequestedSessionIdValid());
+		System.out.println("10 "+request.getAttributeNames().toString());
+		System.out.println("11 "+request.getParameterMap().keySet());
+		System.out.println("12 "+request.getPortletSession());
+		System.out.println("13 "+request.getPrivateParameterMap().keySet().toString());
+		System.out.println("14 "+request.getPublicParameterMap().keySet().toString());
+		System.out.println("15 "+request.getPropertyNames());
+		System.out.println("16 "+request.getPropertyNames().toString());
+		System.out.println("-----------------------------------------");		
+		System.out.println();	*/	
+		
+
 		if (request.getParameter("responseTarget") != null) {
-			
+					
+/*			//
+			if ("uploadfile".toString().equals(request.getParameter("responseTarget").toString())){
+				uploadFile(request, response);			
+			}*/
 			
 			//
 			if ("createproject".toString().equals(request.getParameter("responseTarget").toString()))
@@ -118,10 +159,21 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 			if ("startsubmission".toString().equals(request.getParameter("responseTarget").toString()))
 				startSubmission(request, response);
 
+		}else{
+			uploadFile(request, response);
 		}
 	}
 	
 	
+	
+	
+	
+	public HttpServletRequest getOriginalHttpServletRequest(PortletRequest request) {
+        return PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request));
+    }
+	
+	
+
 	
 	
 	///////////////////////////////////////////////get functions //////////////////////////////////////////////////
@@ -307,6 +359,66 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 	}
 	
 	
+	
+	public void uploadFile (ResourceRequest request, ResourceResponse response){
+		
+		File file = null;
+		file = new File("test");
+		final HttpServletRequest originalHttpServletRequest = getOriginalHttpServletRequest(request);
+	    final boolean multipartContent = FileUploadBase.isMultipartContent(new ServletRequestContext(originalHttpServletRequest));
+
+	    
+	    if (multipartContent) {
+	    	    	
+	        DiskFileItemFactory factory = new DiskFileItemFactory();
+	        factory.setSizeThreshold(10000000);
+	        factory.setRepository(file);
+	        ServletFileUpload upload = new ServletFileUpload(factory);
+	        upload.setSizeMax(10000000);
+	        
+	        List<FileItem> items = null;
+	        try {items = upload.parseRequest(originalHttpServletRequest);}
+	        catch (FileUploadException e1) {e1.printStackTrace(); }
+	        
+	        System.out.println(items.size());
+	        System.out.println(originalHttpServletRequest.getContentLength());
+	        System.out.println(originalHttpServletRequest.getContextPath());
+	        System.out.println(originalHttpServletRequest.getLocalName());
+	        System.out.println(originalHttpServletRequest.getParameterNames().toString());
+	        System.out.println(originalHttpServletRequest.getParameterMap().keySet().toString());
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_state"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_lifecycle"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_resource_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_l_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_col_count"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_col_id"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_cacheability"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_p_mode"));
+	        System.out.println(originalHttpServletRequest.getParameter("p_v_l_s_g_id"));
+	        
+	        Iterator<FileItem> iter = items.iterator();
+	        while (iter.hasNext()) {
+	        	
+	        	FileItem thisItem = (FileItem) iter.next();
+//	        	final String fieldName = thisItem.getFieldName();
+
+	        	if (thisItem.isFormField()) {
+			        
+/*	        		if (fieldName.equals("yourfieldformparam")) {
+	        			String value = thisItem.getString();
+	        		}*/
+	        	} else {
+			        File fileOut = new File("C:/Users/froemm/Desktop/Neuer Ordner (2)/".concat(thisItem.getName()));
+	        		fileOut.deleteOnExit();
+	        		try {thisItem.write(fileOut);} 
+	        		catch (Exception e) {e.printStackTrace();}
+	        	}
+	        }
+	    }
+	}
+
+	
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -373,11 +485,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
-    	
-/*    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
-    	System.out.println(projectJson);
-    	System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");*/
-    	
+    	    	
 		JSONObject submitterJson = new JSONObject();
     	submitterJson = UserExtensionLocalServiceUtil.getUserExtentionById((JSONObject) requestJson.get("submissionregistry"));
     	
@@ -424,12 +532,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         fields.put("customfield_10010", "sand"+"/"+"collection-data2");
         //fields.put("customfield_10010", "dsub"+"/"+"collection");
         fields.put("summary", "Automated Data Submission");
-
-        
-        //project informations
-        
-        //project id
-        
+     
         //project id
         if (projectJson.containsKey("projectid"))
         	if (!(String.valueOf((long) projectJson.get("projectid"))).equals("0"));
@@ -593,13 +696,9 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		
 	      }
 	      
-	      //fields.put("fooo", "fooo");
-	      
 	      json.put("fields", fields);
-	
-/*	      System.out.println("---------------------");
-	      System.out.println("submission: "+json);
-	      System.out.println("---------------------");*/
+
+	      System.out.println(json.toString());
 	      
 	      String response = json.toJSONString();
 	      response = response.replaceAll("\\\\", "");
@@ -607,5 +706,6 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 	     return response;
     }
 	
+
 	
 }

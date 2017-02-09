@@ -1,0 +1,107 @@
+
+.fl_w15 {
+	float: left;
+  	width: 15%;
+    font-size: small;
+}
+
+.fl_w20 {
+	float: left;
+  	width: 20%;
+    font-size: small;
+}
+
+.fl_w25 {
+	float: left;
+  	width: 25%;
+    font-size: small;
+}
+
+.w25 {
+  	width: 25%;
+    font-size: small;
+}
+
+.fl_w50 {
+	float: left;
+  	width: 50%;
+    font-size: small;
+}
+
+.other_input {
+	margin-left: 15px;
+    float: right;
+    padding-bottom: 3px;
+    width: initial;
+}
+
+.slider_w25 {
+	width: 25%;
+}
+
+div#metadata > div {
+	min-width: 275px;
+}
+
+div#persistentIdentifier > label {
+	display: block;
+}
+
+input[type="radio"] {
+	margin-right: 5px !important;
+}
+
+.df_input {
+    padding-bottom: 3px;
+    width: 60%;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.fl {
+    float: left;
+}
+
+.fs_small {
+    font-size: small;
+}
+
+input[type=text]:disabled {
+    background: #dddddd;
+}
+
+input[type=button]:disabled {
+    color: lightgray;
+}
+
+.answer_div {
+    margin-left: 30px;
+}
+.question_div {
+    margin-top: 15px;
+}
+
+.radio_input {
+    float: left; 
+    margin-right: 3px;
+    margin-bottom: 3px
+}
+
+.inputtext_long {
+    margin-top: 5px;
+    width: 25%;
+}
+
+.flex {
+    display: flex;
+}
+
+.block {
+    display: block;
+}
+
+.hide {
+    display: none;
+}

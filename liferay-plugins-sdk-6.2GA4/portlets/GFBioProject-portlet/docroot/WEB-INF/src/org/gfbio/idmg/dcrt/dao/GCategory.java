@@ -1,5 +1,7 @@
 package org.gfbio.idmg.dcrt.dao;
 
+import org.json.simple.JSONObject;
+
 public class GCategory {
 
 	long id;
@@ -11,6 +13,14 @@ public class GCategory {
 		this.name = name;
 		this.label = label;
 	}
+	
+	public GCategory(JSONObject categoryJson) {
+        if (categoryJson.containsKey("id") && categoryJson.containsKey("name") && categoryJson.containsKey("label")){
+            this.id = Long.valueOf((String) categoryJson.get("id")).longValue();;
+            this.name = (String) categoryJson.get("name");;
+            this.label = (String) categoryJson.get("label");;
+        }
+    }
 	
 	public GCategory() {}
 	

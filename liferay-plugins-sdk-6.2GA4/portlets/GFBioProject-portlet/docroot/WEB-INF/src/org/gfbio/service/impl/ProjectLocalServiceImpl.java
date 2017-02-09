@@ -38,11 +38,13 @@ import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.Project_UserLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.UserExtensionLocalServiceUtil;
 import org.gfbio.service.base.ProjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ProjectFinderUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 
 /**
  * The implementation of the project local service.
@@ -120,20 +122,140 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		
 		JSONObject responseJson = new JSONObject();
 		if (requestJson.containsKey("projectid")){
+			
 			long projectId = (long)requestJson.get("projectid");
 			if (checkProjectOnId(projectId)){
-				try {responseJson = constructProjectAsJson(projectPersistence.findByPrimaryKey(projectId));}
-				catch (NoSuchProjectException | SystemException e) {responseJson.put("ERROR", "ERROR: Fail by getProjectById");}
-			}
-			else
+				
+				Project project = null;
+				try {project = projectPersistence.findByPrimaryKey(projectId);}
+				catch (NoSuchProjectException | SystemException e) {e.printStackTrace();responseJson.put("ERROR", "ERROR: Failed by load project.");}
+				
+				if (project != null)
+					
+					if(requestJson.containsKey("kindofresponse"))
+						
+						if((((String)requestJson.get("kindofresponse")).trim()).equals("reduced"))
+							responseJson = constructReducedProjectAsJson(project);
+						else
+							responseJson = constructProjectAsJson(project);
+					else
+						responseJson = constructProjectAsJson(project);
+				else
+					responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
+			}else
 				responseJson.put("ERROR", "ERROR: projectid with value "+projectId+" don't exist in the database.");
-		}
-		else
+		}else
 			responseJson.put("ERROR", "ERROR: No key 'projectid' exist.");
 		
 		return responseJson;
 	}
 	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getProjectById (JSONArray requestJson){
+
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i <requestJson.size();i++){
+			if (((requestJson.get(i).getClass()).toString()).equals("class java.lang.Long")){
+				JSONObject json = new JSONObject();
+				json.put("projectid", requestJson.get(i));
+				requestJson.set(i, json);
+			}
+			responseJson.add(getProjectById((JSONObject) requestJson.get(i)));
+		}
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONArray getProjectsByUser(JSONObject requestJson){
+
+		JSONArray responseJson = new JSONArray();
+				
+		if (requestJson.containsKey("userid") || requestJson.containsKey("emailaddress")){
+
+			long userId =0;
+			if (requestJson.containsKey("userid"))
+				userId = (long)requestJson.get("userid");
+			else
+				if (UserExtensionLocalServiceUtil.checkExistenceOfUserMail(((String) requestJson.get("emailaddress")).trim())){				
+					JSONObject json = new JSONObject();
+					json = UserExtensionLocalServiceUtil.getUserExtentionByEmailAddress(requestJson);
+					if (json.containsKey("userid"))
+						userId = (long) json.get("userid");
+				}
+
+			if (userId !=0 && UserExtensionLocalServiceUtil.checkExistenceOfUserId(userId)){
+
+				JSONObject idJson = new JSONObject();
+				idJson.put("userid", userId);
+				JSONArray projectIdArray = Project_UserLocalServiceUtil.getProjectIdsByUserId(idJson);
+
+
+				if (requestJson.containsKey("kindofresponse"))
+					for (int i =0; i < projectIdArray.size();i++){
+
+						JSONObject json = new JSONObject();
+						if (((projectIdArray.get(i).getClass()).toString()).equals("class java.lang.Long"))
+							json.put("projectid", (long) projectIdArray.get(i));
+						else
+							json = (JSONObject) projectIdArray.get(i);
+						json.put("kindofresponse", requestJson.get("kindofresponse"));
+						projectIdArray.set(i, json);
+					}
+				responseJson = getProjectById(projectIdArray);
+			}
+			else
+				responseJson.add("ERROR: userid and emailaddress don't exist in the database.");
+		}
+		else
+			responseJson.add("ERROR: No keys 'userid' and 'emailaddress' exist.");		
+		
+		
+		return responseJson;
+	}
+	
+
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray  getUserIdsByResearchObject (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			List <Long> responseList = null;
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);
+			
+			if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
+				responseList = getUserIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			else
+				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to user");
+			
+			JSONParser parser = new JSONParser();
+			try {responseJson = (JSONArray) parser.parse(responseList.toString());}
+			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+
+		
+		}else
+			responseJson.add("ERROR: The json need minimal 'researchobjectid'as long.");
+		
+		return responseJson;
+	}	
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	private List <Long> getUserIdsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
+		return ProjectFinderUtil.getUserIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+	}
 	
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
@@ -141,7 +263,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
 	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 
-		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIDList(userID);
+		List<Project_User> idList = Project_UserLocalServiceUtil.getProjectIdList(userID);
 		List<Project> projectList = new ArrayList<Project>();
 		for (int i = 0; i<idList.size(); i++) 
 			projectList.add(projectPersistence.findByPrimaryKey(idList.get(i).getProjectID()));
@@ -183,6 +305,26 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
+
+	//--------------------------------------------- Manage Helper Functions ---------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject checkProjectOnSubmissions(JSONObject idJson){
+		JSONObject answerJson = new JSONObject();
+		if (idJson.containsKey("projectid"))
+			if (idJson.get("projectid").getClass().toString().equals("class java.lang.Long"))
+				answerJson.put("check", (Boolean) ProjectFinderUtil.checkProjectOnSubmissions((long)idJson.get("projectid")).get(0));
+			else
+				answerJson.put("error", "The content of 'id' is not from class 'long'");
+		else
+			answerJson.put("error", "There is no 'id' in the request.");
+		return answerJson;
+	}
+	
+	
+	//------------------------------------------------- Helper Functions ------------------------------------------------//	
 	
 	//
 	public Boolean checkProjectOnId(long projectId) {
@@ -216,6 +358,17 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		else
 			ignoredParameter ="";
 		return ignoredParameter;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructReducedProjectAsJson (Project project){
+
+		JSONObject json = new JSONObject();
+		json.put("projectid", project.getProjectID());
+		json.put("name", project.getName());
+		return json;
 	}
 	
 	
@@ -278,7 +431,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		long projectId = 0;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "label", "extendeddata", "description", "parentprojectid", "userid", "startdate", "enddate", "status", "dcrtid", "dcrtids"};
+		String [] keySet = {"name", "label", "extendeddata", "description", "parentprojectid", "userid", "startdate", "enddate", "status"}; //currently no keys: "dcrtid", "dcrtids"
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -336,7 +489,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 			if (requestJson.containsKey("status") && check)
 				check = updateStatus(projectId, (String) requestJson.get("status"));
 			
-			if (requestJson.containsKey("dcrtids") && check){
+/*			if (requestJson.containsKey("dcrtids") && check){
 				if (requestJson.get("dcrtids").getClass().toString().equals("class java.lang.String")){
 					String dcrtidsString =  (String) requestJson.get("dcrtids");
 					if (!((dcrtidsString.substring(0,0)).equals("[")))
@@ -348,10 +501,10 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 					check = updateCategories(projectId, parseJson);
 				}else
 					check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
-			}
+			}*/
 			
-			if (requestJson.containsKey("dcrtid") && check)
-				check = updateCategory(projectId, (long) requestJson.get("dcrtid"));
+/*			if (requestJson.containsKey("dcrtid") && check)
+				check = updateCategory(projectId, (long) requestJson.get("dcrtid"));*/
 
 			if (check){
 				responseJson.put("projectid", projectId);
@@ -386,90 +539,90 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Boolean check = false;
 		long projectId = 0;
 		JSONObject responseJson = new JSONObject();
-		
-
-/*		System.out.println("------------------------------");
-		System.out.println(requestJson);
-		System.out.println("------------------------------");*/
-		
+			
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"projectid","name", "label", "extendeddata", "description", "parentprojectid", "startdate", "enddate", "status", "dcrtid", "dcrtids"};
+		String [] keySet = {"projectid","name", "label", "extendeddata", "description", "parentprojectid", "startdate", "enddate", "status", }; //currently no keys: "dcrtid", "dcrtids"
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
 		if ((requestJson.containsKey("name") || requestJson.containsKey("label")) && requestJson.containsKey("description")&& requestJson.containsKey("projectid")){
 
-			String name  = "";
-			String label = "";
-			if (!(requestJson.containsKey("name")))
-				name = ((String) requestJson.get("label")).trim();
-			else
-				name = ((String) requestJson.get("name")).trim();
-			if (!(requestJson.containsKey("label")))
-				label = ((String) requestJson.get("name")).trim();
-			else
-				label = ((String) requestJson.get("label")).trim();		
-			String description =((String)  requestJson.get("description")).trim();
-			
-			projectId = updateProject((long) requestJson.get("projectid"), name, label, description);;
-			if (projectId !=0)
-				check = true;
-			
-			if (requestJson.containsKey("parentprojectid") && check)
-				check = updateParentProjectByIds(projectId, (long) requestJson.get("parentprojectid"));
-			
-			if (requestJson.containsKey("extendeddata") && check)
-				check = updateExtendedData(projectId, (String) requestJson.get("extendeddata"));
-			
-			if (requestJson.containsKey("startdate") && check){
-				if (requestJson.get("startdate").getClass().toString().equals("class java.lang.String"))
-					try {
-						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
-						check = updateStartDate(projectId, dateFormat.parse((String) requestJson.get("startdate")));	
-					} catch (ParseException e) {e.printStackTrace();}
+			if (checkProjectOnId((long) requestJson.get("projectid"))){
+				
+				String name  = "";
+				String label = "";
+				if (!(requestJson.containsKey("name")))
+					name = ((String) requestJson.get("label")).trim();
 				else
-					check = updateStartDate(projectId, new Date ((long) requestJson.get("startdate")));
-			}
-			
-			if (requestJson.containsKey("enddate") && check){
-				if (requestJson.get("enddate").getClass().toString().equals("class java.lang.String"))
-					try {
-						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
-						check = updateEndDate(projectId, dateFormat.parse((String) requestJson.get("enddate")));	
-					} catch (ParseException e) {e.printStackTrace();}
+					name = ((String) requestJson.get("name")).trim();
+				if (!(requestJson.containsKey("label")))
+					label = ((String) requestJson.get("name")).trim();
 				else
-					check = updateStartDate(projectId, new Date ((long) requestJson.get("enddate")));
-			}
-			
-			if (requestJson.containsKey("status") && check)
-				check = updateStatus(projectId, (String) requestJson.get("status"));
-			
-			if (requestJson.containsKey("dcrtids") && check){
-				if (requestJson.get("dcrtids").getClass().toString().equals("class java.lang.String")){
-					String dcrtidsString =  (String) requestJson.get("dcrtids");
+					label = ((String) requestJson.get("label")).trim();		
+				String description =((String)  requestJson.get("description")).trim();
+				
+				projectId = updateProject((long) requestJson.get("projectid"), name, label, description);;
+				if (projectId !=0)
+					check = true;
+				
+				if (requestJson.containsKey("parentprojectid") && check)
+					check = updateParentProjectByIds(projectId, (long) requestJson.get("parentprojectid"));
+				
+				if (requestJson.containsKey("extendeddata") && check)
+					check = updateExtendedData(projectId, (String) requestJson.get("extendeddata"));
+				
+				if (requestJson.containsKey("startdate") && check){
+					if (requestJson.get("startdate").getClass().toString().equals("class java.lang.String"))
+						try {
+							DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
+							check = updateStartDate(projectId, dateFormat.parse((String) requestJson.get("startdate")));	
+						} catch (ParseException e) {e.printStackTrace();}
+					else
+						check = updateStartDate(projectId, new Date ((long) requestJson.get("startdate")));
+				}
+				
+				if (requestJson.containsKey("enddate") && check){
+					if (requestJson.get("enddate").getClass().toString().equals("class java.lang.String"))
+						try {
+							DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
+							check = updateEndDate(projectId, dateFormat.parse((String) requestJson.get("enddate")));	
+						} catch (ParseException e) {e.printStackTrace();}
+					else
+						check = updateStartDate(projectId, new Date ((long) requestJson.get("enddate")));
+				}
+				
+				if (requestJson.containsKey("status") && check)
+					check = updateStatus(projectId, (String) requestJson.get("status"));
+				
+	/*			if (requestJson.containsKey("dcrtids") && check){
+					if (requestJson.get("dcrtids").getClass().toString().equals("class java.lang.String")){
+						String dcrtidsString =  (String) requestJson.get("dcrtids");
 
-					if (!((dcrtidsString.substring(0,0)).equals("[")))
-						dcrtidsString = "[".concat(dcrtidsString).concat("]");
-					JSONParser parser = new JSONParser();
-					JSONArray parseJson = new JSONArray();
-					try {parseJson = (JSONArray) parser.parse(dcrtidsString);} 
-					catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+						if (!((dcrtidsString.substring(0,0)).equals("[")))
+							dcrtidsString = "[".concat(dcrtidsString).concat("]");
+						JSONParser parser = new JSONParser();
+						JSONArray parseJson = new JSONArray();
+						try {parseJson = (JSONArray) parser.parse(dcrtidsString);} 
+						catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
 
-					check = updateCategories(projectId, parseJson);
+						check = updateCategories(projectId, parseJson);
+					}else
+						check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
+				}*/
+				
+	/*			if (requestJson.containsKey("dcrtid") && check)
+					check = updateCategory(projectId, (long) requestJson.get("dcrtid"));*/
+
+				if (check){
+					responseJson.put("projectid", projectId);
 				}else
-					check = updateCategories(projectId, (JSONArray) requestJson.get("dcrtids"));
-			}
-			
-			if (requestJson.containsKey("dcrtid") && check)
-				check = updateCategory(projectId, (long) requestJson.get("dcrtid"));
-
-			if (check){
-				responseJson.put("projectid", projectId);
+					responseJson.put("ERROR:", "ERROR: create project is failed.");
 			}else
-				responseJson.put("ERROR:", "ERROR: create project is failed.");
+				responseJson.put("ERROR:", "ERROR: The id "+(long) requestJson.get("projectid")+" is not a 'projectid' in our database");
+			
 		}else{
-			String errorString = "ERROR: To create a project, the json need minimal 'userid', 'description' and 'name' or 'label'  as Strings. ";
+			String errorString = "ERROR: To update a project, the json need minimal 'projectid', 'description' and 'name' or 'label'  as Strings. ";
 			if (!requestJson.containsKey("name"))
 				errorString = errorString.concat(" 'name',");
 			if (!requestJson.containsKey("label"))
@@ -492,7 +645,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public long createProject (long userId, String name, String label, String description) throws SystemException{
+	private long createProject (long userId, String name, String label, String description) throws SystemException{
 		long projectId = 0;
 		projectId =  updateProject(projectId, name, label, description) ;
 		return projectId;
@@ -500,7 +653,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public long  updateProject(long projectId, String name,String label,String description){
+	private long  updateProject(long projectId, String name,String label,String description){
 		
 		Project project = null;
 		long check =0;
@@ -524,48 +677,11 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	}
 	
 	
-	//
-	public long updateProject(long projectID, long userID, String name, String label, String description, String extendedData, Date startDate, Date endDate, String status) throws SystemException {
-
-		Project project = null;
-		try {
-			project = projectPersistence.findByPrimaryKey(projectID);
-		} catch (NoSuchProjectException e) {e.printStackTrace();}
-
-		//create new project
-		if (project == null) {
-			project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-			project.setName(name);
-			project.setLabel(label);
-			project.setDescription(description);
-			project.setExtendeddata(extendedData);
-			project.setStartDate(startDate);
-			project.setEndDate(endDate);
-			project.setStatus(status);
-			super.updateProject(project);
-			Project_UserLocalServiceUtil.updateProjectUser(project.getProjectID(), userID, startDate, endDate, "owner");
-		}
-		
-		//update project
-		else {
-			project.setName(name);
-			project.setLabel(label);
-			project.setDescription(description);
-			project.setExtendeddata(extendedData);
-			project.setStartDate(startDate);
-			project.setEndDate(endDate);
-			project.setStatus(status);
-			super.updateProject(project);
-		}
-		return project.getProjectID();
-	}
-	
-	
 	//-------------------------------  Update Attribute Functions ----------------------------------------------//
 	
 	
 	//
-	public Boolean updateCategories (long projectId, JSONArray requestJson){
+/*	private Boolean updateCategories (long projectId, JSONArray requestJson){
 
 		Boolean check = false;
 		JSONArray responseJson = new JSONArray();
@@ -579,34 +695,33 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 				ContentLocalServiceUtil.deleteRelationContentByCellContent(Long.toString(projectId), Long.toString((Long) responseJson.get(i)) );
 		
 		//wait(1000);
-/*		try {
+		try {
 			TimeUnit.MILLISECONDS.sleep( 2000 );
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 		for (int i =0; i <requestJson.size();i++)
 			check = updateCategory( projectId, (long) requestJson.get(i));
 
 		return check;
-	}	
+	}	*/
 	
 	
 	//
-	public Boolean updateCategory (long projectId, long categoryId){
+/*	private Boolean updateCategory (long projectId, long categoryId){
 		return HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_project", projectId, "gfbio_category", categoryId);
-	}
+	}*/
 	
 	
 	//
-	public Boolean updateEndDate(long projectId, Date endDate){
+	private Boolean updateEndDate(long projectId, Date endDate){
 	
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setEndDate(endDate);
@@ -620,14 +735,13 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public Boolean updateExtendedData(long projectId, String extendedData){
+	private Boolean updateExtendedData(long projectId, String extendedData){
 	
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setExtendeddata(extendedData);
@@ -641,14 +755,13 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public Boolean updateParentProjectByIds(long projectId, long parentProjectId){
+	private Boolean updateParentProjectByIds(long projectId, long parentProjectId){
 	
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setParentProjectID(parentProjectId);
@@ -662,14 +775,13 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
-	public Boolean updateStartDate(long projectId, Date startDate){
+	private Boolean updateStartDate(long projectId, Date startDate){
 	
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setStartDate(startDate);
@@ -685,7 +797,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 
 	
 	//
-	public Boolean updateStatus(long projectId, String status){
+	private Boolean updateStatus(long projectId, String status){
 	
 		Project project = null;
 		Boolean check = false;

@@ -3,7 +3,6 @@ package org.gfbio.idmg.dcrt;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +14,15 @@ import javax.portlet.ResourceResponse;
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.idmg.dcrt.dao.GCategory;
 import org.gfbio.idmg.dcrt.dao.GContentDAO;
-import org.gfbio.idmg.dcrt.dao.GMaterial;
+import org.gfbio.idmg.dcrt.jiraclient.JIRAApi;
+import org.gfbio.idmg.dcrt.jiraclient.connection.Communicator;
+import org.gfbio.idmg.dcrt.jiraclient.model.Assignee;
+import org.gfbio.idmg.dcrt.jiraclient.model.Customfield_10217;
+import org.gfbio.idmg.dcrt.jiraclient.model.Fields;
+import org.gfbio.idmg.dcrt.jiraclient.model.Issue;
+import org.gfbio.idmg.dcrt.jiraclient.model.IssueType;
+import org.gfbio.idmg.dcrt.jiraclient.model.Project;
+import org.gfbio.idmg.dcrt.jiraclient.model.Reporter;
 import org.gfbio.model.Column;
 import org.gfbio.model.Content;
 import org.gfbio.model.DataProvider;
@@ -24,11 +31,13 @@ import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import static j2html.TagCreator.*;
@@ -48,12 +57,12 @@ public class DCRTPortlet extends MVCPortlet {
 			ajaxRadio(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("category")) {
 			ajaxCategory(resourceRequest, resourceResponse);
-		} else if (resourceRequest.getResourceID().equals("material")) {
-			ajaxMaterial(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("contact")) {
 			ajaxContactButton(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("submission")) {
 			ajaxSubmissionButton(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("details")) {
+			ajaxDetailsButton(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -79,7 +88,7 @@ public class DCRTPortlet extends MVCPortlet {
 				physical, taxon, alive, sequenced);
 		_log.info("============RECOMMENDED=DATAPROVIDERS============ ");
 		if (recommendedProviders.isEmpty()) {
-			writer.println("There are no providers available");
+			writer.println("For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
 			dataproviderOutput(writer, recommendedProviders);
 		}
@@ -95,7 +104,7 @@ public class DCRTPortlet extends MVCPortlet {
 			ResourceResponse resourceResponse) throws IOException,
 			PortletException {
 		//Category-DropDown Selection
-		String category = resourceRequest.getParameter("val");
+		String category = resourceRequest.getParameter("category");
 		_log.info("Category " + category);
 		//Radio-Inputs
 		String physical = resourceRequest.getParameter("physical");
@@ -104,7 +113,7 @@ public class DCRTPortlet extends MVCPortlet {
 		String sequenced = resourceRequest.getParameter("sequenced");
 		
 		List <DataProvider> recommendedProviders;
-		if (category.equals("noselection")) {
+		if (category.equals("noselection") || category.equals("default")) {
 			recommendedProviders = setRecommendedProviders(physical, taxon, alive, sequenced);
 		} else {
 			recommendedProviders = setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);
@@ -114,32 +123,7 @@ public class DCRTPortlet extends MVCPortlet {
 		PrintWriter writer = resourceResponse.getWriter();
 		
 		if(recommendedProviders.isEmpty()) {
-			writer.println("There are no data providers available");
-		} else {
-			dataproviderOutput(writer, recommendedProviders);
-		}
-		
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
-	}
-	
-	//Method for ajax functionality of Material DropDown
-	private void ajaxMaterial(ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse) throws IOException,
-			PortletException { 
-		//Material-DropDown Selection
-		String material = resourceRequest.getParameter("material");
-		_log.info("Material " + material);
-		
-		List <DataProvider> recommendedProviders = setRecommendedProvidersForMaterial(material);
-		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-		
-		if(recommendedProviders.isEmpty()) {
-			writer.println("There are no data providers available");
+			writer.println("For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
 			dataproviderOutput(writer, recommendedProviders);
 		}
@@ -152,7 +136,6 @@ public class DCRTPortlet extends MVCPortlet {
 	
 	private void dataproviderOutput(PrintWriter writer, List<DataProvider> providers) {
 		
-		//ContainerTag htmlTable = new ContainerTag("tr");
 		writer.println("<table style=\"width: 100%;\">");
 		
 		for (DataProvider dp : providers) {
@@ -161,20 +144,17 @@ public class DCRTPortlet extends MVCPortlet {
 		_log.info(name);
 		
 		writer.print(
-			tr().withClass("dcrttr").with(
-				th().attr("style", "width: 20%; padding-right: 5px;").with(
-					img().withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 60px;")
+			div().withClass("row dcrttable").with(
+				div().withClass("col-xs-3 col-sm-2 col-lg-2").with(
+					img().withClass("img-zoom").withSrc("/GFBioProject-portlet/images/" + label + ".jpg").attr("style", "width: 80px;")
 				),
-				th().attr("style", "width: 40%").with(
-					span().withId(name).withText(name)
+				div().withName("recommendation").withClass("col-xs-9 col-sm-5 col-lg-6").attr("style", "padding-left: 1.5em;").with(
+					span().withId(label).withName("dataCenter").withText(name)
 				),
-				th().attr("style", "width: 12%").with(
-					button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label)
-				),
-				th().attr("style", "width: 16%").with(
-					button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton").withType("button").withValue(label)
-				),
-				th().attr("style", "width: 12%").with(
+				div().withClass("col-xs-12 col-sm-5 col-lg-4").attr("style", "text-align: center;").with(
+						button().withClass("dcrtbutton contact").withText("Contact").withName("contactButton").withType("button").withValue(label),
+						button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
+						.withType("button").attr("style", "margin-left: 2px; margin-right: 2px").withValue(label),
 						button().withClass("dcrtbutton details").withText("Details").withName("detailsButton").withType("button").withValue(label)
 				)
 			).render()
@@ -183,13 +163,6 @@ public class DCRTPortlet extends MVCPortlet {
 		
 		writer.println("</table>");
 		
-//		Old way for generating HTML output
-//		writer.println("<div style=\"display:block; margin-bottom: 10px;\">");
-//		writer.println("<img src=\"/GFBioProject-portlet/images/" + label + ".jpg\" alt=\"" + label + "\" style=\"width:60px;height:46px;\">");
-//		writer.println("<span id=\"" + name + "\" >" + name + "</span>");
-//		writer.println("<button class=\"dcrtbutton contact\">Test</button>");
-//		writer.println("<button class=\"dcrtbutton submission\">Test</button>");
-//		writer.println("</div>");
 	}
 	
 	//Method for Contact Button
@@ -198,16 +171,78 @@ public class DCRTPortlet extends MVCPortlet {
 			PortletException {
 		_log.info("Contact Button Method reached!");
 		
-		//Get Button Value
-		String value = resourceRequest.getParameter("value");
-		String text = resourceRequest.getParameter("text");
+		//Get Data Center
+		String dataCenter = resourceRequest.getParameter("dataCenter");
 		
-		_log.info("Value: " + value + ", Text: " + text);
-
+		//Get Radio-Inputs
+		String physical = resourceRequest.getParameter("physical");
+		String taxon = resourceRequest.getParameter("taxon");
+		String alive = resourceRequest.getParameter("alive");
+		String sequenced = resourceRequest.getParameter("sequenced");
+		
+		//Get Category
+		String category = resourceRequest.getParameter("category");
+		
+		//Get Dialog Inputs
+		String name = resourceRequest.getParameter("contactName");
+		String email = resourceRequest.getParameter("contactEmail");
+		String message = resourceRequest.getParameter("message");
+		
+		_log.info("DataCenter: " + dataCenter + "Physical: " + physical + ", Taxon: " + taxon + ", Alive: " + alive + ", Sequenced: " + sequenced);
+		_log.info("Category: " + category + "Name: " + name + ", Email: " + email + ", Message: " + message);
+		
+		//Create Issue
+		Project project = new Project("SAND");
+		IssueType issuetype = new IssueType("Question");
+		Reporter reporter = new Reporter("testuser1");
+		String summary = "Data Center Recommendation Request";
+		
+		//User for assignee value 
+		String user;
+		
+		if (dataCenter.equals("ENA")) {
+			user = "brokeragent";
+		} else {
+			user = dataCenter.toLowerCase();
+		}
+		
+		List<Customfield_10217> dataCenters = new ArrayList<>();
+		if (dataCenter.equals("GFBio")) {
+			user = "";
+			//Get List of all possible Data Centers if GFBio default contact is used
+			String[] dcs = resourceRequest.getParameterValues("dataCenterList[]"); 
+			for (int i = 0; i < dcs.length; i++) {
+				if (!dcs[i].equals("GFBio")) {
+					dataCenters.add(new Customfield_10217(dcs[i]));
+				}
+			}
+		} else {
+			dataCenters.add(new Customfield_10217(dataCenter));
+		}
+		
+		//Set assignee for the ticket
+		Assignee assignee = new Assignee(user);
+		
+		String customfield_10010 = "sand/dcrt-request";
+		String customfield_10500 = "Physical objects: " + physical + "\nTaxon based: " + taxon + 
+				"\nAlive: " + alive + "\nPrimarily sequence Data: " + sequenced + "\nCategory: " + category;
+		
+		Fields fields = new Fields(project, summary, issuetype, reporter, message, 
+				assignee, customfield_10010, dataCenters, customfield_10500);
+		Issue issue = new Issue(fields);
+		
+		//JIRA Request
+		Communicator communicator = new Communicator();
+		JIRAApi jiraApi = new JIRAApi(communicator);
+		
+		String response = jiraApi.createDataCenterTicket(issue);
+		_log.info(response);
+		
+		//Response
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println("Hello contact: " + value + ", " + text);
+		writer.println(response);
 		
 		writer.flush();
 		writer.close();
@@ -222,19 +257,35 @@ public class DCRTPortlet extends MVCPortlet {
 		_log.info("Submission Button Method reached!");
 		
 		//Get Button Value
-		String value = resourceRequest.getParameter("value");
-		String text = resourceRequest.getParameter("text");
-		
-		_log.info("Value: " + value + ", Text: " + text);
+		String dataCenter = resourceRequest.getParameter("dataCenter");
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println("Hello submission: " + value + ", " + text);
+		writer.println("Submission: " + dataCenter);
 		
 		writer.flush();
 		writer.close();
 
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+	//Method for Submission Button
+	private void ajaxDetailsButton(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws IOException,
+	PortletException {
+		_log.info("Detail Button Method reached!");
+		
+		//Get Button Value
+		String dataCenter = resourceRequest.getParameter("dataCenter");
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+		
+		writer.println("Details: " + dataCenter);
+		
+		writer.flush();
+		writer.close();
+		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 	
@@ -354,134 +405,12 @@ public class DCRTPortlet extends MVCPortlet {
 		Collections.sort(providersForCategory);
 		return providersForCategory;
 	}
-
-	public static List<GMaterial> getMaterials() {
-		
-		List<GMaterial> enumValues = Arrays.asList(GMaterial.values());
-		return enumValues;
-	}
-	
-	private List<DataProvider> setRecommendedProvidersForMaterial(String material) {
-		List<DataProvider> allProviders = getDataProviders();
-		List<DataProvider> recommendedProviders = new ArrayList<>();
-		
-		if (material.equals(GMaterial.BOTANICAL)) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_DNA)) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalDnaSamples()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_ETHANOL)) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalObjectsInEthanol()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_MICROSCOPIC)) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalMicroscopicSlides()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.BOTANICAL_TISSUE)) {
-			for (DataProvider d : allProviders) {
-				if (d.isBotanicalTissueObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL)) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_DNA)) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalDnaSamples()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_ETHANOL)) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalObjectsInEthanol()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_MICROSCOPIC)) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalMicroscopicSlides()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.MYCOLOGICAL_TISSUE)) {
-			for (DataProvider d : allProviders) {
-				if (d.isMycologicalTissueObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.PALEONTOLOGICAL)) {
-			for (DataProvider d : allProviders) {
-				if (d.isPaleontologicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL)) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_DNA)) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalDnaSamples()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_ETHANOL)) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalObjectsInEthanol()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_MICROSCOPIC)) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalMicroscopicSlides()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.ZOOLOGICAL_TISSUE)) {
-			for (DataProvider d : allProviders) {
-				if (d.isZoologicalTissueObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		} else if (material.equals(GMaterial.OTHER_OBJECTS)) {
-			for (DataProvider d : allProviders) {
-				if (d.isOtherObjects()) {
-					recommendedProviders.add(d);
-				}
-			}
-		}
-		
-		return recommendedProviders;
-	}
-
-	//private void 
 	
 	public static List<DataProvider> getDataProviders() {
 		List<DataProvider> providers = null;
-		try {
-			providers = DataProviderLocalServiceUtil.getDataProviders(0,
-					DataProviderLocalServiceUtil.getDataProvidersCount());
-		} catch (SystemException e) {
-			_log.error("Something went wrong in DataProviderLocalServiceUtil!", e);
-		}
+		
+		providers = DataProviderLocalServiceUtil.getDataProviderByProviderType("GFBio Archive");
+		
 		return providers;
 	}
 	
@@ -495,29 +424,40 @@ public class DCRTPortlet extends MVCPortlet {
 		return categories;
 	}
 
-	public static List<GCategory> getCategoryList() {
-		GContentDAO content = getCategoryContent();
-		List<GCategory> categories = new ArrayList<GCategory>();
+	public static List<GCategory> getCategoryResearchFieldList() {
+		
+		long relationTableHeadId =  6;
+	    long entitiyTableHeadId = 5;
+        String entityTableCellContent = "research field";
+	    JSONArray json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
+		
+        
+        List<GCategory> categories = transformJsonArrayToGcategory(json);
+        
+ 		return categories;
+	}
+	
+	public static List<GCategory> getCategoryMaterialList() {
 
-		GCategory category;
-		for (HashMap<Long, String> map : content.getContents()) {
-			category = new GCategory();
-			for (Long key : map.keySet()) {
-				if (key == 1) {
-					Long id = Long.parseLong(map.get(key));
-					category.setId(id);
-				}
-				if (key == 2) {
-					category.setName(map.get(key));
-				}
-				if (key == 3) {
-					category.setLabel(map.get(key));
-				}
-			}
-			categories.add(category);
-		}
+	    long relationTableHeadId =  6;
+	    long entitiyTableHeadId = 5;
+	    String entityTableCellContent = "material kind";
+	    JSONArray json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
+	        
+		List<GCategory> categories = transformJsonArrayToGcategory(json);
+
 		return categories;
 	}
+	
+	public static List<GCategory> transformJsonArrayToGcategory(JSONArray categoryJson){
+        List<GCategory> categories = new ArrayList<GCategory>();
+        
+        if (categoryJson.size() >0)
+            for (int i = 0; i < categoryJson.size(); i++)
+                categories.add(new GCategory((JSONObject)categoryJson.get(i)));
+        
+        return categories;
+    }
 
 	public static void getTypeContent() {
 

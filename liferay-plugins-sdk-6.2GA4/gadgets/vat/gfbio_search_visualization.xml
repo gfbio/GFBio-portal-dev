@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="Search Visualization" author="Database Research Group of Uni Marburg" height="300">
+		<Require feature="pubsub-2">
+			<Param name="topics">
+                <![CDATA[
+				<Topic title="GFBio Listener" name="gfbio.search.selectedData.listener"
+                	   description="Listens to GFBio Search data" type="string" subscribe="true" />
+                ]]>
+			</Param>
+		</Require>
+	</ModulePrefs>
+	<Content type="html">
+	<![CDATA[
+        <script type="text/javascript">
+            var iframe = undefined;
+
+            /**
+             * Receive Liferay event an pass it to the iframe's window.
+             * @param topic
+             * @param data
+             * @param subscriberData
+             */
+            function receiveVisualizationRequest(topic, data, subscriberData) {
+                iframe.contentWindow.postMessage(data, '*');
+            }
+
+            // subscribe to the channel as soon as the message hub is ready
+            gadgets.HubSettings.onConnect = function(hub, suc, err) {
+                gadgets.Hub.subscribe('gfbio.search.selectedData', receiveVisualizationRequest);
+            };
+
+            // create iframe
+            (function() {
+                iframe = document.createElement('iframe');
+                iframe.id = 'searchVisualizationFrame';
+                iframe.src = 'https://gfbio-db1.inf-bb.uni-jena.de/gfbiopub2/VAT/gfbio_search_visualization.html';
+                iframe.style.border = 'none';
+                iframe.style.margin = 0;
+                iframe.style.padding = 0;
+                iframe.style.height = '100%';
+                iframe.style.width = '100%';
+                document.getElementsByTagName('body')[0].appendChild(iframe);
+            })();
+        </script>
+	]]>
+	</Content>
+</Module>

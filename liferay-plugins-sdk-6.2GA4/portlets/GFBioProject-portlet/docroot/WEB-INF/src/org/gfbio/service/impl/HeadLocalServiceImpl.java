@@ -697,6 +697,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		String tableName="";
 
 		tableName = constructRelationName(nonHccTableName, hccTableName);
+		
 		try {
 			headId = getHeadIdByTableName(tableName);
 		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
@@ -713,13 +714,11 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 			jsonColumn1 = ColumnLocalServiceUtil.constructColumnJson(ColumnLocalServiceUtil.getColumnIdByNames(tableName, nonHccTableName), headId, nonHccTableName);
 			jsonColumn2 = ColumnLocalServiceUtil.constructColumnJson(ColumnLocalServiceUtil.getColumnIdByNames(tableName, hccTableName), headId, hccTableName);
 	
-			try {
-				jsonContent1 = ContentLocalServiceUtil.constructContentJson(0, getHeadIdByTableName(nonHccTableName), ColumnLocalServiceUtil.getColumnIdByNames(tableName, nonHccTableName), 0, Long.toString(nonHccContentId));
-			} catch (SystemException | PortalException e) {e.printStackTrace();	}
+			try {jsonContent1 = ContentLocalServiceUtil.constructContentJson(0, getHeadIdByTableName(nonHccTableName), ColumnLocalServiceUtil.getColumnIdByNames(tableName, nonHccTableName), 0, Long.toString(nonHccContentId));} 
+			catch (SystemException | PortalException e) {e.printStackTrace();	}
 			
-			try {
-				jsonContent2 = ContentLocalServiceUtil.constructContentJson(0, getHeadIdByTableName(hccTableName), ColumnLocalServiceUtil.getColumnIdByNames(tableName, hccTableName), 0, Long.toString(hccContentId));
-			} catch (SystemException | PortalException e) {e.printStackTrace();	}
+			try {jsonContent2 = ContentLocalServiceUtil.constructContentJson(0, getHeadIdByTableName(hccTableName), ColumnLocalServiceUtil.getColumnIdByNames(tableName, hccTableName), 0, Long.toString(hccContentId));} 
+			catch (SystemException | PortalException e) {e.printStackTrace();	}
 	
 			jsonColumn1.put("0", jsonContent1);
 			jsonColumn2.put("0", jsonContent2);

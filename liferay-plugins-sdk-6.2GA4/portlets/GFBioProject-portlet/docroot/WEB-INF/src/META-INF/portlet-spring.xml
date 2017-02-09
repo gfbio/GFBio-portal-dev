@@ -69,6 +69,22 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.PrimaryDataLocalService" class="org.gfbio.service.impl.PrimaryDataLocalServiceImpl" />
+	<bean id="org.gfbio.service.PrimaryDataService" class="org.gfbio.service.impl.PrimaryDataServiceImpl" />
+	<bean id="org.gfbio.service.persistence.PrimaryDataPersistence" class="org.gfbio.service.persistence.PrimaryDataPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.PrimaryData_ResearchObjectLocalService" class="org.gfbio.service.impl.PrimaryData_ResearchObjectLocalServiceImpl" />
+	<bean id="org.gfbio.service.PrimaryData_ResearchObjectService" class="org.gfbio.service.impl.PrimaryData_ResearchObjectServiceImpl" />
+	<bean id="org.gfbio.service.persistence.PrimaryData_ResearchObjectPersistence" class="org.gfbio.service.persistence.PrimaryData_ResearchObjectPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinder" class="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.ProjectLocalService" class="org.gfbio.service.impl.ProjectLocalServiceImpl" />
 	<bean id="org.gfbio.service.ProjectService" class="org.gfbio.service.impl.ProjectServiceImpl" />
 	<bean id="org.gfbio.service.persistence.ProjectPersistence" class="org.gfbio.service.persistence.ProjectPersistenceImpl" parent="basePersistence">
@@ -116,12 +132,6 @@
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
 	<bean id="org.gfbio.service.persistence.ResearchObject_UserFinder" class="org.gfbio.service.persistence.ResearchObject_UserFinderImpl" parent="basePersistence">
-		<property name="dataSource" ref="gfbioDataSource" />
-		<property name="sessionFactory" ref="gfbioSessionFactory" />
-	</bean>
-	<bean id="org.gfbio.service.SearchHistoryLocalService" class="org.gfbio.service.impl.SearchHistoryLocalServiceImpl" />
-	<bean id="org.gfbio.service.SearchHistoryService" class="org.gfbio.service.impl.SearchHistoryServiceImpl" />
-	<bean id="org.gfbio.service.persistence.SearchHistoryPersistence" class="org.gfbio.service.persistence.SearchHistoryPersistenceImpl" parent="basePersistence">
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>

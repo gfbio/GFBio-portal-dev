@@ -1,16 +1,186 @@
+﻿*********************************************
+*** Software Requirements ***
+********************************************
+- Java SDK 8_101 or higher
+- Liferay IDE 3.1.0. or higher (Eclipse-Mars Liferay IDE bundle)
+	Get the Liferay IDE here, use the milestone (https://web.liferay.com/downloads/liferay-projects/liferay-ide)
+- download Liferay 7 bundle with tomcat (https://www.liferay.com/de/downloads)
+
+
+For testing purposes (workspace) you have to initialize it with your own Liferay7 BundleVersion
+--> open cmd in the workspace, execute "blade initBundle" 
+(with it you´ll download the bundle, if not already in your user/.liferay/bundles folder and get it in contact with your workspace)
+standard set password is test/test, depending on how you setup your liferay instance) 
+
+
+
+***********************************************
+*** Liferay 7 **************
+************************************************
+- download Liferay 7 with Tomcat
+- if neccessary install it as a service:
+
+1.) download Tomcat 8 (https://tomcat.apache.org/download-80.cgi)
+2.) copy the follinwg files from Tomcat8/bin to your Liferay7/Tomcat8/bin:
+
+- service.bat
+- Tomcat8.exe
+- Tomcat8w.exe
+
+3.) install the service from command line (go to your Liferay7/Tomcat8/bin folder and start from there)
+
+service.bat install 'Liferay7'
+
+4.) configure your service (e.g., Java settings)
+
+Tomcat8w //ES//'Liferay7'
+
+--> point to your Java8/sdk/jre folder for jvm.dll
+--> increase memory (e.g., 512 and 1024)
+
+
+-------------------------------------------------------------------------------------------------
+
+**********************************************
+*** Liferay 7 Theme-Generator Introduction ***
+**********************************************
+
+- based on the tutorial on https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/introduction-to-themes
+- theme generator for theme automation process
+- (ant and other programs could be used aswell)
+- using gulp for build and deploy
+
+STARTING POINT:	https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/themes-generator
+
+**********************************************
+*** Node JS and the NPM, Yeoman and Gulp ***
+**********************************************
+
+- node js necessary for working with the theme generator
+- https://nodejs.org/en/
+- command line: 
+
+node -v (should respond version number)
+
+Setup npm (node package manager) runtime environment:
+	(1) set Node.js NPM_PACKAGES and NODE_PATH system environment variables with values like these based on the prefix value you just specified.
+		NPM_PACKAGES=C:\Program Files\nodejs\node_modules\npm
+		NODE_PATH=C:\Program Files\nodejs\node_modules\npm\node_modules
+	
+	(2) npm installation also installs YEOMAN and GULP (creation and deploy) executables to ${NPM_PACKAGES}/bin on UNIX and to %NPM_PACKAGES% on Windows
+		--> add directory to your system path
+		--> example on UNIX:	PATH=${PATH}:${NPM_PACKAGES}/bin 
+		
+	(3) install YEOMAN and GULP globally  via command line:	
+	
+	npm install -g yo gulp
+	
+************************************************
+*** Theme-Generator ***
+************************************************
+
+- command line:	
+
+npm install -g generator-liferay-theme
+
+2) For Windows User - Sass required:
+Sass from Ruby and Compass:
+		- install Ruby via Ruby-installer:	http://rubyinstaller.org/
+		- add %Your_Ruby_Path%\bin to the path, PATH=%Your_Ruby_Path%/bin
+
+3) install compass via command line:	
+		
+gem install sass compass
+
+--> there could be trouble,you could need a .pem file since gem-hosts changed and certificates and permissions also (we had a cacert.pem)
+--> they´re about to fix this problem so maybe not necessary and already working, else google is your best friend
+	
+install Gulp via npm:
+4) npm install gulp
+
+
+********************************************
+*** Your first Theme via Theme-Generator ***
+********************************************
+
+- https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/themes-generator
+- open command line in directory in which you want to create the theme (new folder will be created)
+- command line:	
+
+a) yo liferay-theme
+
+b) enter in order:	name, theme-id (or enter for default), version of liferay (to select) and the Liferay 7 installation folder
+
+c) Open the package.json file found in the root folder of your theme, and locate the rubySass property and change it from false to true
+
+d) install Ruby Sass middleware from your newly created theme folder
+
+npm i --save gulp-ruby-sass
+
+e) Run the gulp build task to generate the base files for your theme. Open the build directory of your theme to view the base files.
+
+gulp build
+
+
+c) gulp deploy
+
+
+!!! For repository management only the following files and folders needs to be checked in !!!
+
+src (including all sub-folders, e.g., js, css, templates ...)
+
+gulpfile.js
+package.json
+
+
+When pulling a (new) theme from a repository create a "liferay-theme.json" file within the theme folder with the following content (your app server configs):
+
+{
+  "LiferayTheme": {
+    "appServerPath": "C:\\liferay\\liferay-ce-portal-7.0-ga3\\tomcat-8.0.32",
+    "deployPath": "C:\\liferay\\liferay-ce-portal-7.0-ga3\\deploy",
+    "url": "http://localhost:8080",
+    "appServerPathPlugin": "C:\\liferay\\liferay-ce-portal-7.0-ga3\\tomcat-8.0.32\\webapps\\liferay-7-test-theme",
+    "deployed": true,
+    "pluginName": "liferay-7-test-theme"
+  }
+}
+
+******************************************************
+*** Theme Development *******************************
+*****************************************************
+
+Theme Reference Guide
+https://dev.liferay.com/develop/reference/-/knowledge_base/7-0/theme-reference-guide
+
+How to undeploy a Theme? either A or B
+A) --> GoGoShell uninstall <PID>
+
+* activate telnet client (http://praxistipps.chip.de/telnet-client-unter-windows-7-aktivieren_3601)
+* command line:
+
+telnet localhost 11311
+
+https://dev.liferay.com/develop/reference/-/knowledge_base/7-0/using-the-felix-gogo-shell
+
+B) --> remove war file from osgi/war
+
+----------------------------------------------------------------------------------------------------------------
 
 **************************
 *** JPM4J installation ***
 **************************
 - download jpm4j (https://github.com/jpm4j/jpm4j.installers/blob/master/dist/biz.aQute.jpm.run.jar)
 - copy it to the directory where you want to have it
-- open a command line in this folder
+- open a command line in this folder (shift+rightclick --> open command at this location)
 - type in the following command:
 
 java -jar biz.aQute.jpm.run.jar -g init
 
 - add C:/JPM4J/bin to your path
 - check if jpm is working: open a command line and type "jpm use", is expected to show the JPM4J home and bin
+
+- run "jpm install bnd"
 
 ***************************
 *** Blade Client ***
@@ -19,12 +189,136 @@ java -jar biz.aQute.jpm.run.jar -g init
 
 jpm install com.liferay.blade.cli
 
+- (if it does not work, check out git for possible updates https://github.com/liferay/liferay-blade-cli/)
+
 - check if blade has been installed
 
-blade version
+	- cmd: blade version
+
+
+Note: For Windows users, the blade update command does not work. This is because Windows cannot update a file that is currently in use. To bypass this issue, you can use JPM to update your version of Blade CLI:
+
+jpm install -f com.liferay.blade.cli
+
+
+NOTE: Blade is your all in one - cmd Tool (in comparison to LiferayIDE in Eclipse).. startup server.. deploy etc pp
+
+--> https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/blade-cli
+
 
 ******************************
 *** Creating a Liferay Workspace with Blade CLI ***
 ******************************
+Quote "This is the official way to create Liferay 7.0 modules using Gradle. 
+For those developers that still want to develop WAR-style plugins using the Plugins SDK, this way is also supported using a Liferay Workspace."
 
-blade init MyFirstWorkspace
+* a liferay workspace for all your custom projects 
+
+open command line where you want to setup your liferay7 workspace (shift+rightclick --> open cmd here):
+	- enter "blade init [Workspace Name]"
+	- want to send it to co-worker etc?
+		- cmd "./gradlew distBundle[Zip|Tar]" and get the compressed file
+		- Your distribution file is available from the workspace’s /build directory
+
+if you want to run your modules against a Liferay Test-Server modify
+	- gradle.properties file
+
+Modify your gradle.properties:
+
+liferay.workspace.bundle.url=https://sourceforge.net/projects/lportal/files/Liferay Portal/7.0.1 GA2/liferay-ce-portal-tomcat-7.0-ga2-20160610113014153.zip
+#liferay.workspace.environment=local
+#liferay.workspace.home.dir=bundles
+#liferay.workspace.modules.default.repository.enabled=false
+#liferay.workspace.modules.dir=modules
+#liferay.workspace.plugins.sdk.dir=plugins-sdk
+#liferay.workspace.themes.dir=themes
+
+microsoft.translator.client.id=
+microsoft.translator.client.secret=
+
+	
+
+SETUP your Liferay Instance in Working Directory:
+
+- cmd:	
+
+gradlew initBundle
+	
+blade deploy	
+	
+***************************************************************
+*** Creating a Liferay Workspace in Eclipse // Working with it
+**************************************************************
+
+Therefore stick to 
+https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-a-liferay-workspace-with-liferay-ide
+
+1 Switch View to Liferay Workspace View
+2 in Project Explorer Create New - Liferay Workspace (Fill in Name, rather activate the Checkbox at download Bundle, else you´ll have to "blade initBundle" lateron in your workspace-cmd)
+3 just working if you have the newest Liferay IDE and Java installed (Else Sourceforge throws ssl handshake errors.. sadly)
+
+
+
+
+********************************************
+*** Creating Theme Contributor with Liferay IDE
+*********************************************
+
+
+********************************************
+*** Creating Theme Contributor with Blade CLI
+*********************************************
+
+ - https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/theme-contributor-template
+
+command line where you want to create:
+	- blade create -t theme-contributor [--contributorType contributorType] [-p packageName] projectName
+	- e.g.:	blade create -t theme-contributor --contributorType my-contributor -p com.liferay.docs.theme.contributor my-theme-contributor
+
+
+**********************************
+*** Creating a new Portlet with Blade CLI
+**********************************
+
+We mostly use the MVC Portlet (Model View Controler)
+*Liferay kind of implements an own version of this
+Read more on https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-an-mvc-portlet
+
+Further on you got 2 options:
+	1) Create via Command Line and blade (https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/using-the-mvc-portlet-template)
+	2) Create via Eclipse - New Liferay Module (edit name, type and create)
+
+If you created your first little Portlet, you should see in your Workspace under modules/YOURTESTPORTLET
+It should have the following folder-structure:
+	1 src/main/java
+	2 src/main/resources
+	3 JRE System Library
+	4 Project and External Dependencies
+	5 src
+	6 bnd.bnd
+	7 build.gradle
+
+Easily said number 1 is for editing the .java file and everything that contains logic or controlling code and stating when to use which jsp of number 2.
+Number 2 is for editing the look and feel  e.g. buttons, text, options.
+
+Number 5 will lateron contain Number 1 and 2 if deployed to the server
+
+
+After opening/importing the Workspace you have to deploy the Portlet to the Server if not already done.
+(drag&drop it to the Server instance (should already run) or via rightclicking)
+
+Finally implementing on your running instance:
+	1 Server has to run already
+	2 Portlet has to be deployed
+	3 if youre signed in on the instance, implement new portlets via the "Add"-Navigation /Applications/Sample/YOUR PORTLET
+		--> drag& drop it to the site where you want it to be
+
+The myJspTestportlet ist just for showing the frontend-work of the jsp files. No other logic included, but could be done via ActionMethods.
+Further Information in the Documentation or given when needed.
+
+Links:	http://www.javasavvy.com/liferay-7-portlet-tutorial/ (interesting lil tutorial on working with different .jsp files / portlet)
+
+
+
+
+	

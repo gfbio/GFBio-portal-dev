@@ -27,6 +27,8 @@ import org.gfbio.service.persistence.ResearchObject_UserFinderUtil;
 import org.gfbio.service.persistence.ResearchObject_UserPK;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -47,6 +49,44 @@ import com.liferay.portal.kernel.exception.SystemException;
 public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLocalServiceBaseImpl {
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray  getUserIdsByResearchObject (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if (requestJson.containsKey("researchobjectid")){
+			List <Long> responseList = null;
+			long researchObjectId = (long)requestJson.get("researchobjectid");
+			int researchObjectVersion = 0;
+			
+			if (requestJson.containsKey("researchobjectversion"))
+				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+			else
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);
+			
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
+				responseList = getUserIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			else
+				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to user");
+			
+			JSONParser parser = new JSONParser();
+			try {responseJson = (JSONArray) parser.parse(responseList.toString());}
+			catch (ParseException e) {e.printStackTrace();}
+		
+		}else
+			responseJson.add("ERROR: The json need minimal 'researchobjectid'as long.");
+		
+		return responseJson;
+	}
+	
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
 	
 	
 	//
@@ -85,6 +125,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		return userList;
 	}
 	
+	
 	//
 	public List <Long> getOwnerIdsByResearchObjectIds(long researchObjectId, int researchObjectVersion){
 		List <Long> userList = null;
@@ -94,14 +135,37 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 	
 	
 	//
+	@SuppressWarnings("unchecked")
+	private List <Long> getUserIdsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
+		return ResearchObject_UserFinderUtil.getUserIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+	}
+	
+	
+	
+	//
 	public List <ResearchObject> getResearchObjectsByUserId (long userId){
 		return ResearchObject_UserFinderUtil.getResearchObjectsByUserId(userId);
 	}
 	
+	
+	//
 	@Override
 	public List<ResearchObject_User> getResearchObjectIdList(long arg0) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////	
+	
+	
+	//
+	public Boolean checkResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
+		Boolean check = false;
+		List <Boolean> checkList =  ResearchObject_UserFinderUtil.getCheckOfResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
 	}
 	
 	
@@ -124,7 +188,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
 		try {relation = researchObject_UserPersistence.findByPrimaryKey(pk);} 
-		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'projectId' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
+		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
 		if (relation == null) 
 			relation = researchObject_UserPersistence.create(pk);
@@ -148,7 +212,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
 		try {relation = researchObject_UserPersistence.findByPrimaryKey(pk);}
-		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'projectId' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
+		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
 		if (relation == null) 
 			relation = researchObject_UserPersistence.create(pk);

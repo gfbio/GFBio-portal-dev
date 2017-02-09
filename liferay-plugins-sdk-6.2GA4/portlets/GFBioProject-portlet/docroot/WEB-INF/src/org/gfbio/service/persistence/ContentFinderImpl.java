@@ -14,27 +14,26 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements ContentFinder{
 	
-	public static String FINDER_CLASS_NAME_ENTITY 								= ContentFinderImpl.class.getName();
-	public static String CHECK_EXISTENCE_OF_KEYID								= FINDER_CLASS_NAME_ENTITY + ".checkExistenceOfKeyId";
-	public static String CHECK_KEYPAIR_IN_RELATIONSHIP							= FINDER_CLASS_NAME_ENTITY + ".checkKeyPairInRelationship";
-	public static String GET_CELL_CONTENT 										= FINDER_CLASS_NAME_ENTITY + ".getCellContent";
-	public static String GET_CELL_CONTENT_BY_CONTENTID 							= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
-	public static String GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME				= FINDER_CLASS_NAME_ENTITY + ".getCellContentByRowIdAndColumnName";
-	public static String GET_COLUMNID_BY_ID 									= FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
-	public static String GET_CONTENTIDS_OF_RELATIONSHIPS_OF_SPECIFIC_CELLCONTENT= FINDER_CLASS_NAME_ENTITY + ".getContentIdsOfRelationshipsOfSpecificCellContent";
-	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS 					= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
-	public static String GET_CONTENTIDS_WITH_NORMAL_TABLE_RELATIONSHIPS 		= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithNormalTableRelationships";
-	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS 						= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
-	public static String GET_COUNT_OF_ROW 										= FINDER_CLASS_NAME_ENTITY + ".getRowIds";
-	public static String GET_ROWID_BY_CELLCONTENT 								= FINDER_CLASS_NAME_ENTITY + ".getRowIdByCellContent";
-	public static String GET_HEADID_BY_ID 										= FINDER_CLASS_NAME_ENTITY + ".getHeadIdById";
-	public static String GET_CONTENTIDS_BY_ROWID 								= FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
-	public static String GER_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT	= FINDER_CLASS_NAME_ENTITY + ".getOppositeCellContentsOfRelationsByCellContent";
-	public static String GET_ROWID_BY_CONTENTID									= FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
-	public static String GET_ROWID_OF_RELATION 									= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
-	public static String GET_ROW_INFORMATION_BY_CONTENTID						= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
-	public static String GET_ROW_INFORMATION_BY_ROWID							= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByRowId";
-	
+	public static String FINDER_CLASS_NAME_ENTITY 										= ContentFinderImpl.class.getName();
+	public static String CHECK_EXISTENCE_OF_KEYID										= FINDER_CLASS_NAME_ENTITY + ".checkExistenceOfKeyId";
+	public static String CHECK_KEYPAIR_IN_RELATIONSHIP									= FINDER_CLASS_NAME_ENTITY + ".checkKeyPairInRelationship";
+	public static String GET_CELL_CONTENT 												= FINDER_CLASS_NAME_ENTITY + ".getCellContent";
+	public static String GET_CELL_CONTENT_BY_CONTENTID 									= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
+	public static String GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME						= FINDER_CLASS_NAME_ENTITY + ".getCellContentByRowIdAndColumnName";
+	public static String GET_COLUMNID_BY_ID 											= FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
+	public static String GET_CONTENTIDS_OF_RELATIONSHIPS_OF_SPECIFIC_CELLCONTENT		= FINDER_CLASS_NAME_ENTITY + ".getContentIdsOfRelationshipsOfSpecificCellContent";
+	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS 							= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
+	public static String GET_CONTENTIDS_WITH_NORMAL_TABLE_RELATIONSHIPS 				= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithNormalTableRelationships";
+	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS 								= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
+	public static String GET_COUNT_OF_ROW 												= FINDER_CLASS_NAME_ENTITY + ".getRowIds";
+	public static String GET_ROWID_BY_CELLCONTENT 										= FINDER_CLASS_NAME_ENTITY + ".getRowIdByCellContent";
+	public static String GET_HEADID_BY_ID 												= FINDER_CLASS_NAME_ENTITY + ".getHeadIdById";
+	public static String GET_CONTENTIDS_BY_ROWID 										= FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
+	public static String GER_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT			= FINDER_CLASS_NAME_ENTITY + ".getOppositeCellContentsOfRelationsByCellContent";
+	public static String GET_ROWID_BY_CONTENTID											= FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
+	public static String GET_ROWID_OF_RELATION 											= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
+	public static String GET_ROW_INFORMATION_BY_CONTENTID								= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
+	public static String GET_ROW_INFORMATION_BY_ROWID									= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByRowId";
 	
 	//Is  pk in table with headid, the Boolean is true
 	@SuppressWarnings("rawtypes")
@@ -569,6 +568,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 		}
 		return null;
 	}
+	
 	
 	
 }

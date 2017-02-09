@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getArchiveById">
+	    <![CDATA[
+			SELECT 
+				gfbio_submission.archive
+			FROM 
+				public.gfbio_submission
+			WHERE
+				gfbio_submission.submissionid = ?
+
+		]]>
+    </sql>
+
+
     <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getArchivePIdsOfENA">
 	    <![CDATA[
 			SELECT 
@@ -62,6 +75,20 @@
 
 		]]>
     </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getCheckOfResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_submission
+			 WHERE
+			 researchobjectid = ? AND
+			 researchobjectversion = ?
+		]]>
+    </sql>
+    
 
     <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getLatestSubmissionByIds">
 	    <![CDATA[
@@ -207,6 +234,18 @@
     </sql>
     
 
+   <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getSubmissionIdsByResearchObjectIdAndVersion">
+	    <![CDATA[
+		    SELECT 
+				gfbio_submission.submissionid
+			FROM 
+				public.gfbio_submission
+			where	
+				gfbio_submission.researchobjectid = ? AND
+				gfbio_submission.researchobjectversion =	? 
+		]]>
+    </sql>
+    
     
     
 

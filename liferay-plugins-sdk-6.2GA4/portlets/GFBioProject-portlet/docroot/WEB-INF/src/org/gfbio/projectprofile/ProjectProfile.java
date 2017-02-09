@@ -2,7 +2,6 @@ package org.gfbio.projectprofile;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -149,6 +148,7 @@ public class ProjectProfile extends GenericPortlet {
 	
 	
 	//
+	@SuppressWarnings("unused")
 	public void updateProject(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 		JSONParser parser = new JSONParser();
 		JSONObject json = new JSONObject();
@@ -221,9 +221,9 @@ public class ProjectProfile extends GenericPortlet {
 
 		String status = (String) json.get("status");
 		String extendedData = "";
-		try {
+/*		try {
 			projectID = ProjectLocalServiceUtil.updateProject(projectID, userID, name, label, description, extendedData, startDate, endDate, status);
-		} catch (SystemException e) {e.printStackTrace();}
+		} catch (SystemException e) {e.printStackTrace();}*/
 	}
 
 

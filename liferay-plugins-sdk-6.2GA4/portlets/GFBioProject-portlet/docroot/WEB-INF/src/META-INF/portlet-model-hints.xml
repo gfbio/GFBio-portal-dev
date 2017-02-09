@@ -52,6 +52,7 @@
 		<field name="mycologicalMicroscopicSlides" type="boolean" />
 		<field name="zoologicalMicroscopicSlides" type="boolean" />
 		<field name="otherObjects" type="boolean" />
+		<field name="providerType" type="String" />
 	</model>
 	<model name="org.gfbio.model.DataProvider_PersistentIdentifier">
 		<field name="gfbioDataProvider" type="long" />
@@ -74,6 +75,16 @@
 		<field name="headID" type="long" />
 		<field name="table_name" type="String" />
 		<field name="table_type" type="String" />
+	</model>
+	<model name="org.gfbio.model.PrimaryData">
+		<field name="primaryDataID" type="long" />
+		<field name="name" type="String" />
+		<field name="path" type="String" />
+	</model>
+	<model name="org.gfbio.model.PrimaryData_ResearchObject">
+		<field name="primaryDataID" type="long" />
+		<field name="researchObjectID" type="long" />
+		<field name="researchObjectVersion" type="int" />
 	</model>
 	<model name="org.gfbio.model.Project">
 		<field name="projectID" type="long" />
@@ -107,6 +118,8 @@
 		<field name="description" type="String" />
 		<field name="extendeddata" type="String" />
 		<field name="metadataID" type="long" />
+		<field name="licenseID" type="long" />
+		<field name="researchObjectType" type="String" />
 	</model>
 	<model name="org.gfbio.model.ResearchObject_User">
 		<field name="researchObjectID" type="long" />
@@ -116,16 +129,10 @@
 		<field name="endDate" type="Date" />
 		<field name="userType" type="String" />
 	</model>
-	<model name="org.gfbio.model.SearchHistory">
-		<field name="searchHistoryID" type="long" />
-		<field name="userID" type="long" />
-		<field name="queryString" type="String" />
-		<field name="lastModifiedDate" type="Date" />
-	</model>
 	<model name="org.gfbio.model.Submission">
 		<field name="submissionID" type="long" />
 		<field name="researchObjectID" type="long" />
-		<field name="researchObjectVersion" type="long" />
+		<field name="researchObjectVersion" type="int" />
 		<field name="archive" type="String" />
 		<field name="brokerSubmissionID" type="String" />
 		<field name="archivePID" type="String" />

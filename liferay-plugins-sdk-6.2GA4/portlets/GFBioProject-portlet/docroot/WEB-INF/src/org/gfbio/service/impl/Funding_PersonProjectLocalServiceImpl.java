@@ -77,7 +77,7 @@ public class Funding_PersonProjectLocalServiceImpl	extends Funding_PersonProject
 	
 	//
 	@SuppressWarnings("unchecked")
-	public JSONObject createFunding_PersonProject(JSONObject requestJson){
+	public JSONObject createFundingPersonProject(JSONObject requestJson){
 		
 		Boolean check = false;
 		JSONObject responseJson = new JSONObject();
@@ -88,7 +88,7 @@ public class Funding_PersonProjectLocalServiceImpl	extends Funding_PersonProject
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
 		if (requestJson.containsKey("projectid") && requestJson.containsKey("fundingagencyid") && requestJson.containsKey("fundingprogramid")&& requestJson.containsKey("personid")&& requestJson.containsKey("persontype"))
-			check = saveUpdateFunding_PersonProject((long) requestJson.get("projectid"), (long) requestJson.get("fundingagencyid"), (long) requestJson.get("fundingprogramid"), (long) requestJson.get("personid"), (String) requestJson.get("persontype"));
+			check = saveUpdateFundingPersonProject((long) requestJson.get("projectid"), (long) requestJson.get("fundingagencyid"), (long) requestJson.get("fundingprogramid"), (long) requestJson.get("personid"), (String) requestJson.get("persontype"));
 		
 		
 		if (check){
@@ -111,7 +111,7 @@ public class Funding_PersonProjectLocalServiceImpl	extends Funding_PersonProject
 	
 	
 	//update or create a new Relationship between a Project and a Research Object
-	public Boolean saveUpdateFunding_PersonProject(long projectId, long fundingAgencyId, long fundingProgramId, long personId, String personType) {
+	public Boolean saveUpdateFundingPersonProject(long projectId, long fundingAgencyId, long fundingProgramId, long personId, String personType) {
 
 		Boolean check = false;
 		check = ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_fundingagency", fundingAgencyId);
@@ -130,14 +130,14 @@ public class Funding_PersonProjectLocalServiceImpl	extends Funding_PersonProject
 			}
 				
 			if (check)
-				check = updateFunding_PersonProject(projectId, fundingAgencyId, fundingProgramId, personId, personType);
+				check = updateFundingPersonProject(projectId, fundingAgencyId, fundingProgramId, personId, personType);
 		}
 		return check;
 	}
 		
 		
 	//update or create a new Relationship between a Project and a Research Object
-	public Boolean updateFunding_PersonProject(long projectId, long fundingAgencyId, long fundingProgramId, long personId, String personType) {
+	public Boolean updateFundingPersonProject(long projectId, long fundingAgencyId, long fundingProgramId, long personId, String personType) {
 
 		Boolean check = false;
 		Funding_PersonProject relation = null;

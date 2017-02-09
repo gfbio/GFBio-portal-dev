@@ -1,7 +1,10 @@
-var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+
+				var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
+var showRating = 0;
+var saveSearch = 0;
 
 /////////////////////////////// Search initial functions ////////////////////////////////
 /*
@@ -21,33 +24,33 @@ function listenToEnterPress() {
  */
 function setAutoComplete() {
 	$('#gfbioSearchInput').autocomplete({
-		minLength : 1,
-		delay : 0,
-		source : function (request, response) {
+		minLength: 1,
+		delay: 0,
+		source: function (request, response) {
 			$.ajax('//ws.pangaea.de/es/portals/_suggest', {
-				contentType : 'application/json; charset=UTF-8',
-				type : 'POST',
-				data : JSON.stringify({
-					'suggest' : {
-						'text' : request.term,
-						'completion' : {
-							'field' : 'suggest',
-							'size' : 12,
+				contentType: 'application/json; charset=UTF-8',
+				type: 'POST',
+				data: JSON.stringify({
+					'suggest': {
+						'text': request.term,
+						'completion': {
+							'field': 'suggest',
+							'size': 12,
 						},
 					},
 				}),
-				dataType : 'json',
-				success : function (data) {
+				dataType: 'json',
+				success: function (data) {
 					response($.map(data.suggest[0].options, function (item) {
 							return item.text;
 						}));
 				},
 			});
 		},
-		open : function () {
+		open: function () {
 			var maxWidth = $(document).width() - $(this).offset().left - 16;
 			$(this).autocomplete('widget').css({
-				'max-width' : maxWidth + "px"
+				'max-width': maxWidth + "px"
 			});
 		},
 	});
@@ -72,7 +75,7 @@ function getQueryVariable(variable) {
 
 /*
  * Description: Query for the latest 10 dataset and display to the result table
- * Input: JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Effect: The result table and facet gadget are updated
  */
@@ -82,39 +85,39 @@ function showLatestTenDataset(filter, yearRange) {
 	// initiate result table
 	writeResultTable();
 	var oTable = $('#tableId').DataTable({
-			"bDestroy" : true,
-			"bPaginate" : true,
-			"sPaginationType":"simple",
-			"bJQueryUI" : true,
-			"bProcessing" : true,
-			"bServerSide" : true,
-			"sAjaxSource" : searchAPI,
-			"bRetrieve" : true,
-			"fnServerData" : getFilteredLatestDataset(filter, yearRange),
+			"bDestroy": true,
+			"bPaginate": true,
+			"sPaginationType": "simple",
+			"bJQueryUI": true,
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": searchAPI,
+			"bRetrieve": true,
+			"fnServerData": getFilteredLatestDataset(filter, yearRange),
 			// for the first time loading, filter and yearRange = ""
 			// assign only 3 columns for the result table
-			"aoColumns" : [{
+			"aoColumns": [{
 					// score column is used for sorting, hide it
-					"data" : "score",
-					"visible" : false,
-					"sortable" : false
+					"data": "score",
+					"visible": false,
+					"sortable": false
 				}, {
 					// html column is the main display
-					"data" : "html",
-					"visible" : true,
-					"sortable" : false
+					"data": "html",
+					"visible": true,
+					"sortable": false
 				}, {
 					// column displays color palette and basket cart icon
-					"class" : "color-control",
-					"sortable" : false,
-					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
+					"class": "color-control",
+					"sortable": false,
+					"data": null,
+					"defaultContent": "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating) ? ratingDiv : '')
 				}
 			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">', 
-			"sAutoWidth" : true,
+			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
+			"sAutoWidth": true,
 			// define the event after the search result is returned
-			"fnDrawCallback" : function (oSettings) {
+			"fnDrawCallback": function (oSettings) {
 				//console.log(':Search: table draw callback');
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
@@ -122,37 +125,43 @@ function showLatestTenDataset(filter, yearRange) {
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
-					setRatingBar();
+					if (showRating) {
+						setRatingBar();
+					}
 				}
 			},
 			// define the event after each table row is created
-			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+			"fnRowCallback": function (nRow, aData, iDisplayIndex) {
 				showCartIcon(nRow, aData);
 			},
-			"oLanguage" : {
-				"sLengthMenu" : "Show _MENU_ entries per page"
+			"oLanguage": {
+				"sLengthMenu": "Show _MENU_ entries per page"
 			}
 		});
 	// activate the row click event (broadcast a message to mini-map)
 	onRowClick();
 };
-function setRatingBar(){
-	$('.ratebar').barrating('show',
-		{theme:'bars-horizontal',
+function setRatingBar() {
+	$('.ratebar').barrating('show', {
+		theme: 'bars-horizontal',
 		reverse: true,
 		initialRating: null,
 		hoverState: false,
-		onSelect: function(value, text, event) {
-		if (typeof(event) !== 'undefined') {
-			// rating was selected by a user
-			//console.log(event.target);
-			// TODO:call jsonws
-		} else {
-			// rating was selected programmatically
-			// by calling `set` method
-			console.log(value);
+		onSelect: function (value, text, event) {
+			if (typeof(event) !== 'undefined') {
+				// rating was selected by a user
+				var parent = event.target.parentElement.parentElement.parentElement;
+				//console.log(parent.parentElement.parentElement);
+				//console.log(value);
+				// TODO:call jsonws
+				// saveSearchFeedback(datasetDetail,datasetRank,rating)
+			} else {
+				// rating was selected programmatically
+				// by calling `set` method
+				console.log(value);
+			}
 		}
-	}});
+	});
 	// remove all "selected" css to show as "unselected" by default
 	$(".br-widget a").removeClass('br-selected');
 	// remove default "selected text", if any
@@ -160,7 +169,7 @@ function setRatingBar(){
 }
 /*
  * Description: Get latest dataset with (or without) filtering option, no keyword.
- * Input: JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Return: Data to display on the search result table
  */
@@ -174,23 +183,23 @@ function getFilteredLatestDataset(filter, yearRange) {
 		var filteredQuery = getFilteredQuery("", filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
 		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
-		
+
 		// add sorting by citation date
 		completeQuery.sort = {
-			"citation_date" : {
-				"order" : "desc"
+			"citation_date": {
+				"order": "desc"
 			}
-		}; 
+		};
 
 		// Store query string for sending to VAT
 		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
 		// Send request via AJAX
 		$.ajax(sSource, {
-			contentType : 'application/json; charset=UTF-8',
-			type : 'POST',
-			data : JSON.stringify(completeQuery),
-			dataType : 'json',
-			success : function (json) {
+			contentType: 'application/json; charset=UTF-8',
+			type: 'POST',
+			data: JSON.stringify(completeQuery),
+			dataType: 'json',
+			success: function (json) {
 				var datasrc = json.hits.hits;
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
@@ -217,12 +226,12 @@ function getFilteredLatestDataset(filter, yearRange) {
 /////////////////////////////// Main search functions ////////////////////////////////////
 
 /*
- * Description: Read a keyword parameter and call getSearchResult 
+ * Description: Read a keyword parameter and call getSearchResult
  *              to submit a query and display search result
  * Input: boolean clearBasket: submit a new query with clear basket command or not
  * Effect: Show the result, refresh facet and VAT
  */
-function newQuery(clearBasket) {
+function normalQuery(clearBasket) {
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// read search keywords
@@ -241,16 +250,23 @@ function newQuery(clearBasket) {
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
 		visualBasket.value = "";
-	
+	// Save query to DB
+	if (saveSearch && keyword != "" && clearBasket) {
+		//console.log('New query is made.');
+		//clear semantic terms
+		document.getElementById("semanticTerms").value="";
+		saveSearchHistory(keyword, filter);
+		document.getElementById("filters").value = filter;
+	}
+
 	// send content of visual basket to the mini-map gadget
 	updateMap();
 }
 
-
 /*
  * Description: Read and submit a keyword to search engine and display on the result table
- * Input: String keyword : search keyword  
- *        JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: String keyword : search keyword
+ *        JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Effect: Update TS, rewrite the result table
  */
@@ -264,63 +280,104 @@ function getSearchResult(keyword, filter, yearRange) {
 	writeResultTable();
 	// bound a datatable to pansimple API query
 	var oTable = $('#tableId').DataTable({
-			"bDestroy" : true,
-			"bPaginate" : true,
-			"sPaginationType":"simple",
-			"bJQueryUI" : true,
-			"bProcessing" : true,
-			"bServerSide" : true,
-			"sAjaxSource" : searchAPI, // the URL of Search API
-			"bRetrieve" : true,
-			"fnServerData" : submitQueryToServer(keyword, filter, yearRange),
+			"bDestroy": true,
+			"bPaginate": true,
+			"sPaginationType": "simple",
+			"bJQueryUI": true,
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": searchAPI, // the URL of Search API
+			"bRetrieve": true,
+			"fnServerData": submitQueryToServer(keyword, filter, yearRange),
 			// assign only 3 columns for the result table
-			"aoColumns" : [{
+			"aoColumns": [{
 					// score column is used for sorting, hide it
-					"data" : "score",
-					"visible" : false,
-					"sortable" : false
+					"data": "score",
+					"visible": false,
+					"sortable": false
 				}, {
 					// html column is the main display
-					"data" : "html",
-					"visible" : true,
-					"sortable" : false
+					"data": "html",
+					"visible": true,
+					"sortable": false
 				}, {
 					// column displays color palette and basket cart icon
-					"class" : "color-control",
-					"sortable" : false,
-					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
+					"class": "color-control",
+					"sortable": false,
+					"data": null,
+					"defaultContent": "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating) ? ratingDiv : '')
 				}
 			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
-			"sAutoWidth" : true,
+			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
+			"sAutoWidth": true,
 			// define the event after the search result is returned
-			"fnDrawCallback" : function (oSettings) {
+			"fnDrawCallback": function (oSettings) {
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
-					setRatingBar();
+					if (showRating) {
+						setRatingBar();
+					}
 				}
 			},
 			// define the event after each table row is created
-			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+			"fnRowCallback": function (nRow, aData, iDisplayIndex) {
 				showCartIcon(nRow, aData);
 			},
-			"oLanguage" : {
-				"sLengthMenu" : "Show _MENU_ entries per page"
+			"oLanguage": {
+				"sLengthMenu": "Show _MENU_ entries per page"
 			}
 		});
 	// activate the row click event
 	onRowClick();
 }
 
+function saveSearchHistory(keyword, filter) {
+	//TODO: overwrite the record, if the same keyword and filter are added
+	var recordid = 0; //For a new record
+	var uid = parent.Liferay.ThemeDisplay.getUserId();
+	//console.log('saveSearchHistory');
+	parent.Liferay.Service(
+		'/GFBio-Search-Service-portlet.searchhistory/update-search-history', {
+		searchHistoryId: recordid,
+		userID: uid,
+		queryString: keyword,
+		queryFilter: filter
+	},
+		function (obj) {
+		console.log('Query is recorded.');
+		//if (!isNaN(obj)) {}
+	});
+}
+function saveSearchFeedback(datasetDetail, datasetRank, rating) {
+	//TODO: overwrite the record, if the same keyword, filter, rank are added
+	var keyword = document.getElementById("gfbioSearchInput").value;
+	var filter = document.getElementById("filters").value;
+	var recordid = 0; //For a new record
+	var uid = parent.Liferay.ThemeDisplay.getUserId();
+	console.log('saveSearchFeedback');
+	parent.Liferay.Service(
+		'/GFBio-Search-Service-portlet.searchfeedback/update-search-feedback', {
+		searchHistoryId: recordid,
+		userID: uid,
+		queryString: keyword,
+		queryFilter: filter,
+		datasetDetail: datasetDetail,
+		datasetRank: datsetRank,
+		rating: rating
+	},
+		function (obj) {
+		console.log('Rating is recorded.');
+		//if (!isNaN(obj)) {}
+	});
+}
 /*
  * Description: Get search result from submitted keyword with (or without) filtering option
- * Input: String keyword : search keyword  
- *        JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: String keyword : search keyword
+ *        JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Output: JSONObject result : Data to display on the search result table
  */
@@ -341,11 +398,11 @@ function submitQueryToServer(keyword, filter, yearRange) {
 
 		// Send request via AJAX
 		$.ajax(sSource, {
-			contentType : 'application/json; charset=UTF-8',
-			type : 'POST',
-			data : JSON.stringify(completeQuery),
-			dataType : 'json',
-			success : function (result) {
+			contentType: 'application/json; charset=UTF-8',
+			type: 'POST',
+			data: JSON.stringify(completeQuery),
+			dataType: 'json',
+			success: function (result) {
 				// get JSON result back from the server
 				var datasrc = result.hits.hits;
 
@@ -403,8 +460,8 @@ function createQueryFieldArray() {
 
 /*
  * Description: Add filter to a JSON query message
- * Input: String keyword : search keyword  
- *        JSONArray filter : filter option (Authors, Region, Data Center) 
+ * Input: String keyword : search keyword
+ *        JSONArray filter : filter option (Authors, Region, Data Center)
  *        String yearRange : year range option (e.g. 1999-2016)
  * Output: JSONObject : filtered query
  */
@@ -413,26 +470,25 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	var queryObj;
 	if (keyword != "") {
 		queryObj = {
-			"simple_query_string" : {
-				"query" : keyword,
-				"fields" : ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
-				"default_operator" : "and"
+			"simple_query_string": {
+				"query": keyword,
+				"fields": ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
+				"default_operator": "and"
 			}
 		};
 	} else {
 		queryObj = {
-			"match_all" : {}
+			"match_all": {}
 		};
 	}
 	var filterObj;
-
-	if (yearRange == "") {
+	if (yearRange.trim() == "") {
 		if (filterArray != "") {
 			filterObj = filterArray;
 		} else {
 			return {
-				"bool" : {
-					"must" : queryObj
+				"bool": {
+					"must": queryObj
 				}
 			};
 		}
@@ -442,21 +498,21 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		var maxYear = yearRange.substring(splitPos + 3);
 		//console.log(minYear + "-" + maxYear);
 		yearFilter = {
-				"range" : {
-					"citation_yearFacet" : {
-						"gte" : minYear,
-						"lte" : maxYear
-					}
+			"range": {
+				"citation_yearFacet": {
+					"gte": minYear,
+					"lte": maxYear
 				}
-			};
+			}
+		};
 		filterObj = filterArray;
 		filterObj.push(yearFilter);
 	}
 
 	return {
-		"bool" : {
-			"must" : queryObj,
-			"filter" : filterObj
+		"bool": {
+			"must": queryObj,
+			"filter": filterObj
 		}
 	};
 }
@@ -468,22 +524,22 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
  */
 function applyBoost(query) {
 	return {
-		"function_score" : {
-			"query" : query,
-			"functions" : [{
-					"field_value_factor" : {
-						"field" : "boost"
+		"function_score": {
+			"query": query,
+			"functions": [{
+					"field_value_factor": {
+						"field": "boost"
 					}
 				}
 			],
-			"score_mode" : "multiply"
+			"score_mode": "multiply"
 		}
 	}
 }
 
 /*
  * Description: Complete a JSON query message with query size, query field, and facets options
- * Input: JSONObject boostedQuery : a JSON query mesage with filter and boost parameters  
+ * Input: JSONObject boostedQuery : a JSON query mesage with filter and boost parameters
  *        int iDisplayStart : starting index of dataset (read from pagination option)
  *        int iDisplayLength : size of dataset (read from pagination option)
  *        JSONArray queryfield : array of query fields
@@ -491,34 +547,34 @@ function applyBoost(query) {
  */
 function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield) {
 	return {
-		'query' :
+		'query':
 		boostedQuery,
-		'from' : iDisplayStart,
-		'size' : iDisplayLength,
-		'fields' : queryfield,
-		'aggs' : {
-			'author' : {
-				'terms' : {
-					'field' : 'citation_authorFacet',
-					'size' : 50
+		'from': iDisplayStart,
+		'size': iDisplayLength,
+		'fields': queryfield,
+		'aggs': {
+			'author': {
+				'terms': {
+					'field': 'citation_authorFacet',
+					'size': 50
 				}
 			},
-			'year' : {
-				'terms' : {
-					'field' : 'citation_yearFacet',
-					'size' : 50
+			'year': {
+				'terms': {
+					'field': 'citation_yearFacet',
+					'size': 50
 				}
 			},
-			'region' : {
-				'terms' : {
-					'field' : 'regionFacet',
-					'size' : 50
+			'region': {
+				'terms': {
+					'field': 'regionFacet',
+					'size': 50
 				}
 			},
-			'dataCenter' : {
-				'terms' : {
-					'field' : 'dataCenterFacet',
-					'size' : 50
+			'dataCenter': {
+				'terms': {
+					'field': 'dataCenterFacet',
+					'size': 50
 				}
 			}
 		}
@@ -557,41 +613,42 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.metadatalink = getValueFromJSONObject(fields, "metadatalink", 0);
 		inner.datalink = getValueFromJSONObject(fields, "datalink", 0);
 		inner.format = getValueFromJSONObject(fields, "format", 0);
-		if (fields["html-1"]) { 
+		if (fields["html-1"]) {
 			// this field is used only for displaying data
 			var html = fields["html-1"][0];
 			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
 			html = writeShowHideFields(html);
-			inner.html = hilightResult(html);
-		} else{
+			if (document.getElementById("semanticTerms").value.trim() != "") html = hilightResult(html);
+			inner.html = html;
+		} else {
 			inner.html = "";
 		}
-		if (fields["xml"]) { 
+		if (fields["xml"]) {
 			// this field contains raw data, is used for basket
 			var xml = fields["xml"];
 			// creates object instantce of XMLtoJSON
 			var xml2json = new XMLtoJSON();
 			var json = xml2json.fromStr(xml);
 			inner.xml = json; //JSON.stringify(json);
-			if (isJArray(json.dataset["parentIdentifier"])){
-				inner.parentIdentifier = getStringFromJSONArray(json.dataset,"parentIdentifier");
-			}else{
+			if (isJArray(json.dataset["parentIdentifier"])) {
+				inner.parentIdentifier = getStringFromJSONArray(json.dataset, "parentIdentifier");
+			} else {
 				inner.parentIdentifier = json.dataset["parentIdentifier"];
 			}
 			inner.dcIdentifier = json.dataset["dc:identifier"];
-			if (isJArray(json.dataset["dc:type"])){
+			if (isJArray(json.dataset["dc:type"])) {
 				inner.dcType = "Unit";
-				inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
-			}else{
-				if (json.dataset["dc:type"] == "Dataset"){
+				inner.unitType = getValueFromJSONArray(json.dataset, "dc:type");
+			} else {
+				if (json.dataset["dc:type"] == "Dataset") {
 					inner.dcType = "Dataset";
-					inner.unitType ="";
-				}else{
+					inner.unitType = "";
+				} else {
 					inner.dcType = "Unit";
-					inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
+					inner.unitType = getValueFromJSONArray(json.dataset, "dc:type");
 				}
 			}
-		} else{
+		} else {
 			inner.xml = "";
 		}
 		res.push(inner);
@@ -615,7 +672,7 @@ function writeResultTable() {
 //////////////////////////////////// Basket functions ////////////////////////////////////////
 
 /*
- * Description: Load a basket data, with stored keyword and selected datasets. 
+ * Description: Load a basket data, with stored keyword and selected datasets.
  *              This function is called from a basket manager gadget, which is not currently in used
  * Input: PubSubMessage data : a message contain the basket content published by the basket manager
  * Effect: The search box is automatically filled with the basket's keyword and submitted for search
@@ -628,7 +685,7 @@ function loadBasket(topic, data, subscriberData) {
 	//console.log(queryStr);
 	var searchbox = document.getElementById("gfbioSearchInput");
 	searchbox.value = queryStr;
-	newQuery(false);
+	normalQuery(false);
 }
 
 /*
@@ -647,11 +704,11 @@ function addBasket() {
 		var query = document.getElementById("queryJSON").value;
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
-			basketID : basketid,
-			userID : uid,
-			name : uid + '_basket',
-			basketContent : val,
-			queryJSON : query
+			basketID: basketid,
+			userID: uid,
+			name: uid + '_basket',
+			basketContent: val,
+			queryJSON: query
 		},
 			function (obj) {
 			// set the return id as the current basket id
@@ -722,6 +779,14 @@ function filterQuery(filter, yearRange) {
 		getSearchResult(keyword, filter, yearRange);
 	} else {
 		showLatestTenDataset(filter, yearRange);
+	}
+	// Save query to DB
+	if (saveSearch && keyword != "") {
+		//console.log('Filtered query.');
+		var filterObj = filter;
+		filterObj.push(yearRange);
+		saveSearchHistory(keyword, filterObj);
+		document.getElementById("filters").value = filterObj;
 	}
 }
 /////////////////////////////// End Facet filter functions /////////////////////////////////
@@ -798,7 +863,7 @@ function onRowClick() {
 			// store basket in string format
 			basket.value = JSON.stringify(jsonData);
 		} else {
-			// show the icon that this item is unselected, 
+			// show the icon that this item is unselected,
 			// and ready to be added into a cart/basket
 			$(this).attr('class', 'cart_unselected');
 			$($(".sp-replacer")[irow]).addClass("invisible");
@@ -811,8 +876,8 @@ function onRowClick() {
 				var resultArray = getDataFromSelectedRow(nRow, tRows);
 				// metadataLink is supposed to be unique for each dataset,
 				// so I use it as an id for each row.
-				jsonData.selected = JSONfindAndRemove(jsonData.selected, 
-								'metadatalink', resultArray.metadatalink);
+				jsonData.selected = JSONfindAndRemove(jsonData.selected,
+						'metadatalink', resultArray.metadatalink);
 				basket.value = JSON.stringify(jsonData);
 			}
 		}
@@ -824,7 +889,7 @@ function onRowClick() {
 /*
  * Description: Read dataset information from the selected row
  * Input: int nRow : row index
- *        int tRows : row's columns 
+ *        int tRows : row's columns
  * Output: JSONObject result: Information of the selected dataset + color code
  */
 function getDataFromSelectedRow(nRow, tRows) {
@@ -833,25 +898,25 @@ function getDataFromSelectedRow(nRow, tRows) {
 	var iRow = nRow._DT_RowIndex;
 	var value = tRows.data()[iRow];
 	var result = {
-		"metadatalink" : value.metadatalink,
-		"datalink" : value.datalink,
-		"format" : value.format,
-		"timeStamp" : value.timeStamp,
-		"maxLatitude" : value.maxLatitude,
-		"minLatitude" : value.minLatitude,
-		"maxLongitude" : value.maxLongitude,
-		"minLongitude" : value.minLongitude,
-		"color" : rgbToHex(color),
-		"title" : value.title,
-		"authors" : value.authors,
-		"description" : value.description,
-		"dataCenter" : value.dataCenter,
-		"dcType" : value.dcType,
-		"unitType" : value.unitType,
+		"metadatalink": value.metadatalink,
+		"datalink": value.datalink,
+		"format": value.format,
+		"timeStamp": value.timeStamp,
+		"maxLatitude": value.maxLatitude,
+		"minLatitude": value.minLatitude,
+		"maxLongitude": value.maxLongitude,
+		"minLongitude": value.minLongitude,
+		"color": rgbToHex(color),
+		"title": value.title,
+		"authors": value.authors,
+		"description": value.description,
+		"dataCenter": value.dataCenter,
+		"dcType": value.dcType,
+		"unitType": value.unitType,
 		"parentIdentifier": value.parentIdentifier,
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
-		"xml" : value.xml
+		"xml": value.xml
 	};
 	return result;
 }
@@ -886,15 +951,17 @@ function writeShowHideFields(orgHTML) {
 	});
 	return d.innerHTML;
 }
-function hilightResult(orgHTML){
+function hilightResult(orgHTML) {
 	var semanticTerms = document.getElementById("semanticTerms").value;
-	var semList = semanticTerms.split("|");
+	semanticTerms = semanticTerms.replace(" and ","|");
+	var semList = semanticTerms.split(/[\|]+/);
 	var newHTML = orgHTML;
-	for (var i=0; i<semList.length; i++){
-		if (semList[i].trim() != ""){
-			if (newHTML.toLowerCase().indexOf(semList[i].toLowerCase())>=0){
-				var query = new RegExp("(\\b" + semList[i] + "\\b)", "gim");
-				//var temp = orgHTML.replace(/(<div>|<\/div>)/igm, "");
+	for (var i = 0; i < semList.length; i++) {
+		var semTerm = semList[i].trim().replace(" ","(.{1,25})"); 
+		//allow only 1-25 characters in between, e.g. Circaea ... L.
+		if (semTerm != "") {
+			var query = new RegExp("(\\b" + semTerm + ")", "gim");
+			if (newHTML.match(query) != null) {
 				newHTML = newHTML.replace(query, "<span class='hilight'>$1</span>");
 			}
 		}
@@ -978,11 +1045,11 @@ function addColorPicker() {
 		//			    color: "rgb(244, 204, 204)", // default color
 		//			    showInput: true, // display rgb code input
 		//			    preferredFormat: "hex",
-		showInitial : true,
-		showPalette : true,
-		showSelectionPalette : true,
-		maxPaletteSize : 10,
-		palette : [
+		showInitial: true,
+		showPalette: true,
+		showSelectionPalette: true,
+		maxPaletteSize: 10,
+		palette: [
 			["rgb(0, 0, 0)", // black
 				"rgb(67, 67, 67)", // charcoal grey
 				"rgb(102, 102, 102)", // dim grey
@@ -1030,7 +1097,7 @@ function addColorPicker() {
 				"rgb(7, 55, 99)", // prussian blue
 				"rgb(32, 18, 77)"]// violent violet
 		],
-		change : function (color) {
+		change: function (color) {
 			// read basket value
 			var basket = document.getElementById("visualBasket");
 			var basketStr = basket.value;
@@ -1060,7 +1127,7 @@ function addColorPicker() {
 
 /*
  * Description: Display cart icon for each dataset when a location detail is available.
- * Input: nRow - row number of search result 
+ * Input: nRow - row number of search result
  *        aData - json data of that row of search result
  * Effect: Cart icon will appear for each search result if they have geological data
  */
@@ -1071,9 +1138,9 @@ function showCartIcon(nRow, aData) {
 		// read the current row number and get a div for the cart
 		var elmRow = $(nRow);
 		var elmTD = $(elmRow[0].lastElementChild);
-		var elmDiv =$($(elmTD[0]).find('#cart')[0]);
+		var elmDiv = $($(elmTD[0]).find('#cart')[0]);
 		// show the cart's div
-		console.log(elmDiv);
+		//console.log(elmDiv);
 		elmDiv.removeClass('invisible');
 	}
 }
@@ -1142,7 +1209,6 @@ function JSONfindAndRemove(array, property, value) {
 	return resultArray;
 }
 
-
 /*
  * Description: Get HTML element's style
  */
@@ -1153,7 +1219,6 @@ function getStyle(x, styleProp) {
 		var y = document.defaultView.getComputedStyle(x, null).getPropertyValue(styleProp);
 	return y;
 }
-
 
 /*
  * Description: Equilvalent to JAVA's String.format()
@@ -1256,9 +1321,9 @@ function XMLtoJSON() {
 				var item = xml.childNodes.item(i);
 				var nodeName = item.nodeName;
 				if (typeof(js_obj[nodeName]) == "undefined") {
-					if (nodeName == "#text"){
+					if (nodeName == "#text") {
 						var content = item.textContent.trim();
-						if (content!=""){
+						if (content != "") {
 							js_obj = content;
 						}
 					} else
@@ -1290,21 +1355,21 @@ function XMLtoJSON() {
  * Description: Read value from a JSONObject
  */
 function getValueFromJSONArray(jObj, name) {
-	if (jObj[name] !== undefined){
+	if (jObj[name] !== undefined) {
 		var jArr = jObj[name];
-		if (jArr.length > 0){
-		    return jArr;
+		if (jArr.length > 0) {
+			return jArr;
 		}
-	} 
+	}
 	return [];
 }
 function getStringFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var res = "";
 		var jArr = jObj[name];
-		for (var i=0; i<jArr.length; i++){
+		for (var i = 0; i < jArr.length; i++) {
 			res += jArr[i];
-			if (i != jArr.length-1){
+			if (i != jArr.length - 1) {
 				res += ";";
 			}
 		}
@@ -1346,13 +1411,12 @@ function setCookie(name, value) {
 	document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
 	//console.log('setCookie:'+name);
 	//console.log(value);
-}  
-function deleteCookie(name)
-{
-    document.cookie=name + "=null; path=/; expires=" + expired.toGMTString();
+}
+function deleteCookie(name) {
+	document.cookie = name + "=null; path=/; expires=" + expired.toGMTString();
 }
 function isJArray(elm) {
-    return Object.prototype.toString.call(elm) === '[object Array]';
+	return Object.prototype.toString.call(elm) === '[object Array]';
 }
 ///////////////////////////////////  End Misc functions  //////////////////////////////////
 
@@ -1377,70 +1441,107 @@ function semanticQuery(clearBasket) {
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
 		visualBasket.value = "";
-	
+	// Save query to DB
+	if (saveSearch && keyword != "") {
+		console.log('New Semantic query made.');
+		saveSearchHistory(keyword, filter);
+	}
+
 	// send content of visual basket to the mini-map gadget
 	updateMap();
 }
 
-function getTSterms(keyword, filter, yearRange){
+function getTSterms(keyword, filter, yearRange) {
 	console.log("getTSterms");
-	// Send request via AJAX
-		$.ajax({
-			url: TSAPI+"search?query="+keyword,
-			type : 'GET',
-			dataType : 'json',
-			success : function (val) {
-				var jArrSyn = [];
-				console.log("Terminology for: "+keyword);
-				jArrSyn.push(keyword);
-				$.each(val.results, function(){
-					//console.log(this);
-					console.log("------------------------------");
-					$.each(this,function(key, value){
-						if ((key == "label")&&(value!= keyword)){
-							console.log(key+" : "+value);	
-							if (jArrSyn.indexOf(value.trim())<0){
-								jArrSyn.push(value.trim());
-							}
-						}else if ((key == "description")&&(value.indexOf("Is a:")>=0)){
-							console.log(key+" : "+value);	
-							var parsedStr = value.substr(value.indexOf("Is a:")+5).trim();
-							if (jArrSyn.indexOf(parsedStr)<0){
-								jArrSyn.push(parsedStr);
-							}
-						}else if (key == "uri"){
-							console.log(key+" : "+value);	
-						}else if (key == "sourceTerminology"){
-							console.log(key+" : "+value);	
-						}else if (key == "synonyms"){
-							console.log(key+" : ");	
-							for (i=0;i<value.length;i++){
-								console.log(value[i]);
-								if (jArrSyn.indexOf(value[i].trim())<0){
-									jArrSyn.push(value[i].trim());
-								}
-							}
-						}else if (key == "commonNames"){
-							console.log(key+" : ");	
-							for (i=0;i<value.length;i++){
-								console.log(value[i]);
-								if (jArrSyn.indexOf(value[i].trim())<0){
-									jArrSyn.push(value[i].trim());
-								}
-							}
-						}
-					
-					});
-				});
-				
-				semanticTerms = jArrSyn.join("|");
-				document.getElementById("semanticTerms").value = semanticTerms;
-				getSemanticSearchResult(jArrSyn, filter, "");
-			},
-			error: function(e){
-				console.log(e);
-			}
+	var jArrSyn = [];
+	//TODO: upgrade keyword split with double quote, or automatically parse terms
+	
+	//var keys = keyword.split(" ");
+	//var nKeys = keys.length;
+	var nRequest = 0;
+		//$.each(keys, function (ind, item) {
+		var item = keyword;
+			// Send request via AJAX
+			$.ajax({
+				url: TSAPI + "search?query=" + item, //by default, call exact match
+				type: 'GET',
+				dataType: 'json',
+				success: function (val) {
+					jArrSyn.push.apply(jArrSyn, readTSresults(item, val));
+					//nRequest++;
+					//console.log(nRequest);
+					//if (nRequest == nKeys){ 
+						//if all keywords get semantic terms, then send to pansimple
+						semanticTerms = jArrSyn.join("|");
+						console.log('*********************************');
+						console.log(semanticTerms);
+						//TODO: check if jArrSyn.length > nKeys (contains only the original keyword)
+						//if (jArrSyn.length <= nKeys) console.log('no semantic terms recieved, search again with included option.');
+						//else{
+							document.getElementById("semanticTerms").value = semanticTerms;
+							getSemanticSearchResult(jArrSyn, filter, "");
+						//}
+					//}
+				},
+				error: function (e) {
+					console.log(e);
+				}
+			});
+		//})
+		
+}
+
+function readTSresults(keyword, val) {
+	var jArrSyn = [];
+	console.log("Terminologies for: " + keyword);
+	keyword = keyword.toLowerCase();
+	jArrSyn.push(keyword);
+	$.each(val.results, function () {
+		console.log("------------------------------");
+		$.each(this, function (key, value) {
+			var isAdded = false;
+			if ((key == "label") && (value != keyword)) {
+				if (jArrSyn.indexOf(value.toLowerCase().trim()) < 0) {
+					// add this label if not exist in the result
+					console.log(key + " : " + value);
+					jArrSyn.push(value.trim());
+					isAdded = true;
+				}
+			} else if ((key == "description") && (value.indexOf("Is a:") >= 0)) {
+				var parsedStr = value.substr(value.indexOf("Is a:") + 5).trim();
+				if (jArrSyn.indexOf(parsedStr.toLowerCase()) < 0) {
+					// add this description if not exist in the result
+					console.log(key + " : " + value);
+					jArrSyn.push(parsedStr);
+					isAdded = true;
+				}
+			} else if (key == "synonyms") {
+				for (i = 0; i < value.length; i++) {
+					if (jArrSyn.indexOf(value[i].toLowerCase().trim()) < 0) {
+						console.log(key + " : " + value[i]);
+						jArrSyn.push(value[i].trim());
+						isAdded = true;
+					}
+				}
+			} else if (key == "commonNames") {
+				for (i = 0; i < value.length; i++) {
+					if (jArrSyn.indexOf(value[i].toLowerCase().trim()) < 0) {
+						console.log(key + " : " + value[i]);
+						jArrSyn.push(value[i].trim());
+						isAdded = true;
+					}
+				}
+			}else if (key == "uri") {
+				if (isAdded){
+					console.log(key + " : " + value);}
+			} else if (key == "sourceTerminology") {
+				if (isAdded){
+					console.log(key + " : " + value);}
+			} 
+
 		});
+	});
+	return jArrSyn;
 }
 
 function getSemanticSearchResult(keywordArr, filter, yearRange) {
@@ -1453,54 +1554,56 @@ function getSemanticSearchResult(keywordArr, filter, yearRange) {
 	writeResultTable();
 	// bound a datatable to pansimple API query
 	var oTable = $('#tableId').DataTable({
-			"bDestroy" : true,
-			"bPaginate" : true,
-			"sPaginationType":"simple",
-			"bJQueryUI" : true,
-			"bProcessing" : true,
-			"bServerSide" : true,
-			"sAjaxSource" : searchAPI, // the URL of Search API
-			"bRetrieve" : true,
-			"fnServerData" : semanticQueryToServer(keywordArr, filter, yearRange),
+			"bDestroy": true,
+			"bPaginate": true,
+			"sPaginationType": "simple",
+			"bJQueryUI": true,
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": searchAPI, // the URL of Search API
+			"bRetrieve": true,
+			"fnServerData": semanticQueryToServer(keywordArr, filter, yearRange),
 			// assign only 3 columns for the result table
-			"aoColumns" : [{
+			"aoColumns": [{
 					// score column is used for sorting, hide it
-					"data" : "score",
-					"visible" : false,
-					"sortable" : false
+					"data": "score",
+					"visible": false,
+					"sortable": false
 				}, {
 					// html column is the main display
-					"data" : "html",
-					"visible" : true,
-					"sortable" : false
+					"data": "html",
+					"visible": true,
+					"sortable": false
 				}, {
 					// column displays color palette and basket cart icon
-					"class" : "color-control",
-					"sortable" : false,
-					"data" : null,
-					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv + ratingDiv
+					"class": "color-control",
+					"sortable": false,
+					"data": null,
+					"defaultContent": "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating) ? ratingDiv : '')
 				}
 			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
-			"sAutoWidth" : true,
+			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
+			"sAutoWidth": true,
 			// define the event after the search result is returned
-			"fnDrawCallback" : function (oSettings) {
+			"fnDrawCallback": function (oSettings) {
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
 					toggleParametersField();
-					setRatingBar();
+					if (showRating) {
+						setRatingBar();
+					}
 				}
 				$("body").toggleClass("wait");
 			},
 			// define the event after each table row is created
-			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+			"fnRowCallback": function (nRow, aData, iDisplayIndex) {
 				showCartIcon(nRow, aData);
 			},
-			"oLanguage" : {
-				"sLengthMenu" : "Show _MENU_ entries per page"
+			"oLanguage": {
+				"sLengthMenu": "Show _MENU_ entries per page"
 			}
 		});
 	// activate the row click event
@@ -1525,11 +1628,11 @@ function semanticQueryToServer(keyword, filter, yearRange) {
 
 		// Send request via AJAX
 		$.ajax(sSource, {
-			contentType : 'application/json; charset=UTF-8',
-			type : 'POST',
-			data : JSON.stringify(completeQuery),
-			dataType : 'json',
-			success : function (result) {
+			contentType: 'application/json; charset=UTF-8',
+			type: 'POST',
+			data: JSON.stringify(completeQuery),
+			dataType: 'json',
+			success: function (result) {
 				// get JSON result back from the server
 				var datasrc = result.hits.hits;
 
@@ -1548,7 +1651,7 @@ function semanticQueryToServer(keyword, filter, yearRange) {
 				result.data = res;
 				//console.log("submitQueryToServer");
 				//console.log(result);
-				
+
 				// return result object
 				fnCallback(result);
 			}
@@ -1556,26 +1659,33 @@ function semanticQueryToServer(keyword, filter, yearRange) {
 	};
 };
 
-
 function getBooleanQuery(keyword, filterArray, yearRange) {
 
 	var queryObj;
-	if (keyword.length>0) {
+	if (keyword.length > 0) {
 		var boostedKeywords = [];
-		for (var i=0;i<keyword.length;i++){
+		for (var i = 0; i < keyword.length; i++) {
 			var booster = 1;
-			if (i==0){
-				booster =	2.2;
+			if (i == 0) {
+				booster = 2.2;
 			}
-			boostedKeywords.push({"simple_query_string":{"query":keyword[i],
-						"fields" : ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
-						"default_operator" : "and",
-						"boost" : booster}});
+			boostedKeywords.push({
+				"simple_query_string": {
+					"query": keyword[i],
+					"fields": ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
+					"default_operator": "and",
+					"boost": booster
+				}
+			});
 		}
-		queryObj = {"bool":{"should": boostedKeywords}};
+		queryObj = {
+			"bool": {
+				"should": boostedKeywords
+			}
+		};
 	} else {
 		queryObj = {
-			"match_all" : {}
+			"match_all": {}
 		};
 	}
 	var filterObj;
@@ -1583,14 +1693,14 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 	if (yearRange == "") {
 		if (filterArray != "") {
 			filterObj = {
-				"and" : {
-					"filters" : filterArray
+				"and": {
+					"filters": filterArray
 				}
 			};
 		} else {
 			return {
-				"filtered" : {
-					"query" : queryObj
+				"filtered": {
+					"query": queryObj
 				}
 			};
 		}
@@ -1600,14 +1710,14 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		var maxYear = yearRange.substring(splitPos + 3);
 		//console.log(minYear + "-" + maxYear);
 		filterObj = [{
-				"and" : {
-					"filters" : filterArray
+				"and": {
+					"filters": filterArray
 				}
 			}, {
-				"range" : {
-					"citation_yearFacet" : {
-						"gte" : minYear,
-						"lte" : maxYear
+				"range": {
+					"citation_yearFacet": {
+						"gte": minYear,
+						"lte": maxYear
 					}
 				}
 			}
@@ -1615,16 +1725,16 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 	}
 
 	return {
-		"filtered" : {
-			"query" : queryObj,
-			"filter" : filterObj
+		"filtered": {
+			"query": queryObj,
+			"filter": filterObj
 		}
 	};
 }
 if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
-    position = position || 0;
-    return this.indexOf(searchString, position) === position;
-  };
+	String.prototype.startsWith = function (searchString, position) {
+		position = position || 0;
+		return this.indexOf(searchString, position) === position;
+	};
 }
 ///////////////////////////////////  End Semantic functions  /////////////////////////////////////
