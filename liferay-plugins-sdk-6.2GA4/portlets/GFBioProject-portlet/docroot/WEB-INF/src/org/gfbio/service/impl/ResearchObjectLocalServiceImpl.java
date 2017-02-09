@@ -668,7 +668,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			if (requestJson.containsKey("projectid") && check)
 				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
 
-	
 			if (requestJson.containsKey("userid") && check)
 				check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"), "owner");
 			

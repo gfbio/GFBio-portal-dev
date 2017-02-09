@@ -30,7 +30,7 @@
 				<link rel="stylesheet"	href="//cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.1/themes/bars-horizontal.min.css" />
 				<link rel="stylesheet"	href="//gfbio-db1.inf-bb.uni-jena.de/gfbioDev/search/css/spectrum.css" />
 				<link rel="stylesheet"	href="//gfbio-db1.inf-bb.uni-jena.de/gfbioDev/search/css/search.css" />
-				<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+				<link href="//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
 			</head>
 			<body style="min-height:350px;">
 				<div id="search_gadget">
@@ -44,7 +44,7 @@
 						autocomplete="off"/> 
 						<input id="QueryButton" name="QueryButton"
 						type="button" value="" 
-						onclick="javascript:newQuery(true);" title="Original search, no semantic terms will be included."/>
+						onclick="javascript:normalQuery(true);" title="Original search, no semantic terms will be included."/>
 						<input id="SemanticQueryButton" name="SemanticQueryButton"
 						type="button" value="" 
 						title="This will include semantic terms, including more relevant results, but could take longer processing time." 
@@ -71,7 +71,7 @@
 					if (q != '') {
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = q.replace("+"," ");
-						newQuery(true);
+						normalQuery(true);
 					}
 				};
 				$(document).ready(function() {
@@ -84,7 +84,7 @@
 					} else{
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = getCookie("gfbioSearchInput");
-						newQuery(false);
+						normalQuery(false);
 					}
 				});
 				

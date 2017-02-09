@@ -27,7 +27,7 @@
 				<link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
 				<link rel="stylesheet" type="text/css" href="//gfbio-db1.inf-bb.uni-jena.de/gfbioDev/search/css/jquery.tagit.min.css">
 				<link rel="stylesheet"	href="//gfbio-db1.inf-bb.uni-jena.de/gfbioDev/search/css/search.css" />
-				<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
+				<link href="//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css"/>
 			</head>
 			<body style="height:100%;">
 				<div id="search_facet">

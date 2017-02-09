@@ -231,7 +231,7 @@ function getFilteredLatestDataset(filter, yearRange) {
  * Input: boolean clearBasket: submit a new query with clear basket command or not
  * Effect: Show the result, refresh facet and VAT
  */
-function newQuery(clearBasket) {
+function normalQuery(clearBasket) {
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// read search keywords
@@ -253,6 +253,8 @@ function newQuery(clearBasket) {
 	// Save query to DB
 	if (saveSearch && keyword != "" && clearBasket) {
 		//console.log('New query is made.');
+		//clear semantic terms
+		document.getElementById("semanticTerms").value="";
 		saveSearchHistory(keyword, filter);
 		document.getElementById("filters").value = filter;
 	}
@@ -616,7 +618,8 @@ function parseReturnedJSONfromSearch(datasrc) {
 			var html = fields["html-1"][0];
 			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
 			html = writeShowHideFields(html);
-			inner.html = hilightResult(html);
+			if (document.getElementById("semanticTerms").value.trim() != "") html = hilightResult(html);
+			inner.html = html;
 		} else {
 			inner.html = "";
 		}
@@ -682,7 +685,7 @@ function loadBasket(topic, data, subscriberData) {
 	//console.log(queryStr);
 	var searchbox = document.getElementById("gfbioSearchInput");
 	searchbox.value = queryStr;
-	newQuery(false);
+	normalQuery(false);
 }
 
 /*
@@ -950,13 +953,15 @@ function writeShowHideFields(orgHTML) {
 }
 function hilightResult(orgHTML) {
 	var semanticTerms = document.getElementById("semanticTerms").value;
-	var semList = semanticTerms.split(/[\s,\|]+/);
+	semanticTerms = semanticTerms.replace(" and ","|");
+	var semList = semanticTerms.split(/[\|]+/);
 	var newHTML = orgHTML;
 	for (var i = 0; i < semList.length; i++) {
-		if ((semList[i].trim() != "") && (semList[i].trim() != "and")) {
-			if (newHTML.toLowerCase().indexOf(semList[i].toLowerCase()) >= 0) {
-				var query = new RegExp("(\\b" + semList[i] + "\\b)", "gim");
-				//var temp = orgHTML.replace(/(<div>|<\/div>)/igm, "");
+		var semTerm = semList[i].trim().replace(" ","(.{1,25})"); 
+		//allow only 1-25 characters in between, e.g. Circaea ... L.
+		if (semTerm != "") {
+			var query = new RegExp("(\\b" + semTerm + ")", "gim");
+			if (newHTML.match(query) != null) {
 				newHTML = newHTML.replace(query, "<span class='hilight'>$1</span>");
 			}
 		}
@@ -1452,7 +1457,7 @@ function getTSterms(keyword, filter, yearRange) {
 	//TODO: upgrade keyword split with double quote, or automatically parse terms
 	
 	//var keys = keyword.split(" ");
-	var nKeys = keys.length;
+	//var nKeys = keys.length;
 	var nRequest = 0;
 		//$.each(keys, function (ind, item) {
 		var item = keyword;
@@ -1463,20 +1468,20 @@ function getTSterms(keyword, filter, yearRange) {
 				dataType: 'json',
 				success: function (val) {
 					jArrSyn.push.apply(jArrSyn, readTSresults(item, val));
-					nRequest++;
-					console.log(nRequest);
-					if (nRequest == nKeys){ 
+					//nRequest++;
+					//console.log(nRequest);
+					//if (nRequest == nKeys){ 
 						//if all keywords get semantic terms, then send to pansimple
 						semanticTerms = jArrSyn.join("|");
 						console.log('*********************************');
 						console.log(semanticTerms);
 						//TODO: check if jArrSyn.length > nKeys (contains only the original keyword)
-						if (jArrSyn.length <= nKeys) console.log('no semantic terms recieved, search again with included option.');
-						else{
+						//if (jArrSyn.length <= nKeys) console.log('no semantic terms recieved, search again with included option.');
+						//else{
 							document.getElementById("semanticTerms").value = semanticTerms;
 							getSemanticSearchResult(jArrSyn, filter, "");
-						}
-					}
+						//}
+					//}
 				},
 				error: function (e) {
 					console.log(e);
