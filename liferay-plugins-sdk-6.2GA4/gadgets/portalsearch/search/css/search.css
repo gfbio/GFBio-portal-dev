@@ -1,5 +1,8 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url(//fonts.googleapis.com/css?family=Lato);
 @import url("//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css");
+body, td, div, span, p{
+	font-family:'Lato',sans-serif;
+}
 
 input[type=search] {
 	/*min-width: 200px;*/
@@ -30,14 +33,14 @@ label, input, button {
     width:24px;
 	height:24px;
 	border: none;
-	cursor: help;
+	cursor: pointer;
 }
 #SemanticQueryButton{
 	background:url('../images/ico-search-semantic.png') no-repeat center center;
 	width:24px;
 	height:24px;
 	border: none;
-	cursor: help;
+	cursor: pointer;
 }
 
 span.hilight{
@@ -63,7 +66,7 @@ select[name=tableId_length] {
 	color: #818181;
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
-	font-size: 16px ;
+	font-size: 14px ;
 	line-height:24px;
 	padding:0;
 }
@@ -84,9 +87,8 @@ a {
 		 text-decoration: underline;
 		 text-decoration-style: dotted;
 }
-a:focus , a:visited, a:hover{
+a:focus , a:visited{
     color: #333333;
-    font-weight: bold;
 }
 /*a, a:hover, a:focus, .btn:focus {
 		    text-decoration: none;
@@ -116,18 +118,21 @@ div.dataTables_paginate{
 	width: 36px;
 	background: url('../images/cart_add.png') no-repeat center center;
 	cursor: pointer;
+	margin-left: -5px;
 }
 .cart_selected{
 	height: 36px;
 	width: 36px;
 	background: url('../images/cart_rem.png') no-repeat center center;
 	cursor: pointer;
+	margin-left: -5px;
 }
 td.color-control {
 	vertical-align: middle;
 	text-align: center;
 	display: block;
 	position: absolute;
+	margin-left:-6px;
 }
 .invisible{
 	display:none !important;
