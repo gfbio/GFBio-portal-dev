@@ -1,5 +1,4 @@
-AUI()
-		.ready(
+AUI().ready(
 				'liferay-navigation-interaction',
 				'liferay-sign-in-modal',
 				function(A) {
@@ -145,3 +144,29 @@ AUI().ready(function() {
 }
 
 );
+
+// adds an icon in front of external text links
+AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
+
+
+  A.all('.journal-content-article a[href^="http://"],.journal-content-article a[href^="https://"]').each(function(object) {
+    var link= object.html();
+
+     if(link){
+	
+    	 object.html('<i aria-hidden="true" class="fa fa-external-link" style="font-size:14px;"></i> ' + link);
+	}
+  });
+});
+
+/*removes external icons from footer*/
+AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
+
+	A.all('.journal-content-article .footer a[href^="http://"]').each(function(object) {
+	    var linkText= object.text();
+
+	     if(linkText){
+	       object.html(linkText);
+		}
+	      });
+	});

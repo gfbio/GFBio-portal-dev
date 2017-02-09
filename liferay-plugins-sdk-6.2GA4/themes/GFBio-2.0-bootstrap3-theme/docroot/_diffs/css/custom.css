@@ -67,14 +67,24 @@
 			font-weight:400;
 		} 
 
-		.text-link{
+		 .journal-content-article a{
 		
 		 color: rgb(60, 172, 228); /*3CACE4*/
 		 text-decoration: underline;
 		 text-decoration-style: dotted;
+		} 
+		
+		.journal-content-article .footer a{
+		
+		 color: #fff;
+		 text-decoration: none;
+		 text-decoration-style: none;
+        }
+	
+		.journal-content-article a.btn {
+		 color:#fff;
+		 text-decoration:none;
 		}
-		
-		
 		
 	}
 	

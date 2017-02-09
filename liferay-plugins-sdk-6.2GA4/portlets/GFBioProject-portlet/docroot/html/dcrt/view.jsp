@@ -11,7 +11,6 @@
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
 <portlet:resourceURL var="ajaxUrlContact" id="contact" />
 <portlet:resourceURL var="ajaxUrlSubmission" id="submission" />
-<portlet:resourceURL var="ajaxUrlDetails" id="details" />
 	
 <script type="text/javascript" >
   
@@ -21,19 +20,20 @@ $( document ).ready(function() {
 		$("input[name=sequenced]").attr("checked", false);
 		$("input[name=alive]").attr("checked", false);
 		$("input[name=material]").attr("checked", false);
-	})
-	
-	$("input[name=taxon]").click(function () {
-		$("input[name=sequenced]").attr("checked", false);
-		$("input[name=alive]").attr("checked", false);
-		$("input[name=material]").attr("checked", false);
+		$("div#below").show();
 	})
 	
 	$("input[name=alive]").click(function () {
 		$("input[name=sequenced]").attr("checked", false);
 		$("input[name=material]").attr("checked", false);
+		$("input[name=taxon]").attr("checked", false);
 	})
 	
+	$("input[name=taxon]").click(function () {
+		$("input[name=sequenced]").attr("checked", false);
+		$("input[name=material]").attr("checked", false);
+	})
+		
 	$("input[name=sequenced]").click(function () {
 		$("input[name=taxon]").attr("checked", false);
 		$("input[name=alive]").attr("checked", false);
@@ -137,6 +137,10 @@ $(document).ready(function () {
 
 function openConfirmDialog(defaultContact, btnId) {
 	
+	var btn = $(btnId);
+	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
+	console.log("DataCenter: " + dataCenter);
+	
 	var confirmDialog = $("#dialog-confirm").dialog({
 		autoOpen: false,
 	    resizable: false,
@@ -144,11 +148,12 @@ function openConfirmDialog(defaultContact, btnId) {
 	    modal: true,
 	    close: clearForm,
 	    dialogClass: "contact-dialog custom-dialog",
+	    title: "DCRT Contact Request to " + dataCenter,
 	    buttons: {
-	        'Create Ticket': function() {
+	        'Send Message': function() {
 	        	if ( $("#dialogForm").valid() ) {
-	                $( this ).dialog( 'close' );
-	                createJiraTicket(defaultContact, btnId);
+	              	createJiraTicket(defaultContact, dataCenter);
+	              	$( this ).dialog( 'close' );
 	            }
 	    	},
 	        Cancel: function() {
@@ -160,17 +165,24 @@ function openConfirmDialog(defaultContact, btnId) {
 }
 
 function clearForm() {
-	//$('#dialogForm').resetForm();	
+	//reset input fields and remove validation classes
+	var form = $('#dialogForm');
+	$("input:text", form).each(function() {
+        this.value = "";
+        $(this).removeClass("error valid");
+	});
+	var textarea = $('textarea#message')
+	textarea.val("");
+    textarea.removeClass("error valid");
 }
 
-function createJiraTicket(defaultContact, id) {
+function createJiraTicket(defaultContact, dc) {
 	
-	var btn = $(id);
-	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
+	var dataCenter = dc;
 	
-	var contactName = $("input#contactName").val();
-	var contactEmail = $("input#contactEmail").val();
-	var message = $("textarea#message").val();
+	var contactName = $('input#contactName').val();
+	var contactEmail = $('input#contactEmail').val();
+	var message = $('textarea#message').val();
 	
 	if(typeof category != "string") {
 		category = "None";
@@ -229,7 +241,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("div#result").on('click', "button[name=detailsButton]", function () {
     	var dataCenter = $(this).parent().parent().find("span[name='dataCenter']").attr("id");
-    	var link = "http://www.gfbio.org/about/data-centers#portfolio-" + dataCenter.toLowerCase();
+    	var link =  themeDisplay.getPortalURL() + "/about/data-centers#portfolio-" + dataCenter.toLowerCase();
     	window.open (
     		link,
     		'_blank' // open in a new window.
@@ -265,7 +277,7 @@ List<GCategory> categories = DCRTPortlet.getCategoryResearchFieldList();
 List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 %>
 
-<div id="dialog-confirm" title="DCRT Contact Request" style="display: none;">
+<div id="dialog-confirm" title="" style="display: none;">
 	<form id="dialogForm">
 	    <fieldset>
 		    <label for="contactName" style="display: block">Name</label>
@@ -279,9 +291,9 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 	     </fieldset>
      </form>
 </div>
-<div id="dialog-success" title="Create Ticket" style="display: none;" >
+<div id="dialog-success" title="DCRT Request" style="display: none;" >
 	<span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;" ></span>
-	<p>Your JIRA Ticket was successfully created.</p>
+	<p>Your message have been successfully sent.</p>
 </div>
 
 <div class="container custom" >
@@ -293,7 +305,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 				<div id="physical" name="question" >
 					Do you want to submit physical objects along with your data?
 					<div style="display:block;">
-						<input name="physical" type="radio" value="true" onClick="show('#taxon'); hide('#categorySelection'); hideFirstLevelRight();" />
+						<input name="physical" type="radio" value="true" onClick="show('#alive'); hide('#categorySelection'); hideFirstLevelRight();" />
 						Yes
 					</div>
 					<div style="display:block;">
@@ -301,26 +313,26 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 						No
 					</div>
 				</div>
-				<div id="taxon" name="question" class="swHide">
-					Do you have taxon-based objects in addition to your data?
-					<div style="display:block;">
-						<input name="taxon" type="radio" value="true" onClick="show('#alive'); hide('#materialSelection'); " />
-						Yes
-					</div>
-					<div style="display:block;">
-						<input name="taxon" type="radio" value="false" onClick="show('#alive'); hide('#materialSelection'); " />
-						No
-					</div>
-				</div>
 				<div id="alive" name="question" class="swHide">
 					Is your object dead or alive?
 					<div style="display:block;">
-						<input name="alive" type="radio" value="true" onClick="hide('#materialSelection');" />
+						<input name="alive" type="radio" value="true" onClick="hide('#materialSelection'); hide('#taxon')" />
 						Alive
 					</div>
 					<div style="display:block;">
-						<input name="alive" type="radio" value="false" onClick="show('#materialSelection');" />
+						<input name="alive" type="radio" value="false" onClick="show('#taxon'); hide('#materialSelection');" />
 						Dead
+					</div>
+				</div>
+				<div id="taxon" name="question" class="swHide">
+					Do you have taxon-based objects in addition to your data?
+					<div style="display:block;">
+						<input name="taxon" type="radio" value="true" onClick="show('#materialSelection'); " />
+						Yes
+					</div>
+					<div style="display:block;">
+						<input name="taxon" type="radio" value="false" onClick="show('#materialSelection'); " />
+						No
 					</div>
 				</div>
 				<div id="sequenced" name="question" class="swHide">
@@ -371,24 +383,24 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 		</div>
 	</div>
 	<div>	
-		<div id="below" class="col-md-12" > 
+		<div id="below" class="swHide col-md-12"> 
 			<div>
 				<h3 style="margin-bottom: 20px;">Data Center Recommendation</h3>
 			</div>
 			<div id="result" style="text-align: left">
-				No choice has been made
+				
 			</div>
 			<div id="defaultResult" name="defaultContact" style="text-align: left" class="swHide">
-				<h4 style="margin-bottom: 20px;">No appropriate Data Center found?</h4>
+				<h4 style="margin-bottom: 20px;">Do you need support in selecting a suitable data center or do you have further questions concerning data management?<br/>Please get in contact with us:</h4>
 				<div class="row dcrttable">
 					<div class="col-xs-3 col-sm-2 col-lg-2">
-						<img src="/GFBioProject-portlet/images/gfbio_contact.jpg" style="width: 80px;"/>
+						<img src="/GFBioProject-portlet/images/gfbio_contact.jpg" style="width: 80px;" class="img-zoom"/>
 					</div>
-					<div class="col-xs-9 col-sm-5 col-lg-6" style="padding-left: 25px; padding-top: 8px;">
-						<span id="GFBio" name="dataCenter" >GFBio Contact</span>
+					<div class="col-xs-9 col-sm-6 col-lg-7" style="padding-left: 25px; padding-top: 8px;">
+						<span id="GFBio" name="dataCenter" >German Federation for Biological Data (GFBio)</span>
 					</div>
-					<div class="col-xs-12 col-sm-5 col-lg-4" style="text-align: center; padding-top: 8px;">
-						<button type="button" value="German Federation for Biological Data (GFBio)" name="contactButton" class="dcrtbutton default">Contact</button>
+					<div class="col-xs-12 col-sm-4 col-lg-3" style="text-align: center; padding-top: 8px;">
+						<button type="button" value="GFBioContact" name="contactButton" class="dcrtbutton default">Contact</button>
 					</div>
 				</div>
 			</div>

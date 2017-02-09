@@ -160,6 +160,12 @@ h1.navbar-brand {
     background-size: cover;
     -o-background-size: cover;
     height:564px;
+    
+    a{
+    	color:#666;
+    	text-decoration:none;
+    	outline:none;
+    }
 }
 
 
@@ -677,6 +683,14 @@ h3.landing-area {
 /*=================================================================
 	Services
 ==================================================================*/
+#service{
+	a{
+    	color:#666;
+    	text-decoration:none;
+    	outline:none;
+    }
+	
+}
 
 .service-spacer {
     margin-top: 40px;

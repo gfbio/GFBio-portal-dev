@@ -5,6 +5,18 @@
 
 #submission-fork {
     /*background-color: #eee;*/
+   
+}
+
+section#submission-fork  #molecular a,
+section#submission-fork  #generic a,
+section#submission-fork  #collections a,
+section#submission-fork  #environmental a
+{
+ 
+    	color:#000;
+    	text-decoration:none;
+
 }
 
 .icon-submission {
