@@ -12,6 +12,17 @@ INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES ('8', 'Zool
 INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES ('9', 'European Nucleotide Archive', 'ENA');
 INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES ('10', 'GFBio Collections', 'GFBio collections');
 
+--Provider type
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='PANGAEA';
+
 --Question 1
 UPDATE gfbio_dataprovider SET physicalobjects = true WHERE label ='BGBM';
 UPDATE gfbio_dataprovider SET physicalobjects = true WHERE label ='DSMZ';

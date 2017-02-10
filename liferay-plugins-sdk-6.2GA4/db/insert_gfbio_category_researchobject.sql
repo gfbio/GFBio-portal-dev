@@ -11,14 +11,11 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('4','gfbio_category_researchfield','relationship');
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES('20','gfbio_category_researchobject','relationship');
 
 
 ------------------------------------- Column Table Content -------------------------------------
 
 
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('10','4','gfbio_category');		--gfbio_category_researchfield
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('11','4','gfbio_researchfield');	--gfbio_category_researchfield
-
-
-------------------------------------- Content Table Content -------------------------------------
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('61','20','gfbio_category');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('62','20','gfbio_researchobject');

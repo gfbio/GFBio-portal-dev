@@ -31,3 +31,8 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1524','5','12','1525','1524');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1526','5','13','1525','research field');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1527','5','14','1525','research field');
+
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('2005','5','12' ,'2006','2005');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('2007','5','13' ,'2006','material kind');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('2008','5','14' ,'2006','material kind');
+

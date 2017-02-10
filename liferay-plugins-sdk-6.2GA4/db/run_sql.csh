@@ -9,12 +9,14 @@ export PGPASSWORD=$command 1
 
 $command create_dataprovider.sql
 $command create_head.sql
+$command create_primarydata.sql
 $command create_project.sql
 $command create_researchobject.sql
 
 
 $command create_basket.sql
 $command create_column.sql
+$command create_primarydata_researchobject.sql
 $command create_project_researchobject.sql
 $command create_project_user.sql
 $command create_researchobject_user.sql
@@ -43,11 +45,10 @@ $command create_funding_personproject.sql
 $command create_submission.sql
 $command insert_gfbio_category_dataprovider.sql
 $command insert_gfbio_category_project.sql
-$command insert_gfbio_category_researchfield.sql
+$command insert_gfbio_category_researchobject.sql
 $command insert_gfbio_category_type.sql
 $command insert_gfbio_categoryparent.sql
 $command insert_gfbio_externalperson_researchobject.sql
-$command insert_gfbio_license_researchobject.sql
 $command insert_gfbio_fundingagency_fundingprogram.sql
 
 

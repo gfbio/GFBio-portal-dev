@@ -102,3 +102,9 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1899','11','32' ,'1897','Phenotypic Quality Ontology (PATO)');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1900','11','33' ,'1897','');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1901','11','34' ,'1897','');
+
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1909','11','30' ,'1910','1909');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1911','11','31' ,'1910','no metadata');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1912','11','32' ,'1910','no metadata');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1913','11','33' ,'1910','');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1914','11','34' ,'1910','');

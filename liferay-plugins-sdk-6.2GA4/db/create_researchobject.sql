@@ -3,6 +3,7 @@
 DROP TABLE IF EXISTS
      gfbio_researchobject CASCADE;
 
+
 CREATE TABLE gfbio_researchobject
 (
   researchobjectid bigint NOT NULL,
@@ -15,6 +16,8 @@ CREATE TABLE gfbio_researchobject
   extendeddata text,
   description text,
   metadataid bigint,
+  licenseid bigint,
+  researchobjecttype character varying(75),
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion)
 )
 WITH (

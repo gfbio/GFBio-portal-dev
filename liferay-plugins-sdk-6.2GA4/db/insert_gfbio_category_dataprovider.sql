@@ -26,7 +26,7 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES('18','7','gfbio_d
 
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1571','7','17','1572','1500');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1573','7','18','1572','3');
-INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1574','7','17','1575','1512');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1574','7','17','1575','1496');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1576','7','18','1575','3');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1577','7','17','1578','1512');
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES('1579','7','18','1578','3');

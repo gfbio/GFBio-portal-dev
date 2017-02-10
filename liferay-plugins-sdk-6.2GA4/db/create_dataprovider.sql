@@ -3,6 +3,7 @@
 DROP TABLE IF EXISTS 
      gfbio_dataprovider CASCADE;
 
+
 CREATE TABLE gfbio_dataprovider
 (
   dataproviderid bigint NOT NULL,
@@ -12,6 +13,7 @@ CREATE TABLE gfbio_dataprovider
   address text,
   website character(150),
   training text,
+  providertype character(75),
   physicalobjects boolean,
   taxonbased boolean,
   notaxonbased boolean,
