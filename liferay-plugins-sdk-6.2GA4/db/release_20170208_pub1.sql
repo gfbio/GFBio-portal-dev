@@ -251,11 +251,8 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUE
 
 -----------------------------------------------------------------------------------------------
 ------------------------------------ Head, Column & Content -----------------------------------
-----------------------------------       category type        -- 07.12.2016 edit: 07.02.2017 --
+----------------------------------       category  / type        -- 07.12.2016 edit: 07.02.2017 --
 -----------------------------------------------------------------------------------------------
-
---INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),'11','30' ,getNewRowId(),getNewContentId());
---INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),'11','31' ,getMaxRowId(),'no metadata');
 
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),'6','15' ,getNewRowId(),getContentIdByContent('Botanical objects', 2));
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),'6','16' ,getMaxRowId(),getContentIdByContent('material kind', 13));
