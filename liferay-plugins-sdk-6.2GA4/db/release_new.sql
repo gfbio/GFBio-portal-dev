@@ -420,7 +420,7 @@ language 'sql' VOLATILE;
 
 create or replace function changeCellContentByNames(in hename text, in colname text, in oldccont text, in ccont text)  RETURNS void AS
 $$
-	SELECT changeCellContentByIds(getcolumnidbynames(hename , colname), oldccont, ccont),
+	SELECT changeCellContentByIds(getcolumnidbynames(hename , colname), oldccont, ccont);
 $$	
 language 'sql' VOLATILE;
 
