@@ -157,7 +157,8 @@
 		<column name="address" type="String" />
 		<column name="website" type="String" />
 		<column name="training" type="String" />
-		
+		<column name="physicalobjectpossible" type="boolean" />
+		<column name="nophysicalobject" type="boolean" />
 		<column name="physicalobjects" type="boolean" />
 		<column name="taxonbased" type="boolean" />
 		<column name="notaxonbased" type="boolean" />

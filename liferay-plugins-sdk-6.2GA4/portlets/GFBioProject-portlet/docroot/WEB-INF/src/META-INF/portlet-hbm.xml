@@ -56,6 +56,8 @@
 		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="website" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="training" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="physicalobjectpossible" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="nophysicalobject" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="physicalobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="taxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="notaxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />

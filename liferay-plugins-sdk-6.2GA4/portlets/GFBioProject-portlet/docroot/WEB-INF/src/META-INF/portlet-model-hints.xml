@@ -29,6 +29,8 @@
 		<field name="address" type="String" />
 		<field name="website" type="String" />
 		<field name="training" type="String" />
+		<field name="physicalobjectpossible" type="boolean" />
+		<field name="nophysicalobject" type="boolean" />
 		<field name="physicalobjects" type="boolean" />
 		<field name="taxonbased" type="boolean" />
 		<field name="notaxonbased" type="boolean" />

@@ -53,6 +53,8 @@
 			<basic name="address" />
 			<basic name="website" />
 			<basic name="training" />
+			<basic name="physicalobjectpossible" />
+			<basic name="nophysicalobject" />
 			<basic name="physicalobjects" />
 			<basic name="taxonbased" />
 			<basic name="notaxonbased" />

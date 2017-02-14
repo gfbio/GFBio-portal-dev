@@ -65,7 +65,7 @@
 		if (data.userid != 0){
 
 			div.append(
-				"<h2>Generic Submission Workflow</h2>"+
+				//"<h2>Generic Submission Workflow</h2>"+
 				
 				"<div class='swHide'>"+
 					"<div class='control-group'>"+
@@ -525,30 +525,37 @@
 		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
 		//var url = document.getElementById('workflowgenericurl').value;
 		
+		console.log(data);
+		
 		data["path"]= document.getElementById("gwf_user_path").innerHTML;
 
-		$.ajax({
+		console.log(data);
+		
+/* 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
 			"data" : {
 				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : "startsubmission"
+				//"<portlet:namespace />responseTarget" : "startsubmission"
 			},
 			async: false,
 			success :  function (obj){
+				console.log("jo");
+				console.log(obj);
 				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
 				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. </div>");
 				setTimeout(function(){commentarField.empty();}, 25000);
 			},
 			error :  function (obj){
+				console.log("nope");
 				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
 				commentarField.empty();
 				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support.</div>");
 				setTimeout(function(){commentarField.empty();}, 25000);
 
 			},		
-		});	
+		});	 */
 	}
 	
 	
