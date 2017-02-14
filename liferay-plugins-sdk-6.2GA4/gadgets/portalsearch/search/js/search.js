@@ -154,7 +154,7 @@ function getFilteredLatestDataset(filter, yearRange) {
 
 		// add sorting by citation date
 		completeQuery.sort = {
-			"citation_date" : {
+			"citation_yearFacet" : {
 				"order" : "desc"
 			}
 		};
@@ -477,7 +477,7 @@ function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfiel
 		boostedQuery,
 		'from' : iDisplayStart,
 		'size' : iDisplayLength,
-		'fields' : queryfield,
+		/*'fields' : queryfield,*/
 		'aggs' : {
 			'author' : {
 				'terms' : {
@@ -519,29 +519,28 @@ function parseReturnedJSONfromSearch(datasrc) {
 	for (var i = 0, iLen = datasrc.length; i < iLen; i++) {
 		var inner = new Object();
 		var score = datasrc[i]._score;
-		var fields = datasrc[i].fields;
+		var fields = datasrc[i]._source;
 		inner.score = score;
 		//console.log('parseReturnedJSONfromSearch:fields');
-		//console.log(fields);
-		inner.title = getValueFromJSONObject(fields, "citation_title", 0);
-		inner.authors = getValueFromJSONArray(fields, "citation_authors");
-		inner.description = getValueFromJSONObject(fields, "description", 0);
-		inner.dataCenter = getValueFromJSONObject(fields, "dataCenter", 0);
-		inner.region = getValueFromJSONArray(fields, "region");
-		inner.project = getValueFromJSONArray(fields, "project");
-		inner.parameter = getValueFromJSONArray(fields, "parameter");
-		inner.investigator = getValueFromJSONArray(fields, "investigator");
-		inner.timeStamp = getValueFromJSONObject(fields, "internal-datestamp", 0);
-		inner.maxLatitude = getValueFromJSONObject(fields, "maxLatitude", 0);
-		inner.minLatitude = getValueFromJSONObject(fields, "minLatitude", 0);
-		inner.maxLongitude = getValueFromJSONObject(fields, "maxLongitude", 0);
-		inner.minLongitude = getValueFromJSONObject(fields, "minLongitude", 0);
-		inner.metadatalink = getValueFromJSONObject(fields, "metadatalink", 0);
-		inner.datalink = getValueFromJSONObject(fields, "datalink", 0);
-		inner.format = getValueFromJSONObject(fields, "format", 0);
+		inner.title = getMultiValueField(fields, "citation_title");
+		inner.authors = getMultiValueField(fields, "citation_authors");
+		inner.description = getMultiValueField(fields, "description");
+		inner.dataCenter = getMultiValueField(fields, "dataCenter");
+		inner.region = getMultiValueField(fields, "region");
+		inner.project = getMultiValueField(fields, "project");
+		inner.parameter = getMultiValueField(fields, "parameter");
+		inner.investigator = getMultiValueField(fields, "investigator");
+		inner.timeStamp = getMultiValueField(fields, "internal-datestamp");
+		inner.maxLatitude = getMultiValueField(fields, "maxLatitude");
+		inner.minLatitude = getMultiValueField(fields, "minLatitude");
+		inner.maxLongitude = getMultiValueField(fields, "maxLongitude");
+		inner.minLongitude = getMultiValueField(fields, "minLongitude");
+		inner.metadatalink = getMultiValueField(fields, "metadatalink");
+		inner.datalink = getMultiValueField(fields, "datalink");
+		inner.format = getMultiValueField(fields, "format");
 		if (fields["html-1"]) { 
 			// this field is used only for displaying data
-			var html = fields["html-1"][0];
+			var html = fields["html-1"];
 			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
 			inner.html = writeShowHideFields(html);
 		} 
@@ -1260,6 +1259,18 @@ function XMLtoJSON() {
 /*
  * Description: Read value from a JSONObject
  */
+function getMultiValueField(jObj, name){
+	if ($.isArray(jObj)){
+		var jArr = jObj[name];
+		if (jArr.length > 0){
+		    return jArr;
+		}
+	}
+	else{
+		return jObj[name]
+	}
+	return "";
+}
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var jArr = jObj[name];
@@ -1308,8 +1319,8 @@ function toggleParametersField() {
 function getCookie(name) {
 	var re = new RegExp(name + "=([^;]+)");
 	var value = re.exec(document.cookie);
-	console.log('getCookie:'+name);
-	console.log(value);
+	//console.log('getCookie:'+name);
+	//console.log(value);
 	return (value != null) ? unescape(value[1]) : null;
 }
 
@@ -1317,8 +1328,8 @@ function setCookie(name, value) {
 	var today = new Date();
 	var expiry = new Date(today.getTime() + 7 * 24 * 3600 * 1000); // plus 7 days
 	document.cookie = name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
-	console.log('setCookie:'+name);
-	console.log(value);
+	//console.log('setCookie:'+name);
+	//console.log(value);
 }  
 
 function deleteCookie(name)
