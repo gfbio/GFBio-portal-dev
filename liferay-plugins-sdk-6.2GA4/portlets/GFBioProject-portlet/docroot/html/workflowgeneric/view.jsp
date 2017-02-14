@@ -39,5 +39,11 @@
 	<span class='widthM' id='cwf_b_filetester' onclick='testSubmit()'>		<span class='btn btn-primary'>Test file</span></span> -->
 	
 	<br>
+	
+	<form method="POST" action="https://c103-171.cloud.gwdg.de/api/submissions/generic">
+        <input type="text" name="aText" id="aText">
+        <input type="checkbox" name="aCheck" id="aCheck">
+        <input type="submit">
+    </form>
 
 <%} %>	

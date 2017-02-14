@@ -522,7 +522,8 @@
 	//
 	function startSubmission(data){
 			
-		var url = document.getElementById('workflowgenericurl').value;
+		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
+		//var url = document.getElementById('workflowgenericurl').value;
 		
 		data["path"]= document.getElementById("gwf_user_path").innerHTML;
 

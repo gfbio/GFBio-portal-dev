@@ -331,3 +331,124 @@ SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gf
 SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Other objects' ,  7 );
 SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Other objects' ,  8 );
 
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+-----------------------------------        dataprovider        - 14.02.2017 -------------------
+-----------------------------------------------------------------------------------------------
+
+UPDATE gfbio_dataprovider SET name = 'Botanic Garden and Botanical Museum Berlin-Dahlem, Freie Universität Berlin' WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET name = 'Leibniz Institute DSMZ - German Collection of Microorganisms and Cell Cultures, Braunschweig' WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET name = 'Leibniz Institute for Research on Evolution and Biodiversity, Berlin' WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET name = 'Senckenberg Gesellschaft für Naturforschung - Leibniz Institute, Frankfurt' WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET name = 'State Museum of Natural History Stuttgart' WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET name = 'Staatliche naturwissenschaftliche Sammlungen Bayerns - SNSB IT Center, München' WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET name = 'Zoological Research Museum Alexander Koenig - Leibniz Institute for Animal Biodiversity, Bonn' WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET name = 'European Nucleotide Archive' WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET name = 'Data Publisher for Earth & Environmental Science' WHERE label ='PANGAEA';
+
+
+---------------------------------------------------------------------------------------------
+------------------------------------------ Functions ----------------------------------------
+------------------------------------   dynamic contentids 14.02.2017 ------------------------
+---------------------------------------------------------------------------------------------
+
+
+create or replace function deleteHCCRelationshipWithOutsideOfHCC(in relationhename text, in relationcolname1 text, in colname1 text, in ccont1 text, in ccont2 text)  RETURNS void AS
+$$
+	DELETE 
+	FROM 
+		public.gfbio_content 
+	WHERE  
+		rowid in (
+			SELECT
+				rowid
+			FROM 
+				public.gfbio_content 
+			WHERE  
+				headid = (SELECT getHeadIdByName(relationhename)) AND
+				cellcontent = CAST((SELECT getContentIdentifierIdByRowID(getrowIdByContentId(getContentIdByNames(relationcolname1, colname1, ccont1))))AS text)
+		) AND
+		rowid in (
+			SELECT
+				rowid
+			FROM 
+				public.gfbio_content 
+			WHERE  
+				headid = (SELECT getHeadIdByName(relationhename)) AND
+				cellcontent = ccont2
+		);
+$$	
+language 'sql' VOLATILE;
+
+
+
+create or replace function deleteHCCRelationship(in relationhename text, in relationcolname1 text, in relationcolname2 text, in colname1 text, in ccont1 text,  in colname2 text, in ccont2 text)  RETURNS void AS
+$$
+	DELETE
+	FROM 
+		public.gfbio_content 
+	WHERE  
+		rowid in (
+			SELECT
+				rowid
+			FROM 
+				public.gfbio_content 
+			WHERE  
+				headid = (SELECT getHeadIdByName(relationhename)) AND
+				cellcontent = CAST((SELECT getContentIdentifierIdByRowID(getrowIdByContentId(getContentIdByNames(relationcolname1, colname1, ccont1))))AS text)
+		) AND
+		rowid in (
+			SELECT
+				rowid
+			FROM 
+				public.gfbio_content 
+			WHERE  
+				headid = (SELECT getHeadIdByName(relationhename)) AND
+				cellcontent = CAST((SELECT getContentIdentifierIdByRowID(getrowIdByContentId(getContentIdByNames(relationcolname2, colname2, ccont2))))AS text)
+		);
+$$	
+language 'sql' VOLATILE;
+
+
+create or replace function changeCellContentByIds(in colid bigint, in oldccont text, in ccont text)  RETURNS void AS
+$$
+	UPDATE gfbio_content SET cellcontent = ccont WHERE columnid = colid AND cellcontent = oldccont;
+$$	
+language 'sql' VOLATILE;
+
+
+create or replace function changeCellContentByNames(in hename text, in colname text, in oldccont text, in ccont text)  RETURNS void AS
+$$
+	SELECT changeCellContentByIds(getcolumnidbynames(hename , colname), oldccont, ccont),
+$$	
+language 'sql' VOLATILE;
+
+
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+------------------------------       category / dataprovider        - 14.02.2017 --------------
+-----------------------------------------------------------------------------------------------
+
+
+SELECT deleteHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider', 'gfbio_category','name','Botanical tissue objects', '1');
+SELECT deleteHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider', 'gfbio_category','name','Botanical tissue objects', '5');
+SELECT deleteHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider', 'gfbio_category','name','Botanical tissue objects', '6');
+SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Botanical tissue objects' ,  1 );
+SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Botanical tissue objects' ,  5 );
+SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Botanical DNA samples' ,  1 );
+SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Botanical DNA samples' ,  5 );
+SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Botanical DNA samples' ,  6 );
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+-------------------------------------        category        - 14.02.2017 ---------------------
+-----------------------------------------------------------------------------------------------
+
+SELECT changeCellContentByNames('gfbio_category', 'name',  'Other discipline', 'Other');
+SELECT changeCellContentByNames('gfbio_category', 'label', 'Other discipline', 'Other');
+SELECT changeCellContentByNames('gfbio_category', 'name',  'Other objects', 'Other');
+SELECT changeCellContentByNames('gfbio_category', 'label', 'Other objects', 'Other');

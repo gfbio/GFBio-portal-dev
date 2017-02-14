@@ -2,14 +2,15 @@ package org.gfbio.submissionworkflow;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -155,6 +156,35 @@ public class WorkflowGeneric extends GenericPortlet {
 	
 	////////////////////////////////////////////////////////////// helper functions //////////////////////////////////////////
  
+
+    //
+    private static JSONObject getBrokerAuthorization(String path) throws IOException, PortletException {
+    	
+    	JSONObject responseJson = new JSONObject();
+		JSONParser parser = new JSONParser();	
+		File file = new File(path.trim() +"..\\..\\..\\server_specific_identification\\brokeragent.txt");
+		FileInputStream fis = null;
+		
+		try {
+			fis = new FileInputStream(file);
+			int content;
+			String preJson ="";
+			
+			while ((content = fis.read()) != -1)
+				preJson = preJson+(char) content;
+			
+			try {responseJson = (JSONObject) parser.parse(preJson);}
+			catch (ParseException e) {e.printStackTrace();}
+	
+		} catch (IOException e) {e.printStackTrace();}
+		finally {
+			try {if (fis != null)fis.close();} 
+			catch (IOException ex) {ex.printStackTrace();}
+		}
+		
+		return responseJson;
+	}
+    
 	
 	//
 	private JSONArray getDataJsonAsArray (ResourceRequest request){
@@ -235,6 +265,7 @@ public class WorkflowGeneric extends GenericPortlet {
         
         //project informations
         
+        
         //project id
         if (projectJson.containsKey("projectid"))
         	if (!((String) projectJson.get("projectid")).equals("0"));
@@ -243,14 +274,19 @@ public class WorkflowGeneric extends GenericPortlet {
 
         //dataset informations
         
-        //dataset id 
-        fields.put("customfield_10309",String.valueOf((long) researchObjectJson.get("researchobjectid")));						
+        		
+        if (researchObjectJson.containsKey("researchobjectid"))
+        	if (!((String) projectJson.get("researchobjectid")).equals("0")){
+        		
+        		//dataset id 
+        		fields.put("customfield_10309",String.valueOf((long) researchObjectJson.get("researchobjectid")));	
+        		
+                //dataset version
+                fields.put("customfield_10310", String.valueOf((long) researchObjectJson.get("researchobjectversion"))); 		
+        	}
         
         //dataset title
-        fields.put("customfield_10201", researchObjectJson.get("name")); 						
-        
-        //dataset version
-        fields.put("customfield_10310", String.valueOf((long) researchObjectJson.get("researchobjectversion"))); 							
+        fields.put("customfield_10201", researchObjectJson.get("name")); 							
         
         //dataset label
         datasetlabelArray.add(researchObjectJson.get("label"));
@@ -354,24 +390,17 @@ public class WorkflowGeneric extends GenericPortlet {
         	fields.put("customfield_10202", license);
         }
 	      
-        //fields.put("fooo", "fooo");
-	      
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("submitterid"));
         try {json.put("authorization", "Token "+WorkflowENAPortlet.getServerToken((String) requestJson.get("path"),"token"));}
         catch (IOException | PortletException e) {e.printStackTrace();}
-       
-	
-/*        System.out.println("---------------------");
-        System.out.println("submission: "+json);
-        System.out.println("---------------------");*/
-	      
+       	      
         String response = json.toJSONString();
         response = response.replaceAll("\\\\", "");
 	           
         return response;
     }
-	
+    	
 	
 	////////////////////////////////////////////////////////////// update functions //////////////////////////////////////////
 		
@@ -397,48 +426,54 @@ public class WorkflowGeneric extends GenericPortlet {
     
     
     public void startSubmission (ResourceRequest request, ResourceResponse response){
-    	
-        String responseString = "";    	
+   
+    	String responseString = "";    	
         JSONObject parseJson = getDataJsonAsObject (request);
-
-        try {
-            URL url = new
-            URL("http://c103-170.cloud.gwdg.de/brokerage/submissions/generic");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
+        
+        //JSONObject Authorization = getBrokerAuthorization("");
+        
+    	try {
+	        
+	        URL url = new URL("https://c103-171.cloud.gwdg.de/api/submissions/generic/");
+		        
+	        System.setProperty("javax.net.ssl.trustStore", "C:/Users/froemm/GFBio/GFBio-portal-dev/workspace/LiferayWebserviceTest/jssecacerts");
+	        System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+	
+	        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+	        
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setUseCaches(false);
-            conn.setRequestMethod("POST");
+	        conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Accept","application/json");
-           
-            String userpass = "uni-jena:GFBIOhelpdesk123";
-            String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
-            conn.addRequestProperty ("Authorization", basicAuth);
-          
-            String encodedData = getJSON_Body((JSONObject) parseJson);
-            OutputStream os = conn.getOutputStream();
-            os.write(encodedData.getBytes());
-            os.flush();       
-   
-            if (conn.getResponseCode() != 201)
-               throw new RuntimeException("Failed : HTTP error code : "+ conn.getResponseCode());
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-            String output;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null){
-            	System.out.println("output");
-                responseString = responseString.concat(output);
-            } 
-
-            conn.disconnect();
-         } catch (Exception e) {e.printStackTrace();}
-       
+	        conn.setRequestProperty("Accept", "application/json");
+	        
+/*	        String userpass = "gfbio-dev:iekieta4ooH$o;i[";
+	        String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
+	        conn.addRequestProperty ("Authorization", basicAuth);*/
+	
+	        String encodedData = getJSON_Body((JSONObject) parseJson);
+	        OutputStream os = conn.getOutputStream();
+	        os.write(encodedData.getBytes());
+	        os.flush();       
+	        
+	        if (conn.getResponseCode() != 201) 
+	           throw new RuntimeException("Failed : HTTPS error code : " + conn.getResponseCode());
+	        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+	        String output;
+	        System.out.println("Output from Server .... \n");
+	        while ((output = br.readLine()) != null){
+	           System.out.println(output); 
+	           responseString = responseString.concat(output);
+	        }
+	        conn.disconnect();
+	     } catch (Exception e) {e.printStackTrace();}
+        
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		try {response.getWriter().write(responseString);}
 		catch (IOException e) {e.printStackTrace();}
+        
     }
    
    
