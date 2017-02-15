@@ -186,7 +186,7 @@ language 'sql' VOLATILE;
 --------------------------------      category / data provider       - 10.02.2017 -------------
 -----------------------------------------------------------------------------------------------
 
-SELECT insertRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Palaeontology' ,  4 );
+SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Palaeontology' ,  4 );
 
 
 -----------------------------------------------------------------------------------------------
@@ -233,15 +233,15 @@ SELECT insertHCCRelationship('gfbio_category_type' , 'gfbio_category' , 'gfbio_t
 -----------------------------------------------------------------------------------------------
 
 ALTER TABLE gfbio_dataprovider ADD COLUMN physicalobjectpossible BOOLEAN;
-UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='BGBM';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='DSMZ';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='MfN';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='SGN';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='SMNS';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='SNSB';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='ZFMK';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = false WHERE label ='ENA';
-UPDATE gfbio_dataprovider SET physicalobjectpossible = false WHERE label ='PANGAEA';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET physicalobjectpossible2 = false WHERE label ='PANGAEA';
 
 ALTER TABLE gfbio_dataprovider ADD COLUMN nophysicalobject BOOLEAN;
 UPDATE gfbio_dataprovider SET nophysicalobject = true WHERE label ='BGBM';
