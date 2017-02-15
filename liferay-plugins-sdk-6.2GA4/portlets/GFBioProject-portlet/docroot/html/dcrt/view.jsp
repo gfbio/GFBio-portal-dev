@@ -1,5 +1,7 @@
 <%@ include file="/html/dcrt/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="theme" %>
+
 <script  src="<%=request.getContextPath()%>/js/dcrt/jquery-ui.min.js"       type="text/javascript"></script> <!--  jquery-ui.js  imports -->
 <script src="<%=request.getContextPath()%>/js/jquery.validate.min.js" type="text/javascript"></script>
 <script  src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"       type="text/javascript"></script> <!--  dcrt.js  imports -->
@@ -11,6 +13,8 @@
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
 <portlet:resourceURL var="ajaxUrlContact" id="contact" />
 <portlet:resourceURL var="ajaxUrlSubmission" id="submission" />
+
+<theme:defineObjects />
 	
 <script type="text/javascript" >
   
@@ -273,18 +277,25 @@ $(document).ready(function () {
 </script>
 
 <%
-List<GCategory> categories = DCRTPortlet.getCategoryResearchFieldList();
-List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
+List<GCategory> categories = DCRTPortlet.getCategoryList("research field");
+List<GCategory> materials = DCRTPortlet.getCategoryList("material kind");
+
+String username = "";
+String email = "";
+if(themeDisplay.isSignedIn()) {
+	username = user.getFullName();
+	email = user.getEmailAddress();
+}
 %>
 
 <div id="dialog-confirm" title="" style="display: none;">
 	<form id="dialogForm">
 	    <fieldset>
 		    <label for="contactName" style="display: block">Name</label>
-		    <input type="text" name="contactName" id="contactName" 
+		    <input type="text" name="contactName" id="contactName" value="<%=username%>"
 		    placeholder="Name" class="text ui-widget-content ui-corner-all dialogtext">
 		    <label for="contactEmail" style="display: block">E-Mail</label>
-		    <input type="text" name="contactEmail" id="contactEmail" 
+		    <input type="text" name="contactEmail" id="contactEmail" value="<%=email%>"
 		    placeholder="E-Mail" class="text ui-widget-content ui-corner-all dialogtext">
 		    <label for="message" style="display: block">Message</label>
 		    <textarea id="message" name="contactMessage" rows="4" cols="100" placeholder="Your Message"></textarea>
@@ -293,7 +304,7 @@ List<GCategory> materials = DCRTPortlet.getCategoryMaterialList();
 </div>
 <div id="dialog-success" title="DCRT Request" style="display: none;" >
 	<span class="ui-icon ui-icon-circle-check" style="float:left; margin:12px 12px 20px 0;" ></span>
-	<p>Your message have been successfully sent.</p>
+	<p>Your message has been successfully sent.</p>
 </div>
 
 <div class="container custom" >
