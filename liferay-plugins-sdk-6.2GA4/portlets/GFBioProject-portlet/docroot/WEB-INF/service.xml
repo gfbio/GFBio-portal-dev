@@ -159,30 +159,11 @@
 		<column name="training" type="String" />
 		<column name="physicalobjectpossible" type="boolean" />
 		<column name="nophysicalobject" type="boolean" />
-		<column name="physicalobjects" type="boolean" />
 		<column name="taxonbased" type="boolean" />
 		<column name="notaxonbased" type="boolean" />
 		<column name="livingobjects" type="boolean" />
 		<column name="deadobjects" type="boolean" />
 		<column name="sequencedata" type="boolean" />
-		
-		<column name="botanicalObjects" type="boolean" />
-		<column name="mycologicalObjects" type="boolean" />
-		<column name="zoologicalObjects" type="boolean" />
-		<column name="paleontologicalObjects" type="boolean" />
-		<column name="botanicalTissueObjects" type="boolean" />
-		<column name="mycologicalTissueObjects" type="boolean" />
-		<column name="zoologicalTissueObjects" type="boolean" />
-		<column name="botanicalDnaSamples" type="boolean" />
-		<column name="mycologicalDnaSamples" type="boolean" />
-		<column name="zoologicalDnaSamples" type="boolean" />
-		<column name="botanicalObjectsInEthanol" type="boolean" />
-		<column name="mycologicalObjectsInEthanol" type="boolean" />	
-		<column name="zoologicalObjectsInEthanol" type="boolean" />	
-		<column name="botanicalMicroscopicSlides" type="boolean" />	
-		<column name="mycologicalMicroscopicSlides" type="boolean" />	
-		<column name="zoologicalMicroscopicSlides" type="boolean" />	
-		<column name="otherObjects" type="boolean" />	
 		
 		<column name="providerType" type="String" />	
 

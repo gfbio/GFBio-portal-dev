@@ -58,29 +58,11 @@
 		<property name="training" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="physicalobjectpossible" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="nophysicalobject" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="physicalobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="taxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="notaxonbased" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="livingobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="deadobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="sequencedata" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="botanicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="mycologicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="zoologicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="paleontologicalObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="botanicalTissueObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="mycologicalTissueObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="zoologicalTissueObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="botanicalDnaSamples" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="mycologicalDnaSamples" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="zoologicalDnaSamples" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="botanicalObjectsInEthanol" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="mycologicalObjectsInEthanol" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="zoologicalObjectsInEthanol" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="botanicalMicroscopicSlides" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="mycologicalMicroscopicSlides" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="zoologicalMicroscopicSlides" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="otherObjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="providerType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" table="gfbio_DataProvider_PersistentIdentifier">

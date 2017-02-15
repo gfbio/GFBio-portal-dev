@@ -31,29 +31,11 @@
 		<field name="training" type="String" />
 		<field name="physicalobjectpossible" type="boolean" />
 		<field name="nophysicalobject" type="boolean" />
-		<field name="physicalobjects" type="boolean" />
 		<field name="taxonbased" type="boolean" />
 		<field name="notaxonbased" type="boolean" />
 		<field name="livingobjects" type="boolean" />
 		<field name="deadobjects" type="boolean" />
 		<field name="sequencedata" type="boolean" />
-		<field name="botanicalObjects" type="boolean" />
-		<field name="mycologicalObjects" type="boolean" />
-		<field name="zoologicalObjects" type="boolean" />
-		<field name="paleontologicalObjects" type="boolean" />
-		<field name="botanicalTissueObjects" type="boolean" />
-		<field name="mycologicalTissueObjects" type="boolean" />
-		<field name="zoologicalTissueObjects" type="boolean" />
-		<field name="botanicalDnaSamples" type="boolean" />
-		<field name="mycologicalDnaSamples" type="boolean" />
-		<field name="zoologicalDnaSamples" type="boolean" />
-		<field name="botanicalObjectsInEthanol" type="boolean" />
-		<field name="mycologicalObjectsInEthanol" type="boolean" />
-		<field name="zoologicalObjectsInEthanol" type="boolean" />
-		<field name="botanicalMicroscopicSlides" type="boolean" />
-		<field name="mycologicalMicroscopicSlides" type="boolean" />
-		<field name="zoologicalMicroscopicSlides" type="boolean" />
-		<field name="otherObjects" type="boolean" />
 		<field name="providerType" type="String" />
 	</model>
 	<model name="org.gfbio.model.DataProvider_PersistentIdentifier">

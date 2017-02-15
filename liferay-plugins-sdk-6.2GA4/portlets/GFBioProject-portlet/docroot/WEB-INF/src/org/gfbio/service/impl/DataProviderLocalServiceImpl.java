@@ -136,29 +136,13 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		json.put("website", (dataProvider.getWebsite()).trim());
 		json.put("training", (dataProvider.getTraining()).trim());
 		
-		json.put("physicalobjects", dataProvider.getPhysicalobjects());
+		json.put("physicalobjectpossible", dataProvider.getPhysicalobjectpossible());
+		json.put("nophysicalobject", dataProvider.getNophysicalobject());
 		json.put("taxonbased", dataProvider.getTaxonbased());
 		json.put("notaxonbased", dataProvider.getNotaxonbased());
 		json.put("livingobjects", dataProvider.getLivingobjects());
 		json.put("deadobjects", dataProvider.getDeadobjects());
 		json.put("sequencedata", dataProvider.getSequencedata());
-		json.put("botanicalobjects", dataProvider.getBotanicalObjects());
-		json.put("mycologicalobjects", dataProvider.getMycologicalObjects());
-		json.put("zoologicalobjects", dataProvider.getZoologicalObjects());
-		json.put("paleontologicalobjects", dataProvider.getPaleontologicalObjects());
-		json.put("botanicaltissueobjects", dataProvider.getBotanicalTissueObjects());
-		json.put("mycologicaltissueobjects", dataProvider.getMycologicalTissueObjects());
-		json.put("zoologicaltissueobjects", dataProvider.getZoologicalObjects());
-		json.put("botanicaldnasamples", dataProvider.getBotanicalDnaSamples());
-		json.put("mycologicaldnasamples", dataProvider.getMycologicalDnaSamples());
-		json.put("zoologicaldnasamples", dataProvider.getZoologicalDnaSamples());
-		json.put("botanicalobjectsinethanol", dataProvider.getBotanicalObjectsInEthanol());
-		json.put("mycologicalobjectsinethanol", dataProvider.getMycologicalObjectsInEthanol());
-		json.put("zoologicalobjectsinethanol", dataProvider.getZoologicalObjectsInEthanol());
-		json.put("botanicalmicroscopicslides", dataProvider.getBotanicalMicroscopicSlides());
-		json.put("mycologicalmicroscopicslides", dataProvider.getMycologicalMicroscopicSlides());
-		json.put("zoologicalmicroscopicslides", dataProvider.getZoologicalMicroscopicSlides());
-		json.put("otherobjects", dataProvider.getOtherObjects());
 		
 		return json;
 	}
@@ -200,15 +184,10 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 	
 	//
 	public Boolean updateDataProvider (long dataProviderId, String name, String label, String description, String address, String website, String training,
-			Boolean physicalObjects, Boolean botanicalObjects, Boolean mycologicalObjects, Boolean zoologicalObjects, Boolean paleontologicalObjects,
+			Boolean physicalObjectPossible, Boolean noPhysicalObject,
 			Boolean taxonBased, Boolean noTaxonBased,
 			Boolean livingObjects, Boolean deadObjects,
-			Boolean sequenceData,
-			Boolean botanicalTissueObjects,	Boolean mycologicalTissueObjects, Boolean zoologicalTissueObjects,
-			Boolean botanicalDnaSamples, Boolean mycologicalDnaSamples,	Boolean zoologicalDnaSamples,
-			Boolean botanicalObjectsInEthanol, Boolean mycologicalObjectsInEthanol,	Boolean zoologicalObjectsInEthanol,
-			Boolean botanicalMicroscopicSlides,	Boolean mycologicalMicroscopicSlides, Boolean zoologicalMicroscopicSlides,
-			Boolean otherObjects){
+			Boolean sequenceData){
 		
 		Boolean check = false;
 		
@@ -229,30 +208,14 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		dataProvider.setAddress(address);
 		dataProvider.setWebsite(website);
 		dataProvider.setTraining(training);
-		dataProvider.setPhysicalobjects(physicalObjects);
+		dataProvider.setPhysicalobjectpossible(physicalObjectPossible);
+		dataProvider.setNophysicalobject(noPhysicalObject);
 		dataProvider.setTaxonbased(taxonBased);
 		dataProvider.setNotaxonbased(noTaxonBased);
 		dataProvider.setLivingobjects(livingObjects);
 		dataProvider.setDeadobjects(deadObjects);
 		dataProvider.setSequencedata(sequenceData);
-		dataProvider.setBotanicalObjects(botanicalObjects);
-		dataProvider.setMycologicalObjects(mycologicalObjects);
-		dataProvider.setZoologicalObjects(zoologicalObjects);
-		dataProvider.setPaleontologicalObjects(paleontologicalObjects);
-		dataProvider.setBotanicalTissueObjects(botanicalTissueObjects);
-		dataProvider.setMycologicalTissueObjects(mycologicalTissueObjects);
-		dataProvider.setZoologicalTissueObjects(zoologicalTissueObjects);
-		dataProvider.setBotanicalDnaSamples(botanicalDnaSamples);
-		dataProvider.setMycologicalDnaSamples(mycologicalDnaSamples);
-		dataProvider.setZoologicalDnaSamples(zoologicalDnaSamples);
-		dataProvider.setBotanicalObjectsInEthanol(botanicalObjectsInEthanol);
-		dataProvider.setMycologicalObjectsInEthanol(mycologicalObjectsInEthanol);
-		dataProvider.setZoologicalObjectsInEthanol(zoologicalObjectsInEthanol);
-		dataProvider.setBotanicalMicroscopicSlides(botanicalMicroscopicSlides);
-		dataProvider.setMycologicalDnaSamples(mycologicalDnaSamples);
-		dataProvider.setZoologicalMicroscopicSlides(zoologicalMicroscopicSlides);
-		dataProvider.setOtherObjects(otherObjects);
-		
+	
 		return check;
 	}
 }
