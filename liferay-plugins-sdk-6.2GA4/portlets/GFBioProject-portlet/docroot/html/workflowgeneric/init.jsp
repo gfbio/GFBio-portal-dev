@@ -168,7 +168,7 @@
 			  	"<input type='file' id='file-select'  multiple/>"+
 // 		 		"<button type='submit' id='upload-button'>Upload</button> "+
 				"</form>"+
-				"<span class='widthM' id='gwf_b_filetester' onclick='testSubmit()'>		<span class='btn btn-primary'>Test file</span></span>"+
+//				"<span class='widthM' id='gwf_b_filetester' onclick='testSubmit()'>		<span class='btn btn-primary'>Test file</span></span>"+
 			
 				
 				
@@ -442,7 +442,7 @@
 	////////////////////////////////////////////////////////////////// upload tests
 	
 	
-	function testSubmit(){
+	function fileUplaod(){
 	
 			
 		var url = document.getElementById('workflowgenericurl').value;
@@ -451,11 +451,16 @@
 		var researchObjectId = 		Number(document.getElementById('gwf_ro_id').innerHTML);
 		var researchObjectVersion = Number(document.getElementById('gwf_ro_version').innerHTML);
 		var userId = 				Number(document.getElementById('gwf_user_id').innerHTML);
-		researchObjectId = 35301;
+		//researchObjectId = 35301;
 		
- 		var uploadInformation = new File(['{"researchobjectid":'+researchObjectId+',"researchobjectversion":'+researchObjectVersion+'}'], "uploadInformation.txt");
+ 		var uploadInformation = new File(['{"researchobjectid":'+researchObjectId+',"researchobjectversion":'+researchObjectVersion+',"userid":'+userId+'}'], "uploadInformation.txt");
+ 		console.log("-----------------------------");
+ 		console.log(userId);
+ 		console.log(researchObjectId);
+ 		console.log(researchObjectVersion);
  		
 		console.log(uploadInformation);
+ 		console.log("-----------------------------");
 		formData.append('file', uploadInformation);
 
 		
@@ -485,7 +490,7 @@
 			async: false,
 			success :  function (){
 				
-				var name = "test.txt";
+				var name = "test2.txt";
 				var path = userId+"/"+researchObjectId+"/"+researchObjectVersion+"/"+name;
 				
 				console.log("yeah");

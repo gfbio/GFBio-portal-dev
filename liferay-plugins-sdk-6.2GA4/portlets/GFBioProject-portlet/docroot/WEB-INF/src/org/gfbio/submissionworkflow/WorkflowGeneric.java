@@ -512,7 +512,7 @@ public class WorkflowGeneric extends GenericPortlet {
 
 	    	long researchObjectId = 0;
 	    	int  researchObjectVersion = 0;
-	    	long  userId = Long.valueOf(originalHttpServletRequest.getParameter("p_l_id"));
+	    	long  userId = 0;
 	        
 /*	        System.out.println("1 "+items.size());
 	        System.out.println("2 "+originalHttpServletRequest.getContentLength());
@@ -544,6 +544,7 @@ public class WorkflowGeneric extends GenericPortlet {
 	    			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
 	        		researchObjectId = (long) roJson.get("researchobjectid");
 	        		researchObjectVersion = ResearchObjectLocalServiceUtil.getResearchObjectVersionFromJson(roJson);
+	        		userId = (long) roJson.get("userid");
 	        	} else {
 	        		String path = "C:"+File.separator+"Users"+File.separator+"froemm"+File.separator+"Desktop"+File.separator+File.separator+"Neuer Ordner (2)"+File.separator+userId+File.separator+researchObjectId+File.separator+researchObjectVersion;
 	        		File files = new File(path);

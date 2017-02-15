@@ -452,3 +452,29 @@ SELECT changeCellContentByNames('gfbio_category', 'name',  'Other discipline', '
 SELECT changeCellContentByNames('gfbio_category', 'label', 'Other discipline', 'Other');
 SELECT changeCellContentByNames('gfbio_category', 'name',  'Other objects', 'Other');
 SELECT changeCellContentByNames('gfbio_category', 'label', 'Other objects', 'Other');
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+-----------------------------------        dataprovider        - 15.02.2017 -------------------
+-----------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_dataprovider DROP COLUMN physicalobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN botanicalobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN botanicaltissueobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN botanicaldnasamples;
+ALTER TABLE gfbio_dataprovider DROP COLUMN botanicalmicroscopicslides;
+ALTER TABLE gfbio_dataprovider DROP COLUMN botanicalobjectsinethanol;
+ALTER TABLE gfbio_dataprovider DROP COLUMN mycologicalobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN mycologicaltissueobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN mycologicaldnasamples;
+ALTER TABLE gfbio_dataprovider DROP COLUMN mycologicalmicroscopicslides;
+ALTER TABLE gfbio_dataprovider DROP COLUMN mycologicalobjectsinethanol;
+ALTER TABLE gfbio_dataprovider DROP COLUMN zoologicalobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN zoologicaltissueobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN zoologicaldnasamples;
+ALTER TABLE gfbio_dataprovider DROP COLUMN zoologicalobjectsinethanol;
+ALTER TABLE gfbio_dataprovider DROP COLUMN zoologicalmicroscopicslides;
+ALTER TABLE gfbio_dataprovider DROP COLUMN paleontologicalobjects;
+ALTER TABLE gfbio_dataprovider DROP COLUMN otherobjects;
+
