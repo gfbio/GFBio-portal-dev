@@ -289,7 +289,7 @@ public class DCRTPortlet extends MVCPortlet {
 			List<DataProvider> providersToDelete = new ArrayList<DataProvider>();
 			for (DataProvider p : recommendedProviders) {
 				if (physical) {
-					if (!p.getPhysicalobjects()) {
+					if (!p.getPhysicalobjectpossible()) {
 						providersToDelete.add(p);
 					}
 				}
