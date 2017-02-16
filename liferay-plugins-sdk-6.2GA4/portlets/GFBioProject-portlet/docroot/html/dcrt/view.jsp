@@ -1,7 +1,5 @@
 <%@ include file="/html/dcrt/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="theme" %>
-
 <script  src="<%=request.getContextPath()%>/js/dcrt/jquery-ui.min.js"       type="text/javascript"></script> <!--  jquery-ui.js  imports -->
 <script src="<%=request.getContextPath()%>/js/jquery.validate.min.js" type="text/javascript"></script>
 <script  src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"       type="text/javascript"></script> <!--  dcrt.js  imports -->
@@ -13,8 +11,6 @@
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
 <portlet:resourceURL var="ajaxUrlContact" id="contact" />
 <portlet:resourceURL var="ajaxUrlSubmission" id="submission" />
-
-<theme:defineObjects />
 	
 <script type="text/javascript" >
   
@@ -276,26 +272,14 @@ $(document).ready(function () {
 });
 </script>
 
-<%
-List<GCategory> categories = DCRTPortlet.getCategoryList("research field");
-List<GCategory> materials = DCRTPortlet.getCategoryList("material kind");
-
-String username = "";
-String email = "";
-if(themeDisplay.isSignedIn()) {
-	username = user.getFullName();
-	email = user.getEmailAddress();
-}
-%>
-
 <div id="dialog-confirm" title="" style="display: none;">
 	<form id="dialogForm">
 	    <fieldset>
 		    <label for="contactName" style="display: block">Name</label>
-		    <input type="text" name="contactName" id="contactName" value="<%=username%>"
+		    <input type="text" name="contactName" id="contactName" value="${username}"
 		    placeholder="Name" class="text ui-widget-content ui-corner-all dialogtext">
 		    <label for="contactEmail" style="display: block">E-Mail</label>
-		    <input type="text" name="contactEmail" id="contactEmail" value="<%=email%>"
+		    <input type="text" name="contactEmail" id="contactEmail" value="${email}"
 		    placeholder="E-Mail" class="text ui-widget-content ui-corner-all dialogtext">
 		    <label for="message" style="display: block">Message</label>
 		    <textarea id="message" name="contactMessage" rows="4" cols="100" placeholder="Your Message"></textarea>
@@ -365,13 +349,9 @@ if(themeDisplay.isSignedIn()) {
 					
 					<select id="category" name="category" >
 						<option selected="selected" label="Select" value="default" >Select</option>
-						<%
-						for(GCategory c : categories) {
-						%>
-						<option label="<%=c.getName() %>" value="<%=c.getId()%>"><%=c.getName() %> </option>
-						<%
-						}
-						%>
+						<c:forEach var="field" items="${researchfields}">
+							<option label="<c:out value="${field.name}" />" value="<c:out value="${field.id}"/>"><c:out value="${field.name}"/></option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>
@@ -381,13 +361,9 @@ if(themeDisplay.isSignedIn()) {
 					
 					<select id="material" name="material" >
 						<option selected="selected" label="Select" value="default" >Select</option>
-						<%
-						for(GCategory m : materials) {
-						%>
-						<option label="<%=m.getName() %>" value="<%=m.getId() %>"><%=m.getName() %> </option>
-						<%
-						}
-						%>
+						<c:forEach var="material" items="${materials}">
+							<option label="<c:out value="${material.name}" />" value="<c:out value="${material.id}"/>"><c:out value="${material.name}"/></option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>

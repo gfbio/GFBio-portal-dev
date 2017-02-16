@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -33,7 +35,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -60,6 +61,31 @@ public class DCRTPortlet extends MVCPortlet {
 		} else if (resourceRequest.getResourceID().equals("submission")) {
 			ajaxSubmissionButton(resourceRequest, resourceResponse);
 		}
+	}
+
+	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
+			throws PortletException, IOException {
+	
+		//Setting categories for dropdowns
+		List<GCategory> researchfields = getCategoryList("research field");
+		List<GCategory> materials = getCategoryList("material kind");
+		
+		renderRequest.setAttribute("researchfields", researchfields);
+		renderRequest.setAttribute("materials", materials);
+		
+		//Setting email and username if user is logged in
+		String username = "";
+		String email = "";
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		if (themeDisplay.isSignedIn()) {
+			username = themeDisplay.getUser().getFullName();
+			email = themeDisplay.getUser().getEmailAddress();
+		}
+		
+		renderRequest.setAttribute("username", username);
+		renderRequest.setAttribute("email", email);
+		
+		super.render(renderRequest, renderResponse); 
 	}
 
 	/* Method for ajax functionality of Radio Buttons */
@@ -198,13 +224,14 @@ public class DCRTPortlet extends MVCPortlet {
 		Project project = new Project("SAND");
 		IssueType issuetype = new IssueType("Question");
 		Reporter reporter = new Reporter("testuser1");
-		
-		//If a user is signed in, the reporter will be set new with the email address of the user
+
+		// If a user is signed in, the reporter will be set new with the email
+		// address of the user
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		if (themeDisplay.isSignedIn()) {
 			reporter = new Reporter(themeDisplay.getUser().getEmailAddress());
 		}
-		
+
 		String summary = "Data Center Recommendation Request";
 
 		// User for assignee value
@@ -280,7 +307,10 @@ public class DCRTPortlet extends MVCPortlet {
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 
-	/* Set recommended datacenters in consideration of the radio input selection which was made */
+	/*
+	 * Set recommended datacenters in consideration of the radio input selection
+	 * which was made
+	 */
 	private List<DataProvider> setRecommendedProviders(String physicalInput, String taxonInput, String aliveInput,
 			String sequencedInput) {
 
@@ -362,7 +392,10 @@ public class DCRTPortlet extends MVCPortlet {
 		return recommendedProviders;
 	}
 
-	/* Set recommended datacenters in consideration of the radio input and category selection which was made */
+	/*
+	 * Set recommended datacenters in consideration of the radio input and
+	 * category selection which was made
+	 */
 	private List<DataProvider> setRecommendedProvidersWithCategory(String physical, String taxon, String alive,
 			String sequenced, String category) {
 
@@ -415,15 +448,15 @@ public class DCRTPortlet extends MVCPortlet {
 		try {
 			long relationTableHeadId = HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_type");
 			long entitiyTableHeadId = HeadLocalServiceUtil.getHeadIdByTableName("gfbio_type");
-		
+
 			String entityTableCellContent = type;
 			JSONArray json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(
 					relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
-	
+
 			categories = transformJsonArrayToGCategory(json);
 			categories = sortCategories(categories);
-		
-		} catch(NoSuchHeadException | SystemException ex) {
+
+		} catch (NoSuchHeadException | SystemException ex) {
 			_log.error("Error while getting HeadId by HeadLocalServiceUtil");
 		}
 		return categories;
@@ -448,7 +481,7 @@ public class DCRTPortlet extends MVCPortlet {
 		}
 		return categories;
 	}
-	
+
 	/* Transform JSONArray to List of categories */
 	public static List<GCategory> transformJsonArrayToGCategory(JSONArray categoryJson) {
 		List<GCategory> categories = new ArrayList<GCategory>();
