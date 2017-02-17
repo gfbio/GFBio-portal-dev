@@ -18,9 +18,6 @@
 <link href="<%=request.getContextPath()%>/css/dcrt/spinner.css"
 	rel="stylesheet" type="text/css">
 <!-- spinner import -->
-<link href="<%=request.getContextPath()%>/css/dcrt/loader.css"
-	rel="stylesheet" type="text/css">
-<!-- loader import -->
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
@@ -255,8 +252,14 @@ function createJiraTicket(defaultContact, dc) {
 
 function answer(element, response) {
 	console.info(response);
-	$("#dialogLoader").hide();
-	$(element).show();
+	sleep(2000).then(() => {
+		$("#dialogLoader").hide();
+		$(element).show();
+	})
+}
+
+function sleep (time) {
+  	return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 $(document).ready(
