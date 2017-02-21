@@ -50,27 +50,3 @@ function hideFirstLevelRight() {
 	hide('#categorySelection');
     hide('#sequenced');
 }
-
-//
-//function hideCategory(selection) {
-//    'use strict';
-//    
-//	if (selection === "noselection") {
-//		hide('#categories');
-//	}
-//}
-
-//
-//function categoryalert(label) {
-//	document.getElementById(label).setAttribute("style", "font-weight: bold");
-//	
-//	var searchEles = document.getElementById("categorylist").children;
-//	for(var i = 0; i < searchEles.length; i++) {
-//		var insidediv = searchEles[i].children;
-//		for(var j = 0; j < insidediv.length; j++) {
-//			if (insidediv(j).getAttribute("id") != label) {
-//				insidediv[j].setAttribute("style", "font-weight: normal; color: red;");
-//			}
-//		}
-//	}
-//}

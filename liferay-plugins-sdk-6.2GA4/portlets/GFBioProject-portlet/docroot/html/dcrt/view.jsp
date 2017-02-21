@@ -25,7 +25,10 @@
 <portlet:resourceURL var="ajaxUrlSubmission" id="submission" />
 
 <script type="text/javascript">
-  
+
+var userEmail = '${email}';
+var userName = '${username}';
+
 $( document ).ready(function() {
 	$("input[name=physical]").click(function () {
 		$("input[name=taxon]").attr("checked", false);
@@ -151,7 +154,7 @@ function openConfirmDialog(defaultContact, btnId) {
 	
 	var btn = $(btnId);
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
-	console.log("DataCenter: " + dataCenter);
+	//console.log("DataCenter: " + dataCenter);
 	
 	var confirmDialog = $("#dialog-confirm").dialog({
 		autoOpen: false,
@@ -187,7 +190,15 @@ function clearForm() {
 	var form = $('#dialogForm');
 	
 	$("input:text", form).each(function() {
-		if (!Liferay.ThemeDisplay.isSignedIn()) {
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			if (this.id == 'contactName') {
+				console.log("ContactName");
+				this.value = userName;
+			} else if (this.id == 'contactEmail') {
+				console.log("ContactEmail");
+				this.value = userEmail;
+			}
+		} else {
 			this.value = "";
 		}
         $(this).removeClass("error valid");
@@ -197,8 +208,8 @@ function clearForm() {
 	textarea.val("");
     textarea.removeClass("error valid");
     
-    var username = Liferay.ThemeDisplay.getUserName();
-    console.log("UserId " + username);
+    console.log("UserId " + userName);
+    console.log("EmailAddress " + userEmail);
     
     $("#dialogForm").show();
     $("#successAnswer").hide();
@@ -222,7 +233,7 @@ function createJiraTicket(defaultContact, dc) {
 	if(defaultContact === "true") {
 		$.each( data, function( index ) {
 			dataCenterList.push($(this).attr("id"));
-			console.info("index" + $(this).attr("id"));
+			//console.info("index" + $(this).attr("id"));
 		})
 	}
 	
@@ -251,7 +262,7 @@ function createJiraTicket(defaultContact, dc) {
 	}
 
 function answer(element, response) {
-	console.info(response);
+	//console.info(response);
 	sleep(2000).then(() => {
 		$("#dialogLoader").hide();
 		$(element).show();
@@ -312,20 +323,18 @@ $(document).ready(function() {
 <div id="dialog-confirm" style="display: none;">
 	<form id="dialogForm">
 		<fieldset>
-			<label for="contactName" style="display: block">Name</label> <input
-				type="text" name="contactName" id="contactName" value="${username}"
-				placeholder="Name"
-				class="text ui-widget-content ui-corner-all dialogtext"> <label
-				for="contactEmail" style="display: block">E-Mail</label> <input
-				type="text" name="contactEmail" id="contactEmail" value="${email}"
-				placeholder="E-Mail"
-				class="text ui-widget-content ui-corner-all dialogtext"> <label
-				for="message" style="display: block">Message</label>
+			<label for="contactName" style="display: block">Name</label> 
+			<input id="contactName" type="text" name="contactName" value="${username}"
+				placeholder="Name" class="text ui-widget-content ui-corner-all dialogtext"> 
+			<label for="contactEmail" style="display: block">E-Mail</label> 
+			<input id="contactEmail" type="text" name="contactEmail" value="${email}"
+				placeholder="E-Mail" class="text ui-widget-content ui-corner-all dialogtext"> 
+			<label for="message" style="display: block">Message</label>
 			<textarea id="message" name="contactMessage" rows="4" cols="100"
 				placeholder="Your Message"></textarea>
 		</fieldset>
 	</form>
-	<div id="dialogLoader" style="display:none">
+	<div id="dialogLoader" style="display: none">
 		<div class="answer-wrapper">
 			<svg viewBox="0 0 120 120" version="1.1"
 				xmlns="http://www.w3.org/2000/svg"
@@ -378,13 +387,15 @@ $(document).ready(function() {
 	</div>
 	<div id="successAnswer" style="display: none;">
 		<div class="answer-wrapper">
-			<img alt="Icon Check" src="/GFBioProject-portlet/images/circle-check.png">
+			<img alt="Icon Check"
+				src="/GFBioProject-portlet/images/circle-check.png">
 			<p>Your message has been successfully sent.</p>
 		</div>
 	</div>
 	<div id="errorAnswer" style="display: none;">
 		<div class="answer-wrapper">
-			<img alt="Icon Check" src="/GFBioProject-portlet/images/circle-close.png">
+			<img alt="Icon Check"
+				src="/GFBioProject-portlet/images/circle-close.png">
 			<p>Your message could not been sent.</p>
 		</div>
 	</div>
@@ -428,7 +439,7 @@ $(document).ready(function() {
 					</div>
 					<div style="display: block;">
 						<input name="taxon" type="radio" value="false"
-							onClick="show('#materialSelection'); " /> No
+							onClick="show('#materialSelection');" /> No
 					</div>
 				</div>
 				<div id="sequenced" name="question" class="swHide">
