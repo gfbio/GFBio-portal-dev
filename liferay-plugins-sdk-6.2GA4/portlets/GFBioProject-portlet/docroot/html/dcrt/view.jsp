@@ -192,10 +192,8 @@ function clearForm() {
 	$("input:text", form).each(function() {
 		if (Liferay.ThemeDisplay.isSignedIn()) {
 			if (this.id == 'contactName') {
-				console.log("ContactName");
 				this.value = userName;
 			} else if (this.id == 'contactEmail') {
-				console.log("ContactEmail");
 				this.value = userEmail;
 			}
 		} else {
@@ -207,9 +205,6 @@ function clearForm() {
 	var textarea = $('textarea#message')
 	textarea.val("");
     textarea.removeClass("error valid");
-    
-    console.log("UserId " + userName);
-    console.log("EmailAddress " + userEmail);
     
     $("#dialogForm").show();
     $("#successAnswer").hide();
@@ -263,14 +258,16 @@ function createJiraTicket(defaultContact, dc) {
 
 function answer(element, response) {
 	//console.info(response);
-	sleep(2000).then(() => {
+	sleep(2000).then(function() {
 		$("#dialogLoader").hide();
 		$(element).show();
-	})
+	});
 }
 
 function sleep (time) {
-  	return new Promise((resolve) => setTimeout(resolve, time));
+  	return new Promise(function(resolve) { 
+  		return setTimeout(resolve, time);
+  	});
 }
 
 $(document).ready(
@@ -324,10 +321,10 @@ $(document).ready(function() {
 	<form id="dialogForm">
 		<fieldset>
 			<label for="contactName" style="display: block">Name</label> 
-			<input id="contactName" type="text" name="contactName" value="${username}"
+			<input id="contactName" type="text" name="contactName" value="<c:out value="${username}" />"
 				placeholder="Name" class="text ui-widget-content ui-corner-all dialogtext"> 
 			<label for="contactEmail" style="display: block">E-Mail</label> 
-			<input id="contactEmail" type="text" name="contactEmail" value="${email}"
+			<input id="contactEmail" type="text" name="contactEmail" value="<c:out value="${email}" />"
 				placeholder="E-Mail" class="text ui-widget-content ui-corner-all dialogtext"> 
 			<label for="message" style="display: block">Message</label>
 			<textarea id="message" name="contactMessage" rows="4" cols="100"
@@ -400,7 +397,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
-
+	
 <div class="container custom">
 	<h1>Data Center Recommendation Tool</h1>
 	<div class="row">
