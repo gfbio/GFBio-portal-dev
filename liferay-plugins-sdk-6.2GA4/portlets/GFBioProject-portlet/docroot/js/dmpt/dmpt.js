@@ -29,9 +29,9 @@ function checkboxTypes(event) {
     'use strict';
     
     if ($(event.target).is(':checked')) {
-        $("#typesOther").prop("disabled", false);
+        $("#typesOther").show();
     } else {
-        $("#typesOther").prop("disabled", true);
+        $("#typesOther").hide();
         $("#typesOther").val("");
     }
 }
