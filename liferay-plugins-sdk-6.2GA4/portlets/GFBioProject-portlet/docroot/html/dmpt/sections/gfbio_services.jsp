@@ -1,12 +1,12 @@
 
 <h2>GFBio Services</h2>
 <section>
-	<div name="title" class="visible-xs">
+	<div name="title" class="hidden-md hidden-lg">
 		<h2>6. GFBio Services</h2>
 	</div>
     <div class="question_div">
-        <label>What GFBio services are you interested in?</label>
-        <div id="gfbioServices" class="answer_div">
+        <h4>What GFBio services are you interested in?</h4>
+        <div id="gfbioServices" class="col-md-12">
             <select id="services" name="services" multiple="multiple" size="7">
                 <option value="dmp" >Data Management Plan (DMP) Support</option>
                 <option value="supportManagement" >Datamanagement Support</option>

@@ -118,7 +118,8 @@
 				alert("Submitted!");
 			},
             onInit : function() {
-                $("#firstPrincInput").on("keyup focus", handlePrincipalButton);
+                //General Information
+            	$("#firstPrincInput").on("keyup focus", handlePrincipalButton);
                 
                 $("#types-cb").on("click", checkboxTypes);
                 $("#typesOther").hide();
@@ -133,39 +134,46 @@
                 $("#policyOther").hide();
                 $("#policyLink").hide();
 
+                //Data Collection
                 $("#dataformat-cb").on("click", checkboxDataformat);
+                $("#dataformatOther").hide();
+                
                 $("#volumeSlider").on("input change", showDataVolume);
                 $("#datasetSlider").on("input change", showNumberOfDatasets);
                 
-                $("#sensitive").click(handleSensitive);
-                $("#sensitiveOther").hide();
-                
+                //Documentation and Metadata
                 $("#metadataOther").click(handleMetadataOther);
                 $("#metadataDesc").hide();
+                
+                //Ethics and Legal Compliance
+                $("#sensitive").click(handleSensitive);
+                $("#sensitiveOther").hide();
                 
                 $("input[name='restriction']").on("change", handleRestriction);
                 $("#accessYes").hide();
                 
+                //Preservation and Sharing
                 $("#archives").on("change", handleArchives);
                 $("#archiveOther").hide();
+                
             }
         })
 	});
 </script>
 
 <body>
-	<div class="wizard_main container">
+	<div class="wizard_main">
 		<form id="example-form" action="#">
-			<div>
-  				<jsp:include page="sections/general_information.jsp" /> 
+			<div class="container-fluid">
+  				<jsp:include page="sections/general_information.jsp" />
  				
-  				<jsp:include page="sections/data_collection.jsp" />  
-				
+  				<jsp:include page="sections/data_collection.jsp" />
+			
  				<jsp:include page="sections/metadata.jsp" />
+			
+				<jsp:include page="sections/ethics.jsp" />
 				
-				<jsp:include page="sections/ethics.jsp" /> 
-				
- 				<jsp:include page="sections/preservation.jsp" /> 
+ 				<jsp:include page="sections/preservation.jsp" />
 				
  				<jsp:include page="sections/gfbio_services.jsp" />
 			</div>

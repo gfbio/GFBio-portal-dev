@@ -13,38 +13,13 @@ function handlePrincipalButton(event) {
     } else {
         $.each(inputs, function (index, value) {
             if ($(value).val().length < 3) {
-                x = 1;
+            	button.prop("disabled", true);
+            } else {
+            	button.prop("disabled", false);
             }
         });
-        if (Boolean(x)) {
-            button.prop("disabled", true);
-        } else {
-            button.prop("disabled", false);
-        }
     }
     
-}
-
-function checkboxTypes(event) {
-    'use strict';
-    
-    if ($(event.target).is(':checked')) {
-        $("#typesOther").show();
-    } else {
-        $("#typesOther").hide();
-        $("#typesOther").val("");
-    }
-}
-
-function checkboxDataformat(event) {
-    'use strict';
-    
-    if ($(event.target).is(':checked')) {
-        $("#dataformatOther").prop("disabled", false);
-    } else {
-        $("#dataformatOther").prop("disabled", true);
-        $("#dataformatOther").val("");
-    }
 }
 
 function removePrincipalInput(event) {
@@ -73,8 +48,31 @@ function addInputField(event) {
     newinput.hide();
     newinput.appendTo("#principal");
     newinput.show("slow");
+    newinput.focus();
     
-    $(event.target).disabled = true;
+    event.target.disabled = true;
+}
+
+function checkboxTypes(event) {
+    'use strict';
+    
+    if ($(event.target).is(':checked')) {
+        $("#typesOther").show();
+    } else {
+        $("#typesOther").hide();
+        $("#typesOther").val("");
+    }
+}
+
+function checkboxDataformat(event) {
+    'use strict';
+    
+    if ($(event.target).is(':checked')) {
+        $("#dataformatOther").show();
+    } else {
+        $("#dataformatOther").hide();
+        $("#dataformatOther").val("");
+    }
 }
 
 function getPrincipal() {

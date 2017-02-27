@@ -1,9 +1,4 @@
 
-
-.slider_w25 {
-	width: 25%;
-}
-
 div#metadata > div {
 	min-width: 275px;
 }
@@ -12,19 +7,22 @@ div#persistentIdentifier > label {
 	display: block;
 }
 
-.df_input {
-    padding-bottom: 3px;
-    width: 60%;
+input[type=radio] {
+	display: inline !important;
 }
 
-.input[type=text] {
+input[type=text], 
+input[type=tel], 
+input[type=email] 
+{
     width: 100%;
+    margin-bottom: 5px;
+    border: 1px solid lightgrey;
 }
 
-input[type=text]:disabled {
-    background: #dddddd;
+input[type=button] {
+	border: 1px solid lightgrey;
 }
-
 input[type=button]:disabled {
     color: lightgray;
 }
@@ -32,14 +30,6 @@ input[type=button]:disabled {
 input[type=radio] {
 	margin-right: 3px;
     margin-bottom: 3px;
-}
-
-.answer_div {
-    margin-left: 30px;
-    padding-left: 5px;
-}
-.question_div {
-    margin-top: 15px;
 }
 
 .block {
@@ -96,3 +86,14 @@ input[type=radio] {
     	display: block !important;
     }
 }*/
+
+.aui .row, 
+.aui .row-fluid {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.row {
+	padding-left: 20px !important;
+    padding-bottom: 10px !important;
+}

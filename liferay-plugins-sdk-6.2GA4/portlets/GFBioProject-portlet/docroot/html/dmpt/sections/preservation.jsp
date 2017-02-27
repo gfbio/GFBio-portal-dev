@@ -1,12 +1,12 @@
 
 <h2>Preservation and Sharing</h2>
 <section>
-	<div name="title" class="visible-xs">
+	<div name="title" class="hidden-md hidden-lg">
 		<h2>5. Preservation and Sharing</h2>
 	</div>
-	<div class="question_div">
-        <label>Where will your data be archived?</label>
-        <div id="dataArchives" class="answer_div">
+	<div class="row">
+        <h4>Where will your data be archived?</h4>
+        <div id="dataArchives" class="col-md-12">
             <select id="archives" name="sensitive" multiple="multiple" size="6">
                 <option value="gfbio" >GFBio Consortium</option>
                 <option value="dsmz" >DSMZ</option>
@@ -24,39 +24,39 @@
             </div>
         </div>
     </div>
-	<div class="question_div">
-        <label>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?</label>
-        <div id="persistentIdentifier" class="answer_div fs_small">
-            <label>
+	<div class="row">
+        <h4>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?</h4>
+        <div id="persistentIdentifier">
+	        <div class="col-xs-12 col-sm-4 col-md-3">
+	            <input class="radio_input" name="pid"
+	                type="radio" value="yes" />
+				<label>Yes (recommended)</label>
+	        </div>
+	        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
                 <input class="radio_input" name="pid"
-                type="radio" value="yes" />
-                Yes (recommended)
-            </label>
-            <label>
-                <input class="radio_input" name="pid"
-                type="radio" value="no" />
-                No
-            </label>
-            <label>
-                <input class="radio_input" name="pid"
-                type="radio" value="dontknow" />
-                Don't know yet
-            </label>
+	                type="radio" value="no" />
+				<label>No</label>
+	        </div>
+	        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+	        	<input class="radio_input" name="pid"
+	                type="radio" value="dontknow" />
+	            <label>Don't know yet</label>
+	        </div>
         </div>
     </div>
-	<div class="question_div">
-	    <label>Do you need help estimating the cost and effort for data management?</label>
-	    <div id="needHelp" class="answer_div fs_small">
-	        <label>
+	<div class="row">
+	    <h4>Do you need help estimating the cost and effort for data management?</h4>
+	    <div id="needHelp">
+	    	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 	            <input class="radio_input" name="help"
 	            type="radio" value="yes" />
-	            Yes
-	        </label>
-	        <label style="margin-left: 10px;">
+	            <label>Yes</label>
+	        </div>
+	        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
 	            <input class="radio_input" name="help"
 	            type="radio" value="no" />
-	            No
-	        </label>
+	            <label>No</label>
+	        </div>
 	    </div>
 	</div>
 </section>
