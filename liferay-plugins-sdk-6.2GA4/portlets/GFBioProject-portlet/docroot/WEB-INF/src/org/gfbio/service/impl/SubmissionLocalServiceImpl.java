@@ -362,6 +362,12 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	}
 	
 	
+	//
+	public String getBrokerSubmissionIdByIds(long researchObjectId, int researchObjectVersion, String archive){
+		return SubmissionFinderUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, archive).get(0);
+	}
+	
+	
 	// get the latest Versions of a specific Submission
 	public Submission getLatestSubmissionByIds (long researchObjectId, String archive ){
 		return SubmissionFinderUtil.getLatestSubmissionByIds(researchObjectId, archive).get(0);

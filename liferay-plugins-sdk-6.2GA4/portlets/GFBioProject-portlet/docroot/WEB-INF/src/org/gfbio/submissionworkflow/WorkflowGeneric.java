@@ -485,6 +485,12 @@ public class WorkflowGeneric extends GenericPortlet {
         	fields.put("customfield_10202", license);
         }
         
+        long researchObjectId =(long) researchObjectJson.get("researchobjectid");
+        int researchObjectVersion = (int) (long) researchObjectJson.get("researchobjectversion");
+        
+        fields.put("customfield_10303", SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, "GFBio collections"));
+
+        
         //fields.put("customfield_10312", "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx");
         
         //

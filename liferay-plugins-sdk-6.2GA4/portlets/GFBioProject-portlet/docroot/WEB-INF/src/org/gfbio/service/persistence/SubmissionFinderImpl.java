@@ -20,6 +20,7 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 	public static String GET_ARCHIVE_BY_ID									= FINDER_CLASS_NAME_ENTITY + ".getArchiveById";	
 	public static String GET_ARCHIVEPIDS_OF_ENA								= FINDER_CLASS_NAME_ENTITY + ".getArchivePIdsOfENA";
 	public static String GET_ARCHIVEPIDS_WITH_TYPE_OF_ENA					= FINDER_CLASS_NAME_ENTITY + ".getArchivePIdsWithTypeOfENA";
+	public static String GET_BROKERSUBMISSIONID_BY_IDS						= FINDER_CLASS_NAME_ENTITY + ".getBrokerSubmissionIdByIds";
 	public static String GET_CHECK_OF_BROKERSUBMISSIONID					= FINDER_CLASS_NAME_ENTITY + ".getCheckOfBrokerSubmissionId";
 	public static String GET_CHECK_OF_RESEARCHOBJECTID_AND_VERSION			= FINDER_CLASS_NAME_ENTITY + ".getCheckOfResearchObjectIdAndVersion";
 	public static String GET_LATEST_SUBMISSION_BY_IDS						= FINDER_CLASS_NAME_ENTITY + ".getLatestSubmissionByIds";	
@@ -116,6 +117,29 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 		return null;
 	}
 	
+	
+	//
+	@SuppressWarnings({  "unchecked" })
+	public List<String> getBrokerSubmissionIdByIds(long researchObjectId, int researchObjectVersion, String archive) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_BROKERSUBMISSIONID_BY_IDS);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("brokersubmissionid", Type.STRING);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(researchObjectId);
+			qPos.add(researchObjectVersion);
+			qPos.add(archive);
+			return (List<String>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
 
 	//check submission entity for a specific brokersubmissionid. If this in the relation table, then 'check' is true, else 'check' is wrong.
 	@SuppressWarnings({  "unchecked" })

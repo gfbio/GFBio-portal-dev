@@ -77,6 +77,20 @@
     </sql>
     
     
+    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getBrokerSubmissionIdByIds">
+	    <![CDATA[
+			SELECT 
+			  brokersubmissionid 
+			FROM 
+			  public.gfbio_submission
+			WHERE
+			  researchobjectid =? AND
+			  researchobjectversion = ? AND
+			  archive =?
+
+		]]>
+    </sql>
+    
 	<sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getCheckOfBrokerSubmissionId">
 	    <![CDATA[
 			SELECT 
