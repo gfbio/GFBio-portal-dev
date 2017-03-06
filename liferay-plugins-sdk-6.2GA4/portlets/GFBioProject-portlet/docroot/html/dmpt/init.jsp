@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
@@ -13,6 +14,11 @@
 
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+
+<%@ page import="javax.portlet.PortletPreferences" %>
+<%@ page import="javax.portlet.RenderResponse" %>
+
+<%@ page import="org.gfbio.idmg.dmpt.DMPTPortlet" %>
 
 <portlet:defineObjects />
 

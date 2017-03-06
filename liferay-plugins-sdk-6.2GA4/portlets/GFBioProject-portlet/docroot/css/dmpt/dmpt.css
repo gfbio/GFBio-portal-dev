@@ -1,44 +1,4 @@
 
-.fl_w15 {
-	float: left;
-  	width: 15%;
-    font-size: small;
-}
-
-.fl_w20 {
-	float: left;
-  	width: 20%;
-    font-size: small;
-}
-
-.fl_w25 {
-	float: left;
-  	width: 25%;
-    font-size: small;
-}
-
-.w25 {
-  	width: 25%;
-    font-size: small;
-}
-
-.fl_w50 {
-	float: left;
-  	width: 50%;
-    font-size: small;
-}
-
-.other_input {
-	margin-left: 15px;
-    float: right;
-    padding-bottom: 3px;
-    width: initial;
-}
-
-.slider_w25 {
-	width: 25%;
-}
-
 div#metadata > div {
 	min-width: 275px;
 }
@@ -47,55 +7,29 @@ div#persistentIdentifier > label {
 	display: block;
 }
 
-input[type="radio"] {
-	margin-right: 5px !important;
+input[type=radio] {
+	display: inline !important;
 }
 
-.df_input {
-    padding-bottom: 3px;
-    width: 60%;
+input[type=text], 
+input[type=tel], 
+input[type=email] 
+{
+    width: 100%;
+    margin-bottom: 5px;
+    border: 1px solid lightgrey;
 }
 
-.ml10 {
-    margin-left: 10px;
+input[type=button] {
+	border: 1px solid lightgrey;
 }
-
-.fl {
-    float: left;
-}
-
-.fs_small {
-    font-size: small;
-}
-
-input[type=text]:disabled {
-    background: #dddddd;
-}
-
 input[type=button]:disabled {
     color: lightgray;
 }
 
-.answer_div {
-    margin-left: 30px;
-}
-.question_div {
-    margin-top: 15px;
-}
-
-.radio_input {
-    float: left; 
-    margin-right: 3px;
-    margin-bottom: 3px
-}
-
-.inputtext_long {
-    margin-top: 5px;
-    width: 25%;
-}
-
-.flex {
-    display: flex;
+input[type=radio] {
+	margin-right: 3px;
+    margin-bottom: 3px;
 }
 
 .block {
@@ -104,4 +38,62 @@ input[type=button]:disabled {
 
 .hide {
     display: none;
+}
+
+.wizard > .steps {
+    font-size: 14px !important;
+}
+
+.wizard > .steps > ul{
+    display: flex;
+}
+
+.wizard > .steps > ul > li > a{
+	height: 95%;
+}
+
+.wizard > .content 
+{
+    background: rgba(238, 238, 238, 0.4);
+    border: 1px solid lightgrey;
+}
+
+.wizard > .steps .disabled a, 
+.wizard > .steps .disabled a:hover, 
+.wizard > .steps .disabled a:active 
+{
+    background: rgba(238, 238, 238, 0.4);
+    border: 1px solid lightgrey;
+}
+
+.wizard > .actions .disabled a, 
+.wizard > .actions .disabled a:hover, 
+.wizard > .actions .disabled a:active 
+{
+    background: rgba(238, 238, 238, 0.4);
+    border: 1px solid lightgrey;
+}
+
+/*@media (max-width: 1024px)
+{
+    .wizard > .steps 
+    {
+        display: none !important; 
+    }
+    
+    .wizard > .content > .body > div[name='title']
+    {
+    	display: block !important;
+    }
+}*/
+
+.aui .row, 
+.aui .row-fluid {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.row {
+	padding-left: 20px !important;
+    padding-bottom: 10px !important;
 }

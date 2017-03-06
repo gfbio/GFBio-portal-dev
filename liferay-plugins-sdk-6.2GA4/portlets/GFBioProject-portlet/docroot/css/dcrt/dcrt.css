@@ -15,6 +15,7 @@ input[type="radio"] {
 input.dialogtext { 
 	margin-bottom: 10px; 
 	width: 100%; 
+	max-width: 100% !important;
 	padding: .4em; 
 }
 	
@@ -49,6 +50,46 @@ input.dialogtext {
     height: 110%; 
     background: #aaaaaa;
     opacity: 0.4;
+}
+
+.custom-dialog button {
+	text-align: center;
+   	border-radius: 3px;
+   	padding: .2em 1em;
+}
+
+.custom-dialog div.ui-dialog-buttonpane {
+	margin-top: 0;
+	padding: 0;
+}
+
+.custom-dialog div.ui-dialog-buttonset {
+	float: none !important;
+	text-align: center;
+}
+
+.icon-dialog {
+	float: left; 
+	margin: 4px 12px 10px 0;
+}
+
+.answer-wrapper {
+  width: auto;
+  height: 80px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  text-align: center;
+}
+
+.answer-wrapper img {
+	height: 45px;
+}
+
+.answer-wrapper p {
+	margin: 5px 0 5px !important;
 }
 	
 .dcrtbutton {
@@ -104,22 +145,6 @@ input.dialogtext {
 
 .custom .row {
 	margin-left: 0;
-}
-
-.custom-dialog button {
-	text-align: center;
-   	border-radius: 3px;
-   	padding: .2em 1em;
-}
-
-.custom-dialog-success div.ui-dialog-buttonset {
-	float: none !important;
-	text-align: center;
-}
-
-.custom-dialog-success div.ui-dialog-buttonpane {
-	margin-top: 0;
-	padding: 0;
 }
 
 .img-zoom {
