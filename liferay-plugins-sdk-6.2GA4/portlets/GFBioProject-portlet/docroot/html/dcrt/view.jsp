@@ -162,7 +162,7 @@ function openConfirmDialog(defaultContact, btnId) {
 	    modal: true,
 	    close: clearForm,
 	    dialogClass: "contact-dialog custom-dialog",
-	    title: "DCRT Contact Request to " + dataCenter,
+	    title: "DCRT Contact Request for " + dataCenter,
 	    buttons: {
 	        'Send Message': function() {
 	        	if ( $("#dialogForm").valid() ) {
@@ -421,33 +421,39 @@ $(document).ready(function() {
 					Is your object dead or alive?
 					<div style="display: block;">
 						<input name="alive" type="radio" value="true"
-							onClick="hide('#materialSelection'); hide('#taxon')" /> Alive
+							onClick="hide('#materialSelection'); hide('#taxon')" /> 
+						Alive
 					</div>
 					<div style="display: block;">
 						<input name="alive" type="radio" value="false"
-							onClick="show('#taxon'); hide('#materialSelection');" /> Dead
+							onClick="show('#taxon'); hide('#materialSelection');" /> 
+						Dead
 					</div>
 				</div>
 				<div id="taxon" name="question" class="swHide">
-					Do you have taxon-based objects in addition to your data?
+					Is your object taxon-based?
 					<div style="display: block;">
 						<input name="taxon" type="radio" value="true"
-							onClick="show('#materialSelection'); " /> Yes
+							onClick="show('#materialSelection'); " /> 
+						Yes
 					</div>
 					<div style="display: block;">
-						<input name="taxon" type="radio" value="false"
-							onClick="show('#materialSelection');" /> No
+						<input name="taxon" type="radio" value="false" 
+							onClick="hide('#materialSelection');" /> 
+						No
 					</div>
 				</div>
 				<div id="sequenced" name="question" class="swHide">
-					Do you have mainly sequenced data?
+					Do you have mainly sequence data?
 					<div style="display: block;">
 						<input name="sequenced" type="radio" value="true"
-							onClick="hide('#categorySelection');" /> Yes
+							onClick="hide('#categorySelection');" /> 
+						Yes
 					</div>
 					<div style="display: block;">
 						<input name="sequenced" type="radio" value="false"
-							onClick="show('#categorySelection');" /> No
+							onClick="show('#categorySelection');" /> 
+						No
 					</div>
 				</div>
 
