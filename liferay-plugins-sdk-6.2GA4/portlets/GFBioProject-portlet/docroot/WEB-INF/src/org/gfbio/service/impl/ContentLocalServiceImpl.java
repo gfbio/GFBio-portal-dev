@@ -97,9 +97,31 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	//
 	public void deleteRelationContentByCellContent(String cellcontent1, String cellcontent2 ){
 		long rowId = getRowIdOfRelation(cellcontent1, cellcontent2);
-		//System.out.println(cellcontent1 + " | "+cellcontent2+ " | "+rowId);
 		deleteContentsByRowId (rowId);
 	}
+	
+	
+	//
+	public void deleteRelationContentsByCellContent(String relationTable, String columnName, String cellContent){
+		List<Long> rowIdList = getRowIdsByCellContent(relationTable, columnName, cellContent);
+		if (rowIdList != null)
+			for (int i =0; i<rowIdList.size();i++)
+				deleteContentsByRowId(rowIdList.get(i));
+		
+	}
+	
+	
+	//
+	public void deleteRelationContentOfCategoryWithSpecificType(String typeName, long relatedId, String relationTable){
+		List <Long> rowIdList= null;
+		try {rowIdList= getRowIdsOfCategoryWithSpecificType(typeName, relatedId, relationTable);}
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+		if (rowIdList != null)
+			for (int i =0; i<rowIdList.size();i++)
+				deleteContentsByRowId(rowIdList.get(i));
+	}
+	
 	
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
@@ -326,6 +348,29 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return rowId;
 	}
 	
+	
+	// 
+	@SuppressWarnings("unchecked")
+	private List <Long> getRowIdsByCellContent(long headId, String columnName, String cellContent){
+		List <Long> rowIdList = null;
+		rowIdList =  ContentFinderUtil.getRowIdByCellContent(headId, columnName, cellContent);
+		return rowIdList;
+	}
+	
+	
+	// 
+	private List <Long> getRowIdsByCellContent(String tableName, String columnName, String cellContent){
+		List <Long> rowId = null;
+		long headId =0;
+		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+		if(headId !=0){
+			rowId = getRowIdsByCellContent(headId, columnName, cellContent);
+		}
+		return rowId;
+	}
+	
 
 	// get the columnId of a specific content.
 	@SuppressWarnings("rawtypes")
@@ -353,6 +398,25 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	@SuppressWarnings("rawtypes")
 	public List  getRowIds (long headId){
 		return ContentFinderUtil.getRowIds(headId);
+	}
+	
+	
+	//
+	private List<Long> getRowIdsOfCategoryWithSpecificType(String typeName, long relatedId, String relationTable) throws NoSuchHeadException, SystemException{
+		return  getRowIdsOfCategoryWithSpecificType(typeName, Long.toString(relatedId), relationTable);
+	}
+	
+	
+	//
+	@SuppressWarnings({ "unchecked" })
+	private List<Long> getRowIdsOfCategoryWithSpecificType(String typeName, String relatedId, String relationTable) throws NoSuchHeadException, SystemException{
+		long typeHeadId = HeadLocalServiceUtil.getHeadIdByTableName("gfbio_type");
+		long typeColumnId= ColumnLocalServiceUtil.getColumnIdByNames("gfbio_type", "id");
+		long categoryTypeHeadId=HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_type");
+		long categoryTypeCategoryColumnId=ColumnLocalServiceUtil.getColumnIdByNames("gfbio_category_type", "gfbio_category");
+		long relationTableHeadId=HeadLocalServiceUtil.getHeadIdByTableName(relationTable);
+		
+		return  ContentFinderUtil.getRowIdsOfCategoryWithSpecificType(typeHeadId, typeName, typeColumnId, categoryTypeHeadId, categoryTypeCategoryColumnId, relationTableHeadId, relatedId);
 	}
 	
 		

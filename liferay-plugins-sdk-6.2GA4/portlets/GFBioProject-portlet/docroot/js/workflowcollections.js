@@ -132,6 +132,7 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 
 //
 function checkInput(){
+	console.log("check");
 	var check = true;
 	if (document.getElementById("cwf_project_name").value=="") 					{	check = false; document.getElementById("cwf_project_name_l").className="labelFalse";			document.getElementById("cwf_project_name").className="inputTextContainerFalse";}			else{document.getElementById("cwf_project_name_l").className="control-label";			document.getElementById("cwf_project_name").className="field lfr-input-text-container";}
 	if (document.getElementById("cwf_project_label").value=="") 				{	check = false; document.getElementById("cwf_project_label_l").className="labelFalse";			document.getElementById("cwf_project_label").className="inputTextContainerFalse";}			else{document.getElementById("cwf_project_label_l").className="control-label";			document.getElementById("cwf_project_label").className="field lfr-input-text-container";}
@@ -169,7 +170,7 @@ function checkInput(){
 		commentarField.append("<div class='portlet-success'>Checking complete</div>");
 		setTimeout(function(){commentarField.empty();}, 5000);
 	}
-		
+	console.log(check);
 	return check;
 }
 
@@ -307,14 +308,23 @@ function saveResearchObjectInput(projectJson){
 //
 function submitInput(url){
 	
+	console.log("start submission");
+	
 	if (checkInput()){
 		
+		console.log("now start submission");
+		
+		
 		var mrrJson = saveAllInput();
+		console.log(mrrJson);
 		var registryJson = buildSubmissionJsonForRegistry(mrrJson.researchobjects);
-			
-		startSubmissionRegistry(registryJson);
+		
+		console.log(registryJson);
+		
+		//startSubmissionRegistry(registryJson);
 		
 		if(document.getElementById("cwf_lf_submissioncomentarField").className != 'portlet-msg-error'){
+			console.log('yes');
 			var data ={};
 			data["mrr"]= mrrJson;
 			data["submissionregistry"]= registryJson;

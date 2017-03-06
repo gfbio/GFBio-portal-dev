@@ -380,6 +380,61 @@
 		]]>
     </sql>
     
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdsOfCategoryWithSpecificType">
+	    <![CDATA[
+		   SELECT 
+			  rowid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  rowid in (
+				SELECT 
+				  rowid 
+				FROM 
+				  public.gfbio_content
+				WHERE
+				  cellcontent in (
+					
+					SELECT 
+					  cellcontent 
+					FROM 
+					  public.gfbio_content
+					WHERE
+					  rowid in (
+						SELECT 
+						  rowid 
+						FROM 
+						  public.gfbio_content
+						WHERE
+						  cellcontent in (
+							
+							SELECT 
+							  cellcontent 
+							FROM 
+							  public.gfbio_content
+							WHERE
+							  rowid in (
+								SELECT 
+								  rowid 
+								FROM 
+								  public.gfbio_content
+								WHERE
+								  headid = ? AND
+								  cellcontent = ?
+							  )and
+							  columnid = ?
+						  )and
+						  headid = ?
+					)and
+					columnid = ?
+				  )and
+				  headid = ?
+			  )and
+			  cellcontent = ?
+		]]>
+    </sql>   
+    
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdByContentId">
 	    <![CDATA[
 			SELECT 

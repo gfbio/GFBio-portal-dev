@@ -455,7 +455,6 @@ SELECT changeCellContentByNames('gfbio_category', 'label', 'Other objects', 'Oth
 
 
 -----------------------------------------------------------------------------------------------
------------------------------------- Head, Column & Content -----------------------------------
 -----------------------------------        dataprovider        - 15.02.2017 -------------------
 -----------------------------------------------------------------------------------------------
 
@@ -478,3 +477,17 @@ ALTER TABLE gfbio_dataprovider DROP COLUMN zoologicalmicroscopicslides;
 ALTER TABLE gfbio_dataprovider DROP COLUMN paleontologicalobjects;
 ALTER TABLE gfbio_dataprovider DROP COLUMN otherobjects;
 
+-----------------------------------------------------------------------------------------------
+-----------------------------------        dataprovider        - 06.03.2017 -------------------
+-----------------------------------------------------------------------------------------------
+
+UPDATE gfbio_dataprovider SET name = 'Botanic Garden and Botanical Museum Berlin, Freie Universität Berlin' WHERE label ='BGBM';
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+------------------------------       category / dataprovider        - 06.03.2017 --------------
+-----------------------------------------------------------------------------------------------
+
+
+SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Algae & Protists' ,  4 );

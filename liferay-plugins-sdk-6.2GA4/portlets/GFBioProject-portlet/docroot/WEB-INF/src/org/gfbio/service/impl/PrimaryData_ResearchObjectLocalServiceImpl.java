@@ -164,7 +164,11 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 	//update or create a new Relationship between a Primary Data and a Research Object
 	public Boolean updatePrimaryDataResearchObject(long primaryDataId, long researchObjectId, int researchObjectVersion) {
 
+		System.out.println(researchObjectId + " | "+ researchObjectVersion + " | "+ primaryDataId);
+		
 		Boolean check = false;
+		
+
 		
 		PrimaryData_ResearchObject relation = null;
 		PrimaryData_ResearchObjectPK pk = new PrimaryData_ResearchObjectPK(primaryDataId, researchObjectId, researchObjectVersion);
@@ -179,6 +183,8 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 			super.updatePrimaryData_ResearchObject(relation);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
+		
+		System.out.println(check);
 		
 		return check;
 	}

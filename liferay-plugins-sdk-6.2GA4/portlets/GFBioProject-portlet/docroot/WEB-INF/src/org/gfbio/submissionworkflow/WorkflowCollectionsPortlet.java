@@ -9,11 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -88,29 +88,9 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
     //
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
-		response.setContentType("text/html");
-		
-/*		System.out.println();
-		System.out.println("-----------------------------------------");
-		System.out.println("01 "+request.getContentLength());
-		System.out.println("02 "+request.getContentType());
-		System.out.println("03 "+request.getCharacterEncoding());
-		System.out.println("04 "+request.getMethod());
-		System.out.println("05 "+request.getResourceID());
-		System.out.println("06 "+request.getResponseContentType());
-		System.out.println("07 "+request.getRemoteUser());
-		System.out.println("08 "+request.getResourceID());
-		System.out.println("09 "+request.isRequestedSessionIdValid());
-		System.out.println("10 "+request.getAttributeNames().toString());
-		System.out.println("11 "+request.getParameterMap().keySet());
-		System.out.println("12 "+request.getPortletSession());
-		System.out.println("13 "+request.getPrivateParameterMap().keySet().toString());
-		System.out.println("14 "+request.getPublicParameterMap().keySet().toString());
-		System.out.println("15 "+request.getPropertyNames());
-		System.out.println("16 "+request.getPropertyNames().toString());
-		System.out.println("-----------------------------------------");		
-		System.out.println();	*/	
-		
+		response.setContentType("text/html");	
+    	
+    	System.out.println("start");
 
 		if (request.getParameter("responseTarget") != null) {
 					
@@ -425,6 +405,8 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
     
     public void startSubmission (ResourceRequest request, ResourceResponse response){
     	
+    	System.out.println("start submission");
+    	
 		String dataJson = request.getParameter("data");
 		JSONParser parser = new JSONParser();
 		JSONObject parseJson = new JSONObject();
@@ -432,7 +414,51 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
 		catch (ParseException e) {e.printStackTrace();}
         String responseString = "";
 
-        try {
+    	System.out.println(parseJson);
+        
+    	
+    	try {
+
+            URL url = new
+            URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
+            
+            System.setProperty("javax.net.ssl.trustStore", "C:/Users/froemm/GFBio/GFBio-portal-dev/workspace/LiferayWebserviceTest/jssecacerts");
+            System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+            
+            
+            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept","application/json");
+           
+            String userpass = "uni-jena:GFBIOhelpdesk123";
+            String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
+            conn.addRequestProperty ("Authorization", basicAuth);
+          
+            String encodedData = getJSON_Body((JSONObject) parseJson);
+            OutputStream os = conn.getOutputStream();
+            os.write(encodedData.getBytes());
+            os.flush();       
+   
+            if (conn.getResponseCode() != 201)
+               throw new RuntimeException("Failed : HTTP error code : "+ conn.getResponseCode());
+            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+            String output;
+            System.out.println("Output from Server .... \n");
+            while ((output = br.readLine()) != null){
+            	System.out.println("output");
+                responseString = responseString.concat(output);
+            } 
+
+            conn.disconnect();
+         } catch (Exception e) {e.printStackTrace();}
+    	
+    	
+ /*       try {
 
             URL url = new
             URL("http://helpdesk.gfbio.org/rest/api/2/issue/");
@@ -465,7 +491,7 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
             } 
 
             conn.disconnect();
-         } catch (Exception e) {e.printStackTrace();}
+         } catch (Exception e) {e.printStackTrace();}*/
        
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -588,13 +614,15 @@ public class WorkflowCollectionsPortlet extends GenericPortlet {
         //dataset informations
         
         //dataset id 
-        fields.put("customfield_10309",String.valueOf((long) researchObjectJson.get("researchobjectid")));						
+        fields.put("customfield_10309",10);
+        //fields.put("customfield_10309",String.valueOf((long) researchObjectJson.get("researchobjectid")));						
         
         //dataset title
         fields.put("customfield_10201", researchObjectJson.get("name")); 						
         
         //dataset version
-        fields.put("customfield_10310", String.valueOf((long) researchObjectJson.get("researchobjectversion"))); 							
+        fields.put("customfield_10310", 1); 		
+       // fields.put("customfield_10310", String.valueOf((long) researchObjectJson.get("researchobjectversion"))); 
         
         //dataset label
         datasetlabelArray.add(researchObjectJson.get("label"));

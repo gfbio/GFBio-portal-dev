@@ -21,19 +21,20 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_CELL_CONTENT_BY_CONTENTID 									= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
 	public static String GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME						= FINDER_CLASS_NAME_ENTITY + ".getCellContentByRowIdAndColumnName";
 	public static String GET_COLUMNID_BY_ID 											= FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
+	public static String GET_CONTENTIDS_BY_ROWID 										= FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
 	public static String GET_CONTENTIDS_OF_RELATIONSHIPS_OF_SPECIFIC_CELLCONTENT		= FINDER_CLASS_NAME_ENTITY + ".getContentIdsOfRelationshipsOfSpecificCellContent";
 	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS 							= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
 	public static String GET_CONTENTIDS_WITH_NORMAL_TABLE_RELATIONSHIPS 				= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithNormalTableRelationships";
 	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS 								= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
 	public static String GET_COUNT_OF_ROW 												= FINDER_CLASS_NAME_ENTITY + ".getRowIds";
-	public static String GET_ROWID_BY_CELLCONTENT 										= FINDER_CLASS_NAME_ENTITY + ".getRowIdByCellContent";
 	public static String GET_HEADID_BY_ID 												= FINDER_CLASS_NAME_ENTITY + ".getHeadIdById";
-	public static String GET_CONTENTIDS_BY_ROWID 										= FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
-	public static String GER_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT			= FINDER_CLASS_NAME_ENTITY + ".getOppositeCellContentsOfRelationsByCellContent";
-	public static String GET_ROWID_BY_CONTENTID											= FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
-	public static String GET_ROWID_OF_RELATION 											= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
+	public static String GET_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT			= FINDER_CLASS_NAME_ENTITY + ".getOppositeCellContentsOfRelationsByCellContent";
 	public static String GET_ROW_INFORMATION_BY_CONTENTID								= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
 	public static String GET_ROW_INFORMATION_BY_ROWID									= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByRowId";
+	public static String GET_ROWID_BY_CELLCONTENT 										= FINDER_CLASS_NAME_ENTITY + ".getRowIdByCellContent";
+	public static String GET_ROWID_BY_CONTENTID											= FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
+	public static String GET_ROWID_OF_RELATION 											= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
+	public static String GET_ROWIDS_OF_CATEGORY_WITH_SPECIFIC_TYPE						= FINDER_CLASS_NAME_ENTITY + ".getRowIdsOfCategoryWithSpecificType";
 	
 	//Is  pk in table with headid, the Boolean is true
 	@SuppressWarnings("rawtypes")
@@ -376,7 +377,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 		try {
 		
 			session = openSession();
-			String sql = CustomSQLUtil.get(GER_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT);
+			String sql = CustomSQLUtil.get(GET_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT);
 			
 			SQLQuery queryObject = session.createSQLQuery(sql);
 			queryObject.setCacheable(false);
@@ -560,6 +561,38 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(rowId);
 			
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get List of content IDs from a relationship between two entities. The list has only IDs from one of the entities. The not list entity has a condition in cell content column. Example: the function get all category entries of the relationship between category and types, where the type cell content is 'research field'    
+	@SuppressWarnings("rawtypes")
+	public  List getRowIdsOfCategoryWithSpecificType(long typeHeadId, String typeName, long typeColumnId, long categoryTypeHeadId, long categoryTypeCategoryColumnId, long relationTableHeadId, String relatedId) {
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_ROWIDS_OF_CATEGORY_WITH_SPECIFIC_TYPE);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("rowid", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(typeHeadId);
+			qPos.add(typeName);
+			qPos.add(typeColumnId);
+			qPos.add(categoryTypeHeadId);
+			qPos.add(categoryTypeCategoryColumnId);
+			qPos.add(relationTableHeadId);
+			qPos.add(relatedId);
 			return (List) queryObject.list();
 			
 		} catch (Exception e) {e.printStackTrace();}

@@ -95,20 +95,23 @@
 						"<label class='control-label'					id='gwf_ro_id'_l>Dataset id </label>"+
 						"<div	class='field lfr-input-text-container'	id='gwf_ro_id'></div>"+
 					"</div>"+
+					"<div class='control-group'>"+
+						"<label class='control-label' 				   	id='gwf_ro_version_l'>Version </label>"+
+						"<div	class='field lfr-input-text-container'	id='gwf_ro_version'></div>"+
+					"</div>"+
+					"<div class='control-group'>"+
+						"<label class='control-label' 					id='gwf_ro_researchobjecttype_l'> Type </label>"+
+						"<div class='field lfr-input-text-container' 	id='gwf_ro_researchobjecttype'></div>"+
+					"</div>"+
 				"</div>"+
 				"<div class='control-group'>"+
 					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title </label>"+
 					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text'  value=''>"+
 				"</div >"+
-				"<div class='swHide'>"+
-					"<div class='control-group'>"+
-						"<label class='control-label' 				   	id='gwf_ro_version_l'>Version </label>"+
-						"<div	class='field lfr-input-text-container'	id='gwf_ro_version'></div>"+
-					"</div>"+
-				"</div>"+
 				"<div class='control-group'>"+
 					"<label	class='control-label' 					id='gwf_ro_description_l'> Description </label>"+
-					"<input	class='field lfr-input-text-container'	id='gwf_ro_description' type='text' value='' >"+
+					//"<input	class='field lfr-input-text-container'	id='gwf_ro_description' type='textarea' value='' >"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='10' ></textarea>"+
 				"</div>"+
 				"</div>"+
 				"<div class='control-group'>"+
@@ -147,37 +150,27 @@
 						"</form>"+
 					"</div>"+
 				"</div>"+
+				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
+				"<div id='gwf_ro_categories'></div>"+
+				"</br>"+
 				"<div class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_embargo_l'> Embargo (example: 'embargo time to yyyy-mm-dd') </label>"+
-					"<input class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'  value=''>"+
+					"<input class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value=''>"+
 				"</div>"+
 				"<div class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_legalrequirements_l'> Legal requirements  </label>"+
-					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_legalrequirements_v' type='text'  value=''>"+
-						"<form action='select.html'>"+
-							"<select id='gwf_ro_legalrequirements' name='<portlet:namespace/>gwf_ro_legalrequirements' size='1' style='width:90%'>"+
-								"<option value='none'></option>"+
-							"</select>"+
-						"</form>"+
-					"</div>"+
+					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_legalrequirements' type='text'  value=''></div>"+
 				"</div>"+
 
 				"<h3>Dataset Upload</h3>"+
 				
 				"<form id='file-form'>"+
 			  	"<input type='file' id='file-select'  multiple/>"+
-// 		 		"<button type='submit' id='upload-button'>Upload</button> "+
 				"</form>"+
-//				"<span class='widthM' id='gwf_b_filetester' onclick='testSubmit()'>		<span class='btn btn-primary'>Test file</span></span>"+
-			
-				
 				
 				"</br>"+
 				"<div class='row' id='gwf_lf_comentarField'></div></br>"+
 				"<div class='row' id='gwf_lf_submissioncomentarField'></div>"+
-
-				
-				
 				
 				"<div class='row'>"+
 /* 					"<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
@@ -213,6 +206,7 @@
 	
 		document.getElementById("gwf_ro_id").innerHTML= 0;
 		document.getElementById("gwf_ro_version").innerHTML= 1;
+		document.getElementById("gwf_ro_researchobjecttype").innerHTML= "Dataset";
 		document.getElementById("gwf_ro_name").value= "";
 		document.getElementById("gwf_ro_label").value= "";
 		
@@ -290,15 +284,65 @@
  			}
  		});
  		
+ 		
  		var divLi = $("#".concat('gwf_ro_legalrequirements'));
 		divLi.empty();
 		divLi.append(
-			"<option value='none' selected=true></option>"+
-			"<option value='Nagoya'>Nagoya</option>"+
-			"<option value='Red List'>Red List</option>"+
-			"<option value='Personal'>Personal</option>"+
-			"<option value='Uncertain'>Uncertain</option>"
+			"<div class='row2'>"+
+				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_nagoya' name='legalrequirements' value='Nagoya'> Nagoya</div>"+
+				"<div class='rowField'><input type='checkbox' id='gwf_ro_legalrequirements_red'    name='legalrequirements' value='Red List'>  Red List</div>"+
+			"</div>"+
+			"<div class='row2'>"+
+				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_personal'   name='legalrequirements' value='Personal'> Personal</div>"+
+				"<div class='rowField'><input type='checkbox' id='gwf_ro_legalrequirements_uncertain'  name='legalrequirements' value='Uncertain'>  Uncertain</div>"+
+			"</div>"+
+			"<div style='clear:left'></div>"
 		);
+		
+
+		
+		
+		ajaxData = {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "getresearchfieldinformations"
+			},
+			async: false,
+ 			success :  function (obj){
+				var divKey = $("#".concat('gwf_ro_categories'));
+				divKey.empty();
+
+				for (i=0; i < obj.length;i++){
+					if (i < obj.length-1){
+						var j = i+1;
+						divKey.append(
+							"<div class='row2'>"+
+								"<div class='rowLato'>"+
+									"<input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+
+								"</div>"+
+								"<div class='rowField'>"+
+									"<input type='checkbox' id='gwf_ro_categories"+obj[j].id+"' name='categories' value='"+obj[j].id+"'> "+obj[j].name+
+								"</div>"+
+							"</div>"
+						);
+						i = i+1;
+					}else{
+						divKey.append(
+							"<div class='row2'>"+
+								"<div class='rowLato'>"+
+									"<input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+
+								"</div>"+
+							"</div>"
+						);
+					}
+					divKey.append("<div style='clear:left'></div>");
+					
+				}
+			} 
+		}); 
 
 	}
 
@@ -403,10 +447,15 @@
 	
 	//
 	function createGwfResearchObject(projectJson){
+		
+		console.log("start createGwfResearchObject");
 
 		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
 		var url = document.getElementById('workflowgenericurl').value;
 
+		console.log("researchObjectJson");
+		console.log(researchObjectJson);
+		
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
@@ -416,6 +465,9 @@
 			},
 			async: false,
 			success :  function (obj){
+				
+				console.log("success");
+				console.log(obj);
 
 				if (obj.researchobjectid >0){
 					document.getElementById("gwf_ro_id").innerHTML= obj.researchobjectid;
@@ -433,9 +485,51 @@
 					
 
 				}
+			},
+			error :  function (obj){
+				console.log("error");
 			}
+			
 		});
 		return researchObjectJson;
+	}
+	
+	
+	//
+	function startSubmissionRegistry(data){
+
+		var url = document.getElementById('workflowgenericurl').value;
+		
+		console.log("broker");
+		console.log(data);
+
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowCollectionsPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : "createsubmissionregistry"
+			},
+			async: false,
+			success :  function (obj){
+				if (!obj.hasOwnProperty("ERROR")){
+					var commentarField = $("#".concat('gwf_lf_comentarField'));
+					commentarField.empty();
+					commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>Submission entry is written in the registry.</div>");
+					setTimeout(function(){commentarField.empty();}, 5000);
+				}else{
+					var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
+					document.getElementById("gwf_lf_submissioncomentarField").className="portlet-msg-error";
+					commentarField.empty();
+					commentarField.append("<div class='portlet-msg-error'>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
+					setTimeout(function(){
+						commentarField.empty();
+						document.getElementById("gwf_lf_submissioncomentarField").className="row";;
+					}, 25000);
+				}
+					
+			}		
+		});	
 	}
 	
 	
@@ -444,42 +538,21 @@
 	
 	function fileUplaod(){
 	
-			
 		var url = document.getElementById('workflowgenericurl').value;
 		var formData = new FormData();
-
-		var researchObjectId = 		Number(document.getElementById('gwf_ro_id').innerHTML);
-		var researchObjectVersion = Number(document.getElementById('gwf_ro_version').innerHTML);
-		var userId = 				Number(document.getElementById('gwf_user_id').innerHTML);
-		//researchObjectId = 35301;
-		
- 		var uploadInformation = new File(['{"researchobjectid":'+researchObjectId+',"researchobjectversion":'+researchObjectVersion+',"userid":'+userId+'}'], "uploadInformation.txt");
- 		console.log("-----------------------------");
- 		console.log(userId);
- 		console.log(researchObjectId);
- 		console.log(researchObjectVersion);
- 		
-		console.log(uploadInformation);
- 		console.log("-----------------------------");
+	  //var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)+',"path":"'+document.getElementById('gwf_user_path').innerHTML+'"}'], "uploadInformation.txt");
+	    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)															   +'}'], "uploadInformation.txt");
+		console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		console.log(document.getElementById('gwf_user_path').innerHTML);
+		console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		formData.append('file', uploadInformation);
 
-		
 		var fileSelect = document.getElementById('file-select');
 		var files = fileSelect.files;
+
 		for (var i = 0; i < files.length; i++){ 
 		  	formData.append('file', files[i]);
-		  	console.log(files[i]);
 		}
-
-		
-		
-		console.log(formData);
-		
-		
-		
-		
-		
-		
 		
  		$.ajax({
  			"url": url.concat('/WorkflowCollectionsPortlet'),
@@ -490,31 +563,7 @@
 			async: false,
 			success :  function (){
 				
-				var name = "test2.txt";
-				var path = userId+"/"+researchObjectId+"/"+researchObjectVersion+"/"+name;
-				
 				console.log("yeah");
-				console.log(userId);
-				console.log(researchObjectId);
-				console.log(researchObjectVersion);
-				var dataJson = {"researchobjectid":researchObjectId, "researchobjectversion":researchObjectVersion, "name":name, "path":path };
-				var data = [dataJson];
-				
-				console.log(data);
-				
-				
-				$.ajax({
-					"type" : "POST",
-					"url": url.concat('/WorkflowGenericPortlet'),
-					"data" : {
-						"<portlet:namespace />data" : JSON.stringify(data),
-						"<portlet:namespace />responseTarget" : "registerfileupload"
-					},
-					async: false,
-					success :  function (obj){
-						console.log("yeah");
-					}
-				});
 			} 
 		});
 	}
@@ -527,8 +576,7 @@
 	//
 	function startSubmission(data){
 			
-		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
-		//var url = document.getElementById('workflowgenericurl').value;
+		var url = document.getElementById('workflowgenericurl').value;
 		
 		console.log(data);
 		
@@ -536,12 +584,12 @@
 
 		console.log(data);
 		
-/* 		$.ajax({
+ 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
 			"data" : {
 				"<portlet:namespace />data" : JSON.stringify(data),
-				//"<portlet:namespace />responseTarget" : "startsubmission"
+				"<portlet:namespace />responseTarget" : "startsubmission"
 			},
 			async: false,
 			success :  function (obj){
@@ -560,7 +608,36 @@
 				setTimeout(function(){commentarField.empty();}, 25000);
 
 			},		
-		});	 */
+		});	 
+	}
+	
+	
+	//
+	function sentToBroker(data){
+			
+		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
+				
+		//console.log(data);
+		
+		//data["path"]= document.getElementById("gwf_user_path").innerHTML;
+
+		console.log(data);
+		
+ 		$.ajax({
+			"type" : "POST",
+			"url": url,
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data)
+			},
+			async: false,
+			success :  function (obj){
+				console.log("broker jo");
+				console.log(obj);
+			},
+			error :  function (obj){
+				console.log("broker nope");
+			},		
+		});	 
 	}
 	
 	

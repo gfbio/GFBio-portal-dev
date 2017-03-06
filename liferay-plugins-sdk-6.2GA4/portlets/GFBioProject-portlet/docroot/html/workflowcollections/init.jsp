@@ -605,7 +605,10 @@
 	function startSubmission(data){
 			
 		var url = document.getElementById('workflowcollectionsurl').value;
-
+		
+		console.log("start with");
+		console.log(data);
+		
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowCollectionsPortlet'),
@@ -633,7 +636,6 @@
 	
 	//
 	function startSubmissionRegistry(data){
-		
 
 		var url = document.getElementById('workflowcollectionsurl').value;
 

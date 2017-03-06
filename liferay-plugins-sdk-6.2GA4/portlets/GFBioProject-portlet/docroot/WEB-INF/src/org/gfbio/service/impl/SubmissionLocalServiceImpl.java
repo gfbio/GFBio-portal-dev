@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.gfbio.model.Submission;
+import org.gfbio.publicIdentfier.PublicIdentifier;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.SubmissionLocalServiceUtil;
@@ -528,6 +529,17 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		return ignoredParameter;
 	}
 	
+
+	//
+	public Boolean CheckOfBrokerSubmissionId(String brokersubmissionid) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  SubmissionFinderUtil.getCheckOfBrokerSubmissionId(brokersubmissionid);
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		return check;
+	}
+	
 	
 	//
 	public Boolean checkResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
@@ -608,14 +620,19 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 
-		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion") && requestJson.containsKey("archive") && requestJson.containsKey("brokersubmissionid") && requestJson.containsKey("userid")){
+		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion") && requestJson.containsKey("archive") && requestJson.containsKey("userid")){
 
 			long researchObjectId =(long)requestJson.get("researchobjectid");
 			int researchObjectVersion = (int)((long) requestJson.get("researchobjectversion"));
 			String archive = ((String)requestJson.get("archive")).trim();
-			String brokerSubmissionId = ((String)requestJson.get("brokersubmissionid")).trim();
+			String brokerSubmissionId ="";
 			long userId = (long)requestJson.get("userid");
 			Submission submission = null;
+			
+			if (requestJson.containsKey("brokersubmissionid"))
+				brokerSubmissionId = ((String)requestJson.get("brokersubmissionid")).trim();
+			else
+				brokerSubmissionId = (createBrokerSubmissionId()).trim();
 			
 			if (ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
 				
@@ -804,6 +821,12 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 		
 	//----------------------------------- Update Functions -------------------------------------------------//
+	
+	
+	//
+	private String createBrokerSubmissionId(){	
+		return (new PublicIdentifier("submission")).getIdentifier();
+	}
 	
 	
 	//

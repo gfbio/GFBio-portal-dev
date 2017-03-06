@@ -22,6 +22,7 @@ import org.gfbio.model.PrimaryData;
 import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.PrimaryDataLocalServiceBaseImpl;
+import org.gfbio.service.persistence.PrimaryDataFinderUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -101,6 +102,16 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	
 	
 	//
+	public Boolean checkPrimaryDataExists(String name, String path){
+		Boolean check = false;
+
+		check = PrimaryDataFinderUtil.getCheckPrimaryDataExists( name, path).get(0);
+		
+		return check;
+	}
+	
+	
+	//
 	@SuppressWarnings("unchecked")
 	private  JSONObject constructPrimaryDataJsonById (PrimaryData primaryData) throws NoSuchUserException, SystemException {
 		JSONObject json = new JSONObject();
@@ -120,11 +131,9 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	//
 	@SuppressWarnings("unchecked")
 	public JSONArray createPrimaryData (JSONArray requestJson){
-		JSONArray responseJson = new JSONArray();
-		
+		JSONArray responseJson = new JSONArray();		
 		for (int i =0; i <requestJson.size();i++)
 			responseJson.add(createPrimaryData((JSONObject) requestJson.get(i)));
-
 		return responseJson;
 	}
 
@@ -132,8 +141,6 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createPrimaryData (JSONObject requestJson){
-		
-		System.out.println(requestJson);
 			
 		Boolean check = false;	
 		JSONObject responseJson = new JSONObject();
@@ -143,25 +150,28 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 
-		
 		if (requestJson.containsKey("name") && requestJson.containsKey("path")){
 			
-			long primaryDataId = createKernelPrimaryData(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim());
-			if (primaryDataId !=0)
-				check = true;
-			
-			if (check && requestJson.containsKey("researchobjectid"))
-				if (requestJson.containsKey("researchobjectversion")){
-					int researchObjectVersion = ResearchObjectLocalServiceUtil.getResearchObjectVersionFromJson(requestJson);
-					check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"), researchObjectVersion);
-				}else
-					check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"));
-			
-			if (check)
-				responseJson.put("primarydataid", primaryDataId);
-			else
-				responseJson.put("ERROR:", "ERROR: create primarydata entry is failed.");
+			if (!checkPrimaryDataExists(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim())){
 
+				long primaryDataId = createKernelPrimaryData(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim());
+				if (primaryDataId !=0)
+					check = true;
+				
+				if (check && requestJson.containsKey("researchobjectid"))
+					if (requestJson.containsKey("researchobjectversion")){
+						int researchObjectVersion = ResearchObjectLocalServiceUtil.getResearchObjectVersionFromJson(requestJson);
+						check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"), researchObjectVersion);
+					}else
+						check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"));
+				
+				if (check)
+					responseJson.put("primarydataid", primaryDataId);
+				else
+					responseJson.put("ERROR:", "ERROR: create primarydata entry is failed.");
+			}else{
+				responseJson.put("ERROR:", "ERROR: A File with this name is part of this research object.");
+			}
 		}else{
 			String errorString = "ERROR: Mandatory attribut";
 			if (!requestJson.containsKey("name"))

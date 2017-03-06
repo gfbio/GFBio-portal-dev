@@ -77,6 +77,18 @@
     </sql>
     
     
+	<sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getCheckOfBrokerSubmissionId">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(submissionid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_submission
+			WHERE
+			  brokersubmissionid = ?
+		]]>
+    </sql>
+    
+    
     <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getCheckOfResearchObjectIdAndVersion">
 	    <![CDATA[
 			SELECT 
