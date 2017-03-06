@@ -162,9 +162,9 @@
 </script>
 
 <body>
-	<div class="wizard_main">
+	<div class="container wizard_main">
 		<form id="example-form" action="#">
-			<div class="container-fluid">
+			<div>
   				<jsp:include page="sections/general_information.jsp" />
  				
   				<jsp:include page="sections/data_collection.jsp" />

@@ -27,17 +27,17 @@
 	<div class="row">
         <h4>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?</h4>
         <div id="persistentIdentifier">
-	        <div class="col-xs-12 col-sm-4 col-md-3">
+	        <div style="display: block;">
 	            <input class="radio_input" name="pid"
 	                type="radio" value="yes" />
 				<label>Yes (recommended)</label>
 	        </div>
-	        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+	        <div style="display: block;">
                 <input class="radio_input" name="pid"
 	                type="radio" value="no" />
 				<label>No</label>
 	        </div>
-	        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+	        <div style="display: block;">
 	        	<input class="radio_input" name="pid"
 	                type="radio" value="dontknow" />
 	            <label>Don't know yet</label>
@@ -47,12 +47,12 @@
 	<div class="row">
 	    <h4>Do you need help estimating the cost and effort for data management?</h4>
 	    <div id="needHelp">
-	    	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+	    	<div style="display: block;">
 	            <input class="radio_input" name="help"
 	            type="radio" value="yes" />
 	            <label>Yes</label>
 	        </div>
-	        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+	        <div style="display: block;">
 	            <input class="radio_input" name="help"
 	            type="radio" value="no" />
 	            <label>No</label>

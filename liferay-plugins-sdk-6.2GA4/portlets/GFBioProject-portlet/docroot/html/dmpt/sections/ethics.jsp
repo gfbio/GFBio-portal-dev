@@ -26,17 +26,19 @@
     </div>
 	<div class="row">
         <h4>Do you need access restriction for your data?</h4>
-        <div class="col-xs-6 col-sm-3">
-            <input class="radio_input" name="restriction"
-                type="radio" value="yes" />
-          	<label>Yes</label>
+        <div class="col-md-12">
+	        <div style="display: block;">
+	            <input class="radio_input" name="restriction"
+	                type="radio" value="yes" />
+	          	<label>Yes</label>
+	        </div>
+	        <div style="display: block;">
+	      		<input class="radio_input" name="restriction"
+	                type="radio" value="no" />
+	          	<label>No</label>
+	        </div>
         </div>
-        <div class="col-xs-6 col-sm-3">
-      		<input class="radio_input" name="restriction"
-                type="radio" value="no" />
-          	<label>No</label>
-        </div>
-        <div id="accessYes">
+        <div id="accessYes" class="col-md-12">
         	<label>For how long do you need exclusive use of the data?</label>
         	<input id="accessHowLong" name="accessHowLong" type="text" class="inputtext_long" 
         	placeholder="Other sensitive data"/>

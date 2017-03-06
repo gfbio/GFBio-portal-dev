@@ -5,7 +5,58 @@
 		<h2>2. Data Collection</h2>
 	</div>
     <div class="row">
-       	<h4>DCRT Input</h4>             
+       	<h4>Do you want to submit physical objects along with your data?</h4> 
+       	<div id="physical" class="col-md-12">
+			<div style="display: block;">
+				<input name="physical" type="radio" value="true" />
+				<label>Yes</label>
+			</div>
+			<div style="display: block;">
+				<input name="physical" type="radio" value="false" />
+				<label>No</label>
+			</div>
+		</div>
+    </div>
+    <div class="row">
+       	<h4>Is your object dead or alive?</h4> 
+       	<div id="alive" class="col-md-12">
+			<div style="display: block;">
+				<input name="alive" type="radio" value="true" /> 
+				<label>Alive</label>
+			</div>
+			<div style="display: block;">
+				<input name="alive" type="radio" value="false" /> 
+				<label>Dead</label>
+			</div>
+		</div>
+		
+    </div>
+    <div class="row">
+       	<h4>Is your object taxon-based?</h4> 
+       	<div id="taxon" class="col-md-12">
+			<div style="display: block;">
+				<input name="taxon" type="radio" value="true" /> 
+				<label>Yes</label>
+			</div>
+			<div style="display: block;">
+				<input name="taxon" type="radio" value="false" /> 
+				<label>No</label>
+			</div>
+		</div>
+		
+    </div>
+    <div class="row">
+       	<h4>Do you have mainly sequence data?</h4> 
+       	<div id="sequenced" class="col-md-12">
+			<div style="display: block;">
+				<input name="sequenced" type="radio" value="true" /> 
+				<label>Yes</label>
+			</div>
+			<div style="display: block;">
+				<input name="sequenced" type="radio" value="false" > 
+				<label>No</label>
+			</div>
+		</div>
     </div>
 	<div class="row">
       	<h4>What type of data format will you create?</h4>
@@ -24,7 +75,7 @@
 	                    <label>GIS data</label>
 	                </div>
             	</div>
-	            <div class="col-md-6 col-lg-4">
+	            <div class="col-md-6 col-lg-6">
 	                <div>
 	                    <input name="dataformat" type="checkbox"/>
 	                    <label>Numeric (spreadsheet, measurements, etc.)</label>
