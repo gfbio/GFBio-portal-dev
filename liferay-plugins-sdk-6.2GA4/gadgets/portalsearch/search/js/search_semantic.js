@@ -1483,23 +1483,57 @@ function semanticQuery(clearBasket) {
 function getTSterms(keyword, filter, yearRange) {
 	console.log("getTSterms");
 	var jArrSyn = [];
+	// ignore |, & operators
+	keyword = keyword.replace(new RegExp("|", 'g'),"");//replace all
+	keyword = keyword.replace(new RegExp("&", 'g'),"");
 	//TODO: upgrade keyword split with double quote, or automatically parse terms
 	
-	//var keys = keyword.split(" ");
-	//var nKeys = keys.length;
+	var keys = [];//keyword.split(" ");
+	var unquotedKeywords = keyword;
+	// detect if there are quotes
+	if (keyword.indexOf("\"")>=0){
+		console.log("---------- A quote is detected -------------");
+		var ind = 0;
+		// find a pair of quotes
+		while (keyword.indexOf("\"",ind)>=ind){
+			var openQ = keyword.indexOf("\"",ind);
+			var closeQ = keyword.indexOf("\"", openQ+1);
+			if (closeQ < 0) break;
+			var key = keyword.substring(openQ+1,closeQ);
+			if (key.length > 0){
+				// remove quoted keyword from the rest
+				unquotedKeywords = unquotedKeywords.replace(key,"");
+				//encode space within a quote for RESTful request
+				key = encodeURI(key);
+				console.log("++++++++++ "+key+" ++++++++++");
+				keys.push(key);
+			}
+			ind = closeQ+1;
+		}
+	}
+	// remove all quotes 
+	unquotedKeywords = unquotedKeywords.replace(new RegExp("\"", 'g'),"");
+	var unquotedKeys = unquotedKeywords.split(" ");
+	$.each(unquotedKeys, function(i, unquotedKey){
+		if (unquotedKey.length > 0)
+		keys.push(unquotedKey);
+	});
+	console.log("************** "+keys+" **************");
+	var nKeys = keys.length;
 	var nRequest = 0;
-		//$.each(keys, function (ind, item) {
-		var item = keyword;
+		$.each(keys, function (ind, item) {
+		//var item = keyword;
 			// Send request via AJAX
 			$.ajax({
 				url: TSAPI + "search?query=" + item, //by default, call exact match
 				type: 'GET',
 				dataType: 'json',
 				success: function (val) {
+					item = decodeURI(item);
 					jArrSyn.push.apply(jArrSyn, readTSresults(item, val));
-					//nRequest++;
-					//console.log(nRequest);
-					//if (nRequest == nKeys){ 
+					nRequest++;
+					console.log(nRequest);
+					if (nRequest == nKeys){ 
 						//if all keywords get semantic terms, then send to pansimple
 						semanticTerms = jArrSyn.join("|");
 						console.log('*********************************');
@@ -1510,13 +1544,13 @@ function getTSterms(keyword, filter, yearRange) {
 							document.getElementById("semanticTerms").value = semanticTerms;
 							getSemanticSearchResult(jArrSyn, filter, "");
 						//}
-					//}
+					}
 				},
 				error: function (e) {
 					console.log(e);
 				}
 			});
-		//})
+		})
 		
 }
 
