@@ -668,7 +668,8 @@ public class WorkflowGeneric extends GenericPortlet {
 				catch (ParseException e) {e.printStackTrace();}
 				JSONObject fieldJson = (JSONObject) jiraRequestJson.get("fields");
 				
-				SubmissionLocalServiceUtil.updateJiraId(Long.parseLong((String)fieldJson.get("customfield_10309")), Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("key"));
+				SubmissionLocalServiceUtil.updateJiraKey(Long.parseLong((String)fieldJson.get("customfield_10309")), Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("key"));
+				SubmissionLocalServiceUtil.updateJiraId(Long.parseLong((String)fieldJson.get("customfield_10309")),  Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("id"));
 	        }
 	        conn.disconnect();
 	     } catch (Exception e) {e.printStackTrace();}

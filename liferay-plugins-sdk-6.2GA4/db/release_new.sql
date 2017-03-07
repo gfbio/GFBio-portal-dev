@@ -497,3 +497,9 @@ SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gf
 -----------------------------------------------------------------------------------------------
 
 ALTER TABLE gfbio_submission ADD COLUMN jiraid character (75);
+
+-----------------------------------------------------------------------------------------------
+-----------------------------------        submission        - 08.03.2017 -------------------
+-----------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_submission ADD COLUMN jirakey character (75);

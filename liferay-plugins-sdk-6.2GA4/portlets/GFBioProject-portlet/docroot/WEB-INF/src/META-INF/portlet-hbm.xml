@@ -176,7 +176,8 @@
 		<property name="archive" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="archivePID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="archive_pid" />
 		<property name="brokerSubmissionID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="brokersubmissionid" />
-		<property name="jiraID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="jiraID" type="com.liferay.portal.dao.orm.hibernate.StringType" column="jiraid" />
+		<property name="jiraKey" type="com.liferay.portal.dao.orm.hibernate.StringType" column="jirakey" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.UserExtensionImpl" table="gfbio_UserExtension">

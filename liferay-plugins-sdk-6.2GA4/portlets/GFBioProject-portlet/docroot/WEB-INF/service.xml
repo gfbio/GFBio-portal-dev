@@ -259,7 +259,8 @@
 		<column name="archive" 					type="String" 	db-name="archive"/>
 		<column name="archivePID" 				type="String" 	db-name="archive_pid" />
 		<column name="brokerSubmissionID" 		type="String" 	db-name="brokersubmissionid"/>
-		<column name="jiraID" 					type="String" 	db-name="jiraID"/>
+		<column name="jiraID" 					type="String" 	db-name="jiraid"/>
+		<column name="jiraKey" 					type="String" 	db-name="jirakey"/>
 		<column name="status" 					type="String" 	db-name="status"/>
 
 		<order by="asc">			<order-column name="researchObjectID" />		</order>

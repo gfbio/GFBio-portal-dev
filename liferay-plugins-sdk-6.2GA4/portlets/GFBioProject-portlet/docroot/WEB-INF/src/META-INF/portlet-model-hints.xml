@@ -126,6 +126,7 @@
 		<field name="archivePID" type="String" />
 		<field name="brokerSubmissionID" type="String" />
 		<field name="jiraID" type="String" />
+		<field name="jiraKey" type="String" />
 		<field name="status" type="String" />
 	</model>
 	<model name="org.gfbio.model.UserExtension">

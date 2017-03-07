@@ -275,7 +275,12 @@
 			<basic name="brokerSubmissionID">
 				<column name="BROKERSUBMISSIONID" />
 			</basic>
-			<basic name="jiraID" />
+			<basic name="jiraID">
+				<column name="JIRAID" />
+			</basic>
+			<basic name="jiraKey">
+				<column name="JIRAKEY" />
+			</basic>
 			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
