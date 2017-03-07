@@ -347,12 +347,12 @@ public class WorkflowGeneric extends GenericPortlet {
         fields.put("customfield_10201", (String) researchObjectJson.get("name")); 							
         
         //dataset label
-        datasetlabelArray.add((String) researchObjectJson.get("label"));
+        datasetlabelArray.add(((String) researchObjectJson.get("label")).trim().replace(' ', '_'));
         fields.put("customfield_10308", datasetlabelArray); 			
         
         //dataset description
-        System.out.println("customfield_10208: "+(String) researchObjectJson.get("description"));
-        fields.put("customfield_10208", (String) researchObjectJson.get("description"));	
+        fields.put("customfield_10208", (String) researchObjectJson.get("description"));
+
         
         //dataset author
         if (researchObjectJson.containsKey("authornames")){
@@ -364,7 +364,8 @@ public class WorkflowGeneric extends GenericPortlet {
         		fields.put("customfield_10205", parseJson);
         		String inputString ="";
         		for (int i =0; i< parseJson.size();i++)
-        			inputString = inputString.concat(((String) parseJson.get(i)).trim());//.concat(", ");
+        			inputString = inputString.concat(((String) parseJson.get(i)).trim()).concat(", ");
+        		inputString = inputString.substring(0, inputString.length()-2);
         		fields.put("customfield_10205", inputString);
         	}
         }
@@ -488,22 +489,25 @@ public class WorkflowGeneric extends GenericPortlet {
         long researchObjectId =(long) researchObjectJson.get("researchobjectid");
         int researchObjectVersion = (int) (long) researchObjectJson.get("researchobjectversion");
         
-        fields.put("customfield_10303", SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, "GFBio collections"));
+        fields.put("customfield_10303", (SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, "GFBio collections")).trim());
 
         
         //fields.put("customfield_10312", "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx");
         
         //
-        fields.put("customfield_1", "foo");
+        //fields.put("customfield_1", "foo");
         
         
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("userid"));
         try {json.put("authorization", "Token "+WorkflowENAPortlet.getServerToken((String) requestJson.get("path"),"token"));}
         catch (IOException | PortletException e) {e.printStackTrace();}
-       	      
+       	
+   
         String response = json.toJSONString();
+        response = response.replaceAll("\\\\n", "----n");
         response = response.replaceAll("\\\\", "");
+        response = response.replaceAll("----n", "\\\\n");
         
         System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
@@ -620,7 +624,9 @@ public class WorkflowGeneric extends GenericPortlet {
 	        
 	        System.out.println("6");
 	        
-	        String encodedData = getJSON_Body((JSONObject) parseJson);
+	        String jiraRequestString = getJSON_Body((JSONObject) parseJson);
+	        String encodedData = jiraRequestString;
+	        
 	        
 	        System.out.println("7.0");
 	        
@@ -648,15 +654,21 @@ public class WorkflowGeneric extends GenericPortlet {
 	        String output;
 	        System.out.println("Output from Server .... \n");
 	        while ((output = br.readLine()) != null){
-	           System.out.println(output); 
-	           responseString = responseString.concat(output);
-			JSONParser parser = new JSONParser();
-			JSONObject pj = new JSONObject();
-			try {pj = (JSONObject) parser.parse(output);}
-			catch (ParseException e) {e.printStackTrace();}
-			System.out.println(pj);
-	           
+	        	
+	        	System.out.println(output); 
+	        	responseString = responseString.concat(output);
 			
+		        JSONParser parser = new JSONParser();
+				JSONObject jraResponseJson = new JSONObject();
+				try {jraResponseJson = (JSONObject) parser.parse(output);}
+				catch (ParseException e) {e.printStackTrace();}
+				
+				JSONObject jiraRequestJson = new JSONObject();
+				try {jiraRequestJson = (JSONObject) parser.parse(jiraRequestString);}
+				catch (ParseException e) {e.printStackTrace();}
+				JSONObject fieldJson = (JSONObject) jiraRequestJson.get("fields");
+				
+				SubmissionLocalServiceUtil.updateJiraId(Long.parseLong((String)fieldJson.get("customfield_10309")), Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("key"));
 	        }
 	        conn.disconnect();
 	     } catch (Exception e) {e.printStackTrace();}

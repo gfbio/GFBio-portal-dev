@@ -25,7 +25,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.gfbio.model.Submission;
-import org.gfbio.publicIdentfier.PublicIdentifier;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.SubmissionLocalServiceUtil;
@@ -623,7 +622,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		Boolean check = false;
 		JSONObject keyJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "ispublic", "publicafter", "researchobjectid", "researchobjectversion", "status", "userid"};
+		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "ispublic", "jiraid", "publicafter", "researchobjectid", "researchobjectversion", "status", "userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -676,6 +675,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 								check = updateIsPublic(researchObjectId, researchObjectVersion, archive, (Boolean) requestJson.get("ispublic"));
 							else
 								check = updateIsPublic(researchObjectId, researchObjectVersion, archive, false);
+							
+							if (requestJson.containsKey("jiraid"))
+								check = updateJiraId(researchObjectId, researchObjectVersion, archive, ((String)requestJson.get("jiraid")).trim());
 							
 							if (requestJson.containsKey("publicafter"))
 								if (requestJson.get("publicafter").getClass().toString().equals("class java.lang.String"))
@@ -751,7 +753,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		JSONObject responseJson = new JSONObject();
 		Submission submission = null;
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "ispublic", "publicafter", "researchobjectid", "status", "userid"};
+		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "ispublic", "jiraid", "publicafter", "researchobjectid", "status", "userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -786,6 +788,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 				if (requestJson.containsKey("ispublic"))
 					check = updateIsPublic(researchObjectId, researchObjectVersion, archive, (Boolean) requestJson.get("ispublic"));
 	
+				if (requestJson.containsKey("jiraid"))
+					check = updateJiraId(researchObjectId, researchObjectVersion, archive, ((String)requestJson.get("jiraid")).trim());
+				
 				if (requestJson.containsKey("publicafter"))
 					if (requestJson.get("publicafter").getClass().toString().equals("class java.lang.String"))
 						try {
@@ -1012,6 +1017,24 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setIsPublic(isPublic);
+				super.updateSubmission(submission);
+				check = true;
+			} catch (SystemException e) {e.printStackTrace();}
+		
+		return check;
+	}
+	
+	
+	//
+	public Boolean updateJiraId(long researchObjectId, int researchObjectVersion, String archive, String jiraId){
+		
+		Boolean check = false;
+		Submission submission = null;
+		submission = getSubmission(researchObjectId, researchObjectVersion, archive.trim());
+		
+		if (submission != null)
+			try {
+				submission.setJiraID(jiraId);
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
