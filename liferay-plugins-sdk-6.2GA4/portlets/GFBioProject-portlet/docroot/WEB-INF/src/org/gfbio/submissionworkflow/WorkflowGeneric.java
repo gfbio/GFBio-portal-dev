@@ -494,7 +494,7 @@ public class WorkflowGeneric extends GenericPortlet {
         //fields.put("customfield_10312", "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx");
         
         //
-        //fields.put("customfield_1", "foo");
+        fields.put("customfield_1", "foo");
         
         
         json.put("fields", fields);

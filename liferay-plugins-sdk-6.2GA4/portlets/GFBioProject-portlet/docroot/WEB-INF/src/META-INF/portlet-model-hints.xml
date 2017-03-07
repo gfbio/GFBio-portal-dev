@@ -115,16 +115,17 @@
 	</model>
 	<model name="org.gfbio.model.Submission">
 		<field name="submissionID" type="long" />
-		<field name="researchObjectID" type="long" />
-		<field name="researchObjectVersion" type="int" />
-		<field name="archive" type="String" />
-		<field name="brokerSubmissionID" type="String" />
-		<field name="archivePID" type="String" />
-		<field name="archivePIDType" type="long" />
-		<field name="lastChanged" type="Date" />
-		<field name="userID" type="long" />
 		<field name="isPublic" type="boolean" />
+		<field name="lastChanged" type="Date" />
 		<field name="publicAfter" type="Date" />
+		<field name="researchObjectVersion" type="int" />
+		<field name="archivePIDType" type="long" />
+		<field name="researchObjectID" type="long" />
+		<field name="userID" type="long" />
+		<field name="archive" type="String" />
+		<field name="archivePID" type="String" />
+		<field name="brokerSubmissionID" type="String" />
+		<field name="jiraID" type="String" />
 		<field name="status" type="String" />
 	</model>
 	<model name="org.gfbio.model.UserExtension">

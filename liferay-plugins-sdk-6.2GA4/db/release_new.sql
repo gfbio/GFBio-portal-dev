@@ -491,3 +491,9 @@ UPDATE gfbio_dataprovider SET name = 'Botanic Garden and Botanical Museum Berlin
 
 
 SELECT insertHCCRelationshipWithOutsideOfHCC('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Algae & Protists' ,  4 );
+
+-----------------------------------------------------------------------------------------------
+-----------------------------------        submission        - 07.03.2017 -------------------
+-----------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_submission ADD COLUMN jiraid character (75);

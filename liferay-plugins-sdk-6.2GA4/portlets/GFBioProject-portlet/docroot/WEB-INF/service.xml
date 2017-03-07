@@ -249,18 +249,18 @@
 		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="submissionID" 			type="long" 	db-name="submissionid"				primary="true" />
-		<column name="researchObjectID" 		type="long" 	db-name="researchobjectid"/>
-		<column name="researchObjectVersion" 	type="int" 		db-name="researchobjectversion"/>
-		<column name="archive" 					type="String" 	db-name="archive"/>
-		<column name="brokerSubmissionID" 		type="String" 	db-name="brokersubmissionid"/>
-		<column name="archivePID" 				type="String" 	db-name="archive_pid" />
-		<column name="archivePIDType" 			type="long" 	db-name="archive_pid_type" />
-		<column name="lastChanged" 				type="Date" 	db-name="last_changed" />
-		<column name="userID" 					type="long" 	db-name="userid"/>
 		<column name="isPublic" 				type="boolean" 	db-name="is_public" />
+		<column name="lastChanged" 				type="Date" 	db-name="last_changed" />
 		<column name="publicAfter" 				type="Date" 	db-name="public_after" />
+		<column name="researchObjectVersion" 	type="int" 		db-name="researchobjectversion"/>
+		<column name="archivePIDType" 			type="long" 	db-name="archive_pid_type" />
+		<column name="researchObjectID" 		type="long" 	db-name="researchobjectid"/>
+		<column name="userID" 					type="long" 	db-name="userid"/>
+		<column name="archive" 					type="String" 	db-name="archive"/>
+		<column name="archivePID" 				type="String" 	db-name="archive_pid" />
+		<column name="brokerSubmissionID" 		type="String" 	db-name="brokersubmissionid"/>
+		<column name="jiraID" 					type="String" 	db-name="jiraID"/>
 		<column name="status" 					type="String" 	db-name="status"/>
-
 
 		<order by="asc">			<order-column name="researchObjectID" />		</order>
 

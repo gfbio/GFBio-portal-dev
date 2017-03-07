@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.gfbio.model.Submission;
 import org.gfbio.publicIdentfier.PublicIdentifier;
@@ -586,6 +587,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		json.put("userid", submission.getUserID());
 		json.put("lastchanged", (submission.getLastChanged().toString()).trim());
 		json.put("ispublic", submission.getIsPublic());
+		json.put("jiraid", submission.getJiraID());
 		if (submission.getPublicAfter() != null)
 			json.put("publicafter", (submission.getPublicAfter().toString()).trim());
 		else
@@ -831,7 +833,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 	//
 	private String createBrokerSubmissionId(){	
-		return (new PublicIdentifier("submission")).getIdentifier();
+		//(new PublicIdentifier("submission")).getIdentifier();
+		return (new UUID(System.currentTimeMillis(),System.currentTimeMillis())).toString();
 	}
 	
 	

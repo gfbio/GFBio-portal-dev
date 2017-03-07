@@ -245,36 +245,37 @@
 			<id name="submissionID">
 				<column name="SUBMISSIONID" />
 			</id>
-			<basic name="researchObjectID">
-				<column name="RESEARCHOBJECTID" />
-			</basic>
-			<basic name="researchObjectVersion">
-				<column name="RESEARCHOBJECTVERSION" />
-			</basic>
-			<basic name="archive" />
-			<basic name="brokerSubmissionID">
-				<column name="BROKERSUBMISSIONID" />
-			</basic>
-			<basic name="archivePID">
-				<column name="ARCHIVE_PID" />
-			</basic>
-			<basic name="archivePIDType">
-				<column name="ARCHIVE_PID_TYPE" />
+			<basic name="isPublic">
+				<column name="IS_PUBLIC" />
 			</basic>
 			<basic name="lastChanged">
 				<column name="LAST_CHANGED" />
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="userID">
-				<column name="USERID" />
-			</basic>
-			<basic name="isPublic">
-				<column name="IS_PUBLIC" />
-			</basic>
 			<basic name="publicAfter">
 				<column name="PUBLIC_AFTER" />
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="researchObjectVersion">
+				<column name="RESEARCHOBJECTVERSION" />
+			</basic>
+			<basic name="archivePIDType">
+				<column name="ARCHIVE_PID_TYPE" />
+			</basic>
+			<basic name="researchObjectID">
+				<column name="RESEARCHOBJECTID" />
+			</basic>
+			<basic name="userID">
+				<column name="USERID" />
+			</basic>
+			<basic name="archive" />
+			<basic name="archivePID">
+				<column name="ARCHIVE_PID" />
+			</basic>
+			<basic name="brokerSubmissionID">
+				<column name="BROKERSUBMISSIONID" />
+			</basic>
+			<basic name="jiraID" />
 			<basic name="status" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
