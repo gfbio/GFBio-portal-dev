@@ -597,7 +597,12 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.score = score;
 		//console.log('parseReturnedJSONfromSearch:fields');
 		inner.title = getMultiValueField(fields, "citation_title");
-		inner.authors = getMultiValueField(fields, "citation_authors");
+		// **************** IMPORTANT ***************** //
+		// https://project.gfbio.org/issues/1034        //
+		// The authors field must be presented in array //
+		// as agreed with VAT system                    //
+		inner.authors = getJSONArrayFromField(fields, "citation_authors");
+		// ******************************************** //
 		inner.description = getMultiValueField(fields, "description");
 		inner.dataCenter = getMultiValueField(fields, "dataCenter");
 		inner.region = getMultiValueField(fields, "region");
@@ -1365,6 +1370,18 @@ function getMultiValueField(jObj, name){
 		return jObj[name]
 	}
 	return "";
+}
+function getJSONArrayFromField(jObj, name){
+	if ($.isArray(jObj)){
+		var jArr = jObj[name];
+		if (jArr.length > 0){
+		    return jArr;
+		}
+	}
+	else{
+		return [jObj[name]];
+	}
+	return [];
 }
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
