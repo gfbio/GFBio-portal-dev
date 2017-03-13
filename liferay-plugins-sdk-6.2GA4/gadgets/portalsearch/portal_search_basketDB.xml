@@ -49,6 +49,8 @@
 				</div>
 				<input id="visualBasket" type="hidden" value=""/>
 				<input id="queryJSON" type="hidden" value=""/>
+				<input id="queryKeyword" type="hidden" value=""/>
+				<input id="queryFilter" type="hidden" value=""/>
 				<input id="basketID" type="hidden" value="0"/>
 			</body>
 			<script type="text/javascript">

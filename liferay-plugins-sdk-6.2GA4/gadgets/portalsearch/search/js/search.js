@@ -1,5 +1,4 @@
-
-				var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
 
 /////////////////////////////// Search initial functions ////////////////////////////////
@@ -209,7 +208,7 @@ function newQuery(clearBasket) {
 	// reset facet gadget
 	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
-		console.log('search:reset facet');
+		//console.log('search:reset facet');
 	}
 	// autocomplete from the textbox doesn't automatically closed
 	$('#gfbioSearchInput').autocomplete('close');
@@ -333,13 +332,13 @@ function submitQueryToServer(keyword, filter, yearRange) {
 					var facet = result.aggregations;
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
-						console.log('search:set facet to:');
-						console.log(facet);
+						//console.log('search:set facet to:');
+						//console.log(facet);
 					}
 				} else {
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', '');
-						console.log('search:clear facet');
+						//console.log('search:clear facet');
 					}
 				}
 				var res = parseReturnedJSONfromSearch(datasrc);
@@ -406,7 +405,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 			"match_all" : {}
 		};
 	}
-	
+	// TODO: save Keyword to invisible field for basket
 	var filterObj;
 	if (yearRange == "") {
 		if (filterArray != "") {
@@ -434,7 +433,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		filterObj = filterArray;
 		filterObj.push(yearFilter);
 	}
-
+	// TODO: save filterObj to invisible field for basket
 	return {
 		"bool" : {
 			"must" : queryObj,
@@ -628,13 +627,14 @@ function loadBasket(topic, data, subscriberData) {
 function addBasket() {
 	var val = document.getElementById("visualBasket").value;
 	if (val == "") {
-		console.log('No basket selected.');
+		//console.log('No basket selected.');
 	} else {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
 		//console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
+		//TODO: add queryKeyword and queryFilter fields
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
 			basketID : basketid,
@@ -642,6 +642,7 @@ function addBasket() {
 			name : uid + '_basket',
 			basketContent : val,
 			queryJSON : query
+			//TODO: change WS to accept 2 more fields
 		},
 			function (obj) {
 			// set the return id as the current basket id
@@ -886,7 +887,10 @@ function updateMap() {
 	// Add query message in JSON format
 	var queryJSON = document.getElementById("queryJSON").value;
 	jsonData.queryStr = queryJSON;
+	// TODO: add queryKeyword and queryFilter to jsonData
+	// store in database (for use later)
 	addBasket();
+	// then send info to VAT
 	if (gadgets.Hub.isConnected()) {
 		//console.log(':Search: fire selected data: ');
 		//console.log(jsonData);
@@ -1288,6 +1292,7 @@ function getJSONArrayFromField(jObj, name){
 	}
 	return [];
 }
+
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var jArr = jObj[name];
