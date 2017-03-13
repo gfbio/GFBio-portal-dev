@@ -16,37 +16,37 @@
 
     <sql id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl.getResearchObjectsByPrimaryDataId">
 	    <![CDATA[
-SELECT
-	* 
-FROM
-	(
-		SELECT 
-			*,
-			rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
-		FROM 
-			public.gfbio_researchobject
-		WHERE
-			researchobjectid in
+			SELECT
+				* 
+			FROM
 				(
 					SELECT 
-						gfbio_primarydata_researchobject.researchobjectid
+						*,
+						rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
 					FROM 
-						public.gfbio_primarydata_researchobject
+						public.gfbio_researchobject
 					WHERE
-						gfbio_primarydata_researchobject.primarydataid = ?
-				)AND 
-			researchobjectversion in
-				(
-					SELECT 
-						gfbio_primarydata_researchobject.researchobjectversion
-					FROM 
-						public.gfbio_primarydata_researchobject
-					WHERE
-						gfbio_primarydata_researchobject.primarydataid = ?
-				)
-	)AS iq
-WHERE
-	pos=1
+						researchobjectid in
+							(
+								SELECT 
+									gfbio_primarydata_researchobject.researchobjectid
+								FROM 
+									public.gfbio_primarydata_researchobject
+								WHERE
+									gfbio_primarydata_researchobject.primarydataid = ?
+							)AND 
+						researchobjectversion in
+							(
+								SELECT 
+									gfbio_primarydata_researchobject.researchobjectversion
+								FROM 
+									public.gfbio_primarydata_researchobject
+								WHERE
+									gfbio_primarydata_researchobject.primarydataid = ?
+							)
+				)AS iq
+			WHERE
+				pos=1
 		]]>
     </sql>
     

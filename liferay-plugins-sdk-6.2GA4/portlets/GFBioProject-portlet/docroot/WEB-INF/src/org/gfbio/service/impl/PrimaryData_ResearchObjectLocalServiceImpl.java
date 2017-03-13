@@ -113,15 +113,14 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 	
 	
 	//
-	@SuppressWarnings("unused")
-	private List <Long> getPrimaryDataIdsByResearchObjectId (long researchObjectId){
+	public List <Long> getPrimaryDataIdsByResearchObjectId (long researchObjectId){
 		return getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId, ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId));
 	}
 	
 	
 	//
 	@SuppressWarnings("unchecked")
-	private List <Long> getPrimaryDataIdsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
+	public List <Long> getPrimaryDataIdsByResearchObjectIdAndVersion (long researchObjectId, int researchObjectVersion){
 		return PrimaryData_ResearchObjectFinderUtil.getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
 	}
 	
