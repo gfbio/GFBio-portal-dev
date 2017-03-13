@@ -109,8 +109,7 @@
 					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text'  value=''>"+
 				"</div >"+
 				"<div class='control-group'>"+
-					"<label	class='control-label' 					id='gwf_ro_description_l'> Description </label>"+
-					//"<input	class='field lfr-input-text-container'	id='gwf_ro_description' type='textarea' value='' >"+
+					"<label	class='control-label' 						id='gwf_ro_description_l'> Description </label>"+
 					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='10' ></textarea>"+
 				"</div>"+
 				"</div>"+
@@ -155,7 +154,7 @@
 				"</br>"+
 				"<div class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_embargo_l'> Embargo (example: 'embargo time to yyyy-mm-dd') </label>"+
-					"<input class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value=''>"+
+					"<span onmousemove='datePickler()'><input class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value=''></span>"+
 				"</div>"+
 				"<div class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_legalrequirements_l'> Legal requirements  </label>"+
@@ -181,6 +180,17 @@
 			);
 		}
 	}
+	
+	
+	//
+	function datePickler(){
+		$( "#gwf_ro_embargo" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			//changeMonth: true,
+			//changeYear: true
+		});
+	}
+
 	
 	
 	//default fill function of generic submission workflow

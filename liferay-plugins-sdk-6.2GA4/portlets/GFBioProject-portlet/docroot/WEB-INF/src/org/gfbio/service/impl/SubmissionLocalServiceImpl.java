@@ -1042,7 +1042,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		if (submission != null)
 			try {
-				submission.setJiraID(jiraId);
+				submission.setJiraID(jiraId.trim());
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1060,7 +1060,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		if (submission != null)
 			try {
-				submission.setJiraKey(jiraKey);
+				submission.setJiraKey(jiraKey.trim());
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}

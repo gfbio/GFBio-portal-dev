@@ -19,6 +19,9 @@
 <script  src="${pageContext.request.contextPath}/js/workflowgeneric.js"     	type="text/javascript"></script>  <!--  main.js  imports -->
 <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" 	type="text/css"> <!-- main.css imports -->
 
+ 
+  
+
 <%if (PortalUtil.getUser(request)!=null){ %>
 
 	<input type="hidden" class="widthL" id="path"  					value="<%=request.getContextPath()%>" />
@@ -38,3 +41,4 @@
 
 
 <%} %>	
+

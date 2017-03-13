@@ -1,13 +1,17 @@
 package org.gfbio.submissionworkflow;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -47,10 +51,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
+import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
+
+
+
+import java.net.URI;
 
 /**
  * Portlet implementation class WorkflowGeneric
@@ -67,6 +73,14 @@ public class WorkflowGeneric extends GenericPortlet {
 
     
     public void doView( RenderRequest renderRequest, RenderResponse renderResponse)     throws IOException, PortletException {
+    	
+    	String issueKey = "SAND-621";
+    	String path = "C:\\Users\\froemm\\Desktop\\uploadtest.txt";
+    	
+    	addAttachmentToIssue(issueKey, path);
+    	
+    	
+    	
     	        include(viewTemplate, renderRequest, renderResponse);
     }
 
@@ -569,16 +583,8 @@ public class WorkflowGeneric extends GenericPortlet {
     	try {
 
             URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
-            //String path = "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx";
+            String path = "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx";
             
- /*            String fileComment ="nope";
-            String user = "tester2";
-            if ( fileComment.equals("") | fileComment.equals(" ") | fileComment.equals(null)){
-                fileComment = user + "-" + path;
-            };*/
-            
-            
-
             System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
             System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
 	        	        
@@ -591,6 +597,8 @@ public class WorkflowGeneric extends GenericPortlet {
             conn.setRequestProperty("Content-Type", "application/json");
 	        conn.setRequestProperty("Accept", "application/json");
 	        
+	        System.out.println(conn.toString());
+	        
 	        
 	        
 	        System.out.println("5");  
@@ -598,52 +606,27 @@ public class WorkflowGeneric extends GenericPortlet {
             String userpass = "uni-jena:GFBIOhelpdesk123";
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
 	        conn.addRequestProperty ("Authorization", basicAuth);
-	        
-/*	        MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-	        File fileToUpload = new File(path);
-			FileBody fileBody = new FileBody(fileToUpload, fileComment, "application/octet-stream", "UTF-8");
-	        entity.addPart("file", fileBody);
-	        System.out.println(entity.toString() );*/
-	        //conn.setEntity(entity);
-	        
-/*	        FileReader fr = null;
-	        
-	        fr = new FileReader(path);
-			br = new BufferedReader(fr);
-
-			String sCurrentLine;
-
-			br = new BufferedReader(new FileReader(path));
-
-			while ((sCurrentLine = br.readLine()) != null) {
-				System.out.println(sCurrentLine);
-			}
-	        */
-			
-
-	        
+	                
 	        System.out.println("6");
 	        
 	        String jiraRequestString = getJSON_Body((JSONObject) parseJson);
-	        String encodedData = jiraRequestString;
-	        
+
 	        
 	        System.out.println("7.0");
 	        
 	        OutputStream os = conn.getOutputStream();
 	        
-/*	        File file;
-	        file = new File(path);
-	        os = new FileOutputStream(file);*/
-	        
 	        System.out.println("7.1");
 
+	        os.write(jiraRequestString.getBytes());
+	        os.flush(); 
 	        
-	        os.write(encodedData.getBytes());
+	        System.out.println( os.toString());
 	        
 	        System.out.println("7.2");
 	        
-	        os.flush();  
+	      	        
+	        
 	        os.close();
 	        
 	        System.out.println("8");
@@ -670,6 +653,9 @@ public class WorkflowGeneric extends GenericPortlet {
 				
 				SubmissionLocalServiceUtil.updateJiraKey(Long.parseLong((String)fieldJson.get("customfield_10309")), Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("key"));
 				SubmissionLocalServiceUtil.updateJiraId(Long.parseLong((String)fieldJson.get("customfield_10309")),  Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("id"));
+				
+				addAttachmentToIssue((String) jraResponseJson.get("key"), path);
+				
 	        }
 	        conn.disconnect();
 	     } catch (Exception e) {e.printStackTrace();}
@@ -683,40 +669,175 @@ public class WorkflowGeneric extends GenericPortlet {
     }
     
     
- /*   public boolean addAttachmentToIssue(String issueKey, String fullfilename) throws IOException{
-    	 
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-         
-        HttpPost httppost = new HttpPost(jira_attachment_baseURL+"/api/latest/issue/"+issueKey+"/attachments");
-        httppost.setHeader("X-Atlassian-Token", "nocheck");
-        httppost.setHeader("Authorization", "Basic "+jira_attachment_authentication);
-         
-        File fileToUpload = new File(fullfilename);
-        FileBody fileBody = new FileBody(fileToUpload);
-         
-        HttpEntity entity = MultipartEntityBuilder.create()
-                .addPart("file", fileBody)
-                .build();
-         
-        httppost.setEntity(entity);
-        String mess = "executing request " + httppost.getRequestLine();
-        logger.info(mess);
-         
-        CloseableHttpResponse response;
-         
-        try {
-            response = httpclient.execute(httppost);
-        } finally {
-            httpclient.close();
-        }
-         
-        if(response.getStatusLine().getStatusCode() == 200)
-            return true;
-        else
-            return false;
-     
-    }*/
+	public void addAttachmentToIssue(String issueKey, String path){
 
+/*    	try {
+
+    		issueKey = "11786";
+    		
+    		    		
+    		
+    		Bitmap bitmap = myView.getBitmap();
+    		
+    		String attachmentName = "bitmap";
+    		String attachmentFileName = "bitmap.bmp";
+    		String crlf = "\r\n";
+    		String twoHyphens = "--";
+    		String boundary =  "*****";
+    		
+    		HttpURLConnection conn = null;
+    		URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/"+issueKey+"/attachments");
+    		conn = (HttpURLConnection) url.openConnection();
+    		conn.setUseCaches(false);
+    		conn.setDoOutput(true);
+
+    		conn.setRequestMethod("POST");
+    		conn.setRequestProperty("Connection", "Keep-Alive");
+    		conn.setRequestProperty("Cache-Control", "no-cache");
+    		conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+    		
+    		DataOutputStream request = new DataOutputStream(conn.getOutputStream());
+
+    		request.writeBytes(twoHyphens + boundary + crlf);
+    		request.writeBytes("Content-Disposition: form-data; name=\"" +
+    			attachmentName + "\";filename=\"" + 
+    			attachmentFileName + "\"" + crlf);
+    			request.writeBytes(crlf);
+    			
+    		//I want to send only 8 bit black & white bitmaps
+    		byte[] pixels = new byte[bitmap.getWidth() * bitmap.getHeight()];
+    		for (int i = 0; i < bitmap.getWidth(); ++i) {
+    		    for (int j = 0; j < bitmap.getHeight(); ++j) {
+    		        //we're interested only in the MSB of the first byte, 
+    		        //since the other 3 bytes are identical for B&W images
+    		        pixels[i + j] = (byte) ((bitmap.getPixel(i, j) & 0x80) >> 7);
+    		    }
+    		}
+
+    		request.write(pixels);
+    		
+    		request.writeBytes(crlf);
+    		request.writeBytes(twoHyphens + boundary + twoHyphens + crlf);
+    		
+    		request.flush();
+    		request.close();
+    		
+    		*/
+    		
+    		
+    		
+    		
+    		
+    		
+/*	        System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
+	        System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
+	        	        
+		    HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+		        
+	        conn.setDoInput(true);
+	        conn.setDoOutput(true);
+	        conn.setUseCaches(false);
+		    conn.setRequestMethod("POST");
+		    //System.out.println(conn.getRequestProperty("Content-Disposition"));
+		    System.out.println(conn.getRequestProperty("Content-Type"));
+		    //conn.setRequestProperty("Content-Disposition", "attachment/file");
+	        conn.setRequestProperty("Content-Type", "multipart/form-data");
+		    //System.out.println(conn.getRequestProperty("Content-Disposition"));
+		    System.out.println(conn.getRequestProperty("Content-Type"));
+		    conn.setRequestProperty("Accept", "application/json");
+		
+		    System.out.println("10");  
+		        
+	        String userpass = "uni-jena:GFBIOhelpdesk123";
+	        String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
+	        conn.addRequestProperty ("Authorization", basicAuth);
+		                
+	       
+	        System.out.println("11");
+	        
+	        System.out.println("path: "+path);
+	
+	        File file=new File(path);
+
+	            String content = null;
+	        File file = new File(path); //for ex foo.txt
+	            FileReader reader = null;
+	            try {
+	                reader = new FileReader(file);
+	                char[] chars = new char[(int) file.length()];
+	                reader.read(chars);
+	                content = new String(chars);
+	                reader.close();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            } finally {
+	                if(reader !=null){reader.close();}
+	            }
+	            
+	            System.out.println("+++++++++++++++++++++++++++++++++++++");
+	            System.out.println(content);
+	            System.out.println("+++++++++++++++++++++++++++++++++++++");
+	
+	            OutputStream os =  conn.getOutputStream();
+	            
+	            JSONObject test = new JSONObject();
+	            test.put("test", "test");
+	            
+		        String jiraRequestString = test.toString();
+		        os.write(jiraRequestString.getBytes());
+
+	
+	        byte[] buf = new byte[8192];
+	
+	        InputStream is = new FileInputStream(file);
+	
+	        int c = 0;
+	
+	        int i = 0;
+	        while ((c = is.read(buf, 0, buf.length)) > 0) {
+	        	i = i+1;
+	        	
+	            os.write(buf, 0, c);
+	            //System.out.println("11."+i+" "+is + " | "+buf+ " | "+os);
+	            os.flush();
+	        }
+	        
+	        os = new FileOutputStream(path);
+	        
+	        //System.out.println( file);
+	        System.out.println( os);
+	        
+
+	        
+	        System.out.println("12");
+	       
+	        os.flush();
+
+	        os.close();
+
+	        
+	        os.close();
+	       // is.close();
+	               
+	        System.out.println("13");
+	  */      
+/*	        if (conn.getResponseCode() != 201) 
+	           throw new RuntimeException("Failed : HTTPS error code : " + conn.getResponseCode());
+	        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+	        String output;
+	        System.out.println("Output from Server .... \n");
+	        while ((output = br.readLine()) != null){
+	        	
+	        	System.out.println(output); 			
+	        }
+	        conn.disconnect();
+    	} catch (Exception e) {e.printStackTrace();}*/
+        
+        
+
+}
+    
+    
     
     //
 	public HttpServletRequest getOriginalHttpServletRequest(PortletRequest request) {
@@ -757,12 +878,10 @@ public class WorkflowGeneric extends GenericPortlet {
 	        	
 	        	FileItem thisItem = (FileItem) iter.next();
 	        	if ((thisItem.getName()).equals("uploadInformation.txt")) {
-	        		System.out.println(thisItem.getString());
 	        		JSONObject roJson = new JSONObject();
 	        		JSONParser parser = new JSONParser();
 	    			try {roJson = (JSONObject) parser.parse(thisItem.getString());}
 	    			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
-	    			System.out.println(roJson);
 	        		researchObjectId = (long) roJson.get("researchobjectid");
 	        		researchObjectVersion = (int) (long) roJson.get("researchobjectversion");
 	        		userId = (long) roJson.get("userid");
