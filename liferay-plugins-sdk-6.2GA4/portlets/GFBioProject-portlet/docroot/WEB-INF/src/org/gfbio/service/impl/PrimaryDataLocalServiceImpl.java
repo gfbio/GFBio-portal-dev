@@ -15,6 +15,7 @@
 package org.gfbio.service.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.gfbio.NoSuchPrimaryDataException;
@@ -78,6 +79,17 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
 
+	//
+	public String getPathByPrimaryDataId (long primaryDataId){
+		String  path = null;
+		List <String> pathList = null;
+		
+		pathList = PrimaryDataFinderUtil.getPathByPrimaryDataId(primaryDataId);
+		if (pathList.size()>0)
+			path = (String) pathList.get(0);
+		
+		return path;
+	}
 	
 		
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
@@ -102,6 +114,18 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	
 	
 	//
+	public String checkPath (String name, String path){
+		if (!path.matches(name))
+			if (path.charAt(path.length()-1)=='\\')
+				path = path.concat(name);
+			else
+				path = path.concat("\\").concat(name);
+		
+		return path;
+	}
+	
+	
+	//
 	public Boolean checkPrimaryDataExists(String name, String path){
 		Boolean check = false;
 
@@ -109,6 +133,8 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 		
 		return check;
 	}
+	
+	
 	
 	
 	//
@@ -152,9 +178,11 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 
 		if (requestJson.containsKey("name") && requestJson.containsKey("path")){
 			
-			if (!checkPrimaryDataExists(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim())){
+			String path = checkPath(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim());
+			
+			if (!checkPrimaryDataExists(((String)requestJson.get("name")).trim(), path)){
 
-				long primaryDataId = createKernelPrimaryData(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim());
+				long primaryDataId = createKernelPrimaryData(((String)requestJson.get("name")).trim(), path);
 				if (primaryDataId !=0)
 					check = true;
 				
