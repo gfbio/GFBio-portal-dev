@@ -188,7 +188,8 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// update or create a new basket
 
-	public long updateBasket(long basketId, long userId, String name, String basketContent, String queryJSON)
+	public long updateBasket(long basketId, long userId, String name, 
+			String basketContent, String queryJSON, String queryKeyword, String queryFilter)
 			throws SystemException {
 
 		Basket basket = null;
@@ -205,6 +206,8 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basket.setLastModifiedDate(now);
 				basket.setBasketContent(basketContent);
 				basket.setQueryJSON(queryJSON);
+				basket.setQueryKeyword(queryKeyword);
+				basket.setQueryFilter(queryFilter);
 				super.updateBasket(basket);
 			} else {
 				System.out.println("This user has no rights. Operation aborted.");
