@@ -67,28 +67,27 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds, ServiceContext serviceContext)
 			throws PortalException, SystemException {
 		// called when login, change password, reset password
-		log.info("Hook on update user.");
+		log.info(":: Hook on update user.");
 		User user = super.getUser(userId);
 		try {
 //			if (!isReservedEmail(user)) {
 				// If the email is used by the backend (e.g. Portal mail
 				// settings), the password should not be updated
 //			}
-			user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
-					reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
-					languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId,
-					male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
-					msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
-					userGroupRoles, userGroupIds, serviceContext);
-			log.info("breakpoint 0");
-			if (newPassword1.trim() != "" && newPassword1 != null && 
-					newPassword1!=newPassword2) {
-				updatePassword(userId, newPassword1, newPassword2, false);
-				log.info("breakpoint 1");
+			log.info(":: updateUser 0");
+			if (newPassword1.trim() != "" && newPassword1 != null) {
+				user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
+						reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
+						languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId,
+						male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
+						msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
+						userGroupRoles, userGroupIds, serviceContext);
+				updatePassword(userId, newPassword1,newPassword2, false);
+				log.info(":: updateUser 1");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.info("breakpoint 2");
+			//log.info(":: updateUser 2");
 			log.error(e.toString());
 			return null;
 		}
@@ -97,14 +96,17 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 	}
 
 	@Override
-	public User updatePassword(long userId, String password1, String password2, boolean passwordReset)
+	public User updatePassword(long userId, String password1,String password2, boolean passwordReset)
 			throws PortalException, SystemException {
 		// called when creating a new account, updateUser(hook)
-		log.info("Hook on update Password (4 args).");
+		log.info(":: Hook on update Password (4 args).");
 		User user = super.getUser(userId);
 		try {
-			LDAPaddUser(user, password1);
-			URLBasicAuth.urlAuth(user.getEmailAddress(), password1);
+			boolean isUserAdded = LDAPaddUser(user, password1);
+			if (isUserAdded){
+				log.info(":: LDAP user successfully added");
+				URLBasicAuth.urlAuth(user.getEmailAddress(), password1);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.toString());
@@ -176,7 +178,7 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 						new java.util.Date());
 				return true;
 			}
-			log.info("check point x");
+			//log.info("check point x");
 			ctx.createSubcontext(fullCN, attrs);
 			log.info("AddUser: added entry x " + fullCN + ".");
 			UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
