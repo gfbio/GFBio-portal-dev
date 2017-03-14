@@ -503,3 +503,11 @@ ALTER TABLE gfbio_submission ADD COLUMN jiraid character (75);
 -----------------------------------------------------------------------------------------------
 
 ALTER TABLE gfbio_submission ADD COLUMN jirakey character (75);
+
+
+-----------------------------------------------------------------------------------------------
+-----------------------------------        basket         - 13.03.2017 -------------------
+-----------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_basket ADD COLUMN queryKeyword text;
+ALTER TABLE gfbio_basket ADD COLUMN queryFilter text;
