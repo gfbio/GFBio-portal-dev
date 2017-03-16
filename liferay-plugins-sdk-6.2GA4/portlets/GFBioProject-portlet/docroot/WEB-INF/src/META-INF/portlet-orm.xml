@@ -17,6 +17,8 @@
 			</basic>
 			<basic name="basketContent" />
 			<basic name="queryJSON" />
+			<basic name="queryKeyword" />
+			<basic name="queryFilter" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

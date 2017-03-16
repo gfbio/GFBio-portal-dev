@@ -380,6 +380,12 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				JSONArray jaQuery = JSONFactoryUtil.createJSONArray();
 				jaQuery.put(jQuery);
 				jObj.put("queryJSON", jaQuery);
+				
+				jObj.put("queryKeyword", basket.getQueryKeyword());
+				
+				String strQueryFilter = basket.getQueryFilter();
+				JSONArray jaFilter = JSONFactoryUtil.createJSONArray(strQueryFilter);
+				jObj.put("queryFilter", jaFilter);
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
