@@ -91,80 +91,91 @@
 				"</br>"+
 				
 				"<div class='swHide'>"+
-					"<div class='control-group'>"+
+					"<div 		class='control-group'>"+
 						"<label class='control-label'					id='gwf_ro_id'_l>Dataset id </label>"+
 						"<div	class='field lfr-input-text-container'	id='gwf_ro_id'></div>"+
 					"</div>"+
-					"<div class='control-group'>"+
+					"<div 		class='control-group'>"+
 						"<label class='control-label' 				   	id='gwf_ro_version_l'>Version </label>"+
 						"<div	class='field lfr-input-text-container'	id='gwf_ro_version'></div>"+
 					"</div>"+
-					"<div class='control-group'>"+
+					"<div 		class='control-group'>"+
 						"<label class='control-label' 					id='gwf_ro_researchobjecttype_l'> Type </label>"+
-						"<div class='field lfr-input-text-container' 	id='gwf_ro_researchobjecttype'></div>"+
+						"<div 	class='field lfr-input-text-container' 	id='gwf_ro_researchobjecttype'></div>"+
 					"</div>"+
 				"</div>"+
-				"<div class='control-group'>"+
-					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title </label>"+
+				"<div 		class='control-group'>"+
+					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title* </label>"+
+					"<p 	class='field-description'				id='gwf_ro_name_d'>Provide a short, descriptive title for your dataset.</p>"+
 					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text'  value=''>"+
 				"</div >"+
-				"<div class='control-group'>"+
-					"<label	class='control-label' 						id='gwf_ro_description_l'> Description </label>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='10' ></textarea>"+
+				"<div 			class='control-group'>"+
+					"<label		class='control-label' 					id='gwf_ro_description_l'> Description* </label>"+
+					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract).</p>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' ></textarea>"+
 				"</div>"+
 				"</div>"+
-				"<div class='control-group'>"+
+				"<div 		class='control-group'>"+
 					"<label class='control-label' id='gwf_ro_dct_l'	id='gwf_ro_dct_l'> Data collection time </label>"+
+					"<p 	class='field-description'				id='gwf_ro_description_d'>Provide a time periode, where the data are collected or processed.</p>"+
 					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value=''>"+
 				"</div>"+
-				"<div class='control-group'>"+
-					"<label class='control-label' 					id='gwf_ro_label_l'> Dataset label </label>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_label'	type='text'  value=''>"+
-				"</div>"+
-				"<div class='control-group'>"+
-					"<label class='control-label' 					id='gwf_ro_author_l'> Dataset author </label>"+
-					"<input class='field lfr-input-text-container' 	id='gwf_ro_author' 	type='text'  value=''>"+
-				"</div>"+
-				"<div class='control-group' >"+
-					"<label class='control-label' 					id='gwf_ro_license_l'> Appropriate license   </label>"+
-					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_license_v' type='text'  value=''>"+
-						"<form action='select.html'>"+
-							"<select id='gwf_ro_licenselabel' name='<portlet:namespace/>gwf_ro_licenselabel' size='1' style='width:90%'>"+
-								"<option value='none'></option>"+
-							"</select>"+
-						"</form>"+
-					"</div>"+
-				"</div>"+
-				"<div class='control-group'>"+
-					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publications </label>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value=''>"+
-				"</div>"+
-				"<div class='control-group' >"+
-					"<label class='control-label' 					id='gwf_ro_metadatalabel_l'> Metadata shema  </label>"+
-					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_metadatalabel_v' type='text'  value=''>"+
-						"<form action='select.html'>"+
-							"<select id='gwf_ro_metadatalabel' name='<portlet:namespace/>gwf_ro_metadatalabel' size='1' style='width:90%'>"+
-								"<option value='none'></option>"+
-							"</select>"+
-						"</form>"+
-					"</div>"+
+				"<div 		class='control-group'>"+
+					"<label class='control-label' 					 id='gwf_ro_label_l'> Dataset label </label>"+
+					"<p 	class='field-description'				 id='gwf_ro_labels_d'>Use labels, to typing the dataset, describe it in keywords or use your internal signifier.</p>"+
+					"<input class='field lfr-input-text-container'	 id='gwf_ro_label'	type='text'  value=''>"+
 				"</div>"+
 				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
-				"<div id='gwf_ro_categories'></div>"+
+				"<p 	class='field-description'			 	id='gwf_ro_categories_d'>Choose one or more categories, that are related with the dataset.</p>"+
+				"<div 											id='gwf_ro_categories'></div>"+
 				"</br>"+
-				"<div class='control-group'>"+
-					"<label class='control-label' 					id='gwf_ro_embargo_l'> Embargo (example: 'embargo time to yyyy-mm-dd') </label>"+
-					"<span onmousemove='datePickler()'><input class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value=''></span>"+
+				"<div 			class='control-group'>"+
+					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author* </label>"+
+					"<p 		class='field-description'			 	id='gwf_ro_author_d'>Please, enter the author(s) for the data set (one author per line).</p>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' ></textarea>"+
 				"</div>"+
-				"<div class='control-group' >"+
+				"<div 		class='control-group' >"+
+					"<label class='control-label' 					id='gwf_ro_license_l'> Appropriate license*   </label>"+
+					"<p 	class='field-description'			 	id='gwf_ro_license_d'>Select the license that you prefer for your dataset.</p>"+
+					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_license_v' type='text'  value=''>"+
+						"<form action='select.html'>"+
+							"<select id='gwf_ro_licenselabel' name='<portlet:namespace/>gwf_ro_licenselabel' size='1' style='width:100%'>"+
+								"<option value='none'></option>"+
+							"</select>"+
+						"</form>"+
+					"</div>"+
+				"</div>"+
+				"<div 		class='control-group'>"+
+					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publications </label>"+
+					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset related to a publication.</p>"+
+					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value=''>"+
+				"</div>"+
+				"<div 		class='control-group' >"+
+					"<label class='control-label' 					id='gwf_ro_metadatalabel_l'> Metadata schema  </label>"+
+					"<p 	class='field-description'			 	id='gwf_ro_metadatalabel_d'>Select the metadata schema, that you use for your dataset.</p>"+
+					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_metadatalabel_v' type='text'  value=''>"+
+						"<form action='select.html'>"+
+							"<select id='gwf_ro_metadatalabel' name='<portlet:namespace/>gwf_ro_metadatalabel' size='1' style='width:100%'>"+
+								"<option value='none'></option>"+
+							"</select>"+
+						"</form>"+
+					"</div>"+
+				"</div>"+
+				"<div 											class='control-group'>"+
+					"<label 									class='control-label' 					id='gwf_ro_embargo_l'> Embargo </label>"+
+					"<p 										class='field-description'			 	id='gwf_ro_embargo_d'>Provide a date at which the dataset should be under an embargo  (yyyy-mm-dd')</p>"+
+					"<span onmousemove='datePickler()'><input   class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value=''></span>"+
+				"</div>"+
+				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_legalrequirements_l'> Legal requirements  </label>"+
+					"<p 	class='field-description'			 	id='gwf_ro_embargo_d'>Select legal requirements that apply to the dataset.</p>"+
 					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_legalrequirements' type='text'  value=''></div>"+
 				"</div>"+
 
 				"<h3>Dataset Upload</h3>"+
 				
-				"<form id='file-form'>"+
-			  	"<input type='file' id='file-select'  multiple/>"+
+				"<form id='file-form' >"+
+			  	"<input type='file' id='file-select'  language='en'  multiple/>"+
 				"</form>"+
 				
 				"</br>"+
@@ -230,7 +241,7 @@
 			},
 			async: false,
  			success :  function (obj){
-				document.getElementById("gwf_ro_author").value= obj.fullname.concat(",");
+				document.getElementById("gwf_ro_author").innerHTML= obj.fullname.concat(",");
  			}
  		});
  		
@@ -243,7 +254,7 @@
 		div.empty();
 		div.append(
 			"<form action='select.html'>"+
-				"<select id='gwf_ro_metadatalabel' name='<portlet:namespace/>gwf_ro_metadatalabel' size='1' style='width:90%'>"+
+				"<select id='gwf_ro_metadatalabel' name='<portlet:namespace/>gwf_ro_metadatalabel' size='1' style='width:100%'>"+
 					"<option value='none'></option>"+
 				"</select>"+
 			"</form>"
@@ -429,9 +440,9 @@
 						var author = (json.authorname).substring(1, (json.authorname.length)-1);
 						for (i=0;i<author.length/2;i++)
 							author = author.replace('"','');
-						document.getElementById("gwf_ro_author").value= author;
+						document.getElementById("gwf_ro_author").innerHTML= author;
 					}else{
-						document.getElementById("gwf_ro_author").value= "";
+						document.getElementById("gwf_ro_author").innerHTML= "";
 					}
 					
 					
