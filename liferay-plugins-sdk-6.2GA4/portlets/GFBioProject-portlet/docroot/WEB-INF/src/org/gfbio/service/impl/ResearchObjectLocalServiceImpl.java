@@ -641,9 +641,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 			
 			// optional
-			
-			System.out.println("1");
-				
+						
 			if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames")) && check){
 			
 				if ((requestJson.containsKey("authormail")))
@@ -654,10 +652,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						
 				if(requestJson.containsKey("authornames") && check)
 					if (((requestJson.get("authornames").getClass()).toString()).equals("class java.lang.String")){
+						System.out.println(requestJson.get("authornames"));
 						JSONParser parser = new JSONParser();
 						JSONArray parseJson = new JSONArray();
 						try {parseJson = (JSONArray) parser.parse((String) requestJson.get("authornames"));}
 						catch (ParseException e) {e.printStackTrace();}
+						System.out.println(parseJson);
 						updateAuthorIds(researchObjectId, researchObjectVersion, parseJson);
 					}else
 						updateAuthorIds(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")));
@@ -1004,12 +1004,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	private Boolean updateAuthorIds (long researchObjectId, int researchObjectVersion, JSONArray authorNames){
-
+		System.out.println(authorNames);
 		Boolean check = false;
 		ContentLocalServiceUtil.deleteRelationContentsByCellContent("gfbio_externalperson_researchobject", "gfbio_researchobject", Long.toString(researchObjectId));
 		for (int i=0; i < authorNames.size();i++){
+			System.out.println(i +": "+(String) authorNames.get(i));
 			JSONObject hccJson= new JSONObject();
-			hccJson = checkHCCBackground("gfbio_externalperson", "name", (String) authorNames.get(i));
+			hccJson = checkHCCBackground("gfbio_externalperson", "name", ((String) authorNames.get(i)).trim());
 			if ((boolean) hccJson.get("check"))
 				check =  AddAuthorId(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
 		}

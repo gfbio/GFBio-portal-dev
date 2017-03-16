@@ -258,9 +258,9 @@ public class WorkflowGeneric extends GenericPortlet {
 		
 		//preparation data source
 		
-/*    	System.out.println("--------------------------------");
+    	System.out.println("--------------------------------");
     	System.out.println(requestJson);
-    	System.out.println("--------------------------------");*/
+    	System.out.println("--------------------------------");
     	
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
