@@ -29,6 +29,8 @@
 		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="basketContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="queryJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="queryKeyword" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="queryFilter" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="org.gfbio.model.impl.ColumnImpl" table="gfbio_Column">
 		<id name="columnID" type="long">
