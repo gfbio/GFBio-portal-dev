@@ -28,13 +28,13 @@
 	<input type="hidden" class="widthL" id="workflowgenericurl"  	value="<%=workflowgenericURL %>" />
 
 	<div id="generic"></div>
-	
-
-	
+		
 	<div id="gwf_user_path" class="swHide">
 		<%= getServletContext().getRealPath("/")%>
 	</div>
 	
+	
+
 	
 	<br>
 	

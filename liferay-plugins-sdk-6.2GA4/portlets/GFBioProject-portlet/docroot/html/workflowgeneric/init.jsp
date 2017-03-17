@@ -175,22 +175,28 @@
 				"<h3>Dataset Upload</h3>"+
 				
 				"<form id='file-form' >"+
-			  	"<input type='file' id='file-select'  language='en'  multiple/>"+
+				  	"<input type='file' id='file-select'   multiple/>"+
 				"</form>"+
 				
 				"</br>"+
 				"<div class='row' id='gwf_lf_comentarField'></div></br>"+
+				"<div class='row' id='gwf_lf_storecomentarField'></div>"+
+				"<div class='row' id='gwf_lf_uploadcomentarField'></div>"+
+				"<div class='row' id='gwf_lf_registrycomentarField'></div>"+
 				"<div class='row' id='gwf_lf_submissioncomentarField'></div>"+
 				
 				"<div class='row'>"+
 /* 					"<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
 					"<span class='widthM' id='gwf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
- */					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
+ */					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-success'>Start submission</span></span>"+
+ 					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Reset</span></span>"+
 				"</div>"
 
 			);
 		}
 	}
+	
+	
 	
 	
 	//
@@ -297,10 +303,12 @@
 				divLi.append("<option value='none'></option>");
 				for (i =0; i <obj.length;i++){
 					var json = obj[i];
-					if (json.label == "CC BY")
-						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.name+"</option>");
-					else	
+					if (json.label == "other")
 						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+					else if (json.label == "CC BY")
+						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.label+": "+json.name+" "+json.version+"</option>");
+						else	
+							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.label+": "+json.name+" "+json.version+"</option>");
 				}
  			}
  		});
@@ -469,13 +477,9 @@
 	//
 	function createGwfResearchObject(projectJson){
 		
-		console.log("start createGwfResearchObject");
-
 		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
 		var url = document.getElementById('workflowgenericurl').value;
 
-		console.log("researchObjectJson");
-		console.log(researchObjectJson);
 		
 		$.ajax({
 			"type" : "POST",
@@ -486,9 +490,6 @@
 			},
 			async: false,
 			success :  function (obj){
-				
-				console.log("success");
-				console.log(obj);
 
 				if (obj.researchobjectid >0){
 					document.getElementById("gwf_ro_id").innerHTML= obj.researchobjectid;
@@ -521,9 +522,6 @@
 
 		var url = document.getElementById('workflowgenericurl').value;
 		
-		console.log("broker");
-		console.log(data);
-
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowCollectionsPortlet'),
@@ -534,19 +532,19 @@
 			async: false,
 			success :  function (obj){
 				if (!obj.hasOwnProperty("ERROR")){
-					var commentarField = $("#".concat('gwf_lf_comentarField'));
+					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
 					commentarField.empty();
 					commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>Submission entry is written in the registry.</div>");
-					setTimeout(function(){commentarField.empty();}, 5000);
+					//setTimeout(function(){commentarField.empty();}, 5000);
 				}else{
-					var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
+					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
 					document.getElementById("gwf_lf_submissioncomentarField").className="portlet-msg-error";
 					commentarField.empty();
 					commentarField.append("<div class='portlet-msg-error'>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
-					setTimeout(function(){
+/* 					setTimeout(function(){
 						commentarField.empty();
 						document.getElementById("gwf_lf_submissioncomentarField").className="row";;
-					}, 25000);
+					}, 25000); */
 				}
 					
 			}		
@@ -563,9 +561,7 @@
 		var formData = new FormData();
 	  //var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)+',"path":"'+document.getElementById('gwf_user_path').innerHTML+'"}'], "uploadInformation.txt");
 	    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)															   +'}'], "uploadInformation.txt");
-		console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-		console.log(document.getElementById('gwf_user_path').innerHTML);
-		console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
 		formData.append('file', uploadInformation);
 
 		var fileSelect = document.getElementById('file-select');
@@ -584,7 +580,11 @@
 			async: false,
 			success :  function (){
 				
-				console.log("yeah");
+				
+				var commentarField = $("#".concat('gwf_lf_uploadcomentarField'));
+				commentarField.empty();
+				commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>File upload complete to GFBio.</div>");
+				//setTimeout(function(){commentarField.empty();}, 5000);
 			} 
 		});
 	}
@@ -598,12 +598,7 @@
 	function startSubmission(data){
 			
 		var url = document.getElementById('workflowgenericurl').value;
-		
-		console.log(data);
-		
 		data["path"]= document.getElementById("gwf_user_path").innerHTML;
-
-		console.log(data);
 		
  		$.ajax({
 			"type" : "POST",
@@ -614,21 +609,46 @@
 			},
 			async: false,
 			success :  function (obj){
-				console.log("jo");
-				console.log(obj);
 				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
-				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. </div>");
-				setTimeout(function(){commentarField.empty();}, 25000);
+				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. Your submission key is: "+obj.key+". One of them will be contact you shortly. </div>");
+				//setTimeout(function(){commentarField.empty();}, 25000);
 			},
 			error :  function (obj){
-				console.log("nope");
-				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
+				var delSubRegdata ={};
+				delSubRegdata["researchobjectid"]= data.mrr.researchobjects.researchobjectid;
+				delSubRegdata["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
+				delSubRegdata["archive"]= "GFBio collections";
+				deleteSubmissionRegistryEntry(delSubRegdata);
+				
+				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
-				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support.</div>");
-				setTimeout(function(){commentarField.empty();}, 25000);
+				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support. </div>");
+				//setTimeout(function(){commentarField.empty();}, 25000);
 
 			},		
+		});	 
+	}
+	
+	
+	//
+	function deleteSubmissionRegistryEntry(data){
+			
+		var url = document.getElementById('workflowgenericurl').value;
+		
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : "delsubreg"
+			},
+			async: false,
+			success :  function (obj){
+				console.log("del  subreg");
+				console.log(obj);
+			}
+	
 		});	 
 	}
 	
@@ -641,8 +661,6 @@
 		//console.log(data);
 		
 		//data["path"]= document.getElementById("gwf_user_path").innerHTML;
-
-		console.log(data);
 		
  		$.ajax({
 			"type" : "POST",
