@@ -224,6 +224,8 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			basket.setLastModifiedDate(now);
 			basket.setBasketContent(basketContent);
 			basket.setQueryJSON(queryJSON);
+			basket.setQueryKeyword(queryKeyword);
+			basket.setQueryFilter(queryFilter);
 			super.updateBasket(basket);
 			e.printStackTrace();
 		}
