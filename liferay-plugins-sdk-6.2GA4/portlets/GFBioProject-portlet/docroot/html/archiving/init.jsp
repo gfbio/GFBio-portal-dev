@@ -17,7 +17,7 @@
 					 console.log(data);
 					var choPro = $("#".concat("workflowChooseRO"));
 					choPro.append(
-							"<option id='workflowChooseRO"+	data.updateresearchobject.researchobjectid+"' value='"+data.updateresearchobject.researchobjectid+"'>"+data.updateresearchobject.name+" with Version"+ data.updateresearchobject.researchobjectversion+"</option>");
+							"<option id='workflowChooseRO"+	data.updateresearchobject.researchobjectid+"' value='"+data.updateresearchobject.researchobjectid+"'>"+data.updateresearchobject.name+""+" with Version"+ data.updateresearchobject.researchobjectversion+"</option>");
 					document.getElementById("workflowChooseRO"+data.updateresearchobject.researchobjectid).checked=true;
 				
 				 }
@@ -150,7 +150,7 @@
 			choRO.empty();
 			choRO.append("<option value='none' selected=true></option>");
 			for (i =0; i <roList.length;i++){
-				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" Version: "+ +roList[i].researchobjectversion+"</option>");
+				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" with version "+ +roList[i].researchobjectversion+"</option>");
 				console.log(roList[i]);
 			}
 			document.getElementById("workflowChooseRO").selectedIndex = 0;
@@ -167,7 +167,7 @@
 		choRO.append("<option value='none'></option>");
 		for (i =0; i <data.length;i++){
 			console.log(data[i]);
-			choRO.append("<option value='"+data[i].researchobjectid+"'>"+data[i].name+" Version: "+ +data[i].researchobjectversion+"</option>");
+			choRO.append("<option value='"+data[i].researchobjectid+"'>"+data[i].name+" with Version: "+ +data[i].researchobjectversion+"</option>");
 		}
 		document.getElementById("workflowChooseRO").selectedIndex = 0;
 	}

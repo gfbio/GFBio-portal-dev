@@ -75,7 +75,7 @@
 	  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
 	  						JSONObject roJson =  new JSONObject();
 	  						roJson = (JSONObject) roList.get(i);
-	  						String text = (String) roJson.get("researchobjectname") + "with Version: "+roJson.get("researchobjectversion");
+	  						String text = (String) roJson.get("researchobjectname") + " with version "+roJson.get("researchobjectversion");
 	  						if ((String) roJson.get("projectname")!=null)
 	  							text = text +" from project "+(String) roJson.get("projectname");
 	  						
