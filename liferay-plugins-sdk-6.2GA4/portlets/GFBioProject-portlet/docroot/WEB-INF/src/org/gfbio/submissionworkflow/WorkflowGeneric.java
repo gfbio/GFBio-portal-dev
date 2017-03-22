@@ -510,8 +510,8 @@ public class WorkflowGeneric extends GenericPortlet {
         
         //fields.put("customfield_10312", "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx");
         
-        //
-        //fields.put("customfield_1", "foo");
+        //this line ist for testing and stop the submission to JIRA
+        //fields.put("customfield_1", "stopper");
         
         
         json.put("fields", fields);

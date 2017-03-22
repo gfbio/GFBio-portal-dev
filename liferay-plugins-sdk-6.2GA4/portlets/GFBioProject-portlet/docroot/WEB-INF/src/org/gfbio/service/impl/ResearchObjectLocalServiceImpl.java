@@ -159,8 +159,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		set.add("researchobjectid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
-		if (requestJson.containsKey("researchobjectid")){
-			responseJson=constructResearchObjectJson(getTopParent((long)requestJson.get("researchobjectid")));
+			if (requestJson.containsKey("researchobjectid")){
+		responseJson=constructResearchObjectJson(getTopParent((long)requestJson.get("researchobjectid")));
 			if (responseJson.toString().equals("{}"))
 				responseJson.put("ERROR","ERROR: Faile by find absolut parent");
 		}
@@ -171,6 +171,31 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("WARNING", ignoreParameter);
 		
 		return checkNullParent(responseJson);
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getResearchObjectInformationByUserId (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		Set<String> set = new HashSet<String>();
+		set.add("userid");
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+	
+		if (requestJson.containsKey("userid")){
+			
+			responseJson=getResearchObjectInformationByUserId((long) requestJson.get("userid"));
+			if (responseJson.toString().equals("{}"))
+				responseJson.add("ERROR: Faile by find researchobjects of this userid "+(long) requestJson.get("userid"));
+		}
+		else
+			responseJson.add("ERROR: No key 'userid' exist.");
+			
+		if (!ignoreParameter.equals(""))
+			responseJson.add(ignoreParameter);
+		
+		return responseJson;
 	}
 	
 	
@@ -193,6 +218,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			researchObjectJSON = null;
 		return researchObjectJSON;
 	}
+	
 	
 	//
 	@SuppressWarnings({ "unchecked"})
@@ -245,6 +271,25 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
+	//
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public JSONArray getResearchObjectInformationByUserId (long userId){
+
+		JSONArray responseJson = new JSONArray();
+		List responseList = (ArrayList) ResearchObjectFinderUtil.getResearchObjectInformationByUserId(userId);
+
+		for(Object object:responseList){
+			JSONObject json = new JSONObject ();
+			Object[] arrayobject=(Object[])object;
+			json.put("researchobjectid", (long)arrayobject[0]);
+			json.put("researchobjectversion", (int)arrayobject[1]);
+			json.put("researchobjectname", (String)arrayobject[2]);
+			json.put("projectname", (String)arrayobject[3]);
+			responseJson.add(json);
+		}
+		
+		return responseJson;
+	}
 	
 	//
 	public List <ResearchObject> getAllChildren (long researchObjectId){

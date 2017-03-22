@@ -35,11 +35,17 @@
 	
 	
 	//fire to update information to generally worflow portlet
-	function sentWorkflowUpdate(project, projectId, projectLabel, researchObject) {
+	function sentWorkflowUpdate(project, projectId, projectName, researchObject) {
+		console.log("start archiving communication");
+		console.log(project);
+		console.log(projectId);
+		console.log(projectName);
+		console.log(researchObject);
+		
 		var toUpdate = {
 			"updateproject" : project,
 			"projectid" : projectId,
-			"projectlabel" : projectLabel,
+			"projectName" : projectName,
 			"updateresearchobject"   : researchObject,
 		};
 		Liferay.fire('gadget:gfbio.archiving.update', toUpdate);
@@ -116,7 +122,7 @@
 				"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
-					"<label class='control-label' id='gwf_ro_dct_l'	id='gwf_ro_dct_l'> Data collection time </label>"+
+					"<label class='control-label' 					id='gwf_ro_dct_l'> Data collection time </label>"+
 					"<p 	class='field-description'				id='gwf_ro_description_d'>Provide a time periode, where the data are collected or processed.</p>"+
 					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value=''>"+
 				"</div>"+
@@ -585,6 +591,8 @@
 				commentarField.empty();
 				commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>File upload complete to GFBio.</div>");
 				//setTimeout(function(){commentarField.empty();}, 5000);
+				
+				
 			} 
 		});
 	}
