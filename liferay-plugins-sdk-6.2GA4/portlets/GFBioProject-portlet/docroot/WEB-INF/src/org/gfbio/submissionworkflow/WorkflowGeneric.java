@@ -531,8 +531,8 @@ public class WorkflowGeneric extends GenericPortlet {
 	           
         return response;
     }
-    	
-	
+    
+
 	////////////////////////////////////////////////////////////// update functions //////////////////////////////////////////
 		
 	

@@ -180,9 +180,13 @@
 
 				"<h3>Dataset Upload</h3>"+
 				
-				"<form id='file-form' >"+
-				  	"<input type='file' id='file-select'   multiple/>"+
-				"</form>"+
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size over 20 MB, please ulpoad onlys representative data. Than the whole dataset will transfer later, together with the data curator.</p>"+
+				"<div class='fileUpload btn btn-primary'>"+
+				    "<span>Choose file</span>"+
+				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
+				"</div>"+
+				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"+
+				
 				
 				"</br>"+
 				"<div class='row' id='gwf_lf_comentarField'></div></br>"+
@@ -201,9 +205,7 @@
 			);
 		}
 	}
-	
-	
-	
+		
 	
 	//
 	function datePickler(){
@@ -292,7 +294,6 @@
  			}
  		}); 
 
-		
 		ajaxData = {"tablename":"gfbio_license"};
  		$.ajax({
 			"type" : "POST",
@@ -319,7 +320,6 @@
  			}
  		});
  		
- 		
  		var divLi = $("#".concat('gwf_ro_legalrequirements'));
 		divLi.empty();
 		divLi.append(
@@ -333,9 +333,6 @@
 			"</div>"+
 			"<div style='clear:left'></div>"
 		);
-		
-
-		
 		
 		ajaxData = {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
 		$.ajax({
@@ -459,24 +456,19 @@
 						document.getElementById("gwf_ro_author").innerHTML= "";
 					}
 					
-					
 					if (extendeddata.publications !=null)
 						document.getElementById("gwf_ro_publications").value= extendeddata.publications;
 					else
 						document.getElementById("gwf_ro_publications").value= "";
-					
 					
 					if (json.hasOwnProperty('licenseid')) {
 						var licenseJson = JSON.parse(json.licenseid);
 						for (i=0;i<licenseJson.length;i++)
 							document.getElementById("gwf_ro_licenses"+licenseJson[i]).checked= "checked";
 					}
-
 	 			}
 	 		});
 		}
-		
-		
 	}
 	
 	
@@ -541,16 +533,11 @@
 					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
 					commentarField.empty();
 					commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>Submission entry is written in the registry.</div>");
-					//setTimeout(function(){commentarField.empty();}, 5000);
 				}else{
 					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
 					document.getElementById("gwf_lf_submissioncomentarField").className="portlet-msg-error";
 					commentarField.empty();
 					commentarField.append("<div class='portlet-msg-error'>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
-/* 					setTimeout(function(){
-						commentarField.empty();
-						document.getElementById("gwf_lf_submissioncomentarField").className="row";;
-					}, 25000); */
 				}
 					
 			}		
@@ -561,11 +548,11 @@
 	////////////////////////////////////////////////////////////////// upload tests
 	
 	
+	//
 	function fileUplaod(){
 	
 		var url = document.getElementById('workflowgenericurl').value;
 		var formData = new FormData();
-	  //var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)+',"path":"'+document.getElementById('gwf_user_path').innerHTML+'"}'], "uploadInformation.txt");
 	    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)															   +'}'], "uploadInformation.txt");
 
 		formData.append('file', uploadInformation);
@@ -585,18 +572,29 @@
 			"data" : formData,
 			async: false,
 			success :  function (){
-				
-				
 				var commentarField = $("#".concat('gwf_lf_uploadcomentarField'));
 				commentarField.empty();
 				commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>File upload complete to GFBio.</div>");
-				//setTimeout(function(){commentarField.empty();}, 5000);
-				
-				
 			} 
 		});
 	}
 	
+	
+	//
+	function showUpload(){
+		console.log("start");
+		var nameList = "";
+	    var bttn = $("#".concat('gwf_b_upload'));
+	    var fileList = bttn[0].files;
+	    console.log(fileList.length);
+	    if (fileList.length>0){
+	    	nameList = nameList + '<ul>';
+		    for (i =0; i < fileList.length;i++)
+		    	nameList = nameList +'<li>'+fileList[i].name+ '</li>';
+		    nameList = nameList + '</ul>';
+		}
+	    document.getElementById("gwf_ro_upload").innerHTML = nameList;
+	}
 	
 	
 	//////////////////////////////////////////////////////////////////////////// submission
@@ -620,7 +618,6 @@
 				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
 				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. Your submission key is: "+obj.key+". One of them will be contact you shortly. </div>");
-				//setTimeout(function(){commentarField.empty();}, 25000);
 			},
 			error :  function (obj){
 				var delSubRegdata ={};
@@ -631,9 +628,7 @@
 				
 				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
-				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support. </div>");
-				//setTimeout(function(){commentarField.empty();}, 25000);
-
+				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support via our <a href='https://www.gfbio.org/contact' style='color:darkred; font-weight: bold'> contact form</a>. </div>");
 			},		
 		});	 
 	}
@@ -662,13 +657,9 @@
 	
 	
 	//
-	function sentToBroker(data){
+/* 	function sentToBroker(data){
 			
 		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
-				
-		//console.log(data);
-		
-		//data["path"]= document.getElementById("gwf_user_path").innerHTML;
 		
  		$.ajax({
 			"type" : "POST",
@@ -685,10 +676,6 @@
 				console.log("broker nope");
 			},		
 		});	 
-	}
-	
-	
-	
-
+	} */
 
 </script>
