@@ -46,7 +46,7 @@ public class ArchivingPortlet extends GenericPortlet {
 
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-
+		
 		CacheRegistryUtil.clear();
 		MultiVMPoolUtil.clear();
 		WebCachePoolUtil.clear();
@@ -120,7 +120,7 @@ public class ArchivingPortlet extends GenericPortlet {
 		} catch (ParseException e) {e.printStackTrace();}
 
 		if (parseJson.containsKey("userid")) {
-			responseJson = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId((long) parseJson.get("userid"));
+			responseJson = ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId((long) parseJson.get("userid"));
 
 			
 	        response.setContentType("application/json");

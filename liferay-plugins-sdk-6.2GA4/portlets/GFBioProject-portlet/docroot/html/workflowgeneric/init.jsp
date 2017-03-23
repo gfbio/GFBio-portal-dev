@@ -35,11 +35,17 @@
 	
 	
 	//fire to update information to generally worflow portlet
-	function sentWorkflowUpdate(project, projectId, projectLabel, researchObject) {
+	function sentWorkflowUpdate(project, projectId, projectName, researchObject) {
+		console.log("start archiving communication");
+		console.log(project);
+		console.log(projectId);
+		console.log(projectName);
+		console.log(researchObject);
+		
 		var toUpdate = {
 			"updateproject" : project,
 			"projectid" : projectId,
-			"projectlabel" : projectLabel,
+			"projectName" : projectName,
 			"updateresearchobject"   : researchObject,
 		};
 		Liferay.fire('gadget:gfbio.archiving.update', toUpdate);
@@ -105,24 +111,24 @@
 					"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
-					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title* </label>"+
+					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title<span style='color:darkred'>*</span> </label>"+
 					"<p 	class='field-description'				id='gwf_ro_name_d'>Provide a short, descriptive title for your dataset.</p>"+
 					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text'  value=''>"+
 				"</div >"+
 				"<div 			class='control-group'>"+
-					"<label		class='control-label' 					id='gwf_ro_description_l'> Description* </label>"+
+					"<label		class='control-label' 					id='gwf_ro_description_l'> Description<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract).</p>"+
 					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' ></textarea>"+
 				"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
-					"<label class='control-label' id='gwf_ro_dct_l'	id='gwf_ro_dct_l'> Data collection time </label>"+
-					"<p 	class='field-description'				id='gwf_ro_description_d'>Provide a time periode, where the data are collected or processed.</p>"+
+					"<label class='control-label' 					id='gwf_ro_dct_l'> Data collection time </label>"+
+					"<p 	class='field-description'				id='gwf_ro_description_d'>Provide the time period, in which the data were collected or processed.</p>"+
 					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value=''>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					 id='gwf_ro_label_l'> Dataset label </label>"+
-					"<p 	class='field-description'				 id='gwf_ro_labels_d'>Use labels, to typing the dataset, describe it in keywords or use your internal signifier.</p>"+
+					"<p 	class='field-description'				 id='gwf_ro_labels_d'>Provide labels for the dataset, describe it in keywords or use internal identifiers.</p>"+
 					"<input class='field lfr-input-text-container'	 id='gwf_ro_label'	type='text'  value=''>"+
 				"</div>"+
 				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
@@ -130,13 +136,13 @@
 				"<div 											id='gwf_ro_categories'></div>"+
 				"</br>"+
 				"<div 			class='control-group'>"+
-					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author* </label>"+
+					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'			 	id='gwf_ro_author_d'>Please, enter the author(s) for the data set (one author per line).</p>"+
 					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' ></textarea>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
-					"<label class='control-label' 					id='gwf_ro_license_l'> Appropriate license*   </label>"+
-					"<p 	class='field-description'			 	id='gwf_ro_license_d'>Select the license that you prefer for your dataset.</p>"+
+					"<label class='control-label' 					id='gwf_ro_license_l'> License<span style='color:darkred'>*</span>   </label>"+
+					"<p 	class='field-description'			 	id='gwf_ro_license_d'> Under which license will your data be accessible?</p>"+
 					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_license_v' type='text'  value=''>"+
 						"<form action='select.html'>"+
 							"<select id='gwf_ro_licenselabel' name='<portlet:namespace/>gwf_ro_licenselabel' size='1' style='width:100%'>"+
@@ -146,13 +152,13 @@
 					"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
-					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publications </label>"+
-					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset related to a publication.</p>"+
+					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publication(s) </label>"+
+					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset IS related to a publication.</p>"+
 					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value=''>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_metadatalabel_l'> Metadata schema  </label>"+
-					"<p 	class='field-description'			 	id='gwf_ro_metadatalabel_d'>Select the metadata schema, that you use for your dataset.</p>"+
+					"<p 	class='field-description'			 	id='gwf_ro_metadatalabel_d'>Which metadata schema does your data support (if any)?</p>"+
 					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_metadatalabel_v' type='text'  value=''>"+
 						"<form action='select.html'>"+
 							"<select id='gwf_ro_metadatalabel' name='<portlet:namespace/>gwf_ro_metadatalabel' size='1' style='width:100%'>"+
@@ -163,7 +169,7 @@
 				"</div>"+
 				"<div 											class='control-group'>"+
 					"<label 									class='control-label' 					id='gwf_ro_embargo_l'> Embargo </label>"+
-					"<p 										class='field-description'			 	id='gwf_ro_embargo_d'>Provide a date at which the dataset should be under an embargo  (yyyy-mm-dd')</p>"+
+					"<p 										class='field-description'			 	id='gwf_ro_embargo_d'>Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd')</p>"+
 					"<span onmousemove='datePickler()'><input   class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value=''></span>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
@@ -174,24 +180,32 @@
 
 				"<h3>Dataset Upload</h3>"+
 				
-				"<form id='file-form' >"+
-			  	"<input type='file' id='file-select'  language='en'  multiple/>"+
-				"</form>"+
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size over 20 MB, please ulpoad onlys representative data. Than the whole dataset will transfer later, together with the data curator.</p>"+
+				"<div class='fileUpload btn btn-primary'>"+
+				    "<span>Choose file</span>"+
+				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
+				"</div>"+
+				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"+
+				
 				
 				"</br>"+
 				"<div class='row' id='gwf_lf_comentarField'></div></br>"+
+				"<div class='row' id='gwf_lf_storecomentarField'></div>"+
+				"<div class='row' id='gwf_lf_uploadcomentarField'></div>"+
+				"<div class='row' id='gwf_lf_registrycomentarField'></div>"+
 				"<div class='row' id='gwf_lf_submissioncomentarField'></div>"+
 				
 				"<div class='row'>"+
 /* 					"<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
 					"<span class='widthM' id='gwf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
- */					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-primary'>Start submission</span></span>"+
+ */					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-success'>Start submission</span></span>"+
+ 					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Reset</span></span>"+
 				"</div>"
 
 			);
 		}
 	}
-	
+		
 	
 	//
 	function datePickler(){
@@ -280,7 +294,6 @@
  			}
  		}); 
 
-		
 		ajaxData = {"tablename":"gfbio_license"};
  		$.ajax({
 			"type" : "POST",
@@ -297,14 +310,15 @@
 				divLi.append("<option value='none'></option>");
 				for (i =0; i <obj.length;i++){
 					var json = obj[i];
-					if (json.label == "CC BY")
-						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.name+"</option>");
-					else	
+					if (json.label == "other")
 						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+					else if (json.label == "CC BY")
+						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.label+": "+json.name+" "+json.version+"</option>");
+						else	
+							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.label+": "+json.name+" "+json.version+"</option>");
 				}
  			}
  		});
- 		
  		
  		var divLi = $("#".concat('gwf_ro_legalrequirements'));
 		divLi.empty();
@@ -319,9 +333,6 @@
 			"</div>"+
 			"<div style='clear:left'></div>"
 		);
-		
-
-		
 		
 		ajaxData = {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
 		$.ajax({
@@ -445,37 +456,28 @@
 						document.getElementById("gwf_ro_author").innerHTML= "";
 					}
 					
-					
 					if (extendeddata.publications !=null)
 						document.getElementById("gwf_ro_publications").value= extendeddata.publications;
 					else
 						document.getElementById("gwf_ro_publications").value= "";
-					
 					
 					if (json.hasOwnProperty('licenseid')) {
 						var licenseJson = JSON.parse(json.licenseid);
 						for (i=0;i<licenseJson.length;i++)
 							document.getElementById("gwf_ro_licenses"+licenseJson[i]).checked= "checked";
 					}
-
 	 			}
 	 		});
 		}
-		
-		
 	}
 	
 	
 	//
 	function createGwfResearchObject(projectJson){
 		
-		console.log("start createGwfResearchObject");
-
 		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
 		var url = document.getElementById('workflowgenericurl').value;
 
-		console.log("researchObjectJson");
-		console.log(researchObjectJson);
 		
 		$.ajax({
 			"type" : "POST",
@@ -486,9 +488,6 @@
 			},
 			async: false,
 			success :  function (obj){
-				
-				console.log("success");
-				console.log(obj);
 
 				if (obj.researchobjectid >0){
 					document.getElementById("gwf_ro_id").innerHTML= obj.researchobjectid;
@@ -521,9 +520,6 @@
 
 		var url = document.getElementById('workflowgenericurl').value;
 		
-		console.log("broker");
-		console.log(data);
-
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowCollectionsPortlet'),
@@ -534,19 +530,14 @@
 			async: false,
 			success :  function (obj){
 				if (!obj.hasOwnProperty("ERROR")){
-					var commentarField = $("#".concat('gwf_lf_comentarField'));
+					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
 					commentarField.empty();
 					commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>Submission entry is written in the registry.</div>");
-					setTimeout(function(){commentarField.empty();}, 5000);
 				}else{
-					var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
+					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
 					document.getElementById("gwf_lf_submissioncomentarField").className="portlet-msg-error";
 					commentarField.empty();
 					commentarField.append("<div class='portlet-msg-error'>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
-					setTimeout(function(){
-						commentarField.empty();
-						document.getElementById("gwf_lf_submissioncomentarField").className="row";;
-					}, 25000);
 				}
 					
 			}		
@@ -557,15 +548,13 @@
 	////////////////////////////////////////////////////////////////// upload tests
 	
 	
+	//
 	function fileUplaod(){
 	
 		var url = document.getElementById('workflowgenericurl').value;
 		var formData = new FormData();
-	  //var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)+',"path":"'+document.getElementById('gwf_user_path').innerHTML+'"}'], "uploadInformation.txt");
 	    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)															   +'}'], "uploadInformation.txt");
-		console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-		console.log(document.getElementById('gwf_user_path').innerHTML);
-		console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
 		formData.append('file', uploadInformation);
 
 		var fileSelect = document.getElementById('file-select');
@@ -583,12 +572,29 @@
 			"data" : formData,
 			async: false,
 			success :  function (){
-				
-				console.log("yeah");
+				var commentarField = $("#".concat('gwf_lf_uploadcomentarField'));
+				commentarField.empty();
+				commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>File upload complete to GFBio.</div>");
 			} 
 		});
 	}
 	
+	
+	//
+	function showUpload(){
+		console.log("start");
+		var nameList = "";
+	    var bttn = $("#".concat('gwf_b_upload'));
+	    var fileList = bttn[0].files;
+	    console.log(fileList.length);
+	    if (fileList.length>0){
+	    	nameList = nameList + '<ul>';
+		    for (i =0; i < fileList.length;i++)
+		    	nameList = nameList +'<li>'+fileList[i].name+ '</li>';
+		    nameList = nameList + '</ul>';
+		}
+	    document.getElementById("gwf_ro_upload").innerHTML = nameList;
+	}
 	
 	
 	//////////////////////////////////////////////////////////////////////////// submission
@@ -598,12 +604,7 @@
 	function startSubmission(data){
 			
 		var url = document.getElementById('workflowgenericurl').value;
-		
-		console.log(data);
-		
 		data["path"]= document.getElementById("gwf_user_path").innerHTML;
-
-		console.log(data);
 		
  		$.ajax({
 			"type" : "POST",
@@ -614,35 +615,51 @@
 			},
 			async: false,
 			success :  function (obj){
-				console.log("jo");
-				console.log(obj);
 				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
-				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. </div>");
-				setTimeout(function(){commentarField.empty();}, 25000);
+				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. Your submission key is: "+obj.key+". One of them will be contact you shortly. </div>");
 			},
 			error :  function (obj){
-				console.log("nope");
-				var commentarField = $("#".concat('cwf_lf_submissioncomentarField'));
+				var delSubRegdata ={};
+				delSubRegdata["researchobjectid"]= data.mrr.researchobjects.researchobjectid;
+				delSubRegdata["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
+				delSubRegdata["archive"]= "GFBio collections";
+				deleteSubmissionRegistryEntry(delSubRegdata);
+				
+				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
 				commentarField.empty();
-				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support.</div>");
-				setTimeout(function(){commentarField.empty();}, 25000);
-
+				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support via our <a href='https://www.gfbio.org/contact' style='color:darkred; font-weight: bold'> contact form</a>. </div>");
 			},		
 		});	 
 	}
 	
 	
 	//
-	function sentToBroker(data){
+	function deleteSubmissionRegistryEntry(data){
+			
+		var url = document.getElementById('workflowgenericurl').value;
+		
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : "delsubreg"
+			},
+			async: false,
+			success :  function (obj){
+				console.log("del  subreg");
+				console.log(obj);
+			}
+	
+		});	 
+	}
+	
+	
+	//
+/* 	function sentToBroker(data){
 			
 		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
-				
-		//console.log(data);
-		
-		//data["path"]= document.getElementById("gwf_user_path").innerHTML;
-
-		console.log(data);
 		
  		$.ajax({
 			"type" : "POST",
@@ -659,10 +676,6 @@
 				console.log("broker nope");
 			},		
 		});	 
-	}
-	
-	
-	
-
+	} */
 
 </script>

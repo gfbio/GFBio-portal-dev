@@ -17,14 +17,15 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObject> implements ResearchObjectFinder{
 
 	
-	public static String FINDER_CLASS_NAME_ENTITY 			= ResearchObjectFinderImpl.class.getName();
-	public static String GET_CHECK_OF_DIRECT_PARENT 		= FINDER_CLASS_NAME_ENTITY + ".getCheckOfDirectParent";	
-	public static String GET_CHECK_OF_ID 					= FINDER_CLASS_NAME_ENTITY + ".getCheckOfId";	
-	public static String GET_CHECK_OF_ID_AND_VERSION 		= FINDER_CLASS_NAME_ENTITY + ".getCheckOfIdAndVersion";
-	public static String GET_DIRECT_PARENT 					= FINDER_CLASS_NAME_ENTITY + ".getDirectParent";
-	public static String GET_LATEST_RESEARCHOBJECT_BY_ID 	= FINDER_CLASS_NAME_ENTITY + ".getLatestResearchObjectById";
-	public static String GET_LATEST_VERSION_BY_ID 			= FINDER_CLASS_NAME_ENTITY + ".getLatestVersionById";	
-	public static String GET_RESEARCHOBJECTVERSIONS_BY_ID 	= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectVersionsById";	
+	public static String FINDER_CLASS_NAME_ENTITY 					= ResearchObjectFinderImpl.class.getName();
+	public static String GET_CHECK_OF_DIRECT_PARENT 				= FINDER_CLASS_NAME_ENTITY + ".getCheckOfDirectParent";	
+	public static String GET_CHECK_OF_ID 							= FINDER_CLASS_NAME_ENTITY + ".getCheckOfId";	
+	public static String GET_CHECK_OF_ID_AND_VERSION 				= FINDER_CLASS_NAME_ENTITY + ".getCheckOfIdAndVersion";
+	public static String GET_DIRECT_PARENT 							= FINDER_CLASS_NAME_ENTITY + ".getDirectParent";
+	public static String GET_LATEST_RESEARCHOBJECT_BY_ID 			= FINDER_CLASS_NAME_ENTITY + ".getLatestResearchObjectById";
+	public static String GET_LATEST_VERSION_BY_ID 					= FINDER_CLASS_NAME_ENTITY + ".getLatestVersionById";	
+	public static String GET_RESEARCHOBJECTINFORMATION_BY_USERID	= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectInformationByUserId";
+	public static String GET_RESEARCHOBJECTVERSIONS_BY_ID 			= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectVersionsById";	
 
 	
 	
@@ -157,6 +158,38 @@ public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObjec
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(researchObjectId);
 			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public  List getResearchObjectInformationByUserId(long userId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_RESEARCHOBJECTINFORMATION_BY_USERID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("researchobjectid", Type.LONG);
+			queryObject.addScalar("researchobjectversion", Type.INTEGER);
+			queryObject.addScalar("researchobjectname", Type.STRING);
+			queryObject.addScalar("projectname", Type.STRING);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(userId);
+			qPos.add(userId);
+			
+			return (List) queryObject.list();
+			
 		} catch (Exception e) {e.printStackTrace();}
 		finally {
 			closeSession(session);

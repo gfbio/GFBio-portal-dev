@@ -22,6 +22,8 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 	public static String GET_ARCHIVEPIDS_WITH_TYPE_OF_ENA					= FINDER_CLASS_NAME_ENTITY + ".getArchivePIdsWithTypeOfENA";
 	public static String GET_BROKERSUBMISSIONID_BY_IDS						= FINDER_CLASS_NAME_ENTITY + ".getBrokerSubmissionIdByIds";
 	public static String GET_CHECK_OF_BROKERSUBMISSIONID					= FINDER_CLASS_NAME_ENTITY + ".getCheckOfBrokerSubmissionId";
+	public static String GET_CHECK_OF_IDS									= FINDER_CLASS_NAME_ENTITY + ".getCheckOfIds";
+	public static String GET_CHECK_OF_SUBMISSIONID							= FINDER_CLASS_NAME_ENTITY + ".getCheckOfSubmissionId";
 	public static String GET_CHECK_OF_RESEARCHOBJECTID_AND_VERSION			= FINDER_CLASS_NAME_ENTITY + ".getCheckOfResearchObjectIdAndVersion";
 	public static String GET_LATEST_SUBMISSION_BY_IDS						= FINDER_CLASS_NAME_ENTITY + ".getLatestSubmissionByIds";	
 	public static String GET_LATEST_SUBMISSIONS								= FINDER_CLASS_NAME_ENTITY + ".getLatestSubmissions";	
@@ -32,6 +34,7 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 	public static String GET_STATUS_BY_IDS									= FINDER_CLASS_NAME_ENTITY + ".getStatusByIds";	
 	public static String GET_SUBMISSION										= FINDER_CLASS_NAME_ENTITY + ".getSubmission";	
 	public static String GET_SUBMISSIONID_BY_IDS							= FINDER_CLASS_NAME_ENTITY + ".getSubmissionIdByIds";	
+	public static String GET_SUBMISSIONIDS_BY_BROKERSUBMISSIONID			= FINDER_CLASS_NAME_ENTITY + ".getSubmissionIdsByBrokerSubmissionId";
 	public static String GET_SUBMISSIONIDS_BY_RESEARCHOBJECTID_AND_VERSION	= FINDER_CLASS_NAME_ENTITY + ".getSubmissionIdsByResearchObjectIdAndVersion";
 	
 //
@@ -154,6 +157,52 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 			queryObject.addScalar("check", Type.BOOLEAN);
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(brokersubmissionid);
+			return (List<Boolean>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//check submission entity for a specific brokersubmissionid. If this in the relation table, then 'check' is true, else 'check' is wrong.
+	@SuppressWarnings({  "unchecked" })
+	public List<Boolean> getCheckOfIds(long researchObjectId, int researchObjectVersion, String archive) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CHECK_OF_IDS);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(researchObjectId);
+			qPos.add(researchObjectVersion);
+			qPos.add(archive);
+			return (List<Boolean>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//check submission entity for a specific brokersubmissionid. If this in the relation table, then 'check' is true, else 'check' is wrong.
+	@SuppressWarnings({  "unchecked" })
+	public List<Boolean> getCheckOfSubmissionId(long submissionid) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CHECK_OF_SUBMISSIONID);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(submissionid);
 			return (List<Boolean>) queryObject.list();
 		} catch (Exception e) {e.printStackTrace();}
 		finally {
@@ -396,6 +445,31 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 			qPos.add(researchObjectVersion);
 			qPos.add(archive);
 			return (List<Submission>) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings({  "rawtypes" })
+	public List getSubmissionIdsByBrokerSubmissionId(String brokerSubmissionId) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_SUBMISSIONIDS_BY_BROKERSUBMISSIONID);
+		
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("submissionid", Type.LONG);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(brokerSubmissionId);
+			return (List) queryObject.list();
 			
 		} catch (Exception e) {e.printStackTrace();}
 		finally {

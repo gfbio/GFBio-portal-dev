@@ -103,6 +103,10 @@ public class WorkflowGeneric extends GenericPortlet {
 			if ("createsubmissionregistry".toString().equals(request.getParameter("responseTarget").toString()))
 				createSubmissionRegistry(request, response);
 			
+			//
+			if ("delsubreg".toString().equals(request.getParameter("responseTarget").toString()))
+				deleteSubmissionRegistryEntry(request, response);
+			
 			//starts getRowInformationsOfRelationshipsOfSpecificCellContent of content
 			if ("getresearchfieldinformations".toString().equals(request.getParameter("responseTarget").toString()))
 				getRowInformationsOfRelationshipsOfSpecificCellContent(request, response);
@@ -135,12 +139,28 @@ public class WorkflowGeneric extends GenericPortlet {
 	}
 	
 	
-	////////////////////////////////////////////////////////////// get functions //////////////////////////////////////////	
+	//////////////////////////////////////////////////////////// delete functions ////////////////////////////////////////
 	
 	
 	//
-	public void getResearchObjectById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+	public void deleteSubmissionRegistryEntry(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
+		JSONObject responseJson = new JSONObject();
+        JSONObject parseJson = getDataJsonAsObject (request);
+        
+		responseJson = SubmissionLocalServiceUtil.deleteSubmission(parseJson);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+	}	
+	
+	
+	////////////////////////////////////////////////////////////// get functions //////////////////////////////////////////	
+		
+	
+	//
+	public void getResearchObjectById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+		
 		JSONArray responseJson = new JSONArray();
         JSONArray parseJson = getDataJsonAsArray (request);
 
@@ -149,7 +169,7 @@ public class WorkflowGeneric extends GenericPortlet {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
 	}
-	
+
 	
 	//
 	public void getRowInformationsOfRelationshipsOfSpecificCellContent(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
@@ -490,8 +510,8 @@ public class WorkflowGeneric extends GenericPortlet {
         
         //fields.put("customfield_10312", "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx");
         
-        //
-        //fields.put("customfield_1", "foo");
+        //this line ist for testing and stop the submission to JIRA
+        //fields.put("customfield_1", "stopper");
         
         
         json.put("fields", fields);
@@ -511,8 +531,8 @@ public class WorkflowGeneric extends GenericPortlet {
 	           
         return response;
     }
-    	
-	
+    
+
 	////////////////////////////////////////////////////////////// update functions //////////////////////////////////////////
 		
 	

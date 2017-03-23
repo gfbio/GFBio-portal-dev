@@ -66,7 +66,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		
 		if (contentList != null)
 			for (int i =0; i < contentList.size();i++)
-				try {ContentLocalServiceUtil.deleteContent(contentList.get(i).getContentID());} 
+				try {deleteContent(contentList.get(i).getContentID());} 
 				catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	

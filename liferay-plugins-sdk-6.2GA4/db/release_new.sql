@@ -511,3 +511,50 @@ ALTER TABLE gfbio_submission ADD COLUMN jirakey character (75);
 
 ALTER TABLE gfbio_basket ADD COLUMN queryKeyword text;
 ALTER TABLE gfbio_basket ADD COLUMN queryFilter text;
+
+
+
+
+---- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----
+----							scripts above this line are on pub2 				16.03.2017
+---- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ----
+
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+--------------------------------------       license        -- 16.03.2017 ---------------------
+-----------------------------------------------------------------------------------------------
+
+------------------------------------- Column Table Content -------------------------------------
+
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),getHeadIdByName('gfbio_license'),'version');
+
+
+------------------------------------- Content Table Content -------------------------------------
+
+DO
+$do$
+	DECLARE
+		r bigint;
+	BEGIN
+		FOR r IN 
+			SELECT 
+			  distinct(rowid )
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid = (select getHeadIdByName('gfbio_license'))
+		LOOP
+			INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'),r, '');
+		END LOOP;
+		RETURN;
+	END
+$do$
+LANGUAGE plpgsql;
+
+
+
+
+
+
