@@ -103,8 +103,8 @@ span.hilight{
     color:#666;
 }
 
-body.wait  {
-    cursor: wait;
+.wait, .wait * {
+    cursor: wait!important;
 }
 
 select[name=tableId_length] {
