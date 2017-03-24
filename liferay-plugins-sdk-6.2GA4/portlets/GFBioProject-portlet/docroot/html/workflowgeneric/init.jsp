@@ -557,7 +557,7 @@
 
 		formData.append('file', uploadInformation);
 
-		var fileSelect = document.getElementById('file-select');
+		var fileSelect = document.getElementById('gwf_b_upload');
 		var files = fileSelect.files;
 
 		for (var i = 0; i < files.length; i++){ 
