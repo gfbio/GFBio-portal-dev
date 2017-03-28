@@ -213,20 +213,21 @@
 	}
 		
 	
+	//
 	function buildWaitringMessage(div){
-		console.log("waiter " +div);
-		var commentarField = $("#".concat('div'));
+		var commentarField = $("#".concat(div));
 		commentarField.empty();
-		commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>The submission process is starting. <br> Please wait until the process is finished.</div>");
+		commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>The submission process is starting. Please wait until the process is finished.</div>");
 	}
 	
 	
+	//
 	function buildErrorMessage(div, error){
-		var commentarField = $("#".concat('gwf_lf_comentarField'));
-		//document.getElementById("gwf_lf_comentarField").className="portlet-msg-error";
+		var commentarField = $("#".concat(div));
 		commentarField.empty();
 		commentarField.append("<div class='portlet-msg-error'>"+error+ "</div>");
 	}
+	
 	
 	//
 	function datePickler(){
