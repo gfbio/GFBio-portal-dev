@@ -52,6 +52,16 @@
 	} 
 	
 	
+	//fire to update information to generally worflow portlet
+	function sentShowHideInformation(show) {
+		
+		var showHide = {
+			"show" : show,
+		};
+		Liferay.fire('gadget:gfbio.archiving.showhide', showHide);
+	} 
+	
+	
 	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 
 	
@@ -190,10 +200,6 @@
 				
 				"</br>"+
 				"<div class='row' id='gwf_lf_comentarField'></div></br>"+
-				"<div class='row' id='gwf_lf_storecomentarField'></div>"+
-				"<div class='row' id='gwf_lf_uploadcomentarField'></div>"+
-				"<div class='row' id='gwf_lf_registrycomentarField'></div>"+
-				"<div class='row' id='gwf_lf_submissioncomentarField'></div>"+
 				
 				"<div class='row'>"+
 /* 					"<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
@@ -207,12 +213,28 @@
 	}
 		
 	
+	function buildWaitringMessage(div){
+		console.log("waiter " +div);
+		var commentarField = $("#".concat('div'));
+		commentarField.empty();
+		commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>The submission process is starting. <br> Please wait until the process is finished.</div>");
+	}
+	
+	
+	function buildErrorMessage(div, error){
+		var commentarField = $("#".concat('gwf_lf_comentarField'));
+		//document.getElementById("gwf_lf_comentarField").className="portlet-msg-error";
+		commentarField.empty();
+		commentarField.append("<div class='portlet-msg-error'>"+error+ "</div>");
+	}
+	
 	//
 	function datePickler(){
 		$( "#gwf_ro_embargo" ).datepicker({
 			dateFormat: "yy-mm-dd",
 			//changeMonth: true,
 			//changeYear: true
+
 		});
 	}
 
@@ -529,20 +551,17 @@
 			},
 			async: false,
 			success :  function (obj){
-				if (!obj.hasOwnProperty("ERROR")){
-					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
-					commentarField.empty();
-					commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>Submission entry is written in the registry.</div>");
-				}else{
-					var commentarField = $("#".concat('gwf_lf_registrycomentarField'));
-					document.getElementById("gwf_lf_submissioncomentarField").className="portlet-msg-error";
-					commentarField.empty();
-					commentarField.append("<div class='portlet-msg-error'>The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow. </div>");
-				}
+				if (!obj.hasOwnProperty("ERROR"))
+					buildWaitringMessage('gwf_lf_comentarField');
+				else
+					buildErrorMessage('gwf_lf_comentarField', 'The Submission information transfer was stopped because there is already a submission of this data set, with the same version on this workflow.');
 					
 			}		
 		});	
 	}
+	
+	
+
 	
 	
 	////////////////////////////////////////////////////////////////// upload tests
@@ -572,9 +591,7 @@
 			"data" : formData,
 			async: false,
 			success :  function (){
-				var commentarField = $("#".concat('gwf_lf_uploadcomentarField'));
-				commentarField.empty();
-				commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>File upload complete to GFBio.</div>");
+				buildWaitringMessage('gwf_lf_comentarField');
 			} 
 		});
 	}
@@ -615,9 +632,14 @@
 			},
 			async: false,
 			success :  function (obj){
-				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
-				commentarField.empty();
-				commentarField.append("<div class='portlet-success'>The Submission information has been sent to the data curators of collections. Your submission key is: "+obj.key+". One of them will be contact you shortly. </div>");
+				
+				sentShowHideInformation(false);
+				var div =   $("#generic");
+				div.empty();
+				div.append(
+					"<div class='portlet-success'>The Submission information has been sent to the data curators of collections. Your submission key is: "+obj.key+". One of them will be contact you shortly. </div>"+
+					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+				);
 			},
 			error :  function (obj){
 				var delSubRegdata ={};
@@ -626,9 +648,7 @@
 				delSubRegdata["archive"]= "GFBio collections";
 				deleteSubmissionRegistryEntry(delSubRegdata);
 				
-				var commentarField = $("#".concat('gwf_lf_submissioncomentarField'));
-				commentarField.empty();
-				commentarField.append("<div class='portlet-msg-error'>The Submission information transfer is failed. Please contact our technical support via our <a href='https://www.gfbio.org/contact' style='color:darkred; font-weight: bold'> contact form</a>. </div>");
+				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer is failed. Please contact our technical support via our <a href='https://www.gfbio.org/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 			},		
 		});	 
 	}
@@ -649,7 +669,6 @@
 			async: false,
 			success :  function (obj){
 				console.log("del  subreg");
-				console.log(obj);
 			}
 	
 		});	 

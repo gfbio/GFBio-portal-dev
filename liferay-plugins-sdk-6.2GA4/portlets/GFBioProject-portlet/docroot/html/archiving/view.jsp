@@ -27,9 +27,10 @@
 
 	<div id="dataSubmission">
 		<%if (PortalUtil.getUser(request)==null){ %>
+
 	
 			<div class="portlet-msg-alert">
-				Only logged in users get access to the different submission workflows. Please <span style="color:#006400;">sign in</span> to continue the process. 
+				Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in"><span style="color:#006400;">sign in</span></a> to continue the process. 
 			</div>
 	
 		<%}else { %>
@@ -63,28 +64,29 @@
 				</select>
 			</form>  --%>
 				
-				
-			<h3>Stored information</h3>
-				
-			<p 	class='field-description'				id='gwf_ro_storedinformation_d'>If you have stored information to your datasets, you can choose the dataset to fill the form fields.</p>
-						
-			<form action='select.html' id="choROForm">
-				<select id='workflowChooseRO' style='width:100%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
-					<option value='none'> </option>
-					<% if (roList != null){ %>
-	  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
-	  						JSONObject roJson =  new JSONObject();
-	  						roJson = (JSONObject) roList.get(i);
-	  						String text = (String) roJson.get("researchobjectname") + " with version "+roJson.get("researchobjectversion");
-	  						if ((String) roJson.get("projectname")!=null)
-	  							text = text +" from project "+(String) roJson.get("projectname");
-	  						
-	  						Long roId = (Long) roJson.get("researchobjectid"); %>
- 	  					    
-							<option value="<%= roId %>"> <%= text %> </option>
-						<%} }} %>  
-				</select>
-			</form>	
+			<div id ="workflowform" class="swMain">	
+				<h3>Stored information</h3>
+					
+				<p 	class='field-description'				id='gwf_ro_storedinformation_d'>If you have stored information to your datasets, you can choose the dataset to fill the form fields.</p>
+							
+				<form action='select.html' id="choROForm">
+					<select id='workflowChooseRO' style='width:100%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
+						<option value='none'> </option>
+						<% if (roList != null){ %>
+		  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
+		  						JSONObject roJson =  new JSONObject();
+		  						roJson = (JSONObject) roList.get(i);
+		  						String text = (String) roJson.get("researchobjectname") + " with version "+roJson.get("researchobjectversion");
+		  						if ((String) roJson.get("projectname")!=null)
+		  							text = text +" from project "+(String) roJson.get("projectname");
+		  						
+		  						Long roId = (Long) roJson.get("researchobjectid"); %>
+	 	  					    
+								<option value="<%= roId %>"> <%= text %> </option>
+							<%} }} %>  
+					</select>
+				</form>	
+			</div>
 			
 
 

@@ -6,23 +6,30 @@
 	//Message from Hide Managment
  	AUI().ready(function(A){
 
-		console.log("updateChooser 0");
 		Liferay.on('gadget:gfbio.archiving.update', function(data) {
 
-			console.log("updateChooser 1");
 			if (!(data == undefined)){
-				console.log("updateChooser 2");
 				 if (data.updateproject==true){
-					 console.log("updateChooser 3");
-					 console.log(data);
 					var choPro = $("#".concat("workflowChooseRO"));
 					choPro.append(
 							"<option id='workflowChooseRO"+	data.updateresearchobject.researchobjectid+"' value='"+data.updateresearchobject.researchobjectid+"'>"+data.updateresearchobject.name+""+" with Version"+ data.updateresearchobject.researchobjectversion+"</option>");
 					document.getElementById("workflowChooseRO"+data.updateresearchobject.researchobjectid).checked=true;
-				
 				 }
-
 			}
+		});
+	}); 
+	
+	
+	//Message from Hide Managment
+ 	AUI().ready(function(A){
+
+		Liferay.on('gadget:gfbio.archiving.showhide', function(data) {
+
+			if (!(data == undefined))
+				 if (data.show==true)
+					document.getElementById("workflowform").className='swMain';
+				else
+					document.getElementById("workflowform").className='swHide';
 		});
 	}); 
 	
