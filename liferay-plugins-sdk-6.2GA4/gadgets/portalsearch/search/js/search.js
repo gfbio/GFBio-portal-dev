@@ -57,12 +57,15 @@ function setAutoComplete() {
  * Return: keyword attaced to the variable
  */
 function getQueryVariable(variable) {
-	var query = document.referrer;
-	var vars = query.split('&');
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=');
-		if (decodeURIComponent(pair[0]) == variable) {
-			return decodeURIComponent(pair[1]);
+	var url = document.referrer;
+	var query = url.split('?');
+	if (query.length > 1){
+		var vars = query[1].split('&');
+		for (var i = 0; i < vars.length; i++) {
+			var pair = vars[i].split('=');
+			if (decodeURIComponent(pair[0]) == variable) {
+				return decodeURIComponent(pair[1]);
+			}
 		}
 	}
 	return '';
@@ -201,6 +204,15 @@ function getFilteredLatestDataset(filter, yearRange) {
 function newQuery(clearBasket) {
 	// clear result table
 	$('#tableId').DataTable().clear();
+	// clear visualBasket if the clearBasket flag is true
+	if (clearBasket){
+		document.getElementById("visualBasket").value = "";
+		document.getElementById("basketID").value = 0; 
+		//create a new basket for every query
+		document.getElementById("queryJSON").value = "";
+		document.getElementById("queryKeyword").value = "";
+		document.getElementById("queryFilter").value = "[]";
+	}
 	// read search keywords
 	var keyword = document.getElementById("gfbioSearchInput").value;
 	setCookie("gfbioSearchInput", keyword);
@@ -213,15 +225,9 @@ function newQuery(clearBasket) {
 	// autocomplete from the textbox doesn't automatically closed
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
+	console.log(':: newQuery');
 	getSearchResult(keyword, filter, "");
 
-	// clear visualBasket if the clearBasket flag is true
-	var visualBasket = document.getElementById("visualBasket");
-	if (clearBasket){
-		visualBasket.value = "";
-		document.getElementById("basketID").value = 0; 
-		//create a new basket for every query
-	}
 	// send content of visual basket to the mini-map gadget
 	updateMap();
 }
@@ -239,6 +245,7 @@ function getSearchResult(keyword, filter, yearRange) {
 		// prevent calling ts when keyword box is empty
 		gadgets.Hub.publish('gfbio.search.ts', keyword);
 	}
+	console.log(':: getSearchResult');
 	// create a result table as a placeholder
 	writeResultTable();
 	// bound a datatable to pansimple API query
@@ -277,6 +284,7 @@ function getSearchResult(keyword, filter, yearRange) {
 			"fnDrawCallback" : function (oSettings) {
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
+					console.log(':: writeResultTable');
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
@@ -303,6 +311,7 @@ function getSearchResult(keyword, filter, yearRange) {
  * Output: JSONObject result : Data to display on the search result table
  */
 function submitQueryToServer(keyword, filter, yearRange) {
+	console.log(':: submitQueryToServer');
 	return function (sSource, aoData, fnCallback) {
 		// set value for pagination
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
@@ -326,19 +335,19 @@ function submitQueryToServer(keyword, filter, yearRange) {
 			success : function (result) {
 				// get JSON result back from the server
 				var datasrc = result.hits.hits;
-
+				console.log(datasrc);
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
 					var facet = result.aggregations;
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
-						//console.log('search:set facet to:');
-						//console.log(facet);
+						console.log('search:set facet to:');
+						console.log(facet);
 					}
 				} else {
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', '');
-						//console.log('search:clear facet');
+						console.log('search:clear facet');
 					}
 				}
 				var res = parseReturnedJSONfromSearch(datasrc);
@@ -405,9 +414,10 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 			"match_all" : {}
 		};
 	}
-	// TODO: save Keyword to invisible field for basket
+	// save Keyword to invisible field for basket
+	document.getElementById("queryKeyword").value = keyword;
 	var filterObj;
-	if (yearRange == "") {
+	if (yearRange.trim() == "") {
 		if (filterArray != "") {
 			filterObj = filterArray;
 		} else {
@@ -433,7 +443,8 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		filterObj = filterArray;
 		filterObj.push(yearFilter);
 	}
-	// TODO: save filterObj to invisible field for basket
+	// save filterObj to invisible field for basket
+	document.getElementById("queryFilter").value = JSON.stringify(filterObj);
 	return {
 		"bool" : {
 			"must" : queryObj,
@@ -627,22 +638,31 @@ function loadBasket(topic, data, subscriberData) {
 function addBasket() {
 	var val = document.getElementById("visualBasket").value;
 	if (val == "") {
-		//console.log('No basket selected.');
+		console.log('No basket selected.');
 	} else {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
-		//console.log("addBasket:"+basketid);
+		console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
-		//TODO: add queryKeyword and queryFilter fields
+		
+		console.log("addBasket queryJSON:");
+		console.log(query);
+		var keyword = document.getElementById("queryKeyword").value;
+		var filter = document.getElementById("queryFilter").value;
+		console.log("addBasket queryKeyword:");
+		console.log(keyword);
+		console.log("addBasket queryFilter:");
+		console.log(filter);
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
 			basketID : basketid,
 			userID : uid,
 			name : uid + '_basket',
 			basketContent : val,
-			queryJSON : query
-			//TODO: change WS to accept 2 more fields
+			queryJSON : query,
+			queryKeyword :keyword,
+			queryFilter : filter
 		},
 			function (obj) {
 			// set the return id as the current basket id
@@ -885,10 +905,11 @@ function writeShowHideFields(orgHTML) {
 function updateMap() {
 	var jsonData = getSelectedResult();
 	// Add query message in JSON format
-	var queryJSON = document.getElementById("queryJSON").value;
-	jsonData.queryStr = queryJSON;
-	// TODO: add queryKeyword and queryFilter to jsonData
+	jsonData.queryStr = document.getElementById("queryJSON").value;
+	// add queryKeyword and queryFilter to jsonData
 	// store in database (for use later)
+	jsonData.queryKeyword = document.getElementById("queryKeyword").value;
+	jsonData.queryFilter = document.getElementById("queryFilter").value;
 	addBasket();
 	// then send info to VAT
 	if (gadgets.Hub.isConnected()) {
@@ -1197,7 +1218,7 @@ function XMLtoJSON() {
 
 		// gets the JSON string
 		var json_str = jsontoStr(setJsonObj(xmlDoc));
-		json_str = json_str.replace('\n', '');
+		json_str = json_str.replace(/\n/g, '');
 		// sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
 		if (typeof(rstr) == 'undefined') {
 			try {
@@ -1268,27 +1289,29 @@ function XMLtoJSON() {
 /*
  * Description: Read value from a JSONObject
  */
-function getMultiValueField(jObj, name){
+function getMultiValueField(jObj, id){
 	if ($.isArray(jObj)){
-		var jArr = jObj[name];
+		var jArr = jObj[id];
 		if (jArr.length > 0){
 		    return jArr;
 		}
 	}
 	else{
-		return jObj[name]
+		return jObj[id];
+		// return the object as it is
 	}
 	return "";
 }
 function getJSONArrayFromField(jObj, name){
-	if ($.isArray(jObj)){
+	if ($.isArray(jObj[name])){
 		var jArr = jObj[name];
 		if (jArr.length > 0){
 		    return jArr;
 		}
 	}
 	else{
-		return [jObj[name]];
+		if (jObj[name]!=null)
+			return [jObj[name]];
 	}
 	return [];
 }

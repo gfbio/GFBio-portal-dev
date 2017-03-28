@@ -240,6 +240,15 @@ function normalQuery(clearBasket) {
 	isSemanticSearch = false;
 	// clear result table
 	$('#tableId').DataTable().clear();
+	// clear visualBasket if the clearBasket flag is true
+	if (clearBasket){
+		document.getElementById("visualBasket").value = "";
+		document.getElementById("basketID").value = 0; 
+		//create a new basket for every query
+		document.getElementById("queryJSON").value = "";
+		document.getElementById("queryKeyword").value = "";
+		document.getElementById("queryFilter").value = "[]";
+	}
 	// read search keywords
 	var keyword = document.getElementById("gfbioSearchInput").value;
 	setCookie("gfbioSearchInput", keyword);
@@ -250,20 +259,8 @@ function normalQuery(clearBasket) {
 	// autocomplete from the textbox doesn't automatically closed
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
+	console.log(':: newQuery');
 	getSearchResult(keyword, filter, "");
-
-	// clear visualBasket if the clearBasket flag is true
-	var visualBasket = document.getElementById("visualBasket");
-	if (clearBasket)
-		visualBasket.value = "";
-	// Save query to DB
-	if (saveSearch && keyword != "" && clearBasket) {
-		//console.log('New query is made.');
-		//clear semantic terms
-		document.getElementById("semanticTerms").value="";
-		saveSearchHistory(keyword, filter);
-		document.getElementById("filters").value = filter;
-	}
 
 	// send content of visual basket to the mini-map gadget
 	updateMap();
@@ -282,6 +279,7 @@ function getSearchResult(keyword, filter, yearRange) {
 		// prevent calling ts when keyword box is empty
 		gadgets.Hub.publish('gfbio.search.ts', keyword);
 	}
+	console.log(':: getSearchResult');
 	// create a result table as a placeholder
 	writeResultTable();
 	// bound a datatable to pansimple API query
@@ -320,6 +318,7 @@ function getSearchResult(keyword, filter, yearRange) {
 			"fnDrawCallback": function (oSettings) {
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
+					console.log(':: writeResultTable');
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
@@ -388,6 +387,7 @@ function saveSearchFeedback(datasetDetail, datasetRank, rating) {
  * Output: JSONObject result : Data to display on the search result table
  */
 function submitQueryToServer(keyword, filter, yearRange) {
+	console.log(':: submitQueryToServer');
 	return function (sSource, aoData, fnCallback) {
 		// set value for pagination
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
@@ -411,15 +411,20 @@ function submitQueryToServer(keyword, filter, yearRange) {
 			success: function (result) {
 				// get JSON result back from the server
 				var datasrc = result.hits.hits;
-
+				console.log(datasrc);
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
 					var facet = result.aggregations;
-					if (gadgets.Hub.isConnected())
+					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
+						console.log('search:set facet to:');
+						console.log(facet);
+					}
 				} else {
-					if (gadgets.Hub.isConnected())
+					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', '');
+						console.log('search:clear facet');
+					}
 				}
 				var res = parseReturnedJSONfromSearch(datasrc);
 				result.iTotalRecords = result.hits.total;
@@ -487,6 +492,8 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 			"match_all": {}
 		};
 	}
+	// save Keyword to invisible field for basket
+	document.getElementById("queryKeyword").value = keyword;
 	var filterObj;
 	if (yearRange.trim() == "") {
 		if (filterArray != "") {
@@ -514,7 +521,8 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		filterObj = filterArray;
 		filterObj.push(yearFilter);
 	}
-
+	// save filterObj to invisible field for basket
+	document.getElementById("queryFilter").value = JSON.stringify(filterObj);
 	return {
 		"bool": {
 			"must": queryObj,
@@ -715,19 +723,31 @@ function loadBasket(topic, data, subscriberData) {
 function addBasket() {
 	var val = document.getElementById("visualBasket").value;
 	if (val == "") {
-		//console.log('No basket selected.');
+		console.log('No basket selected.');
 	} else {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
+		console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
+		
+		console.log("addBasket queryJSON:");
+		console.log(query);
+		var keyword = document.getElementById("queryKeyword").value;
+		var filter = document.getElementById("queryFilter").value;
+		console.log("addBasket queryKeyword:");
+		console.log(keyword);
+		console.log("addBasket queryFilter:");
+		console.log(filter);
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
-			basketID: basketid,
-			userID: uid,
-			name: uid + '_basket',
-			basketContent: val,
-			queryJSON: query
+			basketID : basketid,
+			userID : uid,
+			name : uid + '_basket',
+			basketContent : val,
+			queryJSON : query,
+			queryKeyword :keyword,
+			queryFilter : filter
 		},
 			function (obj) {
 			// set the return id as the current basket id
@@ -803,7 +823,7 @@ function filterQuery(filter, yearRange) {
 				jArr.push(semTerm);
 			});
 			console.log(':::: filterQuery - semantic : '+jArr);
-			$("body").toggleClass("wait");
+			$("*").addClass("wait");
 			getSemanticSearchResult(jArr, filter, yearRange);
 		}
 		else{
@@ -983,10 +1003,10 @@ function writeShowHideFields(orgHTML) {
 	return d.innerHTML;
 }
 function hilightResult(orgHTML,termsToHighlight) {
-	termsToHighlight = termsToHighlight.replace(new RegExp(/["()\[\]{}]/, 'g'),"");
+	termsToHighlight = termsToHighlight.replace(/["()\[\]{}]/g,"");
 	termsToHighlight = termsToHighlight.replace(new RegExp(" and ", 'g'),"|");
-	termsToHighlight = termsToHighlight.replace(new RegExp(/[&+,]/, 'g'),"|");
-	var semList = termsToHighlight.split(/[\|]+/);
+	termsToHighlight = termsToHighlight.replace(/[&+,]/g,"|");
+	var semList = termsToHighlight.split("[\|]+");
 	var newHTML = orgHTML;
 	for (var i = 0; i < semList.length; i++) {
 		var semTerm = semList[i].trim().replace(" ","(.{1,25})"); 
@@ -1007,11 +1027,16 @@ function hilightResult(orgHTML,termsToHighlight) {
 function updateMap() {
 	var jsonData = getSelectedResult();
 	// Add query message in JSON format
-	var queryJSON = document.getElementById("queryJSON").value;
-	jsonData.queryStr = queryJSON;
+	jsonData.queryStr = document.getElementById("queryJSON").value;
+	// add queryKeyword and queryFilter to jsonData
+	// store in database (for use later)
+	jsonData.queryKeyword = document.getElementById("queryKeyword").value;
+	jsonData.queryFilter = document.getElementById("queryFilter").value;
 	addBasket();
+	// then send info to VAT
 	if (gadgets.Hub.isConnected()) {
-		//console.log(':Search: fire selected data: ' + JSON.stringify(jsonData));
+		//console.log(':Search: fire selected data: ');
+		//console.log(jsonData);
 		gadgets.Hub.publish('gfbio.search.selectedData', jsonData);
 	}
 }
@@ -1315,7 +1340,7 @@ function XMLtoJSON() {
 
 		// gets the JSON string
 		var json_str = jsontoStr(setJsonObj(xmlDoc));
-		json_str = json_str.replace(new RegExp('\n', 'g'), '');
+		json_str = json_str.replace(/\n/g, '');
 		// sets and returns the JSON object, if "rstr" undefined (not passed), else, returns JSON string
 		if (typeof(rstr) == 'undefined') {
 			try {
@@ -1386,27 +1411,29 @@ function XMLtoJSON() {
 /*
  * Description: Read value from a JSONObject
  */
-function getMultiValueField(jObj, name){
+function getMultiValueField(jObj, id){
 	if ($.isArray(jObj)){
-		var jArr = jObj[name];
+		var jArr = jObj[id];
 		if (jArr.length > 0){
 		    return jArr;
 		}
 	}
 	else{
-		return jObj[name]
+		return jObj[id];
+		// return the object as it is
 	}
 	return "";
 }
 function getJSONArrayFromField(jObj, name){
-	if ($.isArray(jObj)){
+	if ($.isArray(jObj[name])){
 		var jArr = jObj[name];
 		if (jArr.length > 0){
 		    return jArr;
 		}
 	}
 	else{
-		return [jObj[name]];
+		if (jObj[name]!=null)
+			return [jObj[name]];
 	}
 	return [];
 }
@@ -1509,11 +1536,11 @@ function semanticQuery(clearBasket) {
 }
 
 function getTSterms(keyword, filter, yearRange) {
-	$("body").toggleClass("wait");
+	$("*").addClass("wait");
 	var jArrSyn = [keyword];
 	// ignore |, & operators
-	keyword = keyword.replace(new RegExp(/\|/, 'g'),"");//replace all
-	keyword = keyword.replace(new RegExp(/\&/, 'g'),"");
+	keyword = keyword.replace(/\|/g,"");//replace all
+	keyword = keyword.replace(/\&/g,"");
 	//TODO: upgrade keyword split with double quote, or automatically parse terms
 	
 	var keys = [];//keyword.split(" ");
@@ -1540,7 +1567,7 @@ function getTSterms(keyword, filter, yearRange) {
 		}
 	}
 	// remove all quotes 
-	unquotedKeywords = unquotedKeywords.replace(new RegExp(/"/, 'g'),"");
+	unquotedKeywords = unquotedKeywords.replace(/\"/g,"");
 	var unquotedKeys = unquotedKeywords.split(" ");
 	$.each(unquotedKeys, function(i, unquotedKey){
 		if (unquotedKey.length > 0)
@@ -1693,7 +1720,7 @@ function getSemanticSearchResult(keywordArr, filter, yearRange) {
 						setRatingBar();
 					}
 				}
-				$("body").toggleClass("wait");
+				$("*").removeClass("wait");
 			},
 			// define the event after each table row is created
 			"fnRowCallback": function (nRow, aData, iDisplayIndex) {
