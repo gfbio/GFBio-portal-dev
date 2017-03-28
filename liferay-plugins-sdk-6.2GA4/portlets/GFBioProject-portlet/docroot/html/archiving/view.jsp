@@ -30,7 +30,7 @@
 
 	
 			<div class="portlet-msg-alert">
-				Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in"><span style="color:#006400;">sign in</span></a> to continue the process. 
+				Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in"><span style="color:#006400; font-weight:bold">sign in</span></a> to continue the process. 
 			</div>
 	
 		<%}else { %>
