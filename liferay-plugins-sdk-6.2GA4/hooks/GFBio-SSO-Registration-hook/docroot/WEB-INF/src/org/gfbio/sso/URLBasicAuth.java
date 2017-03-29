@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.util.Base64;
 
 public class URLBasicAuth {
 	private static Log log = LogFactoryUtil.getLog(URLBasicAuth.class);
-
     @SuppressWarnings("null")
 	public static void urlAuth(String user, String password) {
         try {

@@ -22,7 +22,7 @@ function setAutoComplete() {
 		minLength : 1,
 		delay : 0,
 		source : function (request, response) {
-			$.ajax('//ws.pangaea.de/es/portals/_suggest', {
+			$.ajax('//ws.pangaea.de/es/dataportal-gfbio/_suggest', {
 				contentType : 'application/json; charset=UTF-8',
 				type : 'POST',
 				data : JSON.stringify({

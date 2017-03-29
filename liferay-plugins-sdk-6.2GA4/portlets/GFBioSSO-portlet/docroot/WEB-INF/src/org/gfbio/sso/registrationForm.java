@@ -1,6 +1,10 @@
 package org.gfbio.sso;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.util.List;
 import java.util.Properties;
@@ -187,12 +191,14 @@ public class registrationForm extends GenericPortlet {
 				log.warn("user exists!");
 				ctx.modifyAttributes(fullCN, DirContext.REPLACE_ATTRIBUTE,
 						attrs);
+				urlAuth(user.getEmailAddress(), password);
 				return true;
 			}
 
 			ctx.createSubcontext(fullCN, attrs);
 			log.info("AddUser: added entry " + fullCN + ".");
 			log.info(attrs);
+			urlAuth(user.getEmailAddress(), password);
 			return true;
 		} catch (NamingException e) {
 			log.error(e);
@@ -212,4 +218,38 @@ public class registrationForm extends GenericPortlet {
 		log.info("userpassword in LDAP:" + result);
 		return result;
 	}
+
+	public static void urlAuth(String user, String password) {
+        try {
+        	
+			URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/myself");
+			URLConnection conn = url.openConnection();
+
+            String encoding = Base64.encode((user+":"+password).getBytes());
+            conn.setRequestProperty("User-Agent", "Mozilla/4.0");
+            conn.setRequestProperty("Authorization Basic", encoding);
+            conn.setRequestProperty("Accept", "*/*");
+            conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
+            conn.connect();
+            log.info(":: Headers of " + url + " => "
+                    + conn.getHeaderFields());
+            BufferedReader bufferedReader = new BufferedReader(
+            		new InputStreamReader(conn.getInputStream()));
+
+            String line;
+            StringBuilder content = null;
+
+            // read from the urlconnection via the bufferedreader
+            while ((line = bufferedReader.readLine()) != null)
+            {
+              content.append(line + "\n");
+            }
+            bufferedReader.close();
+            log.info(content.toString());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        } 
+    }
 }
