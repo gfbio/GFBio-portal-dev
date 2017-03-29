@@ -163,7 +163,7 @@
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publication(s) </label>"+
-					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset IS related to a publication.</p>"+
+					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset is related to a publication.</p>"+
 					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value=''>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
@@ -638,7 +638,7 @@
 				var div =   $("#generic");
 				div.empty();
 				div.append(
-					"<div class='portlet-success'>The Submission information has been sent to the data curators of collections. Your submission key is: "+obj.key+". One of them will be contact you shortly. </div>"+
+					"<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. <br> <br> Your submission key is: "+obj.key+".</div>"+
 					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
 				);
 			},

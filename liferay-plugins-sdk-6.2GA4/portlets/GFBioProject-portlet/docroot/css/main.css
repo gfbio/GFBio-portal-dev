@@ -63,11 +63,23 @@
 	    color:darkred;
 	    height: 50px;
 	    width :100%;
-	}  
+	} 
+	
+	 .textareaFalse{
+	    margin-bottom: 10px;
+	    border: 1px solid;
+	    border-color: darkred ! important;
+	    border-radius: 0;
+	    box-shadow: none;
+	    width :100%;
+	    
+	}   
 	
 	.labelFalse{
 		color:darkred;
 	}
+	
+	
 	
 	.fileUpload {
     position: relative;
