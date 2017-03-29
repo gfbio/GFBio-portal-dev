@@ -92,7 +92,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 	
-	config.colorButton_colors = '818181,66666,81B214,335AA3,3CACE4';
+	config.colorButton_colors = '000000,818181,636F6D,81B248,335AA3,3CACE4'; 
 
 	config.closeNoticeTimeout = 8000;
 
