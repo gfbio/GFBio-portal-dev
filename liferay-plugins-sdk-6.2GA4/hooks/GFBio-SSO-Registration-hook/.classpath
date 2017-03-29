@@ -10,11 +10,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="com.liferay.ide.eclipse.server.plugin.container/theme"/>
 	<classpathentry kind="con" path="com.liferay.ide.eclipse.server.plugin.container/web"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.liferay.ide.eclipse.server.tomcat.runtimeClasspathProvider/Liferay v6.2 CE (Tomcat 7)">
-		<attributes>
-			<attribute name="owner.project.facets" value="jst.web"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_102">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>

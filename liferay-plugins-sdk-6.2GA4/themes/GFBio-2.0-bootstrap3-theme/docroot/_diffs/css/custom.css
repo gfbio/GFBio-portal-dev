@@ -33,10 +33,16 @@
 	    font-weight: 400;
 		}
 
-		a, a:hover, a:focus, .btn:focus {
+		.btn:focus {
 		    text-decoration: none;
 		    outline: none;
+		    
 		   
+		}
+		
+		a, a:hover, a:focus{
+		    text-decoration: none;
+		    outline: none;
 		}
 		
 		
@@ -87,6 +93,12 @@
 		}
 		
 	}
+	
+.html-editor a{
+			color: rgb(60, 172, 228); /*3CACE4*/
+			 text-decoration: underline;
+			 text-decoration-style: dotted;
+	}	
 	
 	.row{
 		padding:0;
@@ -923,6 +935,7 @@ div.toggler .ui-accordion-header-icon{
 div.ui-widget-content{
 	background:none;
 	border:none;
+	color: #818181;
 }
 	
 /*=========================================================

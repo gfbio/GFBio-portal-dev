@@ -151,10 +151,12 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 
   A.all('.journal-content-article a[href^="http://"],.journal-content-article a[href^="https://"]').each(function(object) {
     var link= object.html();
+    
+
 
      if(link){
 	
-    	 object.html('<i aria-hidden="true" class="fa fa-external-link" style="font-size:14px;"></i> ' + link);
+    	 object.html('<i aria-hidden="true" class="fa fa-external-link" style="font-size:12px;"></i> ' + link);
 	}
   });
 });
@@ -162,7 +164,7 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 /*removes external icons from footer*/
 AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 
-	A.all('.journal-content-article .footer a[href^="http://"]').each(function(object) {
+	A.all('.journal-content-article .footer a[href^="http://"],.journal-content-article .footer a[href^="https://"]').each(function(object) {
 	    var linkText= object.text();
 
 	     if(linkText){
