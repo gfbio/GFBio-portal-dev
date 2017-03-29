@@ -67,11 +67,11 @@
 					var q = getQueryVariable('q_');
 					if (q != '') {
 						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = q.replace(new RegExp("\+", "g")," ");
+						searchbox.value = q.replace(/\+/g," ");
 						newQuery(true);
 					}
 					// Check if there's any input cookie stored
-					if(getCookie("gfbioSearchInput")==null){
+					else if(getCookie("gfbioSearchInput")==null){
 						// no keyword, no filter
 						showLatestTenDataset("","");
 					} else{
