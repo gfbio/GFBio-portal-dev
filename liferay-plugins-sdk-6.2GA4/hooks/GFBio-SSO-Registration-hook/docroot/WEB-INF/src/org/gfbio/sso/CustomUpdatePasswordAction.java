@@ -1,6 +1,8 @@
 package org.gfbio.sso;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -184,10 +185,8 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
 			return true;
 		} catch (InvalidAttributeValueException e) {
-			log.info("AddUser: added entry " + fullCN + ".");
+			log.info("AddUser: added entry " + fullCN + " failed.");
 			log.info(attrs);
-			UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
-			return true;
 		} catch (Exception e) {
 			log.error(e);
 			e.printStackTrace();
@@ -199,10 +198,10 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 
 	public static String encryptSHA(String pwdPlainText) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA");
-		md.update(pwdPlainText.getBytes("UTF8"));
+		md.update(pwdPlainText.getBytes(StandardCharsets.US_ASCII));
 
 		byte byteData[] = md.digest();
-		String result = "{SHA}" + Base64.encode(byteData);
+		String result = "{SHA}" + Base64.getEncoder().encodeToString(byteData);
 		log.info("userpassword in LDAP:" + result);
 		return result;
 	}
