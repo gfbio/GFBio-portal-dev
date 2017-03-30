@@ -123,6 +123,8 @@
 		<column name="lastModifiedDate" type="Date" />
 		<column name="basketContent" type="String" />
 		<column name="queryJSON" type="String" />
+		<column name="queryKeyword" type="String" />
+		<column name="queryFilter" type="String" />
 
 		<order by="desc">
 			<order-column name="lastModifiedDate" />

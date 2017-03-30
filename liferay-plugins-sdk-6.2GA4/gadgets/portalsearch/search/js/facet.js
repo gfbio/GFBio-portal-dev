@@ -6,8 +6,8 @@ var minFilteredYear;
 
 ///////////////////////////////////////  Create Main Facet Tree  ////////////////////////////////////
 function writeFacetTree(topic, data, subscriberData) {
-	console.log(':Facet: refresh facet tray');
-	console.log(data);
+	//console.log(':Facet: refresh facet tray');
+	//console.log(data);
 	facetData = data;
 	var displayHTML = "";
 	if (data != "") {
@@ -54,18 +54,21 @@ function writeListFacet(catName, displayName, facetArray, fieldName) {
 			displayHTML += "<li data-value='{0}'>{1}<ol>".format(catName,displayName);
 			for (var i = 0, iLen = facetArray.length; i < iLen; i++) {
 				var key = facetArray[i].key;
-				var ncount = facetArray[i].doc_count;
-				if ((i < 5) && (fieldName != "year")) {
-					displayHTML += "<li data-value='{0}'>".format(key);
-					displayHTML += "<a href='#' onclick='addToFacetTray(\"{0}\",\"{1}\");return false;'>{2}</a>".format(catName,key,key);
-					displayHTML += "<font style='font-style:italic'>({0})</font></li>".format(ncount);
-				} else if (i == 5) {
-					// create a link for each facet with parameters to adjust dialog content
-					var link = createLinkToFacetDialog(catName, fieldName);
-					displayHTML += "<li data-value='more'>{0}</li>".format(link);
-				} else
-					i = iLen;
-
+				if (key.indexOf("\"")<0){
+				//ignore the facet that contains " for now
+				//TODO: find a permanent solution
+					var ncount = facetArray[i].doc_count;
+					if ((i < 5) && (fieldName != "year")) {
+						displayHTML += "<li data-value='{0}'>".format(key);
+						displayHTML += "<a href='#' onclick='addToFacetTray(\"{0}\",\"{1}\");return false;'>{2}</a>".format(catName,key,key);
+						displayHTML += "<font style='font-style:italic'>({0})</font></li>".format(ncount);
+					} else if (i == 5) {
+						// create a link for each facet with parameters to adjust dialog content
+						var link = createLinkToFacetDialog(catName, fieldName);
+						displayHTML += "<li data-value='more'>{0}</li>".format(link);
+					} else
+						i = iLen;
+				}
 			}
 			displayHTML += "</ol></li>";
 		}
@@ -168,15 +171,19 @@ function showMoreFacet(catName, field) {
 	for (var i = 0, iLen = facetList.length; i < iLen; i++) {
 		var facetTerm = facetList[i].key;
 		var facetCount = facetList[i].doc_count;
-		if (field == "dataCenter") {
-			displayHTML += "<input type='checkbox' style='vertical-align:bottom; margin: 0px 4px 3px 0px;' value='{0}:{1}'>".format(catName,facetTerm);
-			displayHTML +=  "{0}<font style='font-style:italic'> ({1})</font></br>".format(facetTerm,facetCount);
-		} else {
-			displayHTML += "<a href='#' onclick='document.getElementById(\"dialogFacetCat\").value=\"{0}\";".format(catName);
-			displayHTML += "document.getElementById(\"dialogFacetTerm\").value=\"{0}\";".format(facetTerm);
-			displayHTML += "$(\"#dialogFacet\").dialog(\"close\");'>{0}</a>".format(facetTerm);
-			displayHTML += "<font style='font-style:italic'> ({0})</font></br>".format(facetCount);
+		if (facetTerm.indexOf("\"")<0){
+				//ignore the facet that contains " for now
+				//TODO: find a permanent solution
+			if (field == "dataCenter") {
+				displayHTML += "<input type='checkbox' style='vertical-align:bottom; margin: 0px 4px 3px 0px;' value='{0}:{1}'>".format(catName,facetTerm);
+				displayHTML +=  "{0}<font style='font-style:italic'> ({1})</font></br>".format(facetTerm,facetCount);
+			} else {
+				displayHTML += "<a href='#' onclick='document.getElementById(\"dialogFacetCat\").value=\"{0}\";".format(catName);
+				displayHTML += "document.getElementById(\"dialogFacetTerm\").value=\"{0}\";".format(facetTerm);
+				displayHTML += "$(\"#dialogFacet\").dialog(\"close\");'>{0}</a>".format(facetTerm);
+				displayHTML += "<font style='font-style:italic'> ({0})</font></br>".format(facetCount);
 
+			}
 		}
 	}
 	var dialogDiv = parent.document.getElementById("dialogFacet");

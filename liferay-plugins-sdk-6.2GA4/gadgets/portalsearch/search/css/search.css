@@ -4,6 +4,39 @@ body, td, div, span, p{
 	font-family:'Lato',sans-serif;
 }
 
+body{
+		background-color: white;
+		font-family: 'Lato',sans-serif;
+		font-weight: 400;
+		font-size: 16px ;
+		color: #818181;
+		line-height:24px;
+		padding:0;
+		margin-top: -10px;
+}
+
+h1,h2,h3,h4,h5,
+		.h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: 'Lato', sans-serif;
+			/*color:#666;*/
+			color:#335AA3;
+		}
+		 h1{
+			font-size: 36px;
+			font-weight:300;
+		}
+		h2{
+			font-size: 30px;
+			font-weight:300;
+		}
+		h3 {
+			font-size: 24px;
+			font-weight:300;
+		}
+		h4 {
+			font-size: 20px;
+			font-weight:400;
+		} 
 input[type=search] {
 	/*min-width: 200px;*/
     vertical-align: bottom;
@@ -14,7 +47,7 @@ input[type=search] {
 }
 
 #gfbioSearchInput{
-	width: 70%;
+	width: 65%;
 }
 
 label, input, button {
@@ -35,21 +68,43 @@ label, input, button {
 	border: none;
 	cursor: pointer;
 }
-#SemanticQueryButton{
-	background:url('../images/ico-search-semantic.png') no-repeat center center;
-	width:24px;
-	height:24px;
+/*//////For semantic search//////*/
+#NormalQueryButton{
+/*	background:url('../images/ico-search-semantic.png') no-repeat center center;
 	border: none;
+	width:24px;*/
+	height:24px;
 	cursor: pointer;
+	padding: 1px 5px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+	background-color: #9baab8;
+	border-color: #88949f;
+	color: #fff;
 }
-
+#SemanticQueryButton{
+/*	background:url('../images/ico-search-semantic.png') no-repeat center center;
+	border: none;
+	width:24px;*/
+	height:24px;
+	cursor: pointer;
+	padding: 1px 5px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+	color: #fff;
+}
+/*////////////////////////////////*/
 span.hilight{
     background-color:#f6931f;
     color:#666;
 }
 
-body.wait  {
-    cursor: wait;
+.wait, .wait * {
+    cursor: wait!important;
 }
 
 select[name=tableId_length] {
@@ -207,7 +262,7 @@ table.dataTable thead th{
 	width: 24px;
 	background: url('../images/more_info.png')  no-repeat;
 	cursor: pointer;
-	margin-left: -15px;
+	margin-left: -7px;
 }
 
 		.tooltip {

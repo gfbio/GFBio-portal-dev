@@ -11,6 +11,8 @@ CREATE TABLE gfbio_basket
   lastmodifieddate timestamp without time zone,
   basketContent text,
   queryJSON text,
+  queryKeyword text,
+  queryFilter text,
   CONSTRAINT gfbio_basket_pkey PRIMARY KEY (basketId)
 )
 WITH (

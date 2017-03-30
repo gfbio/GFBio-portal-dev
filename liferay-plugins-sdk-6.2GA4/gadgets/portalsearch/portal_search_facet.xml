@@ -31,7 +31,7 @@
 			</head>
 			<body style="height:100%;">
 				<div id="search_facet">
-					<div id="facetDiv" class="invisible">Filter Results: 
+					<div id="facetDiv" class="invisible" style="margin-top:10px;">Filter Results: 
 					<a href='#' onclick='resetFacetTray();return false;' style='font-size:11px;'>clear filters</a>
 					<ul id="facetTags"></ul>
 					</div>

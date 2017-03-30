@@ -49,6 +49,8 @@
 				</div>
 				<input id="visualBasket" type="hidden" value=""/>
 				<input id="queryJSON" type="hidden" value=""/>
+				<input id="queryKeyword" type="hidden" value=""/>
+				<input id="queryFilter" type="hidden" value="[]"/>
 				<input id="basketID" type="hidden" value="0"/>
 			</body>
 			<script type="text/javascript">
@@ -56,24 +58,26 @@
 				gadgets.HubSettings.onConnect = function(hub, suc, err) {
 					gadgets.Hub.subscribe("gfbio.search.facetfilter", applyFacetFilter);
 					gadgets.Hub.subscribe("gfbio.search.basketData", loadBasket);
-					var q = getQueryVariable('q_');
-					if (q != '') {
-						var searchbox = document.getElementById("gfbioSearchInput");
-						newQuery(true);
-					}
 				};
 				$(document).ready(function() {
 			
 					listenToEnterPress();
 					setAutoComplete();
-					//TODO: Check if there's any input cookie stored
-					if(getCookie("gfbioSearchInput")==null){
+					
+					var q = getQueryVariable('q_');
+					if (q != '') {
+						var searchbox = document.getElementById("gfbioSearchInput");
+						searchbox.value = q.replace(/\+/g," ");
+						newQuery(true);
+					}
+					// Check if there's any input cookie stored
+					else if(getCookie("gfbioSearchInput")==null){
 						// no keyword, no filter
 						showLatestTenDataset("","");
 					} else{
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = getCookie("gfbioSearchInput");
-						newQuery(false);
+						newQuery(true);
 					}
 				});
 				
