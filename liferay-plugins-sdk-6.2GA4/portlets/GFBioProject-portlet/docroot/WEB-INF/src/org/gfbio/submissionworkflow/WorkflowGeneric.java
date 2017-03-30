@@ -107,6 +107,10 @@ public class WorkflowGeneric extends GenericPortlet {
 			if ("delsubreg".toString().equals(request.getParameter("responseTarget").toString()))
 				deleteSubmissionRegistryEntry(request, response);
 			
+			//
+			if ("getbrokersubmissionid".toString().equals(request.getParameter("responseTarget").toString()))
+				getBrokerSubmissionId(request, response);
+			
 			//starts getRowInformationsOfRelationshipsOfSpecificCellContent of content
 			if ("getresearchfieldinformations".toString().equals(request.getParameter("responseTarget").toString()))
 				getRowInformationsOfRelationshipsOfSpecificCellContent(request, response);
@@ -157,6 +161,19 @@ public class WorkflowGeneric extends GenericPortlet {
 	
 	////////////////////////////////////////////////////////////// get functions //////////////////////////////////////////	
 		
+	//
+	
+	public void getBrokerSubmissionId(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+		
+		JSONObject responseJson = new JSONObject();
+		JSONObject parseJson = getDataJsonAsObject (request);
+
+		responseJson = SubmissionLocalServiceUtil.getBrokerSubmissionId(parseJson);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+	}
+	
 	
 	//
 	public void getResearchObjectById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {

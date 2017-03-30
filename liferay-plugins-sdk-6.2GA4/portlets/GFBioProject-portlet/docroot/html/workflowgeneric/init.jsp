@@ -128,7 +128,7 @@
 				"<div 			class='control-group'>"+
 					"<label		class='control-label' 					id='gwf_ro_description_l'> Description<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract).</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' ></textarea>"+
+					"<textarea	class='field lfr-input-text-container'											id='gwf_ro_description' rows='6' ></textarea>"+
 				"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
@@ -624,6 +624,13 @@
 		var url = document.getElementById('workflowgenericurl').value;
 		data["path"]= document.getElementById("gwf_user_path").innerHTML;
 		
+		console.log(data);
+		
+		var responseData ={};
+		responseData["researchobjectid"]= data.mrr.researchobjects.researchobjectid;
+		responseData["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
+		responseData["archive"]= "GFBio collections";
+		
  		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
@@ -634,20 +641,21 @@
 			async: false,
 			success :  function (obj){
 				
+				var brokerSubmissionId = getBrokerSubmissionId(responseData);
+				
 				sentShowHideInformation(false);
 				var div =   $("#generic");
 				div.empty();
-				div.append(
-					"<div class='portlet-success'>The Submission information has been sent to the data curators of collections. One of them will be contact you shortly. <br> <br> Your submission key is: "+obj.key+".</div>"+
-					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
-				);
+				var obj ={};
+				"<div class='portlet-success'>"+
+					"The submission information has been sent to the data curators of collections. One of them will be contact you shortly. <br> <br>"+
+					"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
+					"Over our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:#488f06; font-weight:bold'>"+obj.key+"</a>"+
+				"</div>"
 			},
 			error :  function (obj){
-				var delSubRegdata ={};
-				delSubRegdata["researchobjectid"]= data.mrr.researchobjects.researchobjectid;
-				delSubRegdata["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
-				delSubRegdata["archive"]= "GFBio collections";
-				deleteSubmissionRegistryEntry(delSubRegdata);
+				
+				deleteSubmissionRegistryEntry(responseData);
 				
 				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer is failed. Please contact our technical support via our <a href='https://www.gfbio.org/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 			},		
@@ -675,6 +683,32 @@
 		});	 
 	}
 	
+	
+	function getBrokerSubmissionId(data){
+		
+		var brokerSubmissionId ="";
+		var url = document.getElementById('workflowgenericurl').value;
+		
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data),
+				"<portlet:namespace />responseTarget" : "getbrokersubmissionid"
+			},
+			async: false,
+			success :  function (obj){
+				console.log("get broberid  subreg");
+				console.log(obj);
+				
+				brokerSubmissionId = obj.brokersubmissionid;
+			}
+	
+		});	 
+		
+		
+		return brokerSubmissionId;
+	}
 	
 	//
 /* 	function sentToBroker(data){

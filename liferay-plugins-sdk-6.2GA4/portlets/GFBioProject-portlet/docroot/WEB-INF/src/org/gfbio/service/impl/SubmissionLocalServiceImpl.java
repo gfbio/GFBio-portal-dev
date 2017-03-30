@@ -127,6 +127,41 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 	
 	//-------------------------------- Manage Get Functions ----------------------------------------------//
+		
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject getBrokerSubmissionId (JSONObject requestJson){
+		
+		
+		JSONObject responseJson = new JSONObject();
+		Set<String> set = new HashSet<String>();
+		String [] keySet = {"archive","researchobjectid","researchobjectversion"};
+		for (int i = 0; i< keySet.length;i++)
+			set.add(keySet[i]);
+		
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
+		if (requestJson.containsKey("archive")&&requestJson.containsKey("researchobjectid")&&requestJson.containsKey("researchobjectversion")){
+			
+			long researchObjectId =(long)requestJson.get("researchobjectid");
+			int researchObjectVersion = (int)((long) requestJson.get("researchobjectversion"));
+			String archive = ((String)requestJson.get("archive")).trim();
+			String brokerSubmissionId = getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
+			
+			responseJson.put("brokersubmissionid", brokerSubmissionId);
+
+			if (responseJson.toString().equals("[]"))
+				responseJson.put("error","ERROR: Failed by response submission registry");
+		}
+		else
+			responseJson.put("error","ERROR: No key 'latestx' exist.");
+		
+		if (!ignoreParameter.equals(""))
+			responseJson.put("warning",ignoreParameter);
+		
+		return responseJson;
+	}
 	
 	
 	//
