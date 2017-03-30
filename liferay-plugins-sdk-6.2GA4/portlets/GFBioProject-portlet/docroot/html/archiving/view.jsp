@@ -65,7 +65,7 @@
 			</form>  --%>
 				
 			<div id ="workflowform" class="swMain">	
-				<h3>Stored information</h3>
+				<h3>0. Stored information</h3><hr>
 					
 				<p 	class='field-description'				id='gwf_ro_storedinformation_d'>If you have stored information to your datasets, you can choose the dataset to fill the form fields.</p>
 							

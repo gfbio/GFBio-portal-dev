@@ -36,11 +36,6 @@
 	
 	//fire to update information to generally worflow portlet
 	function sentWorkflowUpdate(project, projectId, projectName, researchObject) {
-		console.log("start archiving communication");
-		console.log(project);
-		console.log(projectId);
-		console.log(projectName);
-		console.log(researchObject);
 		
 		var toUpdate = {
 			"updateproject" : project,
@@ -102,9 +97,7 @@
 					"</div>"+ 
 				"</div>"+
 
-				"<h3>Dataset Information</h3>"+
-
-				"</br>"+
+				"<h3>1. Dataset information</h3><hr>"+
 				
 				"<div class='swHide'>"+
 					"<div 		class='control-group'>"+
@@ -133,7 +126,7 @@
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_dct_l'> Data collection time </label>"+
-					"<p 	class='field-description'				id='gwf_ro_description_d'>Provide the time period, in which the data were collected or processed.</p>"+
+					"<p 	class='field-description'				id='gwf_ro_description_d'>Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).</p>"+
 					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value=''>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
@@ -188,26 +181,24 @@
 					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_legalrequirements' type='text'  value=''></div>"+
 				"</div>"+
 
-				"<h3>Dataset Upload</h3>"+
+				"<h3>2. Dataset Upload</h3><hr>"+
 				
 				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size over 20 MB, please ulpoad onlys representative data. Than the whole dataset will transfer later, together with the data curator.</p>"+
 				"<div class='fileUpload btn btn-primary'>"+
-				    "<span>Choose file</span>"+
+				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
 				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
 				"</div>"+
 				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"+
 				
+				"<h3>3. Submission options</h3><hr>"+
 				
-				"</br>"+
-				"<div class='row' id='gwf_lf_comentarField'></div></br>"+
-				
-				"<div class='row'>"+
-/* 					"<span class='widthM' id='gwf_b_save' onclick='saveAllInput()'>		<span class='btn btn-primary'>Save dataset information</span></span>"+
-					"<span class='widthM' id='gwf_b_validate' onclick='checkInput()'>	<span class='btn btn-primary'>Checking for completeness</span></span>"+
- */					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-success'>Start submission</span></span>"+
- 					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Reset</span></span>"+
-				"</div>"
-
+				"<div class='row2'>"+
+					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-success'><i class='fa fa-play' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Start submission</span></span>"+
+ 					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset</span></span>"+
+				"</div>"+
+				"<br>"+
+ 				"<div class='row' id='gwf_lf_comentarField'></div></br>"
+ 					
 			);
 		}
 	}
@@ -600,11 +591,9 @@
 	
 	//
 	function showUpload(){
-		console.log("start");
 		var nameList = "";
 	    var bttn = $("#".concat('gwf_b_upload'));
 	    var fileList = bttn[0].files;
-	    console.log(fileList.length);
 	    if (fileList.length>0){
 	    	nameList = nameList + '<ul>';
 		    for (i =0; i < fileList.length;i++)
@@ -623,8 +612,6 @@
 			
 		var url = document.getElementById('workflowgenericurl').value;
 		data["path"]= document.getElementById("gwf_user_path").innerHTML;
-		
-		console.log(data);
 		
 		var responseData ={};
 		responseData["researchobjectid"]= data.mrr.researchobjects.researchobjectid;
@@ -700,15 +687,9 @@
 			},
 			async: false,
 			success :  function (obj){
-				console.log("get broberid  subreg");
-				console.log(obj);
-				
 				brokerSubmissionId = obj.brokersubmissionid;
 			}
-	
 		});	 
-		
-		
 		return brokerSubmissionId;
 	}
 	

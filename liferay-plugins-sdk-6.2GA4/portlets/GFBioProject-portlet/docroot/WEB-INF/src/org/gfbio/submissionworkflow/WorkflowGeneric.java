@@ -389,20 +389,36 @@ public class WorkflowGeneric extends GenericPortlet {
 
         
         //dataset author
+        System.out.println("Author ------------------------------------------------------------------");
         if (researchObjectJson.containsKey("authornames")){
         	if (!(researchObjectJson.get("authornames").equals(""))){
+        		
+        		System.out.println((researchObjectJson.get("authornames")));
         		JSONParser parser2 = new JSONParser();
 				JSONArray parseJson = new JSONArray();
 				try {parseJson = (JSONArray) parser2.parse((String) researchObjectJson.get("authornames"));}
 				catch (ParseException e) {e.printStackTrace();}
-        		fields.put("customfield_10205", parseJson);
+				
+				System.out.println(parseJson);
+				//fields.put("customfield_10205", parseJson);
+				//System.out.println(fields);
+				
+				
         		String inputString ="";
-        		for (int i =0; i< parseJson.size();i++)
-        			inputString = inputString.concat(((String) parseJson.get(i)).trim()).concat(", ");
+        		System.out.println(inputString);
+        		for (int i =0; i< parseJson.size();i++){
+        			String author = ((String) parseJson.get(i)).trim();
+        			inputString = inputString.concat(author).concat(", ");
+        			System.out.println(inputString);
+        		}
         		inputString = inputString.substring(0, inputString.length()-2);
+        		
+        		System.out.println(inputString);
         		fields.put("customfield_10205", inputString);
+        		System.out.println(fields);
         	}
         }
+        System.out.println("Author ------------------------------------------------------------------");
         
         //dataset collection time
         if (extendeddataJsonResearchObject.containsKey("datacollectiontime"))
@@ -542,9 +558,9 @@ public class WorkflowGeneric extends GenericPortlet {
         response = response.replaceAll("\\\\", "");
         response = response.replaceAll("----n", "\\\\n");
         
-/*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
-        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");*/
+        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
 	           
         return response;
     }
