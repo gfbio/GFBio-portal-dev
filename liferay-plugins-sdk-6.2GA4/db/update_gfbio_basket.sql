@@ -1,4 +1,8 @@
-﻿--select queryjson from gfbio_basket where querykeyword is null
+﻿ALTER TABLE gfbio_basket ADD COLUMN queryKeyword text;
+ALTER TABLE gfbio_basket ADD COLUMN queryFilter text;
+
+
+--select queryjson from gfbio_basket where querykeyword is null
 update gfbio_basket set querykeyword = '' where queryjson like '%{"match_all":{}%'
 
 update gfbio_basket set querykeyword = subquery.b from (
