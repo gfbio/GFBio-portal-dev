@@ -646,12 +646,14 @@
 				sentShowHideInformation(false);
 				var div =   $("#generic");
 				div.empty();
-				var obj ={};
-				"<div class='portlet-success'>"+
-					"The submission information has been sent to the data curators of collections. One of them will be contact you shortly. <br> <br>"+
-					"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
-					"Over our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:#488f06; font-weight:bold'>"+obj.key+"</a>"+
-				"</div>"
+				div.append(
+					"<div class='portlet-success'>"+
+						"The submission information has been sent to the data curators of collections. One of them will be contact you shortly. <br> <br>"+
+						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
+						"Over our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:#488f06; font-weight:bold'>"+obj.key+"</a>"+
+					"</div>"+
+					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+				);
 			},
 			error :  function (obj){
 				
