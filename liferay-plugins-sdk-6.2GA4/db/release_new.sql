@@ -508,9 +508,9 @@ ALTER TABLE gfbio_submission ADD COLUMN jirakey character (75);
 -----------------------------------------------------------------------------------------------
 -----------------------------------        basket         - 13.03.2017 -------------------
 -----------------------------------------------------------------------------------------------
-
-ALTER TABLE gfbio_basket ADD COLUMN queryKeyword text;
-ALTER TABLE gfbio_basket ADD COLUMN queryFilter text;
+---- Basket has been updated on v6.5, no need to rerun again (see update_gfbio_basket.sql)
+--ALTER TABLE gfbio_basket ADD COLUMN queryKeyword text;
+--ALTER TABLE gfbio_basket ADD COLUMN queryFilter text;
 
 
 
