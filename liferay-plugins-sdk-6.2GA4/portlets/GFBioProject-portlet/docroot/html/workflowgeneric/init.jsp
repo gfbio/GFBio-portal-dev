@@ -224,13 +224,17 @@
 	function datePickler(){
 		$( "#gwf_ro_embargo" ).datepicker({
 			dateFormat: "yy-mm-dd",
-			//changeMonth: true,
-			//changeYear: true
+			changeMonth: true,
+			changeYear: true
 
 		});
-	}
+		
+		
+		var style = document.getElementById("ui-datepicker-div").style;
+		style["background-color"] = "white";
+		style["border"] = "1px solid #c5dbec";
 
-	
+	}	
 	
 	//default fill function of generic submission workflow
 	function fillDefaultInformations(data, div){

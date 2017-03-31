@@ -99,16 +99,17 @@
     filter: alpha(opacity=0);
 }
 
-/* 
-.ui-icon-circle-traingle-w{
 
+.ui-widget-header {
+    color: #818181;
+    font-weight: bold;
 }
 
-.ui-icon-circle-traingle-e{
-	
-} */
 
-
+.ui-datepicker-next span {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_right_black.png) !important;
+        background-position: 0px 0px !important;
+}
 	
 	
 	
