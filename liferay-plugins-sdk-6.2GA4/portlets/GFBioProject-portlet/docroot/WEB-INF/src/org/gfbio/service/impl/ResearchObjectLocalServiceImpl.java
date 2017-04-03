@@ -707,8 +707,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					}else
 						updateAuthorIds(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")));
 			}				
-			else if (requestJson.containsKey("userid") && check)
-				check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"));
+			else if (requestJson.containsKey("userid") && check){
+				System.out.println(((requestJson.get("userid")).getClass()).toString());
+				if ((((requestJson.get("userid")).getClass()).toString()).equals("class java.lang.Integer"))
+					check = updateAuthorId(researchObjectId, researchObjectVersion, (long) (int) requestJson.get("userid"));
+				else
+					check = updateAuthorId(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"));
+			}
 			
 			if(requestJson.containsKey("categoryids") && check)
 				if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
