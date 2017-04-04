@@ -713,11 +713,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			else if (requestJson.containsKey("userid") && check){
 				JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
 				
-				System.out.println("|"+(String) userExtension.get("fullname")+"|");
-				if (!(((String) userExtension.get("fullname")).equals(null)))
-						check = updateAuthorId(researchObjectId, researchObjectVersion, (String) userExtension.get("fullname") );
-				else
+				if (userExtension.containsKey("fullname"))
+					if (!(((String) userExtension.get("fullname")).equals(null)))
+							check = updateAuthorId(researchObjectId, researchObjectVersion, (String) userExtension.get("fullname") );
+					else
+						check = false;
+				else{
 					check = false;
+					if (userExtension.containsKey("ERROR"))
+						responseJson.put("ERROR", (String) userExtension.get("ERROR"));
+				}
+				
 			}
 			
 			if(requestJson.containsKey("categoryids") && check)

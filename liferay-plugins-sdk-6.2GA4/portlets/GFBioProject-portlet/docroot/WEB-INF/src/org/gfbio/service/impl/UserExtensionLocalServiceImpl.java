@@ -58,13 +58,20 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 		set.add("userid");
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
-		if (requestJson.containsKey("userid"))
+		if (requestJson.containsKey("userid")){
+	
+			long userId =0;
 			if ((((requestJson.get("userid")).getClass()).toString()).equals("class java.lang.Integer"))
-				try {responseJson = constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)(int)requestJson.get("userid")));}
-				catch (NoSuchUserException | SystemException e) {e.printStackTrace();	}
+				userId = (long)(int)requestJson.get("userid");
 			else
-				try {responseJson = constructUserExtentionJsonById(userPersistence.findByPrimaryKey((long)requestJson.get("userid")));}
+				userId = (long)requestJson.get("userid");
+			if (checkExistenceOfUserId(userId))
+				try {responseJson = constructUserExtentionJsonById(userPersistence.findByPrimaryKey(userId));}
 				catch (NoSuchUserException | SystemException e) {e.printStackTrace();}
+			else
+				responseJson.put("ERROR", "No 'userid' with "+userId+" exist.");
+		}
+		
 		else
 			responseJson.put("ERROR", "No key 'userid' exist.");
 		
