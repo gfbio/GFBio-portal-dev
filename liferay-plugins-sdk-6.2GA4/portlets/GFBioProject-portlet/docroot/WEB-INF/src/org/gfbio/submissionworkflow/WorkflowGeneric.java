@@ -74,7 +74,7 @@ public class WorkflowGeneric extends GenericPortlet {
     	JSONArray requestJson = new JSONArray();
     	JSONObject foo = new JSONObject();
     	foo.put("description", "Response of Arctic benthic bacterial deep-sea communities to different detritus composition");
-    	foo.put("userid", 70001);
+    	foo.put("userid", 10199);//70001
     	foo.put("researchobjecttype", "study");
     	foo.put("name", "study_katy_hoffmann_2016");
     	foo.put("extendeddata", "{'study_type': 'Metagenomics', 'center_name': 'MPI-BREM', 'study_abstract': 'In a multidisciplinary ex situ experiment, benthic bacterial deep-sea communities from 2,500 m water depth at the Long-Term Ecological Research Observatory HAUSGARTEN (stationPS93/050-5 and 6), were retrieved using a TV-guided multiple corer. Surface sediments (0 - 2 cm) of 16 cores were mixed with sterile filtered deep-sea water to a final sediment dilution of 3.5 fold. The slurries were split and supplemented with five different types of habitat-related detritus: chitin, as the most abundant biopolymer in the oceans, and four different naturally occurring Arctic algae species, i.e. Thalassiosira weissflogii, Emiliania huxleyi, Bacillaria sp. and Melosira arctica. Incubations were performed in five replicates, at in situ temperature and at atmospheric pressure, as well as at in situ pressure of 250 atm. At the start of the incubation and after 23 days, changes in key community functions, i.e. extracellular enzymatic activity, oxygen respiration and secondary production of biomass (bacterial cell numbers and biomass), were assessed along with changes in the bacterial community composition based on 16S rRNA gene and 16S rRNA Illumina sequencing. In summary, differences in community structure and in the uptake and remineralization of carbon in the different treatments suggest an effect of organic matter quality on bacterial diversity as well as on carbon turnover at the seafloor. The work is part of the ERC Advanced Investigator Grant ABYSS (no. 294757) to Antje Boetius.', 'study_title': 'Response of Arctic benthic bacterial deep-sea communities to different detritus composition', 'study_alias': 'study_katy_hoffmann_2016'}");
@@ -82,6 +82,7 @@ public class WorkflowGeneric extends GenericPortlet {
     	foo.put("brokerobjectid", "25");
     	requestJson.add(foo);
     	
+    	System.out.println(requestJson);
     	
     	ResearchObjectLocalServiceUtil.createResearchObjectByJson(requestJson);
     	
