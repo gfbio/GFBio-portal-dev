@@ -27,21 +27,14 @@
 
 	<div id="dataSubmission">
 		<%if (PortalUtil.getUser(request)==null){ %>
+
 	
 			<div class="portlet-msg-alert">
-				Only logged in users get access to the different submission workflows. Please <span style="color:#006400;">sign in</span> to continue the process. 
+				Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in"><span style="color:#006400; font-weight:bold">sign in</span></a> to continue the process. 
 			</div>
 	
 		<%}else { %>
-	
-			
-			<div>
-			<p>
-			<br>
-			<br>
-			<br>
-			</p>
-			</div>
+
 				
 			<%
 				Long userID = PortalUtil.getUserId(request);
@@ -54,41 +47,46 @@
 				 
 				JSONArray roList = new JSONArray();
 				roList = null;
-				roList = ResearchObjectLocalServiceUtil.getResearchObjectsByUserId(userID); 
+				roList = ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(userID);
+				
 			%>
-		
 			
-			
-			<br>
+<!-- 			<br>
 			Please select an existing project, or choose nothing.
-			<br> 
+			<br>  -->
 			
-			<form action="select.html" id="choProjForm">
+<%-- 			<form action="select.html" id="choProjForm">
 				<select style="width:90%" id="workflowChoPro" name="<portlet:namespace/>choPro" size="1"  onchange="chooseWorkflowProject('choosePro',this.form.workflowChoPro.options[this.form.workflowChoPro.selectedIndex].value, 'chooseROX', <%=PortalUtil.getUser(request).getUserId()%>)" >
 					<option selected="selected" value="none">All project independent datasets of user</option>
  					<%if (projectList.size()>0){for (int i = 0; i < projectList.size(); i++) { %>
 						<option id="<%= "workflowChoPro"+projectList.get(i).getProjectID() %>" value="<%= projectList.get(i).getProjectID() %>"> <%= projectList.get(i).getLabel() %> </option>
 					<%} } %>  
 				</select>
-			</form>
+			</form>  --%>
+				
+			<div id ="workflowform" class="swMain">	
+				<h3>0. Stored information</h3><hr>
 					
-			
-			Please select an existing dataset, or choose nothing.
-						
-			<form action='select.html' id="choROForm">
-				<select id='workflowChooseRO' style='width:90%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, choProjForm.workflowChoPro.options[choProjForm.workflowChoPro.selectedIndex].value, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
-					<option value='none'> </option>
-					<% if (roList != null){ %>
-	  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
-	  						JSONObject roJson =  new JSONObject();
-	  						roJson = (JSONObject) roList.get(i);
-	  						String label = (String) roJson.get("label");
-	  						Long roId = (Long) roJson.get("researchobjectid"); %>
-	  					    
-							<option value="<%= roId %>"> <%= label %> </option>
-						<%} }} %>  
-				</select>
-			</form>	
+				<p 	class='field-description'				id='gwf_ro_storedinformation_d'>If you have stored information to your datasets, you can choose the dataset to fill the form fields.</p>
+							
+				<form action='select.html' id="choROForm">
+					<select id='workflowChooseRO' style='width:100%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
+						<option value='none'> </option>
+						<% if (roList != null){ %>
+		  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
+		  						JSONObject roJson =  new JSONObject();
+		  						roJson = (JSONObject) roList.get(i);
+		  						String text = (String) roJson.get("researchobjectname") + " with version "+roJson.get("researchobjectversion");
+		  						if ((String) roJson.get("projectname")!=null)
+		  							text = text +" from project "+(String) roJson.get("projectname");
+		  						
+		  						Long roId = (Long) roJson.get("researchobjectid"); %>
+	 	  					    
+								<option value="<%= roId %>"> <%= text %> </option>
+							<%} }} %>  
+					</select>
+				</form>	
+			</div>
 			
 
 

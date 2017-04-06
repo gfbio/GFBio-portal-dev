@@ -22,7 +22,7 @@
 				<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"	type="text/javascript"></script>
 				<script src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.3.4/spectrum.min.js"	type="text/javascript"></script>
 				<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-bar-rating/1.2.1/jquery.barrating.min.js" type="text/javascript"></script>
-				<script src="//gfbio-db1.inf-bb.uni-jena.de/gfbioDev/search/js/search_semantic.js?iyuoiuoqw=123"	type="text/javascript"></script>
+				<script src="//gfbio-db1.inf-bb.uni-jena.de/gfbioDev/search/js/search_semantic.js?ytre=123"	type="text/javascript"></script>
 				
 				<link rel="stylesheet"	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" />
 				<link rel="stylesheet"	href="//cdn.datatables.net/1.10.12/css/dataTables.jqueryui.min.css" />
@@ -42,11 +42,11 @@
 						class="acInput" value=""
 						placeholder="Parameters, authors, data center, taxa, ..."
 						autocomplete="off"/> 
-						<input id="QueryButton" name="QueryButton"
-						type="button" value="" 
+						<input id="normalQueryButton" name="QueryButton"
+						type="button" value="Search" 
 						onclick="javascript:normalQuery(true);" title="Original search, no semantic terms will be included."/>
 						<input id="SemanticQueryButton" name="SemanticQueryButton"
-						type="button" value="" 
+						type="button" value="Semantic Search" 
 						title="This will include semantic terms, including more relevant results, but could take longer processing time." 
 						onclick="javascript:semanticQuery(true);" class="tooltip">
 						</input>
@@ -58,6 +58,8 @@
 				</div>
 				<input id="visualBasket" type="hidden" value=""/>
 				<input id="queryJSON" type="hidden" value=""/>
+				<input id="queryKeyword" type="hidden" value=""/>
+				<input id="queryFilter" type="hidden" value="[]"/>
 				<input id="basketID" type="hidden" value="0"/>
 				<input id="semanticTerms" type="hidden" value=""/>
 				<input id="filters" type="hidden" value=""/>
@@ -67,25 +69,29 @@
 				gadgets.HubSettings.onConnect = function(hub, suc, err) {
 					gadgets.Hub.subscribe("gfbio.search.facetfilter", applyFacetFilter);
 					gadgets.Hub.subscribe("gfbio.search.basketData", loadBasket);
-					var q = getQueryVariable('q_');
-					if (q != '') {
-						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = q.replace("+"," ");
-						normalQuery(true);
-					}
+					// start listening to facet and VAT basket
 				};
 				$(document).ready(function() {
 					listenToEnterPress();
 					setAutoComplete();
-					//TODO: Check if there's any input cookie stored
-					if(getCookie("gfbioSearchInput")==null){
-					// no keyword, no filter
-					showLatestTenDataset("","");
+					
+					var q = getQueryVariable('q_');
+					// check if the search is redirected
+					if (q != '') {
+						var searchbox = document.getElementById("gfbioSearchInput");
+						searchbox.value = q.replace(/\+/g," ");
+						// call semanticQuery by default
+						semanticQuery(true);
+					}
+					// check if there's any input cookie stored
+					else if(getCookie("gfbioSearchInput")==null){
+						// no keyword, no filter
+						showLatestTenDataset("","");
 					} else{
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = getCookie("gfbioSearchInput");
-						normalQuery(false);
-					}
+						semanticQuery(true);
+					} 
 				});
 				
 				$( document ).ajaxComplete(function( event, xhr, settings ) {

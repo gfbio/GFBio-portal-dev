@@ -91,6 +91,9 @@
 		]]>
     </sql>
     
+    
+    
+    
 	<sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getCheckOfBrokerSubmissionId">
 	    <![CDATA[
 			SELECT 
@@ -99,6 +102,32 @@
 			  public.gfbio_submission
 			WHERE
 			  brokersubmissionid = ?
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getCheckOfIds">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(submissionid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_submission
+			WHERE
+			  researchobjectid =? AND
+			  researchobjectversion = ? AND
+			  archive =?
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getCheckOfSubmissionId">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(submissionid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_submission
+			WHERE
+			  submissionid = ?
 		]]>
     </sql>
     
@@ -246,6 +275,19 @@
     </sql>
     
     
+    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getSubmissionIdsByBrokerSubmissionId">
+	    <![CDATA[
+		    SELECT 
+				gfbio_submission.submissionid
+			FROM 
+				public.gfbio_submission
+			where	
+				gfbio_submission.brokersubmissionid = ?
+
+		]]>
+    </sql>
+    
+
     <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getSubmissionIdByIds">
 	    <![CDATA[
 		    SELECT 

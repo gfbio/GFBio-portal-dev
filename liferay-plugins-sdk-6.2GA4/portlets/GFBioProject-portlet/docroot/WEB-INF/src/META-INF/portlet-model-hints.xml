@@ -8,6 +8,8 @@
 		<field name="lastModifiedDate" type="Date" />
 		<field name="basketContent" type="String" />
 		<field name="queryJSON" type="String" />
+		<field name="queryKeyword" type="String" />
+		<field name="queryFilter" type="String" />
 	</model>
 	<model name="org.gfbio.model.Column">
 		<field name="columnID" type="long" />

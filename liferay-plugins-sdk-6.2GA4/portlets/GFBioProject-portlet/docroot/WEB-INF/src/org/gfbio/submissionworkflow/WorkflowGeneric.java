@@ -2,16 +2,12 @@ package org.gfbio.submissionworkflow;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.portlet.GenericPortlet;
@@ -32,9 +28,19 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PrimaryDataLocalServiceUtil;
+import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
@@ -47,14 +53,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
 
 /**
  * Portlet implementation class WorkflowGeneric
  */
+@SuppressWarnings("deprecation")
 public class WorkflowGeneric extends GenericPortlet {
 
     protected String viewTemplate;
@@ -67,7 +70,23 @@ public class WorkflowGeneric extends GenericPortlet {
 
     
     public void doView( RenderRequest renderRequest, RenderResponse renderResponse)     throws IOException, PortletException {
-    	        include(viewTemplate, renderRequest, renderResponse);
+    	
+    	JSONArray requestJson = new JSONArray();
+    	JSONObject foo = new JSONObject();
+    	foo.put("description", "Response of Arctic benthic bacterial deep-sea communities to different detritus composition");
+    	foo.put("userid", 10199);//70001
+    	foo.put("researchobjecttype", "study");
+    	foo.put("name", "study_katy_hoffmann_2016");
+    	foo.put("extendeddata", "{'study_type': 'Metagenomics', 'center_name': 'MPI-BREM', 'study_abstract': 'In a multidisciplinary ex situ experiment, benthic bacterial deep-sea communities from 2,500 m water depth at the Long-Term Ecological Research Observatory HAUSGARTEN (stationPS93/050-5 and 6), were retrieved using a TV-guided multiple corer. Surface sediments (0 - 2 cm) of 16 cores were mixed with sterile filtered deep-sea water to a final sediment dilution of 3.5 fold. The slurries were split and supplemented with five different types of habitat-related detritus: chitin, as the most abundant biopolymer in the oceans, and four different naturally occurring Arctic algae species, i.e. Thalassiosira weissflogii, Emiliania huxleyi, Bacillaria sp. and Melosira arctica. Incubations were performed in five replicates, at in situ temperature and at atmospheric pressure, as well as at in situ pressure of 250 atm. At the start of the incubation and after 23 days, changes in key community functions, i.e. extracellular enzymatic activity, oxygen respiration and secondary production of biomass (bacterial cell numbers and biomass), were assessed along with changes in the bacterial community composition based on 16S rRNA gene and 16S rRNA Illumina sequencing. In summary, differences in community structure and in the uptake and remineralization of carbon in the different treatments suggest an effect of organic matter quality on bacterial diversity as well as on carbon turnover at the seafloor. The work is part of the ERC Advanced Investigator Grant ABYSS (no. 294757) to Antje Boetius.', 'study_title': 'Response of Arctic benthic bacterial deep-sea communities to different detritus composition', 'study_alias': 'study_katy_hoffmann_2016'}");
+    	foo.put("label", "study_katy_hoffmann_2016");
+    	foo.put("brokerobjectid", "25");
+    	requestJson.add(foo);
+    	
+    	System.out.println(requestJson);
+    	
+    	ResearchObjectLocalServiceUtil.createResearchObjectByJson(requestJson);
+    	
+   	    include(viewTemplate, renderRequest, renderResponse);
     }
 
     
@@ -99,6 +118,14 @@ public class WorkflowGeneric extends GenericPortlet {
 			//
 			if ("createsubmissionregistry".toString().equals(request.getParameter("responseTarget").toString()))
 				createSubmissionRegistry(request, response);
+			
+			//
+			if ("delsubreg".toString().equals(request.getParameter("responseTarget").toString()))
+				deleteSubmissionRegistryEntry(request, response);
+			
+			//
+			if ("getbrokersubmissionid".toString().equals(request.getParameter("responseTarget").toString()))
+				getBrokerSubmissionId(request, response);
 			
 			//starts getRowInformationsOfRelationshipsOfSpecificCellContent of content
 			if ("getresearchfieldinformations".toString().equals(request.getParameter("responseTarget").toString()))
@@ -132,12 +159,41 @@ public class WorkflowGeneric extends GenericPortlet {
 	}
 	
 	
+	//////////////////////////////////////////////////////////// delete functions ////////////////////////////////////////
+	
+	
+	//
+	public void deleteSubmissionRegistryEntry(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		JSONObject responseJson = new JSONObject();
+        JSONObject parseJson = getDataJsonAsObject (request);
+        
+		responseJson = SubmissionLocalServiceUtil.deleteSubmission(parseJson);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+	}	
+	
+	
 	////////////////////////////////////////////////////////////// get functions //////////////////////////////////////////	
+		
+	//
+	
+	public void getBrokerSubmissionId(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+		
+		JSONObject responseJson = new JSONObject();
+		JSONObject parseJson = getDataJsonAsObject (request);
+
+		responseJson = SubmissionLocalServiceUtil.getBrokerSubmissionId(parseJson);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+	}
 	
 	
 	//
 	public void getResearchObjectById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
-
+		
 		JSONArray responseJson = new JSONArray();
         JSONArray parseJson = getDataJsonAsArray (request);
 
@@ -146,7 +202,7 @@ public class WorkflowGeneric extends GenericPortlet {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
 	}
-	
+
 	
 	//
 	public void getRowInformationsOfRelationshipsOfSpecificCellContent(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
@@ -251,9 +307,7 @@ public class WorkflowGeneric extends GenericPortlet {
     @SuppressWarnings({ "unchecked", "unused" })
     private static String getJSON_Body(JSONObject requestJson){
     	
-    	//https://helpdesk.gfbio.org/rest/api/2/issue/createmeta?projectKeys=SAND&issuetypeNames=Data Submission&expand=projects.issuetypes.fields
-
-    	JSONParser parser = new JSONParser();
+      	JSONParser parser = new JSONParser();
 		
 		//preparation data source
 		
@@ -263,9 +317,7 @@ public class WorkflowGeneric extends GenericPortlet {
     	
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
-    	
-    	System.out.println(projectJson);
-    	
+    	    	
     	JSONObject researchObjectJson = new JSONObject();
     	researchObjectJson = (JSONObject) projectJson.get("researchobjects");
 
@@ -293,9 +345,7 @@ public class WorkflowGeneric extends GenericPortlet {
         JSONArray metadataArray = new JSONArray();
         JSONObject license = new JSONObject();
         JSONArray legalRequirementsArray = new JSONArray();
-        
-        
-        
+
         
         //ticket basic informations
         project.put("key", "SAND");
@@ -355,20 +405,36 @@ public class WorkflowGeneric extends GenericPortlet {
 
         
         //dataset author
+        System.out.println("Author ------------------------------------------------------------------");
         if (researchObjectJson.containsKey("authornames")){
         	if (!(researchObjectJson.get("authornames").equals(""))){
+        		
+        		System.out.println((researchObjectJson.get("authornames")));
         		JSONParser parser2 = new JSONParser();
 				JSONArray parseJson = new JSONArray();
 				try {parseJson = (JSONArray) parser2.parse((String) researchObjectJson.get("authornames"));}
 				catch (ParseException e) {e.printStackTrace();}
-        		fields.put("customfield_10205", parseJson);
+				
+				System.out.println(parseJson);
+				//fields.put("customfield_10205", parseJson);
+				//System.out.println(fields);
+				
+				
         		String inputString ="";
-        		for (int i =0; i< parseJson.size();i++)
-        			inputString = inputString.concat(((String) parseJson.get(i)).trim()).concat(", ");
+        		System.out.println(inputString);
+        		for (int i =0; i< parseJson.size();i++){
+        			String author = ((String) parseJson.get(i)).trim();
+        			inputString = inputString.concat(author).concat(", ");
+        			System.out.println(inputString);
+        		}
         		inputString = inputString.substring(0, inputString.length()-2);
+        		
+        		System.out.println(inputString);
         		fields.put("customfield_10205", inputString);
+        		System.out.println(fields);
         	}
         }
+        System.out.println("Author ------------------------------------------------------------------");
         
         //dataset collection time
         if (extendeddataJsonResearchObject.containsKey("datacollectiontime"))
@@ -448,7 +514,6 @@ public class WorkflowGeneric extends GenericPortlet {
         		JSONArray lrArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
         		for (int i = 0; i < lrArray.size();i++){
         			JSONObject legalRequirements = new JSONObject();
-        			System.out.println(lrArray.get(i));
         			legalRequirements.put("value", (String) lrArray.get(i));
         		  	legalRequirementsArray.add(legalRequirements);
         		}
@@ -494,8 +559,8 @@ public class WorkflowGeneric extends GenericPortlet {
         
         //fields.put("customfield_10312", "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx");
         
-        //
-        //fields.put("customfield_1", "foo");
+        //this line ist for testing and stop the submission to JIRA
+        //fields.put("customfield_1", "stopper");
         
         
         json.put("fields", fields);
@@ -509,14 +574,14 @@ public class WorkflowGeneric extends GenericPortlet {
         response = response.replaceAll("\\\\", "");
         response = response.replaceAll("----n", "\\\\n");
         
-        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
         System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
 	           
         return response;
     }
-    	
-	
+    
+
 	////////////////////////////////////////////////////////////// update functions //////////////////////////////////////////
 		
 	
@@ -559,9 +624,8 @@ public class WorkflowGeneric extends GenericPortlet {
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    public void startSubmission (ResourceRequest request, ResourceResponse response){
-   
-    	System.out.println("start submission =)");
+    @SuppressWarnings("unchecked")
+	public void startSubmission (ResourceRequest request, ResourceResponse response){
 
     	String responseString = "";    	
         JSONObject parseJson = getDataJsonAsObject (request);
@@ -569,21 +633,11 @@ public class WorkflowGeneric extends GenericPortlet {
     	try {
 
             URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
-            //String path = "C:\\Users\\froemm\\Desktop\\uploadtest.xlsx";
             
- /*            String fileComment ="nope";
-            String user = "tester2";
-            if ( fileComment.equals("") | fileComment.equals(" ") | fileComment.equals(null)){
-                fileComment = user + "-" + path;
-            };*/
-            
-            
-
             System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
             System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
 	        	        
 	        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
-	        
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setUseCaches(false);
@@ -591,62 +645,16 @@ public class WorkflowGeneric extends GenericPortlet {
             conn.setRequestProperty("Content-Type", "application/json");
 	        conn.setRequestProperty("Accept", "application/json");
 	        
-	        
-	        
-	        System.out.println("5");  
-	        
             String userpass = "uni-jena:GFBIOhelpdesk123";
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
 	        conn.addRequestProperty ("Authorization", basicAuth);
-	        
-/*	        MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-	        File fileToUpload = new File(path);
-			FileBody fileBody = new FileBody(fileToUpload, fileComment, "application/octet-stream", "UTF-8");
-	        entity.addPart("file", fileBody);
-	        System.out.println(entity.toString() );*/
-	        //conn.setEntity(entity);
-	        
-/*	        FileReader fr = null;
-	        
-	        fr = new FileReader(path);
-			br = new BufferedReader(fr);
-
-			String sCurrentLine;
-
-			br = new BufferedReader(new FileReader(path));
-
-			while ((sCurrentLine = br.readLine()) != null) {
-				System.out.println(sCurrentLine);
-			}
-	        */
-			
-
-	        
-	        System.out.println("6");
-	        
+	                        
 	        String jiraRequestString = getJSON_Body((JSONObject) parseJson);
-	        String encodedData = jiraRequestString;
-	        
-	        
-	        System.out.println("7.0");
 	        
 	        OutputStream os = conn.getOutputStream();
-	        
-/*	        File file;
-	        file = new File(path);
-	        os = new FileOutputStream(file);*/
-	        
-	        System.out.println("7.1");
-
-	        
-	        os.write(encodedData.getBytes());
-	        
-	        System.out.println("7.2");
-	        
-	        os.flush();  
+	        os.write(jiraRequestString.getBytes());
+	        os.flush(); 
 	        os.close();
-	        
-	        System.out.println("8");
 	        
 	        if (conn.getResponseCode() != 201) 
 	           throw new RuntimeException("Failed : HTTPS error code : " + conn.getResponseCode());
@@ -656,7 +664,6 @@ public class WorkflowGeneric extends GenericPortlet {
 	        while ((output = br.readLine()) != null){
 	        	
 	        	System.out.println(output); 
-	        	responseString = responseString.concat(output);
 			
 		        JSONParser parser = new JSONParser();
 				JSONObject jraResponseJson = new JSONObject();
@@ -668,8 +675,26 @@ public class WorkflowGeneric extends GenericPortlet {
 				catch (ParseException e) {e.printStackTrace();}
 				JSONObject fieldJson = (JSONObject) jiraRequestJson.get("fields");
 				
-				SubmissionLocalServiceUtil.updateJiraKey(Long.parseLong((String)fieldJson.get("customfield_10309")), Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("key"));
-				SubmissionLocalServiceUtil.updateJiraId(Long.parseLong((String)fieldJson.get("customfield_10309")),  Integer.parseInt((String) fieldJson.get("customfield_10310")), "GFBio collections", (String) jraResponseJson.get("id"));
+				long researchObjectId = Long.parseLong((String)fieldJson.get("customfield_10309"));
+				int researchObjectVersion = Integer.parseInt((String) fieldJson.get("customfield_10310"));
+				
+				SubmissionLocalServiceUtil.updateJiraKey(researchObjectId, researchObjectVersion, "GFBio collections", (String) jraResponseJson.get("key"));
+				SubmissionLocalServiceUtil.updateJiraId (researchObjectId, researchObjectVersion, "GFBio collections", (String) jraResponseJson.get("id"));
+				
+				if (PrimaryData_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
+					List <Long> idList = PrimaryData_ResearchObjectLocalServiceUtil.getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId,researchObjectVersion);
+					Boolean check = true;
+					int i =0;
+					while (i<idList.size() && check){
+						check = addAttachmentToIssue((String) jraResponseJson.get("id"), (String) PrimaryDataLocalServiceUtil.getPathByPrimaryDataId(idList.get(i)));
+						i = i+1;
+					}
+					jraResponseJson.put("fileToJiraResponse", check);
+				}
+				
+				
+				responseString = responseString.concat(jraResponseJson.toString());
+				System.out.println(responseString); 
 	        }
 	        conn.disconnect();
 	     } catch (Exception e) {e.printStackTrace();}
@@ -683,39 +708,43 @@ public class WorkflowGeneric extends GenericPortlet {
     }
     
     
- /*   public boolean addAttachmentToIssue(String issueKey, String fullfilename) throws IOException{
-    	 
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-         
-        HttpPost httppost = new HttpPost(jira_attachment_baseURL+"/api/latest/issue/"+issueKey+"/attachments");
-        httppost.setHeader("X-Atlassian-Token", "nocheck");
-        httppost.setHeader("Authorization", "Basic "+jira_attachment_authentication);
-         
-        File fileToUpload = new File(fullfilename);
-        FileBody fileBody = new FileBody(fileToUpload);
-         
-        HttpEntity entity = MultipartEntityBuilder.create()
-                .addPart("file", fileBody)
-                .build();
-         
-        httppost.setEntity(entity);
-        String mess = "executing request " + httppost.getRequestLine();
-        logger.info(mess);
-         
-        CloseableHttpResponse response;
-         
-        try {
-            response = httpclient.execute(httppost);
-        } finally {
-            httpclient.close();
-        }
-         
-        if(response.getStatusLine().getStatusCode() == 200)
-            return true;
-        else
-            return false;
-     
-    }*/
+    //
+	@SuppressWarnings({ "resource", "unused" })
+	public Boolean addAttachmentToIssue(String issueKey, String path){
+
+		try{
+			
+			URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/"+issueKey+"/attachments");
+			String userpass = "uni-jena:GFBIOhelpdesk123";
+
+			String auth = new String(org.apache.commons.codec.binary.Base64.encodeBase64((userpass).getBytes()));
+
+		    HttpClient httpclient = new DefaultHttpClient();
+		    HttpPost httppost = new HttpPost(url.toString());
+		    httppost.setHeader("X-Atlassian-Token", "nocheck");
+		    httppost.setHeader("Authorization", "Basic "+auth);
+		    MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+		    File fileToUpload = new File(path);
+		    FileBody fileBody = new FileBody(fileToUpload, "application/octet-stream");
+		    entity.addPart("file", fileBody);
+
+		    httppost.setEntity(entity);
+		    HttpResponse response = null;
+		    try {response = httpclient.execute(httppost);}
+		    catch (ClientProtocolException e) {return false;}
+		    catch (IOException e) {return false; }
+		    
+		    HttpEntity result = response.getEntity();
+		    if(response.getStatusLine().getStatusCode() == 200)
+		        return true;
+		    else
+		        return false;
+			
+	    } catch (IOException e) {e.printStackTrace();}
+		
+		return null;
+	}
 
     
     //
@@ -757,12 +786,10 @@ public class WorkflowGeneric extends GenericPortlet {
 	        	
 	        	FileItem thisItem = (FileItem) iter.next();
 	        	if ((thisItem.getName()).equals("uploadInformation.txt")) {
-	        		System.out.println(thisItem.getString());
 	        		JSONObject roJson = new JSONObject();
 	        		JSONParser parser = new JSONParser();
 	    			try {roJson = (JSONObject) parser.parse(thisItem.getString());}
 	    			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
-	    			System.out.println(roJson);
 	        		researchObjectId = (long) roJson.get("researchobjectid");
 	        		researchObjectVersion = (int) (long) roJson.get("researchobjectversion");
 	        		userId = (long) roJson.get("userid");

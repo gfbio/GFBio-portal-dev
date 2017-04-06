@@ -49,6 +49,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
 ;(function() {
+	
 	var ckEditor = CKEDITOR.instances['<%= HtmlUtil.escapeJS(name) %>'];
 
 	if (!CKEDITOR.stylesSet.get('liferayStyles')) {
@@ -63,6 +64,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 			{name: 'Heading 2', element: 'h2'},
 			{name: 'Heading 3', element: 'h3'},
 			{name: 'Heading 4', element: 'h4'},
+			
 
 			// Special classes
 
@@ -80,12 +82,17 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	}
 
 	var config = ckEditor.config;
+	
+	config.allowedContent = true;
+	
 
 	config.autoParagraph = false;
 
 	config.autoSaveTimeout = 3000;
 
 	config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
+	
+	config.colorButton_colors = '000000,818181,636F6D,81B248,335AA3,3CACE4'; 
 
 	config.closeNoticeTimeout = 8000;
 
@@ -100,13 +107,11 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 	config.contentsLanguage = '<%= contentsLanguageId.replace("iw_", "he_") %>';
 
 	config.entities = false;
-
-	config.extraPlugins = 'ajaxsave,media,restore,scayt,wsc';
-
-	config.height = 600;
-	
-	config.colorButton_colors = '818181,66666,81B214,335AA3,3CACE4';
-
+    
+    config.extraPlugins = 'codemirror';
+    
+    config.height = 800;
+    
 	config.language = '<%= languageId.replace("iw_", "he_") %>';
 
 	config.resize_enabled = <%= resizable %>;
@@ -116,6 +121,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 	</c:if>
 
 	config.stylesCombo_stylesSet = 'liferayStyles';
+	
+	config.skin = 'moono';
 
 	config.toolbar_editInPlace = [
 		['Styles'],
@@ -163,7 +170,7 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 	config.toolbar_liferayArticle = [
 		['Styles', 'FontSize', '-', 'TextColor', 'BGColor'],
 		['Bold', 'Italic', 'Underline', 'Strike'],
-		['Subscript', 'Superscript'],
+		['Subscript', 'Superscript'], 
 		'/',
 		['Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'SelectAll', 'RemoveFormat'],
 		['Find', 'Replace', 'SpellChecker', 'Scayt'],
@@ -173,6 +180,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		['Source'],
 		['Link', 'Unlink', 'Anchor'],
 		['Image', 'Flash', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if> 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
+	    
+	
 	];
 
 	config.toolbar_phone = [
@@ -195,6 +204,8 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 		['Styles', 'FontSize']
 	];
 
+    
+    
 	ckEditor.on(
 		'dialogDefinition',
 		function(event) {
@@ -217,9 +228,13 @@ String contentsLanguageDir = LanguageUtil.get(contentsLocale, "lang.dir");
 					var x = documentPosition.x + ((editorElement.getSize('width', true) - dialogSize.width) / 2);
 					var y = documentPosition.y + ((editorElement.getSize('height', true) - dialogSize.height) / 2);
 
+					
 					this.move(x, y, false);
+
 				}
 			}
+			
+			
 		}
 	);
 })();

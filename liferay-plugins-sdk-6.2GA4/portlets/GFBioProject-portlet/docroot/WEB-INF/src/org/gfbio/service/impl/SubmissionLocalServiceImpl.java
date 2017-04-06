@@ -56,10 +56,112 @@ import org.json.simple.parser.JSONParser;
  */
 public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 
+	
+	/////////////////////////////////// Delete Functions /////////////////////////////////////////////////
+
+	
+	//------------------------------ Manage Delete Functions --------------------------------------------//
+	
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject deleteSubmission (JSONObject requestJson){
+		JSONObject responseJson = new JSONObject();
+		Boolean check = false;
+
+		if (requestJson.containsKey("submissionid"))
+			check = deleteSubmissionBySubmissionId((long)requestJson.get("submissionid"));
+		else
+			if (requestJson.containsKey("brokersubmissionid"))
+				check = deleteSubmissionByBrokerSubmissionId((String)requestJson.get("brokersubmissionid"));
+			else
+				if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion") &&requestJson.containsKey("archive"))
+					check = deleteSubmissionByIds((long)requestJson.get("researchobjectid"), (int) (long)requestJson.get("researchobjectversion"), (String)requestJson.get("archive"));
+					
+		
+		responseJson.put("check", check);
+		return responseJson;
+	}
+	
+	
+	//--------------------------------- Delete Functions ------------------------------------------------//
+	
+	
+	//
+	private Boolean deleteSubmissionBySubmissionId(long submissionId){
+		
+		if (checkOfSubmissionId(submissionId) != null)
+			try {deleteSubmission(submissionId);}
+			catch (PortalException | SystemException e) {e.printStackTrace();}
+
+		return !checkOfSubmissionId(submissionId);
+	}
+
+	
+	//
+	private Boolean deleteSubmissionByBrokerSubmissionId(String  brokerSubmissionId){
+		
+		if (checkOfBrokerSubmissionId(brokerSubmissionId)){
+			JSONArray submissionIdArray = getSubmissionIdsByBrokerSubmissionId(brokerSubmissionId);
+			for (int i =0; i < submissionIdArray.size();i++)
+				try {deleteSubmission((long) submissionIdArray.get(i));}
+				catch (PortalException | SystemException e) {e.printStackTrace();}	
+		}
+		
+		return !checkOfBrokerSubmissionId(brokerSubmissionId);
+	}
+	
+	
+	//
+	private Boolean deleteSubmissionByIds(long researchObjectId, int researchObjectVersion, String archive){
+		
+		if (checkOfIds(researchObjectId, researchObjectVersion, archive))
+			try {deleteSubmission(getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive));}
+			catch (PortalException | SystemException e) {e.printStackTrace();}
+		
+		
+		return !checkOfIds(researchObjectId, researchObjectVersion, archive);
+	}
+	
+	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
 	
 	//-------------------------------- Manage Get Functions ----------------------------------------------//
+		
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject getBrokerSubmissionId (JSONObject requestJson){
+		
+		
+		JSONObject responseJson = new JSONObject();
+		Set<String> set = new HashSet<String>();
+		String [] keySet = {"archive","researchobjectid","researchobjectversion"};
+		for (int i = 0; i< keySet.length;i++)
+			set.add(keySet[i]);
+		
+		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
+		if (requestJson.containsKey("archive")&&requestJson.containsKey("researchobjectid")&&requestJson.containsKey("researchobjectversion")){
+			
+			long researchObjectId =(long)requestJson.get("researchobjectid");
+			int researchObjectVersion = (int)((long) requestJson.get("researchobjectversion"));
+			String archive = ((String)requestJson.get("archive")).trim();
+			String brokerSubmissionId = getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
+			
+			responseJson.put("brokersubmissionid", brokerSubmissionId);
+
+			if (responseJson.toString().equals("[]"))
+				responseJson.put("error","ERROR: Failed by response submission registry");
+		}
+		else
+			responseJson.put("error","ERROR: No key 'latestx' exist.");
+		
+		if (!ignoreParameter.equals(""))
+			responseJson.put("warning",ignoreParameter);
+		
+		return responseJson;
+	}
 	
 	
 	//
@@ -468,7 +570,21 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	public Submission getSubmission (long researchObjectId, int researchObjectVersion, String archive){
 		return SubmissionFinderUtil.getSubmission(researchObjectId, researchObjectVersion, archive).get(0);
 	}
-		
+
+	
+	//get all submissions of one specific research object with one specific version and different archives
+	@SuppressWarnings("rawtypes")
+	private JSONArray getSubmissionIdsByBrokerSubmissionId(String brokerSubmissionId){
+		JSONArray responseJson = new JSONArray();
+		List submissionIdList = SubmissionFinderUtil.getSubmissionIdsByBrokerSubmissionId(brokerSubmissionId);
+		if (submissionIdList.size()>0){
+			JSONParser parser = new JSONParser();
+			try {responseJson = (JSONArray) parser.parse(submissionIdList.toString());}
+			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+		}
+		return responseJson;
+	}
+	
 	
 	//get all submissions of one specific research object with one specific version and different archives
 	@SuppressWarnings("rawtypes")
@@ -537,7 +653,23 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 
 	//
-	public Boolean CheckOfBrokerSubmissionId(String brokersubmissionid) {
+	public Boolean checkOfIds (long researchObjectId, int researchObjectVersion, String archive){
+		Boolean check =false;
+		check = SubmissionFinderUtil.getCheckOfIds(researchObjectId, researchObjectVersion, archive).get(0);
+		return check;
+	}
+	
+	
+	//
+	public Boolean checkOfSubmissionId (long submissionId){
+		Boolean check =false;
+		check = SubmissionFinderUtil.getCheckOfSubmissionId(submissionId).get(0);
+		return check;
+	}
+	
+	
+	//
+	public Boolean checkOfBrokerSubmissionId(String brokersubmissionid) {
 		
 		Boolean check = false;
 		List <Boolean> checkList =  SubmissionFinderUtil.getCheckOfBrokerSubmissionId(brokersubmissionid);
@@ -1042,7 +1174,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		if (submission != null)
 			try {
-				submission.setJiraID(jiraId);
+				submission.setJiraID(jiraId.trim());
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1060,7 +1192,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		if (submission != null)
 			try {
-				submission.setJiraKey(jiraKey);
+				submission.setJiraKey(jiraKey.trim());
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}

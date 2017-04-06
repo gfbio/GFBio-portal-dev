@@ -4,17 +4,34 @@
 	
 	
 	//Message from Hide Managment
-	AUI().ready(function(A){
-		
+ 	AUI().ready(function(A){
+
 		Liferay.on('gadget:gfbio.archiving.update', function(data) {
-			if (!(data == undefined))
-				if (data.updateproject==true){
-					var choPro = $("#".concat("workflowChoPro"));
-					choPro.append("<option id='workflowChoPro"+data.projectid+"' value='"+data.projectid+"'>"+data.projectlabel+"</option>");
-					document.getElementById("workflowChoPro"+data.projectid).checked=true;
-				}
+
+			if (!(data == undefined)){
+				 if (data.updateproject==true){
+					var choPro = $("#".concat("workflowChooseRO"));
+					choPro.append(
+							"<option id='workflowChooseRO"+	data.updateresearchobject.researchobjectid+"' value='"+data.updateresearchobject.researchobjectid+"'>"+data.updateresearchobject.name+""+" with Version"+ data.updateresearchobject.researchobjectversion+"</option>");
+					document.getElementById("workflowChooseRO"+data.updateresearchobject.researchobjectid).checked=true;
+				 }
+			}
 		});
-	});
+	}); 
+	
+	
+	//Message from Hide Managment
+ 	AUI().ready(function(A){
+
+		Liferay.on('gadget:gfbio.archiving.showhide', function(data) {
+
+			if (!(data == undefined))
+				 if (data.show==true)
+					document.getElementById("workflowform").className='swMain';
+				else
+					document.getElementById("workflowform").className='swHide';
+		});
+	}); 
 	
 	
 	//generelly submission workflow fire to subworkflows
@@ -117,7 +134,7 @@
 	
 	
 	AUI().ready(function(A){
-		 document.getElementById("workflowChoPro").selectedIndex = 0;
+		 //document.getElementById("workflowChoPro").selectedIndex = 0;
 		 //document.getElementById("choWorkflow").selectedIndex = 0;
 	});
 	
@@ -139,8 +156,10 @@
 			//div.attr("class", "swMain");
 			choRO.empty();
 			choRO.append("<option value='none' selected=true></option>");
-			for (i =0; i <roList.length;i++)
-				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" Version: "+ +roList[i].researchobjectversion+"</option>");
+			for (i =0; i <roList.length;i++){
+				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" with version "+ +roList[i].researchobjectversion+"</option>");
+				console.log(roList[i]);
+			}
 			document.getElementById("workflowChooseRO").selectedIndex = 0;
 		}else{
 			choRO.empty();
@@ -153,8 +172,10 @@
 		
 		choRO.empty();
 		choRO.append("<option value='none'></option>");
-		for (i =0; i <data.length;i++)
-			choRO.append("<option value='"+data[i].researchobjectid+"'>"+data[i].name+" Version: "+ +data[i].researchobjectversion+"</option>");
+		for (i =0; i <data.length;i++){
+			console.log(data[i]);
+			choRO.append("<option value='"+data[i].researchobjectid+"'>"+data[i].name+" with Version: "+ +data[i].researchobjectversion+"</option>");
+		}
 		document.getElementById("workflowChooseRO").selectedIndex = 0;
 	}
 	

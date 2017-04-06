@@ -12,8 +12,8 @@ function chooseWorkflowProject(method, projectId  ,divId, userId){
 
 
 //
-function chooseWorkflowResearchObject( userId, projectId, researchObjectId){
-	if (projectId == "none")
+function chooseWorkflowResearchObject( userId, researchObjectId){
+//	if (projectId == "none")
 		projectId =0;
 	if (researchObjectId == "none")
 		researchObjectId =0;
