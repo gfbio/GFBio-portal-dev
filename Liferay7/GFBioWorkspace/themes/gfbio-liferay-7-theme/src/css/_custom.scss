@@ -1,0 +1,174 @@
+/* These inject tags are used for dynamically creating imports for themelet styles, you can place them where ever you like in this file. */
+
+/* inject:imports */
+/* endinject */
+
+/* This file allows you to override default styles in one central location for easier upgrade and maintenance. */
+
+
+
+body{
+
+		/***************** Common Stuff ***************/
+		background-color: white;
+		font-family: 'Lato',sans-serif;
+		font-weight: 400;
+		font-size: 16px ;
+		/*color: #818181;*/
+		line-height:24px;
+		padding:0;
+		margin-top: -10px;
+		
+		a {
+	    -webkit-transition: all 0.3s ease-out 0s;
+	    -moz-transition: all 0.3s ease-out 0s;
+	    -ms-transition: all 0.3s ease-out 0s;
+	    -o-transition: all 0.3s ease-out 0s;
+	    transition: all 0.3s ease-out 0s;
+	    
+	    font-weight: 400;
+		}
+
+		a, a:hover, a:focus, .btn:focus {
+		    text-decoration: none;
+		    outline: none;
+		   
+		}
+		
+		
+		h1,h2,h3,h4,h5,
+		.h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: 'Lato', sans-serif;
+			/*color:#666;*/
+			color:#335AA3;
+		}
+		 h1{
+			font-size: 36px;
+			font-weight:300;
+			
+		}
+		
+		h2{
+			font-size: 30px;
+			font-weight:300;
+		}
+		
+		h3 {
+			font-size: 24px;
+			font-weight:300;
+		}
+		
+		h4 {
+			font-size: 20px;
+			font-weight:400;
+		} 
+
+		 .journal-content-article a{
+		
+		 color: rgb(60, 172, 228); /*3CACE4*/
+		 text-decoration: underline;
+		 text-decoration-style: dotted;
+		} 
+		
+		.journal-content-article .footer a{
+		
+		 color: #fff;
+		 text-decoration: none;
+		 text-decoration-style: none;
+        }
+	
+		.journal-content-article a.btn {
+		 color:#fff;
+		 text-decoration:none;
+		}
+
+
+		
+		/***************** NAVIGATION:								START ***************/
+		/***************** GFBio-Logo Top Navi ***************/
+		h1.navbar-brand {
+			-webkit-transition: all 0.8s ease 0s;
+			-moz-transition: all 0.8s ease 0s;
+			-ms-transition: all 0.8s ease 0s;
+			-o-transition: all 0.8s ease 0s;
+			transition: all 0.8s ease 0s;
+			background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;			
+			padding: 80px 122px 0 0 !important;
+		   margin: 0px 0px 5px 0px;
+		}
+		
+		/***************** Sign-In-Div for Navigation ***************/
+		.navsignin{
+			/*position: absolute;
+			top: 50px;
+			right: 50px;*/
+			float:right;
+			margin-top:33px;
+			margin-left: 10px;
+			font-size: 15px;
+		}
+		
+		/*#separator-border{
+			box-shadow: 0 4px 2px -2px gray;
+		}*/
+		
+		#banner{
+			box-shadow: 0px 3px 10px -5px grey
+		}
+		
+		#content{
+			margin-top: 5px;
+		}
+		
+		#wrapper{
+			padding-top:0em;
+		}
+		
+		.field.search-input.form-control{
+			size: 15px;
+			/*placeholder: Search for..;*/
+		}
+		
+		.container-fluid{
+			padding-left:0px;
+			padding-right:0px;
+		}
+		
+		.navbar-right{
+			margin-right: -10px;
+			margin-top: 15px;
+			font-size: 15px;
+		}
+		
+		.navbar-form{
+			padding-bottom: 0px;
+		}
+		
+		.navbar-form .form-group {
+			vertical-align: top;
+		}
+		
+		#_com_liferay_portal_search_web_portlet_SearchPortlet_keywords{
+			width: 100px;
+		}
+		
+		/***************** Scope-Image-Navigation ***************/
+		.icon-monospaced .lexicon-icon{
+			display: block;
+			height: 32px;
+			line-height:32px;
+			width: 32px;
+			padding: 8px;
+			margin-top:5px;
+			margin-left: -10px;
+		}
+		
+		/***************** NAVIGATION:								END ***************/
+		
+}
+
+/***************** Testing ***************/
+.btn{
+background-color:gray;
+}
+
