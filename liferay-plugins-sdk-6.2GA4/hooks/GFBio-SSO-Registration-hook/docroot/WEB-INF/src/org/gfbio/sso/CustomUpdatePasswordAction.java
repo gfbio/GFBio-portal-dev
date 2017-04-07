@@ -2,6 +2,7 @@ package org.gfbio.sso;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
@@ -69,23 +70,28 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			throws PortalException, SystemException {
 		// called when login, change password, reset password
 		log.info(":: Hook on update user.");
+		log.info(":: groupIds:"+Arrays.toString(groupIds));
+		log.info(":: organizationIds:"+Arrays.toString(organizationIds));
+		log.info(":: roleIds:"+Arrays.toString(roleIds));
+		log.info(":: userGroupRoles:"+ userGroupRoles.toString());
+		log.info(":: userGroupIds:"+Arrays.toString(userGroupIds));
 		User user = super.getUser(userId);
 		try {
 //			if (!isReservedEmail(user)) {
 				// If the email is used by the backend (e.g. Portal mail
 				// settings), the password should not be updated
 //			}
-			log.info(":: updateUser 0");
-			if (newPassword1.trim() != "" && newPassword1 != null) {
+			log.info(":: updateUser "+userId);
 				user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
 						reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
 						languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId,
 						male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn,
 						msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds,
 						userGroupRoles, userGroupIds, serviceContext);
-				updatePassword(userId, newPassword1,newPassword2, false);
-				log.info(":: updateUser 1");
-			}
+				if (newPassword1.trim() != "" && newPassword1 != null) {
+					updatePassword(userId, newPassword1,newPassword2, false);
+					log.info(":: updatePassword");
+				}
 		} catch (Exception e) {
 			e.printStackTrace();
 			//log.info(":: updateUser 2");
