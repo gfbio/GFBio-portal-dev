@@ -14,8 +14,9 @@
 				if (data.researchobjectid==0){
 					fillDefaultInformations(data, div);
 				}else{
-					if (document.getElementById("gwf_ro_id").innerHTML!= 0)
+					if (document.getElementById("gwf_ro_id").innerHTML!= 0){
 						fillDefaultResearchObjectInformations(data, div);
+					}
 					fillResearchObjectInformations(data, div);
 				}
 			}else{
@@ -44,6 +45,16 @@
 			"updateresearchobject"   : researchObject,
 		};
 		Liferay.fire('gadget:gfbio.archiving.update', toUpdate);
+	} 
+	
+	
+	//fire to update information to generally worflow portlet
+	function sentResetRequest() {
+		
+		var toUpdate = {
+			"reset" : true,
+		};
+		Liferay.fire('gadget:gfbio.archiving.reset', toUpdate);
 	} 
 	
 	
@@ -254,7 +265,7 @@
 	
 	//
 	function fillDefaultResearchObjectInformations(data, div){
-	
+		
 		var url = document.getElementById('workflowgenericurl').value;
 	
 		document.getElementById("gwf_ro_id").innerHTML= 0;
@@ -307,7 +318,10 @@
 				choMeta.append("<option value='none'></option>");
 				for (i =0; i <obj.length;i++){
 					var json = obj[i];
-					choMeta.append("<option id='gwf_ro_metadatalabel"+json.id+"' value='"+json.id+"'>"+json.label+"</option>");
+					if (json.label == 'other')
+						choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+					else
+						choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.label+" "+json.version+"</option>");
 				}
  			}
  		}); 
@@ -330,7 +344,7 @@
 					var json = obj[i];
 					if (json.label == "other")
 						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
-					else if (json.label == "CC BY")
+					else if (json.label == "CC-BY")
 						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.label+": "+json.name+" "+json.version+"</option>");
 						else	
 							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.label+": "+json.name+" "+json.version+"</option>");
@@ -431,7 +445,7 @@
 
 		var url = document.getElementById('workflowgenericurl').value;
 		if (Number(data.researchobjectid)!=0){
-			var ajaxData = [{"researchobjectid":Number(data.researchobjectid)}];
+			var ajaxData = [{"researchobjectid":Number(data.researchobjectid), "kindofresponse":"extended"}];
 	 		$.ajax({
 				"type" : "POST",
 				"url": url.concat('/WorkflowGenericPortlet'),
@@ -442,9 +456,12 @@
 				async: false,
 	 			success :  function (obj){
 	 				
-	 				var div =   $("#gwf_ro_metadatalabel_v");
 					var json = obj[0];
-					var ed = json.extendeddata;
+					if (json.extendeddata != "")
+						var ed = json.extendeddata;
+					else
+						var ed = "[]";
+					
 					for (i=0;i<ed.length/2;i++)
 						ed = ed.replace("'",'"');
 					var extendeddata = JSON.parse(ed);
@@ -454,37 +471,92 @@
 					document.getElementById("gwf_ro_name").value= json.name;
 					document.getElementById("gwf_ro_label").value= json.label;
 					
+					//datacolectiontime
 					if (extendeddata.datacollectiontime !=null)
 						document.getElementById("gwf_ro_dct").value= extendeddata.datacollectiontime;
 					else
 						document.getElementById("gwf_ro_dct").value= "";
 					
+					//description
 					document.getElementById("gwf_ro_description").value= json.description;
-					div.empty();
-					div.append(json.metadatalabel+
-						"<div class='rowField'><input type='hidden' id='gwf_ro_metadatalabel' value='"+json.metadatalabel+"'></div>"
-					);
-
-					if (json.authorname != null){
-						var author = (json.authorname).substring(1, (json.authorname.length)-1);
-						for (i=0;i<author.length/2;i++)
-							author = author.replace('"','');
-						document.getElementById("gwf_ro_author").innerHTML= author;
-					}else{
-						document.getElementById("gwf_ro_author").innerHTML= "";
-					}
 					
+					
+					//metadata
+					if (json.hasOwnProperty('metadataid')) {
+						var metadataJson = JSON.parse(json.metadataid);
+						document.getElementById("gwf_ro_metadatalabel").value= metadataJson;
+					}
+
+					
+					//author
+					if (json.authorname != null && json.authorname.length !=0){
+						var author ="";
+						for (i=0;i<json.authorname.length;i++)
+							author = author + json.authorname[i]+"\n";
+		
+						document.getElementById("gwf_ro_author").innerHTML= author;
+					}else
+						document.getElementById("gwf_ro_author").innerHTML= "";
+					
+					
+					//category
+					if (json.categoryids !=null && json.categoryids!="")
+						for (i =0; i < json.categoryids.length;i++)
+							document.getElementById("gwf_ro_categories"+json.categoryids[i]).checked  =true;
+						
+					
+					
+					//publications
 					if (extendeddata.publications !=null)
 						document.getElementById("gwf_ro_publications").value= extendeddata.publications;
 					else
 						document.getElementById("gwf_ro_publications").value= "";
 					
+					if (extendeddata.embargo !=null)
+						document.getElementById("gwf_ro_embargo").value= extendeddata.embargo;
+					else
+						document.getElementById("gwf_ro_embargo").value= "";
+
+					
+					//legal requirements
+					if (extendeddata.legalrequirements !=null && extendeddata.legalrequirements!="")
+						for (i =0; i < extendeddata.legalrequirements.length;i++)
+							if (extendeddata.legalrequirements[i]=="Nagoya")
+								document.getElementById("gwf_ro_legalrequirements_nagoya").checked  =true;
+							else
+								if (extendeddata.legalrequirements[i]=="Red List")
+									document.getElementById("gwf_ro_legalrequirements_red").checked  =true;
+								else
+									if (extendeddata.legalrequirements[i]=="Personal")
+										document.getElementById("gwf_ro_legalrequirements_personal").checked  =true;
+									else
+										if (extendeddata.legalrequirements[i]=="Uncertain")
+											document.getElementById("gwf_ro_legalrequirements_uncertain").checked  =true;
+					
+					
+					//license
 					if (json.hasOwnProperty('licenseid')) {
-						var licenseJson = JSON.parse(json.licenseid);
-						for (i=0;i<licenseJson.length;i++)
-							document.getElementById("gwf_ro_licenses"+licenseJson[i]).checked= "checked";
+						var licenseid = JSON.parse(json.licenseid);
+						document.getElementById("gwf_ro_licenselabel").value =licenseid;
 					}
-	 			}
+					
+					//primarydata
+					
+				    if (json.primarydata !=null && json.primarydata.length!=0){
+				    	var nameList = "";
+				    	nameList = nameList + '<ul>';
+					    for (i =0; i < json.primarydata.length;i++)
+					    	nameList = nameList +'<li>'+json.primarydata[i].name+ '</li>';
+					    nameList = nameList + '</ul>';
+					}
+				    document.getElementById("gwf_ro_upload").innerHTML = nameList;
+
+	 			},
+				error :  function (obj){
+					console.log("error");
+					console.log(obj);
+				}
+				
 	 		});
 		}
 	}

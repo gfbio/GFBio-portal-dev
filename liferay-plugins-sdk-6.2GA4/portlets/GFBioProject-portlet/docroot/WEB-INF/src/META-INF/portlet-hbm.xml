@@ -153,6 +153,7 @@
 		<property name="metadataID" type="com.liferay.portal.dao.orm.hibernate.LongType" column="metadataid" />
 		<property name="licenseID" type="com.liferay.portal.dao.orm.hibernate.LongType" column="licenseid" />
 		<property name="researchObjectType" type="com.liferay.portal.dao.orm.hibernate.StringType" column="researchobjecttype" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.ResearchObject_UserImpl" table="gfbio_ResearchObject_User">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.ResearchObject_UserPK">

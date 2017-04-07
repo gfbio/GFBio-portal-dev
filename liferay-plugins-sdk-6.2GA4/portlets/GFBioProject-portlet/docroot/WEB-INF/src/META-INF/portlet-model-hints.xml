@@ -106,6 +106,7 @@
 		<field name="metadataID" type="long" />
 		<field name="licenseID" type="long" />
 		<field name="researchObjectType" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.ResearchObject_User">
 		<field name="researchObjectID" type="long" />

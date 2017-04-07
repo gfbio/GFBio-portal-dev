@@ -171,7 +171,15 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////	
 	
+	
+	//------------------------------- Manage Update Functions ----------------------------------------------//
+	
+	
 
+	
+	//----------------------------------- Update Functions -------------------------------------------------//
+	
+	
 	//
 	public Boolean updateResearchObjectUser(long researchObjectId,  long userId, String userType) {
 		Boolean check = false;
@@ -229,6 +237,29 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		return check;
 	}
 
+	
+	//
+	public Boolean updateResearchObjectVersion(long userId, long researchObjectId, int oldResearchObjectVersion, int newResearchObjectVersion) {
+		Boolean check = false;
+		
+		ResearchObject_User oldRelation = null;
+		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, oldResearchObjectVersion, userId);
+
+		try {oldRelation = researchObject_UserPersistence.findByPrimaryKey(pk);}
+		catch (NoSuchResearchObject_UserException | SystemException e) {e.printStackTrace();}
+		
+		if (oldRelation !=null){
+			ResearchObject_User newRelation = (ResearchObject_User) oldRelation.clone();
+			newRelation.setResearchObjectVersion(newResearchObjectVersion);
+			
+			try {
+				super.updateResearchObject_User(newRelation);
+				check = true;
+			} catch (SystemException e) {e.printStackTrace();}
+		}
+
+		return check;
+	}
 
 
 

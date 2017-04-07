@@ -219,6 +219,10 @@
 			<basic name="researchObjectType">
 				<column name="RESEARCHOBJECTTYPE" />
 			</basic>
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

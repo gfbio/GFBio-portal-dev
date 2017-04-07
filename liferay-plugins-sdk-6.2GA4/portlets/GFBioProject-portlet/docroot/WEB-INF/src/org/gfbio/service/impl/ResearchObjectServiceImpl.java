@@ -99,6 +99,7 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 		
 	//
 	public JSONArray updateResearchObject(String requestJson){
+		System.out.println(requestJson);
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
 		try {parseJson = (JSONArray) parser.parse(requestJson);}

@@ -71,7 +71,7 @@
 							
 				<form action='select.html' id="choROForm">
 					<select id='workflowChooseRO' style='width:100%' name='<portlet:namespace/>workflowChooseRO' size='1'  onchange="chooseWorkflowResearchObject(<%=PortalUtil.getUser(request).getUserId()%>, this.form.workflowChooseRO.options[this.form.workflowChooseRO.selectedIndex].value)" >
-						<option value='none'> </option>
+						<option value='none' disabled selected> </option> 
 						<% if (roList != null){ %>
 		  					<%if (roList.size()>0){for (int i = 0; i < roList.size(); i++) { 
 		  						JSONObject roJson =  new JSONObject();
@@ -82,7 +82,7 @@
 		  						
 		  						Long roId = (Long) roJson.get("researchobjectid"); %>
 	 	  					    
-								<option value="<%= roId %>"> <%= text %> </option>
+ 								<option value="<%= roId %>"> <%= text %> </option> 
 							<%} }} %>  
 					</select>
 				</form>	

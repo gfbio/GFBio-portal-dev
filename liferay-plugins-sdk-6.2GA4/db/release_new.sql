@@ -557,7 +557,7 @@ LANGUAGE plpgsql;
 
 ---------------------------------------------------------------------------------------------
 ------------------------------------------ Functions ----------------------------------------
-------------------------------------   dynamic contentids 31.03.2017 ------------------------
+------------------------------------   dynamic contentids 04.04.2017 ------------------------
 ---------------------------------------------------------------------------------------------
 
 
@@ -611,154 +611,273 @@ language 'sql' STABLE;
 
 -- -----------------------------------------------------------------------------------------------
 -- ------------------------------------ Head, Column & Content -----------------------------------
--- --------------------------------------       license        -- 31.03.2017 ---------------------
+-- --------------------------------------       license        -- 04.04.2017 ---------------------
 -- -----------------------------------------------------------------------------------------------
 
 
--- ALTER TABLE gfbio_researchobject ADD COLUMN licenselabel text;
+ALTER TABLE gfbio_researchobject ADD COLUMN licenselabel text;
 
 
--- DO
--- $do$
-	-- DECLARE
-		-- lid bigint;
-	-- BEGIN
-		-- FOR lid IN 
-			-- SELECT 
-			  -- cellcontent
-			-- FROM 
-			  -- public.gfbio_content
-			-- WHERE
-			  -- headid = (select getHeadIdByName('gfbio_license')) AND
-			  -- columnid = (select getColumnIdByNames('gfbio_license','id'))
-		-- LOOP
-			-- UPDATE gfbio_researchobject SET licenselabel = (Select (getContentByColumnName('gfbio_license', 'label', lid ))) WHERE licenseid =lid;
-		-- END LOOP;
-		-- RETURN;
-	-- END
--- $do$
--- LANGUAGE plpgsql;
+DO
+$do$
+	DECLARE
+		lid bigint;
+	BEGIN
+		FOR lid IN 
+			SELECT 
+			  cellcontent
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid = (select getHeadIdByName('gfbio_license')) AND
+			  columnid = (select getColumnIdByNames('gfbio_license','id'))
+		LOOP
+			UPDATE gfbio_researchobject SET licenselabel = (Select (getContentByColumnName('gfbio_license', 'label', lid ))) WHERE licenseid =lid;
+		END LOOP;
+		RETURN;
+	END
+$do$
+LANGUAGE plpgsql;
 
 
--- SELECT deleteHCCRow('gfbio_license', 'label', 'other');
--- SELECT deleteHCCRow('gfbio_license', 'label', 'CC0');
--- SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY');
--- SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-SA');
--- SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-NC-SA');
--- SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-NC');
--- SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-NC-ND');
+UPDATE gfbio_researchobject SET licenselabel = 'CC-BY' 			WHERE licenselabel ='CC BY';
+UPDATE gfbio_researchobject SET licenselabel = 'CC-BY-SA' 		WHERE licenselabel ='CC BY-SA';
+UPDATE gfbio_researchobject SET licenselabel = 'CC-BY-NC-SA' 	WHERE licenselabel ='CC BY-NC-SA';
+UPDATE gfbio_researchobject SET licenselabel = 'CC-BY-NC' 		WHERE licenselabel ='CC BY-NC';
+UPDATE gfbio_researchobject SET licenselabel = 'CC-BY-NC-ND' 	WHERE licenselabel ='CC BY-NC-ND';
 
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Other License');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'other');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Zero');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC0');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '{"url":"https://creativecommons.org/publicdomain/zero/1.0/deed.de"}');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '1.0');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '{"url":"https://creativecommons.org/licenses/by/3.0/de"}');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NonComercial');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-NC');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NonComercial-NoDerivs');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-NC-ND');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NonComercial-ShareAlike');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-NC-SA');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '{"url":"https://creativecommons.org/licenses/by-sa/3.0/de"}');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NoDerivs');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-ND');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-ShareAlike');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-SA');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
--- INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
+SELECT deleteHCCRow('gfbio_license', 'label', 'other');
+SELECT deleteHCCRow('gfbio_license', 'label', 'CC0');
+SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY');
+SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-SA');
+SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-NC-SA');
+SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-NC');
+SELECT deleteHCCRow('gfbio_license', 'label', 'CC BY-NC-ND');
 
 
--- DO
--- $do$
-	-- DECLARE
-		-- lid bigint;
-	-- BEGIN
-		-- FOR lid IN 
-			-- SELECT 
-			  -- cellcontent
-			-- FROM 
-			  -- public.gfbio_content
-			-- WHERE
-			  -- headid = (select getHeadIdByName('gfbio_license')) AND
-			  -- columnid = (select getColumnIdByNames('gfbio_license','id'))
-		-- LOOP
-			-- UPDATE gfbio_researchobject SET licenseid = lid WHERE licenselabel = (Select (getContentByColumnName('gfbio_license', 'label', lid )));
-		-- END LOOP;
-		-- RETURN;
-	-- END
--- $do$
--- LANGUAGE plpgsql;
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Other License');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'other');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Zero');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '{"url":"https://creativecommons.org/publicdomain/zero/1.0/deed.de"}');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '1.0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '{"url":"https://creativecommons.org/licenses/by/3.0/de"}');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NonComercial');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-NC');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NonComercial-NoDerivs');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-NC-ND');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NonComercial-ShareAlike');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-NC-SA');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '{"url":"https://creativecommons.org/licenses/by-sa/3.0/de"}');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-NoDerivs');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-ND');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','name'), getMaxRowId(), 'Creative Commons Attribution-ShareAlike');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','label'), getMaxRowId(), 'CC-BY-SA');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','extendeddata'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_license')), getColumnIdByNames('gfbio_license','version'), getMaxRowId(), '3.0');
 
 
--- ALTER TABLE	gfbio_researchobject DROP licenselabel;
+
+
+
+DO
+$do$
+	DECLARE
+		lid bigint;
+	BEGIN
+		FOR lid IN 
+			SELECT 
+			  cellcontent
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid = (select getHeadIdByName('gfbio_license')) AND
+			  columnid = (select getColumnIdByNames('gfbio_license','id'))
+		LOOP
+			UPDATE gfbio_researchobject SET licenseid = lid WHERE licenselabel = (Select (getContentByColumnName('gfbio_license', 'label', lid )));
+		END LOOP;
+		RETURN;
+	END
+$do$
+LANGUAGE plpgsql;
+
+
+UPDATE gfbio_researchobject SET licenseid = null 	WHERE licenseid =0;
+
+ALTER TABLE	gfbio_researchobject DROP licenselabel;
 	
 
--- -----------------------------------------------------------------------------------------------
--- ------------------------------------ Head, Column & Content -----------------------------------
--- -------------------------------------       metadata        -- 31.03.2017 ---------------------
--- -----------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+-------------------------------------       metadata        -- 04.04.2017 ---------------------
+-----------------------------------------------------------------------------------------------
+
+
+------------------------------------- Column Table Content -------------------------------------
+
+
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_metadata')),'schema');
+
+
+------------------------------------- Content Table Content -------------------------------------
+
+
+
+ALTER TABLE gfbio_researchobject ADD COLUMN metadatalabel text;
+
+
+DO
+$do$
+	DECLARE
+		mid bigint;
+	BEGIN
+		FOR mid IN 
+			SELECT 
+			  cellcontent
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid = (select getHeadIdByName('gfbio_metadata')) AND
+			  columnid = (select getColumnIdByNames('gfbio_metadata','id'))
+		LOOP
+			UPDATE gfbio_researchobject SET metadatalabel = (Select (getContentByColumnName('gfbio_metadata', 'label', mid ))) WHERE metadataid =mid;
+		END LOOP;
+		RETURN;
+	END
+$do$
+LANGUAGE plpgsql;
+
+UPDATE gfbio_researchobject SET metadatalabel = 'ABCD' WHERE metadatalabel ='ABCD 2.06';
+UPDATE gfbio_researchobject SET metadatalabel = 'Dublin Core' WHERE metadatalabel ='Dublin Core (Metadata Elements Set V1.1)';
+UPDATE gfbio_researchobject SET metadatalabel = 'EDM' WHERE metadatalabel ='EDM (Europeana Data Model V5.2.5)';
+UPDATE gfbio_researchobject SET metadatalabel = 'EML' WHERE metadatalabel ='EML (Ecological Metadata Language V2.1.1)';
+UPDATE gfbio_researchobject SET metadatalabel = 'ESE' WHERE metadatalabel ='ESE (Europeana Semantic Elements V3.4.1';
+UPDATE gfbio_researchobject SET metadatalabel = 'INSPIRE' WHERE metadatalabel ='INSPIRE (VO (EG) Nr. 1205/2008)';
+
+SELECT deleteHCCAllTableContent('gfbio_metadata');
+UPDATE gfbio_researchobject SET metadataid = 0;
 
 
 
 
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'Other metadata schema or version');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'other');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'ABCD');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'ABCD');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '2.06');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'Darwin Core');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'Darwin Core');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'Dublin Core');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'Dublin Core');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '1.1');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'Europeana Data Model');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'EDM');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '5.2.5');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'Ecological Metadata Language');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'EML');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '2.1.1');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'Europeana Semantic Elements');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'ESE');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '3.4.1');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'INSPIRE');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'INSPIRE');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), 'VO (EG) Nr. 1205/2008');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'ISO 19115');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'ISO 19115');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','id'),getNewRowId(), getNewContentId());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','name'), getMaxRowId(), 'Minimum Information about any (x) Sequence');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','label'), getMaxRowId(), 'MIxS');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','description'), getMaxRowId(), 'The MIxS standard (Minimum Information about any (x) Sequence) is an overarching framework providing a single entry point to all minimum information checklists from the Genomic Standards Consortium (GSC) and to the environmental packages. MIxS includes the technology-specific checklists from the previous MIGS (Minimum Information about a Genome Sequence) and MIMS (Minimum Information about a Metagenome Sequence) standards. It provides a way to introduce additional checklists such as MIMARKS (Minimum Information about a Marker Gene Sequence), and allows annotation of sample data using environmental packages. MIxS was published in Nature Biotechnology in 2011.');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','version'), getMaxRowId(), '4.0.0');
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','schema'), getMaxRowId(), '');
 
--- ALTER TABLE gfbio_researchobject ADD COLUMN metadatalabel text;
 
 
--- DO
--- $do$
-	-- DECLARE
-		-- mid bigint;
-	-- BEGIN
-		-- FOR mid IN 
-			-- SELECT 
-			  -- cellcontent
-			-- FROM 
-			  -- public.gfbio_content
-			-- WHERE
-			  -- headid = (select getHeadIdByName('gfbio_metadata')) AND
-			  -- columnid = (select getColumnIdByNames('gfbio_metadata','id'))
-		-- LOOP
-			-- UPDATE gfbio_researchobject SET metadatalabel = (Select (getContentByColumnName('gfbio_metadata', 'label', mid ))) WHERE metadataid =mid;
-		-- END LOOP;
-		-- RETURN;
-	-- END
--- $do$
--- LANGUAGE plpgsql;
+DO
+$do$
+	DECLARE
+		mid bigint;
+	BEGIN
+		FOR mid IN 
+			SELECT 
+			  cellcontent
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid = (select getHeadIdByName('gfbio_metadata')) AND
+			  columnid = (select getColumnIdByNames('gfbio_metadata','id'))
+		LOOP
+			UPDATE gfbio_researchobject SET metadataid = mid WHERE metadatalabel = (Select (getContentByColumnName('gfbio_metadata', 'label', mid )));
+		END LOOP;
+		RETURN;
+	END
+$do$
+LANGUAGE plpgsql;
 
 
--- SELECT deleteHCCAllTableContent('gfbio_metadata');
--- UPDATE gfbio_researchobject SET metadataid = 0;
+UPDATE gfbio_researchobject SET metadataid = null WHERE metadataid =0;
+ALTER TABLE	gfbio_researchobject DROP metadatalabel;
 
+-----------------------------------------------------------------------------------------------
+----------------------------------        researchobject        - 04.04.2017 ------------------
+-----------------------------------------------------------------------------------------------
 
-
+ALTER TABLE gfbio_researchobject ADD COLUMN lastmodifieddate timestamp with time zone NOT NULL DEFAULT now();

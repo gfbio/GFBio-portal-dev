@@ -70,22 +70,7 @@ public class WorkflowGeneric extends GenericPortlet {
 
     
     public void doView( RenderRequest renderRequest, RenderResponse renderResponse)     throws IOException, PortletException {
-    	
-    	JSONArray requestJson = new JSONArray();
-    	JSONObject foo = new JSONObject();
-    	foo.put("description", "Response of Arctic benthic bacterial deep-sea communities to different detritus composition");
-    	foo.put("userid", 10199);//70001
-    	foo.put("researchobjecttype", "study");
-    	foo.put("name", "study_katy_hoffmann_2016");
-    	foo.put("extendeddata", "{'study_type': 'Metagenomics', 'center_name': 'MPI-BREM', 'study_abstract': 'In a multidisciplinary ex situ experiment, benthic bacterial deep-sea communities from 2,500 m water depth at the Long-Term Ecological Research Observatory HAUSGARTEN (stationPS93/050-5 and 6), were retrieved using a TV-guided multiple corer. Surface sediments (0 - 2 cm) of 16 cores were mixed with sterile filtered deep-sea water to a final sediment dilution of 3.5 fold. The slurries were split and supplemented with five different types of habitat-related detritus: chitin, as the most abundant biopolymer in the oceans, and four different naturally occurring Arctic algae species, i.e. Thalassiosira weissflogii, Emiliania huxleyi, Bacillaria sp. and Melosira arctica. Incubations were performed in five replicates, at in situ temperature and at atmospheric pressure, as well as at in situ pressure of 250 atm. At the start of the incubation and after 23 days, changes in key community functions, i.e. extracellular enzymatic activity, oxygen respiration and secondary production of biomass (bacterial cell numbers and biomass), were assessed along with changes in the bacterial community composition based on 16S rRNA gene and 16S rRNA Illumina sequencing. In summary, differences in community structure and in the uptake and remineralization of carbon in the different treatments suggest an effect of organic matter quality on bacterial diversity as well as on carbon turnover at the seafloor. The work is part of the ERC Advanced Investigator Grant ABYSS (no. 294757) to Antje Boetius.', 'study_title': 'Response of Arctic benthic bacterial deep-sea communities to different detritus composition', 'study_alias': 'study_katy_hoffmann_2016'}");
-    	foo.put("label", "study_katy_hoffmann_2016");
-    	foo.put("brokerobjectid", "25");
-    	requestJson.add(foo);
-    	
-    	System.out.println(requestJson);
-    	
-    	ResearchObjectLocalServiceUtil.createResearchObjectByJson(requestJson);
-    	
+    	   	
    	    include(viewTemplate, renderRequest, renderResponse);
     }
 
@@ -193,11 +178,11 @@ public class WorkflowGeneric extends GenericPortlet {
 	
 	//
 	public void getResearchObjectById(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
-		
+		 
 		JSONArray responseJson = new JSONArray();
         JSONArray parseJson = getDataJsonAsArray (request);
 
-		responseJson = ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById(parseJson);
+		responseJson = ResearchObjectLocalServiceUtil.getResearchObjectsAsJsonById(parseJson);	
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
@@ -311,9 +296,9 @@ public class WorkflowGeneric extends GenericPortlet {
 		
 		//preparation data source
 		
-    	System.out.println("--------------------------------");
+/*    	System.out.println("--------------------------------");
     	System.out.println(requestJson);
-    	System.out.println("--------------------------------");
+    	System.out.println("--------------------------------");*/
     	
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
@@ -405,36 +390,23 @@ public class WorkflowGeneric extends GenericPortlet {
 
         
         //dataset author
-        System.out.println("Author ------------------------------------------------------------------");
         if (researchObjectJson.containsKey("authornames")){
         	if (!(researchObjectJson.get("authornames").equals(""))){
         		
-        		System.out.println((researchObjectJson.get("authornames")));
         		JSONParser parser2 = new JSONParser();
 				JSONArray parseJson = new JSONArray();
 				try {parseJson = (JSONArray) parser2.parse((String) researchObjectJson.get("authornames"));}
 				catch (ParseException e) {e.printStackTrace();}
-				
-				System.out.println(parseJson);
-				//fields.put("customfield_10205", parseJson);
-				//System.out.println(fields);
-				
-				
+
         		String inputString ="";
-        		System.out.println(inputString);
         		for (int i =0; i< parseJson.size();i++){
         			String author = ((String) parseJson.get(i)).trim();
         			inputString = inputString.concat(author).concat(", ");
-        			System.out.println(inputString);
         		}
         		inputString = inputString.substring(0, inputString.length()-2);
-        		
-        		System.out.println(inputString);
         		fields.put("customfield_10205", inputString);
-        		System.out.println(fields);
         	}
         }
-        System.out.println("Author ------------------------------------------------------------------");
         
         //dataset collection time
         if (extendeddataJsonResearchObject.containsKey("datacollectiontime"))
@@ -574,9 +546,9 @@ public class WorkflowGeneric extends GenericPortlet {
         response = response.replaceAll("\\\\", "");
         response = response.replaceAll("----n", "\\\\n");
         
-      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+/*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
-        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");*/
 	           
         return response;
     }
@@ -662,8 +634,6 @@ public class WorkflowGeneric extends GenericPortlet {
 	        String output;
 	        System.out.println("Output from Server .... \n");
 	        while ((output = br.readLine()) != null){
-	        	
-	        	System.out.println(output); 
 			
 		        JSONParser parser = new JSONParser();
 				JSONObject jraResponseJson = new JSONObject();
@@ -694,7 +664,6 @@ public class WorkflowGeneric extends GenericPortlet {
 				
 				
 				responseString = responseString.concat(jraResponseJson.toString());
-				System.out.println(responseString); 
 	        }
 	        conn.disconnect();
 	     } catch (Exception e) {e.printStackTrace();}

@@ -34,6 +34,18 @@
 	}); 
 	
 	
+	//Message from Hide Managment
+ 	AUI().ready(function(A){
+
+		Liferay.on('gadget:gfbio.archiving.reset', function(data) {
+
+			if (!(data == undefined))
+				 if (data.reset==true)
+					 cleanSubmissionWorkflow();
+		});
+	}); 
+	
+	
 	//generelly submission workflow fire to subworkflows
 	function sentWorkflowInformations(workflow, showhide, researchObjectId, projectId, userId) {
 		var showhide;
@@ -71,6 +83,7 @@
 	
 	//
 	function sentResearchObjectInformations(userId, projectId, researchObjectId) {
+
  		var toSubmit = {
  			"userid"   : userId,
  			"projectid"   : projectId,
@@ -82,6 +95,7 @@
 		
 	//
 	function ajaxActionRequest_ChooseResearchObject(archivingURL, method, data, divId, as) {
+
 		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
@@ -136,6 +150,7 @@
 	AUI().ready(function(A){
 		 //document.getElementById("workflowChoPro").selectedIndex = 0;
 		 //document.getElementById("choWorkflow").selectedIndex = 0;
+		 cleanSubmissionWorkflow();
 	});
 	
 	
@@ -156,11 +171,11 @@
 			//div.attr("class", "swMain");
 			choRO.empty();
 			choRO.append("<option value='none' selected=true></option>");
-			for (i =0; i <roList.length;i++){
+			for (i =0; i <roList.length;i++)
 				choRO.append("<option value='"+roList[i].researchobjectid+"'>"+roList[i].name+" with version "+ +roList[i].researchobjectversion+"</option>");
-				console.log(roList[i]);
-			}
-			document.getElementById("workflowChooseRO").selectedIndex = 0;
+			var v = 'none';
+			document.getElementById("workflowChooseRO").value = v;
+			
 		}else{
 			choRO.empty();
 		}
@@ -173,16 +188,17 @@
 		choRO.empty();
 		choRO.append("<option value='none'></option>");
 		for (i =0; i <data.length;i++){
-			console.log(data[i]);
 			choRO.append("<option value='"+data[i].researchobjectid+"'>"+data[i].name+" with Version: "+ +data[i].researchobjectversion+"</option>");
 		}
-		document.getElementById("workflowChooseRO").selectedIndex = 0;
+		var v = 'none';
+		document.getElementById("workflowChooseRO").value = v;
 	}
 	
 	
 	//
 	function cleanSubmissionWorkflow(){
-		document.getElementById("choWorkflow").selectedIndex = 0;
+		var v = 'none';
+		document.getElementById("workflowChooseRO").value = v;
 	}
 
 	

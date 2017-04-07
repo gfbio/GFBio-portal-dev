@@ -163,11 +163,7 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 	//update or create a new Relationship between a Primary Data and a Research Object
 	public Boolean updatePrimaryDataResearchObject(long primaryDataId, long researchObjectId, int researchObjectVersion) {
 
-		System.out.println(researchObjectId + " | "+ researchObjectVersion + " | "+ primaryDataId);
-		
 		Boolean check = false;
-		
-
 		
 		PrimaryData_ResearchObject relation = null;
 		PrimaryData_ResearchObjectPK pk = new PrimaryData_ResearchObjectPK(primaryDataId, researchObjectId, researchObjectVersion);
@@ -188,6 +184,29 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 		return check;
 	}
 	
-	//----------------------------------- Get Functions --------------------------------------------------//
+	//---------------------------------- Update Functions -------------------------------------------------//
+	
+	//
+	public Boolean updateResearchObjectVersion(long primaryDataId, long researchObjectId, int oldResearchObjectVersion, int newResearchObjectVersion) {
+		Boolean check = false;
+		
+		PrimaryData_ResearchObject oldRelation = null;
+		PrimaryData_ResearchObjectPK pk = new PrimaryData_ResearchObjectPK(primaryDataId, researchObjectId, oldResearchObjectVersion);
+
+		try {oldRelation = primaryData_ResearchObjectPersistence.findByPrimaryKey(pk);}
+		catch (NoSuchPrimaryData_ResearchObjectException | SystemException e) {e.printStackTrace();}
+		
+		if (oldRelation !=null){
+			PrimaryData_ResearchObject newRelation = (PrimaryData_ResearchObject) oldRelation.clone();
+			newRelation.setResearchObjectVersion(newResearchObjectVersion);
+			
+			try {
+				super.updatePrimaryData_ResearchObject(newRelation);
+				check = true;
+			} catch (SystemException e) {e.printStackTrace();}
+		}
+
+		return check;
+	}
 	
 }
