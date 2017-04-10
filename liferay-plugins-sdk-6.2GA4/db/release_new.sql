@@ -881,3 +881,18 @@ ALTER TABLE	gfbio_researchobject DROP metadatalabel;
 -----------------------------------------------------------------------------------------------
 
 ALTER TABLE gfbio_researchobject ADD COLUMN lastmodifieddate timestamp with time zone NOT NULL DEFAULT now();
+
+-- -----------------------------------------------------------------------------------------------
+-- ------------------------------------ Head, Column & Content -----------------------------------
+-- --------------------------------------       license        -- 10.04.2017 ---------------------
+-- -----------------------------------------------------------------------------------------------
+
+
+
+
+UPDATE gfbio_content SET cellcontent = 'CC BY' 			WHERE cellcontent ='CC-BY' and headid = (select getHeadIdByName('gfbio_license'));
+UPDATE gfbio_content SET cellcontent = 'CC BY-SA' 		WHERE cellcontent ='CC-BY-SA' and headid = (select getHeadIdByName('gfbio_license'));
+UPDATE gfbio_content SET cellcontent = 'CC BY-NC-SA' 	WHERE cellcontent ='CC-BY-NC-SA' and headid = (select getHeadIdByName('gfbio_license'));
+UPDATE gfbio_content SET cellcontent = 'CC BY-NC' 		WHERE cellcontent ='CC-BY-NC' and headid = (select getHeadIdByName('gfbio_license'));
+UPDATE gfbio_content SET cellcontent = 'CC BY-NC-ND' 	WHERE cellcontent ='CC-BY-NC-ND' and headid = (select getHeadIdByName('gfbio_license'));
+UPDATE gfbio_content SET cellcontent = 'CC BY-ND' 	WHERE cellcontent ='CC-BY-ND' and headid = (select getHeadIdByName('gfbio_license'));

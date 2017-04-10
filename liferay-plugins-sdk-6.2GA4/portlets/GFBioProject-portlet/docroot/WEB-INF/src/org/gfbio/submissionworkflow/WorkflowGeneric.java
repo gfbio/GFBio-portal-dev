@@ -95,7 +95,7 @@ public class WorkflowGeneric extends GenericPortlet {
 		response.setContentType("text/html");
 				
 		if (request.getParameter("responseTarget") != null) {
-			
+					
 			//
 			if ("createresearchobject".toString().equals(request.getParameter("responseTarget").toString()))
 				createResearchObject(request, response);	
@@ -546,9 +546,9 @@ public class WorkflowGeneric extends GenericPortlet {
         response = response.replaceAll("\\\\", "");
         response = response.replaceAll("----n", "\\\\n");
         
-      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+/*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
-        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");*/
 	           
         return response;
     }
@@ -606,7 +606,6 @@ public class WorkflowGeneric extends GenericPortlet {
 
             URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
             
-            //System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/jssecacerts");
             System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
             System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
 	        	        
@@ -617,23 +616,25 @@ public class WorkflowGeneric extends GenericPortlet {
 	        conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
 	        conn.setRequestProperty("Accept", "application/json");
-	        
+
+            conn.setUseCaches(false);
             String userpass = "uni-jena:GFBIOhelpdesk123";
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
 	        conn.addRequestProperty ("Authorization", basicAuth);
-	                        
+	        
 	        String jiraRequestString = getJSON_Body((JSONObject) parseJson);
 	        
 	        OutputStream os = conn.getOutputStream();
 	        os.write(jiraRequestString.getBytes());
 	        os.flush(); 
 	        os.close();
-	        
-	        if (conn.getResponseCode() != 201) 
+	        if (conn.getResponseCode() != 201) {
+	        	_log.info("Failed : HTTPS error code : "+conn.getResponseCode());
 	           throw new RuntimeException("Failed : HTTPS error code : " + conn.getResponseCode());
+	        }
 	        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 	        String output;
-	        System.out.println("Output from Server .... \n");
+	        _log.info("Output from Server .... \n");
 	        while ((output = br.readLine()) != null){
 			
 		        JSONParser parser = new JSONParser();
@@ -658,6 +659,7 @@ public class WorkflowGeneric extends GenericPortlet {
 					int i =0;
 					while (i<idList.size() && check){
 						check = addAttachmentToIssue((String) jraResponseJson.get("id"), (String) PrimaryDataLocalServiceUtil.getPathByPrimaryDataId(idList.get(i)));
+						
 						i = i+1;
 					}
 					jraResponseJson.put("fileToJiraResponse", check);
@@ -667,12 +669,16 @@ public class WorkflowGeneric extends GenericPortlet {
 				responseString = responseString.concat(jraResponseJson.toString());
 	        }
 	        conn.disconnect();
-	     } catch (Exception e) {e.printStackTrace();}
+	     } catch (Exception e) {
+	    	 e.printStackTrace();
+	     	System.out.println(e.toString());
+	     }
         
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		try {response.getWriter().write(responseString);}
-		catch (IOException e) {e.printStackTrace();}
+		catch (IOException e) {e.printStackTrace();
+		System.out.println(e.toString());}
 		
         
     }
