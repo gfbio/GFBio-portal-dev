@@ -233,15 +233,15 @@ SELECT insertHCCRelationship('gfbio_category_type' , 'gfbio_category' , 'gfbio_t
 -----------------------------------------------------------------------------------------------
 
 ALTER TABLE gfbio_dataprovider ADD COLUMN physicalobjectpossible BOOLEAN;
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='BGBM';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='DSMZ';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='MfN';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='SGN';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='SMNS';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='SNSB';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = true WHERE label ='ZFMK';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = false WHERE label ='ENA';
-UPDATE gfbio_dataprovider SET physicalobjectpossible2 = false WHERE label ='PANGAEA';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = false WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET physicalobjectpossible = false WHERE label ='PANGAEA';
 
 ALTER TABLE gfbio_dataprovider ADD COLUMN nophysicalobject BOOLEAN;
 UPDATE gfbio_dataprovider SET nophysicalobject = true WHERE label ='BGBM';
@@ -895,4 +895,4 @@ UPDATE gfbio_content SET cellcontent = 'CC BY-SA' 		WHERE cellcontent ='CC-BY-SA
 UPDATE gfbio_content SET cellcontent = 'CC BY-NC-SA' 	WHERE cellcontent ='CC-BY-NC-SA' and headid = (select getHeadIdByName('gfbio_license'));
 UPDATE gfbio_content SET cellcontent = 'CC BY-NC' 		WHERE cellcontent ='CC-BY-NC' and headid = (select getHeadIdByName('gfbio_license'));
 UPDATE gfbio_content SET cellcontent = 'CC BY-NC-ND' 	WHERE cellcontent ='CC-BY-NC-ND' and headid = (select getHeadIdByName('gfbio_license'));
-UPDATE gfbio_content SET cellcontent = 'CC BY-ND' 	WHERE cellcontent ='CC-BY-ND' and headid = (select getHeadIdByName('gfbio_license'));
+UPDATE gfbio_content SET cellcontent = 'CC BY-ND' 		WHERE cellcontent ='CC-BY-ND' and headid = (select getHeadIdByName('gfbio_license'));

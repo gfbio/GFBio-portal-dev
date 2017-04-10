@@ -1005,7 +1005,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					String extendedData = getStringFromJson(requestJson, "extendeddata");
 					if (!extendedData.equals(researchObject.getExtendeddata())){
 						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						System.out.println(researchObjectVersion +" | "+ startVersion);
 						check = updateExtendedData(researchObjectId, researchObjectVersion, extendedData);
 					}
 				}
