@@ -541,15 +541,15 @@
 					}
 					
 					//primarydata
-					
-				    if (json.primarydata !=null && json.primarydata.length!=0){
+					if (json.primarydata !=null && json.primarydata.length!=0){
 				    	var nameList = "";
 				    	nameList = nameList + '<ul>';
 					    for (i =0; i < json.primarydata.length;i++)
 					    	nameList = nameList +'<li>'+json.primarydata[i].name+ '</li>';
 					    nameList = nameList + '</ul>';
+					    document.getElementById("gwf_ro_upload").innerHTML = nameList;
 					}
-				    document.getElementById("gwf_ro_upload").innerHTML = nameList;
+				    
 
 	 			},
 				error :  function (obj){
@@ -719,10 +719,11 @@
 				);
 			},
 			error :  function (obj){
-				
+				console.log("sub error");
 				deleteSubmissionRegistryEntry(responseData);
 				
 				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer is failed. Please contact our technical support via our <a href='https://www.gfbio.org/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+				console.log(obj);
 			},		
 		});	 
 	}

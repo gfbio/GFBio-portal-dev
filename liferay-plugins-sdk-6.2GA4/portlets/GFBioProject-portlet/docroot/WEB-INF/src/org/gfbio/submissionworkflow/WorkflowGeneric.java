@@ -546,9 +546,9 @@ public class WorkflowGeneric extends GenericPortlet {
         response = response.replaceAll("\\\\", "");
         response = response.replaceAll("----n", "\\\\n");
         
-/*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
-        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");*/
+        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
 	           
         return response;
     }
@@ -606,6 +606,7 @@ public class WorkflowGeneric extends GenericPortlet {
 
             URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
             
+            //System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/jssecacerts");
             System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
             System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
 	        	        

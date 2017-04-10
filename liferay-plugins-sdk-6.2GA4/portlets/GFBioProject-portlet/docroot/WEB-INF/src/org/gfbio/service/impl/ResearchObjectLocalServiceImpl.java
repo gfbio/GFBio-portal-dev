@@ -1466,7 +1466,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					check = true;
 				} catch (SystemException e) {e.printStackTrace();}
 				
-				// research object - project
+				// project - research object
 				if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, oldResearchObjectVersion) && check){
 					long projectId =0;
 					projectId = getProjectIdByIds(researchObjectId, oldResearchObjectVersion);
@@ -1478,6 +1478,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				// research object - user
 				if (ResearchObject_UserLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, oldResearchObjectVersion) && check){
 					JSONArray userIdJson = getUserIdsByIds(researchObjectId, oldResearchObjectVersion);
+					System.out.println("userId "+userIdJson);
 					for(int i =0;i < userIdJson.size();i++)
 						check = ResearchObject_UserLocalServiceUtil.updateResearchObjectVersion((long)userIdJson.get(i), researchObjectId,  oldResearchObjectVersion, newResearchObjectVersion);
 				}
