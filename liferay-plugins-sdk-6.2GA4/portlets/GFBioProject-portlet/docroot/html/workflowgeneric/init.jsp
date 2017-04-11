@@ -194,7 +194,7 @@
 
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
-				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size over 20 MB, please ulpoad onlys representative data. Than the whole dataset will transfer later, together with the data curator.</p>"+
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size exceeds 20 MB, please upload only representative data. The whole dataset will be transfered later, together with the data curator.</p>"+
 				"<div class='fileUpload btn btn-primary'>"+
 				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
 				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
@@ -722,7 +722,7 @@
 				console.log("sub error");
 				deleteSubmissionRegistryEntry(responseData);
 				
-				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer is failed. Please contact our technical support via our <a href='https://www.gfbio.org/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 				console.log(obj);
 			},		
 		});	 
