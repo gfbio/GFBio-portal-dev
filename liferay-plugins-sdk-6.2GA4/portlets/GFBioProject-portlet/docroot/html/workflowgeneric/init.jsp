@@ -109,7 +109,7 @@
 				"</div>"+
 
 				"<h3>1. Dataset information</h3><hr>"+
-				
+									
 				"<div class='swHide'>"+
 					"<div 		class='control-group'>"+
 						"<label class='control-label'					id='gwf_ro_id'_l>Dataset id </label>"+
@@ -713,7 +713,7 @@
 					"<div class='portlet-success'>"+
 						"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
 						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
-						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:#488f06; font-weight:bold'>"+obj.key+"</a>"+
+						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
 					"</div>"+
 					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
 				);
