@@ -6,7 +6,7 @@
 	td{	text-align:left; }
 	label{cursor:default;}
 
-	
+
 	.portlet-success	{
 		background-color: #f1fbd1;
 		border: 1px solid #f1d875;
@@ -47,11 +47,12 @@
 	input[type=button].widthL{width:50%}
 
 
-	.navigator {   border-bottom:1px solid #c8c8c8;height:32px}
-	.navigator .tabs ul {list-style:none}
-	.navigator .tabs li {list-style:none; display:inline}
-	.navigator .tabs a {text-decoration:none;floar:left;margin-rigth:5px;border:1px solid #c8c8c8;border-bottom: none;padding:2px 5px;width:150px;text-align:center;display:inline-block;}
-	.navigator .tabs a.active {	color:#000;	border-bottom: 1px solid #ffffff}
+	.navigator {  height:32px }
+	.tabs { }
+	.navigator .tabs span 		{display:inline;  text-decoration:none;floar:left}
+	.navigator .tabs .gap	 	{						   border-bottom:1px solid #c8c8c8; padding-bottom:5px; display:inline-block}
+	.navigator .tabs .tab 		{border:1px solid #e6e6e6; border-bottom:1px solid #c8c8c8; padding-bottom:5px; display:inline-block; text-align:center; cursor:pointer}
+	.navigator .tabs .tabCurrent{border:1px solid #c8c8c8; border-bottom:1px solid #ffffff; padding-bottom:5px; display:inline-block; text-align:center; cursor:pointer; font-weight: bold}
 
 	div .section {display: none}
 	div .section .active {display: block}

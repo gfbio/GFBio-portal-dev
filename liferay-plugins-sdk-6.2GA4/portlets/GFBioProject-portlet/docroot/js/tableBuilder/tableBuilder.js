@@ -1,3 +1,32 @@
+//////////////////////////////////////////////   Builder  ///////////////////////////////////////////////////
+
+
+//
+function loadTab(oldTabName, newTabId){
+	
+	tabChange(oldTabName, newTabId)
+
+	tabLoader(newTabId);
+}
+
+
+//
+function tabChange(oldTabName, newTabId){
+	var tabs = document.getElementsByName(oldTabName);
+	for (i =0;i<tabs.length;i++)
+		tabs[i].className="tab";
+	document.getElementById(newTabId).className="tabCurrent";
+}
+
+function tabLoader(newTabId){
+	if (newTabId=='tabContentMenu')
+		buildContentMenu('tableBuilder');
+	else
+		if(newTabId=='tabTableMenu')
+			initiateTableMenu('tableBuilder');
+}
+
+
 //////////////////////////////////////////////   Helper  ///////////////////////////////////////////////////
 
 

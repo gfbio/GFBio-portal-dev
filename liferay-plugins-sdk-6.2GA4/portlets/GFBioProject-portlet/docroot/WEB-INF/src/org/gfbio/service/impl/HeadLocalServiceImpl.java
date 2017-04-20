@@ -90,6 +90,26 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
+	
+	//-------------------------------- Manage Get Functions ----------------------------------------------//
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getTableNamesByTableType(JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		if (requestJson.containsKey("tabletype"))
+			responseJson = getTableNamesByTableType((String) requestJson.get("tabletype"));
+		else
+			responseJson.add("ERROR: The json need minimal 'tabletype' as String.");
+		return responseJson;
+		
+	}
+	
+	
+	//----------------------------------- Get Functions --------------------------------------------------//
 		
 		
 	//get Table_names of a List of heads selected by TableType
@@ -155,22 +175,20 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return headPersistence.findByTableType(tableType);
 	}
 	
-	
+		
 	//get content of a specific entity in a TableArray
 	@SuppressWarnings("rawtypes")
 	public long[][] getIdTableAsArray(long headId){
 		
 		long[][] table = null;
-		try {
-			table = new long[((ColumnLocalServiceUtil.getCountofColumns(headId))+1)][(ContentLocalServiceUtil.getCountOfRows(headId)+1)];
-		} catch (SystemException e) {e.printStackTrace();}
+		try {table = new long[((ColumnLocalServiceUtil.getCountofColumns(headId))+1)][(ContentLocalServiceUtil.getCountOfRows(headId)+1)];}
+		catch (SystemException e) {e.printStackTrace();}
 			
 		//head of table
 		table[0][0]= headId;
 		List<Column> columnList = null;
-		try {
-			columnList = columnPersistence.findByHeadId(headId);
-		} catch (SystemException e1) {e1.printStackTrace();}
+		try {columnList = columnPersistence.findByHeadId(headId);}
+		catch (SystemException e1) {e1.printStackTrace();}
 		
 		for (int x =0; x < columnList.size();x++)
 			table[x+1][0]= columnList.get(x).getColumnID();
@@ -206,9 +224,8 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		
 		for (int y = 1; y < idTable[0].length;y++)
 			for (int x =1;x< idTable.length;x++)
-				try {
-					returnTable[x][y]= contentPersistence.findByContentId(idTable[x][y]).getCellContent();
-				} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
+				try {returnTable[x][y]= contentPersistence.findByContentId(idTable[x][y]).getCellContent();}
+				catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 			
 		return returnTable;
 	}
@@ -244,17 +261,6 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		return responseJson;
 	}
 	
-		
-	//get tableName of a specific head  
-	@SuppressWarnings("rawtypes")
-	public String getTableNameById(long headId) throws NoSuchHeadException, SystemException {
-		String name ="";
-		List nameList =  HeadFinderUtil.getTableNameById(headId);
-		if (nameList.size()>0)
-			name =  (String) nameList.get(0);
-		return name;
-	}
-	
 	
 	//get an Array of TableNames with a specific table type
 	public String[] getTableNameArray(String tableType) throws SystemException  {
@@ -281,6 +287,30 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 				tableNames[i] = headList.get(i).getTable_name();
 
 		return tableNames;
+	}
+	
+	
+	//get tableName of a specific head  
+	@SuppressWarnings("rawtypes")
+	public String getTableNameById(long headId) throws NoSuchHeadException, SystemException {
+		String name ="";
+		List nameList =  HeadFinderUtil.getTableNameById(headId);
+		if (nameList.size()>0)
+			name =  (String) nameList.get(0);
+		return name;
+	}
+	
+	
+	//
+	@SuppressWarnings({ "rawtypes", "unchecked"})
+	public JSONArray getTableNamesByTableType(String tableType){
+		
+		JSONArray responseJson = new JSONArray();;
+		List responseList = (ArrayList)	HeadFinderUtil.getTableNamesByTableType(tableType);
+		for(int i=0; i< responseList.size();i++)
+			responseJson.add(responseList.get(i));
+
+		return responseJson;
 	}
 	
 		

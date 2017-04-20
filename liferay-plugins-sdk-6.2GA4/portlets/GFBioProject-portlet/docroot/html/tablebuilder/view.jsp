@@ -13,10 +13,12 @@
 
 
 <%@ include file="/html/init.jsp" %> 																				
-<%@ include file="/html/tablebuilder/init.jsp" %> 																	
-<script src="${pageContext.request.contextPath}/js/main.js" 					type="text/javascript"></script>  	<!--  main.js  imports -->
-<script src="${pageContext.request.contextPath}/js/tableBuilder.js"     		type="text/javascript"></script>  	<!--  tableBuilder.js  imports -->
-<link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 	type="text/css"> 					<!--  main.css imports -->
+<%@ include file="/html/tablebuilder/init.jsp" %>
+<%@ include file="/html/tablebuilder/contentmenu/init.jsp" %> 	
+<%@ include file="/html/tablebuilder/tablemenu/init.jsp" %> 	 																	
+<script src="${pageContext.request.contextPath}/js/main.js" 						type="text/javascript"></script>  	<!--  main.js  imports -->
+<script src="${pageContext.request.contextPath}/js/tableBuilder/tableBuilder.js"    type="text/javascript"></script>  	<!--  tableBuilder.js  imports -->
+<link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 		type="text/css"> 					<!--  main.css imports -->
 
 <input type="hidden" class="widthL" id="path"  				value="<%=request.getContextPath()%>" />
 <input type="hidden" class="widthL" id="tablebuilderurl"  	value="<%=tablebuilderURL %>" />
@@ -29,18 +31,32 @@
 <!------------------------------------------------        Tabs        -------------------------------------------------------------------->
 <!---------------------------------------------------------------------------------------------------------------------------------------->
 
+<h1>Table Builder</h1>
 
-<div class='navigator'>
-	<ul class='tabs' id="verticalNav">
-		<li><a id="linkTableMenu"	href='#tabTableMenu'	>Table Menu	 </a></li>
-		<li><a id="linkContentMenu"	href='#tabContentMenu'	>Content Menu</a></li>
-	</ul>
+
+
+ <div class='navigator'>
+	<div class='tabs'>
+		<span class ='gap' style='width:4%'> &nbsp;</span><span class ='tabCurrent' style='width:15%' name="navTab" id="tabTableMenu" onclick="loadTab('navTab','tabTableMenu')"	>Table Menu	 </span><span class ='gap' style='width:2%'> &nbsp;</span><span class ='tab' style='width:15%' name="navTab" id="tabContentMenu" onclick="loadTab('navTab','tabContentMenu')"	>Content Menu</span><span class ='gap' style='width:60%'>&nbsp;</span>
+	</div>
 </div>
 
 
-<div id="sections">
+<div id="tableBuilder">
+</div>
 
 
+<script>
+
+	//
+	AUI().ready(function(A){
+		initiateTableMenu('tableBuilder');
+	});
+
+</script>
+
+
+<%--
 <!------------------------------------------------        Tab: Table Menu        -------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------------------------------------------------------------------------->
 
@@ -474,4 +490,4 @@
 		<%} %>
 	</div>
 	
-</div>
+</div> --%>

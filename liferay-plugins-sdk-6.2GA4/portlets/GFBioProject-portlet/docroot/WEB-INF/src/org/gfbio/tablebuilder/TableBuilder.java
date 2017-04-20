@@ -21,6 +21,7 @@ import org.gfbio.NoSuchHeadException;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -60,8 +61,7 @@ public class TableBuilder extends GenericPortlet {
 	//
 	public void init() {
 		viewTemplate = getInitParameter("view-template");
-	}
-	
+	}	
 	
 	
 	///////////////////////////////////// Request/Response Functions ///////////////////////////////////////////////////
@@ -75,11 +75,15 @@ public class TableBuilder extends GenericPortlet {
 
 		response.setContentType("text/html");
 		
-		System.out.println(request.getParameter("responseTarget"));
-		
 		if (request.getParameter("responseTarget") != null) {
 			
-			//choose Table
+			
+			//get the table name list
+			if ("gethccentitylist".toString().equals(request.getParameter("responseTarget").toString()))
+				TableBuilderTableMenu.getHCCEntityList(request, response);
+			
+			
+/*			//choose Table
 			if ("chooseTableForRelationship".toString().equals(request.getParameter("responseTarget").toString()))
 				chooseTable(request, response);
 			
@@ -103,8 +107,7 @@ public class TableBuilder extends GenericPortlet {
 			if ("deleteRelationContent".toString().equals(request.getParameter("responseTarget").toString()))
 				deleteRelationContent(request, response);
 			
-
-			//new Table
+		//new Table
 			if ("newTable".toString().equals(request.getParameter("responseTarget").toString()))
 				updateTable(request, response);		
 
@@ -130,13 +133,27 @@ public class TableBuilder extends GenericPortlet {
 			
 			//update Table
 			if ("updateTable".toString().equals(request.getParameter("responseTarget").toString()))
-				updateTable(request, response);
+				updateTable(request, response);*/
 		
 		}
 	}
 	
 	
-	//-------------------------------- Choose Functions ----------------------------------------------//
+	////////////////////////////////////////////////////////////// get functions //////////////////////////////////////////	
+	
+	
+	//
+	public void getHCCEntityList(ResourceRequest request, ResourceResponse response) throws IOException, PortletException{
+
+		JSONArray responseJson = new JSONArray();
+		responseJson = TableBuilderTableMenu.getHCCEntityList(request, response);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(responseJson.toString());
+	}
+	
+	
+/*	//-------------------------------- Choose Functions ----------------------------------------------//
 	
 	
 	//choose Table
@@ -359,5 +376,5 @@ public class TableBuilder extends GenericPortlet {
 			json = (JSONObject) parser.parse(request.getParameter("data"));
 		} catch (ParseException e1) {e1.printStackTrace();}
 		Boolean check = HeadLocalServiceUtil.updateHeadWithColumns(json);
-	}
+	}*/
 }

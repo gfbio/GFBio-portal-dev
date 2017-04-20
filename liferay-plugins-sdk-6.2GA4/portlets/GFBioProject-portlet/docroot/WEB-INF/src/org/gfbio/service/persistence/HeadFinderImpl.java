@@ -18,11 +18,12 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFinder {
 	
-	public static String FINDER_CLASS_NAME_ENTITY = HeadFinderImpl.class.getName();
-	public static String GET_ENITIES_BY_HEADID = FINDER_CLASS_NAME_ENTITY + ".getEntitiesByHeadId";
-	public static String GET_HEAD_BETWEEN_HEAD_IDS = FINDER_CLASS_NAME_ENTITY + ".getHeadBetweenHeadIds";
-	public static String GET_HEADID_BY_TABLENAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdByTableName";	
-	public static String GET_TABLENAME_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getTableNameById";		
+	public static String FINDER_CLASS_NAME_ENTITY 	= HeadFinderImpl.class.getName();
+	public static String GET_ENITIES_BY_HEADID 		= FINDER_CLASS_NAME_ENTITY + ".getEntitiesByHeadId";
+	public static String GET_HEAD_BETWEEN_HEAD_IDS 	= FINDER_CLASS_NAME_ENTITY + ".getHeadBetweenHeadIds";
+	public static String GET_HEADID_BY_TABLENAME 	= FINDER_CLASS_NAME_ENTITY + ".getHeadIdByTableName";	
+	public static String GET_TABLENAME_BY_ID 		= FINDER_CLASS_NAME_ENTITY + ".getTableNameById";	
+	public static String GET_TABLENAME_BY_TABLETYPE = FINDER_CLASS_NAME_ENTITY + ".getTableNamesByTableType";
 	
 	
 
@@ -125,6 +126,34 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 			
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(headId);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	
+	//get the name of a specific table with a specific id
+	@SuppressWarnings("rawtypes")
+	public List getTableNamesByTableType(String tableType) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_TABLENAME_BY_TABLETYPE);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("table_name", Type.STRING);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(tableType);
 			return (List) queryObject.list();
 			
 		} catch (Exception e) {e.printStackTrace();}

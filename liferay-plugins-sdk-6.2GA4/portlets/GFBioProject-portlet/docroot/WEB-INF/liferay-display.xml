@@ -7,8 +7,8 @@
 		<portlet id="archiving"></portlet>
 		<portlet id="back-to-su-ma"></portlet>
 		<portlet id="data-provider-managment"></portlet>
-        <portlet id="dcrt"></portlet>
-        <portlet id="dmpt"></portlet>
+		<portlet id="dcrt"></portlet>
+		<portlet id="dmpt"></portlet>
 		<portlet id="new-project"></portlet>
 		<portlet id="project-profile"></portlet>
 		<portlet id="submission-manager"></portlet>
@@ -17,5 +17,6 @@
 		<portlet id="workflowena"></portlet>
 		<portlet id="workflow-environmental"></portlet>
 		<portlet id="workflow-generic"></portlet>
+		<portlet id="table-builder-table-menu"></portlet>
 	</category>
 </display>
