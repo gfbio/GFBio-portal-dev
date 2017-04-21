@@ -13,6 +13,7 @@
 <%@ page import="java.io.File" %>
 
 <%@ page import="org.gfbio.submissionworkflow.WorkflowENAPortlet" %>
+<%@ page import="org.gfbio.helper.Helper" %>
 
 
 

@@ -37,6 +37,7 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.gfbio.helper.Helper;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PrimaryDataLocalServiceUtil;
@@ -333,7 +334,8 @@ public class WorkflowGeneric extends GenericPortlet {
 
         
         //ticket basic informations
-        project.put("key", "SAND");
+        try {project.put("key", Helper.getServerInformation((String) requestJson.get("path"),"jiraprojectkey"));}
+        catch (IOException | PortletException e1) {e1.printStackTrace();}
         fields.put("project", project);
         issuetype.put("name", "Data Submission");
         fields.put("issuetype", issuetype);	
@@ -537,7 +539,7 @@ public class WorkflowGeneric extends GenericPortlet {
         
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("userid"));
-        try {json.put("authorization", "Token "+WorkflowENAPortlet.getServerToken((String) requestJson.get("path"),"token"));}
+        try {json.put("authorization", "Token "+Helper.getServerInformation((String) requestJson.get("path"),"brokeragenttoken"));}
         catch (IOException | PortletException e) {e.printStackTrace();}
        	
    
@@ -618,7 +620,7 @@ public class WorkflowGeneric extends GenericPortlet {
 	        conn.setRequestProperty("Accept", "application/json");
 
             conn.setUseCaches(false);
-            String userpass = "uni-jena:GFBIOhelpdesk123";
+            String userpass= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauserpass");
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
 	        conn.addRequestProperty ("Authorization", basicAuth);
 	        
@@ -641,10 +643,10 @@ public class WorkflowGeneric extends GenericPortlet {
 				JSONObject jraResponseJson = new JSONObject();
 				try {jraResponseJson = (JSONObject) parser.parse(output);}
 				catch (ParseException e) {e.printStackTrace();}
-				
 				JSONObject jiraRequestJson = new JSONObject();
 				try {jiraRequestJson = (JSONObject) parser.parse(jiraRequestString);}
 				catch (ParseException e) {e.printStackTrace();}
+				
 				JSONObject fieldJson = (JSONObject) jiraRequestJson.get("fields");
 				
 				long researchObjectId = Long.parseLong((String)fieldJson.get("customfield_10309"));
@@ -658,7 +660,7 @@ public class WorkflowGeneric extends GenericPortlet {
 					Boolean check = true;
 					int i =0;
 					while (i<idList.size() && check){
-						check = addAttachmentToIssue((String) jraResponseJson.get("id"), (String) PrimaryDataLocalServiceUtil.getPathByPrimaryDataId(idList.get(i)));
+						check = addAttachmentToIssue(userpass, (String) jraResponseJson.get("id"), (String) PrimaryDataLocalServiceUtil.getPathByPrimaryDataId(idList.get(i)));
 						
 						i = i+1;
 					}
@@ -686,12 +688,11 @@ public class WorkflowGeneric extends GenericPortlet {
     
     //
 	@SuppressWarnings({ "resource", "unused" })
-	public Boolean addAttachmentToIssue(String issueKey, String path){
+	public Boolean addAttachmentToIssue(String userpass, String issueKey, String path){
 
 		try{
 			
 			URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/"+issueKey+"/attachments");
-			String userpass = "uni-jena:GFBIOhelpdesk123";
 
 			String auth = new String(org.apache.commons.codec.binary.Base64.encodeBase64((userpass).getBytes()));
 
@@ -801,8 +802,6 @@ public class WorkflowGeneric extends GenericPortlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
-        
-        
 	}
 	
     

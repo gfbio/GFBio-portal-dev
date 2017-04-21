@@ -29,7 +29,7 @@
    
 
 		<div id="ui-molecular-data-submission"
-		     userid="<%=PortalUtil.getUserId(request) %>" token="<%=WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"token") %>"
+		     userid="<%=PortalUtil.getUserId(request) %>" token="<%=Helper.getServerInformation(getServletContext().getRealPath("/"),"brokeragenttoken") %>"
 		     style="margin-top: 100px;">
 		</div> 
    
