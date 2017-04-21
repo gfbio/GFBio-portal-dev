@@ -42,9 +42,11 @@
 </div>
 
 
-<div id="tableBuilder">
-</div>
+<div id="tableBuilder"></div>
 
+<br/>
+<br/>
+<br/>
 
 <script>
 
