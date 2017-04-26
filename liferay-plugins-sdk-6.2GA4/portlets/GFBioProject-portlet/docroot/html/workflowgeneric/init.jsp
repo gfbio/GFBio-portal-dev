@@ -289,7 +289,7 @@
 			},
 			async: false,
  			success :  function (obj){
-				document.getElementById("gwf_ro_author").innerHTML= obj.fullname.concat(",");
+				document.getElementById("gwf_ro_author").innerHTML= obj.fullname;
  			}
  		});
  		
