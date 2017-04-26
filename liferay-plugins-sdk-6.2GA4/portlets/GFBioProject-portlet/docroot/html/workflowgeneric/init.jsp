@@ -1,5 +1,6 @@
 <script>
 
+	var mandatoryList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license'];
 
 /////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
@@ -71,6 +72,8 @@
 	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 
 	
+
+	
 	//build default generic workflow without project or researchobject data
 	AUI().ready(function(A){
 		var div =   $("#generic");
@@ -127,12 +130,12 @@
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title<span style='color:darkred'>*</span> </label>"+
 					"<p 	class='field-description'				id='gwf_ro_name_d'>Provide a short, descriptive title for your dataset.</p>"+
-					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text'  value=''>"+
+					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text' onchange=\"goToNormal(\'"+mandatoryList[0]+"\')\" value=''>"+
 				"</div >"+
 				"<div 			class='control-group'>"+
 					"<label		class='control-label' 					id='gwf_ro_description_l'> Description<span style='color:darkred'>*</span> </label>"+
-					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract).</p>"+
-					"<textarea	class='field lfr-input-text-container'											id='gwf_ro_description' rows='6' ></textarea>"+
+					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract). <br/>Please note: Only 2000 characters are permitted.</p>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+mandatoryList[1]+"\')\" ></textarea>"+
 				"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
@@ -152,14 +155,14 @@
 				"<div 			class='control-group'>"+
 					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'			 	id='gwf_ro_author_d'>Please, enter the author(s) for the data set (one author per line).</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' ></textarea>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+mandatoryList[2]+"\')\"></textarea>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_license_l'> License<span style='color:darkred'>*</span>   </label>"+
 					"<p 	class='field-description'			 	id='gwf_ro_license_d'> Under which license will your data be accessible?</p>"+
 					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_license_v' type='text'  value=''>"+
 						"<form action='select.html'>"+
-							"<select id='gwf_ro_licenselabel' name='<portlet:namespace/>gwf_ro_licenselabel' size='1' style='width:100%'>"+
+							"<select id='gwf_ro_licenselabel' name='<portlet:namespace/>gwf_ro_licenselabel' size='1' style='width:100%' onchange=\"goToNormal(\'"+mandatoryList[3]+"\')\">"+
 								"<option value='none'></option>"+
 							"</select>"+
 						"</form>"+
@@ -208,7 +211,7 @@
  					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset</span></span>"+
 				"</div>"+
 				"<br>"+
- 				"<div class='row' id='gwf_lf_comentarField'></div></br>"
+ 				"<div class='row' id='gwf_lf_comentarField'><div id='gwf_lf_comentar'></div></div></br>"
  					
 			);
 		}
@@ -217,17 +220,19 @@
 	
 	//
 	function buildWaitringMessage(div){
+		document.getElementById("generic").style.cursor="wait";
 		var commentarField = $("#".concat(div));
 		commentarField.empty();
-		commentarField.append("<div class='portlet-success' id='gwf_lf_subreg'>The submission process is starting. Please wait until the process is finished.</div>");
+		commentarField.append("<div class='portlet-success' id='gwf_lf_comentar'>The submission process is starting. Please wait until the process is finished.</div>");
 	}
 	
 	
 	//
 	function buildErrorMessage(div, error){
+		document.getElementById("generic").style.cursor="default";
 		var commentarField = $("#".concat(div));
 		commentarField.empty();
-		commentarField.append("<div class='portlet-msg-error'>"+error+ "</div>");
+		commentarField.append("<div class='portlet-msg-error' id='gwf_lf_comentar'>"+error+ "</div>");
 	}
 	
 	
@@ -545,7 +550,7 @@
 				    	var nameList = "";
 				    	nameList = nameList + '<ul>';
 					    for (i =0; i < json.primarydata.length;i++)
-					    	nameList = nameList +'<li>'+json.primarydata[i].name+ '</li>';
+					    	nameList = nameList +"<li><span id='gwf_ro_upload"+json.primarydata[i].name+"'>"+json.primarydata[i].name+ "</span></li>";
 					    nameList = nameList + '</ul>';
 					    document.getElementById("gwf_ro_upload").innerHTML = nameList;
 					}
@@ -558,6 +563,36 @@
 				}
 				
 	 		});
+		}
+	}
+	
+
+	//
+	function goToNormal(block){
+		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
+			document.getElementById(block+"_l").className="control-label";
+			document.getElementById(block+"_d").className="field-description";
+			var testfield = $("#".concat("gwf_lf_comentarField"));
+			if (block == mandatoryList[0])
+				document.getElementById(block).className = 'field lfr-input-text-container';
+			else
+				if (block == mandatoryList[1]|| block == mandatoryList[2])
+					document.getElementById(block).style = 'width: 100%';
+				else
+					if (block == mandatoryList[3])
+						document.getElementById(block+"label").style = 'width: 100%';
+			check = true
+			for (i =0;i<mandatoryList.length;i++){
+				if(document.getElementById(mandatoryList[i]+"_l").className == 'labelFalse'){
+					check = false;
+				}
+			}
+			if(check){
+				var commentarField = $("#".concat("gwf_lf_comentarField"));
+				commentarField.empty();
+				commentarField.append("<div id='gwf_lf_comentar'></div>");
+			}
+				
 		}
 	}
 	
@@ -610,6 +645,8 @@
 
 		var url = document.getElementById('workflowgenericurl').value;
 		
+		
+
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowCollectionsPortlet'),
@@ -619,6 +656,7 @@
 			},
 			async: false,
 			success :  function (obj){
+				
 				if (!obj.hasOwnProperty("ERROR"))
 					buildWaitringMessage('gwf_lf_comentarField');
 				else
@@ -632,7 +670,7 @@
 
 	
 	
-	////////////////////////////////////////////////////////////////// upload tests
+	////////////////////////////////////////////////////////////////// upload 
 	
 	
 	//
@@ -640,40 +678,63 @@
 	
 		var url = document.getElementById('workflowgenericurl').value;
 		var formData = new FormData();
-	    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML)															   +'}'], "uploadInformation.txt");
+	    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML) +'}'], "uploadInformation.txt");
 
 		formData.append('file', uploadInformation);
 
 		var fileSelect = document.getElementById('gwf_b_upload');
 		var files = fileSelect.files;
-
-		for (var i = 0; i < files.length; i++){ 
-		  	formData.append('file', files[i]);
-		}
+		var check = true; 
 		
- 		$.ajax({
- 			"url": url.concat('/WorkflowCollectionsPortlet'),
- 			"type" : "POST",
-			processData: false,
-			contentType: false,
-			"data" : formData,
-			async: false,
-			success :  function (){
-				buildWaitringMessage('gwf_lf_comentarField');
-			} 
-		});
+		for (var i = 0; i < files.length; i++){
+		  	if (files[i].size> 20971520){
+		  		document.getElementById("gwf_ro_upload"+files[i].name).className="labelFalse";
+		  		check = false;
+		  	}
+		}
+		if (check==true){
+		
+			for (var i = 0; i < files.length; i++)
+			  	formData.append('file', files[i]);
+	
+	 		$.ajax({
+	 			"url": url.concat('/WorkflowCollectionsPortlet'),
+	 			"type" : "POST",
+				processData: false,
+				contentType: false,
+				"data" : formData,
+				async: false,
+				success :  function (){
+					buildWaitringMessage('gwf_lf_comentarField');
+				} 
+			});
+		}else{
+			document.getElementById("gwf_ro_upload_d").className="labelFalse";
+			buildErrorMessage('gwf_lf_comentarField', 'One or more files are larger as 20 MB.');
+		}
 	}
 	
 	
 	//
 	function showUpload(){
+		
+		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
+		
+			document.getElementById("gwf_ro_id").innerHTML= 0;
+			document.getElementById("gwf_ro_version").innerHTML= 1;
+			document.getElementById("gwf_ro_upload_d").className='field-description';
+			var commentarField = $("#".concat("gwf_lf_comentarField"));
+			commentarField.empty();
+			commentarField.append("<div id='gwf_lf_comentar'></div>");
+		}
+		
 		var nameList = "";
 	    var bttn = $("#".concat('gwf_b_upload'));
 	    var fileList = bttn[0].files;
 	    if (fileList.length>0){
 	    	nameList = nameList + '<ul>';
 		    for (i =0; i < fileList.length;i++)
-		    	nameList = nameList +'<li>'+fileList[i].name+ '</li>';
+		    	nameList = nameList +"<li><span id='gwf_ro_upload"+fileList[i].name+"'>"+fileList[i].name+ "</span></li>";
 		    nameList = nameList + '</ul>';
 		}
 	    document.getElementById("gwf_ro_upload").innerHTML = nameList;
@@ -704,6 +765,7 @@
 			async: false,
 			success :  function (obj){
 				
+				document.getElementById("generic").style.cursor="default";
 				var brokerSubmissionId = getBrokerSubmissionId(responseData);
 				
 				sentShowHideInformation(false);
@@ -721,9 +783,7 @@
 			error :  function (obj){
 				console.log("sub error");
 				deleteSubmissionRegistryEntry(responseData);
-				
 				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
-				console.log(obj);
 			},		
 		});	 
 	}

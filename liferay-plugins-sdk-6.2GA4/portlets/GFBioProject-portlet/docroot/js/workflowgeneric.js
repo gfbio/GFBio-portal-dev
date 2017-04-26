@@ -149,7 +149,8 @@ function checkMinimalResearchObjectInput(){
 	}
 	
 	//description
-	if (document.getElementById("gwf_ro_description").value==""){
+	var description = document.getElementById("gwf_ro_description").value;
+	if (description=="" || description.length > 2000){
 		check = false;
 		document.getElementById("gwf_ro_description_l").className="labelFalse";
 		document.getElementById("gwf_ro_description_d").className="labelFalse";
@@ -296,31 +297,37 @@ function saveResearchObjectInput(projectJson){
 //
 function submitInput(url){
 	
-	if (checkInput()){
+	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 		
-		//create research object /project
-		var mrrJson = saveAllInput();
-		
-		//create primary data
-		if(document.getElementById("gwf_lf_comentarField").className != 'portlet-msg-error')
-			if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
-				fileUplaod();
-		
-		//create submission registry
-		if(document.getElementById("gwf_lf_comentarField").className != 'portlet-msg-error')
-			startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
-		
-		//sent to JIRA
-		if(document.getElementById("gwf_lf_comentarField").className != 'portlet-msg-error'){
-			var data ={};
-			data["mrr"]= mrrJson;
-			startSubmission(data);
+		if (checkInput()){
+			
+			//create research object /project
+			var mrrJson = saveAllInput();
+			
+			//create primary data
+			if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+				if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
+					fileUplaod();
+			
+				//create submission registry
+				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+					startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
+				
+					//sent to JIRA
+					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+						var data ={};
+						data["mrr"]= mrrJson;
+						startSubmission(data);
+						
+						//sent to Broker
+						//data["submissionregistry"]= registryJson;
+						//sentToBroker(data);
+					}
+				}
+			}
 		}
-		
-		//sent to Broker
-		//data["submissionregistry"]= registryJson;
-		//sentToBroker(data);
-	}
+	}else
+		console.log("submit no");
 }
 
 

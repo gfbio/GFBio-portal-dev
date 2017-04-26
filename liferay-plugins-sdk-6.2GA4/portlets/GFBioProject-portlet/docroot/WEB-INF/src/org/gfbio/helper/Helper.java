@@ -12,6 +12,7 @@ import org.json.simple.parser.ParseException;
 
 public class Helper {
 
+	static String FILEPATH = "..\\..\\..\\server_specific_identification\\serverfile.txt";
 	
     //
     public static String getServerInformation(String path, String key) throws IOException, PortletException {
@@ -33,7 +34,7 @@ public class Helper {
     	
     	JSONObject responseJson = new JSONObject();
 		JSONParser parser = new JSONParser();	
-		File file = new File(path.trim() +"..\\..\\..\\server_specific_identification\\serverfile.txt");
+		File file = new File(path.trim() +FILEPATH);
 		FileInputStream fis = null;
 		
 		try {

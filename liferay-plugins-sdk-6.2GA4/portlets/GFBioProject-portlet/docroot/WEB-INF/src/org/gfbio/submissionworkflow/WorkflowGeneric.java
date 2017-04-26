@@ -341,7 +341,8 @@ public class WorkflowGeneric extends GenericPortlet {
         fields.put("issuetype", issuetype);	
         reporter.put("name", submitterJson.get("emailaddress"));
         fields.put("reporter", reporter);	
-        fields.put("customfield_10010", "sand"+"/"+"generic-data");
+        try {fields.put("customfield_10010", Helper.getServerInformation((String) requestJson.get("path"),"jiracustomfield10010"));}
+        catch (IOException | PortletException e1) {e1.printStackTrace();}
         fields.put("summary", "Automated Data Submission");
 
         
@@ -550,8 +551,8 @@ public class WorkflowGeneric extends GenericPortlet {
         
 /*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
-        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");*/
-	           
+        System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+	           */
         return response;
     }
     
