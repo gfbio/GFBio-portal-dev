@@ -198,8 +198,8 @@
 
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
-				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size exceeds 20 MB, please upload only representative data. The whole dataset will be transfered later, in collaboration with the data curator.</p>"+
-				"<div class='fileUpload btn btn-primary'>"+
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
+				"<div class='fileUpload btn btn-primary'  style='width:25%'>"+
 				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
 				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
 				"</div>"+
@@ -207,10 +207,20 @@
 				
 				"<h3>3. Submission options</h3><hr>"+
 				
-				"<div class='row2'>"+
+/* 				"<div class='row2'>"+
 					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-success'><i class='fa fa-play' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Start submission</span></span>"+
  					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset</span></span>"+
+				"</div>"+ */
+				
+				"<div>"+
+					"<span  style='width:25%; display:inline-block' id='gwf_b_start' onclick='submitInput()'>		<span style='width:100%' class='btn btn-success'><i class='fa fa-play' 		aria-hidden='true'>&nbsp; &nbsp;  </i>Start submission</span></span>"+
+					"<span style='width:50%; display:inline-block'></span>"+
+					"<span  style='width:25%; display:inline-block' id='gwf_b_reset' onclick='resetInput()'>		<span style='width:100%' class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset</span></span>"+
+			
 				"</div>"+
+				
+				
+				
 				"<br>"+
  				"<div class='row' id='gwf_lf_comentarField'><div id='gwf_lf_comentar'></div></div></br>"
  					
