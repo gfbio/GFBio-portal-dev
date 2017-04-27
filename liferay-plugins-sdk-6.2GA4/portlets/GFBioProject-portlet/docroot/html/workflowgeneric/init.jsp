@@ -1,6 +1,7 @@
 <script>
 
-	var mandatoryList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license'];
+	var fieldCheckList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license','gwf_ro_dct', 'gwf_ro_label', 'gwf_ro_publications', 'gwf_ro_embargo'];
+
 
 /////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
@@ -130,23 +131,23 @@
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title<span style='color:darkred'>*</span> </label>"+
 					"<p 	class='field-description'				id='gwf_ro_name_d'>Provide a short, descriptive title for your dataset.</p>"+
-					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text' onchange=\"goToNormal(\'"+mandatoryList[0]+"\')\" value=''>"+
+					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text' onchange=\"goToNormal(\'"+fieldCheckList[0]+"\')\" maxlength='75' value=''>"+
 				"</div >"+
 				"<div 			class='control-group'>"+
 					"<label		class='control-label' 					id='gwf_ro_description_l'> Description<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract). <br/>Please note: Only 2000 characters are permitted.</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+mandatoryList[1]+"\')\" ></textarea>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+fieldCheckList[1]+"\')\" maxlength='2000'></textarea>"+
 				"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_dct_l'> Data collection time </label>"+
-					"<p 	class='field-description'				id='gwf_ro_description_d'>Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).</p>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value=''>"+
+					"<p 	class='field-description'				id='gwf_ro_dct_d'>Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).</p>"+
+					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value='' onchange=\"goToNormal(\'"+fieldCheckList[4]+"\')\" maxlength='75'>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					 id='gwf_ro_label_l'> Dataset label </label>"+
-					"<p 	class='field-description'				 id='gwf_ro_labels_d'>Provide labels for the dataset, describe it in keywords or use internal identifiers.</p>"+
-					"<input class='field lfr-input-text-container'	 id='gwf_ro_label'	type='text'  value=''>"+
+					"<p 	class='field-description'				 id='gwf_ro_label_d'>Provide labels for the dataset, describe it in keywords or use internal identifiers.</p>"+
+					"<input class='field lfr-input-text-container'	 id='gwf_ro_label'	type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[5]+"\')\" maxlength='75'>"+
 				"</div>"+
 				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
 				"<p 	class='field-description'			 	id='gwf_ro_categories_d'>Choose one or more categories, that are related with the dataset.</p>"+
@@ -155,14 +156,14 @@
 				"<div 			class='control-group'>"+
 					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'			 	id='gwf_ro_author_d'>Please, enter the author(s) for the data set (one author per line).</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+mandatoryList[2]+"\')\"></textarea>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+fieldCheckList[2]+"\' maxlength='500')\"></textarea>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_license_l'> License<span style='color:darkred'>*</span>   </label>"+
 					"<p 	class='field-description'			 	id='gwf_ro_license_d'> Under which license will your data be accessible?</p>"+
 					"<div 	class='field lfr-input-text-container' 	id='gwf_ro_license_v' type='text'  value=''>"+
 						"<form action='select.html'>"+
-							"<select id='gwf_ro_licenselabel' name='<portlet:namespace/>gwf_ro_licenselabel' size='1' style='width:100%' onchange=\"goToNormal(\'"+mandatoryList[3]+"\')\">"+
+							"<select id='gwf_ro_licenselabel' name='<portlet:namespace/>gwf_ro_licenselabel' size='1' style='width:100%' onchange=\"goToNormal(\'"+fieldCheckList[3]+"\')\">"+
 								"<option value='none'></option>"+
 							"</select>"+
 						"</form>"+
@@ -170,8 +171,8 @@
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publication(s) </label>"+
-					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset is related to a publication.</p>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value=''>"+
+					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset is related to a publication.<br>Please note: Only 500 characters are permitted.</p>"+
+					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[6]+"\')\" maxlength='500'>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_metadatalabel_l'> Metadata schema  </label>"+
@@ -187,7 +188,7 @@
 				"<div 											class='control-group'>"+
 					"<label 									class='control-label' 					id='gwf_ro_embargo_l'> Embargo </label>"+
 					"<p 										class='field-description'			 	id='gwf_ro_embargo_d'>Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd')</p>"+
-					"<span onmousemove='datePickler()'><input   class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value=''></span>"+
+					"<span onmousemove='datePickler()'><input   class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value='' onchange=\"goToNormal(\'"+fieldCheckList[7]+"\')\" maxlength='10'></span>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_legalrequirements_l'> Legal requirements  </label>"+
@@ -197,7 +198,7 @@
 
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
-				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size exceeds 20 MB, please upload only representative data. The whole dataset will be transfered later, together with the data curator.</p>"+
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files to upload these to the submission process. If the file size exceeds 20 MB, please upload only representative data. The whole dataset will be transfered later, in collaboration with the data curator.</p>"+
 				"<div class='fileUpload btn btn-primary'>"+
 				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
 				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
@@ -573,17 +574,18 @@
 			document.getElementById(block+"_l").className="control-label";
 			document.getElementById(block+"_d").className="field-description";
 			var testfield = $("#".concat("gwf_lf_comentarField"));
-			if (block == mandatoryList[0])
+			if (block == fieldCheckList[0] || block == fieldCheckList[4] || block == fieldCheckList[5] || block == fieldCheckList[6] || block == fieldCheckList[7]){
 				document.getElementById(block).className = 'field lfr-input-text-container';
-			else
-				if (block == mandatoryList[1]|| block == mandatoryList[2])
+				document.getElementById(block).style = 'width: 100%';
+			}else
+				if (block == fieldCheckList[1]|| block == fieldCheckList[2])
 					document.getElementById(block).style = 'width: 100%';
 				else
-					if (block == mandatoryList[3])
+					if (block == fieldCheckList[3])
 						document.getElementById(block+"label").style = 'width: 100%';
 			check = true
-			for (i =0;i<mandatoryList.length;i++){
-				if(document.getElementById(mandatoryList[i]+"_l").className == 'labelFalse'){
+			for (i =0;i<fieldCheckList.length;i++){
+				if(document.getElementById(fieldCheckList[i]+"_l").className == 'labelFalse'){
 					check = false;
 				}
 			}
