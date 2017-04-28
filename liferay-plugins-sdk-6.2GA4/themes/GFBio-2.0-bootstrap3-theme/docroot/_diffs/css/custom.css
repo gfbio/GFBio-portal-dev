@@ -92,6 +92,12 @@
 		 text-decoration:none;
 		}
 		
+		.journal-content-article a.btn-footer:hover {
+		 color:#345aa2;
+		 background-color:#fff;
+		 text-decoration:none;
+		}
+		
 	}
 	
 .html-editor a{

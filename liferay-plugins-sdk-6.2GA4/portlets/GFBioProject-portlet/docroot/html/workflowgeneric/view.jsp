@@ -22,7 +22,13 @@
  
   
 
-<%if (PortalUtil.getUser(request)!=null){ %>
+<%if (PortalUtil.getUser(request)==null){ %>
+	<div class="portlet-msg-alert">
+		Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to continue the process. 
+	</div>
+
+
+<%} else{%>
 
 	<input type="hidden" class="widthL" id="path"  					value="<%=request.getContextPath()%>" />
 	<input type="hidden" class="widthL" id="workflowgenericurl"  	value="<%=workflowgenericURL %>" />

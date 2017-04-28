@@ -23,13 +23,13 @@
 	
 
 			<div class="portlet-msg-alert" style='margin-left:25%; margin-right:25%; margin-top:40px'>
-				Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in"><span style="color:#006400; font-weight:bold">sign in</span></a> to continue the process. 
+				Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to continue the process. 
 			</div>
 <%}else { %>
    
 
 		<div id="ui-molecular-data-submission"
-		     userid="<%=PortalUtil.getUserId(request) %>" token="<%=WorkflowENAPortlet.getServerToken(getServletContext().getRealPath("/"),"token") %>"
+		     userid="<%=PortalUtil.getUserId(request) %>" token="<%=Helper.getServerInformation(getServletContext().getRealPath("/"),"brokeragenttoken") %>"
 		     style="margin-top: 100px;">
 		</div> 
    

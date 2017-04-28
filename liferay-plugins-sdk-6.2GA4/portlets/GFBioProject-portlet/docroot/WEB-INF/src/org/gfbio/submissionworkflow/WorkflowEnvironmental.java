@@ -16,6 +16,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.commons.codec.binary.Base64;
+import org.gfbio.helper.Helper;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
@@ -196,7 +197,7 @@ public class WorkflowEnvironmental extends GenericPortlet {
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Accept","application/json");
            
-            String userpass = "uni-jena:GFBIOhelpdesk123";
+            String userpass= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauserpass");
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
             conn.addRequestProperty ("Authorization", basicAuth);
           
@@ -273,7 +274,8 @@ public class WorkflowEnvironmental extends GenericPortlet {
         
         
         //ticket basic informations
-        project.put("key", "SAND");
+        try {project.put("key", Helper.getServerInformation((String) requestJson.get("path"),"jiraprojectkey"));}
+        catch (IOException | PortletException e1) {e1.printStackTrace();}
         fields.put("project", project);
         issuetype.put("name", "Data Submission");
         fields.put("issuetype", issuetype);	
@@ -337,7 +339,7 @@ public class WorkflowEnvironmental extends GenericPortlet {
 	      
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("submitterid"));
-        try {json.put("authorization", "Token "+WorkflowENAPortlet.getServerToken((String) requestJson.get("path"),"token"));}
+        try {json.put("authorization", "Token "+Helper.getServerInformation((String) requestJson.get("path"),"brokeragenttoken"));}
         catch (IOException | PortletException e) {e.printStackTrace();}
        
 	
