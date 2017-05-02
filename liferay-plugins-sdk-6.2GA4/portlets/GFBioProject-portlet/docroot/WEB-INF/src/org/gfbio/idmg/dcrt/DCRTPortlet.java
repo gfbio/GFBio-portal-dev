@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -261,7 +262,7 @@ public class DCRTPortlet extends MVCPortlet {
 		// Set assignee for the ticket
 		Assignee assignee = new Assignee(user);
 
-		String customfield_10010 = "sand/dcrt-request";
+		String customfield_10010 = PropsUtil.get("jira.gfbio.requesttype");
 		String customfield_10500 = "Physical objects: " + physical + "\nTaxon based: " + taxon + "\nAlive: " + alive
 				+ "\nPrimarily sequence Data: " + sequenced + "\nCategory: " + category;
 
