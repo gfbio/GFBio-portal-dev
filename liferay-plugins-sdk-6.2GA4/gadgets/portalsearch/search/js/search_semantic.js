@@ -16,9 +16,41 @@ function listenToEnterPress() {
 			$('#gfbioSearchInput').autocomplete('close');
 			// set the default enter event to semantic search
 			$("#SemanticQueryButton").click();
+			var value = document.getElementById("gfbioSearchInput").value;
+			insertParam("q_", value);
 		}
 	});
 }
+function insertParam(key, value) {
+			console.log(':::insertParam');
+        key = escape(key); value = escape(value);
+        var url = document.referrer.split('?');
+			console.log(url);
+		var newUrl = '';
+		if (url.length >1){
+			// if url already has parameters
+            var params = url[1].split('&');
+            for (i=0; i< params.length; i++){
+				var par = params[i].split('=');
+
+                if (par[0] == key) {
+                    par[1] = value;
+                    params[i] = par.join('=');
+                    break;
+                }
+            }
+			newUrl = url[0]+'?'+params.join('&');
+
+		}else if (url.length==1){
+			newUrl = url[0]+"?"+key+"="+value;
+		}
+		
+		if (history.pushState && newUrl!='') {
+			console.log(':::pushstate');
+			console.log(newUrl);
+			parent.history.pushState({path:newUrl},'',newUrl);
+		}
+    }
 
 /*
  * Description: set autocomplete to the search textbox
@@ -254,13 +286,23 @@ function normalQuery(clearBasket) {
 	setCookie("gfbioSearchInput", keyword);
 	var filter = [];
 	// reset facet gadget
-	if (gadgets.Hub.isConnected())
+	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+		//console.log('search:reset facet');
+	}
 	// autocomplete from the textbox doesn't automatically closed
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
 	console.log(':: newQuery');
 	getSearchResult(keyword, filter, "");
+	// Save query to DB
+	if (saveSearch && keyword != "" && clearBasket) {
+		//console.log('New query is made.');
+		//clear semantic terms
+		document.getElementById("semanticTerms").value="";
+		saveSearchHistory(keyword, filter);
+		document.getElementById("filters").value = filter;
+	}
 
 	// send content of visual basket to the mini-map gadget
 	updateMap();
@@ -561,8 +603,10 @@ function applyBoost(query) {
  */
 function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield) {
 	return {
-		'query':
-		boostedQuery,
+		'query': boostedQuery,
+	    'highlight': {
+		  'fields': {'*': {} }
+		},
 		'from': iDisplayStart,
 		'size': iDisplayLength,
 		/*'fields' : queryfield,*/
@@ -590,6 +634,12 @@ function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfiel
 					'field': 'dataCenterFacet',
 					'size': 50
 				}
+			},
+			'license': {
+				'terms': {
+					'field': 'licenseFacet',
+					'size': 50
+				}
 			}
 		}
 	}
@@ -608,6 +658,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 		var inner = new Object();
 		var score = datasrc[i]._score;
 		var fields = datasrc[i]._source;
+		var highlight = datasrc[i].highlight;
 		inner.score = score;
 		//console.log('parseReturnedJSONfromSearch:fields');
 		inner.title = getMultiValueField(fields, "citation_title");
@@ -630,20 +681,25 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.minLongitude = getMultiValueField(fields, "minLongitude");
 		inner.metadatalink = getMultiValueField(fields, "metadatalink");
 		inner.datalink = getMultiValueField(fields, "datalink");
+		inner.accessRestricted = getMultiValueField(fields, "accessRestricted");
+		inner.license = getMultiValueField(fields, "license");
 		inner.format = getMultiValueField(fields, "format");
 		if (fields["html-1"]) {
 			// this field is used only for displaying data
 			var html = fields["html-1"];
-			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
+			html = html.replace(/@target@/gi, "_blank").replace("<table", "<table class=\"html-1\"");
+			if (inner.accessRestricted){
+				html = html.replace(">Data Download</a>",">Data Download<i class='padlock'/></a>");
+				console.log('Download restricted.');
+			}/*else{
+				console.log('No restriction.');
+			}*/
 			html = writeShowHideFields(html);
-			if (document.getElementById("semanticTerms").value.trim() != ""){
-				// hilight semantic terms
-				var semanticTerms = document.getElementById("semanticTerms").value;
-				html = hilightResult(html,semanticTerms);
-			}else{
-				var keyword = document.getElementById("gfbioSearchInput").value;
-				if (keyword.length>0){
-				html = hilightResult(html,semanticTerms, keyword);}
+			// use highlight field to highlight html
+			if (highlight!=null){	
+				var highlightArr = extractHilightedSearch(highlight);
+				console.log(highlightArr);
+				html = hilightResult(html,highlightArr);
 			}
 			inner.html = html;
 		} else {
@@ -656,11 +712,13 @@ function parseReturnedJSONfromSearch(datasrc) {
 			var xml2json = new XMLtoJSON();
 			var json = xml2json.fromStr(xml);
 			inner.xml = json; //JSON.stringify(json);
+
 			if (isJArray(json.dataset["parentIdentifier"])) {
 				inner.parentIdentifier = getStringFromJSONArray(json.dataset, "parentIdentifier");
 			} else {
 				inner.parentIdentifier = json.dataset["parentIdentifier"];
 			}
+
 			inner.dcIdentifier = json.dataset["dc:identifier"];
 			if (isJArray(json.dataset["dc:type"])) {
 				inner.dcType = "Unit";
@@ -758,6 +816,26 @@ function addBasket() {
 	}
 }
 
+function extractHilightedSearch(highlight){
+	var jArr = [];
+	$.each(highlight, function (field, arr) {
+		$.each(arr,function (ind,highlightedText){
+			console.log('--'+highlightedText+'--');
+			var startTag = highlightedText.indexOf("<em>");
+			var endTag = 0;
+			var taggedText = "";
+			while (startTag>=0){
+				endTag = highlightedText.indexOf("</em>",startTag);
+				taggedText = highlightedText.substring(startTag+4,endTag);
+				if (jArr.indexOf(taggedText)<0){
+					jArr.push(taggedText);
+				}
+				startTag = highlightedText.indexOf("<em>",endTag+5);
+			}
+		});
+	});
+	return jArr;
+}
 /*
  * Description: Read selected dataset information from the result table
  * Output: JSONObject jsonData
@@ -967,7 +1045,9 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"parentIdentifier": value.parentIdentifier,
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
-		"xml": value.xml
+		"xml": value.xml,
+		"accessRestricted": value.accessRestricted,
+		"license":value.license
 	};
 	return result;
 }
@@ -1003,21 +1083,20 @@ function writeShowHideFields(orgHTML) {
 	return d.innerHTML;
 }
 function hilightResult(orgHTML,termsToHighlight) {
-	termsToHighlight = termsToHighlight.replace(/["()\[\]{}]/g,"");
-	termsToHighlight = termsToHighlight.replace(new RegExp(" and ", 'g'),"|");
-	termsToHighlight = termsToHighlight.replace(/[&+,]/g,"|");
-	var semList = termsToHighlight.split("[\|]+");
 	var newHTML = orgHTML;
-	for (var i = 0; i < semList.length; i++) {
-		var semTerm = semList[i].trim().replace(" ","(.{1,25})"); 
+	//for (var i = 0; i < semList.length; i++) {
+	$.each(termsToHighlight,function(ind,key){
+		//var semTerm = semList[i].trim().replace(" ","(.{1,25})"); 
 		//allow only 1-25 characters in between, e.g. Circaea ... L.
-		if (semTerm.length >2) {
-			var query = new RegExp("(\\b" + semTerm + ")", "gim");
-			if (newHTML.match(query) != null) {
-				newHTML = newHTML.replace(new RegExp(query, 'g'), "<span class='hilight'>$1</span>");
-			}
+		console.log("::"+key);
+		if (key.length >2) {//ignore short string
+			var query = new RegExp("(\\b" + key + "\\b)", "gim");
+			//if (newHTML.match(query) != null) {
+				newHTML = newHTML.replace(new RegExp(query, 'gim'), "<span class='highlight'>"+key+"</span>");
+			//}
 		}
-	}
+	});
+	console.log(newHTML);
 	return newHTML;
 }
 /*
@@ -1437,22 +1516,24 @@ function getJSONArrayFromField(jObj, name){
 	}
 	return [];
 }
+
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var jArr = jObj[name];
-		if (jArr.length > 0) {
-			return jArr;
+		if (jArr.length > 0){
+		    return jArr;
 		}
 	}
 	return [];
 }
+
 function getStringFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var res = "";
 		var jArr = jObj[name];
-		for (var i = 0; i < jArr.length; i++) {
+		for (var i=0; i<jArr.length; i++){
 			res += jArr[i];
-			if (i != jArr.length - 1) {
+			if (i != jArr.length-1){
 				res += ";";
 			}
 		}
@@ -1481,6 +1562,7 @@ function toggleParametersField() {
 		adjustGadgetHeight();
 	});
 };
+
 function getCookie(name) {
 	var re = new RegExp(name + "=([^;]+)");
 	var value = re.exec(document.cookie);
@@ -1488,6 +1570,7 @@ function getCookie(name) {
 	//console.log(value);
 	return (value != null) ? unescape(value[1]) : null;
 }
+
 function setCookie(name, value) {
 	var today = new Date();
 	var expiry = new Date(today.getTime() + 7 * 24 * 3600 * 1000); // plus 7 days
@@ -1495,6 +1578,7 @@ function setCookie(name, value) {
 	//console.log('setCookie:'+name);
 	//console.log(value);
 }
+
 function deleteCookie(name) {
 	document.cookie = name + "=null; path=/; expires=" + expired.toGMTString();
 }
@@ -1537,7 +1621,7 @@ function semanticQuery(clearBasket) {
 
 function getTSterms(keyword, filter, yearRange) {
 	$("*").addClass("wait");
-	var jArrSyn = [keyword];
+	var jArrSyn = [];
 	// ignore |, & operators
 	keyword = keyword.replace(/\|/g,"");//replace all
 	keyword = keyword.replace(/\&/g,"");
@@ -1612,7 +1696,6 @@ function getTSterms(keyword, filter, yearRange) {
 function readTSresults(keyword, val) {
 	var jArrSyn = [];
 	console.log("----- Terminologies for: " + keyword+ " -----");
-	keyword = keyword.toLowerCase();
 	jArrSyn.push(keyword);
 	$.each(val.results, function () {
 		// read each JSON Objec results from TS
@@ -1627,7 +1710,7 @@ function readTSresults(keyword, val) {
 			var log = "";
 			if ((label!=null) && (label!=keyword)) {
 				label = label.trim();
-				if (jArrSyn.indexOf(label.toLowerCase()) < 0) {
+				if (isArrayNotContainKey(jArrSyn,label)) {
 					// add this label if not exist in the result
 					log += "----- label : " + label+"\n";
 					jArrSyn.push(label);
@@ -1635,7 +1718,7 @@ function readTSresults(keyword, val) {
 			} 
 			if ((description != null) && (description.indexOf("Is a:") >= 0)) {
 				var parsedStr = description.substr(description.indexOf("Is a:") + 5).trim();
-				if (jArrSyn.indexOf(parsedStr.toLowerCase()) < 0) {
+				if (isArrayNotContainKey(jArrSyn,parsedStr)) {
 					// add this description if not exist in the result
 					log += "----- description : " + description+"\n";
 					jArrSyn.push(parsedStr);
@@ -1644,7 +1727,7 @@ function readTSresults(keyword, val) {
 			if (synonyms != null) {
 				for (i = 0; i < synonyms.length; i++) {
 					var syn = synonyms[i].trim();
-					if (jArrSyn.indexOf(syn.toLowerCase()) < 0) {
+					if (isArrayNotContainKey(jArrSyn,syn)) {
 						log +="----- synonym : " + syn+"\n";
 						jArrSyn.push(syn);
 					}
@@ -1653,7 +1736,7 @@ function readTSresults(keyword, val) {
 			if (commonNames != null) {
 				for (i = 0; i < commonNames.length; i++) {
 					var commonName = commonNames[i].trim();
-					if (jArrSyn.indexOf(commonName.toLowerCase()) < 0) {
+					if (isArrayNotContainKey(jArrSyn,commonName)) {
 						log += "----- commonName : " + commonName+"\n";
 						jArrSyn.push(commonName);
 					}
@@ -1667,6 +1750,17 @@ function readTSresults(keyword, val) {
 		}
 	});
 	return jArrSyn;
+}
+
+function isArrayNotContainKey(array, text){
+ var flag = true;
+ $.each(array,function(key,value) { 
+    if(value.toLowerCase() == text.toLowerCase()) {
+		flag = false;
+		return false; //this return false is only exit the each loop
+	}
+  });
+  return flag;
 }
 
 function getSemanticSearchResult(keywordArr, filter, yearRange) {
@@ -1793,15 +1887,16 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		for (var i = 0; i < keyword.length; i++) {
 			var booster = 1;
 			var fields = [];
-			if (i == 0) {
+			if (i == 0) { // original keyword
 				booster = 2.2;
-				fields = ["citation^3", "citation.folded^2.1", 
-							"description^2.1","description.folded",
-							"type.folded", "investigator.folded",
-							"parameter.folded", "region.folded", "feature.folded", 
-							"project.folded", "dataCenter.folded","method.folded"];
+				fields = ["citation_title^3","citation_title.folded^2.1", 
+					"description^2.1","description.folded",
+					"type.folded", "investigator.folded",
+					"parameter.folded", "region.folded", "feature.folded", 
+					"project.folded", "dataCenter.folded","method.folded", 
+					"citation.folded"];
 				//["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"];
-			}else{
+			}else{ // extended keywords
 				fields = ["citation_title^3","citation_title.folded^2.1", 
 							"description^2.1","description.folded",
 							"parameter.folded", "region.folded", "feature.folded", 

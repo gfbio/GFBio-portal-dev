@@ -43,9 +43,11 @@
 			
 				<script type="text/javascript">
 					// start listening to main search interface gadget
+					$.holdReady( true );
 					gadgets.HubSettings.onConnect = function(hub, suc, err) {
 						gadgets.Hub.subscribe("gfbio.search.facet", writeFacetTree);
 						gadgets.Hub.subscribe("gfbio.search.facetreset", resetFacet);
+						$.holdReady( false );
 					};
 
 					$(document).ready(function() { 

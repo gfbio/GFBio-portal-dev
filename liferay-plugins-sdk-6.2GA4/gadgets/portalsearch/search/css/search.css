@@ -98,7 +98,7 @@ label, input, button {
 	color: #fff;
 }
 /*////////////////////////////////*/
-span.hilight{
+span.highlight{
     background-color:#f6931f;
     color:#666;
 }
@@ -266,20 +266,34 @@ table.dataTable thead th{
 }
 
 		.tooltip {
-			/*border-bottom: 1px dotted #000000;*/ color: #000000; outline: none;
-			cursor: help; text-decoration: none;
+			color: #000000; 
+			outline: none;
+			cursor: help; 
+			text-decoration: none;
 			position: relative;
 		}
 		.tooltip span {
-			margin-left: -999em;
 			position: absolute;
+			display: none;
 		}
 		.tooltip:hover span {
 			border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
 			box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
 			font-family: 'Lato', sans-serif;
-			position: absolute; left: 1em; top: 2em; z-index: 99;
-			margin-left: -400; width: 400px;
+			position: absolute; 
+			left: 1em; right:unset;
+			top: 1em; z-index: 99;
+			width: 400px;
+			display: block;
+		}
+		@media (min-width: 795px) {		
+			.tooltip:hover span {
+				position: absolute; 
+				right: 1em; left:unset;
+				top: 1em; z-index: 99;
+				width: 400px;
+				display: block;
+			}
 		}
 		/*.tooltip:hover img {
 			border: 0; margin: -10px 0 0 -55px;
@@ -301,3 +315,11 @@ table.dataTable thead th{
 		.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 		.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 		.warning { background: #FFFFAA; border: 1px solid #FFAD33; }*/
+
+.padlock{
+	background:url('../images/padlock-closed.png') no-repeat center center;
+	width:16px;
+	height:16px;
+	border: none;
+	display: inline-block;
+}
