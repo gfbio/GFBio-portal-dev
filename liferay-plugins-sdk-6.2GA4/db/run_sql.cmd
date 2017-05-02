@@ -16,10 +16,14 @@ set PGPASSWORD=test
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_project_user.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_researchobject_user.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_usersso.sql
+"%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  function_head.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  insert_gfbio_dataprovider.sql
 
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_content.sql
+"%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  function_column.sql
+"%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  function_dataprovider.sql
 
+"%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  function_content.sql
 
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  insert_gfbio_category.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  insert_gfbio_externalperson.sql
@@ -31,7 +35,6 @@ set PGPASSWORD=test
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  insert_gfbio_persistentidentifier.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  insert_gfbio_researchfield.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  insert_gfbio_type.sql
-
 
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_dataprovider_persistentidentifiert.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_funding_institutionproject.sql

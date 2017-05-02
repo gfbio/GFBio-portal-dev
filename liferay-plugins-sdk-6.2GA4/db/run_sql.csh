@@ -21,10 +21,16 @@ $command create_project_researchobject.sql
 $command create_project_user.sql
 $command create_researchobject_user.sql
 $command create_usersso.sql
+$command function_head.sql
 $command insert_gfbio_dataprovider.sql
 
 
 $command create_content.sql
+$command function_column.sql
+$command function_dataprovider.sql
+
+
+$command function_content.sql
 
 
 $command insert_gfbio_category.sql

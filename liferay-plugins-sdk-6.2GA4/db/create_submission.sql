@@ -17,6 +17,8 @@ CREATE TABLE gfbio_submission
   public_after timestamp with time zone DEFAULT NULL,
   status text NOT NULL,
   submissionid bigint NOT NULL,
+  jiraid character(75),
+  jirakey character(75),
   CONSTRAINT gfbio_submission_pkey PRIMARY KEY (submissionid),
   CONSTRAINT gfbio_dataprovider_fkey FOREIGN KEY (archive)
       REFERENCES gfbio_dataprovider (label) MATCH SIMPLE
