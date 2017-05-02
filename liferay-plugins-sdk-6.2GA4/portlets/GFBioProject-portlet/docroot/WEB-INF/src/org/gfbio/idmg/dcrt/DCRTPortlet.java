@@ -222,7 +222,7 @@ public class DCRTPortlet extends MVCPortlet {
 		message = "Name: " + name + "E-Mail: " + email + "Message: " + message;
 
 		// Create Issue
-		Project project = new Project("SAND");
+		Project project = new Project(PropsUtil.get("jira.gfbio.projectkey"));
 		IssueType issuetype = new IssueType("Question");
 		Reporter reporter = new Reporter("testuser1");
 
