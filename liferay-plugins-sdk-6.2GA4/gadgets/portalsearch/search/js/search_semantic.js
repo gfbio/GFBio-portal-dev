@@ -682,14 +682,15 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.metadatalink = getMultiValueField(fields, "metadatalink");
 		inner.datalink = getMultiValueField(fields, "datalink");
 		inner.accessRestricted = getMultiValueField(fields, "accessRestricted");
-		inner.license = getMultiValueField(fields, "license");
+		/* pangeae doesn't return license field
+		inner.license = getMultiValueField(fields, "license");*/
 		inner.format = getMultiValueField(fields, "format");
 		if (fields["html-1"]) {
 			// this field is used only for displaying data
 			var html = fields["html-1"];
 			html = html.replace(/@target@/gi, "_blank").replace("<table", "<table class=\"html-1\"");
 			if (inner.accessRestricted){
-				html = html.replace(">Data Download</a>",">Data Download<i class='padlock'/></a>");
+				html = html.replace(">Data Download</a>",">Data Download<i class='padlock' title='This download link requires login.'/></a>");
 				console.log('Download restricted.');
 			}/*else{
 				console.log('No restriction.');
@@ -791,7 +792,7 @@ function addBasket() {
 		
 		console.log("addBasket queryJSON:");
 		console.log(query);
-		var keyword = document.getElementById("queryKeyword").value;
+		var keyword = document.getElementById("gfbioSearchInput").value;
 		var filter = document.getElementById("queryFilter").value;
 		console.log("addBasket queryKeyword:");
 		console.log(keyword);
@@ -1047,7 +1048,7 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"parameter": value.parameter,
 		"xml": value.xml,
 		"accessRestricted": value.accessRestricted,
-		"license":value.license
+		/* pangeae doesn't return license field, only provide facets			"license":value.license*/
 	};
 	return result;
 }
