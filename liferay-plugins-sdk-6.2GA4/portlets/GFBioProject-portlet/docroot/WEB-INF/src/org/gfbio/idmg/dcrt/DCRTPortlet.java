@@ -222,7 +222,7 @@ public class DCRTPortlet extends MVCPortlet {
 		message = "Name: " + name + "E-Mail: " + email + "Message: " + message;
 
 		// Create Issue
-		Project project = new Project(PropsUtil.get("jira.gfbio.projectkey"));
+		Project project = new Project(PropsUtil.get("jira.gfbio.dcrt.projectkey"));
 		IssueType issuetype = new IssueType("Question");
 		Reporter reporter = new Reporter("testuser1");
 
@@ -262,7 +262,7 @@ public class DCRTPortlet extends MVCPortlet {
 		// Set assignee for the ticket
 		Assignee assignee = new Assignee(user);
 
-		String customfield_10010 = PropsUtil.get("jira.gfbio.requesttype");
+		String customfield_10010 = PropsUtil.get("jira.gfbio.dcrt.requesttype");
 		String customfield_10500 = "Physical objects: " + physical + "\nTaxon based: " + taxon + "\nAlive: " + alive
 				+ "\nPrimarily sequence Data: " + sequenced + "\nCategory: " + category;
 
