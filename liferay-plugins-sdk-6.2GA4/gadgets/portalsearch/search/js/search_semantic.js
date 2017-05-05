@@ -543,7 +543,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		} else {
 			return {
 				"bool": {
-					"must": queryObj
+					"should": queryObj
 				}
 			};
 		}
@@ -1937,7 +1937,15 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		}
 		queryObj = {
 			"bool": {
-				"should": boostedKeywords,
+				"must": [{
+					"function_score":{
+						"query":{
+							"bool":{
+								"should":boostedKeywords
+							}
+						}
+					}
+				}],
 				"filter": filterObj
 			}
 		}
