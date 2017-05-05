@@ -1,3 +1,5 @@
+
+jQueryCode = function(){// if jquery is not loaded, load it first (see bottom of the page). 
 AUI().ready(
 				'liferay-navigation-interaction',
 				'liferay-sign-in-modal',
@@ -172,3 +174,15 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 		}
 	      });
 	});
+}
+
+// check if jquery is loaded, if not load it first.
+if(window.jQuery)  jQueryCode();
+else{    
+    var script = document.createElement('script'); 
+    document.head.appendChild(script);  
+    script.type = 'text/javascript';
+    script.src = "//code.jquery.com/jquery-1.11.1.min.js";
+
+    script.onload = jQueryCode;
+}
