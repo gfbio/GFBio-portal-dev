@@ -543,7 +543,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		} else {
 			return {
 				"bool": {
-					"must": queryObj
+					"should": queryObj
 				}
 			};
 		}
@@ -689,12 +689,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 			// this field is used only for displaying data
 			var html = fields["html-1"];
 			html = html.replace(/@target@/gi, "_blank").replace("<table", "<table class=\"html-1\"");
-			if (inner.accessRestricted){
-				html = html.replace(">Data Download</a>",">Data Download<i class='padlock' title='This download link requires login.'/></a>");
-				console.log('Download restricted.');
-			}/*else{
-				console.log('No restriction.');
-			}*/
+		
 			html = writeShowHideFields(html);
 			// use highlight field to highlight html
 			if (highlight!=null){	
@@ -1942,7 +1937,15 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		}
 		queryObj = {
 			"bool": {
-				"should": boostedKeywords,
+				"must": [{
+					"function_score":{
+						"query":{
+							"bool":{
+								"should":boostedKeywords
+							}
+						}
+					}
+				}],
 				"filter": filterObj
 			}
 		}
