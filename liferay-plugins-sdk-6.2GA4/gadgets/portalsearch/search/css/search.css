@@ -319,10 +319,7 @@ table.dataTable thead th{
 		.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 		.warning { background: #FFFFAA; border: 1px solid #FFAD33; }*/
 
-.padlock{
-	background:url('../images/padlock-closed.png') no-repeat center center;
-	width:16px;
-	height:16px;
-	border: none;
-	display: inline-block;
+#semanticTermsDisplay{
+	color:#b0e0e6;
+	font-family: 'Lato', sans-serif;
 }

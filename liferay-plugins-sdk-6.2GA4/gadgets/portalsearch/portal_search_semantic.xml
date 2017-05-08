@@ -55,6 +55,7 @@
 						<a class="tooltip" href="#"><img src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" class="icon-info"><span class="classic"><em>What is a semantic search engine?</em><p>The conventional text-based search can be enhanced by NLP, e.g. Biologists vs. Biology, so that we can explore more of datasets.</p><p>But what will happen when we are looking for a scientific term, for instance, Lepidoptera, but the common name like "butterfly" is overlooked? </p><p>Here, we offer the search combined with terminologies. This allows us to get synonyms, common names, scientific names, translation in other languages, etc. This would broaden the search results when the given query is not specific enough, or even too specific.</p></span></a>
 						</span>
 					</label> <div style="height:20px"></div>
+					<div id="semanticTermsDisplay" style="height:40px"></div>
 					<div id="search_result_table"></div>
 
 				</div>
