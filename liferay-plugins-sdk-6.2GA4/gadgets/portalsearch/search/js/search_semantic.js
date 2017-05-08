@@ -601,7 +601,7 @@ function applyBoost(query) {
  *        JSONArray queryfield : array of query fields
  * Output: JSONObject : a complete JSON request message
  */
-function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield) {
+function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength) {
 	return {
 		'query': boostedQuery,
 	    'highlight': {
@@ -609,7 +609,6 @@ function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfiel
 		},
 		'from': iDisplayStart,
 		'size': iDisplayLength,
-		/*'fields' : queryfield,*/
 		'aggs': {
 			'author': {
 				'terms': {
@@ -1832,10 +1831,9 @@ function semanticQueryToServer(keyword, filter, yearRange) {
 
 		//console.log("semanticQueryToServer");
 		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
 		var filteredQuery = getBooleanQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 		//console.log('----semanticQueryToServer----');
 		//console.log(completeQuery);
 		//console.log('-----------------------------');
@@ -1938,13 +1936,9 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		queryObj = {
 			"bool": {
 				"must": [{
-					"function_score":{
-						"query":{
 							"bool":{
 								"should":boostedKeywords
 							}
-						}
-					}
 				}],
 				"filter": filterObj
 			}
