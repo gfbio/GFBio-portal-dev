@@ -97,6 +97,14 @@ label, input, button {
 	border-color: #2e6da4;
 	color: #fff;
 }
+#semanticTermsDisplay{
+	color:#b0e0e6;
+	font-family: 'Lato', sans-serif;
+	height:20px;
+	display:block;
+	padding: 0.3em 0.4em;
+	margin: 0.1em 0.2em;
+}
 /*////////////////////////////////*/
 span.highlight{
     background-color:#b0e0e6;
@@ -148,11 +156,6 @@ a {
 a:focus , a:visited{
     color: #333333;
 }
-/*a, a:hover, a:focus, .btn:focus {
-		    text-decoration: none;
-		    outline: none;
-		   
-}*/		
 		
 
 .dataTables_length, .dataTables_info, .dataTables_paginate{
@@ -268,6 +271,7 @@ table.dataTable thead th{
 	margin-left: -7px;
 }
 
+		/* Begin tooltip*/
 		.tooltip {
 			color: #000000; 
 			outline: none;
@@ -310,6 +314,7 @@ table.dataTable thead th{
 			font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 400;
 			display: block; 
 		}
+		/* End tooltip*/
 		.classic { padding: 0.8em 1em; }
 		.classic {background: #9FDAEE; border: 1px solid #2BB0D7; }
 		/*.custom { padding: 0.5em 0.8em 0.8em 2em; }
@@ -318,8 +323,3 @@ table.dataTable thead th{
 		.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 		.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 		.warning { background: #FFFFAA; border: 1px solid #FFAD33; }*/
-
-#semanticTermsDisplay{
-	color:#b0e0e6;
-	font-family: 'Lato', sans-serif;
-}

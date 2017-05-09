@@ -180,10 +180,9 @@ function getFilteredLatestDataset(filter, yearRange) {
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
 		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
 		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
 		var filteredQuery = getFilteredQuery("", filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 
 		// add sorting by citation date
 		completeQuery.sort = {
@@ -354,7 +353,7 @@ function submitQueryToServer(keyword, filter, yearRange) {
 		var queryfield = createQueryFieldArray();
 		var filteredQuery = getFilteredQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 
 		// Store query string for sending to VAT
 		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
@@ -513,15 +512,13 @@ function applyBoost(query) {
  * Input: JSONObject boostedQuery : a JSON query mesage with filter and boost parameters
  *        int iDisplayStart : starting index of dataset (read from pagination option)
  *        int iDisplayLength : size of dataset (read from pagination option)
- *        JSONArray queryfield : array of query fields
  * Output: JSONObject : a complete JSON request message
  */
-function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield) {
+function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength) {
 	return {
 		'query': boostedQuery,
 		'from': iDisplayStart,
 		'size': iDisplayLength,
-		/*'fields' : queryfield,*/
 		'aggs': {
 			'author': {
 				'terms': {
