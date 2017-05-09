@@ -118,6 +118,7 @@ function getQueryVariable(variable) {
  */
 function showLatestTenDataset(filter, yearRange) {
 	isSemanticSearch = false;
+	document.getElementById('semanticTermsDisplay').innerHTML = "";
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// initiate result table
@@ -271,6 +272,7 @@ function getFilteredLatestDataset(filter, yearRange) {
  */
 function normalQuery(clearBasket) {
 	isSemanticSearch = false;
+	document.getElementById('semanticTermsDisplay').innerHTML = "";
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// clear visualBasket if the clearBasket flag is true
@@ -703,7 +705,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 				var highlightArr = extractHilightedSearch(highlight);
 				html = hilightResult(html,highlightArr);
 				
-				console.log(highlightArr);
+				//console.log(highlightArr);
 				
 				var isAdded = false;
 				for (var iHighlight = 0; iHighlight < highlightArr.length; iHighlight++){
@@ -1609,6 +1611,7 @@ function isJArray(elm) {
 ///////////////////////////////////  Semantic functions  /////////////////////////////////////
 function semanticQuery(clearBasket) {
 	isSemanticSearch = true;
+	document.getElementById('semanticTermsDisplay').innerHTML = "";
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// read search keywords
