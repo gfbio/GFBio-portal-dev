@@ -159,19 +159,19 @@ a:focus , a:visited{
 		
 
 .dataTables_length, .dataTables_info, .dataTables_paginate{
-	font-size:12px !important;
+	font-size:12px;
 }
 div.dataTables_info{
-  float:right !important;
-  padding-top: 16px !important;
+  float:right;
+  padding-top: 16px;
 }
 div.dataTables_paginate{
-  float:left !important;
+  float:left;
 }
 
 
 .jstree-node, .jstree-children, .jstree-container-ul  {
-	margin: 0px 0px 0px 5px !important;
+	margin: 0px 0px 0px 5px;
 }
 
 .cart_unselected{
@@ -206,16 +206,16 @@ table.dataTable table.html-1 tr{
 	width:20px !important;
 }
 .tagit, .tagit-new{
-	background:transparent !important;
+	background:transparent;
 }
 ul.tagit input[type="text"] {
-	background:transparent !important;
+	background:transparent;
 }
 .ui-widget,#facetTags.ui-widget{
-	font-size:12px !important;
+	font-size:12px;
 }
 .dataTables_length, .dataTables_info, .dataTables_paginate{
-	text-align: right !important;
+	text-align: right;
 }
 .ui-widget { font: inherit; }
 .ui-autocomplete li { overflow: hidden; white-space: nowrap; }
@@ -245,8 +245,8 @@ table.html-1 .desc-right { font: inherit; margin: 0; padding: 0; vertical-align:
 }
 table.dataTable thead th{
 	background-color: transparent;
-	padding:0px 0px 0px 40px!important;
-	margin:0px !important;
+	padding:0px 0px 0px 40px;
+	margin:0px;
 }
 
 #dialogFacet{
