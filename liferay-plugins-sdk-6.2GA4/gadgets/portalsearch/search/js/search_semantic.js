@@ -703,7 +703,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 				var highlightArr = extractHilightedSearch(highlight);
 				html = hilightResult(html,highlightArr);
 				
-				//console.log(highlightArr);
+				console.log(highlightArr);
 				
 				var isAdded = false;
 				for (var iHighlight = 0; iHighlight < highlightArr.length; iHighlight++){
@@ -1108,9 +1108,9 @@ function hilightResult(orgHTML,termsToHighlight) {
 		//allow only 1-25 characters in between, e.g. Circaea ... L.
 		//console.log("::"+key);
 		if (key.length >highlightLength) {//ignore short string
-			var query = new RegExp("(\\b" + key + "\\b)", "gim");
+			var query = new RegExp("(\\b" + key + "\\b)", "gm");
 			//if (newHTML.match(query) != null) {
-				newHTML = newHTML.replace(new RegExp(query, 'gim'), "<span class='highlight'>"+key+"</span>");
+				newHTML = newHTML.replace(new RegExp(query, 'gm'), "<span class='highlight'>"+key+"</span>");
 			//}
 		}
 	});
