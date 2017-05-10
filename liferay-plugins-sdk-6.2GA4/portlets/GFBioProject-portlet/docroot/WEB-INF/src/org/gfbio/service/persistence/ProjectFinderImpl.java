@@ -17,8 +17,9 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class ProjectFinderImpl extends BasePersistenceImpl<Project> implements ProjectFinder {
 
 	public static String FINDER_CLASS_NAME_ENTITY 						= ProjectFinderImpl.class.getName();
-	public static String GET_CHECK_ON_ID 								= FINDER_CLASS_NAME_ENTITY + ".getCheckOnId";
 	public static String CHECK_PROJECT_ON_SUBMISSIONS 					= FINDER_CLASS_NAME_ENTITY + ".checkProjectOnSubmissions";
+	public static String GET_CHECK_ON_ID 								= FINDER_CLASS_NAME_ENTITY + ".getCheckOnId";
+	public static String GET_MAX_ID 									= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
 	public static String GET_USERIDS_BY_RESEARCHOBJECTID_AND_VERSION 	= FINDER_CLASS_NAME_ENTITY + ".getUserIdsByResearchObjectIdAndVersion";
 	
 	
@@ -60,6 +61,30 @@ public class ProjectFinderImpl extends BasePersistenceImpl<Project> implements P
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(projectId);
 			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	//get the ID of a table that include a cell with a specific ID
+	@SuppressWarnings("rawtypes")
+	public  List getMaxId() {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_MAX_ID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("projectid", Type.LONG);
+
+			return (List) queryObject.list();
+			
 		} catch (Exception e) {e.printStackTrace();}
 		finally {
 			closeSession(session);

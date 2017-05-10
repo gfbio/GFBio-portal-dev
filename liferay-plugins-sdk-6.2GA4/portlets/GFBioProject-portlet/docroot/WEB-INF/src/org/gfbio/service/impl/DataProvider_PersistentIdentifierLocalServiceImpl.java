@@ -14,6 +14,8 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchDataProvider_PersistentIdentifierException;
@@ -21,6 +23,7 @@ import org.gfbio.model.DataProvider_PersistentIdentifier;
 import org.gfbio.service.base.DataProvider_PersistentIdentifierLocalServiceBaseImpl;
 import org.gfbio.service.persistence.DataProvider_PersistentIdentifierFinderUtil;
 import org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK;
+
 
 
 
@@ -70,16 +73,18 @@ public class DataProvider_PersistentIdentifierLocalServiceImpl extends DataProvi
 		DataProvider_PersistentIdentifierPK pk = new DataProvider_PersistentIdentifierPK(dataProviderId, persistentIdentifierId);
 		DataProvider_PersistentIdentifier relationship = null;
 		
-		try {
-			relationship = dataProvider_PersistentIdentifierPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchDataProvider_PersistentIdentifierException | SystemException e1) {e1.printStackTrace();}
+		try {relationship = dataProvider_PersistentIdentifierPersistence.findByPrimaryKey(pk);}
+		catch (NoSuchDataProvider_PersistentIdentifierException | SystemException e1) {e1.printStackTrace();}
 
-		if (relationship == null) 
+		if (relationship == null) {
 			relationship = dataProvider_PersistentIdentifierPersistence.create(pk);
+		}
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		try {
 			super.updateDataProvider_PersistentIdentifier(relationship);
 			check = true;
-		} catch (SystemException e) {e.printStackTrace();}
+		} 
+		catch (SystemException e) {e.printStackTrace();}
 
 		return check;
 	}

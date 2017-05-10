@@ -14,6 +14,8 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -119,14 +121,13 @@ public class Funding_PersonProjectLocalServiceImpl	extends Funding_PersonProject
 		if(check){
 			ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_fundingprogram", fundingProgramId);
 			
-			if (check && (personType.trim()).equals("externalperson")){
+			if (check && (personType.trim()).equals("externalperson"))
 				check = ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_externalperson", personId);
-			}else{
-				if(check && (personType.trim()).equals("user")){
+			else{
+				if(check && (personType.trim()).equals("user"))
 					check = UserExtensionLocalServiceUtil.checkExistenceOfUserId(personId);
-				}else{
+				else
 					check = false;
-				}
 			}
 				
 			if (check)
@@ -140,17 +141,17 @@ public class Funding_PersonProjectLocalServiceImpl	extends Funding_PersonProject
 	public Boolean updateFundingPersonProject(long projectId, long fundingAgencyId, long fundingProgramId, long personId, String personType) {
 
 		Boolean check = false;
-		Funding_PersonProject relation = null;
+		Funding_PersonProject relationship = null;
 		Funding_PersonProjectPK pk = new Funding_PersonProjectPK(projectId, fundingAgencyId, fundingProgramId, personId, personType);
 					
-		try {relation = funding_PersonProjectPersistence.findByPrimaryKey(pk);} 
+		try {relationship = funding_PersonProjectPersistence.findByPrimaryKey(pk);} 
 		catch (NoSuchFunding_PersonProjectException | SystemException e1) {System.out.println("no enitity with pk: "+pk+" is found");	}
 						
-		if (relation == null) 
-			relation = funding_PersonProjectPersistence.create(pk);
-
+		if (relationship == null) 
+			relationship = funding_PersonProjectPersistence.create(pk);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		try {
-			super.updateFunding_PersonProject(relation);
+			super.updateFunding_PersonProject(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 

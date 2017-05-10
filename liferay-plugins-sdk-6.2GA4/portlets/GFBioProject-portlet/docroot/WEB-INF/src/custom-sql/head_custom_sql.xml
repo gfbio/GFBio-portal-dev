@@ -38,6 +38,16 @@
 		]]>
     </sql>
     
+    <sql id="org.gfbio.service.persistence.HeadFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(headid)  AS headid
+			FROM
+				public.gfbio_head
+		]]>
+    </sql>
+    
+    
     <sql id="org.gfbio.service.persistence.HeadFinderImpl.getTableNameById">
 	    <![CDATA[
 			SELECT 

@@ -9,6 +9,7 @@ import org.gfbio.model.impl.ColumnImpl;
 
 
 
+
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -18,15 +19,41 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements ColumnFinder{
 
-	public static String FINDER_CLASS_NAME_ENTITY = ColumnFinderImpl.class.getName();
-	public static String GET_COLUMNID_BY_NAMES = FINDER_CLASS_NAME_ENTITY + ".getColumnIdByNames";	
-	public static String GET_COLUMNNAME_BY_ID = FINDER_CLASS_NAME_ENTITY + ".getColumnNameById";	
-	public static String GET_COLUMNS_WITH_RELATION = FINDER_CLASS_NAME_ENTITY + ".getColumnsWithRelation";
-	public static String GET_COUNT_OF_COLUMNS = FINDER_CLASS_NAME_ENTITY + ".getCountofColumns";
-	public static String GET_HEADIDS_BY_COLUMNNAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdsByColumnName";
-	public static String GET_HEADIDS_WITHOUT_RELATIONSHIPS_BY_COLUMNNAME = FINDER_CLASS_NAME_ENTITY + ".getHeadIdsWithoutRelationshipsByColumnName";
+	public static String FINDER_CLASS_NAME_ENTITY 							= ColumnFinderImpl.class.getName();
+	public static String CHECK_EXISTENCE_OF_COLUMN							= FINDER_CLASS_NAME_ENTITY + ".checkExistenceOfColumn";	
+	public static String GET_COLUMNID_BY_NAMES 								= FINDER_CLASS_NAME_ENTITY + ".getColumnIdByNames";	
+	public static String GET_COLUMNNAME_BY_ID 								= FINDER_CLASS_NAME_ENTITY + ".getColumnNameById";	
+	public static String GET_COLUMNS_WITH_RELATION 							= FINDER_CLASS_NAME_ENTITY + ".getColumnsWithRelation";
+	public static String GET_COUNT_OF_COLUMNS 								= FINDER_CLASS_NAME_ENTITY + ".getCountofColumns";
+	public static String GET_HEADIDS_BY_COLUMNNAME 							= FINDER_CLASS_NAME_ENTITY + ".getHeadIdsByColumnName";
+	public static String GET_HEADIDS_WITHOUT_RELATIONSHIPS_BY_COLUMNNAME 	= FINDER_CLASS_NAME_ENTITY + ".getHeadIdsWithoutRelationshipsByColumnName";
+	public static String GET_MAX_ID 										= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
+	
 
+	//
+	@SuppressWarnings({  "rawtypes" })
+	public List checkExistenceOfColumn(long headId, String columnName) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(CHECK_EXISTENCE_OF_COLUMN);
+			SQLQuery queryObject = session.createSQLQuery(sql);
 
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(headId);
+			qPos.add(columnName);
+			return (List) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
 	//
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List getColumnIdByNames(String tableName, String columnName) {
@@ -167,6 +194,31 @@ public class ColumnFinderImpl  extends BasePersistenceImpl<Column> implements Co
 			qPos.add(columnName);
 			qPos.add(columnName);
 			return (List<Column>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public  List getMaxId() {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_MAX_ID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("columnid", Type.LONG);
+
+			return (List) queryObject.list();
+			
 		} catch (Exception e) {e.printStackTrace();}
 		finally {
 			closeSession(session);

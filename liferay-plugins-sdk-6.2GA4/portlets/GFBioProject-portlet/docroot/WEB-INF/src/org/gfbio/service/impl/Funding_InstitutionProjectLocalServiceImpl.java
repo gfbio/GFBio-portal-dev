@@ -14,6 +14,8 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +24,6 @@ import org.gfbio.model.Funding_InstitutionProject;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.base.Funding_InstitutionProjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Funding_InstitutionProjectPK;
-
 import org.json.simple.JSONObject;
 
 import com.liferay.portal.kernel.exception.SystemException;
@@ -130,17 +131,17 @@ public class Funding_InstitutionProjectLocalServiceImpl	extends Funding_Institut
 	public Boolean updateFundingInstitutionProject(long projectId, long fundingAgencyId, long fundingProgramId, long institutionId) {
 
 		Boolean check = false;
-		Funding_InstitutionProject relation = null;
+		Funding_InstitutionProject relationship = null;
 		Funding_InstitutionProjectPK pk = new Funding_InstitutionProjectPK(projectId, fundingAgencyId, fundingProgramId, institutionId);
 					
-		try {relation = funding_InstitutionProjectPersistence.findByPrimaryKey(pk);	}
+		try {relationship = funding_InstitutionProjectPersistence.findByPrimaryKey(pk);	}
 		catch (NoSuchFunding_InstitutionProjectException | SystemException e1) {System.out.println("no enitity with pk: "+pk+" is found");}
 
-		if (relation == null) 
-			relation = funding_InstitutionProjectPersistence.create(pk);
-
+		if (relationship == null) 
+			relationship = funding_InstitutionProjectPersistence.create(pk);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		try {
-			super.updateFunding_InstitutionProject(relation);
+			super.updateFunding_InstitutionProject(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 

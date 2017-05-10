@@ -21,6 +21,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_CELL_CONTENT_BY_CONTENTID 									= FINDER_CLASS_NAME_ENTITY + ".getCellContentByContentId";
 	public static String GET_CELLCONTENT_BY_ROWID_AND_COLUMNNAME						= FINDER_CLASS_NAME_ENTITY + ".getCellContentByRowIdAndColumnName";
 	public static String GET_COLUMNID_BY_ID 											= FINDER_CLASS_NAME_ENTITY + ".getColumnIdById";
+	public static String GET_CONTENTID_BY_ROWID_AND_COLUMNNAME							= FINDER_CLASS_NAME_ENTITY + ".getContentIdByRowIdAndColumnName";
 	public static String GET_CONTENTIDS_BY_ROWID 										= FINDER_CLASS_NAME_ENTITY + ".getContentIdsByRowId";
 	public static String GET_CONTENTIDS_OF_RELATIONSHIPS_OF_SPECIFIC_CELLCONTENT		= FINDER_CLASS_NAME_ENTITY + ".getContentIdsOfRelationshipsOfSpecificCellContent";
 	public static String GET_CONTENTIDS_WITHOUT_RELATIONSHIPS 							= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithoutRelationships";
@@ -28,6 +29,8 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_CONTENTIDS_WITH_RELATIONSHIPS 								= FINDER_CLASS_NAME_ENTITY + ".getContentIdsWithRelationships";
 	public static String GET_COUNT_OF_ROW 												= FINDER_CLASS_NAME_ENTITY + ".getRowIds";
 	public static String GET_HEADID_BY_ID 												= FINDER_CLASS_NAME_ENTITY + ".getHeadIdById";
+	public static String GET_HEADID_BY_ROWID 											= FINDER_CLASS_NAME_ENTITY + ".getHeadIdByRowId";
+	public static String GET_MAX_ID 													= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
 	public static String GET_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT			= FINDER_CLASS_NAME_ENTITY + ".getOppositeCellContentsOfRelationsByCellContent";
 	public static String GET_ROW_INFORMATION_BY_CONTENTID								= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
 	public static String GET_ROW_INFORMATION_BY_ROWID									= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByRowId";
@@ -35,6 +38,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_ROWID_BY_CONTENTID											= FINDER_CLASS_NAME_ENTITY + ".getRowIdByContentId";
 	public static String GET_ROWID_OF_RELATION 											= FINDER_CLASS_NAME_ENTITY + ".getRowIdOfRelation";
 	public static String GET_ROWIDS_OF_CATEGORY_WITH_SPECIFIC_TYPE						= FINDER_CLASS_NAME_ENTITY + ".getRowIdsOfCategoryWithSpecificType";
+	
 	
 	//Is  pk in table with headid, the Boolean is true
 	@SuppressWarnings("rawtypes")
@@ -197,7 +201,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	
 	//get List of content IDs, without content of relationship tables
 	@SuppressWarnings("rawtypes")
-	public  List getContentIdsWithoutRelationships(long rowId, String columnName1, String columnName2) {
+	public  List getContentIdsWithoutRelationships(long id, String columnName1, String columnName2) {
 		
 		Session session = null;
 		try {
@@ -212,8 +216,8 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(columnName1);
 			qPos.add(columnName2);
-			qPos.add(Long.toString(rowId));
-			qPos.add(Long.toString(rowId));
+			qPos.add(Long.toString(id));
+			qPos.add(Long.toString(id));
 			qPos.add(columnName2);
 			return (List) queryObject.list();
 			
@@ -227,7 +231,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	
 	//get List of content IDs, with content of relationship tables
 	@SuppressWarnings("rawtypes")
-	public  List getContentIdsWithNormalTableRelationships(long rowId, String tableName, String columnName1, String columnName2) {
+	public  List getContentIdsWithNormalTableRelationships(long id, String tableName, String columnName1, String columnName2) {
 		Session session = null;
 		try {
 		
@@ -242,7 +246,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(columnName1);
 			qPos.add(tableName);
-			qPos.add(Long.toString(rowId));
+			qPos.add(Long.toString(id));
 			qPos.add(columnName2);
 			return (List) queryObject.list();
 			
@@ -257,7 +261,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	
 	//get List of content IDs, with content of relationship tables
 	@SuppressWarnings("rawtypes")
-	public  List getContentIdsWithRelationships(long rowId, String columnName1, String columnName2) {
+	public  List getContentIdsWithRelationships(long id, String columnName1, String columnName2) {
 		
 		Session session = null;
 		try {
@@ -273,8 +277,8 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(columnName1);
 			qPos.add(columnName2);
-			qPos.add(Long.toString(rowId));
-			qPos.add(Long.toString(rowId));
+			qPos.add(Long.toString(id));
+			qPos.add(Long.toString(id));
 			qPos.add(columnName1);
 			qPos.add(columnName2);
 			return (List) queryObject.list();
@@ -310,6 +314,33 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 		finally {
 			closeSession(session);
 		}
+		return null;
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public  List getContentIdByRowIdAndColumnName(long rowId, String columnName) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CONTENTID_BY_ROWID_AND_COLUMNNAME);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("contentid", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(rowId);
+			qPos.add(columnName);
+			
+			return (List) queryObject.list();
+			
+		} 
+		catch (Exception e) {e.printStackTrace();}
+		finally {closeSession(session);	}
 		return null;
 	}
 	
@@ -370,9 +401,62 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	}
 	
 	
+	//
+	@SuppressWarnings("rawtypes")
+	public  List getHeadIdByRowId(long rowId) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_HEADID_BY_ROWID);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("headid", Type.LONG);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(rowId);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get the ID of a table that include a cell with a specific ID
+	@SuppressWarnings("rawtypes")
+	public  List getMaxId() {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_MAX_ID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("contentid", Type.LONG);
+
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	
 	//get List of content IDs, with content of relationship tables
 	@SuppressWarnings("rawtypes")
 	public  List getOppositeCellContentsOfRelationsByCellContent(long headId, String cellcontent) {
+		
 		Session session = null;
 		try {
 		

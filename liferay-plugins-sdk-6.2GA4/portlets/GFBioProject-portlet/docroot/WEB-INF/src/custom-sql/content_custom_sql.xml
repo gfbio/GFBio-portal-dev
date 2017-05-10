@@ -49,6 +49,7 @@
 		]]>
     </sql>
     
+    
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getCellContentByContentId">
 	    <![CDATA[
 			SELECT 
@@ -86,15 +87,32 @@
 			ORDER BY gfbio_content.columnid
 		]]>
     </sql>
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdByRowIdAndColumnName">
+	    <![CDATA[
+			SELECT 
+			  contentid
+			FROM 
+			  public.gfbio_content,
+			  public.gfbio_column
+			WHERE
+			  rowid = ? AND
+			  gfbio_content.columnid = gfbio_column.columnid AND
+			  gfbio_column.column_name = ?
+		]]>
+    </sql>
 
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsWithoutRelationships">
 	    <![CDATA[
-			SELECT
+		SELECT
 			public.gfbio_content.contentid
 			FROM 
 				public.gfbio_head,
-				public.gfbio_content
-			WHERE
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
 				CAST(contentid as text) = cellcontent AND
 				CAST(gfbio_content.rowid AS text) not in (
 				SELECT
@@ -132,8 +150,11 @@
 			SELECT
 				public.gfbio_content.contentid
 			FROM
-				public.gfbio_content
-			WHERE
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
 				CAST(gfbio_content.rowid AS text)  in (
 				
 					SELECT
@@ -185,8 +206,11 @@
 			SELECT 
 				CAST(cellcontent as bigint) AS contentid
 			FROM 
-				public.gfbio_content
+				public.gfbio_content,
+				public.gfbio_column
 			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
 				rowid in(
 					SELECT 
 						rowid 
@@ -251,8 +275,11 @@
 			SELECT
 				public.gfbio_content.contentid
 			FROM 
-				public.gfbio_content
-			WHERE
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
 				CAST(contentid as text) = cellcontent AND
 				CAST(gfbio_content.rowid AS text)  in (
 					SELECT
@@ -315,6 +342,31 @@
 			ORDER BY gfbio_content.headid
 		]]>
     </sql>
+    
+       <sql id="org.gfbio.service.persistence.ContentFinderImpl.getHeadIdByRowId">
+	    <![CDATA[
+			SELECT 
+			  headid
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  rowid = ?
+		]]>
+    </sql>
+    
+       <sql id="org.gfbio.service.persistence.ContentFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				contentid
+			FROM
+				(SELECT MAX(rowid) as "contentid" FROM gfbio_content) as maxid
+				union
+				
+				SELECT MAX(contentid) FROM gfbio_content
+			ORDER BY contentid DESC
+			limit (1);
+		]]>
+    </sql>
         
         
         
@@ -323,8 +375,11 @@
 			SELECT 
 			  cellcontent 
 			FROM 
-			  public.gfbio_content
-			WHERE
+			  public.gfbio_content,
+			  public.gfbio_column
+			WHERE 
+			  gfbio_column.columnid = gfbio_content.columnid AND
+			  gfbio_column.column_name != 'lastmodifieddate' AND
 			  rowid in (
 				SELECT 
 					rowid 

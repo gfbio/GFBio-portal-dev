@@ -29,6 +29,10 @@
 			<id name="columnID" />
 			<basic name="headID" />
 			<basic name="column_name" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -41,6 +45,10 @@
 			<basic name="columnID" />
 			<basic name="rowID" />
 			<basic name="cellContent" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -63,6 +71,10 @@
 			<basic name="deadobjects" />
 			<basic name="sequencedata" />
 			<basic name="providerType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -77,6 +89,10 @@
 			<id name="gfbioPersistentIdentifier">
 				<column name="GFBIO_PERSISTENTIDENTIFIER" />
 			</id>
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -89,6 +105,10 @@
 			<id name="fundingAgencyID" />
 			<id name="fundingProgramID" />
 			<id name="institutionID" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -102,6 +122,10 @@
 			<id name="fundingProgramID" />
 			<id name="personID" />
 			<id name="personType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -112,6 +136,10 @@
 			<id name="headID" />
 			<basic name="table_name" />
 			<basic name="table_type" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -124,6 +152,10 @@
 			</id>
 			<basic name="name" />
 			<basic name="path" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -135,6 +167,10 @@
 			<id name="primaryDataID" />
 			<id name="researchObjectID" />
 			<id name="researchObjectVersion" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -161,6 +197,10 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="status" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -172,6 +212,10 @@
 			<id name="projectID" />
 			<id name="researchObjectID" />
 			<id name="researchObjectVersion" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -189,6 +233,10 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="userType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -241,6 +289,10 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="userType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

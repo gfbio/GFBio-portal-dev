@@ -38,6 +38,7 @@
 		</id>
 		<property name="headID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="column_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.ContentImpl" table="gfbio_Content">
 		<id name="contentID" type="long">
@@ -47,6 +48,7 @@
 		<property name="columnID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="rowID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="cellContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.DataProviderImpl" table="gfbio_DataProvider">
 		<id name="dataProviderID" type="long">
@@ -66,12 +68,14 @@
 		<property name="deadobjects" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="sequencedata" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="providerType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" table="gfbio_DataProvider_PersistentIdentifier">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK">
 			<key-property name="gfbioDataProvider" column="gfbio_dataprovider" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="gfbioPersistentIdentifier" column="gfbio_persistentidentifier" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.Funding_InstitutionProjectImpl" table="gfbio_Funding_InstitutionProject">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Funding_InstitutionProjectPK">
@@ -80,6 +84,7 @@
 			<key-property name="fundingProgramID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="institutionID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.Funding_PersonProjectImpl" table="gfbio_Funding_PersonProject">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Funding_PersonProjectPK">
@@ -89,6 +94,7 @@
 			<key-property name="personID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="personType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		</composite-id>
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.HeadImpl" table="gfbio_Head">
 		<id name="headID" type="long">
@@ -96,6 +102,7 @@
 		</id>
 		<property name="table_name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="table_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.PrimaryDataImpl" table="gfbio_PrimaryData">
 		<id name="primaryDataID" column="primarydataid" type="long">
@@ -103,6 +110,7 @@
 		</id>
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="path" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.PrimaryData_ResearchObjectImpl" table="gfbio_PrimaryData_ResearchObject">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.PrimaryData_ResearchObjectPK">
@@ -110,6 +118,7 @@
 			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		</composite-id>
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.ProjectImpl" table="gfbio_Project">
 		<id name="projectID" column="projectid" type="long">
@@ -123,6 +132,7 @@
 		<property name="startDate" type="org.hibernate.type.TimestampType" column="startdate" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" column="enddate" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.Project_ResearchObjectImpl" table="gfbio_Project_ResearchObject">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_ResearchObjectPK">
@@ -130,6 +140,7 @@
 			<key-property name="researchObjectID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property name="researchObjectVersion" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		</composite-id>
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.Project_UserImpl" table="gfbio_Project_User">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.Project_UserPK">
@@ -139,6 +150,7 @@
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 		<property name="userType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.ResearchObjectImpl" table="gfbio_ResearchObject">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.ResearchObjectPK">
@@ -164,6 +176,7 @@
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 		<property name="userType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.SubmissionImpl" table="gfbio_Submission">
 		<id name="submissionID" column="submissionid" type="long">

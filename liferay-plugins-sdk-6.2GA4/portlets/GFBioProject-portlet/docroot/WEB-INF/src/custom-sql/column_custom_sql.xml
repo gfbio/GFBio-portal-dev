@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+
+
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.checkExistenceOfColumn">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN count(Distinct(gfbio_column.columnid)) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_content, 
+			  public.gfbio_column
+			WHERE 
+			  gfbio_column.columnid = gfbio_content.columnid AND
+			  gfbio_column.headid = ? AND
+			  gfbio_column.column_name = ? 
+			  
+		]]>
+    </sql>
+    
     <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnIdByNames">
 	    <![CDATA[
 			SELECT 
@@ -99,6 +116,15 @@
 			  public.gfbio_column
 			where
 			  column_name = ?
+		]]>
+    </sql>
+    
+     <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(columnid)  AS columnid
+			FROM
+				public.gfbio_column
 		]]>
     </sql>
     

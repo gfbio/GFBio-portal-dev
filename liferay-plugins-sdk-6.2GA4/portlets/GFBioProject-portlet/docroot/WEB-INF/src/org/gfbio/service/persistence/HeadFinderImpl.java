@@ -22,6 +22,7 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 	public static String GET_ENITIES_BY_HEADID 		= FINDER_CLASS_NAME_ENTITY + ".getEntitiesByHeadId";
 	public static String GET_HEAD_BETWEEN_HEAD_IDS 	= FINDER_CLASS_NAME_ENTITY + ".getHeadBetweenHeadIds";
 	public static String GET_HEADID_BY_TABLENAME 	= FINDER_CLASS_NAME_ENTITY + ".getHeadIdByTableName";	
+	public static String GET_MAX_ID 				= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
 	public static String GET_TABLENAME_BY_ID 		= FINDER_CLASS_NAME_ENTITY + ".getTableNameById";	
 	public static String GET_TABLENAME_BY_TABLETYPE = FINDER_CLASS_NAME_ENTITY + ".getTableNamesByTableType";
 	
@@ -101,6 +102,30 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 			qPos.add(tableName);
 			return (List) queryObject.list();
 			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get the ID of a table that include a cell with a specific ID
+	@SuppressWarnings("rawtypes")
+	public  List getMaxId() {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_MAX_ID);
+				
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("headid", Type.LONG);
+			return (List) queryObject.list();
+				
 		} catch (Exception e) {e.printStackTrace();}
 		finally {
 			closeSession(session);

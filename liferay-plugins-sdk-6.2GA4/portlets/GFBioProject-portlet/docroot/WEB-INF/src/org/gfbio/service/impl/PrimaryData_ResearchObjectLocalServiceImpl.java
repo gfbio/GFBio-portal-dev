@@ -14,6 +14,8 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchPrimaryData_ResearchObjectException;
@@ -158,6 +160,9 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 	public Boolean updatePrimaryDataResearchObject(long primaryDataId, long researchObjectId) {
 		return updatePrimaryDataResearchObject(primaryDataId, researchObjectId, ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId));
 	}
+
+	
+	//---------------------------------- Update Functions -------------------------------------------------//
 	
 	
 	//update or create a new Relationship between a Primary Data and a Research Object
@@ -165,43 +170,40 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 
 		Boolean check = false;
 		
-		PrimaryData_ResearchObject relation = null;
+		PrimaryData_ResearchObject relationship = null;
 		PrimaryData_ResearchObjectPK pk = new PrimaryData_ResearchObjectPK(primaryDataId, researchObjectId, researchObjectVersion);
 
-		try {relation = primaryData_ResearchObjectPersistence.findByPrimaryKey(pk);	}
+		try {relationship = primaryData_ResearchObjectPersistence.findByPrimaryKey(pk);	}
 		catch (NoSuchPrimaryData_ResearchObjectException | SystemException e1) {System.out.println("no enitity with pk: "+pk+" is found");}
 		
-		if (relation == null) 
-			relation = primaryData_ResearchObjectPersistence.create(pk);
-		
+		if (relationship == null) 
+			relationship = primaryData_ResearchObjectPersistence.create(pk);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));		
 		try {
-			super.updatePrimaryData_ResearchObject(relation);
+			super.updatePrimaryData_ResearchObject(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
-		
-		System.out.println(check);
 		
 		return check;
 	}
 	
-	//---------------------------------- Update Functions -------------------------------------------------//
-	
+
 	//
 	public Boolean updateResearchObjectVersion(long primaryDataId, long researchObjectId, int oldResearchObjectVersion, int newResearchObjectVersion) {
 		Boolean check = false;
 		
-		PrimaryData_ResearchObject oldRelation = null;
+		PrimaryData_ResearchObject oldRelationship = null;
 		PrimaryData_ResearchObjectPK pk = new PrimaryData_ResearchObjectPK(primaryDataId, researchObjectId, oldResearchObjectVersion);
 
-		try {oldRelation = primaryData_ResearchObjectPersistence.findByPrimaryKey(pk);}
+		try {oldRelationship = primaryData_ResearchObjectPersistence.findByPrimaryKey(pk);}
 		catch (NoSuchPrimaryData_ResearchObjectException | SystemException e) {e.printStackTrace();}
 		
-		if (oldRelation !=null){
-			PrimaryData_ResearchObject newRelation = (PrimaryData_ResearchObject) oldRelation.clone();
-			newRelation.setResearchObjectVersion(newResearchObjectVersion);
-			
+		if (oldRelationship !=null){
+			PrimaryData_ResearchObject relationship = (PrimaryData_ResearchObject) oldRelationship.clone();
+			relationship.setResearchObjectVersion(newResearchObjectVersion);
+			relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));			
 			try {
-				super.updatePrimaryData_ResearchObject(newRelation);
+				super.updatePrimaryData_ResearchObject(relationship);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
 		}

@@ -234,6 +234,16 @@
 		]]>
     </sql>
     
+    	
+	<sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(submissionid)  AS submissionid
+			FROM
+				public.gfbio_submission
+		]]>
+    </sql>
+    
    <sql id="org.gfbio.service.persistence.SubmissionFinderImpl.getResearchObjectVersion">
 	    <![CDATA[
 			SELECT 

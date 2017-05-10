@@ -17,7 +17,8 @@
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="headID" type="long" primary="true" />
 		<column name="table_name" type="String" />
-		<column name="table_type" type="String" />
+		<column name="table_type" type="String" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<order by="asc">
 			<order-column name="table_name" />
@@ -43,7 +44,8 @@
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="columnID" type="long" primary="true" />
 		<column name="headID" type="long" />
-		<column name="column_name" type="String" />
+		<column name="column_name" type="String" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<order by="asc">
 			<order-column name="columnID" />
@@ -75,7 +77,8 @@
 		<column name="headID" type="long" />
 		<column name="columnID" type="long" />
 		<column name="rowID" type="long" />
-		<column name="cellContent" type="String" />
+		<column name="cellContent" type="String" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<order by="asc">
 			<order-column name="contentID" />
@@ -166,8 +169,8 @@
 		<column name="livingobjects" type="boolean" />
 		<column name="deadobjects" type="boolean" />
 		<column name="sequencedata" type="boolean" />
-		
 		<column name="providerType" type="String" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<order by="asc">			<order-column name="name" />			</order>
 
@@ -192,7 +195,8 @@
 		<column name="description" 		type="String" 	db-name="description"/>
 		<column name="startDate" 		type="Date" 	db-name="startdate"/>
 		<column name="endDate" 			type="Date" 	db-name="enddate"/>
-		<column name="status" 			type="String"	db-name="status"/>
+		<column name="status" 			type="String"	db-name="status"/>	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<order by="asc">	<order-column name="name" />	</order>
 
@@ -210,7 +214,8 @@
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="primaryDataID" 			type="long" 	db-name="primarydataid"		primary="true" />
 		<column name="name" 					type="String" 	db-name="name"/>
-		<column name="path" 					type="String" 	db-name="path"/>
+		<column name="path" 					type="String" 	db-name="path"/>	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<order by="asc">			<order-column name="name" />		</order>
 
@@ -264,7 +269,7 @@
 		<column name="brokerSubmissionID" 		type="String" 	db-name="brokersubmissionid"/>
 		<column name="jiraID" 					type="String" 	db-name="jiraid"/>
 		<column name="jiraKey" 					type="String" 	db-name="jirakey"/>
-		<column name="status" 					type="String" 	db-name="status"/>
+		<column name="status" 					type="String" 	db-name="status"/>	
 
 		<order by="asc">			<order-column name="researchObjectID" />		</order>
 
@@ -310,17 +315,12 @@
 	<entity name="DataProvider_PersistentIdentifier" data-source="gfbioDataSource"
 		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="gfbioDataProvider" type="long" db-name="gfbio_dataprovider"
-			primary="true" />
-		<column name="gfbioPersistentIdentifier" type="long"
-			db-name="gfbio_persistentidentifier" primary="true" />
+		<column name="gfbioDataProvider" 			type="long" 	db-name="gfbio_dataprovider"			primary="true" />
+		<column name="gfbioPersistentIdentifier" 	type="long"		db-name="gfbio_persistentidentifier" 	primary="true" />	
+		<column name="lastModifiedDate" 			type="Date" 	db-name="lastmodifieddate"/>
 
-		<finder name="DataProvider" return-type="Collection">
-			<finder-column name="gfbioDataProvider" />
-		</finder>
-		<finder name="PersistentIdentifier" return-type="Collection">
-			<finder-column name="gfbioPersistentIdentifier" />
-		</finder>
+		<finder name="DataProvider" 		return-type="Collection">	<finder-column name="gfbioDataProvider" />			</finder>
+		<finder name="PersistentIdentifier" return-type="Collection">	<finder-column name="gfbioPersistentIdentifier" />	</finder>
 	</entity>
 
 
@@ -330,21 +330,15 @@
 	<entity name="Project_ResearchObject" data-source="gfbioDataSource"
 		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="projectID" type="long" primary="true" />
-		<column name="researchObjectID" type="long" primary="true" />
-		<column name="researchObjectVersion" type="int" primary="true" />
+		<column name="projectID" 				type="long" 	primary="true" />
+		<column name="researchObjectID" 		type="long" 	primary="true" />
+		<column name="researchObjectVersion" 	type="int" 		primary="true" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 
-		<finder name="ProjectID" return-type="Collection">
-			<finder-column name="projectID" />
-		</finder>
-		<finder name="ResearchObjectID" return-type="Collection">
-			<finder-column name="researchObjectID" />
-			<finder-column name="researchObjectVersion" />
-		</finder>
-		<finder name="ResearchObjectID2" return-type="Collection">
-			<finder-column name="researchObjectID" />
-		</finder>
+		<finder name="ProjectID" 			return-type="Collection">	<finder-column name="projectID" />	</finder>
+		<finder name="ResearchObjectID" 	return-type="Collection">	<finder-column name="researchObjectID" />		<finder-column name="researchObjectVersion" />	</finder>
+		<finder name="ResearchObjectID2" 	return-type="Collection">	<finder-column name="researchObjectID" />		</finder>
 	</entity>
 
 
@@ -359,6 +353,7 @@
 		<column name="startDate" type="Date" />
 		<column name="endDate" type="Date" />
 		<column name="userType" type="String" />
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<finder name="ProjectID" 		return-type="Collection">		<finder-column name="projectID" />			</finder>
 		<finder name="UserID" 			return-type="Collection">		<finder-column name="userID" />				</finder>	
@@ -368,13 +363,12 @@
 
 	<!-- Relationship between project, funding agency, funding program and institution -->
 
-	<entity name="Funding_InstitutionProject" data-source="gfbioDataSource"
-		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
-		tx-manager="gfbioTransactionManager" cache-enabled="false">
+	<entity name="Funding_InstitutionProject" data-source="gfbioDataSource"	local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="projectID" type="long" primary="true" />
 		<column name="fundingAgencyID" type="long" primary="true" />
 		<column name="fundingProgramID" type="long" primary="true" />
-		<column name="institutionID" type="long" primary="true" />
+		<column name="institutionID" type="long" primary="true" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<finder name="FundingAgencyID" 	return-type="Collection">	<finder-column name="fundingAgencyID" />		</finder>
 		<finder name="InstitutionID" 	return-type="Collection">	<finder-column name="institutionID" />			</finder>
@@ -384,25 +378,17 @@
 
 	<!-- Relationship between project, funding agency, funding program and person -->
 
-	<entity name="Funding_PersonProject" data-source="gfbioDataSource"
-		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
-		tx-manager="gfbioTransactionManager" cache-enabled="false">
-		<column name="projectID" type="long" primary="true" />
-		<column name="fundingAgencyID" type="long" primary="true" />
-		<column name="fundingProgramID" type="long" primary="true" />
-		<column name="personID" type="long" primary="true" />
-		<column name="personType" type="String" primary="true" />
+	<entity name="Funding_PersonProject" data-source="gfbioDataSource"	local-service="true" remote-service="true" session-factory="gfbioSessionFactory"	tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="projectID" 				type="long" 	primary="true" />
+		<column name="fundingAgencyID" 			type="long" 	primary="true" />
+		<column name="fundingProgramID" 		type="long" 	primary="true" />
+		<column name="personID" 				type="long" 	primary="true" />
+		<column name="personType" 				type="String" 	primary="true" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
-		<finder name="FundingAgencyID" return-type="Collection">
-			<finder-column name="fundingAgencyID" />
-		</finder>
-		<finder name="Person" return-type="Collection">
-			<finder-column name="personID" />
-			<finder-column name="personType" />
-		</finder>
-		<finder name="ProjectID" return-type="Collection">
-			<finder-column name="projectID" />
-		</finder>
+		<finder name="FundingAgencyID" 	return-type="Collection">	<finder-column name="fundingAgencyID" />		</finder>
+		<finder name="Person" 			return-type="Collection">	<finder-column name="personID" />			<finder-column name="personType" />		</finder>
+		<finder name="ProjectID" 		return-type="Collection">	<finder-column name="projectID" />		</finder>
 	</entity>
 	
 	
@@ -414,7 +400,8 @@
 		<column name="userID" 					type="long" 	primary="true" />
 		<column name="startDate" 				type="Date" />
 		<column name="endDate" 					type="Date" />
-		<column name="userType" 				type="String" />
+		<column name="userType" 				type="String" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<finder name="researchObjectID"	return-type="Collection">			<finder-column name="researchObjectID" />												</finder>
 		<finder name="UserID" 			return-type="Collection">			<finder-column name="userID" />													</finder>
@@ -429,7 +416,7 @@
 		tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="userID" type="long" primary="true" />
 		<column name="token" type="String" />
-		<column name="lastModifiedDate" type="Date" />
+		<column name="lastModifiedDate" type="Date" />	
 
 		<order by="desc">
 			<order-column name="lastModifiedDate" />
@@ -452,7 +439,8 @@
 	<entity name="PrimaryData_ResearchObject" data-source="gfbioDataSource"	local-service="true" remote-service="true" session-factory="gfbioSessionFactory" tx-manager="gfbioTransactionManager" cache-enabled="false">
 		<column name="primaryDataID" 			type="long" 		primary="true" />
 		<column name="researchObjectID" 		type="long" 		primary="true" />
-		<column name="researchObjectVersion" 	type="int" 			primary="true" />
+		<column name="researchObjectVersion" 	type="int" 			primary="true" />	
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<finder name="PrimaryDataID" 				return-type="Collection">	<finder-column name="primaryDataID" />															</finder>
 		<finder name="ResearchObjectID" 			return-type="Collection">	<finder-column name="researchObjectID" />													</finder>

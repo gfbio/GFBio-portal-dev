@@ -15,6 +15,7 @@
 		<field name="columnID" type="long" />
 		<field name="headID" type="long" />
 		<field name="column_name" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Content">
 		<field name="contentID" type="long" />
@@ -22,6 +23,7 @@
 		<field name="columnID" type="long" />
 		<field name="rowID" type="long" />
 		<field name="cellContent" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.DataProvider">
 		<field name="dataProviderID" type="long" />
@@ -39,16 +41,19 @@
 		<field name="deadobjects" type="boolean" />
 		<field name="sequencedata" type="boolean" />
 		<field name="providerType" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.DataProvider_PersistentIdentifier">
 		<field name="gfbioDataProvider" type="long" />
 		<field name="gfbioPersistentIdentifier" type="long" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Funding_InstitutionProject">
 		<field name="projectID" type="long" />
 		<field name="fundingAgencyID" type="long" />
 		<field name="fundingProgramID" type="long" />
 		<field name="institutionID" type="long" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Funding_PersonProject">
 		<field name="projectID" type="long" />
@@ -56,21 +61,25 @@
 		<field name="fundingProgramID" type="long" />
 		<field name="personID" type="long" />
 		<field name="personType" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Head">
 		<field name="headID" type="long" />
 		<field name="table_name" type="String" />
 		<field name="table_type" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.PrimaryData">
 		<field name="primaryDataID" type="long" />
 		<field name="name" type="String" />
 		<field name="path" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.PrimaryData_ResearchObject">
 		<field name="primaryDataID" type="long" />
 		<field name="researchObjectID" type="long" />
 		<field name="researchObjectVersion" type="int" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Project">
 		<field name="projectID" type="long" />
@@ -82,11 +91,13 @@
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="status" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Project_ResearchObject">
 		<field name="projectID" type="long" />
 		<field name="researchObjectID" type="long" />
 		<field name="researchObjectVersion" type="int" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Project_User">
 		<field name="projectID" type="long" />
@@ -94,6 +105,7 @@
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="userType" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.ResearchObject">
 		<field name="researchObjectID" type="long" />
@@ -115,6 +127,7 @@
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="userType" type="String" />
+		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.Submission">
 		<field name="submissionID" type="long" />

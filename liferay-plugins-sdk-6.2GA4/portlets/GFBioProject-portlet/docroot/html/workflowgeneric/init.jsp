@@ -156,7 +156,7 @@
 				"<div 			class='control-group'>"+
 					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'			 	id='gwf_ro_author_d'>Please, enter the author(s) for the data set (one author per line).</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+fieldCheckList[2]+"\' maxlength='500')\"></textarea>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+fieldCheckList[2]+"\')\" maxlength='500'></textarea>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_license_l'> License<span style='color:darkred'>*</span>   </label>"+

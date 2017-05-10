@@ -36,6 +36,15 @@
 		]]>
     </sql>
     
+   <sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(dataproviderid)  AS dataproviderid
+			FROM
+				public.gfbio_dataprovider
+		]]>
+    </sql>
+    
     
     <sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getNameById">
 	    <![CDATA[

@@ -16,6 +16,8 @@ package org.gfbio.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchProject_ResearchObjectException;
@@ -92,9 +94,8 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 	//get a ID-List (Project_ResearchObject-Object) of all Research Objects of a specific Project
 	public List<Project_ResearchObject> getProjectIDList(long projectID) {
 		List<Project_ResearchObject> idList = null;
-		try {
-			idList = project_ResearchObjectPersistence.findByProjectID(projectID);
-		} catch (SystemException e) {e.printStackTrace();}
+		try {idList = project_ResearchObjectPersistence.findByProjectID(projectID);}
+		catch (SystemException e) {e.printStackTrace();}
 		return idList;
 	}
 	
@@ -133,17 +134,17 @@ public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObje
 	public Boolean updateProjectResearchObject(long projectID, long researchObjectID, int researchObjectVersion) {
 
 		Boolean check = false;
-		Project_ResearchObject relation = null;
+		Project_ResearchObject relationship = null;
 		Project_ResearchObjectPK pk = new Project_ResearchObjectPK(projectID, researchObjectID, researchObjectVersion);
 
-		try {relation = project_ResearchObjectPersistence.findByPrimaryKey(pk);} 
+		try {relationship = project_ResearchObjectPersistence.findByPrimaryKey(pk);} 
 		catch (NoSuchProject_ResearchObjectException | SystemException e) {System.out.println("no enitity with pk: "+pk+" is found");	}
 
-		if (relation == null) 
-			relation = project_ResearchObjectPersistence.create(pk);
-
+		if (relationship == null) 
+			relationship = project_ResearchObjectPersistence.create(pk);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		try {
-			super.updateProject_ResearchObject(relation);
+			super.updateProject_ResearchObject(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 

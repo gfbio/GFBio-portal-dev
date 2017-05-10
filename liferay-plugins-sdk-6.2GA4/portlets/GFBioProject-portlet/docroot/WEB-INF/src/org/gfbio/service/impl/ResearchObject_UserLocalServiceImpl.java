@@ -14,6 +14,7 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -192,19 +193,19 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 	public Boolean updateResearchObjectUser(long researchObjectId, int researchObjectVersion, long userId, String userType) {
 
 		Boolean check = false;
-		ResearchObject_User relation = null;
+		ResearchObject_User relationship = null;
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
-		try {relation = researchObject_UserPersistence.findByPrimaryKey(pk);} 
+		try {relationship = researchObject_UserPersistence.findByPrimaryKey(pk);} 
 		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
-		if (relation == null) 
-			relation = researchObject_UserPersistence.create(pk);
+		if (relationship == null) 
+			relationship = researchObject_UserPersistence.create(pk);
 		
-		relation.setUserType(userType);
-
+		relationship.setUserType(userType);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		try {
-			super.updateResearchObject_User(relation);
+			super.updateResearchObject_User(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 		
@@ -216,21 +217,21 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 	public Boolean updateResearchObjectUser(long researchObjectId, int researchObjectVersion, long userId, Date startDate, Date endDate, String userType) {
 
 		Boolean check = false;
-		ResearchObject_User relation = null;
+		ResearchObject_User relationship = null;
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
-		try {relation = researchObject_UserPersistence.findByPrimaryKey(pk);}
+		try {relationship = researchObject_UserPersistence.findByPrimaryKey(pk);}
 		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
-		if (relation == null) 
-			relation = researchObject_UserPersistence.create(pk);
+		if (relationship == null) 
+			relationship = researchObject_UserPersistence.create(pk);
 		
-		relation.setStartDate(startDate);
-		relation.setEndDate(endDate);
-		relation.setUserType(userType);
-
+		relationship.setStartDate(startDate);
+		relationship.setEndDate(endDate);
+		relationship.setUserType(userType);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		try {
-			super.updateResearchObject_User(relation);
+			super.updateResearchObject_User(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 		
@@ -242,18 +243,18 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 	public Boolean updateResearchObjectVersion(long userId, long researchObjectId, int oldResearchObjectVersion, int newResearchObjectVersion) {
 		Boolean check = false;
 		
-		ResearchObject_User oldRelation = null;
+		ResearchObject_User oldRelationship = null;
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, oldResearchObjectVersion, userId);
 
-		try {oldRelation = researchObject_UserPersistence.findByPrimaryKey(pk);}
+		try {oldRelationship = researchObject_UserPersistence.findByPrimaryKey(pk);}
 		catch (NoSuchResearchObject_UserException | SystemException e) {e.printStackTrace();}
 		
-		if (oldRelation !=null){
-			ResearchObject_User newRelation = (ResearchObject_User) oldRelation.clone();
-			newRelation.setResearchObjectVersion(newResearchObjectVersion);
-			
+		if (oldRelationship !=null){
+			ResearchObject_User newRelationship = (ResearchObject_User) oldRelationship.clone();
+			newRelationship.setResearchObjectVersion(newResearchObjectVersion);
+			newRelationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 			try {
-				super.updateResearchObject_User(newRelation);
+				super.updateResearchObject_User(newRelationship);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
 		}

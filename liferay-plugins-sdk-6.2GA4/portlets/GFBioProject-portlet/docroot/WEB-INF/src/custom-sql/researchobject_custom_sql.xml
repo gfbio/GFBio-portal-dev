@@ -108,8 +108,17 @@
 		]]>
     </sql>
     
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(researchobjectid)  AS researchobjectid
+			FROM
+				public.gfbio_researchobject
+		]]>
+    </sql>
     
-         <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getResearchObjectInformationByUserId">
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getResearchObjectInformationByUserId">
 	    <![CDATA[
 			SELECT
 				list.researchobjectid,

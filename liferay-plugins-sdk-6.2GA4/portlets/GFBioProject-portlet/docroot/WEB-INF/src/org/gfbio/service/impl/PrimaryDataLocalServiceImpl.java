@@ -14,6 +14,8 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -91,6 +93,17 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 		return path;
 	}
 	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	private long getMaxId(){
+		long id = 0;
+		List idList = PrimaryDataFinderUtil.getMaxId();
+		if (idList.size()>0)
+		id = (long) idList.get(0);
+		return id;
+	}
+	
 		
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
@@ -135,6 +148,18 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	}
 	
 	
+	//
+	public long constructNewId(){
+		long id = 0;
+		try {
+			if (CounterLocalServiceUtil.increment(getModelClassName())<getMaxId())
+				CounterLocalServiceUtil.reset(getModelClassName(), getMaxId());
+			id = CounterLocalServiceUtil.increment(getModelClassName());
+		} 
+		catch (SystemException e) {e.printStackTrace();}
+		return id;
+	}
+	
 	
 	
 	//
@@ -144,6 +169,7 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 		json.put("primarydataid", primaryData.getPrimaryDataID());
 		json.put("name", primaryData.getName());
 		json.put("path", primaryData.getPath());
+		json.put("lastmodifieddate", primaryData.getLastModifiedDate());
 		return json;
 	}
 	
@@ -235,12 +261,12 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 		catch (NoSuchPrimaryDataException | SystemException e1) {System.out.println("Entry in Project does not exist with pk "+primaryDataId+ " and  will be create now");}
 
 		if (primaryData == null)
-			try {
-				primaryDataId = CounterLocalServiceUtil.increment(getModelClassName());
-				primaryData = primaryDataPersistence.create(primaryDataId);
-			} catch (SystemException e) {System.out.println("no enitity with pk: "+primaryDataId+" is found");}
+			primaryDataId = constructNewId();
+			primaryData = primaryDataPersistence.create(primaryDataId);
+			
 		primaryData.setName(name);
 		primaryData.setPath(path);
+		primaryData.setLastModifiedDate(new Timestamp(new Date().getTime()));
 
 		try {
 			super.updatePrimaryData(primaryData);

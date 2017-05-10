@@ -14,6 +14,16 @@
     </sql>
     
     
+	<sql id="org.gfbio.service.persistence.PrimaryDataFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(primarydataid)  AS primarydataid
+			FROM
+				public.gfbio_primarydata
+		]]>
+    </sql>
+    
+    
     <sql id="org.gfbio.service.persistence.PrimaryDataFinderImpl.getPathByPrimaryDataId">
 	    <![CDATA[
 			SELECT 

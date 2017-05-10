@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.portlet.PortletException;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -56,5 +57,39 @@ public class Helper {
 		}
 		
 		return responseJson;
+	}
+    
+    
+	//
+	public static long getLongFromJson(JSONObject requestJson, String key){
+		
+		long responseLong = 0;
+		if ((((requestJson.get(key)).getClass()).toString()).equals("class java.lang.Long"))
+			responseLong = (long)requestJson.get(key);
+		else 
+			if ((((requestJson.get(key)).getClass()).toString()).equals("class java.lang.Integer"))
+				responseLong = (long)(int)requestJson.get(key);
+			else
+				if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String"))
+					responseLong = Long.valueOf((String) requestJson.get(key)).longValue();
+		
+		return responseLong;
+	}
+	
+	
+	//
+	public static String getStringFromJson(JSONObject requestJson, String key){
+		
+		String responseString ="";
+		if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String"))
+			responseString = ((String) requestJson.get(key)).trim();
+		else
+			if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONObject"))
+				responseString = ((JSONObject) requestJson.get(key)).toString();
+			else 
+				if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONArray"))
+					responseString = ((JSONArray) requestJson.get(key)).toString();
+
+		return responseString;
 	}
 }

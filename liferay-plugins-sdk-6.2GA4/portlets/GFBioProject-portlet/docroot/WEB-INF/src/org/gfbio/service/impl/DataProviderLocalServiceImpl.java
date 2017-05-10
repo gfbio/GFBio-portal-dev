@@ -14,6 +14,8 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchDataProviderException;
@@ -50,9 +52,8 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 	
 	public JSONObject getDataProviderById (long dataProviderId){
 		JSONObject responseJson = new JSONObject();
-		try {
-			responseJson = constructDataProviderAsJson(DataProviderLocalServiceUtil.getDataProvider(dataProviderId));
-		} catch (PortalException | SystemException e) {e.printStackTrace();}
+		try {responseJson = constructDataProviderAsJson(DataProviderLocalServiceUtil.getDataProvider(dataProviderId));}
+		catch (PortalException | SystemException e) {e.printStackTrace();}
 		return responseJson;
 	}
 	
@@ -95,6 +96,16 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		return (String) DataProviderFinderUtil.getLabelById(dataProviderId).get(0);
 	}
 	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	private long getMaxId(){
+		long id = 0;
+		List idList = DataProviderFinderUtil.getMaxId();
+		if (idList.size()>0)
+		id = (long) idList.get(0);
+		return id;
+	}
 	
 	//
 	public String getNameById (long dataProviderId){
@@ -143,8 +154,22 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		json.put("livingobjects", dataProvider.getLivingobjects());
 		json.put("deadobjects", dataProvider.getDeadobjects());
 		json.put("sequencedata", dataProvider.getSequencedata());
+		json.put("lastmodifieddate", dataProvider.getLastModifiedDate());
 		
 		return json;
+	}
+	
+	
+	//
+	public long constructNewId(){
+		long id = 0;
+		try {
+			if (CounterLocalServiceUtil.increment(getModelClassName())<getMaxId())
+				CounterLocalServiceUtil.reset(getModelClassName(), getMaxId());
+			id = CounterLocalServiceUtil.increment(getModelClassName());
+		} 
+		catch (SystemException e) {e.printStackTrace();}
+		return id;
 	}
 	
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
@@ -160,8 +185,7 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		catch (NoSuchDataProviderException | SystemException e1) {e1.printStackTrace();}
 
 		if (dataProvider == null) {
-			try {dataProvider = dataProviderPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));}
-			catch (SystemException e) {e.printStackTrace();}
+			dataProvider = dataProviderPersistence.create(constructNewId());
 			dataProviderId = dataProvider.getDataProviderID();
 		}
 		
@@ -172,6 +196,7 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		dataProvider.setAddress(address);
 		dataProvider.setWebsite(website);
 		dataProvider.setTraining(training);
+		dataProvider.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		
 		try {
 			super.updateDataProvider(dataProvider);
@@ -196,8 +221,7 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		catch (NoSuchDataProviderException | SystemException e1) {e1.printStackTrace();}
 
 		if (dataProvider == null) {
-			try {dataProvider = dataProviderPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));}
-			catch (SystemException e) {e.printStackTrace();}
+			dataProvider = dataProviderPersistence.create(constructNewId());
 			dataProviderId = dataProvider.getDataProviderID();
 		}
 		
@@ -215,6 +239,7 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		dataProvider.setLivingobjects(livingObjects);
 		dataProvider.setDeadobjects(deadObjects);
 		dataProvider.setSequencedata(sequenceData);
+		dataProvider.setLastModifiedDate(new Timestamp(new Date().getTime()));
 	
 		return check;
 	}

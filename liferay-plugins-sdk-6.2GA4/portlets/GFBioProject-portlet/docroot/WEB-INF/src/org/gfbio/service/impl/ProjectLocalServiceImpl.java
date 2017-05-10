@@ -18,6 +18,7 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -260,6 +261,17 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	//----------------------------------- Get Functions --------------------------------------------------//
 	
 	
+	//
+	@SuppressWarnings("rawtypes")
+	private long getMaxId(){
+		long id = 0;
+		List idList = ProjectFinderUtil.getMaxId();
+		if (idList.size()>0)
+		id = (long) idList.get(0);
+		return id;
+	}
+	
+	
 	// get list of all projects of a specific user - if we have a access to the user table, than this method goes to the UserLocalServiceImpl
 	public List<Project> getProjectList(long userID) throws NoSuchModelException, SystemException {
 
@@ -362,6 +374,19 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 	
 	//
+	public long constructNewId(){
+		long id = 0;
+		try {
+			if (CounterLocalServiceUtil.increment(getModelClassName())<getMaxId())
+				CounterLocalServiceUtil.reset(getModelClassName(), getMaxId());
+			id = CounterLocalServiceUtil.increment(getModelClassName());
+		} 
+		catch (SystemException e) {e.printStackTrace();}
+		return id;
+	}
+	
+	
+	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructReducedProjectAsJson (Project project){
 
@@ -392,6 +417,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		else
 			json.put("enddate", "");			
 		json.put("status", project.getStatus());
+		json.put("lastmodifieddate", project.getLastModifiedDate());
 		return json;
 	}
 	
@@ -663,11 +689,11 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		} catch (SystemException | NoSuchProjectException e) {System.out.println("Entry in Project does not exist with pk "+projectId+ " and  will be create now");}
 
 		if (project == null)
-			try {project = projectPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-			} catch (SystemException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+			project = projectPersistence.create(constructNewId());
 		project.setName(name);
 		project.setLabel(label);
 		project.setDescription(description);
+		project.setLastModifiedDate(new Timestamp(new Date().getTime()));
 		try {
 			super.updateProject(project);
 			check = project.getProjectID();
@@ -725,6 +751,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 		if (project != null){
 			project.setEndDate(endDate);
+			project.setLastModifiedDate(new Timestamp(new Date().getTime()));
 			try {
 				super.updateProject(project);
 				check = true;
@@ -745,6 +772,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 		if (project != null){
 			project.setExtendeddata(extendedData);
+			project.setLastModifiedDate(new Timestamp(new Date().getTime()));
 			try {
 				super.updateProject(project);
 				check = true;
@@ -765,6 +793,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 		if (project != null){
 			project.setParentProjectID(parentProjectId);
+			project.setLastModifiedDate(new Timestamp(new Date().getTime()));
 			try {
 				super.updateProject(project);
 				check = true;
@@ -785,6 +814,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	
 		if (project != null){
 			project.setStartDate(startDate);
+			project.setLastModifiedDate(new Timestamp(new Date().getTime()));
 			try {
 				super.updateProject(project);
 				check = true;
@@ -802,12 +832,12 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		Project project = null;
 		Boolean check = false;
 		
-		try {
-			project = projectPersistence.findByPrimaryKey(projectId);
-		} catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
+		try {project = projectPersistence.findByPrimaryKey(projectId);}
+		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+projectId+" is found");}
 	
 		if (project != null){
 			project.setStatus(status);
+			project.setLastModifiedDate(new Timestamp(new Date().getTime()));
 			try {
 				super.updateProject(project);
 				check = true;

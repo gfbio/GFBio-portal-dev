@@ -24,6 +24,7 @@ public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObjec
 	public static String GET_DIRECT_PARENT 							= FINDER_CLASS_NAME_ENTITY + ".getDirectParent";
 	public static String GET_LATEST_RESEARCHOBJECT_BY_ID 			= FINDER_CLASS_NAME_ENTITY + ".getLatestResearchObjectById";
 	public static String GET_LATEST_VERSION_BY_ID 					= FINDER_CLASS_NAME_ENTITY + ".getLatestVersionById";	
+	public static String GET_MAX_ID 								= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
 	public static String GET_RESEARCHOBJECTINFORMATION_BY_USERID	= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectInformationByUserId";
 	public static String GET_RESEARCHOBJECTVERSIONS_BY_ID 			= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectVersionsById";	
 
@@ -164,6 +165,31 @@ public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObjec
 		}
 		return null;
 	}
+	
+	
+	//
+		@SuppressWarnings("rawtypes")
+		public  List getMaxId() {
+			
+			Session session = null;
+			try {
+			
+				session = openSession();
+				String sql = CustomSQLUtil.get(GET_MAX_ID);
+				
+				SQLQuery queryObject = session.createSQLQuery(sql);
+				queryObject.setCacheable(false);
+				
+				queryObject.addScalar("researchobjectid", Type.LONG);
+
+				return (List) queryObject.list();
+				
+			} catch (Exception e) {e.printStackTrace();}
+			finally {
+				closeSession(session);
+			}
+			return null;
+		}
 	
 	
 	//

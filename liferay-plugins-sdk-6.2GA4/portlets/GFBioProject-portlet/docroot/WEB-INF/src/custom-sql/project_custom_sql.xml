@@ -28,6 +28,16 @@
     </sql>
     
     
+    <sql id="org.gfbio.service.persistence.ProjectFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(projectid)  AS projectid
+			FROM
+				public.gfbio_project
+		]]>
+    </sql>
+    
+    
     <sql id="org.gfbio.service.persistence.ProjectFinderImpl.getUserIdsByResearchObjectIdAndVersion">
 	    <![CDATA[
 			SELECT 

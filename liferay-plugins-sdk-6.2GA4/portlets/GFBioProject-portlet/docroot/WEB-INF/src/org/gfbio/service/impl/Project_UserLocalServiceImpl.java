@@ -16,6 +16,7 @@ package org.gfbio.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -129,19 +130,19 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 	public Boolean updateProjectUser(long projectId, long userId, String userType) {
 
 		Boolean check = false;
-		Project_User relation = null;
+		Project_User relationship = null;
 		Project_UserPK pk = new Project_UserPK(projectId, userId);
 
-		try {relation = project_UserPersistence.findByPrimaryKey(pk);} 
+		try {relationship = project_UserPersistence.findByPrimaryKey(pk);} 
 		catch (NoSuchProject_UserException | SystemException e) {System.out.println("Entry in Project does not exist with 'projectId' "+projectId+ " and 'userid' " + userId + " and will be create now");}
 
-		if (relation == null) {
-			relation = project_UserPersistence.create(pk);
-		}
-		relation.setUserType(userType);
+		if (relationship == null) 
+			relationship = project_UserPersistence.create(pk);
+		relationship.setUserType(userType);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 
 		try {
-			super.updateProject_User(relation);
+			super.updateProject_User(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 		
@@ -153,22 +154,22 @@ public class Project_UserLocalServiceImpl extends Project_UserLocalServiceBaseIm
 	public Boolean updateProjectUser(long projectID, long userID, Date startDate, Date endDate, String userType) {
 
 		Boolean check = false;
-		Project_User relation = null;
+		Project_User relationship = null;
 		Project_UserPK pk = new Project_UserPK(projectID, userID);
 
-		try {
-			relation = project_UserPersistence.findByPrimaryKey(pk);
-		} catch (NoSuchProject_UserException | SystemException e) {e.printStackTrace();}
+		try {relationship = project_UserPersistence.findByPrimaryKey(pk);}
+		catch (NoSuchProject_UserException | SystemException e) {e.printStackTrace();}
 
-		if (relation == null) {
-			relation = project_UserPersistence.create(pk);
-		}
-		relation.setStartDate(startDate);
-		relation.setEndDate(endDate);
-		relation.setUserType(userType);
+		if (relationship == null) 
+			relationship = project_UserPersistence.create(pk);
+		
+		relationship.setStartDate(startDate);
+		relationship.setEndDate(endDate);
+		relationship.setUserType(userType);
+		relationship.setLastModifiedDate(new Timestamp(new Date().getTime()));
 
 		try {
-			super.updateProject_User(relation);
+			super.updateProject_User(relationship);
 			check = true;
 		} catch (SystemException e) {e.printStackTrace();}
 		

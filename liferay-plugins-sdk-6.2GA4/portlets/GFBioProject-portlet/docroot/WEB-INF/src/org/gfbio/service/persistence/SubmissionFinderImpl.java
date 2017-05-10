@@ -31,6 +31,7 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 	public static String GET_LATEST_SUBMISSIONS_BY_RESEARCHOBJECTID			= FINDER_CLASS_NAME_ENTITY + ".getLatestSubmissionsByResearchObjectId";			
 	public static String GET_RESEARCHOBJECTVERSION							= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectVersion";	
 	public static String GET_LATEST_X_PUBLIC_SUBMISSIONS_BY_X				= FINDER_CLASS_NAME_ENTITY + ".getLatestXPublicSubmissionsByX";
+	public static String GET_MAX_ID 										= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
 	public static String GET_STATUS_BY_IDS									= FINDER_CLASS_NAME_ENTITY + ".getStatusByIds";	
 	public static String GET_SUBMISSION										= FINDER_CLASS_NAME_ENTITY + ".getSubmission";	
 	public static String GET_SUBMISSIONID_BY_IDS							= FINDER_CLASS_NAME_ENTITY + ".getSubmissionIdByIds";	
@@ -366,6 +367,31 @@ public class SubmissionFinderImpl  extends BasePersistenceImpl<Submission> imple
 		}
 		return null;
 	}
+	
+	
+	//get the ID of a table that include a cell with a specific ID
+		@SuppressWarnings("rawtypes")
+		public  List getMaxId() {
+			
+			Session session = null;
+			try {
+			
+				session = openSession();
+				String sql = CustomSQLUtil.get(GET_MAX_ID);
+				
+				SQLQuery queryObject = session.createSQLQuery(sql);
+				queryObject.setCacheable(false);
+				
+				queryObject.addScalar("submissionid", Type.LONG);
+
+				return (List) queryObject.list();
+				
+			} catch (Exception e) {e.printStackTrace();}
+			finally {
+				closeSession(session);
+			}
+			return null;
+		}
 	
 	
 	//

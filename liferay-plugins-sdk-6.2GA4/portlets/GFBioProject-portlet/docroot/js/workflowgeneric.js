@@ -383,7 +383,7 @@ function submitInput(url){
 					//create submission registry
 					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 						startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
-					
+						
 						//sent to JIRA
 						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 							var data ={};

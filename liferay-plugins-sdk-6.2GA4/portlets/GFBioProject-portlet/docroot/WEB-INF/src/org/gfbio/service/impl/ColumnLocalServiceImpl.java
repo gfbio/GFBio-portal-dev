@@ -14,6 +14,8 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
@@ -24,6 +26,8 @@ import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.ColumnLocalServiceBaseImpl;
 import org.gfbio.service.persistence.ColumnFinderUtil;
+import org.gfbio.service.persistence.ContentFinderUtil;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -181,21 +185,51 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		return maxcolumncount;
 	}
 	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	private long getMaxId(){
+		long id = 0;
+		List idList = ColumnFinderUtil.getMaxId();
+		System.out.println(idList);
+		if (idList.size()>0)
+		id = (long) idList.get(0);
+		return id;
+	}
+	
 
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////////
 		
+	
+	
+	//
+	public Boolean checkExistenceOfColumn(String tableName, String columnName) {
+		Boolean check = false;
+		long headId = 0;
+		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);}
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		if (headId !=0)
+			check = checkExistenceOfColumn(headId, columnName);
+		return check;
+	}
+	
+	//
+	public Boolean checkExistenceOfColumn(long headId, String columnName) {
+		return (Boolean) ColumnFinderUtil.checkExistenceOfColumn(headId, columnName).get(0);
+	}
+	
 	
 	//check: "if this tableName in Column as columnName". By TRUE have the head with this tableName a relationship to a other head 
 	public Boolean checkHaveTableRelationsById(long  headId) throws NoSuchHeadException, SystemException{
 		return ColumnLocalServiceUtil.checkHaveTableRelationsByName(HeadLocalServiceUtil.getTableNameById(headId));
 	}
-	
+
 	
 	//check: "if this tableName in Column as columnName". By TRUE have the head with this tableName a relationship to a other head 
 	@SuppressWarnings("rawtypes")
 	public Boolean checkHaveTableRelationsByName(String tableName){
 		Boolean check = false;
-		List list = ColumnLocalServiceUtil.getHeadIdsByColumnName(tableName);
+		List list = getHeadIdsByColumnName(tableName);
 		if (list != null)
 			check = true;
 		return check;
@@ -204,12 +238,38 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	
 	//construct a JSON of Column
 	@SuppressWarnings("unchecked")
-	public JSONObject constructColumnJson(long columnId, long headId, String columnName){
+	public JSONObject constructColumnJson(Column column){
+		JSONObject json = new JSONObject();
+		json.put("columnid", Long.toString(column.getColumnID()));
+		json.put("headid", Long.toString(column.getHeadID()));
+		json.put("column_name", column.getColumn_name());
+		json.put("lastmodifieddate", column.getLastModifiedDate());
+		return json;
+	}
+	
+	
+	//construct a JSON of Column
+	@SuppressWarnings("unchecked")
+	public JSONObject constructColumnJson(long columnId, long headId, String columnName, Date lastModifiedDate ){
 		JSONObject json = new JSONObject();
 		json.put("columnid", Long.toString(columnId));
 		json.put("headid", Long.toString(headId));
 		json.put("column_name", columnName);
+		json.put("lastmodifieddate", lastModifiedDate);
 		return json;
+	}
+	
+	
+	//
+	public long constructNewId(){
+		long id = 0;
+		try {
+			if (CounterLocalServiceUtil.increment(getModelClassName())<getMaxId())
+				CounterLocalServiceUtil.reset(getModelClassName(), getMaxId());
+			id = CounterLocalServiceUtil.increment(getModelClassName());
+		} 
+		catch (SystemException e) {e.printStackTrace();}
+		return id;
 	}
 	
 	
@@ -217,23 +277,23 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	
 	
 	//update or build a new the column
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Boolean updateColumn (long columnId, long headId, String content){
 		
 		Boolean check = false;
+		JSONArray futureResponseJson = new JSONArray();
 		Column column = null;
-		try {
-			column = ColumnLocalServiceUtil.getColumn(columnId);
-		} catch (PortalException | SystemException e) {System.out.println("No Column exists with the primary key "+columnId);}
+		try {column = getColumn(columnId);}
+		catch (PortalException | SystemException e) {System.out.println("No Column exists with the primary key "+columnId);}
 
 		// if it true, then must be build a new content with a new primary key else update the content
 		if (column == null)
-			try {
-				column = columnPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-			} catch (SystemException e) {e.printStackTrace();}
+			column = columnPersistence.create(constructNewId());
 
 		column.setHeadID(headId);
 		column.setColumn_name(content);
+		column.setLastModifiedDate(new Timestamp(new Date().getTime()));
+		
 		try {
 			super.updateColumn(column);
 			check = true;
@@ -241,9 +301,22 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 
 		if (columnId ==0){
 			List rowCount = ContentLocalServiceUtil.getRowIds(headId);
-			if (rowCount.size()>0)
-				for (int i =0;i<rowCount.size();i++)
-					check = ContentLocalServiceUtil.updateContent(0, headId, column.getColumnID(), (long) rowCount.get(i), "");
+			if (rowCount.size()>0){
+				int i =0;
+				while (i<rowCount.size() && check == true){
+					JSONObject contentJson = new JSONObject();
+					contentJson.put("contentid", 0);
+					contentJson.put("headid", headId);
+					contentJson.put("columnid", column.getColumnID());
+					contentJson.put("rowid", (long) rowCount.get(i));
+					contentJson.put("cellcontent", "");
+					JSONArray tempJson = (JSONArray) ContentLocalServiceUtil.updateContent(contentJson);
+					futureResponseJson.add(tempJson);
+					if (tempJson.size() ==0)
+						check = false;
+					i++;
+				}
+			}
 		}
 		return check;
 	}
@@ -257,39 +330,49 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		String headKey ="headid";
 		String columnNameKey = "column_name";
 		if (json.containsKey(columnKey) && json.containsKey(headKey) && json.containsKey(columnNameKey))
-			check = ColumnLocalServiceUtil.updateColumn(Long.valueOf((String) json.get(columnKey)).longValue(),  Long.valueOf((String) json.get(headKey)).longValue(), (String) json.get(columnNameKey));
+			check = updateColumn(Long.valueOf((String) json.get(columnKey)).longValue(),  Long.valueOf((String) json.get(headKey)).longValue(), (String) json.get(columnNameKey));
 		return check;
 	}
 	
 	
 	//update or build a new the column and their content with a json as input
-	public Boolean updateColumnWithContents (JSONObject json){
+	@SuppressWarnings("unchecked")
+	public JSONArray updateColumnWithContents (JSONObject json){
 
-		Boolean check = false;
-		check = ColumnLocalServiceUtil.updateColumn(json);
+		JSONArray futureResponseJson = new JSONArray();
+		Boolean check = true;
+		check = updateColumn(json);
 		int i=0;
-		while (json.containsKey(new Integer (i).toString())){
+		while (json.containsKey(new Integer (i).toString()) && check == true){
 			JSONObject contentJson = (JSONObject) json.get(new Integer (i).toString());
-			check = ContentLocalServiceUtil.updateContent(contentJson);
+			JSONArray tempJson = (JSONArray) ContentLocalServiceUtil.updateContentWithTS(contentJson);
+			futureResponseJson.add(tempJson);
+			if (tempJson.size() ==0)
+				check = false;
 			i++;
 		}
-		return check;
+		return futureResponseJson;
 	}
 	
 	
 	//update or build a new the column and their content with a json as input
-	public Boolean updateColumnWithContents2 (JSONObject json){
+	@SuppressWarnings("unchecked")
+	public JSONArray updateColumnWithContents2 (JSONObject json){
 		
-		Boolean check = false;
-		check = ColumnLocalServiceUtil.updateColumn(json);
+		JSONArray futureResponseJson = new JSONArray();
+		Boolean check = true;
+		check = updateColumn(json);
 		int i=0;
-		while (json.containsKey(new Integer (i).toString())){
+		while (json.containsKey(new Integer (i).toString()) && check == true){
 			JSONObject contentJson = (JSONObject) json.get(new Integer (i).toString());
-			check = ContentLocalServiceUtil.updateContent2(contentJson);
+			JSONArray tempJson = (JSONArray) ContentLocalServiceUtil.createContentWithTS(contentJson);
+			futureResponseJson.add(tempJson);
+			if (tempJson.size() ==0)
+				check = false;
 			i++;
 		}
 	
-		return check;
+		return futureResponseJson;
 	}
 	
 }

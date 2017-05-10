@@ -500,6 +500,17 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		return SubmissionFinderUtil.getLatestXPublicSubmissionsByX(latestX);
 	}
 
+	
+	//
+	@SuppressWarnings("rawtypes")
+	private long getMaxId(){
+		long id = 0;
+		List idList = SubmissionFinderUtil.getMaxId();
+		if (idList.size()>0)
+		id = (long) idList.get(0);
+		return id;
+	}
+	
 		
 	//
 	public String getStatus(long researchObjectId, int researchObjectVersion, String archive, String archivePId){
@@ -691,6 +702,18 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 	
 	//
+	public long constructNewId(){
+		long id = 0;
+		try {
+			if (CounterLocalServiceUtil.increment(getModelClassName())<getMaxId())
+				CounterLocalServiceUtil.reset(getModelClassName(), getMaxId());
+			id = CounterLocalServiceUtil.increment(getModelClassName());
+		} 
+		catch (SystemException e) {e.printStackTrace();}
+		return id;
+	}
+	
+	//
 	@SuppressWarnings("unchecked")
 	public JSONArray constructSubmissionsJson (List <Submission> submissionList){
 		
@@ -717,6 +740,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		json.put("brokersubmissionid", (submission.getBrokerSubmissionID()).trim());
 		json.put("userid", submission.getUserID());
 		json.put("lastchanged", (submission.getLastChanged().toString()).trim());
+		json.put("lastmodifieddate", (submission.getLastChanged().toString()).trim());
 		json.put("ispublic", submission.getIsPublic());
 		json.put("jiraid", submission.getJiraID());
 		json.put("jirakey", submission.getJiraKey());
@@ -903,7 +927,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			long researchObjectId =(long)requestJson.get("researchobjectid");
 			int  researchObjectVersion = getResearchObjectVersion(researchObjectId, archive, brokerSubmissionId);
 
-			submission = SubmissionLocalServiceUtil.getSubmission(researchObjectId, researchObjectVersion, archive);
+			submission = getSubmission(researchObjectId, researchObjectVersion, archive);
 			
 			if (submission != null){
 				
@@ -993,13 +1017,12 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			try {submission = getSubmission(submissionId);}
 			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
 
-		if (submission == null)
-			try {
-				submission = submissionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-				submission.setResearchObjectID(researchObjectId);
-				submission.setResearchObjectVersion(researchObjectVersion);
-				submission.setArchive(archive.trim());
-			}catch (SystemException e) {e.printStackTrace();}
+		if (submission == null){
+			submission = submissionPersistence.create(constructNewId());
+			submission.setResearchObjectID(researchObjectId);
+			submission.setResearchObjectVersion(researchObjectVersion);
+			submission.setArchive(archive.trim());
+		}
 		submission.setBrokerSubmissionID(brokerSubmissionId.trim());
 		submission.setUserID(userId);
 		submission.setLastChanged(new Timestamp(new Date().getTime()));
@@ -1023,13 +1046,12 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			try {submission = getSubmission(submissionId);}
 			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
 
-		if (submission == null)
-			try {
-				submission = submissionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-				submission.setResearchObjectID(researchObjectId);
-				submission.setResearchObjectVersion(researchObjectVersion);
-				submission.setArchive(archive.trim());
-			} catch (SystemException e) {e.printStackTrace();}
+		if (submission == null){
+			submission = submissionPersistence.create(constructNewId());
+			submission.setResearchObjectID(researchObjectId);
+			submission.setResearchObjectVersion(researchObjectVersion);
+			submission.setArchive(archive.trim());
+		} 
 		submission.setBrokerSubmissionID(brokerSubmissionId.trim());
 		submission.setArchivePID(archivePId.trim());
 		submission.setArchivePIDType(archivePIdType);
@@ -1069,13 +1091,12 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			try {submission = getSubmission(submissionId);}
 			catch (PortalException | SystemException e1) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
 
-		if (submission == null)
-			try {
-				submission = submissionPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
-				submission.setResearchObjectID(researchObjectId);
-				submission.setResearchObjectVersion(researchObjectVersion);
-				submission.setArchive(archive.trim());
-			} catch (SystemException e) {e.printStackTrace();}
+		if (submission == null){
+			submission = submissionPersistence.create(constructNewId());
+			submission.setResearchObjectID(researchObjectId);
+			submission.setResearchObjectVersion(researchObjectVersion);
+			submission.setArchive(archive.trim());
+		}
 		submission.setBrokerSubmissionID(brokerSubmissionId.trim());
 		submission.setLastChanged(lastChanged);
 		submission.setUserID(userID);
@@ -1103,6 +1124,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setArchivePID(archivePId.trim());
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1121,6 +1143,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setArchivePIDType(archivePIdType);
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1139,6 +1162,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setBrokerSubmissionID(brokerSubmissionId.trim());
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1157,6 +1181,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setIsPublic(isPublic);
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1175,6 +1200,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setJiraID(jiraId.trim());
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1193,6 +1219,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setJiraKey(jiraKey.trim());
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1229,6 +1256,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setPublicAfter(publicAfter);
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1246,6 +1274,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setStatus(status.trim());
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}
@@ -1264,6 +1293,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		if (submission != null)
 			try {
 				submission.setUserID(userId);
+				submission.setLastChanged(new Timestamp(new Date().getTime()));
 				super.updateSubmission(submission);
 				check = true;
 			} catch (SystemException e) {e.printStackTrace();}

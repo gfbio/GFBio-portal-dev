@@ -14,13 +14,16 @@
 
 package org.gfbio.service.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.gfbio.NoSuchContentException;
 import org.gfbio.NoSuchHeadException;
+import org.gfbio.helper.Helper;
 import org.gfbio.model.Column;
 import org.gfbio.model.Content;
 import org.gfbio.service.ColumnLocalServiceUtil;
@@ -151,6 +154,15 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return (long) ContentFinderUtil.getColumnIdById(contentId).get(0);
 	}
 	
+	
+	@SuppressWarnings("rawtypes")
+	public long 	getContentIdByRowIdAndColumnName(long rowId, String columnName) {
+		long contentId =0;
+		List contentIdList = ContentFinderUtil.getContentIdByRowIdAndColumnName(rowId, columnName);
+		if (contentIdList != null && contentIdList.size()>0)
+			contentId = (long) contentIdList.get(0);
+		return contentId;
+	}
 
 	//get Content of  a specific row and column
 	public Content getContentByTableIds(long rowId, long columnId) throws NoSuchContentException, SystemException  {
@@ -223,7 +235,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		try {content = contentPersistence.findByContentId(contentId);
 		} catch (NoSuchContentException | SystemException e) {e.printStackTrace();}
 		if (content != null)
-			json = constructContentJson(content.getContentID(), content.getHeadID(), content.getColumnID(), content.getRowID(), content.getCellContent());
+			json = constructContentJson(content);
 		return json;
 	}
 	
@@ -263,6 +275,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 				subJson.put("columnId", Long.toString(contentList.get(i).getColumnID()));
 				subJson.put("rowId", Long.toString(contentList.get(i).getRowID()));
 				subJson.put("cellcontent", contentList.get(i).getCellContent());
+				subJson.put("lastmodifieddate", contentList.get(i).getLastModifiedDate());
 				json.put(Long.toString(contentList.get(i).getContentID()), subJson);
 			}
 		return json;
@@ -311,6 +324,28 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	
 	//
+	@SuppressWarnings("rawtypes")
+	public long getHeadIdByRowId(long rowId){
+		long headId =0;
+		List headIdList = (List) ContentFinderUtil.getHeadIdByRowId(rowId);
+		if (headIdList.size() >0)
+			headId = (long) headIdList.get(0);
+		return headId;
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	private long getMaxId(){
+		long id = 0;
+		List idList = ContentFinderUtil.getMaxId();
+		if (idList.size()>0)
+		id = (long) idList.get(0);
+		return id;
+	}
+	
+	
+	//
 	@SuppressWarnings("unchecked")
 	public JSONArray getOppositeCellContentsOfRelationsByCellContent(long headId, String cellContent){
 		List <String> responseList = ContentFinderUtil.getOppositeCellContentsOfRelationsByCellContent(headId, cellContent);
@@ -339,12 +374,12 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	public long getRowIdByCellContent(String tableName, String columnName, String cellContent){
 		long rowId =0;
 		long headId =0;
-		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
-		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);}
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
 		
-		if(headId !=0){
+		if(headId !=0)
 			rowId = getRowIdByCellContent(headId, columnName, cellContent);
-		}
+
 		return rowId;
 	}
 	
@@ -362,12 +397,12 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	private List <Long> getRowIdsByCellContent(String tableName, String columnName, String cellContent){
 		List <Long> rowId = null;
 		long headId =0;
-		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
-		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);}
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
 		
-		if(headId !=0){
+		if(headId !=0)
 			rowId = getRowIdsByCellContent(headId, columnName, cellContent);
-		}
+		
 		return rowId;
 	}
 	
@@ -430,7 +465,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			 Object[] arrayobject=(Object[])object;
 			 responseJson.put((String)arrayobject[0], (String)arrayobject[1]);
 		 }
-		return responseJson;
+		 return responseJson;
 	}
 	
 	
@@ -504,7 +539,6 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	//
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public JSONArray getRowInformationOfRelationshipsOfSpecificCellContent(long relationTableHeadId, long entitiyTableHeadId, String entityTableCellContent){
-		System.out.println(relationTableHeadId+ " |"+ entitiyTableHeadId+ " |"+entityTableCellContent);
 		
 		JSONArray responseJson = new JSONArray();;
 		List responseList = null;
@@ -568,72 +602,364 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		return (Boolean) ContentFinderUtil.checkKeyPairInRelationship (headId, pk1, pk2).get(0);
 	}
 	
+	
 	//build a content entry to a JSON
 	@SuppressWarnings("unchecked")
-	public JSONObject constructContentJson(long contentId, long headId, long columnId, long rowId, String cellContent){
+	public JSONObject constructContentJson(Content content){
+		JSONObject json = new JSONObject();
+		json.put("contentid", content.getContentID());
+		json.put("headid", content.getHeadID());
+		json.put("columnid", content.getColumnID());
+		json.put("rowid", content.getRowID());
+		json.put("cellcontent", content.getCellContent());
+		json.put("lastmodifieddate", content.getLastModifiedDate());
+		return json;
+	}
+	
+	
+	//build a content entry to a JSON
+	@SuppressWarnings("unchecked")
+	public JSONObject constructContentJson(long contentId, long headId, long columnId, long rowId, String cellContent, Date lastModifiedDate){
 		JSONObject json = new JSONObject();
 		json.put("contentid", contentId);
 		json.put("headid", headId);
 		json.put("columnid", columnId);
 		json.put("rowid", rowId);
 		json.put("cellcontent", cellContent);
+		json.put("lastmodifieddate", lastModifiedDate);
 		return json;
 	}
 	
 	
-	//create a ID in content context
-	public long constructNewId() throws SystemException{
-		return contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName())).getContentID();
-	}
+	//tableName, {{columnnames:[name, label]}{name: foo},{label:foolabel},...}
+	@SuppressWarnings("unchecked")
+	public JSONArray constructContenRowInputJson (String tableName, long contentId, long rowId, JSONObject rowInformationJson){
+		
+		JSONArray responseJson = new JSONArray();
+		JSONArray columnNames = (JSONArray) rowInformationJson.get("columnnames");
+		
+		for (int i=0;i<columnNames.size();i++){
+			JSONObject contentJson = new JSONObject();
+			contentJson.put("tablename", tableName);
+			contentJson.put("columnname", columnNames.get(i));
+			contentJson.put("cellcontent", rowInformationJson.get(columnNames.get(i)));
+			if (contentId >0)
+				contentJson.put("contentid", contentId);
+			if (rowId >0)
+				contentJson.put("rowid", rowId);
+			responseJson.add(contentJson);
+		}
 
+		return responseJson;
+	}
+	
+
+	//
+	public long constructNewId(){
+		long id = 0;
+		try {
+			if (CounterLocalServiceUtil.increment(getModelClassName())<getMaxId())
+				CounterLocalServiceUtil.reset(getModelClassName(), getMaxId());
+			id = CounterLocalServiceUtil.increment(getModelClassName());
+		} 
+		catch (SystemException e) {e.printStackTrace();}
+		return id;
+	}
+	
 		
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 	
-	//update or build a new the content
-	public Boolean updateContent (long contentId, long headId, long columnId, long rowId, String cellContent){
+	//------------------------------- Manage Update Functions ----------------------------------------------//
+	
+	@SuppressWarnings("unchecked")
+	public JSONArray createContent (JSONObject requestJson){
+		
+		JSONArray responseJson = new JSONArray();
+		
+		if ((requestJson.containsKey("headid") || requestJson.containsKey("tablename")) && requestJson.containsKey("cellcontent") && (requestJson.containsKey("columnid") || requestJson.containsKey("columnname"))){
+			long columnId = 0;
+			long headId = 0;
+			String key="";
+			
+			key = "headid";
+			if (requestJson.containsKey(key))
+				headId = Helper.getLongFromJson(requestJson, key);
+			else
+				try {headId = HeadLocalServiceUtil.getHeadIdByTableName((String) requestJson.get("tablename"));}
+				catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}	
 
-		Boolean check = false;
+			if (headId >0){
+				if (requestJson.containsKey("columnid"))
+					columnId = (long) requestJson.get("columnid");
+				else
+					try {columnId = HeadLocalServiceUtil.getHeadIdByTableName((String) requestJson.get("columnname"));}
+					catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+
+				if (columnId >0){
+					long contentId  = updateKernalContent(headId, columnId, 0,(String) requestJson.get("cellcontent"));
+					responseJson.add(contentId);
+			
+					if (contentId > 0){
+						long rowId =0;
+						key = "rowid";
+						if (requestJson.containsKey(key))
+							rowId = Helper.getLongFromJson(requestJson, key);
+
+						if (rowId > 0){
+							rowId = updateRowId(contentId, rowId);
+						}
+					}
+				}
+			}
+		}
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray createContentWithTS (JSONObject requestJson){
+		
+		JSONArray responseJson = createContent(requestJson);
+		
+		if (responseJson.size()>0){
+			long contentId = (long) responseJson.get(0);
+			
+			Content content = null;
+			try {content = getContent(contentId);}
+			catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+			
+			if (content != null){
+				long tsContentId =0;
+				if (requestJson.containsKey("tscontentid"))
+					tsContentId = Helper.getLongFromJson(requestJson, "tscontentid");
+				contentId = updateRowTimeStamp (content.getHeadID(), content.getRowID(), tsContentId);
+				responseJson.add(contentId);
+			}
+		}
+		
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray createContentRow (JSONArray requestJson){
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i < requestJson.size();i++)
+			responseJson.add(createContent((JSONObject) requestJson.get(i)));
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray updateContent (JSONObject requestJson){
+
+		JSONArray responseJson = new JSONArray();
+		if (requestJson.containsKey("contentid")){
+			
+			long contentId = Helper.getLongFromJson(requestJson, "contentid");
+			if (contentId >0){
+									
+				if (contentId > 0){
+					
+					Content content = null;
+					try {content = getContent(contentId);}
+					catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+
+					if (content != null){
+
+						responseJson.add(contentId);
+						
+						if (requestJson.containsKey("cellcontent"))
+							updateCellContent(contentId, Helper.getStringFromJson(requestJson, "cellcontent"));
+	
+						if (requestJson.containsKey("rowid"))
+							updateRowId(contentId, Helper.getLongFromJson(requestJson, "rowid"));
+					
+					}
+				}else{
+					if ((requestJson.containsKey("headid") || requestJson.containsKey("tablename")) && requestJson.containsKey("cellcontent") && (requestJson.containsKey("columnid") || requestJson.containsKey("columnname")))
+						responseJson = createContent(requestJson);
+					}
+			}else{
+				if ((requestJson.containsKey("headid") || requestJson.containsKey("tablename")) && requestJson.containsKey("cellcontent") && (requestJson.containsKey("columnid") || requestJson.containsKey("columnname")))
+					responseJson = createContent(requestJson);
+			}
+		}else{
+			if ((requestJson.containsKey("headid") || requestJson.containsKey("tablename")) && requestJson.containsKey("cellcontent") && (requestJson.containsKey("columnid") || requestJson.containsKey("columnname")))
+				responseJson = createContent(requestJson);
+		}
+
+		return responseJson;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray updateContentWithTS (JSONObject requestJson){
+		
+		JSONArray responseJson = updateContent(requestJson);
+		
+		if (responseJson.size()>0){
+			long contentId = (long) responseJson.get(0);
+			
+			Content content = null;
+			try {content = getContent(contentId);}
+			catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+			
+			if (content != null){
+				long tsContentId =0;
+				if (requestJson.containsKey("tscontentid"))
+					tsContentId = Helper.getLongFromJson(requestJson, "tscontentid");
+				contentId = updateRowTimeStamp (content.getHeadID(), content.getRowID(), tsContentId);
+				responseJson.add(contentId);
+			}
+		}
+		
+		return responseJson;
+	}	
+	
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray updateContentRow (JSONArray requestJson){
+		JSONArray responseJson = new JSONArray();
+		for (int i =0; i < requestJson.size();i++)
+			responseJson.add(updateContentWithTS((JSONObject) requestJson.get(i)));
+		return responseJson;
+	}
+	
+	//----------------------------------- Update Functions -------------------------------------------------//
+	
+	
+	//
+	public long updateKernalContent(long headId, long columnId, long contentId, String cellContent){
+		
 		Content content = null;
+		try {content = getContent(contentId);}
+		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
 
-		try {
-			content = getContent(contentId);
-		} catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+		if (content == null){
+			contentId  = constructNewId();
+			content = contentPersistence.create(contentId);
+		}
+		
+		content.setHeadID(headId);
+		content.setColumnID(columnId);
+		content.setCellContent(cellContent);
+		content.setLastModifiedDate(new Timestamp(new Date().getTime()));
+		try {super.updateContent(content);}
+		catch (SystemException e) {e.printStackTrace();}
 
+		return contentId;
+	}
+	
+	
+	//
+	public long  updateKernelContent (long headId, long columnId, long contentId, long rowId, String cellContent){
+
+		Content content = null;
+		try {content = getContent(contentId);}
+		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+		
 		// if it true, then must be build a new content with a new primary key else update the content
-		if (content == null)
+		if (content == null){
 			try {
-				content = contentPersistence.create(CounterLocalServiceUtil.increment(getModelClassName()));
+				if (contentId ==0)
+					contentId  = constructNewId();
+				content = contentPersistence.create(contentId);
 				Column column = null;
-				try {
-					column = ColumnLocalServiceUtil.getColumn(columnId);
-				} catch (PortalException e) {e.printStackTrace();}
+				try {column = ColumnLocalServiceUtil.getColumn(columnId);}
+				catch (PortalException e) {e.printStackTrace();}
 				if (column != null)
 					if (ColumnLocalServiceUtil.getColumnNameById(columnId).equals("id"))
 						cellContent = Long.toString(content.getContentID());
-			} catch (SystemException e) {e.printStackTrace();}
-
-		if (rowId==0)
-			try {
-				rowId= constructNewId();
-			} catch (SystemException e) {e.printStackTrace();}
+			} 
+			catch (SystemException e) {e.printStackTrace();}
+			
+			if (rowId ==0)
+				rowId  = constructNewId();
+		}else
+			if (rowId ==0)
+				rowId = ContentLocalServiceUtil.getRowIdById(contentId);
 
 		content.setHeadID(headId);
 		content.setColumnID(columnId);
 		content.setRowID(rowId);
 		content.setCellContent(cellContent);
-		try {
-			super.updateContent(content);
-			check = true;
-		} catch (SystemException e) {e.printStackTrace();}
-		return check;
-	}
-
+		content.setLastModifiedDate(new Timestamp(new Date().getTime()));
+		try {super.updateContent(content);}
+		catch (SystemException e) {e.printStackTrace();}
+		return contentId;
+	}	
 	
-	//update or build a new the content with a json as input
-	public Boolean updateContent (JSONObject json){
+	
+	//
+	public long updateRowTimeStamp (long headId, long rowId, long contentId){
 
 		Boolean check = false;
+		String columnName = "lastmodifieddate";
+		if (contentId ==0)	
+			contentId = getContentIdByRowIdAndColumnName(rowId, columnName);
+		
+		if (contentId !=0){
+			check = updateCellContent(contentId, (new Timestamp(new Date().getTime()).toString()));
+		}
+		else{
+			if (!ColumnLocalServiceUtil.checkExistenceOfColumn(headId, columnName))
+				ColumnLocalServiceUtil.updateColumn( 0,  headId,  columnName);
+			long columnId = 0;
+			try {columnId = ColumnLocalServiceUtil.getColumnIdByNames(HeadLocalServiceUtil.getTableNameById(headId), columnName);}
+			catch (NoSuchHeadException | SystemException e1) {e1.printStackTrace();}
+			contentId = updateKernelContent ( headId, columnId, constructNewId(), rowId,  (new Timestamp(new Date().getTime())).toString());
+			
+			if (contentId > 0)
+				check = true;
+		}
+		
+		if (!check)
+			contentId =0;
+
+		return contentId;
+	}
+	
+	
+	
+	
+	//update or build a new the content
+	@SuppressWarnings("unchecked")
+	public JSONObject updateContent (long headId, long columnId, long contentId, long rowId, String cellContent, long tsContentId){
+		
+		JSONObject responseJson = new JSONObject();
+		Content content = null;
+		long timeStampeContentId=0;
+		
+		contentId = updateKernelContent (headId, columnId, contentId, rowId, cellContent);
+
+		try {content = getContent(contentId);}
+		catch (PortalException | SystemException e) {e.printStackTrace();}
+		
+		if (content != null)
+			timeStampeContentId = updateRowTimeStamp (content.getHeadID(), content.getRowID(), tsContentId);
+		
+		
+		responseJson.put("contentid", contentId);
+		responseJson.put("tscontentid", timeStampeContentId);
+		
+		return responseJson;
+	}
+	
+	
+
+
+	
+/*	//update or build a new the content with a json as input
+	public long updateContent (JSONObject json){
+
 		String contentIdKey ="contentid";
 		String headKey ="headid";
 		String columnKey ="columnid";
@@ -645,28 +971,84 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
 		String cellcontent = (String) json.get(contentKey);
 		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
-			check = updateContent(contentId, headId, columnId, rowId, cellcontent);
-		return check;
-	}
+			contentId = updateContent(contentId, headId, columnId, rowId, cellcontent);
+		return contentId;
+	}*/
 	
 	
 	//update or build a new the content with a json as input
-	public Boolean updateContent2 (JSONObject json){
+	public long updateContent2 (JSONObject json){
 		
-		Boolean check = false;
-		String contentIdKey ="contentid";
 		String headKey ="headid";
 		String columnKey ="columnid";
 		String rowKey = "rowid";
 		String contentKey = "cellcontent";
-		long contentId = (long) json.get(contentIdKey);
+		String contentIdKey = "contentid";
+		long contentId =0;
+		contentId = Helper.getLongFromJson(json, contentIdKey);
 		long headId = Long.valueOf((String) json.get(headKey)).longValue();
 		long columnId = (long) json.get(columnKey);
 		long rowId = Long.valueOf((String) json.get(rowKey)).longValue();
 		String cellcontent = (String) json.get(contentKey);
-		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey))
-			check = updateContent(contentId, headId, columnId, rowId, cellcontent);
+		if (json.containsKey(contentKey) && json.containsKey(headKey) && json.containsKey(columnKey) && json.containsKey(rowKey) && json.containsKey(contentKey)){
+			long tsContentId =0;
+			if (json.containsKey("tscontentid"))
+				tsContentId = Helper.getLongFromJson(json, "tscontentid");
+			JSONObject responseJson = updateContent(contentId, headId, columnId, rowId, cellcontent, tsContentId);
+			contentId = (long) responseJson.get("contentId");
+		}
+		
+		return contentId;
+	}
+	
+	
+	//-------------------------------  Update Attribute Functions ----------------------------------------------//
+	
+	
+
+	
+	
+	//
+	private Boolean updateCellContent(long contentId, String cellContent){
+		
+		Boolean check = false;
+		Content content = null;
+
+		try {content = getContent(contentId);}
+		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+
+		// if it true, then must be build a new content with a new primary key else update the content
+		if (content != null){
+			content.setCellContent(cellContent);
+			content.setLastModifiedDate(new Timestamp(new Date().getTime()));
+			
+			try {
+				super.updateContent(content);
+				check = true;
+			} catch (SystemException e) {e.printStackTrace();}
+		}
 		return check;
+	}
+	
+	
+	//
+	private long updateRowId(long contentId, long rowId){
+		
+		Content content = null;
+		if (rowId ==0)
+			rowId = ContentLocalServiceUtil.constructNewId();
+
+		try {content = getContent(contentId);}
+		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+
+		if (content != null){
+			content.setRowID(rowId);
+			content.setLastModifiedDate(new Timestamp(new Date().getTime()));
+			
+			try {super.updateContent(content);}
+			catch (SystemException e) {e.printStackTrace();rowId =0;}
+		}
+		return rowId;
 	}
 	
 }
