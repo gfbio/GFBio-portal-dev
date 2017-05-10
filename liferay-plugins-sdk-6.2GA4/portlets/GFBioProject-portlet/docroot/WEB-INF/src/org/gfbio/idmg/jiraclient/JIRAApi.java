@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcrt.jiraclient;
+package org.gfbio.idmg.jiraclient;
 
 import com.google.gson.Gson;
 import com.liferay.portal.kernel.log.Log;
@@ -7,10 +7,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.io.IOException;
 import org.apache.commons.codec.binary.Base64;
 import org.gfbio.idmg.dcrt.DCRTPortlet;
-import org.gfbio.idmg.dcrt.jiraclient.connection.Communicator;
-import org.gfbio.idmg.dcrt.jiraclient.connection.HTTPResponse;
-import org.gfbio.idmg.dcrt.jiraclient.connection.HTTPConnectionFactory;
-import org.gfbio.idmg.dcrt.jiraclient.model.Issue;
+import org.gfbio.idmg.jiraclient.connection.Communicator;
+import org.gfbio.idmg.jiraclient.connection.HTTPConnectionFactory;
+import org.gfbio.idmg.jiraclient.connection.HTTPResponse;
+import org.gfbio.idmg.jiraclient.model.Issue;
 
 public class JIRAApi {
 

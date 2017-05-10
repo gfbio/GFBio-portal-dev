@@ -1,11 +1,12 @@
-package org.gfbio.idmg.dcrt.jiraclient.connection;
+package org.gfbio.idmg.jiraclient.connection;
 
-import org.gfbio.idmg.dcrt.jiraclient.connection.HTTPConnectionFactory.RequestMethod;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+
+import org.gfbio.idmg.jiraclient.connection.HTTPConnectionFactory.RequestMethod;
 
 public class Communicator {
 	
