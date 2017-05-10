@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcrt.jiraclient.security;
+package org.gfbio.idmg.jiraclient.security;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
