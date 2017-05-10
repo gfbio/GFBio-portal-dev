@@ -97,3 +97,21 @@ input[type=radio] {
 	padding-left: 20px !important;
     padding-bottom: 10px !important;
 }
+
+.icon-information4 {
+	font-size: 16px;
+	color: #335AA3;
+}
+
+.icon-information4:before {
+    content: "\e939";
+}
+
+h4 {
+	display: inline-block;
+}
+
+.jqueryTooltip {
+	font-size: 12px !important;
+	background: white !important;
+}

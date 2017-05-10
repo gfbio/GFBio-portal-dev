@@ -7,7 +7,27 @@
 <link href="<%=request.getContextPath()%>/css/dmpt/jquery-steps.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
-<script type="text/javascript">     
+<script type="text/javascript">    
+	$(document).ready(function(){
+	    $(document).tooltip({
+	    	tooltipClass: "jqueryTooltip",
+	    	position: {
+	            my: "left center", // the "anchor point" in the tooltip element
+	            at: "right+5 center", // the position of that anchor point relative to selected element
+	        },
+            content: function() {
+                return $(this).attr('title');
+            },
+            show: { 
+            	effect: "fade"
+            },
+            hide: {
+                effect: "fade",
+                delay: 600
+            }
+        });   
+	});
+
 	$(document).ready(function() {
         $.validator.addMethod("notEqual", function(value, element, param) {
             return this.optional(element) || value != param;
