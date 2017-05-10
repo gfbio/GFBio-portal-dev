@@ -70,11 +70,12 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			throws PortalException, SystemException {
 		// called when login, change password, reset password
 		log.info(":: Hook on update user.");
-		log.info(":: groupIds:"+Arrays.toString(groupIds));
-		log.info(":: organizationIds:"+Arrays.toString(organizationIds));
-		log.info(":: roleIds:"+Arrays.toString(roleIds));
-		log.info(":: userGroupRoles:"+ userGroupRoles.toString());
-		log.info(":: userGroupIds:"+Arrays.toString(userGroupIds));
+		if (groupIds != null)log.info(":: groupIds:"+Arrays.toString(groupIds));
+		if (organizationIds != null)log.info(":: organizationIds:"+Arrays.toString(organizationIds));
+		if (roleIds != null)log.info(":: roleIds:"+Arrays.toString(roleIds));
+		if (userGroupRoles != null)	log.info(":: userGroupRoles:"+ userGroupRoles.toString());
+		if (userGroupIds !=null)log.info(":: userGroupIds:"+Arrays.toString(userGroupIds));
+
 		User user = super.getUser(userId);
 		try {
 //			if (!isReservedEmail(user)) {

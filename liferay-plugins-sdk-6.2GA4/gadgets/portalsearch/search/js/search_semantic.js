@@ -4,6 +4,7 @@ var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to 
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 var showRating = 0;
 var saveSearch = 0;
+var highlightLength = 2;
 var isSemanticSearch = true;
 
 /////////////////////////////// Search initial functions ////////////////////////////////
@@ -16,9 +17,41 @@ function listenToEnterPress() {
 			$('#gfbioSearchInput').autocomplete('close');
 			// set the default enter event to semantic search
 			$("#SemanticQueryButton").click();
+			var value = document.getElementById("gfbioSearchInput").value;
+			insertParam("q_", value);
 		}
 	});
 }
+function insertParam(key, value) {
+		//console.log(':::insertParam');
+        key = escape(key); value = escape(value);
+        var url = document.referrer.split('?');
+		//onsole.log(url);
+		var newUrl = '';
+		if (url.length >1){
+			// if url already has parameters
+            var params = url[1].split('&');
+            for (i=0; i< params.length; i++){
+				var par = params[i].split('=');
+
+                if (par[0] == key) {
+                    par[1] = value;
+                    params[i] = par.join('=');
+                    break;
+                }
+            }
+			newUrl = url[0]+'?'+params.join('&');
+
+		}else if (url.length==1){
+			newUrl = url[0]+"?"+key+"="+value;
+		}
+		
+		if (history.pushState && newUrl!='') {
+			//console.log(':::pushstate');
+			//console.log(newUrl);
+			parent.history.pushState({path:newUrl},'',newUrl);
+		}
+    }
 
 /*
  * Description: set autocomplete to the search textbox
@@ -85,6 +118,7 @@ function getQueryVariable(variable) {
  */
 function showLatestTenDataset(filter, yearRange) {
 	isSemanticSearch = false;
+	document.getElementById('semanticTermsDisplay').innerHTML = "";
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// initiate result table
@@ -238,6 +272,7 @@ function getFilteredLatestDataset(filter, yearRange) {
  */
 function normalQuery(clearBasket) {
 	isSemanticSearch = false;
+	document.getElementById('semanticTermsDisplay').innerHTML = "";
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// clear visualBasket if the clearBasket flag is true
@@ -254,13 +289,23 @@ function normalQuery(clearBasket) {
 	setCookie("gfbioSearchInput", keyword);
 	var filter = [];
 	// reset facet gadget
-	if (gadgets.Hub.isConnected())
+	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+		//console.log('search:reset facet');
+	}
 	// autocomplete from the textbox doesn't automatically closed
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
-	console.log(':: newQuery');
+	//console.log(':: newQuery');
 	getSearchResult(keyword, filter, "");
+	// Save query to DB
+	if (saveSearch && keyword != "" && clearBasket) {
+		//console.log('New query is made.');
+		//clear semantic terms
+		document.getElementById("semanticTerms").value="";
+		saveSearchHistory(keyword, filter);
+		document.getElementById("filters").value = filter;
+	}
 
 	// send content of visual basket to the mini-map gadget
 	updateMap();
@@ -279,7 +324,7 @@ function getSearchResult(keyword, filter, yearRange) {
 		// prevent calling ts when keyword box is empty
 		gadgets.Hub.publish('gfbio.search.ts', keyword);
 	}
-	console.log(':: getSearchResult');
+	//console.log(':: getSearchResult');
 	// create a result table as a placeholder
 	writeResultTable();
 	// bound a datatable to pansimple API query
@@ -318,7 +363,7 @@ function getSearchResult(keyword, filter, yearRange) {
 			"fnDrawCallback": function (oSettings) {
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
-					console.log(':: writeResultTable');
+					//console.log(':: writeResultTable');
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
@@ -387,7 +432,7 @@ function saveSearchFeedback(datasetDetail, datasetRank, rating) {
  * Output: JSONObject result : Data to display on the search result table
  */
 function submitQueryToServer(keyword, filter, yearRange) {
-	console.log(':: submitQueryToServer');
+	//console.log(':: submitQueryToServer');
 	return function (sSource, aoData, fnCallback) {
 		// set value for pagination
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
@@ -411,19 +456,19 @@ function submitQueryToServer(keyword, filter, yearRange) {
 			success: function (result) {
 				// get JSON result back from the server
 				var datasrc = result.hits.hits;
-				console.log(datasrc);
+				//console.log(datasrc);
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
 					var facet = result.aggregations;
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
-						console.log('search:set facet to:');
-						console.log(facet);
+						//console.log('search:set facet to:');
+						//console.log(facet);
 					}
 				} else {
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', '');
-						console.log('search:clear facet');
+						//console.log('search:clear facet');
 					}
 				}
 				var res = parseReturnedJSONfromSearch(datasrc);
@@ -466,6 +511,7 @@ function createQueryFieldArray() {
 	jArr.push("metadatalink");
 	jArr.push("html-1");
 	jArr.push("xml");
+	/*jArr.push("license");*/
 	return jArr;
 }
 
@@ -501,7 +547,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		} else {
 			return {
 				"bool": {
-					"must": queryObj
+					"should": queryObj
 				}
 			};
 		}
@@ -559,13 +605,14 @@ function applyBoost(query) {
  *        JSONArray queryfield : array of query fields
  * Output: JSONObject : a complete JSON request message
  */
-function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield) {
+function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength) {
 	return {
-		'query':
-		boostedQuery,
+		'query': boostedQuery,
+	    'highlight': {
+		  'fields': {'*': {} }
+		},
 		'from': iDisplayStart,
 		'size': iDisplayLength,
-		/*'fields' : queryfield,*/
 		'aggs': {
 			'author': {
 				'terms': {
@@ -590,6 +637,12 @@ function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfiel
 					'field': 'dataCenterFacet',
 					'size': 50
 				}
+			},
+			'license': {
+				'terms': {
+					'field': 'licenseFacet',
+					'size': 50
+				}
 			}
 		}
 	}
@@ -602,12 +655,14 @@ function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfiel
  */
 function parseReturnedJSONfromSearch(datasrc) {
 	var res = [];
+	var extendedTerms = [];
 	//console.log('parseReturnedJSONfromSearch');
 	//console.log(datasrc);
 	for (var i = 0, iLen = datasrc.length; i < iLen; i++) {
 		var inner = new Object();
 		var score = datasrc[i]._score;
 		var fields = datasrc[i]._source;
+		var highlight = datasrc[i].highlight;
 		inner.score = score;
 		//console.log('parseReturnedJSONfromSearch:fields');
 		inner.title = getMultiValueField(fields, "citation_title");
@@ -630,20 +685,38 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.minLongitude = getMultiValueField(fields, "minLongitude");
 		inner.metadatalink = getMultiValueField(fields, "metadatalink");
 		inner.datalink = getMultiValueField(fields, "datalink");
+		inner.accessRestricted = getMultiValueField(fields, "accessRestricted");
+		/* pangeae doesn't return license field
+		inner.license = getMultiValueField(fields, "license");*/
 		inner.format = getMultiValueField(fields, "format");
 		if (fields["html-1"]) {
 			// this field is used only for displaying data
 			var html = fields["html-1"];
-			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
-			html = writeShowHideFields(html);
-			if (document.getElementById("semanticTerms").value.trim() != ""){
-				// hilight semantic terms
-				var semanticTerms = document.getElementById("semanticTerms").value;
-				html = hilightResult(html,semanticTerms);
+			html = html.replace(/@target@/gi, "_blank").replace("<table", "<table class=\"html-1\"");
+			/*if (inner.accessRestricted){
+				html = html.replace(">Data Download</a>",">Data Download<i class='padlock' title='This download link requires login.'/></a>");
+				console.log('Download restricted.');
 			}else{
-				var keyword = document.getElementById("gfbioSearchInput").value;
-				if (keyword.length>0){
-				html = hilightResult(html,semanticTerms, keyword);}
+				console.log('No restriction.');
+			}*/
+			html = writeShowHideFields(html);
+			// use highlight field to highlight html
+			if (highlight!=null){	
+				var highlightArr = extractHilightedSearch(highlight);
+				html = hilightResult(html,highlightArr);
+				
+				//console.log(highlightArr);
+				
+				var isAdded = false;
+				for (var iHighlight = 0; iHighlight < highlightArr.length; iHighlight++){
+					for (var iExtended = 0; iExtended < extendedTerms.length; iExtended++){
+						if (extendedTerms[iExtended].toLowerCase() == highlightArr[iHighlight].toLowerCase()){
+							isAdded = true;
+						}							
+					}
+					if (!isAdded && highlightArr[iHighlight].length>highlightLength){
+					extendedTerms.push(highlightArr[iHighlight]);}
+				}
 			}
 			inner.html = html;
 		} else {
@@ -656,11 +729,13 @@ function parseReturnedJSONfromSearch(datasrc) {
 			var xml2json = new XMLtoJSON();
 			var json = xml2json.fromStr(xml);
 			inner.xml = json; //JSON.stringify(json);
+
 			if (isJArray(json.dataset["parentIdentifier"])) {
 				inner.parentIdentifier = getStringFromJSONArray(json.dataset, "parentIdentifier");
 			} else {
 				inner.parentIdentifier = json.dataset["parentIdentifier"];
 			}
+
 			inner.dcIdentifier = json.dataset["dc:identifier"];
 			if (isJArray(json.dataset["dc:type"])) {
 				inner.dcType = "Unit";
@@ -681,6 +756,9 @@ function parseReturnedJSONfromSearch(datasrc) {
 		//console.log('parseReturnedJSONfromSearch:inner');
 		//console.log(inner);
 	}
+	
+	var semDiv = document.getElementById('semanticTermsDisplay');
+	semDiv.innerHTML = "Extended terms: "+extendedTerms.join(", ");
 	return res;
 }
 
@@ -723,22 +801,22 @@ function loadBasket(topic, data, subscriberData) {
 function addBasket() {
 	var val = document.getElementById("visualBasket").value;
 	if (val == "") {
-		console.log('No basket selected.');
+		//console.log('No basket selected.');
 	} else {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
-		console.log("addBasket:"+basketid);
+		//console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
 		
-		console.log("addBasket queryJSON:");
-		console.log(query);
-		var keyword = document.getElementById("queryKeyword").value;
+		//console.log("addBasket queryJSON:");
+		//console.log(query);
+		var keyword = document.getElementById("gfbioSearchInput").value;
 		var filter = document.getElementById("queryFilter").value;
-		console.log("addBasket queryKeyword:");
+		/*console.log("addBasket queryKeyword:");
 		console.log(keyword);
 		console.log("addBasket queryFilter:");
-		console.log(filter);
+		console.log(filter);*/
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
 			basketID : basketid,
@@ -758,6 +836,26 @@ function addBasket() {
 	}
 }
 
+function extractHilightedSearch(highlight){
+	var jArr = [];
+	$.each(highlight, function (field, arr) {
+		$.each(arr,function (ind,highlightedText){
+			//console.log('--'+highlightedText+'--');
+			var startTag = highlightedText.indexOf("<em>");
+			var endTag = 0;
+			var taggedText = "";
+			while (startTag>=0){
+				endTag = highlightedText.indexOf("</em>",startTag);
+				taggedText = highlightedText.substring(startTag+4,endTag);
+				if (jArr.indexOf(taggedText)<0){
+					jArr.push(taggedText);
+				}
+				startTag = highlightedText.indexOf("<em>",endTag+5);
+			}
+		});
+	});
+	return jArr;
+}
 /*
  * Description: Read selected dataset information from the result table
  * Output: JSONObject jsonData
@@ -822,7 +920,7 @@ function filterQuery(filter, yearRange) {
 			$.each(semArr, function (index, semTerm) {
 				jArr.push(semTerm);
 			});
-			console.log(':::: filterQuery - semantic : '+jArr);
+			//console.log(':::: filterQuery - semantic : '+jArr);
 			$("*").addClass("wait");
 			getSemanticSearchResult(jArr, filter, yearRange);
 		}
@@ -967,7 +1065,9 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"parentIdentifier": value.parentIdentifier,
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
-		"xml": value.xml
+		"xml": value.xml,
+		"accessRestricted": value.accessRestricted,
+		/* pangeae doesn't return license field, only provide facets			"license":value.license*/
 	};
 	return result;
 }
@@ -1003,21 +1103,20 @@ function writeShowHideFields(orgHTML) {
 	return d.innerHTML;
 }
 function hilightResult(orgHTML,termsToHighlight) {
-	termsToHighlight = termsToHighlight.replace(/["()\[\]{}]/g,"");
-	termsToHighlight = termsToHighlight.replace(new RegExp(" and ", 'g'),"|");
-	termsToHighlight = termsToHighlight.replace(/[&+,]/g,"|");
-	var semList = termsToHighlight.split("[\|]+");
 	var newHTML = orgHTML;
-	for (var i = 0; i < semList.length; i++) {
-		var semTerm = semList[i].trim().replace(" ","(.{1,25})"); 
+	//for (var i = 0; i < semList.length; i++) {
+	$.each(termsToHighlight,function(ind,key){
+		//var semTerm = semList[i].trim().replace(" ","(.{1,25})"); 
 		//allow only 1-25 characters in between, e.g. Circaea ... L.
-		if (semTerm.length >2) {
-			var query = new RegExp("(\\b" + semTerm + ")", "gim");
-			if (newHTML.match(query) != null) {
-				newHTML = newHTML.replace(new RegExp(query, 'g'), "<span class='hilight'>$1</span>");
-			}
+		//console.log("::"+key);
+		if (key.length >highlightLength) {//ignore short string
+			var query = new RegExp("(\\b" + key + "\\b)", "gm");
+			//if (newHTML.match(query) != null) {
+				newHTML = newHTML.replace(new RegExp(query, 'gm'), "<span class='highlight'>"+key+"</span>");
+			//}
 		}
-	}
+	});
+	//console.log(newHTML);
 	return newHTML;
 }
 /*
@@ -1437,22 +1536,24 @@ function getJSONArrayFromField(jObj, name){
 	}
 	return [];
 }
+
 function getValueFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var jArr = jObj[name];
-		if (jArr.length > 0) {
-			return jArr;
+		if (jArr.length > 0){
+		    return jArr;
 		}
 	}
 	return [];
 }
+
 function getStringFromJSONArray(jObj, name) {
 	if (jObj[name] !== undefined) {
 		var res = "";
 		var jArr = jObj[name];
-		for (var i = 0; i < jArr.length; i++) {
+		for (var i=0; i<jArr.length; i++){
 			res += jArr[i];
-			if (i != jArr.length - 1) {
+			if (i != jArr.length-1){
 				res += ";";
 			}
 		}
@@ -1481,6 +1582,7 @@ function toggleParametersField() {
 		adjustGadgetHeight();
 	});
 };
+
 function getCookie(name) {
 	var re = new RegExp(name + "=([^;]+)");
 	var value = re.exec(document.cookie);
@@ -1488,6 +1590,7 @@ function getCookie(name) {
 	//console.log(value);
 	return (value != null) ? unescape(value[1]) : null;
 }
+
 function setCookie(name, value) {
 	var today = new Date();
 	var expiry = new Date(today.getTime() + 7 * 24 * 3600 * 1000); // plus 7 days
@@ -1495,6 +1598,7 @@ function setCookie(name, value) {
 	//console.log('setCookie:'+name);
 	//console.log(value);
 }
+
 function deleteCookie(name) {
 	document.cookie = name + "=null; path=/; expires=" + expired.toGMTString();
 }
@@ -1507,6 +1611,7 @@ function isJArray(elm) {
 ///////////////////////////////////  Semantic functions  /////////////////////////////////////
 function semanticQuery(clearBasket) {
 	isSemanticSearch = true;
+	document.getElementById('semanticTermsDisplay').innerHTML = "";
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// read search keywords
@@ -1537,7 +1642,7 @@ function semanticQuery(clearBasket) {
 
 function getTSterms(keyword, filter, yearRange) {
 	$("*").addClass("wait");
-	var jArrSyn = [keyword];
+	var jArrSyn = [];
 	// ignore |, & operators
 	keyword = keyword.replace(/\|/g,"");//replace all
 	keyword = keyword.replace(/\&/g,"");
@@ -1611,12 +1716,11 @@ function getTSterms(keyword, filter, yearRange) {
 
 function readTSresults(keyword, val) {
 	var jArrSyn = [];
-	console.log("----- Terminologies for: " + keyword+ " -----");
-	keyword = keyword.toLowerCase();
+	//console.log("----- Terminologies for: " + keyword+ " -----");
 	jArrSyn.push(keyword);
 	$.each(val.results, function () {
 		// read each JSON Objec results from TS
-		console.log("------------------------------");
+		//console.log("------------------------------");
 		// get the sourceTerminology 
 		// if the sourceTerminology == ISOCOUNTRIES, ignore it
 		if (this["sourceTerminology"] != "GEONAMES"){
@@ -1627,7 +1731,7 @@ function readTSresults(keyword, val) {
 			var log = "";
 			if ((label!=null) && (label!=keyword)) {
 				label = label.trim();
-				if (jArrSyn.indexOf(label.toLowerCase()) < 0) {
+				if (isArrayNotContainKey(jArrSyn,label)) {
 					// add this label if not exist in the result
 					log += "----- label : " + label+"\n";
 					jArrSyn.push(label);
@@ -1635,7 +1739,7 @@ function readTSresults(keyword, val) {
 			} 
 			if ((description != null) && (description.indexOf("Is a:") >= 0)) {
 				var parsedStr = description.substr(description.indexOf("Is a:") + 5).trim();
-				if (jArrSyn.indexOf(parsedStr.toLowerCase()) < 0) {
+				if (isArrayNotContainKey(jArrSyn,parsedStr)) {
 					// add this description if not exist in the result
 					log += "----- description : " + description+"\n";
 					jArrSyn.push(parsedStr);
@@ -1644,7 +1748,7 @@ function readTSresults(keyword, val) {
 			if (synonyms != null) {
 				for (i = 0; i < synonyms.length; i++) {
 					var syn = synonyms[i].trim();
-					if (jArrSyn.indexOf(syn.toLowerCase()) < 0) {
+					if (isArrayNotContainKey(jArrSyn,syn)) {
 						log +="----- synonym : " + syn+"\n";
 						jArrSyn.push(syn);
 					}
@@ -1653,7 +1757,7 @@ function readTSresults(keyword, val) {
 			if (commonNames != null) {
 				for (i = 0; i < commonNames.length; i++) {
 					var commonName = commonNames[i].trim();
-					if (jArrSyn.indexOf(commonName.toLowerCase()) < 0) {
+					if (isArrayNotContainKey(jArrSyn,commonName)) {
 						log += "----- commonName : " + commonName+"\n";
 						jArrSyn.push(commonName);
 					}
@@ -1667,6 +1771,17 @@ function readTSresults(keyword, val) {
 		}
 	});
 	return jArrSyn;
+}
+
+function isArrayNotContainKey(array, text){
+ var flag = true;
+ $.each(array,function(key,value) { 
+    if(value.toLowerCase() == text.toLowerCase()) {
+		flag = false;
+		return false; //this return false is only exit the each loop
+	}
+  });
+  return flag;
 }
 
 function getSemanticSearchResult(keywordArr, filter, yearRange) {
@@ -1742,10 +1857,9 @@ function semanticQueryToServer(keyword, filter, yearRange) {
 
 		//console.log("semanticQueryToServer");
 		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
 		var filteredQuery = getBooleanQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 		//console.log('----semanticQueryToServer----');
 		//console.log(completeQuery);
 		//console.log('-----------------------------');
@@ -1793,15 +1907,16 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		for (var i = 0; i < keyword.length; i++) {
 			var booster = 1;
 			var fields = [];
-			if (i == 0) {
+			if (i == 0) { // original keyword
 				booster = 2.2;
-				fields = ["citation^3", "citation.folded^2.1", 
-							"description^2.1","description.folded",
-							"type.folded", "investigator.folded",
-							"parameter.folded", "region.folded", "feature.folded", 
-							"project.folded", "dataCenter.folded","method.folded"];
+				fields = ["citation_title^3","citation_title.folded^2.1", 
+					"description^2.1","description.folded",
+					"type.folded", "investigator.folded",
+					"parameter.folded", "region.folded", "feature.folded", 
+					"project.folded", "dataCenter.folded","method.folded", 
+					"citation.folded"];
 				//["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"];
-			}else{
+			}else{ // extended keywords
 				fields = ["citation_title^3","citation_title.folded^2.1", 
 							"description^2.1","description.folded",
 							"parameter.folded", "region.folded", "feature.folded", 
@@ -1846,7 +1961,11 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 		}
 		queryObj = {
 			"bool": {
-				"should": boostedKeywords,
+				"must": [{
+							"bool":{
+								"should":boostedKeywords
+							}
+				}],
 				"filter": filterObj
 			}
 		}

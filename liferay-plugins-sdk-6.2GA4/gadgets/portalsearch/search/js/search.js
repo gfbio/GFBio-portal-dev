@@ -10,42 +10,73 @@ function listenToEnterPress() {
 		if (event.keyCode == 13) {
 			$('#gfbioSearchInput').autocomplete('close');
 			$("#QueryButton").click();
+			var value = document.getElementById("gfbioSearchInput").value;
+			insertParam("q_", value);
 		}
 	});
 }
+function insertParam(key, value) {
+			console.log(':::insertParam');
+        key = escape(key); value = escape(value);
+        var url = document.referrer.split('?');
+			console.log(url);
+		var newUrl = '';
+		if (url.length >1){
+			// if url already has parameters
+            var params = url[1].split('&');
+            for (i=0; i< params.length; i++){
+				var par = params[i].split('=');
 
+                if (par[0] == key) {
+                    par[1] = value;
+                    params[i] = par.join('=');
+                    break;
+                }
+            }
+			newUrl = url[0]+'?'+params.join('&');
+
+		}else if (url.length==1){
+			newUrl = url[0]+"?"+key+"="+value;
+		}
+		
+		if (history.pushState && newUrl!='') {
+			console.log(':::pushstate');
+			console.log(newUrl);
+			parent.history.pushState({path:newUrl},'',newUrl);
+		}
+    }
 /*
  * Description: set autocomplete to the search textbox
  */
 function setAutoComplete() {
 	$('#gfbioSearchInput').autocomplete({
-		minLength : 1,
-		delay : 0,
-		source : function (request, response) {
+		minLength: 1,
+		delay: 0,
+		source: function (request, response) {
 			$.ajax('//ws.pangaea.de/es/dataportal-gfbio/_suggest', {
-				contentType : 'application/json; charset=UTF-8',
-				type : 'POST',
-				data : JSON.stringify({
-					'suggest' : {
-						'text' : request.term,
-						'completion' : {
-							'field' : 'suggest',
-							'size' : 12,
+				contentType: 'application/json; charset=UTF-8',
+				type: 'POST',
+				data: JSON.stringify({
+					'suggest': {
+						'text': request.term,
+						'completion': {
+							'field': 'suggest',
+							'size': 12,
 						},
 					},
 				}),
-				dataType : 'json',
-				success : function (data) {
+				dataType: 'json',
+				success: function (data) {
 					response($.map(data.suggest[0].options, function (item) {
 							return item.text;
 						}));
 				},
 			});
 		},
-		open : function () {
+		open: function () {
 			var maxWidth = $(document).width() - $(this).offset().left - 16;
 			$(this).autocomplete('widget').css({
-				'max-width' : maxWidth + "px"
+				'max-width': maxWidth + "px"
 			});
 		},
 	});
@@ -83,39 +114,39 @@ function showLatestTenDataset(filter, yearRange) {
 	// initiate result table
 	writeResultTable();
 	var oTable = $('#tableId').DataTable({
-			"bDestroy" : true,
-			"bPaginate" : true,
-			"sPaginationType" : "simple",
-			"bJQueryUI" : true,
-			"bProcessing" : true,
-			"bServerSide" : true,
-			"sAjaxSource" : searchAPI,
-			"bRetrieve" : true,
-			"fnServerData" : getFilteredLatestDataset(filter, yearRange),
+			"bDestroy": true,
+			"bPaginate": true,
+			"sPaginationType": "simple",
+			"bJQueryUI": true,
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": searchAPI,
+			"bRetrieve": true,
+			"fnServerData": getFilteredLatestDataset(filter, yearRange),
 			// for the first time loading, filter and yearRange = ""
 			// assign only 3 columns for the result table
-			"aoColumns" : [{
+			"aoColumns": [{
 					// score column is used for sorting, hide it
-					"data" : "score",
-					"visible" : false,
-					"sortable" : false
+					"data": "score",
+					"visible": false,
+					"sortable": false
 				}, {
 					// html column is the main display
-					"data" : "html",
-					"visible" : true,
-					"sortable" : false
+					"data": "html",
+					"visible": true,
+					"sortable": false
 				}, {
 					// column displays color palette and basket cart icon
-					"class" : "color-control",
-					"sortable" : false,
-					"data" : null,
+					"class": "color-control",
+					"sortable": false,
+					"data": null,
 					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
 				}
 			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
-			"sAutoWidth" : true,
+			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
+			"sAutoWidth": true,
 			// define the event after the search result is returned
-			"fnDrawCallback" : function (oSettings) {
+			"fnDrawCallback": function (oSettings) {
 				//console.log(':Search: table draw callback');
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
@@ -126,11 +157,11 @@ function showLatestTenDataset(filter, yearRange) {
 				}
 			},
 			// define the event after each table row is created
-			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+			"fnRowCallback": function (nRow, aData, iDisplayIndex) {
 				showCartIcon(nRow, aData);
 			},
-			"oLanguage" : {
-				"sLengthMenu" : "Show _MENU_ entries per page"
+			"oLanguage": {
+				"sLengthMenu": "Show _MENU_ entries per page"
 			}
 		});
 	// activate the row click event (broadcast a message to mini-map)
@@ -149,15 +180,14 @@ function getFilteredLatestDataset(filter, yearRange) {
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
 		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
 		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
 		var filteredQuery = getFilteredQuery("", filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 
 		// add sorting by citation date
 		completeQuery.sort = {
 			"citation_yearFacet" : {
-				"order" : "desc"
+				"order": "desc"
 			}
 		};
 
@@ -165,20 +195,22 @@ function getFilteredLatestDataset(filter, yearRange) {
 		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
 		// Send request via AJAX
 		$.ajax(sSource, {
-			contentType : 'application/json; charset=UTF-8',
-			type : 'POST',
-			data : JSON.stringify(completeQuery),
-			dataType : 'json',
-			success : function (json) {
+			contentType: 'application/json; charset=UTF-8',
+			type: 'POST',
+			data: JSON.stringify(completeQuery),
+			dataType: 'json',
+			success: function (json) {
 				var datasrc = json.hits.hits;
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
 					var facet = json.aggregations;
-					if (gadgets.Hub.isConnected())
+					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
-				} else {
-					if (gadgets.Hub.isConnected())
-						gadgets.Hub.publish('gfbio.search.facet', '');
+					}
+				} else {// clear facet
+					if (gadgets.Hub.isConnected()){
+						gadgets.Hub.publish('gfbio.search.facet', '');	
+					}
 				}
 				// Prepare the returned result in usable format
 				var res = parseReturnedJSONfromSearch(datasrc);
@@ -250,38 +282,38 @@ function getSearchResult(keyword, filter, yearRange) {
 	writeResultTable();
 	// bound a datatable to pansimple API query
 	var oTable = $('#tableId').DataTable({
-			"bDestroy" : true,
-			"bPaginate" : true,
-			"sPaginationType" : "simple",
-			"bJQueryUI" : true,
-			"bProcessing" : true,
-			"bServerSide" : true,
-			"sAjaxSource" : searchAPI, // the URL of Search API
-			"bRetrieve" : true,
-			"fnServerData" : submitQueryToServer(keyword, filter, yearRange),
+			"bDestroy": true,
+			"bPaginate": true,
+			"sPaginationType": "simple",
+			"bJQueryUI": true,
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": searchAPI, // the URL of Search API
+			"bRetrieve": true,
+			"fnServerData": submitQueryToServer(keyword, filter, yearRange),
 			// assign only 3 columns for the result table
-			"aoColumns" : [{
+			"aoColumns": [{
 					// score column is used for sorting, hide it
-					"data" : "score",
-					"visible" : false,
-					"sortable" : false
+					"data": "score",
+					"visible": false,
+					"sortable": false
 				}, {
 					// html column is the main display
-					"data" : "html",
-					"visible" : true,
-					"sortable" : false
+					"data": "html",
+					"visible": true,
+					"sortable": false
 				}, {
 					// column displays color palette and basket cart icon
-					"class" : "color-control",
-					"sortable" : false,
-					"data" : null,
+					"class": "color-control",
+					"sortable": false,
+					"data": null,
 					"defaultContent" : "<input type='text' class='full-spectrum'/>" + cartDiv
 				}
 			],
-			"sDom" : '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
-			"sAutoWidth" : true,
+			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
+			"sAutoWidth": true,
 			// define the event after the search result is returned
-			"fnDrawCallback" : function (oSettings) {
+			"fnDrawCallback": function (oSettings) {
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
 					console.log(':: writeResultTable');
@@ -292,11 +324,11 @@ function getSearchResult(keyword, filter, yearRange) {
 				}
 			},
 			// define the event after each table row is created
-			"fnRowCallback" : function (nRow, aData, iDisplayIndex) {
+			"fnRowCallback": function (nRow, aData, iDisplayIndex) {
 				showCartIcon(nRow, aData);
 			},
-			"oLanguage" : {
-				"sLengthMenu" : "Show _MENU_ entries per page"
+			"oLanguage": {
+				"sLengthMenu": "Show _MENU_ entries per page"
 			}
 		});
 	// activate the row click event
@@ -321,21 +353,21 @@ function submitQueryToServer(keyword, filter, yearRange) {
 		var queryfield = createQueryFieldArray();
 		var filteredQuery = getFilteredQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 
 		// Store query string for sending to VAT
 		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
 
 		// Send request via AJAX
 		$.ajax(sSource, {
-			contentType : 'application/json; charset=UTF-8',
-			type : 'POST',
-			data : JSON.stringify(completeQuery),
-			dataType : 'json',
-			success : function (result) {
+			contentType: 'application/json; charset=UTF-8',
+			type: 'POST',
+			data: JSON.stringify(completeQuery),
+			dataType: 'json',
+			success: function (result) {
 				// get JSON result back from the server
 				var datasrc = result.hits.hits;
-				console.log(datasrc);
+				//console.log(datasrc);
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
 					var facet = result.aggregations;
@@ -354,6 +386,8 @@ function submitQueryToServer(keyword, filter, yearRange) {
 				result.iTotalRecords = result.hits.total;
 				result.iTotalDisplayRecords = result.hits.total;
 				result.data = res;
+				//console.log("submitQueryToServer");
+				//console.log(result);
 				// return result object
 				fnCallback(result);
 			}
@@ -403,15 +437,15 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	var queryObj;
 	if (keyword != "") {
 		queryObj = {
-			"simple_query_string" : {
-				"query" : keyword,
-				"fields" : ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
-				"default_operator" : "and"
+			"simple_query_string": {
+				"query": keyword,
+				"fields": ["fulltext", "fulltext.folded^.7", "citation^3", "citation.folded^2.1"],
+				"default_operator": "and"
 			}
 		};
 	} else {
 		queryObj = {
-			"match_all" : {}
+			"match_all": {}
 		};
 	}
 	// save Keyword to invisible field for basket
@@ -422,8 +456,8 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 			filterObj = filterArray;
 		} else {
 			return {
-				"bool" : {
-					"must" : queryObj
+				"bool": {
+					"must": queryObj
 				}
 			};
 		}
@@ -433,22 +467,22 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		var maxYear = yearRange.substring(splitPos + 3);
 		//console.log(minYear + "-" + maxYear);
 		yearFilter = {
-				"range" : {
-					"citation_yearFacet" : {
-						"gte" : minYear,
-						"lte" : maxYear
-					}
+			"range": {
+				"citation_yearFacet": {
+					"gte": minYear,
+					"lte": maxYear
 				}
-			};
+			}
+		};
 		filterObj = filterArray;
 		filterObj.push(yearFilter);
 	}
 	// save filterObj to invisible field for basket
 	document.getElementById("queryFilter").value = JSON.stringify(filterObj);
 	return {
-		"bool" : {
-			"must" : queryObj,
-			"filter" : filterObj
+		"bool": {
+			"must": queryObj,
+			"filter": filterObj
 		}
 	};
 }
@@ -460,15 +494,15 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
  */
 function applyBoost(query) {
 	return {
-		"function_score" : {
-			"query" : query,
-			"functions" : [{
-					"field_value_factor" : {
-						"field" : "boost"
+		"function_score": {
+			"query": query,
+			"functions": [{
+					"field_value_factor": {
+						"field": "boost"
 					}
 				}
 			],
-			"score_mode" : "multiply"
+			"score_mode": "multiply"
 		}
 	}
 }
@@ -478,39 +512,42 @@ function applyBoost(query) {
  * Input: JSONObject boostedQuery : a JSON query mesage with filter and boost parameters
  *        int iDisplayStart : starting index of dataset (read from pagination option)
  *        int iDisplayLength : size of dataset (read from pagination option)
- *        JSONArray queryfield : array of query fields
  * Output: JSONObject : a complete JSON request message
  */
-function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield) {
+function getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength) {
 	return {
-		'query' :
-		boostedQuery,
-		'from' : iDisplayStart,
-		'size' : iDisplayLength,
-		/*'fields' : queryfield,*/
-		'aggs' : {
-			'author' : {
-				'terms' : {
-					'field' : 'citation_authorFacet',
-					'size' : 50
+		'query': boostedQuery,
+		'from': iDisplayStart,
+		'size': iDisplayLength,
+		'aggs': {
+			'author': {
+				'terms': {
+					'field': 'citation_authorFacet',
+					'size': 50
 				}
 			},
-			'year' : {
-				'terms' : {
-					'field' : 'citation_yearFacet',
-					'size' : 50
+			'year': {
+				'terms': {
+					'field': 'citation_yearFacet',
+					'size': 50
 				}
 			},
-			'region' : {
-				'terms' : {
-					'field' : 'regionFacet',
-					'size' : 50
+			'region': {
+				'terms': {
+					'field': 'regionFacet',
+					'size': 50
 				}
 			},
-			'dataCenter' : {
-				'terms' : {
-					'field' : 'dataCenterFacet',
-					'size' : 50
+			'dataCenter': {
+				'terms': {
+					'field': 'dataCenterFacet',
+					'size': 50
+				}
+			},
+			'license': {
+				'terms': {
+					'field': 'licenseFacet',
+					'size': 50
 				}
 			}
 		}
@@ -552,45 +589,48 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.minLongitude = getMultiValueField(fields, "minLongitude");
 		inner.metadatalink = getMultiValueField(fields, "metadatalink");
 		inner.datalink = getMultiValueField(fields, "datalink");
+		inner.accessRestricted = getMultiValueField(fields, "accessRestricted");
+		/* pangeae doesn't return license field
+		inner.license = getMultiValueField(fields, "license");*/
 		inner.format = getMultiValueField(fields, "format");
-		if (fields["html-1"]) { 
+		if (fields["html-1"]) {
 			// this field is used only for displaying data
 			var html = fields["html-1"];
-			html = html.replace("@target@", "_blank").replace("<table", "<table class=\"html-1\"");
+			html = html.replace(/@target@/gi, "_blank").replace("<table", "<table class=\"html-1\"");
+
 			inner.html = writeShowHideFields(html);
 		} 
 		else{
 			inner.html = "";
 		}
-		if (fields["xml"]) { 
+		if (fields["xml"]) {
 			// this field contains raw data, is used for basket
 			var xml = fields["xml"];
 			// creates object instantce of XMLtoJSON
 			var xml2json = new XMLtoJSON();
 			var json = xml2json.fromStr(xml);
 			inner.xml = json; //JSON.stringify(json);
-						
-			if (isJArray(json.dataset["parentIdentifier"])){
-				inner.parentIdentifier = getStringFromJSONArray(json.dataset,"parentIdentifier");
-			}else{
+
+			if (isJArray(json.dataset["parentIdentifier"])) {
+				inner.parentIdentifier = getStringFromJSONArray(json.dataset, "parentIdentifier");
+			} else {
 				inner.parentIdentifier = json.dataset["parentIdentifier"];
 			}
-			
+
 			inner.dcIdentifier = json.dataset["dc:identifier"];
-			if (isJArray(json.dataset["dc:type"])){
+			if (isJArray(json.dataset["dc:type"])) {
 				inner.dcType = "Unit";
-				inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
-			}else{
-				if (json.dataset["dc:type"] == "Dataset"){
+				inner.unitType = getValueFromJSONArray(json.dataset, "dc:type");
+			} else {
+				if (json.dataset["dc:type"] == "Dataset") {
 					inner.dcType = "Dataset";
-					inner.unitType ="";
-				}else{
+					inner.unitType = "";
+				} else {
 					inner.dcType = "Unit";
-					inner.unitType = getValueFromJSONArray(json.dataset,"dc:type");
+					inner.unitType = getValueFromJSONArray(json.dataset, "dc:type");
 				}
 			}
-			
-		} else{
+		} else {
 			inner.xml = "";
 		}
 		res.push(inner);
@@ -643,17 +683,17 @@ function addBasket() {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
 		var basketid = document.getElementById("basketID").value;
-		console.log("addBasket:"+basketid);
+		//console.log("addBasket:"+basketid);
 		var query = document.getElementById("queryJSON").value;
 		
-		console.log("addBasket queryJSON:");
-		console.log(query);
+		/*console.log("addBasket queryJSON:");
+		console.log(query);*/
 		var keyword = document.getElementById("queryKeyword").value;
 		var filter = document.getElementById("queryFilter").value;
-		console.log("addBasket queryKeyword:");
+		/*console.log("addBasket queryKeyword:");
 		console.log(keyword);
 		console.log("addBasket queryFilter:");
-		console.log(filter);
+		console.log(filter);*/
 		parent.Liferay.Service(
 			'/GFBioProject-portlet.basket/update-basket', {
 			basketID : basketid,
@@ -844,25 +884,28 @@ function getDataFromSelectedRow(nRow, tRows) {
 	var iRow = nRow._DT_RowIndex;
 	var value = tRows.data()[iRow];
 	var result = {
-		"metadatalink" : value.metadatalink,
-		"datalink" : value.datalink,
-		"format" : value.format,
-		"timeStamp" : value.timeStamp,
-		"maxLatitude" : value.maxLatitude,
-		"minLatitude" : value.minLatitude,
-		"maxLongitude" : value.maxLongitude,
-		"minLongitude" : value.minLongitude,
-		"color" : rgbToHex(color),
-		"title" : value.title,
-		"authors" : value.authors,
-		"description" : value.description,
-		"dataCenter" : value.dataCenter,
-		"dcType" : value.dcType,
-		"unitType" : value.unitType,
+		"metadatalink": value.metadatalink,
+		"datalink": value.datalink,
+		"format": value.format,
+		"timeStamp": value.timeStamp,
+		"maxLatitude": value.maxLatitude,
+		"minLatitude": value.minLatitude,
+		"maxLongitude": value.maxLongitude,
+		"minLongitude": value.minLongitude,
+		"color": rgbToHex(color),
+		"title": value.title,
+		"authors": value.authors,
+		"description": value.description,
+		"dataCenter": value.dataCenter,
+		"dcType": value.dcType,
+		"unitType": value.unitType,
 		"parentIdentifier": value.parentIdentifier,
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
-		"xml" : value.xml
+		"xml": value.xml,
+		"accessRestricted": value.accessRestricted,
+		/* pangeae doesn't return license field
+		"license":value.license*/
 	};
 	return result;
 }
@@ -980,11 +1023,11 @@ function addColorPicker() {
 		//			    color: "rgb(244, 204, 204)", // default color
 		//			    showInput: true, // display rgb code input
 		//			    preferredFormat: "hex",
-		showInitial : true,
-		showPalette : true,
-		showSelectionPalette : true,
-		maxPaletteSize : 10,
-		palette : [
+		showInitial: true,
+		showPalette: true,
+		showSelectionPalette: true,
+		maxPaletteSize: 10,
+		palette: [
 			["rgb(0, 0, 0)", // black
 				"rgb(67, 67, 67)", // charcoal grey
 				"rgb(102, 102, 102)", // dim grey
@@ -1032,7 +1075,7 @@ function addColorPicker() {
 				"rgb(7, 55, 99)", // prussian blue
 				"rgb(32, 18, 77)"]// violent violet
 		],
-		change : function (color) {
+		change: function (color) {
 			// read basket value
 			var basket = document.getElementById("visualBasket");
 			var basketStr = basket.value;
@@ -1043,14 +1086,13 @@ function addColorPicker() {
 				var col = this.parentElement;
 				var row = col.parentElement;
 				var tb = $('#tableId').DataTable();
-				var metadatalink = tb.rows().data()[row.rowIndex - 1].metadatalink;
+				var metadatalink = tb.rows().data()[row.rowIndex - 1].metadataLink;
 				// loop compare with the link in basket
 				$.each(jsonData.selected, function (index, result) {
 					var selectedLink = result['metadatalink'];
 					if (selectedLink == metadatalink) {
 						// if found the link, update row detail
 						jsonData.selected[index].color = color.toHexString();
-						
 					}
 				});
 				basket.value = JSON.stringify(jsonData);
@@ -1076,6 +1118,7 @@ function showCartIcon(nRow, aData) {
 		var elmTD = $(elmRow[0].lastElementChild);
 		var elmDiv = $(elmTD[0].lastElementChild);
 		// show the cart's div
+		//console.log(elmDiv);
 		elmDiv.removeClass('invisible');
 	}
 }
@@ -1322,7 +1365,7 @@ function getValueFromJSONArray(jObj, name) {
 		if (jArr.length > 0){
 		    return jArr;
 		}
-	} 
+	}
 	return [];
 }
 
@@ -1340,6 +1383,7 @@ function getStringFromJSONArray(jObj, name) {
 	} else
 		return "";
 }
+
 /*
  * Description: Read value[ind] from a JSONObject
  */
@@ -1377,19 +1421,18 @@ function setCookie(name, value) {
 	//console.log(value);
 }  
 
-function deleteCookie(name)
-{
-    document.cookie=name + "=null; path=/; expires=" + expired.toGMTString();
+function deleteCookie(name) {
+	document.cookie = name + "=null; path=/; expires=" + expired.toGMTString();
 }
 
 function isJArray(elm) {
-    return Object.prototype.toString.call(elm) === '[object Array]';
+	return Object.prototype.toString.call(elm) === '[object Array]';
 }
 
 if (!String.prototype.startsWith) {
-  String.prototype.startsWith = function(searchString, position) {
-    position = position || 0;
-    return this.indexOf(searchString, position) === position;
-  };
+	String.prototype.startsWith = function (searchString, position) {
+		position = position || 0;
+		return this.indexOf(searchString, position) === position;
+	};
 }
 ///////////////////////////////////  End Misc functions  //////////////////////////////////

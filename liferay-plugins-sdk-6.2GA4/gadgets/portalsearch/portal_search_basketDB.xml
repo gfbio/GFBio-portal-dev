@@ -41,7 +41,8 @@
 						autocomplete="off"/> 
 						<input id="QueryButton" name="QueryButton"
 						type="button" value="" class="acButton"
-						onclick="javascript:newQuery(true);" />
+						onclick="javascript:	insertParam('q_',document.getElementById('gfbioSearchInput').value);
+						newQuery(true);" />
 						</span>
 					</label> <div style="height:10px"></div>
 					<div id="search_result_table"></div>
@@ -55,12 +56,13 @@
 			</body>
 			<script type="text/javascript">
 				$=jQuery;
+				$.holdReady( true );
 				gadgets.HubSettings.onConnect = function(hub, suc, err) {
 					gadgets.Hub.subscribe("gfbio.search.facetfilter", applyFacetFilter);
 					gadgets.Hub.subscribe("gfbio.search.basketData", loadBasket);
+					$.holdReady( false );
 				};
 				$(document).ready(function() {
-			
 					listenToEnterPress();
 					setAutoComplete();
 					
@@ -80,8 +82,13 @@
 						newQuery(true);
 					}
 				});
-				
-				$( document ).ajaxComplete(function( event, xhr, settings ) {
+				parent.window.onpopstate = function (e) {
+					//TODO: this reloading page takes time, consider to call our ajax function instead
+					console.log(':::popstate');
+					console.log(parent.document.location.href);
+				  parent.window.location.href = parent.document.location.href;
+				};
+				$(document).ajaxComplete(function( event, xhr, settings ) {
 					adjustGadgetHeight();
 					document.getElementById('gfbioSearchInput').focus();
 				});

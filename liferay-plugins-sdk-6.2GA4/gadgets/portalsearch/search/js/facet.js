@@ -16,7 +16,8 @@ function writeFacetTree(topic, data, subscriberData) {
 		var yearFacet = data.year.buckets;
 		var regionFacet = data.region.buckets;
 		var dataCenterFacet = data.dataCenter.buckets;
-
+		var licenseFacet = data.license.buckets;
+		
 		displayHTML += "<ol id='facet-tree'>";
 
 		displayHTML += writeListFacet('citation_authorFacet', 'Author', authorFacet, 'author');
@@ -26,8 +27,14 @@ function writeFacetTree(topic, data, subscriberData) {
 		displayHTML += writeListFacet('regionFacet', 'Geographical Region', regionFacet, 'region');
 
 		displayHTML += writeListFacet('dataCenterFacet', 'Data Center', dataCenterFacet, 'dataCenter');
+		
+		displayHTML += writeListFacet('licenseFacet', 'License', licenseFacet, 'license');
 
-		displayHTML += "</ol>";
+		displayHTML += "</ol>";	
+
+		/*displayHTML += 	"<input type='checkbox' id='showDirectAccess' value='showDirectAccess'"+
+		" onchange='addToFacetTray(\"accessRestricted\",this.checked);return false;'>"+
+		"Show only non-restricted access datasets</input>";*/
 	}
 	var facetfield = document.getElementById("search_facet_tree");
 	facetfield.innerHTML = displayHTML;
@@ -208,16 +215,40 @@ function addToFacetTray(filterCat, filterTerm) {
 		jsonData = JSON.parse(trayStr);
 	}
 	// check if the facet is already selected, if not, then add
-	var isExist = isInJSON(jsonData.filtered, "facetTerm", filterTerm);
-	if (isExist == 0) {
+	
+	var isExist = false;
+	if (filterCat=="accessRestricted"){
+		isExist = isInJSON(jsonData.filtered, "facetCat", "accessRestricted");
+		//if the filterTerm == true, accessRestricted == false
+		if (filterTerm){filterTerm = false;} //show only non-restricted download
+		else {filterTerm = true;} // show all
+		console.log(filterCat);
+		console.log(filterTerm);
+	}else{
+		isExist = isInJSON(jsonData.filtered, "facetTerm", filterTerm);
+	}
+	if (isExist == 0) { // if the facet has not been added
 		var jsonArr = {
 			"facetCat" : filterCat,
 			"facetTerm" : filterTerm
 		};
-		jsonData.filtered.push(jsonArr);
-		tray.value = JSON.stringify(jsonData);
-		// Display the selected facet as tagLabel
-		$("#facetTags").tagit('createTag', filterTerm);
+		if (filterCat=="accessRestricted"){
+			if (filterTerm){ // show all
+				removeByFacetCatTray(filterCat);
+				console.log('remove facet');
+				console.log(filterCat);
+				console.log(filterTerm);
+			}else{
+				console.log('add to facet');
+				jsonData.filtered.push(jsonArr);
+				tray.value = JSON.stringify(jsonData);
+			}
+		}else{
+			jsonData.filtered.push(jsonArr);
+			tray.value = JSON.stringify(jsonData);
+			// Display the selected facet as tagLabel
+			$("#facetTags").tagit('createTag', filterTerm);
+		}
 		// apply the facet to the main search interface gadget
 		fireFacetData();
 	}

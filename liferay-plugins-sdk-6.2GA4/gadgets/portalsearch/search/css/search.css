@@ -97,9 +97,20 @@ label, input, button {
 	border-color: #2e6da4;
 	color: #fff;
 }
+#semanticTermsDisplay{
+	color:#b0e0e6;
+	font-family: 'Lato', sans-serif;
+	height:20px;
+	display:block;
+	padding: 0.3em 0.4em;
+	margin: 0.1em 0.2em;
+}
 /*////////////////////////////////*/
-span.hilight{
-    background-color:#f6931f;
+span.highlight{
+    background-color:#b0e0e6;
+    box-shadow: 0 0 1px 1px #b0e0e6; 
+	opacity: 0.9; 
+	border-radius: 10px;
     color:#666;
 }
 
@@ -145,27 +156,22 @@ a {
 a:focus , a:visited{
     color: #333333;
 }
-/*a, a:hover, a:focus, .btn:focus {
-		    text-decoration: none;
-		    outline: none;
-		   
-}*/		
 		
 
 .dataTables_length, .dataTables_info, .dataTables_paginate{
-	font-size:12px !important;
+	font-size:12px;
 }
 div.dataTables_info{
-  float:right !important;
-  padding-top: 16px !important;
+  float:right;
+  padding-top: 16px;
 }
 div.dataTables_paginate{
-  float:left !important;
+  float:left;
 }
 
 
 .jstree-node, .jstree-children, .jstree-container-ul  {
-	margin: 0px 0px 0px 5px !important;
+	margin: 0px 0px 0px 5px;
 }
 
 .cart_unselected{
@@ -200,16 +206,16 @@ table.dataTable table.html-1 tr{
 	width:20px !important;
 }
 .tagit, .tagit-new{
-	background:transparent !important;
+	background:transparent;
 }
 ul.tagit input[type="text"] {
-	background:transparent !important;
+	background:transparent;
 }
 .ui-widget,#facetTags.ui-widget{
-	font-size:12px !important;
+	font-size:12px;
 }
 .dataTables_length, .dataTables_info, .dataTables_paginate{
-	text-align: right !important;
+	text-align: right;
 }
 .ui-widget { font: inherit; }
 .ui-autocomplete li { overflow: hidden; white-space: nowrap; }
@@ -239,8 +245,8 @@ table.html-1 .desc-right { font: inherit; margin: 0; padding: 0; vertical-align:
 }
 table.dataTable thead th{
 	background-color: transparent;
-	padding:0px 0px 0px 40px!important;
-	margin:0px !important;
+	padding:0px 0px 0px 40px;
+	margin:0px;
 }
 
 #dialogFacet{
@@ -265,21 +271,36 @@ table.dataTable thead th{
 	margin-left: -7px;
 }
 
+		/* Begin tooltip*/
 		.tooltip {
-			/*border-bottom: 1px dotted #000000;*/ color: #000000; outline: none;
-			cursor: help; text-decoration: none;
+			color: #000000; 
+			outline: none;
+			cursor: help; 
+			text-decoration: none;
 			position: relative;
 		}
 		.tooltip span {
-			margin-left: -999em;
 			position: absolute;
+			display: none;
 		}
 		.tooltip:hover span {
 			border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
 			box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
 			font-family: 'Lato', sans-serif;
-			position: absolute; left: 1em; top: 2em; z-index: 99;
-			margin-left: -400; width: 400px;
+			position: absolute; 
+			left: 1em; right:unset;
+			top: 1em; z-index: 99;
+			width: 400px;
+			display: block;
+		}
+		@media (min-width: 795px) {		
+			.tooltip:hover span {
+				position: absolute; 
+				right: 1em; left:unset;
+				top: 1em; z-index: 99;
+				width: 400px;
+				display: block;
+			}
 		}
 		/*.tooltip:hover img {
 			border: 0; margin: -10px 0 0 -55px;
@@ -293,6 +314,7 @@ table.dataTable thead th{
 			font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 400;
 			display: block; 
 		}
+		/* End tooltip*/
 		.classic { padding: 0.8em 1em; }
 		.classic {background: #9FDAEE; border: 1px solid #2BB0D7; }
 		/*.custom { padding: 0.5em 0.8em 0.8em 2em; }

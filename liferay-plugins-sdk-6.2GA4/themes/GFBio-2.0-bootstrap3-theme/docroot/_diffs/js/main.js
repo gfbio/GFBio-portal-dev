@@ -1,3 +1,5 @@
+
+jQueryCode = function(){// if jquery is not loaded, load it first (see bottom of the page). 
 AUI().ready(
 				'liferay-navigation-interaction',
 				'liferay-sign-in-modal',
@@ -145,6 +147,8 @@ AUI().ready(function() {
 
 );
 
+
+
 // adds an icon in front of external text links
 AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 
@@ -152,11 +156,9 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
   A.all('.journal-content-article a[href^="http://"],.journal-content-article a[href^="https://"]').each(function(object) {
     var link= object.html();
     
-
-
      if(link){
 	
-    	 object.html('<i aria-hidden="true" class="fa fa-external-link" style="font-size:12px;"></i> ' + link);
+    	 object.html('<span id="extIcon"><i aria-hidden="true" class="fa fa-external-link" style="font-size:12px;"></i></span> ' + link);
 	}
   });
 });
@@ -164,11 +166,22 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 /*removes external icons from footer*/
 AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 
-	A.all('.journal-content-article .footer a[href^="http://"],.journal-content-article .footer a[href^="https://"]').each(function(object) {
-	    var linkText= object.text();
-
-	     if(linkText){
-	       object.html(linkText);
-		}
+	A.all('.footer a[href^="http://"],.footer a[href^="https://"]').each(function(object) {
+	    var linkHTML = object.html();
+	    var child = object.one('#extIcon');
+	    child.remove();
+	     
 	      });
 	});
+}
+
+// check if jquery is loaded, if not load it first.
+if(window.jQuery)  jQueryCode();
+else{    
+    var script = document.createElement('script'); 
+    document.head.appendChild(script);  
+    script.type = 'text/javascript';
+    script.src = "//code.jquery.com/jquery-1.11.1.min.js";
+
+    script.onload = jQueryCode;
+}

@@ -73,7 +73,7 @@
 			font-weight:400;
 		} 
 
-		 .journal-content-article a{
+		 .journal-content-article a, .asset-summary a{
 		
 		 color: rgb(60, 172, 228); /*3CACE4*/
 		 text-decoration: underline;
