@@ -28,7 +28,7 @@ import org.gfbio.idmg.jiraclient.model.Issue;
 import org.gfbio.idmg.jiraclient.model.IssueType;
 import org.gfbio.idmg.jiraclient.model.Project;
 import org.gfbio.idmg.jiraclient.model.Reporter;
-import org.gfbio.idmg.util.CategoryUtil;
+import org.gfbio.idmg.util.ContentUtil;
 import org.gfbio.model.DataProvider;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.DataProviderLocalServiceUtil;
@@ -70,8 +70,8 @@ public class DCRTPortlet extends MVCPortlet {
 			throws PortletException, IOException {
 	
 		//Setting categories for dropdowns
-		List<GCategory> researchfields = CategoryUtil.getCategoryList("research field");
-		List<GCategory> materials = CategoryUtil.getCategoryList("material kind");
+		List<GCategory> researchfields = ContentUtil.getCategoryList("research field");
+		List<GCategory> materials = ContentUtil.getCategoryList("material kind");
 		
 		renderRequest.setAttribute("researchfields", researchfields);
 		renderRequest.setAttribute("materials", materials);
