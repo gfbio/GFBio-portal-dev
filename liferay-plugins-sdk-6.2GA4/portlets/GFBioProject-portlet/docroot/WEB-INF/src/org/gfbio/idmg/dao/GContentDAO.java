@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcrt.dao;
+package org.gfbio.idmg.dao;
 
 import java.util.HashMap;
 import java.util.List;

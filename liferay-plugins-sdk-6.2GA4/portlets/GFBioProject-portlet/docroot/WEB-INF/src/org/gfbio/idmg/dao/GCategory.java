@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcrt.dao;
+package org.gfbio.idmg.dao;
 
 import org.json.simple.JSONObject;
 
@@ -16,9 +16,9 @@ public class GCategory {
 	
 	public GCategory(JSONObject categoryJson) {
         if (categoryJson.containsKey("id") && categoryJson.containsKey("name") && categoryJson.containsKey("label")){
-            this.id = Long.valueOf((String) categoryJson.get("id")).longValue();;
-            this.name = (String) categoryJson.get("name");;
-            this.label = (String) categoryJson.get("label");;
+            this.id = Long.valueOf((String) categoryJson.get("id")).longValue();
+            this.name = (String) categoryJson.get("name");
+            this.label = (String) categoryJson.get("label");
         }
     }
 	

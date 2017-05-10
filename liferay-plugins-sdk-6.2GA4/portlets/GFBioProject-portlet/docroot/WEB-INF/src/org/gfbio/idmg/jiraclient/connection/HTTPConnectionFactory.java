@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcrt.jiraclient.connection;
+package org.gfbio.idmg.jiraclient.connection;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,7 +7,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
-import org.gfbio.idmg.dcrt.jiraclient.security.TrustAllCertificates;
+import org.gfbio.idmg.jiraclient.security.TrustAllCertificates;
 
 public class HTTPConnectionFactory {
 

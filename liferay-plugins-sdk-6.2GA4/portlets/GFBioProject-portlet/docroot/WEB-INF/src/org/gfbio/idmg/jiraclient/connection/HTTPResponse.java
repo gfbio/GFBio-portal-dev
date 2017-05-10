@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcrt.jiraclient.connection;
+package org.gfbio.idmg.jiraclient.connection;
 
 public class HTTPResponse {
 

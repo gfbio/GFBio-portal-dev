@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dcrt.jiraclient.model;
+package org.gfbio.idmg.jiraclient.model;
 
 import java.util.Arrays;
 import java.util.List;

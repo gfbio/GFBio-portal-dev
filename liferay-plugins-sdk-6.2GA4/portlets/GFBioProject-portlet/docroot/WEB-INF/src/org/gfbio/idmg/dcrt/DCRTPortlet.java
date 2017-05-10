@@ -1,10 +1,14 @@
 package org.gfbio.idmg.dcrt;
 
+import static j2html.TagCreator.button;
+import static j2html.TagCreator.div;
+import static j2html.TagCreator.img;
+import static j2html.TagCreator.span;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -14,22 +18,22 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.gfbio.NoSuchHeadException;
-import org.gfbio.idmg.dcrt.dao.GCategory;
-import org.gfbio.idmg.dcrt.jiraclient.JIRAApi;
-import org.gfbio.idmg.dcrt.jiraclient.connection.Communicator;
-import org.gfbio.idmg.dcrt.jiraclient.model.Assignee;
-import org.gfbio.idmg.dcrt.jiraclient.model.Customfield_10217;
-import org.gfbio.idmg.dcrt.jiraclient.model.Fields;
-import org.gfbio.idmg.dcrt.jiraclient.model.Issue;
-import org.gfbio.idmg.dcrt.jiraclient.model.IssueType;
-import org.gfbio.idmg.dcrt.jiraclient.model.Project;
-import org.gfbio.idmg.dcrt.jiraclient.model.Reporter;
+import org.gfbio.idmg.dao.GCategory;
+import org.gfbio.idmg.jiraclient.JIRAApi;
+import org.gfbio.idmg.jiraclient.connection.Communicator;
+import org.gfbio.idmg.jiraclient.model.Assignee;
+import org.gfbio.idmg.jiraclient.model.Customfield_10217;
+import org.gfbio.idmg.jiraclient.model.Fields;
+import org.gfbio.idmg.jiraclient.model.Issue;
+import org.gfbio.idmg.jiraclient.model.IssueType;
+import org.gfbio.idmg.jiraclient.model.Project;
+import org.gfbio.idmg.jiraclient.model.Reporter;
+import org.gfbio.idmg.util.CategoryUtil;
 import org.gfbio.model.DataProvider;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -39,8 +43,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
-
-import static j2html.TagCreator.*;
 
 /**
  * Portlet implementation class dcrt
@@ -68,8 +70,8 @@ public class DCRTPortlet extends MVCPortlet {
 			throws PortletException, IOException {
 	
 		//Setting categories for dropdowns
-		List<GCategory> researchfields = getCategoryList("research field");
-		List<GCategory> materials = getCategoryList("material kind");
+		List<GCategory> researchfields = CategoryUtil.getCategoryList("research field");
+		List<GCategory> materials = CategoryUtil.getCategoryList("material kind");
 		
 		renderRequest.setAttribute("researchfields", researchfields);
 		renderRequest.setAttribute("materials", materials);
@@ -222,6 +224,7 @@ public class DCRTPortlet extends MVCPortlet {
 		message = "Name: " + name + "E-Mail: " + email + "Message: " + message;
 
 		// Create Issue
+		//PropsUtil reads the property from portal-ext.properties
 		Project project = new Project(PropsUtil.get("jira.gfbio.dcrt.projectkey"));
 		IssueType issuetype = new IssueType("Question");
 		Reporter reporter = new Reporter("testuser1");
@@ -262,6 +265,7 @@ public class DCRTPortlet extends MVCPortlet {
 		// Set assignee for the ticket
 		Assignee assignee = new Assignee(user);
 
+		//PropsUtil reads the property from portal-ext.properties
 		String customfield_10010 = PropsUtil.get("jira.gfbio.dcrt.requesttype");
 		String customfield_10500 = "Physical objects: " + physical + "\nTaxon based: " + taxon + "\nAlive: " + alive
 				+ "\nPrimarily sequence Data: " + sequenced + "\nCategory: " + category;
@@ -440,57 +444,5 @@ public class DCRTPortlet extends MVCPortlet {
 		providers = DataProviderLocalServiceUtil.getDataProviderByProviderType("GFBio Archive");
 
 		return providers;
-	}
-
-	/* Get a list of all categories from db regarding to their type */
-	public static List<GCategory> getCategoryList(String type) {
-
-		List<GCategory> categories = null;
-		try {
-			long relationTableHeadId = HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_type");
-			long entitiyTableHeadId = HeadLocalServiceUtil.getHeadIdByTableName("gfbio_type");
-
-			String entityTableCellContent = type;
-			JSONArray json = ContentLocalServiceUtil.getRowInformationOfRelationshipsOfSpecificCellContent(
-					relationTableHeadId, entitiyTableHeadId, entityTableCellContent);
-
-			categories = transformJsonArrayToGCategory(json);
-			categories = sortCategories(categories);
-
-		} catch (NoSuchHeadException | SystemException ex) {
-			_log.error("Error while getting HeadId by HeadLocalServiceUtil");
-		}
-		return categories;
-	}
-
-	/* Sort categories alphabetically */
-	private static List<GCategory> sortCategories(List<GCategory> categories) {
-		if (!categories.isEmpty()) {
-			Collections.sort(categories, new Comparator<GCategory>() {
-				@Override
-				public int compare(final GCategory object1, final GCategory object2) {
-					return object1.getName().compareTo(object2.getName());
-				}
-			});
-		}
-		for (GCategory category : categories) {
-			if (category.getName().equalsIgnoreCase("other")) {
-				categories.remove(category);
-				categories.add(category);
-				break;
-			}
-		}
-		return categories;
-	}
-
-	/* Transform JSONArray to List of categories */
-	public static List<GCategory> transformJsonArrayToGCategory(JSONArray categoryJson) {
-		List<GCategory> categories = new ArrayList<GCategory>();
-
-		if (categoryJson.size() > 0)
-			for (int i = 0; i < categoryJson.size(); i++)
-				categories.add(new GCategory((JSONObject) categoryJson.get(i)));
-
-		return categories;
 	}
 }
