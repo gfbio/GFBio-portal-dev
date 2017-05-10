@@ -27,7 +27,6 @@ import java.util.UUID;
 import org.gfbio.model.Submission;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.base.SubmissionLocalServiceBaseImpl;
 import org.gfbio.service.persistence.SubmissionFinderUtil;
 

@@ -1,10 +1,8 @@
 package org.gfbio.submissionworkflow;
 
-import com.liferay.counter.service.CounterLocalServiceUtil;
+
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
@@ -19,15 +17,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.gfbio.service.ColumnLocalServiceUtil;
-import org.gfbio.service.ContentLocalServiceUtil;
-import org.gfbio.service.DataProviderLocalServiceUtil;
-import org.gfbio.service.HeadLocalServiceUtil;
-import org.gfbio.service.PrimaryDataLocalServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-import org.gfbio.service.SubmissionLocalServiceUtil;
-import org.gfbio.service.impl.ColumnLocalServiceImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
