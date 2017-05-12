@@ -32,6 +32,10 @@ input[type=radio] {
     margin-bottom: 3px;
 }
 
+input[name=services] {
+	margin-bottom: 20px;
+}
+
 .block {
     display: block;
 }
@@ -98,13 +102,14 @@ input[type=radio] {
     padding-bottom: 10px !important;
 }
 
-.icon-information4 {
+.info-blue {
 	font-size: 16px;
 	color: #335AA3;
 }
 
-.icon-information4:before {
-    content: "\e939";
+.info-grey {
+	font-size: 14px;
+	color: #818181;
 }
 
 h4 {

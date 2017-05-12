@@ -1,3 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set var="cp" scope="page" value="${renderRequest.getContextPath()}"/>
 
 <h2>GFBio Services</h2>
 <section>
@@ -7,15 +10,84 @@
     <div class="question_div">
         <h4>What GFBio services are you interested in?</h4>
         <div id="gfbioServices" class="col-md-12">
-            <select id="services" name="services" multiple="multiple" size="7">
-                <option value="dmp" >Data Management Plan (DMP) Support</option>
-                <option value="supportManagement" >Datamanagement Support</option>
-                <option value="analysis" >Data Anlaysis</option>
-                <option value="curation" >Data Curation</option>
-                <option value="supportPublication" >Support in Managing Data Related to a Publication</option>
-                <option value="publication" >Data Publication</option>
-                <option value="training" >Data Management Training</option>
-            </select>
+            <div>
+                <input name="services" type="checkbox"/>
+                <label>Data Management Plan (DMP) Support</label>
+                <a target="_blank" href="${cp}/about/services#service-dmpsupport" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>
+                <input name="services" type="checkbox"/>
+                <label>Data Collection and Assurance</label>
+               	<a target="_blank" href="${cp}/about/services#service-datacollection" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>
+                <input name="services" type="checkbox"/>
+                <label>Data Curation</label>
+               	<a target="_blank" href="${cp}/about/services#service-datacuration" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>
+                <input name="services" type="checkbox"/>
+                <label>Data Submission</label>
+               	<a target="_blank" href="${cp}/about/services#service-datasubmission" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>	
+                <input name="services" type="checkbox"/>
+                <label>Data Archiving</label>
+                <a target="_blank" href="${cp}/about/services#service-dataarchiving" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>	
+                <input name="services" type="checkbox"/>
+                <label>Data Search</label>
+                <a target="_blank" href="${cp}/about/services#service-datasearch" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>	
+                <input name="services" type="checkbox"/>
+                <label>Data Visualization and Analysis</label>
+                <a target="_blank" href="${cp}/about/services#service-dataintegration" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>	
+                <input name="services" type="checkbox"/>
+                <label>Data Publication</label>
+                <a target="_blank" href="${cp}/about/services#service-datapublication" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>	
+                <input name="services" type="checkbox"/>
+                <label>Terminology Service</label>
+                <a target="_blank" href="${cp}/about/services#service-terminologyservice" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>	
+                <input name="services" type="checkbox"/>
+                <label>Data Management Training</label>
+                <a target="_blank" href="${cp}/about/services#service-datamanagementtraining" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+            <div>	
+                <input name="services" type="checkbox"/>
+                <label>Data Management Cost Estimation</label>
+                <a target="_blank" href="${cp}/about/services#service-datamanagementcostestimation" >
+					<span class="icon-landing-flex icon-information4 info-grey" ></span>
+				</a>
+            </div>
+	            
         </div>
     </div>
 </section>

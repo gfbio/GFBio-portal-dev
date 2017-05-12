@@ -84,34 +84,16 @@ public class ContentUtil {
 		List<GMetadata> metadata = new ArrayList<>();
 		try {
 			long entitiyTableHeadId = HeadLocalServiceUtil.getHeadIdByTableName("gfbio_metadata");
-			GContentDAO content = getContent(entitiyTableHeadId);
 			
-			GMetadata meta;
-			for (HashMap<Long, String> map : content.getContents()) {
-				meta = new GMetadata();
-				for (Long key : map.keySet()) {
-					if (key == 1) {
-						Long id = Long.parseLong(map.get(key));
-						meta.setId(id);
-					}
-					if (key == 2) {
-						meta.setName(map.get(key));
-					}
-					if (key == 3) {
-						meta.setLabel(map.get(key));
-					}
-					if (key == 4) {
-						meta.setDescription(map.get(key));
-					}
-					if (key == 5) {
-						meta.setVersion(map.get(key));
-					}
-					if (key == 6) {
-						meta.setSchema(map.get(key));
-					}
-				}
-				metadata.add(meta);
+			@SuppressWarnings("unchecked")
+			List<Long> rowIds = ContentLocalServiceUtil.getRowIds(entitiyTableHeadId);
+			
+			for (long i : rowIds) {
+				JSONObject json = ContentLocalServiceUtil.getContentsAsJSONByRowId(i);
+				JSONObject json2 = ContentLocalServiceUtil.getRowInformationById(i);
+				
 			}
+			
 			//JSONArray json = ContentLocalServiceUtil... JSON would be nice
 		} catch(NoSuchHeadException | SystemException ex) {
 			_log.error("Error while getting HeadId by HeadLocalServiceUtil");
@@ -123,7 +105,7 @@ public class ContentUtil {
 
 		@SuppressWarnings("unchecked")
 		List<Object> fields = HeadLocalServiceUtil.getEntitiesByHeadId(headId);
-		_log.info("Size: " + fields.size());
+		//_log.info("Size: " + fields.size());
 
 		GContentDAO entityContent = new GContentDAO();
 		List<Long> columnIds = new ArrayList<Long>();

@@ -8,6 +8,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.gfbio.idmg.dao.GCategory;
+import org.gfbio.idmg.dao.GFunding;
+import org.gfbio.idmg.dao.GLicense;
+import org.gfbio.idmg.dao.GMetadata;
 import org.gfbio.idmg.dcrt.DCRTPortlet;
 import org.gfbio.idmg.util.ContentUtil;
 
@@ -26,9 +29,15 @@ public class DMPTPortlet extends MVCPortlet {
 	
 		//Setting categories for dropdowns
 		List<GCategory> researchfields = ContentUtil.getCategoryList("research field");
+		//List<GMetadata> metadata = ContentUtil.getMetadataList();
+		//List<GLicense> licenses = ContentUtil.getLicenseList();
+		//List<GFunding> fundings = ContentUtil.getFundingList();
 		//List<GCategory> materials = getCategoryList("material kind");
-		
+
 		renderRequest.setAttribute("researchfields", researchfields);
+		//renderRequest.setAttribute("licenses", licenses);
+		//renderRequest.setAttribute("fundings", fundings);
+		//renderRequest.setAttribute("metadata", metadata);
 		//renderRequest.setAttribute("materials", materials);
 		
 		//Setting email and username if user is logged in

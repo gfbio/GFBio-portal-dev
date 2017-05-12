@@ -28,7 +28,7 @@
   	<div class="row">
       	<h4>Is your research data reproducible?
       		<a href="#" title="A onetime observation might be a measurement or a count at a certain point in time or at a certain location, whereas a repetable experiment might be a DNA sequencing which exactly reproduces data.">
-				<span class="icon-landing-flex icon-information4" ></span>
+				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
       	</h4>
       	<div id="nature">
@@ -45,7 +45,7 @@
     <div class="row">
    		<h4>Please specify your project type.
    			<a href="#" title="You can combine several types.">
-				<span class="icon-landing-flex icon-information4" ></span>
+				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
    		</h4>
         <div id="projectTypes" >
@@ -118,7 +118,7 @@
     	<h4>Who is the point of contact for the project data?
     		<a href="#" title="Who should be contacted in case of any question concerning data management? This might be technical issues as well as questions concerning data policies, legal requirements or data volumes and formats.  
 Most commonly this is: you - the one preparing the DMP.">
-				<span class="icon-landing-flex icon-information4" ></span>
+				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
     	</h4>
     	
@@ -140,7 +140,7 @@ Most commonly this is: you - the one preparing the DMP.">
     	<h4>For which funding are you applying?
     		<a href="#" title="Funding agencies or even funding programmes demand certain data management standards.
 We support you in meeting their requirements.">
-				<span class="icon-landing-flex icon-information4" ></span>
+				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
     	</h4>
     	
@@ -164,7 +164,7 @@ We support you in meeting their requirements.">
 	<div class="row">
     	<h4>Which policies or guideliness for research data management will you follow?
     		<a href="#" title="Does your institution or your funder have certain data management policies or guidelines?">
-				<span class="icon-landing-flex icon-information4" ></span>
+				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
     	</h4>
 	    <div id="follow-policies" class="col-md-12">
