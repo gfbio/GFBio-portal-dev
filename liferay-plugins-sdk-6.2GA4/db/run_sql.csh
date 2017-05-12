@@ -22,12 +22,12 @@ $command create_project_user.sql
 $command create_researchobject_user.sql
 $command create_usersso.sql
 $command function_head.sql
-$command insert_gfbio_dataprovider.sql
+$command function_dataprovider.sql
 
 
 $command create_content.sql
 $command function_column.sql
-$command function_dataprovider.sql
+$command insert_gfbio_dataprovider.sql
 
 
 $command function_content.sql
@@ -41,7 +41,6 @@ $command insert_gfbio_institution.sql
 $command insert_gfbio_license.sql
 $command insert_gfbio_metadata.sql
 $command insert_gfbio_persistentidentifier.sql
-$command insert_gfbio_researchfield.sql
 $command insert_gfbio_type.sql
 
 
@@ -53,7 +52,6 @@ $command insert_gfbio_category_dataprovider.sql
 $command insert_gfbio_category_project.sql
 $command insert_gfbio_category_researchobject.sql
 $command insert_gfbio_category_type.sql
-$command insert_gfbio_categoryparent.sql
 $command insert_gfbio_externalperson_researchobject.sql
 $command insert_gfbio_fundingagency_fundingprogram.sql
 

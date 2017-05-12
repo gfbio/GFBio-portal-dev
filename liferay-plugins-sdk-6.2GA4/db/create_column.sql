@@ -1,13 +1,14 @@
 ------------------------------------- Column   ------------------------------------- 
 
-DROP TABLE IF EXISTS
-     gfbio_column;
+--DROP TABLE IF EXISTS
+--     gfbio_column;
 
 CREATE TABLE gfbio_column
 (
   columnid bigint NOT NULL,
   headid bigint NOT NULL,
   column_name text,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_column_pkey PRIMARY KEY (columnid),
   CONSTRAINT gfbio_head_fkey FOREIGN KEY (headid)
       REFERENCES gfbio_head (headid) MATCH SIMPLE

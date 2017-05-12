@@ -1,7 +1,7 @@
 ------------------------------- Submission -----------------------
 
-DROP TABLE IF EXISTS
-     gfbio_submission CASCADE;
+--DROP TABLE IF EXISTS
+--     gfbio_submission CASCADE;
 
 CREATE TABLE gfbio_submission
 (

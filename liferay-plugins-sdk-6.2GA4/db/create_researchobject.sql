@@ -1,7 +1,7 @@
 ------------------------------------- Research Object -------------------------------------   
 
-DROP TABLE IF EXISTS
-     gfbio_researchobject CASCADE;
+--DROP TABLE IF EXISTS
+--    gfbio_researchobject CASCADE;
 
 
 CREATE TABLE gfbio_researchobject

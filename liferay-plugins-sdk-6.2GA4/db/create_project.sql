@@ -1,7 +1,7 @@
 ------------------------------------- Project ------------------------------------- 
 
-DROP TABLE IF EXISTS 
-     gfbio_project CASCADE;
+--DROP TABLE IF EXISTS 
+--     gfbio_project CASCADE;
 
 CREATE TABLE gfbio_project
 (
@@ -14,6 +14,7 @@ CREATE TABLE gfbio_project
   enddate timestamp without time zone,
   status varchar(75),
   parentprojectid bigint,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_project_pkey PRIMARY KEY (projectId)
 )
 WITH (

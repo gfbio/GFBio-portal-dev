@@ -22,9 +22,17 @@ language 'sql' STABLE;
 create or replace function getMaxDataProivderId() RETURNS TABLE (maxid bigint) AS
 $$
 	SELECT 
-		MAX(dataproviderid) 
-	FROM 
-		gfbio_dataprovider
+		(CASE 
+			WHEN 
+				count(dataproviderid) =0 
+			THEN 
+				0 
+			ELSE
+				MAX(dataproviderid)
+			END 
+		) as dataproviderid
+	FROM
+		public.gfbio_dataprovider
 $$	
 language 'sql' STABLE;
 

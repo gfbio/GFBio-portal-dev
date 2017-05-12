@@ -19,3 +19,4 @@ INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gf
 
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_category_researchobject')),'gfbio_category');
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_category_researchobject')),'gfbio_researchobject');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_category_researchobject')),'lastmodifieddate');

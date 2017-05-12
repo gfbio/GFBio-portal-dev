@@ -1,7 +1,7 @@
 ----------------------------     funding / institution project      -------------------------
 
-DROP TABLE IF EXISTS
-     gfbio_funding_institutionproject CASCADE;
+--DROP TABLE IF EXISTS
+--     gfbio_funding_institutionproject CASCADE;
 
 CREATE TABLE gfbio_funding_institutionproject
 (
@@ -9,6 +9,7 @@ CREATE TABLE gfbio_funding_institutionproject
   fundingagencyid bigint NOT NULL,
   fundingprogramid bigint NOT NULL,
   institutionid bigint NOT NULL,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_funding_institutionproject_pkey PRIMARY KEY (projectid, fundingagencyid, fundingprogramid, institutionid),
   CONSTRAINT gfbio_fundingagency_fkey FOREIGN KEY (fundingagencyid)
       REFERENCES gfbio_content (contentid) MATCH SIMPLE

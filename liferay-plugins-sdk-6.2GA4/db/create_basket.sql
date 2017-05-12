@@ -1,7 +1,7 @@
 ------------------------------------- Basket ------------------------------------- 
 
-DROP TABLE IF EXISTS
-     gfbio_basket;
+--DROP TABLE IF EXISTS
+--     gfbio_basket;
 
 CREATE TABLE gfbio_basket
 (

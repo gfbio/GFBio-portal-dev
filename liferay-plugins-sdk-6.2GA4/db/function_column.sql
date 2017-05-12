@@ -6,11 +6,18 @@
 --
 create or replace function getMaxColumnId() RETURNS TABLE (mr bigint) AS
 $$
-	SELECT columnid
+	SELECT 
+		(CASE 
+			WHEN 
+				count(columnid) =0 
+			THEN 
+				0 
+			ELSE
+				MAX(columnid)
+			END 
+		) as columnid
 	FROM
-		(SELECT MAX(columnid) as "columnid" FROM gfbio_column) as maxid
-	ORDER BY columnid DESC
-	limit (1);
+		public.gfbio_column
 $$	
 language 'sql' STABLE;
 

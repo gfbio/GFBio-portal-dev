@@ -1,7 +1,7 @@
 ------------------------------------- Search History ------------------------------------- 
 
-DROP TABLE IF EXISTS
-     gfbio_searchhistory;
+--DROP TABLE IF EXISTS
+--     gfbio_searchhistory;
 
 CREATE TABLE gfbio_searchhistory
 (

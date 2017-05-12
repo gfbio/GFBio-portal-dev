@@ -1,16 +1,16 @@
 ------------------------------------- Content Data Provider -------------------------------------
 
 
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'Botanic Garden and Botanical Museum Berlin, Freie Universität Berlin', 'BGBM');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'Leibniz Institute DSMZ - German Collection of Microorganisms and Cell Cultures, Braunschweig', 'DSMZ');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'Leibniz Institute for Research on Evolution and Biodiversity, Berlin', 'MfN');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'Data Publisher for Earth & Environmental Science', 'PANGAEA');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'Senckenberg Gesellschaft für Naturforschung - Leibniz Institute, Frankfurt', 'SGN');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'State Museum of Natural History Stuttgart', 'SMNS');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'Staatliche naturwissenschaftliche Sammlungen Bayerns - SNSB IT Center, München', 'SNSB');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'Zoological Research Museum Alexander Koenig - Leibniz Institute for Animal Biodiversity, Bonn', 'ZFMK');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'European Nucleotide Archive', 'ENA');
-INSERT INTO gfbio_dataprovider (dataproviderid, name, label)  VALUES (getNewDataProviderId(), 'GFBio Collections', 'GFBio collections');
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'Botanic Garden and Botanical Museum Berlin, Freie Universität Berlin', 'BGBM',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'Leibniz Institute DSMZ - German Collection of Microorganisms and Cell Cultures, Braunschweig', 'DSMZ',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'Leibniz Institute for Research on Evolution and Biodiversity, Berlin', 'MfN',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'Data Publisher for Earth & Environmental Science', 'PANGAEA',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'Senckenberg Gesellschaft für Naturforschung - Leibniz Institute, Frankfurt', 'SGN',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'State Museum of Natural History Stuttgart', 'SMNS',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'Staatliche naturwissenschaftliche Sammlungen Bayerns - SNSB IT Center, München', 'SNSB',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'Zoological Research Museum Alexander Koenig - Leibniz Institute for Animal Biodiversity, Bonn', 'ZFMK',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'European Nucleotide Archive', 'ENA',now());
+INSERT INTO gfbio_dataprovider (dataproviderid, name, label, lastmodifieddate)  VALUES ((select getNewDataProviderId()), 'GFBio Collections', 'GFBio collections',now());
 
 --Provider type
 UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='BGBM';
@@ -24,7 +24,6 @@ UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='ENA';
 UPDATE gfbio_dataprovider SET providertype = 'GFBio Archive' WHERE label ='PANGAEA';
 
 --Question 1
-ALTER TABLE gfbio_dataprovider ADD COLUMN physicalobjectpossible BOOLEAN;
 UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='BGBM';
 UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='DSMZ';
 UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='MfN';
@@ -35,7 +34,6 @@ UPDATE gfbio_dataprovider SET physicalobjectpossible = true WHERE label ='ZFMK';
 UPDATE gfbio_dataprovider SET physicalobjectpossible = false WHERE label ='ENA';
 UPDATE gfbio_dataprovider SET physicalobjectpossible = false WHERE label ='PANGAEA';
 
-ALTER TABLE gfbio_dataprovider ADD COLUMN nophysicalobject BOOLEAN;
 UPDATE gfbio_dataprovider SET nophysicalobject = true WHERE label ='BGBM';
 UPDATE gfbio_dataprovider SET nophysicalobject = true WHERE label ='DSMZ';
 UPDATE gfbio_dataprovider SET nophysicalobject = true WHERE label ='MfN';
@@ -105,7 +103,14 @@ UPDATE gfbio_dataprovider SET sequencedata = true WHERE label ='ENA';
 UPDATE gfbio_dataprovider SET sequencedata = false WHERE label ='PANGAEA';
 
 
-
-
-
+--Timestamp
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='BGBM';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='DSMZ';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='MfN';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='SGN';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='SMNS';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='SNSB';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='ZFMK';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='ENA';
+UPDATE gfbio_dataprovider SET lastmodifieddate = now() WHERE label ='PANGAEA';
 

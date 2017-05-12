@@ -1,7 +1,7 @@
 ------------------------------------- Content  ------------------------------------- 
 
-DROP TABLE IF EXISTS
-     gfbio_content;
+--DROP TABLE IF EXISTS
+--     gfbio_content;
 
 CREATE TABLE gfbio_content
 (
@@ -10,6 +10,7 @@ CREATE TABLE gfbio_content
   columnid bigint NOT NULL,
   rowid bigint NOT NULL,
   cellcontent text,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_content_pkey PRIMARY KEY (contentid),
   CONSTRAINT gfbio_column_fkey FOREIGN KEY (columnid)
       REFERENCES gfbio_column (columnid) MATCH SIMPLE

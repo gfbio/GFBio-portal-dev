@@ -1,7 +1,7 @@
 ------------------------------- Project / User -----------------------
 
-DROP TABLE IF EXISTS
-     gfbio_project_user CASCADE;
+--DROP TABLE IF EXISTS
+--     gfbio_project_user CASCADE;
 
 CREATE TABLE gfbio_project_user
 (
@@ -10,6 +10,7 @@ CREATE TABLE gfbio_project_user
   startdate timestamp with time zone,
   enddate timestamp with time zone,
   usertype character(40) NOT NULL,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_project_user_pkey PRIMARY KEY (projectId, userId),
   CONSTRAINT gfbio_project_fkey FOREIGN KEY (projectId)
       REFERENCES gfbio_project (projectId) MATCH SIMPLE

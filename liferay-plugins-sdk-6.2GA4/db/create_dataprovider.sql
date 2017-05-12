@@ -1,7 +1,7 @@
 ------------------------------------- Data Provider ------------------------------------- 
 
-DROP TABLE IF EXISTS 
-     gfbio_dataprovider CASCADE;
+--DROP TABLE IF EXISTS 
+--     gfbio_dataprovider CASCADE;
 
 
 CREATE TABLE gfbio_dataprovider
@@ -14,11 +14,14 @@ CREATE TABLE gfbio_dataprovider
   website character(150),
   training text,
   providertype character(75),
+  physicalobjectpossible boolean,
+  nophysicalobject boolean,
   taxonbased boolean,
   notaxonbased boolean,
   livingobjects boolean,
   deadobjects boolean,
   sequencedata boolean,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_dataprovider_pkey PRIMARY KEY (dataproviderid),
   CONSTRAINT gfbio_dataprovider_label_key UNIQUE (label)
 )

@@ -17,6 +17,7 @@ INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gf
 
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_category_project')),'gfbio_category');
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_category_project')),'gfbio_project');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_category_project')),'lastmodifieddate');
 
 
 

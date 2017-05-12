@@ -1,13 +1,14 @@
 ------------------------------- Project / Research Object -----------------------
 
-DROP TABLE IF EXISTS
-     gfbio_project_researchobject CASCADE;
+--DROP TABLE IF EXISTS
+--     gfbio_project_researchobject CASCADE;
 
 CREATE TABLE gfbio_project_researchobject
 (
   projectid bigint NOT NULL,
   researchobjectid bigint NOT NULL,
   researchobjectversion smallint NOT NULL,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_project_researchobject_pkey PRIMARY KEY (projectid, researchobjectid, researchobjectversion),
   CONSTRAINT gfbio_project FOREIGN KEY (researchobjectid, researchobjectversion)
       REFERENCES gfbio_researchobject (researchobjectid, researchobjectversion) MATCH SIMPLE

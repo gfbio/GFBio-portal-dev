@@ -6,11 +6,19 @@
 --
 create or replace function getMaxHeadId() RETURNS TABLE (mr bigint) AS
 $$
-	SELECT headid
+	SELECT 
+		(CASE 
+			WHEN 
+				count(headid) =0 
+			THEN 
+				0 
+			ELSE
+				MAX(headid)
+			END 
+		) as headid
 	FROM
-		(SELECT MAX(headid) as "headid" FROM gfbio_head) as maxid
-	ORDER BY headid DESC
-	limit (1);
+		public.gfbio_head
+	
 $$	
 language 'sql' STABLE;
 

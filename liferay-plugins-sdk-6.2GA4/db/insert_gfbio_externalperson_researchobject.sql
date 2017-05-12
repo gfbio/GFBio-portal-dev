@@ -16,6 +16,7 @@ INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gf
 
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_externalperson_researchobject')),'gfbio_externalperson');
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_externalperson_researchobject')),'gfbio_researchobject');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_externalperson_researchobject')),'lastmodifieddate');
 
 
 ------------------------------------- Content Table Content -------------------------------------

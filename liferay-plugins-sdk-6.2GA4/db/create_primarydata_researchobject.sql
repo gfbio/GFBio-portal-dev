@@ -1,8 +1,8 @@
 ------------------------------- Primary data / Research Object-----------------------
 
 
-DROP TABLE IF EXISTS
-     gfbio_primarydata_researchobject CASCADE;
+--DROP TABLE IF EXISTS
+--     gfbio_primarydata_researchobject CASCADE;
 
 
 CREATE TABLE gfbio_primarydata_researchobject
@@ -10,6 +10,7 @@ CREATE TABLE gfbio_primarydata_researchobject
   researchobjectid bigint NOT NULL,
   researchobjectversion smallint NOT NULL,
   primarydataid bigint NOT NULL,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_primarydata_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion, primarydataid),
   CONSTRAINT gfbio_primarydata_fkey FOREIGN KEY (primarydataid)
       REFERENCES gfbio_primarydata (primarydataid) MATCH SIMPLE
