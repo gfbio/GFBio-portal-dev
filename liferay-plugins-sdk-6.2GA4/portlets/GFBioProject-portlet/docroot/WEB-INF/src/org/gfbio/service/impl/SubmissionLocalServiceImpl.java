@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.gfbio.helper.Helper;
 import org.gfbio.model.Submission;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
@@ -139,7 +140,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
 		if (requestJson.containsKey("archive")&&requestJson.containsKey("researchobjectid")&&requestJson.containsKey("researchobjectversion")){
 			
@@ -170,7 +171,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		JSONArray responseJson = new JSONArray();
 		Set<String> set = new HashSet<String>();
 		set.add("latestx");
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		if (requestJson.containsKey("latestx")){
 			if (requestJson.get("latestx").getClass().toString().equals("class java.lang.Long"))
 				responseJson = constructSubmissionsJson(getLatestXPublicSubmissionsByX((int)((long)requestJson.get("latestx"))));
@@ -297,7 +298,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		JSONArray responseJson = new JSONArray();
 		Set<String> set = new HashSet<String>();
 		set.add("brokersubmissionid");
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		if (requestJson.containsKey("brokersubmissionid")){
 			try {responseJson = constructSubmissionsJson(getSubmissionsByBrokerSubmissionId((String)requestJson.get("brokersubmissionid")));}
 			catch (SystemException e) {e.printStackTrace();}
@@ -320,7 +321,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		JSONArray responseJson = new JSONArray();
 		Set<String> set = new HashSet<String>();
 		set.add("researchobjectid");
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		if (requestJson.containsKey("researchobjectid"))
 			try {responseJson = constructSubmissionsJson(getSubmissionsByResearchObjectId((long)requestJson.get("researchobjectid")));} 
 			catch (SystemException e) {	e.printStackTrace();responseJson.add("ERROR: Build Array is failed.");}
@@ -345,7 +346,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			set.add(keySet[i]);
 
 		
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 		
 		if (requestJson.containsKey("researchobjectid")){
 			
@@ -642,24 +643,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
 	
 
-	//
-	public String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
 
-		String ignoredParameter = "WARNING:";
-		Boolean check = false;
-		
-		for (int i =0; i < objects.length;i++)
-			if (!keyList.contains((objects[i]))){
-				ignoredParameter = ignoredParameter.concat(" ").concat(objects[i].toString()).concat(",");
-				check = true;
-			}
-		if (check == true)
-			ignoredParameter = ignoredParameter.substring(0, ignoredParameter.length()-1).concat(" are not parameters of this method.");
-		else
-			ignoredParameter ="";
-		
-		return ignoredParameter;
-	}
 	
 
 	//
@@ -774,22 +758,31 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createSubmission (JSONObject requestJson){
-			
+		
+		System.out.println(requestJson);
+		
 		Boolean check = false;
 		JSONObject keyJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
 		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "ispublic", "jiraid","jirakey", "publicafter", "researchobjectid", "researchobjectversion", "status", "userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		
+		int researchObjectVersion =0;
+		if (requestJson.containsKey("researchobjectversion"))
+			researchObjectVersion = (int) Helper.getIntFromJson(requestJson, "researchobjectversion");
+		else
+			if (requestJson.containsKey("researchobjectid"))
+				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(Helper.getLongFromJson(requestJson, "researchobjectid"));
+		
+		
+		if (requestJson.containsKey("researchobjectid") && researchObjectVersion != 0 && requestJson.containsKey("archive") && requestJson.containsKey("userid")){
 
-		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion") && requestJson.containsKey("archive") && requestJson.containsKey("userid")){
-
-			long researchObjectId =(long)requestJson.get("researchobjectid");
-			int researchObjectVersion = (int)((long) requestJson.get("researchobjectversion"));
-			String archive = ((String)requestJson.get("archive")).trim();
+			long researchObjectId =Helper.getLongFromJson(requestJson, "researchobjectid");
+			String archive = (Helper.getStringFromJson(requestJson, "archive")).trim();
 			String brokerSubmissionId ="";
-			long userId = (long)requestJson.get("userid");
+			long userId = Helper.getLongFromJson(requestJson, "userid");
 			Submission submission = null;
 			
 			if (requestJson.containsKey("brokersubmissionid"))
@@ -915,7 +908,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "ispublic", "jiraid", "jirakey", "publicafter", "researchobjectid", "status", "userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
+		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
 			
 		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("archive") && requestJson.containsKey("archivepid") && requestJson.containsKey("brokersubmissionid")&& requestJson.containsKey("userid") ){
 	

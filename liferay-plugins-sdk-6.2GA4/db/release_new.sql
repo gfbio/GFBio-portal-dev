@@ -462,3 +462,12 @@ WHERE
 	columnid != (select getcolumnidbynames('gfbio_category', 'lastmodifieddate')) and
 	cellcontent = 'Other'
 			
+			
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+-------------------------------------       category        -- 16.05.2017 ---------------------
+-----------------------------------------------------------------------------------------------
+			
+
+--SELECT insertHCCRelationshipWithOutsideOfHCCSecoundColumn('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Botany' ,  (SELECT  CAST( (SELECT getDataProviderIdByLabel( 'BGBM' )) AS text)) );
+--SELECT insertHCCRelationshipWithOutsideOfHCCSecoundColumn('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Palaeontology' ,  (SELECT  CAST( (SELECT getDataProviderIdByLabel( 'PANGAEA' )) AS text)) );

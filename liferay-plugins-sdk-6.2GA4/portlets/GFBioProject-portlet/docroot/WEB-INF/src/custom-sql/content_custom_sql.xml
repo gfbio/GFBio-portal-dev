@@ -400,6 +400,42 @@
 			  cellcontent = ?)
 		]]>
     </sql>
+    
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getOppositeCellContentsOfRelationsByCellContentAndColumn">
+	    <![CDATA[
+			SELECT 
+			  cellcontent 
+			FROM 
+			  public.gfbio_content,
+			  public.gfbio_column
+			WHERE 
+			  gfbio_column.columnid = gfbio_content.columnid AND
+			  gfbio_column.column_name != 'lastmodifieddate' AND
+			  rowid in (
+				SELECT 
+					rowid 
+				FROM 
+					public.gfbio_content
+				WHERE
+					headid= ? and
+					columnid = ? and
+					cellcontent = ?
+				)
+			  and
+			  contentid not in(
+			  SELECT 
+			  contentid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid= ? and
+			  columnid = ? and
+			  cellcontent = ?)
+		]]>
+    </sql>
+    
         
     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIds">
 	    <![CDATA[

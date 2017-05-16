@@ -358,6 +358,19 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		
 	}
 	
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONArray getOppositeCellContentsOfRelationsByCellContent(long headId, long columnId, String cellContent){
+		List <String> responseList = ContentFinderUtil.getOppositeCellContentsOfRelationsByCellContentAndColumn(headId, columnId, cellContent);
+		JSONParser parser = new JSONParser();
+		JSONArray parseJson = new JSONArray();
+		try {parseJson = (JSONArray) parser.parse(responseList.toString());}
+		catch (ParseException e) {e.printStackTrace();}
+
+		return parseJson;
+	}
+	
 
 	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
 	@SuppressWarnings("rawtypes")

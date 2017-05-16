@@ -32,6 +32,7 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 	public static String GET_HEADID_BY_ROWID 											= FINDER_CLASS_NAME_ENTITY + ".getHeadIdByRowId";
 	public static String GET_MAX_ID 													= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
 	public static String GET_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT			= FINDER_CLASS_NAME_ENTITY + ".getOppositeCellContentsOfRelationsByCellContent";
+	public static String GET_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT_AND_COLUMN= FINDER_CLASS_NAME_ENTITY + ".getOppositeCellContentsOfRelationsByCellContentAndColumn";
 	public static String GET_ROW_INFORMATION_BY_CONTENTID								= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByContentId";
 	public static String GET_ROW_INFORMATION_BY_ROWID									= FINDER_CLASS_NAME_ENTITY + ".getRowInformationByRowId";
 	public static String GET_ROWID_BY_CELLCONTENT 										= FINDER_CLASS_NAME_ENTITY + ".getRowIdByCellContent";
@@ -482,7 +483,39 @@ public class ContentFinderImpl  extends BasePersistenceImpl<Content> implements 
 		return null;
 	}
 	
+	
+	//get List of content IDs, with content of relationship tables
+	@SuppressWarnings("rawtypes")
+	public  List getOppositeCellContentsOfRelationsByCellContentAndColumn(long headId, long columnId, String cellcontent) {
+		
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_OPPOSITE_CELLCONTENT_OF_RELATIONS_BY_CELLCONTENT_AND_COLUMN);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("cellcontent", Type.STRING);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(headId);
+			qPos.add(columnId);
+			qPos.add(cellcontent);
+			qPos.add(headId);
+			qPos.add(columnId);
+			qPos.add(cellcontent);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
 
+	
 	//get all IDs of rows of a specific table
 	@SuppressWarnings("rawtypes")
 	public  List getRowIds(long headId) {

@@ -3,6 +3,7 @@ package org.gfbio.helper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 
@@ -14,6 +15,10 @@ import org.json.simple.parser.ParseException;
 public class Helper {
 
 	static String FILEPATH = "..\\..\\..\\server_specific_identification\\serverfile.txt";
+	
+	
+	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
+	
 	
     //
     public static String getServerInformation(String path, String key) throws IOException, PortletException {
@@ -61,6 +66,23 @@ public class Helper {
     
     
 	//
+	public static long getIntFromJson(JSONObject requestJson, String key){
+		
+		int responseInt = 0;
+		if ((((requestJson.get(key)).getClass()).toString()).equals("class java.lang.Integer"))
+			responseInt = (int)requestJson.get(key);
+		else
+			if ((((requestJson.get(key)).getClass()).toString()).equals("class java.lang.Long"))
+				responseInt = (int)(long)requestJson.get(key);
+			else 
+				if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String"))
+					responseInt = Integer.valueOf((String) requestJson.get(key)).intValue();
+		
+		return responseInt;
+	}
+	
+    
+	//
 	public static long getLongFromJson(JSONObject requestJson, String key){
 		
 		long responseLong = 0;
@@ -91,5 +113,29 @@ public class Helper {
 					responseString = ((JSONArray) requestJson.get(key)).toString();
 
 		return responseString;
+	}
+	
+	
+	
+	///////////////////////////////////// Helper Functions ///////////////////////////////////////////////////
+	
+	
+	//
+	public static String checkForIgnoredParameter (Object[] objects, Set<String> keyList){
+
+		String ignoredParameter = "WARNING:";
+		Boolean check = false;
+		
+		for (int i =0; i < objects.length;i++)
+			if (!keyList.contains((objects[i]))){
+				ignoredParameter = ignoredParameter.concat(" ").concat(objects[i].toString()).concat(",");
+				check = true;
+			}
+		if (check == true)
+			ignoredParameter = ignoredParameter.substring(0, ignoredParameter.length()-1).concat(" are not parameters of this method.");
+		else
+			ignoredParameter ="";
+		
+		return ignoredParameter;
 	}
 }
