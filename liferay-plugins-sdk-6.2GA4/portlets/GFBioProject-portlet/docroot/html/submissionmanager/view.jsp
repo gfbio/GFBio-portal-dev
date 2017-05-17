@@ -64,6 +64,7 @@
 							e.printStackTrace();
 						}
 					%>
+					<%=ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(PortalUtil.getUserId(request)) %>
 					<div id="suma_left_top">
 						<div>
 							<div style="float:left; width:35%" onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_chooseProject.svg')"   onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">
