@@ -130,6 +130,63 @@ function checkMinimalInput(){
 }
 
 
+function checkInputLength(){
+	
+	check = true;
+	failList = [];
+	failListLength =0;
+	
+	console.log(check);
+	
+	if ((document.getElementById("gwf_ro_name").value).length > 75){
+		check = false;
+		failList.push(" title");
+		document.getElementById("gwf_ro_name_l").className="labelFalse";
+		document.getElementById("gwf_ro_name_d").className="labelFalse";
+	    document.getElementById("gwf_ro_name").className="inputTextContainerFalse";
+	}else{
+		document.getElementById("gwf_ro_name_l").className="control-label";
+		document.getElementById("gwf_ro_name_d").className="field-description";
+		document.getElementById("gwf_ro_name").className="field lfr-input-text-container";
+	}
+	
+	
+	if ((document.getElementById("gwf_ro_dct").value).length > 75){
+		check = false;
+		failList.push(" data collection time");
+		document.getElementById("gwf_ro_dct_l").className="labelFalse";
+		document.getElementById("gwf_ro_dct_d").className="labelFalse";
+	    document.getElementById("gwf_ro_dct").className="inputTextContainerFalse";
+	}else{
+		document.getElementById("gwf_ro_dct_l").className="control-label";
+		document.getElementById("gwf_ro_dct_d").className="field-description";
+		document.getElementById("gwf_ro_dct").className="field lfr-input-text-container";
+	}
+	
+	
+	if ((document.getElementById("gwf_ro_label").value).length > 75){
+		check = false;
+		failList.push(" dataset label");
+		document.getElementById("gwf_ro_label_l").className="labelFalse";
+		document.getElementById("gwf_ro_label_d").className="labelFalse";
+	    document.getElementById("gwf_ro_label").className="inputTextContainerFalse";
+	}else{
+		document.getElementById("gwf_ro_label_l").className="control-label";
+		document.getElementById("gwf_ro_label_d").className="field-description";
+		document.getElementById("gwf_ro_label").className="field lfr-input-text-container";
+	}
+
+	console.log(check);
+	
+	if (!check)
+		buildErrorMessage('gwf_lf_comentarField',"Please reduce the length of"+failList +" under 75 characters." );
+	else
+		buildWaitringMessage('gwf_lf_comentarField');
+	
+	return check;
+}
+
+
 //
 function checkMinimalResearchObjectInput(){
 
@@ -149,7 +206,8 @@ function checkMinimalResearchObjectInput(){
 	}
 	
 	//description
-	if (document.getElementById("gwf_ro_description").value==""){
+	var description = document.getElementById("gwf_ro_description").value;
+	if (description=="" || description.length > 2000){
 		check = false;
 		document.getElementById("gwf_ro_description_l").className="labelFalse";
 		document.getElementById("gwf_ro_description_d").className="labelFalse";
@@ -184,6 +242,18 @@ function checkMinimalResearchObjectInput(){
 		document.getElementById("gwf_ro_license_l").className="control-label";
 		document.getElementById("gwf_ro_license_d").className="field-description";
 		document.getElementById("gwf_ro_licenselabel").style='width:100%';
+	}
+	
+	
+	if ((document.getElementById("gwf_ro_publications").value).length > 500){
+		check = false;
+		document.getElementById("gwf_ro_publications_l").className="labelFalse";
+		document.getElementById("gwf_ro_publications_d").className="labelFalse";
+	    document.getElementById("gwf_ro_publications").className="inputTextContainerFalse";
+	}else{
+		document.getElementById("gwf_ro_publications_l").className="control-label";
+		document.getElementById("gwf_ro_publications_d").className="field-description";
+		document.getElementById("gwf_ro_publications").className="field lfr-input-text-container";
 	}
 	
 	
@@ -296,31 +366,40 @@ function saveResearchObjectInput(projectJson){
 //
 function submitInput(url){
 	
-	if (checkInput()){
+	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 		
-		//create research object /project
-		var mrrJson = saveAllInput();
-		
-		//create primary data
-		if(document.getElementById("gwf_lf_comentarField").className != 'portlet-msg-error')
-			if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
-				fileUplaod();
-		
-		//create submission registry
-		if(document.getElementById("gwf_lf_comentarField").className != 'portlet-msg-error')
-			startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
-		
-		//sent to JIRA
-		if(document.getElementById("gwf_lf_comentarField").className != 'portlet-msg-error'){
-			var data ={};
-			data["mrr"]= mrrJson;
-			startSubmission(data);
+		if (checkInput()){
+			
+			if (checkInputLength()){
+			
+				//create research object /project
+				var mrrJson = saveAllInput();
+				
+				//create primary data
+				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
+						fileUplaod();
+				
+					//create submission registry
+					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+						startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
+					
+						//sent to JIRA
+						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+							var data ={};
+							data["mrr"]= mrrJson;
+							startSubmission(data);
+							
+							//sent to Broker
+							//data["submissionregistry"]= registryJson;
+							//sentToBroker(data);
+						}
+					}
+				}
+			}
 		}
-		
-		//sent to Broker
-		//data["submissionregistry"]= registryJson;
-		//sentToBroker(data);
-	}
+	}else
+		console.log("submit no");
 }
 
 

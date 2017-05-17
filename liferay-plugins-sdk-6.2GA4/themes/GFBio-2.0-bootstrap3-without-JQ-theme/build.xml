@@ -5,4 +5,5 @@
 	<property name="theme.parent" value="../GFBio-2.0-bootstrap3-theme" />
 
 	<import file="../build-common-theme.xml" />
+	<property name="theme.type" value="vm" />
 </project>

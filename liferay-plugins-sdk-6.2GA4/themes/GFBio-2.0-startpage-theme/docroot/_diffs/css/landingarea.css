@@ -794,10 +794,10 @@ h3.landing-area {
     transition: all 0.2s ease 0s;
 }
 
-.social-button li a:hover {
+ .social-button li a:hover {
      color: rgba(60, 172, 228, 1.0);
     border: 2px solid rgba(60, 172, 228, 1.0);
-}
+} 
 
 
 /*================================================================

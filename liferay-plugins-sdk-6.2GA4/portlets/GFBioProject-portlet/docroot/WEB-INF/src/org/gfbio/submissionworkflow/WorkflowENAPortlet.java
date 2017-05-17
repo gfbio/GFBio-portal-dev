@@ -1,7 +1,5 @@
 package org.gfbio.submissionworkflow;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 
@@ -10,13 +8,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-
-
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,39 +42,5 @@ public class WorkflowENAPortlet extends GenericPortlet {
             portletRequestDispatcher.include(renderRequest, renderResponse);
     }
     
-
-    //
-    public static String getServerToken(String path, String server) throws IOException, PortletException {
-    	
-		String token ="";
-		JSONParser parser = new JSONParser();	
-		File file = new File(path.trim() +"..\\..\\..\\server_specific_identification\\token.txt");
-		FileInputStream fis = null;
-		
-		try {
-			fis = new FileInputStream(file);
-			int content;
-			String preJson ="";
-			
-			while ((content = fis.read()) != -1)
-				preJson = preJson+(char) content;
-			
-			JSONObject fileJson = new JSONObject();
-			try {fileJson = (JSONObject) parser.parse(preJson);}
-			catch (ParseException e) {e.printStackTrace();}
-			
-			if (fileJson.containsKey(server))
-				token = (String) fileJson.get(server);
-			else
-				token = "ERROR: You sent a wrong server type.";
-	
-		} catch (IOException e) {e.printStackTrace();}
-		finally {
-			try {if (fis != null)fis.close();} 
-			catch (IOException ex) {ex.printStackTrace();}
-		}
-		
-		return token;
-	}
 
 }
