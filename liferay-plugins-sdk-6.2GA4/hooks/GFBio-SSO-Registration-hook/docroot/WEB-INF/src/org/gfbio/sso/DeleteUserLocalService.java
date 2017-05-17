@@ -8,6 +8,8 @@ import javax.naming.Context;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -36,9 +38,8 @@ public class DeleteUserLocalService extends UserLocalServiceWrapper {
 	}
 
 	@Override
-	public com.liferay.portal.model.User deleteUser(long userId)
-			throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public User deleteUser(long userId)
+			throws PortalException,SystemException {
 		try {
 			User user = getUserById(userId);
 			String cn = user.getScreenName();
