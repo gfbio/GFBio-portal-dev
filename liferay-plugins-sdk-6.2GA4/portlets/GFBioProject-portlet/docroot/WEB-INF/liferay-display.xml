@@ -18,5 +18,6 @@
 		<portlet id="workflow-environmental"></portlet>
 		<portlet id="workflow-generic"></portlet>
 		<portlet id="table-builder-table-menu"></portlet>
+		<portlet id="submissions"></portlet>
 	</category>
 </display>
