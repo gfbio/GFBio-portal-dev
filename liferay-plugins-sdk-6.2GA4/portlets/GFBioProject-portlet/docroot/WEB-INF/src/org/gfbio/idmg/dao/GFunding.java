@@ -2,7 +2,7 @@ package org.gfbio.idmg.dao;
 
 import org.json.simple.JSONObject;
 
-public class GFunding {
+public class GFunding implements Comparable<GFunding> {
 
 	long id;
 	String name;
@@ -26,6 +26,8 @@ public class GFunding {
         }
 	}
 
+	public GFunding() {}
+	
 	public long getId() {
 		return id;
 	}
@@ -58,6 +60,15 @@ public class GFunding {
 		this.fundingId = fundingId;
 	}
 
+	@Override
+	public int compareTo(GFunding o) {
+		int i = this.label.compareTo(o.getLabel());
+		if (this.label.equalsIgnoreCase("other")) {
+			i = 1;
+		}
+		return i;
+	}
+	
 	@Override
 	public String toString() {
 		return "GFunding [id=" + id + ", name=" + name + ", label=" + label + ", fundingId=" + fundingId + "]";

@@ -28,16 +28,16 @@ public class DMPTPortlet extends MVCPortlet {
 			throws PortletException, IOException {
 	
 		//Setting categories for dropdowns
-		List<GCategory> researchfields = ContentUtil.getCategoryList("research field");
-		//List<GMetadata> metadata = ContentUtil.getMetadataList();
-		//List<GLicense> licenses = ContentUtil.getLicenseList();
+		List<GCategory> researchfields = ContentUtil.getCategoryListByType("research field");
+		List<GMetadata> metadata = ContentUtil.getListByTableName(GMetadata.class, "gfbio_metadata");
+		List<GLicense> licenses = ContentUtil.getListByTableName(GLicense.class, "gfbio_license");
 		//List<GFunding> fundings = ContentUtil.getFundingList();
 		//List<GCategory> materials = getCategoryList("material kind");
 
 		renderRequest.setAttribute("researchfields", researchfields);
-		//renderRequest.setAttribute("licenses", licenses);
+		renderRequest.setAttribute("metadata", metadata);
+		renderRequest.setAttribute("licenses", licenses);
 		//renderRequest.setAttribute("fundings", fundings);
-		//renderRequest.setAttribute("metadata", metadata);
 		//renderRequest.setAttribute("materials", materials);
 		
 		//Setting email and username if user is logged in

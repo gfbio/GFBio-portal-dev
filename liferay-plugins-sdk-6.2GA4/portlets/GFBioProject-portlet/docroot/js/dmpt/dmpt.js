@@ -202,3 +202,47 @@ function showNumberOfDatasets(event) {
     }
     document.getElementById("datasets").innerHTML = answer;
 }
+
+function handlePhysical(event) {
+	'use strict';
+	
+	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
+        $("#alive").removeClass("disabledDiv");
+        $("#sequenced").addClass("disabledDiv");
+        resetInput("#sequenced");
+    } else {
+        $("#sequenced").removeClass("disabledDiv");
+        $("#alive").addClass("disabledDiv");
+        resetInput("#alive");
+        $("#taxon").addClass("disabledDiv");
+        resetInput("#taxon");
+    }
+}
+
+function handleAlive(event) {
+	'use strict';
+	
+	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
+        $("#taxon").removeClass("disabledDiv");
+    } else {
+    	$("#taxon").addClass("disabledDiv");
+    	resetInput("#taxon");
+    }
+}
+
+function hide(j) {
+    'use strict';
+    
+	$(j).hide();
+	$('[name="' + j + '"]').each(function () {
+        this.checked = false;
+    });
+}
+
+function resetInput(j) {
+	'use strict';
+	
+	$('[name="' + j + '"]').each(function () {
+		this.checked = false;
+	});
+}

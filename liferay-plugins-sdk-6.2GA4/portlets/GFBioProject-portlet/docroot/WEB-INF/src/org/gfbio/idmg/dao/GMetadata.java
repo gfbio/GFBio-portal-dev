@@ -2,7 +2,7 @@ package org.gfbio.idmg.dao;
 
 import org.json.simple.JSONObject;
 
-public class GMetadata {
+public class GMetadata implements Comparable<GMetadata> {
 
 	long id;
 	String name;
@@ -81,6 +81,15 @@ public class GMetadata {
 		this.schema = schema;
 	}
 
+	@Override
+	public int compareTo(GMetadata o) {
+		int i = this.label.compareTo(o.getLabel());
+		if (this.label.equalsIgnoreCase("other")) {
+			i = 1;
+		}
+		return i;
+	}
+	
 	@Override
 	public String toString() {
 		return "Metadata [id=" + id + ", name=" + name + ", label=" + label + ", description=" + description

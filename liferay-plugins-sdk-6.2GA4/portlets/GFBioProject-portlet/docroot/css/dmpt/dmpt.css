@@ -120,3 +120,8 @@ h4 {
 	font-size: 12px !important;
 	background: white !important;
 }
+
+.disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+}
