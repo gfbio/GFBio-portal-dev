@@ -32,13 +32,11 @@ public class DMPTPortlet extends MVCPortlet {
 		List<GMetadata> metadata = ContentUtil.getListByTableName(GMetadata.class, "gfbio_metadata");
 		List<GLicense> licenses = ContentUtil.getListByTableName(GLicense.class, "gfbio_license");
 		//List<GFunding> fundings = ContentUtil.getFundingList();
-		//List<GCategory> materials = getCategoryList("material kind");
 
 		renderRequest.setAttribute("researchfields", researchfields);
 		renderRequest.setAttribute("metadata", metadata);
 		renderRequest.setAttribute("licenses", licenses);
 		//renderRequest.setAttribute("fundings", fundings);
-		//renderRequest.setAttribute("materials", materials);
 		
 		//Setting email and username if user is logged in
 		String username = "";

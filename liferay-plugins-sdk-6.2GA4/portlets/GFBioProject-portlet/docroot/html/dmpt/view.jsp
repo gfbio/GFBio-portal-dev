@@ -173,12 +173,15 @@
                 $("#datasetSlider").on("input change", showNumberOfDatasets);
                 
                 //Documentation and Metadata
-                $("#metadata-other").click(handleMetadataOther);
+                $("#metadata-other").on("click", handleMetadataOther);
                 $("#metadataDesc").hide();
                 
                 //Ethics and Legal Compliance
-                $("#sensitive").click(handleSensitive);
+                $("#sensitive").on("click", handleSensitive);
                 $("#sensitiveOther").hide();
+
+                $("#licenses").on("click", handleLicenses);
+                $("#licenseOther").hide();
                 
                 $("input[name='restriction']").on("change", handleRestriction);
                 $("#accessYes").hide();

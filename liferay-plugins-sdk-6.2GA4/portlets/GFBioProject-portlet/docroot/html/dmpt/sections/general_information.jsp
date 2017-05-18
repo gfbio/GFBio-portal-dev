@@ -32,11 +32,11 @@
 			</a>
       	</h4>
       	<div id="nature">
-      		<div class="col-xs-6 col-sm-3">
+      		<div class="col-xs-12 col-sm-6 col-md-4">
             	<input name="nature" type="radio" value="snapshot" />
             	<label>Onetime observation</label>
      		</div>
-      		<div class="col-xs-6 col-sm-3">
+      		<div class="col-xs-12 col-sm-6 col-md-4">
 		        <input name="nature" type="radio" value="reapeatable" />
 		        <label>Repeatable experiments</label>
           	</div>
