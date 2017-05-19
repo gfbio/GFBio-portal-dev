@@ -7,11 +7,11 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.gfbio.idmg.dao.GCategory;
-import org.gfbio.idmg.dao.GFunding;
-import org.gfbio.idmg.dao.GLicense;
-import org.gfbio.idmg.dao.GMetadata;
 import org.gfbio.idmg.dcrt.DCRTPortlet;
+import org.gfbio.idmg.dto.GCategory;
+import org.gfbio.idmg.dto.GFunding;
+import org.gfbio.idmg.dto.GLicense;
+import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.idmg.util.ContentUtil;
 
 import com.liferay.portal.kernel.log.Log;

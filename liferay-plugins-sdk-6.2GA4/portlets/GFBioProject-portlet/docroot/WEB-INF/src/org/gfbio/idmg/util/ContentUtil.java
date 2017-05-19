@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
-import org.gfbio.idmg.dao.GCategory;
-import org.gfbio.idmg.dao.GFunding;
-import org.gfbio.idmg.dao.GLicense;
-import org.gfbio.idmg.dao.GMetadata;
+import org.gfbio.idmg.dto.GCategory;
+import org.gfbio.idmg.dto.GFunding;
+import org.gfbio.idmg.dto.GLicense;
+import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.model.DataProvider;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;

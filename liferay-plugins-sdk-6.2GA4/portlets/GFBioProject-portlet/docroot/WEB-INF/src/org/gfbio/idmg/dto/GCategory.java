@@ -1,4 +1,4 @@
-package org.gfbio.idmg.dao;
+package org.gfbio.idmg.dto;
 
 import org.json.simple.JSONObject;
 
