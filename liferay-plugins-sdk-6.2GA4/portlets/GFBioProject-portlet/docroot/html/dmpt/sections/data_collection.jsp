@@ -4,9 +4,9 @@
 	<div name="title" class="hidden-md hidden-lg">
 		<h2>2. Data Collection</h2>
 	</div>
-    <div class="row">
+    <div id="physical" class="row">
        	<h4>Do you want to submit physical objects along with your data?</h4> 
-       	<div id="physical" class="col-md-12">
+       	<div class="col-md-12">
 			<div style="display: block;">
 				<input name="physical" type="radio" value="true" />
 				<label>Yes</label>
@@ -17,9 +17,9 @@
 			</div>
 		</div>
     </div>
-    <div class="row">
+    <div id="alive" class="row">
        	<h4>Is your object dead or alive?</h4> 
-       	<div id="alive" class="col-md-12">
+       	<div class="col-md-12">
 			<div style="display: block;">
 				<input name="alive" type="radio" value="true" /> 
 				<label>Alive</label>
@@ -31,9 +31,9 @@
 		</div>
 		
     </div>
-    <div class="row">
+    <div id="taxon" class="row">
        	<h4>Is your object taxon-based?</h4> 
-       	<div id="taxon" class="col-md-12">
+       	<div class="col-md-12">
 			<div style="display: block;">
 				<input name="taxon" type="radio" value="true" /> 
 				<label>Yes</label>
@@ -45,9 +45,9 @@
 		</div>
 		
     </div>
-    <div class="row">
+    <div id="sequenced" class="row">
        	<h4>Do you have mainly sequence data?</h4> 
-       	<div id="sequenced" class="col-md-12">
+       	<div class="col-md-12">
 			<div style="display: block;">
 				<input name="sequenced" type="radio" value="true" /> 
 				<label>Yes</label>

@@ -154,6 +154,17 @@
                 $("#policyOther").hide();
                 $("#policyLink").hide();
 
+                //Data Collection DCRT
+                $("#alive").addClass("disabledDiv");
+                $("#taxon").addClass("disabledDiv");
+                $("#sequenced").addClass("disabledDiv");
+                
+                $("input[value='true'][name='physical']").on("click", handlePhysical);
+                $("input[value='false'][name='physical']").on("click", handlePhysical);
+
+                $("input[value='true'][name='alive']").on("click", handleAlive);
+                $("input[value='false'][name='alive']").on("click", handleAlive);
+                
                 //Data Collection
                 $("#dataformat-cb").on("click", checkboxDataformat);
                 $("#dataformatOther").hide();
@@ -162,12 +173,15 @@
                 $("#datasetSlider").on("input change", showNumberOfDatasets);
                 
                 //Documentation and Metadata
-                $("#metadataOther").click(handleMetadataOther);
+                $("#metadata-other").on("click", handleMetadataOther);
                 $("#metadataDesc").hide();
                 
                 //Ethics and Legal Compliance
-                $("#sensitive").click(handleSensitive);
+                $("#sensitive").on("click", handleSensitive);
                 $("#sensitiveOther").hide();
+
+                $("#licenses").on("click", handleLicenses);
+                $("#licenseOther").hide();
                 
                 $("input[name='restriction']").on("change", handleRestriction);
                 $("#accessYes").hide();
