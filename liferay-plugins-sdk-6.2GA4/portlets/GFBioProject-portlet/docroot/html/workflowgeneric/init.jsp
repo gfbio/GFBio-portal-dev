@@ -136,7 +136,7 @@
 				"<div 			class='control-group'>"+
 					"<label		class='control-label' 					id='gwf_ro_description_l'> Description<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract). <br/>Please note: Only 2000 characters are permitted.</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+fieldCheckList[1]+"\')\" maxlength='2000'></textarea>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+fieldCheckList[1]+"\')\" ></textarea>"+ //maxlength='2000'
 				"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+

@@ -134,12 +134,26 @@ function handleSensitive(event) {
 	
 	var selection = $(event.target).val(),
 		other = $("#sensitiveOther");
-	if ($.inArray("other", selection) !== -1) {
+	if (selection === "other") {
 		other.show("slow");
 	} else {
 		other.hide();
 		other.val("");
 	}
+}
+
+function handleLicenses(event) {
+	'use strict';
+	
+	var selection = $(event.target).val(),
+    other = $("#licenseOther");
+	if (selection === "other") {
+		other.show("slow");
+	} else {
+	    other.hide();
+	    other.val("");
+	}
+	
 }
 
 function handleRestriction(event) {

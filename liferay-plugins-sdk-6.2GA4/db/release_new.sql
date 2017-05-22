@@ -471,3 +471,9 @@ WHERE
 
 --SELECT insertHCCRelationshipWithOutsideOfHCCSecoundColumn('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Botany' ,  (SELECT  CAST( (SELECT getDataProviderIdByLabel( 'BGBM' )) AS text)) );
 --SELECT insertHCCRelationshipWithOutsideOfHCCSecoundColumn('gfbio_category_dataprovider' , 'gfbio_category' , 'gfbio_dataprovider' ,  'label' ,  'Palaeontology' ,  (SELECT  CAST( (SELECT getDataProviderIdByLabel( 'PANGAEA' )) AS text)) );
+
+-----------------------------------------------------------------------------------------------
+-------------------------------------       primary data        -- 18.05.2017 ---------------------
+-----------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_primarydata ALTER COLUMN path TYPE character(250);

@@ -16,7 +16,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.gfbio.idmg.dao.GCategory;
+import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.jiraclient.JIRAApi;
 import org.gfbio.idmg.jiraclient.connection.Communicator;
 import org.gfbio.idmg.jiraclient.model.Assignee;

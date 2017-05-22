@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <h2>Ethics and Legal Compliance</h2>
 <section>
@@ -14,6 +15,15 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 			</a>
 	    </h4>
 	    <div id="sensitiveData" class="col-md-12">
+	    
+	    	<!-- <div class="col-md-12">
+				<c:forEach var="legal" items="${sensitiveData}">
+					<div>
+						<input id="legal-${legal.label}" name="${legal.label}" type="checkbox" /> 
+						<label><c:out value="${legal.name}" /></label>
+					</div>
+				</c:forEach>
+			</div> -->
 	       	<select id="sensitive" name="sensitive" multiple="multiple" size="6">
 	           <option value="individual" >Nagoya Protocol</option>
 	           <option value="coordinated" >Red List</option>
@@ -35,8 +45,22 @@ Thus, we support  the idea of  open access to data. Attaching a  corresponding l
 Open access does not mean everyone can use your data at his leisure. Data can be cited as well as publications can be. Licenses define citation demands as well as  further terms of use, e.g. if the data may be remixed or transformed.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
-    	    	
     	</h4>
+    	<div class="col-md-12">
+	       	<select id="licenses" name="licenses" multiple="multiple" size="8">
+	           <c:forEach var="license" items="${licenses}">
+					<option value="<c:out value="${license.label}"/>"
+							title="<c:out value="${license.name}"/>">
+							<c:out value="${license.label}" />
+					</option>
+				</c:forEach>
+	       	</select>
+	       	<div>
+				<input id="licenseOther" name="licenseOther" type="text" class="inputtext_long" 
+	        	placeholder="Other license"/>
+	       </div>
+	   	</div>
+    	
     </div>
 	<div class="row">
         <h4>Do you need access restriction for your data?</h4>
@@ -54,11 +78,9 @@ Open access does not mean everyone can use your data at his leisure. Data can be
         </div>
         <div id="accessYes" class="col-md-12">
         	<label>For how long do you need exclusive use of the data?</label>
-        	<input id="accessHowLong" name="accessHowLong" type="text" class="inputtext_long" 
-        	placeholder="Other sensitive data"/>
+        	<input id="accessHowLong" name="accessHowLong" type="text" class="inputtext_long" />
         	<label>Why do you need exclusive use of the data?</label>
-        	<input id="accessWhy" name="accessWhy" type="text" class="inputtext_long" 
-        	placeholder="Other sensitive data"/>
+        	<input id="accessWhy" name="accessWhy" type="text" class="inputtext_long" />
        	</div>
     </div>
 </section>

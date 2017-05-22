@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
-import org.gfbio.idmg.dao.GCategory;
-import org.gfbio.idmg.dao.GFunding;
-import org.gfbio.idmg.dao.GLicense;
-import org.gfbio.idmg.dao.GMetadata;
+import org.gfbio.idmg.dto.GCategory;
+import org.gfbio.idmg.dto.GFunding;
+import org.gfbio.idmg.dto.GLicense;
+import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.model.DataProvider;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
@@ -61,13 +61,13 @@ public class ContentUtil {
 		return categories;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static <T extends Comparable<T>> List<T> getListByTableName (Class<T> cl, String tableName) {
 		
 		List<T> list = new ArrayList<T>();
 		try {
 			long entitiyTableHeadId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
 			
+			@SuppressWarnings("unchecked")
 			List<Long> rowIds = ContentLocalServiceUtil.getRowIds(entitiyTableHeadId);
 			
 			for (long i : rowIds) {
@@ -77,17 +77,17 @@ public class ContentUtil {
 				if(inst instanceof GMetadata)
 		        {
 					GMetadata md = new GMetadata(json);
-					list.add((T) md);
+					list.add(cl.cast(md));
 		        }
 		        else if(inst instanceof GLicense)
 		        {
 		        	GLicense license = new GLicense(json);
-		        	list.add((T) license);
+		        	list.add(cl.cast(license));
 		        }
 		        else if(inst instanceof GFunding)
 		        {
 		        	GFunding funding = new GFunding(json);
-		        	list.add((T) funding);
+		        	list.add(cl.cast(funding));
 		        }
 				
 			}

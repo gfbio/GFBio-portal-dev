@@ -7,11 +7,11 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.gfbio.idmg.dao.GCategory;
-import org.gfbio.idmg.dao.GFunding;
-import org.gfbio.idmg.dao.GLicense;
-import org.gfbio.idmg.dao.GMetadata;
 import org.gfbio.idmg.dcrt.DCRTPortlet;
+import org.gfbio.idmg.dto.GCategory;
+import org.gfbio.idmg.dto.GFunding;
+import org.gfbio.idmg.dto.GLicense;
+import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.idmg.util.ContentUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -32,13 +32,11 @@ public class DMPTPortlet extends MVCPortlet {
 		List<GMetadata> metadata = ContentUtil.getListByTableName(GMetadata.class, "gfbio_metadata");
 		List<GLicense> licenses = ContentUtil.getListByTableName(GLicense.class, "gfbio_license");
 		//List<GFunding> fundings = ContentUtil.getFundingList();
-		//List<GCategory> materials = getCategoryList("material kind");
 
 		renderRequest.setAttribute("researchfields", researchfields);
 		renderRequest.setAttribute("metadata", metadata);
 		renderRequest.setAttribute("licenses", licenses);
 		//renderRequest.setAttribute("fundings", fundings);
-		//renderRequest.setAttribute("materials", materials);
 		
 		//Setting email and username if user is logged in
 		String username = "";
