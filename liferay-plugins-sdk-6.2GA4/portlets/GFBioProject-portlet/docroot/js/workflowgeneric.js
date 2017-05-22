@@ -207,7 +207,7 @@ function checkMinimalResearchObjectInput(){
 	
 	//description
 	var description = document.getElementById("gwf_ro_description").value;
-	if (description=="" || description.length > 2000){
+	if (description=="" ){//})|| description.length > 2000){
 		check = false;
 		document.getElementById("gwf_ro_description_l").className="labelFalse";
 		document.getElementById("gwf_ro_description_d").className="labelFalse";
