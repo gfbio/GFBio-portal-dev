@@ -1518,7 +1518,9 @@ function getMultiValueField(jObj, id){
 		}
 	}
 	else{
-		return jObj[id];
+		if (jObj[id] != null)
+			return jObj[id];
+		else return "";
 		// return the object as it is
 	}
 	return "";
@@ -1624,8 +1626,11 @@ function semanticQuery(clearBasket) {
 	// autocomplete from the textbox doesn't automatically closed
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
-	getTSterms(keyword, filter, "");
-
+	if (keyword != ""){
+		getTSterms(keyword, filter, "");
+	}else{
+		showLatestTenDataset("","");
+	}
 	// clear visualBasket if the clearBasket flag is true
 	var visualBasket = document.getElementById("visualBasket");
 	if (clearBasket)
@@ -1785,9 +1790,10 @@ function isArrayNotContainKey(array, text){
 }
 
 function getSemanticSearchResult(keywordArr, filter, yearRange) {
-	// every submitted query must be sent to TS gadget too
-	if (gadgets.Hub.isConnected() && (keywordArr != "")) {
-		gadgets.Hub.publish('gfbio.search.ts', keywordArr);
+
+	// The first term must be sent to TS gadget too
+	if (gadgets.Hub.isConnected() && (keywordArr.length >0)) {
+		gadgets.Hub.publish('gfbio.search.ts', keywordArr[0]);
 	}
 	// create a result table as a placeholder
 	writeResultTable();
@@ -1947,6 +1953,7 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 			var minYear = yearRange.substring(0, splitPos);
 			var maxYear = yearRange.substring(splitPos + 3);
 			//console.log(minYear + "-" + maxYear);
+			if (filterArray.length > 0 ){
 			filterObj = [filterArray, 
 				{	"range": {
 						"citation_yearFacet": {
@@ -1955,7 +1962,17 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 						}
 					}
 				}
-			]
+			]}
+			else{
+			filterObj = [
+				{	"range": {
+						"citation_yearFacet": {
+							"gte": minYear,
+							"lte": maxYear
+						}
+					}
+				}
+			]}
 		}else{
 			filterObj = filterArray;
 		}
@@ -1969,7 +1986,6 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 				"filter": filterObj
 			}
 		}
-	} 
 	return queryObj;
 }
 if (!String.prototype.startsWith) {
