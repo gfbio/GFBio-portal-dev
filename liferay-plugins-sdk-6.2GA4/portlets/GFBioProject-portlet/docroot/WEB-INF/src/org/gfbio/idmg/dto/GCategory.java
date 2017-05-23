@@ -1,8 +1,8 @@
-package org.gfbio.idmg.dao;
+package org.gfbio.idmg.dto;
 
 import org.json.simple.JSONObject;
 
-public class GCategory {
+public class GCategory implements Comparable<GCategory> {
 
 	long id;
 	String name;
@@ -49,9 +49,18 @@ public class GCategory {
 	}
 
 	@Override
+	public int compareTo(GCategory o) {
+		int i = this.label.compareTo(o.getLabel());
+		if (this.name.equalsIgnoreCase("other")) {
+			i = 1;
+		}
+		return i;
+	}
+	
+	@Override
 	public String toString() {
 		return "GCategory [id=" + id + ", name=" + name + ", label=" + label
 				+ "]";
 	}
-	
+
 }

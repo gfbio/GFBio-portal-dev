@@ -167,8 +167,8 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 	private  JSONObject constructPrimaryDataJsonById (PrimaryData primaryData) throws NoSuchUserException, SystemException {
 		JSONObject json = new JSONObject();
 		json.put("primarydataid", primaryData.getPrimaryDataID());
-		json.put("name", primaryData.getName());
-		json.put("path", primaryData.getPath());
+		json.put("name", (primaryData.getName()).trim());
+		json.put("path", (primaryData.getPath()).trim());
 		json.put("lastmodifieddate", primaryData.getLastModifiedDate());
 		return json;
 	}

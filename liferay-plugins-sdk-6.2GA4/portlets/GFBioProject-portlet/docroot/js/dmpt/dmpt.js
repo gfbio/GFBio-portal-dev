@@ -134,12 +134,26 @@ function handleSensitive(event) {
 	
 	var selection = $(event.target).val(),
 		other = $("#sensitiveOther");
-	if ($.inArray("other", selection) !== -1) {
+	if (selection === "other") {
 		other.show("slow");
 	} else {
 		other.hide();
 		other.val("");
 	}
+}
+
+function handleLicenses(event) {
+	'use strict';
+	
+	var selection = $(event.target).val(),
+    other = $("#licenseOther");
+	if (selection === "other") {
+		other.show("slow");
+	} else {
+	    other.hide();
+	    other.val("");
+	}
+	
 }
 
 function handleRestriction(event) {
@@ -201,4 +215,48 @@ function showNumberOfDatasets(event) {
         answer = "&gt; 1000";
     }
     document.getElementById("datasets").innerHTML = answer;
+}
+
+function handlePhysical(event) {
+	'use strict';
+	
+	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
+        $("#alive").removeClass("disabledDiv");
+        $("#sequenced").addClass("disabledDiv");
+        resetInput("#sequenced");
+    } else {
+        $("#sequenced").removeClass("disabledDiv");
+        $("#alive").addClass("disabledDiv");
+        resetInput("#alive");
+        $("#taxon").addClass("disabledDiv");
+        resetInput("#taxon");
+    }
+}
+
+function handleAlive(event) {
+	'use strict';
+	
+	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
+        $("#taxon").removeClass("disabledDiv");
+    } else {
+    	$("#taxon").addClass("disabledDiv");
+    	resetInput("#taxon");
+    }
+}
+
+function hide(j) {
+    'use strict';
+    
+	$(j).hide();
+	$('[name="' + j + '"]').each(function () {
+        this.checked = false;
+    });
+}
+
+function resetInput(j) {
+	'use strict';
+	
+	$('[name="' + j + '"]').each(function () {
+		this.checked = false;
+	});
 }

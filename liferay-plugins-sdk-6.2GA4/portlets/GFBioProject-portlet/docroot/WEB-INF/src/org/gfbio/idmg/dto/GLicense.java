@@ -1,8 +1,8 @@
-package org.gfbio.idmg.dao;
+package org.gfbio.idmg.dto;
 
 import org.json.simple.JSONObject;
 
-public class GLicense {
+public class GLicense implements Comparable<GLicense> {
 	
 	long id;
 	String name;
@@ -31,6 +31,8 @@ public class GLicense {
             this.version = (String) licenseJson.get("version");
         }
 	}
+	
+	public GLicense() {}
 
 	public long getId() {
 		return id;
@@ -80,6 +82,15 @@ public class GLicense {
 		this.version = version;
 	}
 
+	@Override
+	public int compareTo(GLicense o) {
+		int i = this.label.compareTo(o.getLabel());
+		if (this.label.equalsIgnoreCase("other")) {
+			i = 1;
+		}
+		return i;
+	}
+	
 	@Override
 	public String toString() {
 		return "GLicense [id=" + id + ", name=" + name + ", label=" + label + ", description=" + description

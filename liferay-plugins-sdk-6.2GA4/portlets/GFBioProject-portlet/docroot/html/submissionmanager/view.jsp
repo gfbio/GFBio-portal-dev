@@ -32,6 +32,26 @@
 				Please sign in to use more options.
 			</div>
 		<%} %>
+		
+		<%JSONArray  ResearchObjects = new JSONArray();
+	      ResearchObjects = null;
+	      //try {
+			long userId = PortalUtil.getUserId(request)  ;
+	       	ResearchObjects=ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(userId);
+	       
+	       	/*}
+	            catch (NoSuchModelException e) { e.printStackTrace(); }
+	       catch (SystemException e) {  e.printStackTrace(); } */
+	      %>
+	      <%if (ResearchObjects.size()>0){for (int i = 0; i < ResearchObjects.size(); i++) { 
+	      	JSONObject responseJson = (JSONObject) ResearchObjects.get(i);
+	      %>
+	      <tr><td><%=responseJson.get("researchobjectname") %></td>
+	      <td><%= ((JSONObject )ResearchObjects.get(i)).get("researchobjectversion")%></td> </tr>
+		
+		<%}}%>
+		
+		
 		<div class="row">
 			<div id="suma_left">
 				<%if (PortalUtil.getUser(request)==null){ %>
@@ -64,6 +84,7 @@
 							e.printStackTrace();
 						}
 					%>
+					<%=ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(PortalUtil.getUserId(request)) %>
 					<div id="suma_left_top">
 						<div>
 							<div style="float:left; width:35%" onmouseover="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_chooseProject.svg')"   onmouseout="helpdeskInfo('${pageContext.request.contextPath}/html/submissionmanager/','img_suma_default.svg')">

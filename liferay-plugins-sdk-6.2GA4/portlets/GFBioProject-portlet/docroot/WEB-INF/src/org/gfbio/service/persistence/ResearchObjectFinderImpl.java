@@ -209,6 +209,7 @@ public class ResearchObjectFinderImpl  extends BasePersistenceImpl<ResearchObjec
 			queryObject.addScalar("researchobjectversion", Type.INTEGER);
 			queryObject.addScalar("researchobjectname", Type.STRING);
 			queryObject.addScalar("projectname", Type.STRING);
+			queryObject.addScalar("status", Type.STRING);
 			
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(userId);

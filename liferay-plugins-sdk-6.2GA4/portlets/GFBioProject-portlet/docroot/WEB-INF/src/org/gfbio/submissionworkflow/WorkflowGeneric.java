@@ -1,6 +1,7 @@
 package org.gfbio.submissionworkflow;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -606,9 +607,12 @@ public class WorkflowGeneric extends GenericPortlet {
 
             URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
             
+            System.out.println(System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
             System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
             System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
-	        	        
+	        	       
+            String jiraRequestString = getJSON_Body((JSONObject) parseJson);
+            
 	        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
@@ -616,18 +620,18 @@ public class WorkflowGeneric extends GenericPortlet {
 	        conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
 	        conn.setRequestProperty("Accept", "application/json");
+	        conn.setRequestProperty("Content-Length", String.valueOf((jiraRequestString.getBytes()).length));
 
             conn.setUseCaches(false);
             String userpass= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauserpass");
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
 	        conn.addRequestProperty ("Authorization", basicAuth);
 	        
-	        String jiraRequestString = getJSON_Body((JSONObject) parseJson);
-	        
-	        OutputStream os = conn.getOutputStream();
-	        os.write(jiraRequestString.getBytes());
-	        os.flush(); 
-	        os.close();
+	        try( DataOutputStream os = new DataOutputStream( conn.getOutputStream())) {
+		        os.write(jiraRequestString.getBytes());
+		        os.flush(); 
+		        os.close();
+	        }
 	        if (conn.getResponseCode() != 201) {
 	        	_log.info("Failed : HTTPS error code : "+conn.getResponseCode());
 	           throw new RuntimeException("Failed : HTTPS error code : " + conn.getResponseCode());

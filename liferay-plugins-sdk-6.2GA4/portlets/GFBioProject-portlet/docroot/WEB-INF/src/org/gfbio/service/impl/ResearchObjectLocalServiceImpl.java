@@ -162,7 +162,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				try {researchObject = researchObjectPersistence.findByIDAndVersion((long) requestJson.get("researchobjectid"), (int) ((long) requestJson.get("researchobjectversion")));} 
 				catch (NoSuchResearchObjectException | SystemException e1) {responseJson.put("ERROR", "ERROR: This 'researchobjectid' with this 'researchobjectversion' don't exist.");	}
 			else
-				researchObject = getLatestResearchObjectById((long) requestJson.get("researchobjectid"));
+				researchObject = getLatestResearchObjectById(Helper.getLongFromJson(requestJson, "researchobjectid"));
 
 			if (researchObject != null)
 				if (requestJson.containsKey("kindofresponse"))
@@ -219,7 +219,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 		if (requestJson.containsKey("userid")){
 			
-			responseJson=getResearchObjectInformationByUserId((long) requestJson.get("userid"));
+			responseJson=getResearchObjectInformationByUserId(Helper.getLongFromJson(requestJson, "userid") );
 			if (responseJson.toString().equals("{}"))
 				responseJson.add("ERROR: Faile by find researchobjects of this userid "+(long) requestJson.get("userid"));
 		}
@@ -308,10 +308,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public JSONArray getResearchObjectInformationByUserId (long userId){
-
+		
 		JSONArray responseJson = new JSONArray();
 		List responseList = (ArrayList) ResearchObjectFinderUtil.getResearchObjectInformationByUserId(userId);
-
+		
 		for(Object object:responseList){
 			JSONObject json = new JSONObject ();
 			Object[] arrayobject=(Object[])object;
@@ -319,6 +319,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			json.put("researchobjectversion", (int)arrayobject[1]);
 			json.put("researchobjectname", (String)arrayobject[2]);
 			json.put("projectname", (String)arrayobject[3]);
+			if ((String)arrayobject[4] !=null)
+				json.put("status", (String)arrayobject[4]);
+			else
+				json.put("status", "on gfbio");
 			responseJson.add(json);
 		}
 		

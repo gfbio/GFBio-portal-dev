@@ -48,6 +48,13 @@ public class ArchivingPortlet extends GenericPortlet {
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		
+		//ResearchObjectLocalServiceUtil.getRese
+/*		JSONObject requestJson = new JSONObject();
+		requestJson.put("researchobjectid", 79703);
+		requestJson.put("kindofresponse", "extended");
+		
+		System.out.println(ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(requestJson));*/
+		
 		CacheRegistryUtil.clear();
 		MultiVMPoolUtil.clear();
 		WebCachePoolUtil.clear();
