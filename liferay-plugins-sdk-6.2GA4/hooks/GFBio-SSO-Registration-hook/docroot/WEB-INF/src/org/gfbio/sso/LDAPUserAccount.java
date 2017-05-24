@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 public class LDAPUserAccount {
 
@@ -103,16 +102,12 @@ public class LDAPUserAccount {
 				log.info(res.getName());
 				log.warn("user exists!");
 				ctx.modifyAttributes(fullCN, DirContext.REPLACE_ATTRIBUTE, attrs);
-
-				log.info("updatePasswordManually");
-				UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false,
-						new java.util.Date());
 				return true;
 			}
 			//log.info("check point x");
 			ctx.createSubcontext(fullCN, attrs);
 			log.info("AddUser: added entry x " + fullCN + ".");
-			UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
+//			UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
 			return true;
 		} catch (InvalidAttributeValueException e) {
 			log.info("AddUser: added entry " + fullCN + " failed.");

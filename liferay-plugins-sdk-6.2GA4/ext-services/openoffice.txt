@@ -1,0 +1,2 @@
+1. Follow the tutorial Document Conversion with OpenOffice - Wiki.pdf to enable the Liferay integration with OpenOffice.
+2. Set OpenOffice to run as a window service (so that it will start automatically after the machine restart) - see RunningOpenofficeasaserviceinWindows-240517-0732-75928.pdf

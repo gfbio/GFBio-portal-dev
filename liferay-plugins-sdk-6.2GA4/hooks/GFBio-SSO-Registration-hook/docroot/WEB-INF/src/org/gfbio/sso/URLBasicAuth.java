@@ -30,13 +30,13 @@ public class URLBasicAuth {
             conn.setRequestProperty("User-Agent", "GFBio Portal");
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", "Basic "+encoding);
-            log.info(":: RequestProperties of " + url + " => "
-                    + conn.getRequestProperties());
+//            log.info(":: RequestProperties of " + url + " => "
+//                    + conn.getRequestProperties());
             conn.setUseCaches(false);
             
             conn.connect();
-            log.info(":: HeaderFields of " + url + " => "
-                    + conn.getHeaderFields());
+//            log.info(":: HeaderFields of " + url + " => "
+//                    + conn.getHeaderFields());
             checkResponseCode(conn);
             
         } catch(Exception e) {
@@ -70,10 +70,10 @@ public class URLBasicAuth {
             }
           }
           if (conn.getResponseCode() == 401) {
-            throw new GeneralSecurityException("JIRA requires authentication (response 401).");
+            log.error("JIRA requires authentication (response 401).");
           }
           if (conn.getResponseCode() == 403) {
-            throw new GeneralSecurityException("You are not authorized to perform this action against JIRA. (response 403)");
+        	  log.error("You are not authorized to perform this action against JIRA. (response 403)");
           }
           return false;
         }

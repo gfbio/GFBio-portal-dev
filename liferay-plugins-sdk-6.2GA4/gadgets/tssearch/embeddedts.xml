@@ -51,7 +51,7 @@
 	        });
 			
 		    function adjust() {
-		        var height = $('#search_results').height()+20;
+		        var height = $('#search_results').height()+40;
 			    gadgets.window.adjustHeight(height);
 			    console.log('adjust ausgefuehrt ' + height);
 			}
