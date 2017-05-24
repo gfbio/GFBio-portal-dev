@@ -1167,3 +1167,9 @@ $breakpoint_tablet: 979px;
 		}
 	}
 }
+
+/*Facebook css bug - misalignment*/
+ .fb_iframe_widget span 
+{
+    vertical-align: baseline !important;
+ }
