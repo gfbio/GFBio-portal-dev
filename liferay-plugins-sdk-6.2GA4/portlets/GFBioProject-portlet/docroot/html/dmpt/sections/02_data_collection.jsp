@@ -114,14 +114,14 @@
 			</a>
 	  	</h4>
 	    <div id="formatDocumentated" class="col-md-12">
-	   		<div>
-	            <input name="documentated" type="checkbox"/>
-	            <label>Openly documented</label>
-	        </div>
-	        <div>
-	            <input name="documentated" type="checkbox"/>
-	            <label>Only legible with special software</label>
-	        </div>
+	        <div style="display: block;">
+				<input name="documentated" type="radio" value="true" /> 
+				<label>Openly documented</label>
+			</div>
+			<div style="display: block;">
+				<input name="documentated" type="radio" value="false" > 
+				<label>Only legible with special software</label>
+			</div>
 	    </div>
 	</div>
 	<div class="row">

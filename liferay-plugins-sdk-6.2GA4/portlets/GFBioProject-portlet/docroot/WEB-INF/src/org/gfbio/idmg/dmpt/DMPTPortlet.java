@@ -9,7 +9,6 @@ import javax.portlet.RenderResponse;
 
 import org.gfbio.idmg.dcrt.DCRTPortlet;
 import org.gfbio.idmg.dto.GCategory;
-import org.gfbio.idmg.dto.GFunding;
 import org.gfbio.idmg.dto.GLicense;
 import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.idmg.util.ContentUtil;
@@ -27,7 +26,7 @@ public class DMPTPortlet extends MVCPortlet {
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws PortletException, IOException {
 	
-		//Setting categories for dropdowns
+		//Setting Lists for dropdowns
 		List<GCategory> researchfields = ContentUtil.getCategoryListByType("research field");
 		List<GMetadata> metadata = ContentUtil.getListByTableName(GMetadata.class, "gfbio_metadata");
 		List<GLicense> licenses = ContentUtil.getListByTableName(GLicense.class, "gfbio_license");
@@ -49,6 +48,10 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		renderRequest.setAttribute("username", username);
 		renderRequest.setAttribute("email", email);
+		
+		//Setting variable for context path
+		String contextPath = renderResponse.encodeURL(renderRequest.getContextPath());
+		renderRequest.setAttribute("contextPath", contextPath);
 		
 		super.render(renderRequest, renderResponse); 
 	}
