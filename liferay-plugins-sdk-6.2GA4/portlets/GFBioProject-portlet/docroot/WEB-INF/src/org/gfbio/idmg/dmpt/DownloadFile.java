@@ -1,10 +1,8 @@
 package org.gfbio.idmg.dmpt;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.common.PDStream;
+import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.util.PDFUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -29,25 +27,20 @@ public class DownloadFile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		String fName = request.getParameter("fileName"); // getting file
-															// name from
-															// request
-															// parameter
+		String fName = request.getParameter("fileName"); // getting file name from request parameter
 		_log.info("fileName from request Object" + fName);
-
-		String fileName = "test.pdf";
 
 		response.setContentType("application/pdf");
 		response.setHeader("Cache-Control", "max-age=3600, must-revalidate");
-		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"");
+		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fName + "\"");
 
 		BufferedOutputStream output = null;
 		ByteArrayOutputStream byteStream = null;
 		PDDocument pdf = null;
-		
+		DMPTInput input = new DMPTInput();
 		
 		try {
-			pdf = PDFUtil.createPDF("test.pdf");
+			pdf = PDFUtil.createPDF("test.pdf", input);
 			
 			byteStream = new ByteArrayOutputStream();
 			pdf.save(byteStream);

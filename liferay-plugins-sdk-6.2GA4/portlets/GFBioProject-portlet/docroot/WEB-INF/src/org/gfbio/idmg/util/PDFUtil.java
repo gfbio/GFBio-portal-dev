@@ -7,6 +7,7 @@ import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.gfbio.idmg.dto.DMPTInput;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -15,14 +16,14 @@ public class PDFUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(ContentUtil.class);
 
-	public static PDDocument createPDF(String path) throws IOException {
+	public static PDDocument createPDF(String path, DMPTInput userInput) throws IOException {
 
 		// Creating PDF document object
 		PDDocument document = new PDDocument();
 		// PDPageContentStream contentStream;
 
 		PDPage page = new PDPage();
-		setDocumentContent(document, page);
+		setDocumentContent(document, page, userInput);
 		document.addPage(page);
 
 		PDPage page2 = new PDPage();
@@ -33,7 +34,7 @@ public class PDFUtil {
 		// Add content to page3
 		document.addPage(page3);
 
-		setDocumentInformation(document);
+		setDocumentInformation(document, userInput);
 
 		// contentStream = new PDPageContentStream(document, page);
 		//
@@ -49,7 +50,7 @@ public class PDFUtil {
 		return document;
 	}
 
-	private static void setDocumentInformation(PDDocument pdf) {
+	private static void setDocumentInformation(PDDocument pdf, DMPTInput userInput) {
 
 		// Creating the PDDocumentInformation object
 		PDDocumentInformation pdd = pdf.getDocumentInformation();
@@ -58,7 +59,7 @@ public class PDFUtil {
 		pdd.setAuthor("GFBio");
 
 		// Setting the title of the document
-		pdd.setTitle("DMP for <<project title>>");
+		pdd.setTitle("DMP for" + userInput.getProjectName());
 
 		// Setting the creator of the document
 		pdd.setCreator("GFBio Portal");
@@ -68,7 +69,7 @@ public class PDFUtil {
 
 	}
 
-	private static void setDocumentContent(PDDocument pdf, PDPage page) throws IOException {
+	private static void setDocumentContent(PDDocument pdf, PDPage page, DMPTInput userInput) throws IOException {
 
 		PDPageContentStream contentStream = new PDPageContentStream(pdf, page);
 		// Begin the Content stream
@@ -78,9 +79,9 @@ public class PDFUtil {
 		contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
 
 		// Setting the position for the line
-		contentStream.newLineAtOffset(25, 500);
+		contentStream.newLineAtOffset(25, 200);
 
-		String text = "This is the sample document and we are adding content to it.";
+		String text = "Project Name:";
 
 		// Adding text in the form of string
 		contentStream.showText(text);

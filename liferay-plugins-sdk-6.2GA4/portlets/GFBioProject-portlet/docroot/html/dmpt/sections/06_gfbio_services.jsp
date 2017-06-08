@@ -7,7 +7,7 @@
 	<div name="title" class="hidden-md hidden-lg">
 		<h2>6. GFBio Services</h2>
 	</div>
-    <div class="question_div">
+    <div id="gfbioServicesStep" class="question_div">
         <h4>What GFBio services are you interested in?</h4>
         <div id="gfbioServices" class="col-md-12">
             <div>
@@ -90,4 +90,6 @@
 	            
         </div>
     </div>
+    
+    <jsp:include page="handleInput.jsp" />
 </section>
