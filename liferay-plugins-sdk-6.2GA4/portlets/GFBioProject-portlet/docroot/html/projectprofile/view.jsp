@@ -38,9 +38,10 @@
 				Long userID = PortalUtil.getUserId(request);
 				List <Project> projectList = new ArrayList<Project>();
 				projectList = null;
-				try {projectList = ProjectLocalServiceUtil.getProjectList(userID);}
+				projectList = ProjectLocalServiceUtil.getProjectList(userID);
+/* 				try {projectList = ProjectLocalServiceUtil.getProjectList(userID);}
 				catch (NoSuchModelException e) {e.printStackTrace();}
-				catch (SystemException e) {e.printStackTrace();	}
+				catch (SystemException e) {e.printStackTrace();	} */
 			%>
 	
 			<%if (projectList.size()==0){ %>

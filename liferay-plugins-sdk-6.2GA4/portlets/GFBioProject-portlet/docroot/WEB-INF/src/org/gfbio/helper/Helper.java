@@ -14,7 +14,7 @@ import org.json.simple.parser.ParseException;
 
 public class Helper {
 
-	static String FILEPATH = "..\\..\\..\\server_specific_identification\\serverfile.txt";
+	static String FILEPATH = ".."+File.separator+".."+File.separator+".."+File.separator+"server_specific_identification"+File.separator+"serverfile.txt";
 	
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////

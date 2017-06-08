@@ -17,7 +17,7 @@
 <script src="${pageContext.request.contextPath}/js/main.js" 								type="text/javascript"></script>  	<!--  main.js  imports -->
 <script src="${pageContext.request.contextPath}/js/tableBuilder/tableBuilder.js"    		type="text/javascript"></script>  	<!--  tableBuilder.js  imports -->
 <script src="${pageContext.request.contextPath}/js/tableBuilder/tableBuilderTableMenu.js"   type="text/javascript"></script>  	<!--  tableBuilder.js  imports -->
-<link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 		type="text/css"> 					<!--  main.css imports -->
+<%-- <link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 		type="text/css"> 	 --%>				<!--  main.css imports -->
 
 <input type="hidden" class="widthL" id="path"  						value="<%=request.getContextPath()%>" />
 <input type="hidden" class="widthL" id="tablebuilderurl"  				value="<%=tablebuildertablemenuURL %>" />

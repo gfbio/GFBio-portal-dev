@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,14 +31,25 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.BasicHttpContext;
 import org.gfbio.helper.Helper;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
@@ -603,12 +615,63 @@ public class WorkflowGeneric extends GenericPortlet {
     	String responseString = "";    	
         JSONObject parseJson = getDataJsonAsObject (request);
         
+       /* try {
+	        HttpHost targetHost = new HttpHost("helpdesk.gfbio.org", 8443, "https");
+	        DefaultHttpClient httpclient = new DefaultHttpClient();
+	        
+	        
+	        String user ="";
+	        String pw ="";
+			user = Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauser");
+			pw= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirapw");
+
+	        
+	        
+	        httpclient.getCredentialsProvider().setCredentials(
+	                new AuthScope(targetHost.getHostName(), targetHost.getPort()),
+	                new UsernamePasswordCredentials(user, pw));
+	
+	
+	        AuthCache authCache = new BasicAuthCache();
+	        BasicScheme basicAuth = new BasicScheme();
+	        authCache.put(targetHost, basicAuth);
+	        BasicHttpContext ctx = new BasicHttpContext();
+	        ctx.setAttribute(ClientContext.AUTH_CACHE, authCache);
+	
+	        HttpPost post = new HttpPost("/rest/api/2/issue/");
+	        
+	        List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        
+	        String value = getJSON_Body((JSONObject) parseJson);
+	        
+	        params.add(new BasicNameValuePair("requestJson", value));
+	
+	        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
+	        post.setEntity(entity);
+	        
+	        System.out.println(params.get(0));
+	        System.out.println("--------------------------------------------------------------------------");
+	
+	        HttpResponse resp = httpclient.execute(targetHost, post, ctx);
+	        resp.getEntity().writeTo(System.out);
+	
+	        System.out.println(resp.getParams().toString());
+	        System.out.println(resp.getStatusLine());
+	        
+	        httpclient.getConnectionManager().shutdown();
+        }catch (IOException | PortletException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+        
     	try {
 
             URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
-            
-            System.out.println(System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
-            System.setProperty("javax.net.ssl.keyStore", System.getenv("JAVA_Home") +"/jre/lib/security/cacerts");
+            System.out.println(System.getenv("JAVA_Home"));
+            String path = System.getenv("JAVA_Home") +File.separator+"jre"+File.separator+"lib"+File.separator+"security"+File.separator+"cacerts";
+            //String path = System.getenv("JAVA_Home") +"/jre/lib/security/cacerts";
+            System.out.println(path);
+            System.setProperty("javax.net.ssl.keyStore", path);
             System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
 	        	       
             String jiraRequestString = getJSON_Body((JSONObject) parseJson);

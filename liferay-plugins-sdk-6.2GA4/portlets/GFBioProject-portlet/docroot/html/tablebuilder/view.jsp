@@ -1,12 +1,17 @@
 <input name="csrfmiddlewaretoken" type="hidden" value="HSujo2ODIdggzYB7imfBM4Nh17ZcEp2C" />
 
+<%@page import="com.liferay.portal.kernel.portlet.LiferayPortletMode"%>
+<%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%!RenderResponse renderResponse; %>
+
 
 <jsp:useBean class="java.lang.String" id="keyWords" scope="request" />
 
 <portlet:defineObjects />
 <portlet:resourceURL escapeXml="false" id="tablebuilderURL" var="tablebuilderURL" />
+<%-- <portlet:renderURL escapeXml="false" id="tablebuilderURLview" var="tablebuilderURLview" /> --%>
 <%-- <portlet:actionURL  var="tablebuilderactionURL" portletMode="view"/> --%>
 <meta charset="UTF-8">
 
@@ -18,7 +23,7 @@
 <%@ include file="/html/tablebuilder/tablemenu/init.jsp" %> 	 																	
 <script src="${pageContext.request.contextPath}/js/main.js" 						type="text/javascript"></script>  	<!--  main.js  imports -->
 <script src="${pageContext.request.contextPath}/js/tableBuilder/tableBuilder.js"    type="text/javascript"></script>  	<!--  tableBuilder.js  imports -->
-<link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 		type="text/css"> 					<!--  main.css imports -->
+<%-- <link href="<%= request.getContextPath() %>/css/main.css"	 rel="stylesheet" 		type="text/css"> 					<!--  main.css imports --> --%>
 
 <input type="hidden" class="widthL" id="path"  				value="<%=request.getContextPath()%>" />
 <input type="hidden" class="widthL" id="tablebuilderurl"  	value="<%=tablebuilderURL %>" />
@@ -35,27 +40,71 @@
 
 
 
- <div class='navigator'>
+<div class='navigator'>
 	<div class='tabs'>
 		<span class ='gap' style='width:4%'> &nbsp;</span><span class ='tabCurrent' style='width:15%' name="navTab" id="tabTableMenu" onclick="loadTab('navTab','tabTableMenu')"	>Table Menu	 </span><span class ='gap' style='width:2%'> &nbsp;</span><span class ='tab' style='width:15%' name="navTab" id="tabContentMenu" onclick="loadTab('navTab','tabContentMenu')"	>Content Menu</span><span class ='gap' style='width:60%'>&nbsp;</span>
 	</div>
-</div>
-
+</div> 
 
 <div id="tableBuilder"></div>
-
-<br/>
-<br/>
-<br/>
 
 <script>
 
 	//
-	AUI().ready(function(A){
+ 	AUI().ready(function(A){
 		initiateTableMenu('tableBuilder');
-	});
+	}); 
 
 </script>
+
+<%-- 
+
+<%@ include file="test.jsp" %>
+
+<%
+Long userId = PortalUtil.getUserId(request);
+session.setAttribute("sessionROId", userId);
+%>
+
+<%=session.getAttribute("sessionROId") %>
+<br/>
+<br/>
+<br/>
+
+
+
+<a href="test.jsp">Click here</a>
+<br>
+<br>
+ <jsp:forward page = "/test.jsp" /> 
+<br>
+<br>
+<A href="<portlet:renderURL><portlet:param name="tablebuilderURL" value="/docroot/html/tablebuilder/test.jsp" /></portlet:renderURL>">Click Me</A>
+<a href="<portlet:renderURL><portlet:param name='jspPage' value='/test.jsp' /><portlet:param name='n' value='<%=nname%>' /></portlet:renderURL> " >Link</a>
+<br>
+<br> --%>
+
+<!-- <definition name="portlet.ext.your-portlet.test" extends="portlet">
+        <put name="portlet_content" value="/portlet/ext/your-portlet/test.jsp" />
+</definition>
+<action path="/ext/your-portlet/test" forward="portlet.ext.your-portlet.test" />
+
+ -->
+
+
+<%-- <a href="<%=  test.jsp %>" >some link</a> --%>
+<%--   <portlet:renderURL var="renderUrl" 
+ 	windowState="<%=LiferayWindowState.NORMAL.toString() %>" copyCurrentRenderParameters="true" portletMode="<%=LiferayPortletMode.VIEW.toString()%>">
+ 	<portlet:param name="param" value="/docroot/html/tablebuilder/test.jsp"/>
+</portlet:renderURL> 
+ 
+<a href="${renderUrl}">RenderURL Created by Portlet Tag</a> 
+
+ --%>
+
+
+
+
 
 
 <%--

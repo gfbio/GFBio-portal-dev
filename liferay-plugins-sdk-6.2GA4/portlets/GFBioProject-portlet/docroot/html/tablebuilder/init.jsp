@@ -34,6 +34,23 @@
 		);
 	}
 	
+	//
+	function addListBlock (targetDiv, id, name, smallDescriptionBold, smallDescription, mainDescriptionBold, mainDescription, btnfunction){
+
+		var div = $("#"+targetDiv);
+		div.append(
+			"<div 		class='control-group'>"+
+				"<label class='control-label' 				   	id='"+id+"_l'>"+name+" </label>"+
+				"<div>"+
+					"<span  style='width:84%; display:inline-block'>		<span style='width:100%' class='field-description' id='"+id+"_d'>"+"<b> "+smallDescriptionBold+"</b>"+smallDescription+"</span></span>"+
+					"<span style='width:3%; display:inline-block'></span>"+
+					"<span  style='width:13%; display:inline-block' id='"+id+"edit_btn' onclick='"+btnfunction+"'>		<span style='width:100%' class='btn btn-primary'><i class='fa fa-edit' 		aria-hidden='true'>&nbsp; &nbsp;  </i>Edit</span></span>"+
+				"</div>"+
+				"<p 	class='field-description'				id='"+id+"_c'>"+"<b>"+mainDescriptionBold+"</b> "+mainDescription+"</p>"+
+			"</div >"
+		);
+	}
+	
 	
 	//
 	function deleteColumnBlock(targetDiv, id){

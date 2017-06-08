@@ -15,12 +15,16 @@
 package org.gfbio.service.impl;
 
 
+import org.gfbio.idmg.dcrt.DCRTPortlet;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 
 
@@ -83,15 +87,23 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 		
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
+	private static Log _log = LogFactoryUtil.getLog(ResearchObjectLocalServiceImpl.class);
 	
 	//
 	public JSONArray createResearchObject(String requestJson){
+		
+		System.out.println(requestJson);
+		_log.info("createRO request |" + requestJson);
 
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
 
+		_log.info("createRO start |" + parseJson);
+		
 		try {parseJson = (JSONArray) parser.parse(requestJson);}
 		catch (ParseException e) {e.printStackTrace();}
+		
+		_log.info("createRO response|" + parseJson);
 
 		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
 	}
