@@ -4,7 +4,7 @@
     font-family: icomoon;
     src: url(icomoon/fonts/icomoon.eot?xtb52m);
     src: url(icomoon/fonts/icomoon.eot?xtb52m#iefix) format('embedded-opentype'),
-    url(icomoon/fonts/icomoon.ttf?xtb52m) format('truetype'),
+    url(icomoon/fonts/icomoonTS.ttf?xtb52m) format('truetype'),
     url(icomoon/fonts/icomoon.woff?xtb52m) format('woff'),
     url(icomoon/fonts/icomoon.svg?xtb52m#icomoon) format('svg');
     font-weight: normal;
@@ -24,6 +24,16 @@ svg {
     overflow: hidden;
 }
 
+[data-icon]:before {
+        font-family: 'icomoon';
+        content: attr(data-icon);
+        speak: none;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+    }
 
   [class^="icon-"], [class*=" icon-"] {
     font-family: icomoon !important;
@@ -5340,6 +5350,9 @@ svg {
 }
 .icon-IcoMoon:before {
     content: "\ef82";
+}
+.icon-TS:before{
+	content: "\f7ff";
 }
 
 	 /*  Liferay icon fixes*/

@@ -17,15 +17,14 @@
 	<Content type="html">
 
 	<![CDATA[
-	<!DOCTYPE html>
 	<html style="height: 100%;">
 			<head>
-			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
-			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-			<script src="http://terminologies.gfbio.org/openSocialGadget/TMSexact.js" type="text/javascript"></script>
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+			<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+			<script src="//terminologies.gfbio.org/openSocialGadget/TMSexact.js" type="text/javascript"></script>
 
-			<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css">
-			<link rel="stylesheet" type="text/css" href="http://gfbio-dev1.inf-bb.uni-jena.de/gfbio/esTSSearch/termSearchCSS.css"/>
+			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/flick/jquery-ui.css">
+			<link rel="stylesheet" type="text/css" href="//terminologies.gfbio.org/openSocialGadget/termSearchCSS.css"/>
 			
 			
 			<script>
@@ -52,7 +51,7 @@
 	        });
 			
 		    function adjust() {
-		        var height = $('#search_results').height()+20;
+		        var height = $('#search_results').height()+40;
 			    gadgets.window.adjustHeight(height);
 			    console.log('adjust ausgefuehrt ' + height);
 			}

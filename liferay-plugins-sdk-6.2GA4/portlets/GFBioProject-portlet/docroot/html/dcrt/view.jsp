@@ -1,23 +1,12 @@
 <%@ include file="/html/dcrt/init.jsp"%>
 
-<script src="<%=request.getContextPath()%>/js/dcrt/jquery-ui.min.js"
-	type="text/javascript"></script>
-<!--  jquery-ui.js  imports -->
-<script src="<%=request.getContextPath()%>/js/jquery.validate.min.js"
-	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"
-	type="text/javascript"></script>
-<!--  dcrt.js  imports -->
+<script src="<%=request.getContextPath()%>/js/dcrt/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"	type="text/javascript"></script>
 
-<link href="<%=request.getContextPath()%>/css/dcrt/jquery-ui.min.css"
-	rel="stylesheet" type="text/css">
-<!-- jquery-ui.css imports -->
-<link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css"
-	rel="stylesheet" type="text/css">
-<!-- dcrt.css imports -->
-<link href="<%=request.getContextPath()%>/css/dcrt/spinner.css"
-	rel="stylesheet" type="text/css">
-<!-- spinner import -->
+<link href="<%=request.getContextPath()%>/css/dcrt/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/dcrt/spinner.css" rel="stylesheet" type="text/css">
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
@@ -131,7 +120,6 @@ function categoryChange(category) {
 }
 
 function getRadioInputs() {
-	
 	physicalval = $("input[name='physical']:checked").val();
 	taxonval = $("input[name='taxon']:checked").val();
 	aliveval = $("input[name='alive']:checked").val();
@@ -271,28 +259,28 @@ function sleep (time) {
 }
 
 $(document).ready(
-		function() {
-			$("div#result").on('click', "button[name=submissionButton]",
-					function() {
-						//Submission logic
-					});
-		});
+	function() {
+		$("div#result").on('click', "button[name=submissionButton]",
+				function() {
+					//Submission logic
+				});
+	});
 
 $(document).ready(
-		function() {
-			$("div#result").on(
-					'click',
-					"button[name=detailsButton]",
-					function() {
-						var dataCenter = $(this).parent().parent().find(
-								"span[name='dataCenter']").attr("id");
-						var link = themeDisplay.getPortalURL()
-								+ "/about/data-centers#portfolio-"
-								+ dataCenter.toLowerCase();
-						window.open(link, '_blank' // open in a new window.
-						);
-					});
-		});
+	function() {
+		$("div#result").on(
+				'click',
+				"button[name=detailsButton]",
+				function() {
+					var dataCenter = $(this).parent().parent().find(
+							"span[name='dataCenter']").attr("id");
+					var link = themeDisplay.getPortalURL()
+							+ "/about/data-centers#portfolio-"
+							+ dataCenter.toLowerCase();
+					window.open(link, '_blank' // open in a new window.
+					);
+				});
+	});
 
 $(document).ready(function() {
 	var form = $("#dialogForm");
