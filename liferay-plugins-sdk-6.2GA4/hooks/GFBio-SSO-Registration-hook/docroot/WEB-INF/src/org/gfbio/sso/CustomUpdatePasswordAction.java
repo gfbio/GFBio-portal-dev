@@ -9,10 +9,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Ticket;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroupRole;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -20,6 +26,7 @@ import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceWrapper;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.theme.ThemeDisplay;
 
 public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 
@@ -39,24 +46,32 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			ServiceContext serviceContext) throws PortalException, SystemException {
 
 		log.info(":: Hook on addUserWithWorkflow.");
-		try {		
+		try {
 			User user = super.addUserWithWorkflow(creatorUserId, companyId, autoPassword, password1, password2,
 					autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName,
 					lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 					organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
-			log.info(":: creatorUserId "+creatorUserId);
-			if (creatorUserId == super.getDefaultUserId(companyId)) {
-				boolean isUserAdded = LDAPUserAccount.LDAPaddUser(user, password1);
-
-				if (isUserAdded) { // create JIRA account
-					log.info(":: LDAP user successfully added");
-					URLBasicAuth.urlAuth(user.getEmailAddress(), password1);
-				}
-			}else{
+			log.info(":: creatorUserId " + creatorUserId);
+			if (creatorUserId != super.getDefaultUserId(companyId)) {
+				//when an admin user add another user, password is invisible to the new user
 				log.info(":: added a user by admin.");
-				//TODO: add LDAP user, JIRA account
-				//TODO: send a password reset link
-//				log.info(user.getPassword());
+				log.info(user.getPasswordUnencrypted());
+				password1 = user.getPasswordUnencrypted();
+				// send a password reset link
+				ServiceContext scNewUser = serviceContext;
+				long groupId = GroupLocalServiceUtil.getFriendlyURLGroup(companyId, "/guest").getGroupId();
+				long plid = LayoutLocalServiceUtil.getFriendlyURLLayout( groupId, false, "/sign-in").getPlid();
+				scNewUser.setPlid(plid);
+
+				sendPassword(
+						user.getCompanyId(), user.getEmailAddress(),
+						null, null, null, null, scNewUser);
+			}
+			boolean isUserAdded = LDAPUserAccount.LDAPaddUser(user, password1);
+
+			if (isUserAdded) { // create JIRA account
+				log.info(":: LDAP user successfully added");
+				URLBasicAuth.urlAuth(user.getEmailAddress(), password1);
 			}
 			return user;
 		} catch (Exception e) {
@@ -66,30 +81,43 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 		}
 	}
 
-	/*
-	 * @Override public User updatePassword(long userId, String password1,
-	 * String password2, boolean passwordReset) throws PortalException,
-	 * SystemException { // called when creating a new account, updateUser(hook)
-	 * log.info(":: Hook on updatePassword 1."); User user =
-	 * super.updatePassword(userId, password1, password2, passwordReset); try {
-	 * // log.info(":: "+password1); // boolean isUserAdded =
-	 * LDAPUserAccount.LDAPaddUser(user, password1); // if (isUserAdded) { //
-	 * log.info(":: LDAP user successfully added"); //
-	 * URLBasicAuth.urlAuth(user.getEmailAddress(), password1); // } } catch
-	 * (Exception e) { e.printStackTrace(); log.error(e.toString()); } return
-	 * user; }
-	 */
+	@Override
+	public User updatePassword(long userId, String password1, String password2, boolean passwordReset)
+			throws PortalException, SystemException { 
+		// called when creating a new account, updateUser(hook)
+		log.info(":: Hook on updatePassword 1.");
+		User user = super.updatePassword(userId, password1, password2, passwordReset);
+		try {
+			log.info(":: " + password1);
+//			boolean isUserAdded = LDAPUserAccount.LDAPaddUser(user, password1);
+//			if (isUserAdded) {
+//				log.info(":: LDAP user successfully added");
+//				URLBasicAuth.urlAuth(user.getEmailAddress(), password1);
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.toString());
+		}
+		return user;
+	}
+
 	@Override
 	public User updatePassword(long userId, String password1, String password2, boolean passwordReset,
 			boolean silentUpdate) throws PortalException, SystemException {
 		// called when creating a new account, updateUser(hook)
+		log.info(":: Hook on updatePassword 2.");
 		User user = super.getUser(userId);
 		boolean isVerified = user.getEmailAddressVerified();
 		if (isVerified) {
 			user = super.updatePassword(userId, password1, password2, passwordReset, silentUpdate);
-		} else {// prevent re-sending a verification email after adding LDAP
+		}/*else if (PrincipalThreadLocal.getUserId() != userId){
+			//if this password is updated by another user (admin), send a notification mail
+			silentUpdate = false;
+			user = super.updatePassword(userId, password1, password2, passwordReset, silentUpdate);
+		} */
+		else {// prevent re-sending a verification email after adding LDAP
 				// user
-			log.warn(":: no password update - unverified user");
+			log.warn(":: no password update - non verified user");
 		}
 		return user;
 	}
@@ -113,15 +141,16 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 				log.info(":: " + newPassword1);
 				// update LDAP user without connecting to JIRA
 				LDAPUserAccount.LDAPaddUser(user, newPassword1);
-			} /*else { // no new password is set
-				if (oldPassword.length() > 0) { // add new user
-					log.info(":: add new user");
-				} else {
-					log.info(":: update user without changing password");
-				}
-			}*/
+			} /*
+				 * else { // no new password is set if (oldPassword.length() >
+				 * 0) { // add new user log.info(":: add new user"); } else {
+				 * log.info(":: update user without changing password"); } }
+				 */
 			boolean isVerified = user.getEmailAddressVerified();
-			if (isVerified) {
+			
+			PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+			
+			if (isVerified || permissionChecker.isOmniadmin()) {
 				user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
 						reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
 						languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId,
@@ -130,7 +159,7 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 						userGroupRoles, userGroupIds, serviceContext);
 			} else { // prevent re-sending a verification email after adding
 						// LDAP user
-				log.warn(":: no user update - unverified user");
+				log.warn(":: no user update - non verified user");
 			}
 			return user;
 		} catch (Exception e) {
