@@ -30,6 +30,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 %>
 
+<div style="padding:0 150px;">
 <c:choose>
 	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.class.getName()) %>">
 		<div class="alert alert-error">
@@ -113,3 +114,4 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 		</aui:form>
 	</c:otherwise>
 </c:choose>
+</div>
