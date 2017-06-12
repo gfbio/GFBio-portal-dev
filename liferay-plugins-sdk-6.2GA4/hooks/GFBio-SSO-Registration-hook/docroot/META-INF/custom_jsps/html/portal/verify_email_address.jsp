@@ -28,6 +28,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 String ticketKey = ParamUtil.getString(request, "ticketKey");
 %>
 
+<div class="wrapper" style="padding:0 10%;">
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/verify_email_address" %>' method="post" name="fm">
 	<aui:input name="p_l_id" type="hidden" value="<%= layout.getPlid() %>" />
 	<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
@@ -76,3 +77,17 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 		</c:if>
 	</aui:button-row>
 </aui:form>
+    <div class="push"></div>
+</div>
+<% 
+String footerContent = "";
+try{ 
+	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), "footer");
+	String articleId = journalArticle.getArticleId();
+	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay.getScopeGroupId(),articleId, "","",themeDisplay);
+ 	footerContent = articleDisplay.getContent();
+} catch (Exception e){
+	footerContent = "Sorry, there is no web content with this title";
+}
+%>
+<p class="embeddedFooter"><%=footerContent%></p>

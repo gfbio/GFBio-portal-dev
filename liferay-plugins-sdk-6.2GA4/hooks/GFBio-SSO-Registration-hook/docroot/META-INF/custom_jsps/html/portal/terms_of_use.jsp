@@ -26,6 +26,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 }
 %>
 
+<div style="padding:0 10%;">
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_terms_of_use" %>' name="fm">
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
@@ -214,3 +215,17 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 		</aui:button-row>
 	</c:if>
 </aui:form>
+</div>
+
+<% 
+String footerContent = "";
+try{ 
+	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), "footer");
+	String articleId = journalArticle.getArticleId();
+	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay.getScopeGroupId(),articleId, "","",themeDisplay);
+ 	footerContent = articleDisplay.getContent();
+} catch (Exception e){
+	footerContent = "Sorry, there is no web content with this title";
+}
+%>
+<p><%=footerContent%></p>

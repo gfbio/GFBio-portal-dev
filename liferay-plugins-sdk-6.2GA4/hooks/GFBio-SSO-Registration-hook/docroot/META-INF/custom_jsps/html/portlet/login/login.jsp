@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/login/init.jsp" %>
 
-<div style="padding:0 10%;">
+<div  class="wrapper" style="padding:0 10%;">
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 
@@ -38,6 +38,7 @@
 		%>
 
 		<%= LanguageUtil.format(pageContext, "you-are-signed-in-as-x", signedInAs, false) %>
+		<div style="height:250px;"></div>
 	</c:when>
 	<c:otherwise>
 
@@ -163,4 +164,17 @@
 		</aui:script>
 	</c:otherwise>
 </c:choose>
+    <div class="push"></div>
 </div>
+<% 
+String footerContent = "";
+try{ 
+	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), "footer");
+	String articleId = journalArticle.getArticleId();
+	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay.getScopeGroupId(),articleId, "","",themeDisplay);
+ 	footerContent = articleDisplay.getContent();
+} catch (Exception e){
+	footerContent = "Sorry, there is no web content with this title";
+}
+%>
+<p class="embeddedFooter"><%=footerContent%></p>
