@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/login/init.jsp" %>
 
-<div style="padding:0 150px;">
+<div style="padding:0 10%;">
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 

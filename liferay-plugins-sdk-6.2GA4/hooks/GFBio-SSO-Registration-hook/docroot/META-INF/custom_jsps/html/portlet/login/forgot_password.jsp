@@ -30,7 +30,7 @@ if (reminderAttempts == null) {
 }
 %>
 
-<div style="padding:0 150px;">
+<div style="padding:0 10%;">
 <portlet:actionURL var="forgotPasswordURL">
 	<portlet:param name="struts_action" value="/login/forgot_password" />
 </portlet:actionURL>

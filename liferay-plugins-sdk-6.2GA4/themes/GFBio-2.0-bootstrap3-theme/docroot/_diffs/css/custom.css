@@ -1201,3 +1201,10 @@ $breakpoint_tablet: 979px;
 {
     vertical-align: baseline !important;
  }
+ 
+ /*Add padding to registration portlet*/
+ #portlet_terms-of-use, #portlet_update-reminder-query,
+ #portlet_verify-email-address
+ {
+ 	padding: 0px 10%;	
+ }

@@ -32,7 +32,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	<portlet:param name="struts_action" value="/login/create_account" />
 </portlet:actionURL>
 
-<div style="padding:0 150px;">
+<div style="padding:0 10%;">
 <aui:form action="<%= createAccountURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
