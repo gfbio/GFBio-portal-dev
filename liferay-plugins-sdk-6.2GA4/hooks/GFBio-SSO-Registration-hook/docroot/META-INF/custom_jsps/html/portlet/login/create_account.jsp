@@ -125,10 +125,10 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
-				<aui:input model="<%= User.class %>" name="screenName" />
+				<aui:input model="<%= User.class %>" name="screenName"  style="max-width:75%;" type="text"/>
 			</c:if>
 
-			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress">
+			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  style="max-width:75%;" type="text">
 				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 					<aui:validator name="required" />
 				</c:if>
