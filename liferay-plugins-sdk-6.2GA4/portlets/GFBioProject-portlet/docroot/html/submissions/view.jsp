@@ -6,7 +6,7 @@
 
 <portlet:defineObjects />
 
- Hello World!
+ Hello GFBio!
  
  <%long userID = PortalUtil.getUserId(request);%>
  <%if (userID==0){ %>
