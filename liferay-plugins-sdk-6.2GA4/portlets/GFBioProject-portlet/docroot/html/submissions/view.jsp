@@ -6,7 +6,7 @@
 
 <portlet:defineObjects />
 
- 
+ Hello GFBio!
  
  <%long userID = PortalUtil.getUserId(request);%>
  <%if (userID==0){ %>
@@ -17,15 +17,17 @@
 			
 <%}else { %>
 <%JSONArray  ResearchObjects = new JSONArray();
-ResearchObjects = null;
-ResearchObjects=ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(15926);%>
-
+	try{
+ResearchObjects=ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(15926);
+}catch(Exception e){
+ System.out.println("Error");
+}%>
 <a href="<portlet:renderURL><portlet:param name="view" value="/datasetinformation.jsp" /></portlet:renderURL>" target="_blank">Other JSP</A>
 
     <portlet:renderURL var="other"><portlet:param name="jspPage" value="/datasetinformation.jsp"/> </portlet:renderURL>
       <a href="<%=other%>">other</a>
       
-<%if (ResearchObjects.size()>0){%>
+<%if (ResearchObjects!=null && ResearchObjects.size()>0){%>
 <h2>Your GfBio datasets</h2><br>
 <table><tr>
 <td>Dataset Name </td><td>Version</td><td>Status</td></tr>
