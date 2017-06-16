@@ -32,7 +32,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 <%
 	User selUser = (User) request.getAttribute("user.selUser");
 
-	PasswordPolicy passwordPolicy = passwordPolicy = user.getPasswordPolicy();
+	PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 	boolean passwordResetDisabled = false;
 

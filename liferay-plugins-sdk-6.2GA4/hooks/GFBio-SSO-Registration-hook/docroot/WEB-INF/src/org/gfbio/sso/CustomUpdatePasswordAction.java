@@ -1,7 +1,10 @@
 package org.gfbio.sso;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Locale;
+
+import javax.naming.NamingException;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -44,10 +47,9 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			int suffixId, boolean male, int birthdayMonth, int birthdayDay, int birthdayYear, String jobTitle,
 			long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds, boolean sendEmail,
 			ServiceContext serviceContext) throws PortalException, SystemException {
-
+		User user = null;
 		log.info(":: Hook on addUserWithWorkflow.");
-		try {
-			User user = super.addUserWithWorkflow(creatorUserId, companyId, autoPassword, password1, password2,
+			user = super.addUserWithWorkflow(creatorUserId, companyId, autoPassword, password1, password2,
 					autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName,
 					lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 					organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
@@ -67,18 +69,22 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 						user.getCompanyId(), user.getEmailAddress(),
 						null, null, null, null, scNewUser);
 			}
-			boolean isUserAdded = LDAPUserAccount.LDAPaddUser(user, password1);
+			boolean isUserAdded = false;
+			try {
+				isUserAdded = LDAPUserAccount.LDAPaddUser(user, password1);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				log.error(e.toString());
+			} catch (NamingException e) {
+				e.printStackTrace();
+				log.error(e.toString());
+			}
 
 			if (isUserAdded) { // create JIRA account
 				log.info(":: LDAP user successfully added");
 				URLBasicAuth.urlAuth(user.getEmailAddress(), password1);
 			}
-			return user;
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.error(e.toString());
-			return null;
-		}
+		return user;
 	}
 
 	@Override

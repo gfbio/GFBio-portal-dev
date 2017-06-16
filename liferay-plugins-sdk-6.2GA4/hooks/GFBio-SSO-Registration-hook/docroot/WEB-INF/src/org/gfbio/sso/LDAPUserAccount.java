@@ -2,12 +2,14 @@ package org.gfbio.sso;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
@@ -18,6 +20,8 @@ import javax.naming.directory.InvalidAttributeValueException;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -44,7 +48,7 @@ public class LDAPUserAccount {
 		env.put(Context.SECURITY_CREDENTIALS, admincred);
 	}
 
-	public static boolean LDAPaddUser(User user, String password) throws Exception {
+	public static boolean LDAPaddUser(User user, String password) throws PortalException, SystemException, NamingException, NoSuchAlgorithmException {
 
 		String cn = user.getScreenName();
 		List<Organization> organizations = user.getOrganizations();
@@ -57,10 +61,12 @@ public class LDAPUserAccount {
 		Attribute screenName = new BasicAttribute("cn");
 		Attribute uid = new BasicAttribute("uid");
 		Attribute objclass = new BasicAttribute("objectclass");
+		log.info("LDAPaddUser:1");
 
 		givenName.add(user.getFirstName());
 		surname.add(user.getLastName());
 		email.add(user.getEmailAddress());
+		log.info("LDAPaddUser:2");
 		pwd.add(encryptSHA(password));
 		for (int i = 0; i < organizations.size(); i++) {
 			log.info("Organizations: " + organizations.get(i).getName());
@@ -121,11 +127,15 @@ public class LDAPUserAccount {
 		return false;
 	}
 
-	public static String encryptSHA(String pwdPlainText) throws Exception {
+	public static String encryptSHA(String pwdPlainText) throws NoSuchAlgorithmException {
+		log.info("encryptSHA:1");
 		MessageDigest md = MessageDigest.getInstance("SHA");
+		log.info("encryptSHA:2");
 		md.update(pwdPlainText.getBytes(StandardCharsets.US_ASCII));
 
+		log.info("encryptSHA:3");
 		byte byteData[] = md.digest();
+		log.info("encryptSHA:4");
 		String result = "{SHA}" + Base64.getEncoder().encodeToString(byteData);
 		log.info("userpassword in LDAP:" + result);
 		return result;

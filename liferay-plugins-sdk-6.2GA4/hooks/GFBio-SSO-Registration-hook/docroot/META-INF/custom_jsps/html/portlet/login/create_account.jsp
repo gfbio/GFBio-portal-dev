@@ -17,16 +17,82 @@
 <%@ include file="/html/portlet/login/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
+	String redirect = ParamUtil.getString(request, "redirect");
+	
+	String openId = ParamUtil.getString(request, "openId");
+	boolean male = ParamUtil.getBoolean(request, "male", true);
+	
+	Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
+	
+	birthdayCalendar.set(Calendar.MONTH, Calendar.JANUARY);
+	birthdayCalendar.set(Calendar.DATE, 1);
+	birthdayCalendar.set(Calendar.YEAR, 1970);
 
-String openId = ParamUtil.getString(request, "openId");
-boolean male = ParamUtil.getBoolean(request, "male", true);
+	User selUser = (User) request.getAttribute("user.selUser");
 
-Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
+	PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(company.getCompanyId());
 
-birthdayCalendar.set(Calendar.MONTH, Calendar.JANUARY);
-birthdayCalendar.set(Calendar.DATE, 1);
-birthdayCalendar.set(Calendar.YEAR, 1970);
+	boolean passwordResetDisabled = false;
+
+	if (((selUser == null) || (selUser.getLastLoginDate() == null)) && ((passwordPolicy == null)
+			|| (passwordPolicy.isChangeable() && passwordPolicy.isChangeRequired()))) {
+		passwordResetDisabled = true;
+	}
+
+	boolean passwordReset = false;
+
+	if (passwordResetDisabled) {
+		passwordReset = true;
+	} else {
+		passwordReset = BeanParamUtil.getBoolean(selUser, request, "passwordReset");
+	}
+
+	String passwordRules = "";
+	if (passwordPolicy.isCheckSyntax()) {
+		if (passwordPolicy.isAllowDictionaryWords()) {
+			passwordRules += "The new password should not contain dictionary words. ";
+		}
+		int passMinAlp = passwordPolicy.getMinAlphanumeric();
+		int passMinLen = passwordPolicy.getMinLength();
+		int passMinLowCase = passwordPolicy.getMinLowerCase();
+		int passMinNum = passwordPolicy.getMinNumbers();
+		int passMinSym = passwordPolicy.getMinSymbols();
+		int passMinUppCase = passwordPolicy.getMinUpperCase();
+			
+		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character(s)";
+		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
+			passwordRules += " consists of ";
+		if (passMinAlp>0) 
+			passwordRules += Integer.toString(passMinAlp)+" alphanumeric";
+		if (passMinLowCase>0) {
+			if (passMinAlp>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinLowCase)+" lowercase";
+		}
+		if (passMinUppCase>0) {
+			if (passMinAlp>0 || passMinLowCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinUppCase)+ " uppercase";
+		}
+		if (passMinNum>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinNum)+" numeric";
+		}
+		if (passMinSym>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0) 
+				passwordRules += ", ";
+			passwordRules += Integer.toString(passMinSym)+" symbol(s)";
+		}
+		passwordRules += ". ";
+		
+		String passRegex = passwordPolicy.getRegex();
+		if (!passRegex.isEmpty()) {
+			passwordRules += "\nPlease set your password following this regular expression: "
+							+passRegex+" ";
+		}
+	}
+
+	if (passwordPolicy.isHistory()) {
+		passwordRules += "The old password cannot be reused. ";
+	}
 %>
 <portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL">
 	<portlet:param name="struts_action" value="/login/create_account" />
@@ -93,10 +159,6 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_LENGTH %>">
 
-			<%
-			PasswordPolicy passwordPolicy = PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(company.getCompanyId());
-			%>
-
 			<%= LanguageUtil.format(pageContext, "that-password-is-too-short-or-too-long-please-make-sure-your-password-is-between-x-and-512-characters", String.valueOf(passwordPolicy.getMinLength()), false) %>
 		</c:if>
 
@@ -137,6 +199,8 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 		<aui:col width="<%= 50 %>">
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
+				<div class="icon-info" style="float:left; padding-top:3px; padding-right:3px;" title="<%=passwordRules%>"></div>
+				
 				<aui:input label="password" name="password1" size="30" type="password" value="" />
 
 				<aui:input label="enter-again" name="password2" size="30" type="password" value="">
