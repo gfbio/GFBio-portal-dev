@@ -618,6 +618,7 @@ $dockbarVerticalWidth: 240px;
 				position: static;
 				width: 300px;
 			}
+			
 
 			.navbar-inner {
 				width: auto;
@@ -768,6 +769,8 @@ $dockbarVerticalWidth: 240px;
 			display: none;
 		}
 	}
+	
+	
 }
 
 /* ---------- Dockbar-vertical  ---------- */
@@ -856,6 +859,7 @@ $dockbarVerticalWidth: 240px;
 						.nav-collapse ul.nav li.user-avatar>a {
 							background-position: right bottom;
 						}
+						
 					}
 				}
 
@@ -917,6 +921,11 @@ $dockbarVerticalWidth: 240px;
 											width: 50%;
 										}
 									}
+									
+									 .dropdown-menu .dataSubmissions{
+									 
+									 	width:100%;
+									 }
 								}
 
 								&.dockbar-user-notifications {
@@ -1034,5 +1043,6 @@ $dockbarVerticalWidth: 240px;
 			margin-top: 40px;
 		}
 	}
+	
 	
 }
