@@ -14,7 +14,9 @@
  */
 --%>
 
-<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" model="<%= User.class %>" name="firstName" style="max-width:75%;" type="text"/>
+<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" model="<%= User.class %>" name="firstName" style="max-width:75%;" type="text">
+<aui:validator name="required" />
+</aui:input>
 
 <aui:input model="<%= User.class %>" name="middleName" style="max-width:75%;" type="text"/>
 

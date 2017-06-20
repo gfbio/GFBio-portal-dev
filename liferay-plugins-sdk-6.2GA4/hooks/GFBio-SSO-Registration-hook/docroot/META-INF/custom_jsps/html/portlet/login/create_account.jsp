@@ -187,7 +187,9 @@
 			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
-				<aui:input model="<%= User.class %>" name="screenName"  style="max-width:75%;" type="text"/>
+				<aui:input model="<%= User.class %>" name="screenName"  style="max-width:75%;" type="text">
+				<aui:validator name="required" />
+			</aui:input>
 			</c:if>
 
 			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  style="max-width:75%;" type="text">

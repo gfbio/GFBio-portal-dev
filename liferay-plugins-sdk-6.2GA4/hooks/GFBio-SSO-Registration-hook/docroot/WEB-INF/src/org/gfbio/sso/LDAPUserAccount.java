@@ -61,12 +61,10 @@ public class LDAPUserAccount {
 		Attribute screenName = new BasicAttribute("cn");
 		Attribute uid = new BasicAttribute("uid");
 		Attribute objclass = new BasicAttribute("objectclass");
-		log.info("LDAPaddUser:1");
 
 		givenName.add(user.getFirstName());
 		surname.add(user.getLastName());
 		email.add(user.getEmailAddress());
-		log.info("LDAPaddUser:2");
 		pwd.add(encryptSHA(password));
 		for (int i = 0; i < organizations.size(); i++) {
 			log.info("Organizations: " + organizations.get(i).getName());
@@ -128,14 +126,10 @@ public class LDAPUserAccount {
 	}
 
 	public static String encryptSHA(String pwdPlainText) throws NoSuchAlgorithmException {
-		log.info("encryptSHA:1");
 		MessageDigest md = MessageDigest.getInstance("SHA");
-		log.info("encryptSHA:2");
 		md.update(pwdPlainText.getBytes(StandardCharsets.US_ASCII));
 
-		log.info("encryptSHA:3");
 		byte byteData[] = md.digest();
-		log.info("encryptSHA:4");
 		String result = "{SHA}" + Base64.getEncoder().encodeToString(byteData);
 		log.info("userpassword in LDAP:" + result);
 		return result;

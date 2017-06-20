@@ -1227,3 +1227,6 @@ $breakpoint_tablet: 979px;
 .push{
 	height: 50px;
 }
+.portlet-body > .footer{
+	margin-bottom: -10px;
+}
