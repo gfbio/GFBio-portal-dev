@@ -96,6 +96,17 @@
 		]]>
     </sql>
     
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnNamesByHeadId">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_column.column_name 
+			FROM 
+			  public.gfbio_column
+			WHERE
+			  headid= ?
+		]]>
+    </sql>
+    
         <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getCountofColumns">
 	    <![CDATA[
 			SELECT 

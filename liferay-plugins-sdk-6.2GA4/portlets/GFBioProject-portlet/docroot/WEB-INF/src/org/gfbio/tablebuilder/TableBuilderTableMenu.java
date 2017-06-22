@@ -10,12 +10,14 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.NoSuchHeadException;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -62,6 +64,31 @@ public class TableBuilderTableMenu extends GenericPortlet {
 				getHCCEntityList(request, response);
 		}
 	}
+	
+	
+	//////////////////////////////////////////////////////////// delete functions ////////////////////////////////////////	
+	
+	
+	//delete all entries in head, column and content (also the complete HCC table) of a specific headid
+	public static void deleteTable (ResourceRequest request, ResourceResponse response){
+		
+	
+		String tableName = (request.getParameter("data")).toString();
+		System.out.println(tableName);
+		long headId = 0;
+
+		try {
+			if(tableName.charAt(0)=='"')
+				headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName.substring(1,tableName.length()-1));
+			else
+				headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);
+		} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
+		HeadLocalServiceUtil.deleteTableByHeadId(headId);
+
+		
+	}
+	
 	
 	////////////////////////////////////////////////////////////// get functions //////////////////////////////////////////	
 	

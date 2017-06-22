@@ -477,3 +477,128 @@ WHERE
 -----------------------------------------------------------------------------------------------
 
 ALTER TABLE gfbio_primarydata ALTER COLUMN path TYPE character(250);
+
+
+-----------------------------------------------------------------------------------------------
+-------------------------------------       head        -- 08.06.2017 -------------------------
+-----------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_head ALTER COLUMN description TYPE text;
+
+
+UPDATE gfbio_head SET  description='In this table we store keywords for some tools. This table is related with the "gfbio_type" table.'			WHERE table_name = 'gfbio_category';
+UPDATE gfbio_head SET  description='In this table we store non user persons , that are related with GFBio. For example authors of a dataset or contact persons of an archive. An user can be an user and an external person to the same time.'			WHERE table_name = 'gfbio_externalperson';
+UPDATE gfbio_head SET  description='In this table we store information of funding agencies, that are related with the GFBio Conext. For example via DMP Tool.'			WHERE table_name = 'gfbio_fundingagency';
+UPDATE gfbio_head SET  description='In this table we store information of funding programms, that are related with the GFBio Conext. For example via DMP Tool.'			WHERE table_name = 'gfbio_fundingprogram';
+UPDATE gfbio_head SET  description='In this table we store information of institutions, taht are related with GFBio as partner or from the user.'			WHERE table_name = 'gfbio_institution';
+UPDATE gfbio_head SET  description='In this table we store information about the licenses, that we use in GFBio.'			WHERE table_name = 'gfbio_license';
+UPDATE gfbio_head SET  description='In this table we store information about the metadata, that we use in GFBio. '			WHERE table_name = 'gfbio_metadata';
+UPDATE gfbio_head SET  description='In this table we store the information about persistent identifier, that the archives/datacenter use.'			WHERE table_name = 'gfbio_persistentidentifier';
+UPDATE gfbio_head SET  description='The type table specify the category.'			WHERE table_name = 'gfbio_type';
+
+
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+--------------------------------       legal requirements        -- 22.06.2017 ----------------
+-----------------------------------------------------------------------------------------------
+
+------------------------------------- Head Table Content -------------------------------------
+INSERT INTO gfbio_head (headid, table_name, table_type, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_legalrequirement','entity', now());
+
+------------------------------------- Column Table Content -------------------------------------
+
+
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement')),'id', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement')),'name', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement')),'label', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement')),'description', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement')),'extendeddata', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement')),'lastmodifieddate', now());
+
+------------------------------------- Content Table Content -------------------------------------
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','id'),				getNewRowId(), getNewContentId(), now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','name'), 				getMaxRowId(), 'Nagoya Protocol', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','label'), 			getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','description'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','extendeddata'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','lastmodifieddate'), 	getMaxRowId(), now(), now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','id'),				getNewRowId(), getNewContentId(), now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','name'), 				getMaxRowId(), 'Red List', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','label'), 			getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','description'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','extendeddata'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','lastmodifieddate'), 	getMaxRowId(), now(), now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','id'),				getNewRowId(), getNewContentId(), now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','name'), 				getMaxRowId(), 'Personally Identifiable Information', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','label'), 			getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','description'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','extendeddata'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','lastmodifieddate'), 	getMaxRowId(), now(), now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','name'), 				getMaxRowId(), 'Uncertain', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','label'), 			getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','description'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','extendeddata'), 		getMaxRowId(), '', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','lastmodifieddate'), 	getMaxRowId(), now(), now());
+
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+------------------------       legal requirements / research object       -- 22.06.2017 -------
+-----------------------------------------------------------------------------------------------
+
+------------------------------------- Head Table Content -------------------------------------
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_legalrequirement_researchobject','relationship');
+
+------------------------------------- Column Table Content -------------------------------------
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement_researchobject')),'gfbio_legalrequirement');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement_researchobject')),'gfbio_researchobject');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement_researchobject')),'lastmodifieddate');
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+------------------------       legal requirements / project       -- 22.06.2017 ---------------
+-----------------------------------------------------------------------------------------------
+
+------------------------------------- Head Table Content -------------------------------------
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_legalrequirement_project','relationship');
+
+------------------------------------- Column Table Content -------------------------------------
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement_project')),'gfbio_legalrequirement');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement_project')),'gfbio_project');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement_project')),'lastmodifieddate');
+
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+--------------------------------------       policy        -- 22.06.2017 ----------------------
+-----------------------------------------------------------------------------------------------
+
+------------------------------------- Head Table Content -------------------------------------
+INSERT INTO gfbio_head (headid, table_name, table_type, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_policy','entity', now());
+
+------------------------------------- Column Table Content -------------------------------------
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy')),'id', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy')),'name', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy')),'label', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy')),'description', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy')),'url', now());
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy')),'lastmodifieddate', now());
+
+
+-----------------------------------------------------------------------------------------------
+------------------------------------ Head, Column & Content -----------------------------------
+----------------------------------       policy / project       -- 22.06.2017 -----------------
+-----------------------------------------------------------------------------------------------
+
+------------------------------------- Head Table Content -------------------------------------
+INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_policy_project','relationship');
+
+------------------------------------- Column Table Content -------------------------------------
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy_project')),'gfbio_policy');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy_project')),'gfbio_project');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy_project')),'lastmodifieddate');
+

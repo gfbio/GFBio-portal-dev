@@ -28,7 +28,6 @@
 <body class="$css_class">
 
 
-
 <a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
 
 $theme.include($body_top_include)
@@ -120,13 +119,6 @@ $theme.include($body_top_include)
 	
 </main>
 
-
-$theme.include($body_bottom_include)
-
-$theme.include($bottom_include)
-
-</body>
-
 <script>
 
 (function($) {
@@ -194,4 +186,13 @@ $theme.include($bottom_include)
   })(jQuery);
   
 </script>
+
+
+$theme.include($body_bottom_include)
+
+$theme.include($bottom_include)
+
+</body>
+
+
 </html>
