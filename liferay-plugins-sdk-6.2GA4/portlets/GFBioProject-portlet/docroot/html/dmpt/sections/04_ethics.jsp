@@ -78,9 +78,9 @@ Open access does not mean everyone can use your data at his leisure. Data can be
         </div>
         <div id="accessYes" class="col-md-12">
         	<label>For how long do you need exclusive use of the data?</label>
-        	<input id="accessHowLong" name="accessHowLong" type="text" class="inputtext_long" />
+        	<input id="accessDuration" name="accessDuration" type="text" class="inputtext_long" />
         	<label>Why do you need exclusive use of the data?</label>
-        	<input id="accessWhy" name="accessWhy" type="text" class="inputtext_long" />
+        	<input id="accessReason" name="accessReason" type="text" class="inputtext_long" />
        	</div>
     </div>
 </section>

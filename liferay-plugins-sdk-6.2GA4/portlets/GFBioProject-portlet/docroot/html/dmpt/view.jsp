@@ -42,7 +42,7 @@ $(document).ready(function(){
         return this.optional(element) || value != param;
     }, "Please specify a non-default value");
     
-    var form = $("#example-form");
+    var form = $("#dmpt-wizard");
 	form.validate({
 		errorPlacement : function errorPlacement(error, element) {
 			if (element.attr("name") == "responsibleName" || element.attr("name") == "email") {
@@ -144,7 +144,9 @@ $(document).ready(function(){
 			return form.valid();
 		},
 		onFinished : function(event, currentIndex) {
-			alert("Submitted!");
+			$("div.steps").hide();
+			$("div.actions").hide();
+			$("#gfbioServicesStep").hide();
 		},
 		onInit : function() {
 		    //General Information
@@ -199,6 +201,8 @@ $(document).ready(function(){
 		    $("#archives").on("change", handleArchives);
 		    $("#archiveOther").hide();
 		    
+		    //Handling of inputs at the end of the wizard
+		    $("#handleInput").hide();
 		}
   	})
 });
@@ -207,7 +211,7 @@ $(document).ready(function(){
 
 <body>
 	<div class="container wizard_main">
-		<form id="example-form" action="#">
+		<form id="dmpt-wizard" action="#">
 			<div>
   				<jsp:include page="sections/01_general_information.jsp" />
  				
@@ -222,9 +226,6 @@ $(document).ready(function(){
  				<jsp:include page="sections/06_gfbio_services.jsp" />
 			</div>
 		</form>
-	</div>
-	<div >
-		<a href="#" id="download">Download File</a>
 	</div>
 	
 	<div id="clear" style="clear: both;"></div>

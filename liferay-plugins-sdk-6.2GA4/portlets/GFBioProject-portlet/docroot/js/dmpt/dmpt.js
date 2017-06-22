@@ -160,8 +160,8 @@ function handleRestriction(event) {
 	'use strict';
 	
 	var selection = $(event.target).val(),
-		howLong = $("#accessHowLong"),
-		why = $("#accessWhy"),
+		howLong = $("#accessDuration"),
+		why = $("#accessReason"),
 		div = $("#accessYes");
 	if (selection === "yes") {
 		div.show("slow");

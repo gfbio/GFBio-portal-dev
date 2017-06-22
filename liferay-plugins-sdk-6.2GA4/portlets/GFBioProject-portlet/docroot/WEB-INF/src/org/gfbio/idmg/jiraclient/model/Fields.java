@@ -1,6 +1,5 @@
 package org.gfbio.idmg.jiraclient.model;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Fields {

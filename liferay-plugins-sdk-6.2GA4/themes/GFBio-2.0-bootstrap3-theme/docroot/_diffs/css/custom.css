@@ -87,7 +87,7 @@
 		 text-decoration-style: none;
         }
 	
-		.journal-content-article a.btn {
+		.journal-content-article a.btn-footer {
 		 color:#fff;
 		 text-decoration:none;
 		}
@@ -1201,3 +1201,32 @@ $breakpoint_tablet: 979px;
 {
     vertical-align: baseline !important;
  }
+ 
+ /*Add padding to registration portlet*/
+ #portlet_terms-of-use > header, #portlet_update-reminder-query > header,
+ #portlet_verify-email-address > header,  #portlet_new-password > header
+ {
+ 	padding: 0px 10%;	
+ }
+#portlet_terms-of-use, #portlet_update-reminder-query ,
+#portlet_verify-email-address, #portlet_new-password
+{
+	padding-bottom: 0px;
+}
+
+.wrapper {
+  min-height: 100%;
+
+  /* Equal to height of footer */
+  /* But also accounting for potential margin-bottom of last child */
+  margin-bottom: -200px;
+}
+.embeddedFooter {
+  height: 200px;
+}
+.push{
+	height: 50px;
+}
+.portlet-body > .footer{
+	margin-bottom: -10px;
+}

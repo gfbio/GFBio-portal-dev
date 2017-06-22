@@ -27,9 +27,76 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 	referer = themeDisplay.getPathMain();
 }
 
-PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 %>
 
+<%
+	User selUser = (User) request.getAttribute("user.selUser");
+
+	PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+	boolean passwordResetDisabled = false;
+
+	if (((selUser == null) || (selUser.getLastLoginDate() == null)) && ((passwordPolicy == null)
+			|| (passwordPolicy.isChangeable() && passwordPolicy.isChangeRequired()))) {
+		passwordResetDisabled = true;
+	}
+
+	boolean passwordReset = false;
+
+	if (passwordResetDisabled) {
+		passwordReset = true;
+	} else {
+		passwordReset = BeanParamUtil.getBoolean(selUser, request, "passwordReset");
+	}
+
+	String passwordRules = "";
+	if (passwordPolicy.isCheckSyntax()) {
+		if (passwordPolicy.isAllowDictionaryWords()) {
+			passwordRules += "The new password should not contain dictionary words. ";
+		}
+		int passMinAlp = passwordPolicy.getMinAlphanumeric();
+		int passMinLen = passwordPolicy.getMinLength();
+		int passMinLowCase = passwordPolicy.getMinLowerCase();
+		int passMinNum = passwordPolicy.getMinNumbers();
+		int passMinSym = passwordPolicy.getMinSymbols();
+		int passMinUppCase = passwordPolicy.getMinUpperCase();
+			
+		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character(s)";
+		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
+			passwordRules += " consists of ";
+		if (passMinAlp>0) 
+			passwordRules += Integer.toString(passMinAlp)+" alphanumeric";
+		if (passMinLowCase>0) {
+			if (passMinAlp>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinLowCase)+" lowercase";
+		}
+		if (passMinUppCase>0) {
+			if (passMinAlp>0 || passMinLowCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinUppCase)+ " uppercase";
+		}
+		if (passMinNum>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinNum)+" numeric";
+		}
+		if (passMinSym>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0) 
+				passwordRules += ", ";
+			passwordRules += Integer.toString(passMinSym)+" symbol(s)";
+		}
+		passwordRules += ". ";
+		
+		String passRegex = passwordPolicy.getRegex();
+		if (!passRegex.isEmpty()) {
+			passwordRules += "\nPlease set your password following this regular expression: "
+							+passRegex+" ";
+		}
+	}
+
+	if (passwordPolicy.isHistory()) {
+		passwordRules += "The old password cannot be reused. ";
+	}
+%>
+<div  class="wrapper" style="padding:0 10%;">
 <c:choose>
 	<c:when test="<%= SessionErrors.contains(request, UserLockoutException.class.getName()) %>">
 		<div class="alert alert-error">
@@ -47,6 +114,8 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 			<div class="alert alert-info">
 				<liferay-ui:message key="please-set-a-new-password" />
+					<c:if test="<%=!passwordRules.isEmpty()%>">
+	</c:if>
 			</div>
 
 			<c:if test="<%= SessionErrors.contains(request, UserPasswordException.class.getName()) %>">
@@ -96,6 +165,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 
 			<aui:fieldset label="new-password">
+				<div class="icon-info" style="float:left; padding-top:3px; padding-right:3px;" title="<%=passwordRules%>"></div>
 				<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="password" name="password1" type="password" />
 
 				<aui:input class="lfr-input-text-container" label="enter-again" name="password2" type="password" />
@@ -113,3 +183,18 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 		</aui:form>
 	</c:otherwise>
 </c:choose>
+    <div class="push"></div>
+</div>
+
+<% 
+String footerContent = "";
+try{ 
+	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), "footer");
+	String articleId = journalArticle.getArticleId();
+	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay.getScopeGroupId(),articleId, "","",themeDisplay);
+ 	footerContent = articleDisplay.getContent();
+} catch (Exception e){
+	footerContent = "Sorry, there is no web content with this title";
+}
+%>
+<p class="embeddedFooter"><%=footerContent%></p>
