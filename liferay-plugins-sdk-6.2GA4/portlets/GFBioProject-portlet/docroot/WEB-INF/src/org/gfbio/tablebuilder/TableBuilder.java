@@ -82,6 +82,10 @@ public class TableBuilder extends GenericPortlet {
 			if ("gethccentitylist".toString().equals(request.getParameter("responseTarget").toString()))
 				TableBuilderTableMenu.getHCCEntityList(request, response);
 			
+			//delete Table
+			if ("deleteTable".toString().equals(request.getParameter("responseTarget").toString()))
+				TableBuilderTableMenu.deleteTable(request, response);
+			
 			
 /*			//choose Table
 			if ("chooseTableForRelationship".toString().equals(request.getParameter("responseTarget").toString()))
@@ -99,9 +103,7 @@ public class TableBuilder extends GenericPortlet {
 			if ("deleteColumn".toString().equals(request.getParameter("responseTarget").toString()))
 				deleteColumn(request, response);
 			
-			//delete Table
-			if ("deleteTable".toString().equals(request.getParameter("responseTarget").toString()))
-				deleteTable(request, response);
+
 			
 			//delete Content of a relationship
 			if ("deleteRelationContent".toString().equals(request.getParameter("responseTarget").toString()))

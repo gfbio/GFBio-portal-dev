@@ -26,12 +26,15 @@ import java.util.List;
 
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.NoSuchContentException;
+import org.gfbio.helper.Helper;
 import org.gfbio.model.Column;
 import org.gfbio.model.Head;
 import org.gfbio.model.Content;
 import org.gfbio.service.ColumnLocalServiceUtil;
 import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.base.HeadLocalServiceBaseImpl;
+import org.gfbio.service.persistence.ColumnFinderUtil;
 import org.gfbio.service.persistence.HeadFinderUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -67,9 +70,8 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		
 		if (check){
 			String tableName="";
-			try {
-				tableName = getTableNameById(headId);
-			} catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+			try {tableName = getTableNameById(headId);}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
 			List relationList = ColumnLocalServiceUtil.getHeadIdsByColumnName(tableName);
 			for (int i=0; i <relationList.size();i++)
 				deleteTableByHeadIdWithoutCheck((long)relationList.get(i));
@@ -81,13 +83,11 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	//delete a table/entity (head, column and content) 
 	public void deleteTableByHeadIdWithoutCheck(long headId){
 		
-		try {
-			ContentLocalServiceUtil.deleteContentsByHeadId(headId);
-		} catch (SystemException e1) {e1.printStackTrace();	}
+		try {ContentLocalServiceUtil.deleteContentsByHeadId(headId);}
+		catch (SystemException e1) {e1.printStackTrace();	}
 		ColumnLocalServiceUtil.deleteColumnsByHeadId(headId);
-		try {
-			deleteHead(headId);
-		} catch (PortalException | SystemException e) {e.printStackTrace();}
+		try {deleteHead(headId);}
+		catch (PortalException | SystemException e) {e.printStackTrace();}
 	}
 	
 	
@@ -102,9 +102,33 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 	public JSONArray getTableNamesByTableType(JSONObject requestJson){
 		
 		JSONArray responseJson = new JSONArray();
-		if (requestJson.containsKey("tabletype"))
+		if (requestJson.containsKey("tabletype")){
 			responseJson = getTableNamesByTableType((String) requestJson.get("tabletype"));
-		else
+			if (requestJson.containsKey("kindofresponse"))
+				if (Helper.getStringFromJson(requestJson, "kindofresponse").equals("extended")){
+					for (int i = 0; i <responseJson.size();i++){
+						String tableName = (String) responseJson.get(i);
+						JSONObject extendedJson = new JSONObject();
+						
+						try {
+							List columnList = ColumnLocalServiceUtil.getColumnNamesByHeadId(HeadLocalServiceUtil.getHeadIdByTableName(tableName));
+							JSONArray columnJson = new JSONArray();
+							for (int j =0; j < columnList.size(); j++)
+								columnJson.add(columnList.get(j));
+							extendedJson.put("columnnames", columnJson);
+						}
+						catch (NoSuchHeadException | SystemException e) {e.printStackTrace();	}
+						
+						extendedJson.put("tablename", tableName);
+						
+						try {extendedJson.put("description", HeadLocalServiceUtil.getDescriptionByHeadId(HeadLocalServiceUtil.getHeadIdByTableName(tableName)));} 
+						catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+						
+						responseJson.set(i, extendedJson);
+					}
+				}
+			
+		}else
 			responseJson.add("ERROR: The json need minimal 'tabletype' as String.");
 		return responseJson;
 		
@@ -151,6 +175,17 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 			}
 		}
 		return count;
+	}
+	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public String getDescriptionByHeadId(long headId) {
+		String description ="";
+		List descriptionList = HeadFinderUtil.getDescriptionByHeadId(headId);
+		if (descriptionList!=null)
+			description =  (String) descriptionList.get(0);
+		return description;
 	}
 	
 	
@@ -320,6 +355,7 @@ public class HeadLocalServiceImpl extends HeadLocalServiceBaseImpl {
 		
 		JSONArray responseJson = new JSONArray();;
 		List responseList = (ArrayList)	HeadFinderUtil.getTableNamesByTableType(tableType);
+		java.util.Collections.sort(responseList);
 		for(int i=0; i< responseList.size();i++)
 			responseJson.add(responseList.get(i));
 

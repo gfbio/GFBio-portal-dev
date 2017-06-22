@@ -19,6 +19,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFinder {
 	
 	public static String FINDER_CLASS_NAME_ENTITY 	= HeadFinderImpl.class.getName();
+	public static String GET_DESCRIPTION_BY_HEADID 	= FINDER_CLASS_NAME_ENTITY + ".getDescriptionByHeadId";
 	public static String GET_ENITIES_BY_HEADID 		= FINDER_CLASS_NAME_ENTITY + ".getEntitiesByHeadId";
 	public static String GET_HEAD_BETWEEN_HEAD_IDS 	= FINDER_CLASS_NAME_ENTITY + ".getHeadBetweenHeadIds";
 	public static String GET_HEADID_BY_TABLENAME 	= FINDER_CLASS_NAME_ENTITY + ".getHeadIdByTableName";	
@@ -44,6 +45,33 @@ public class HeadFinderImpl extends BasePersistenceImpl<Head> implements HeadFin
 			queryObject.addEntity("Head", HeadImpl.class);
 			queryObject.addEntity("Column", ColumnImpl.class);
 			queryObject.addEntity("Content", ContentImpl.class);
+			
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(headId);
+			return (List) queryObject.list();
+			
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
+	//get the ID of a table with a specific name 
+	@SuppressWarnings("rawtypes")
+	public List getDescriptionByHeadId(long headId) {
+	
+		Session session = null;
+		try {
+		
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_DESCRIPTION_BY_HEADID);
+			
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			
+			queryObject.addScalar("description", Type.STRING);
 			
 			QueryPos qPos = QueryPos.getInstance(queryObject);
 			qPos.add(headId);

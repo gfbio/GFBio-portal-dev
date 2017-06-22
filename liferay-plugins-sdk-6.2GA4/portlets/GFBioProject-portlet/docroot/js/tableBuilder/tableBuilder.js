@@ -32,14 +32,12 @@ function tabLoader(newTabId){
 
 //
 function loadPath (path){
-	console.log(path);
 	$( "#".concat(tab)).load( document.getElementById("path").value.concat(path));
 }
 
 
 //
 function loadPath (path1, path2){
-	console.log(path1 +"" | "+path2");
 	$( "#".concat(tab1)).load( document.getElementById("path").value.concat(path1));
 	$( "#".concat(tab2)).load( document.getElementById("path").value.concat(path2));
 }
@@ -86,10 +84,10 @@ function deleteColumn(method, data, tab1, path1,tab2,path2){
 
 
 //
-function deleteTable(method, data, tab1, path1,tab2,path2){
+/*function deleteTable(method, data, tab1, path1,tab2,path2){
 	ajaxTableBuilderRequest(document.getElementById('tablebuilderurl').value, method, data, false);
 	loadPath (path1, path2);
-}
+}*/
 
 
 //Method to update a RelationTable in Head
