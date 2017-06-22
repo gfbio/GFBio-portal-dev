@@ -1192,6 +1192,12 @@ $breakpoint_tablet: 979px;
 			} 
 		
 		}
+		.span8, .span4{
+           width: 100%;
+       }
+       
+      
+		
 		 
 	}
 }
