@@ -189,7 +189,8 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 <% 
 String footerContent = "";
 try{ 
-	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), "footer");
+	String footerName = com.liferay.portal.kernel.util.PropsUtil.get("footer.name");
+	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), footerName);
 	String articleId = journalArticle.getArticleId();
 	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay.getScopeGroupId(),articleId, "","",themeDisplay);
  	footerContent = articleDisplay.getContent();
