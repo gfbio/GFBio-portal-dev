@@ -9,6 +9,7 @@ import com.liferay.portal.util.PortalUtil;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
+import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -548,11 +550,11 @@ public class WorkflowGeneric extends GenericPortlet {
        	
        
         String response = json.toJSONString();
-        _log.info(response);
+/*        _log.info(response);
         response = response.replaceAll("\\\\n", "----n");
         response = response.replaceAll("\\\\", "");
         response = response.replaceAll("----n", "\\\\n");
-        _log.info(response);
+        _log.info(response);*/
         
 /*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
@@ -625,7 +627,7 @@ public class WorkflowGeneric extends GenericPortlet {
                 post.addHeader("Authorization", basicAuth);
 
             String jiraRequestString = getJSON_Body((JSONObject) parseJson);
-            HttpEntity entity = new ByteArrayEntity(jiraRequestString.getBytes());
+            HttpEntity entity = new ByteArrayEntity(jiraRequestString.getBytes(StandardCharsets.UTF_8));
             post.setEntity(entity);
             
             HttpResponse resp = httpclient.execute(post);
