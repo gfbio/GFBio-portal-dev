@@ -549,22 +549,19 @@ public class WorkflowGeneric extends GenericPortlet {
        	
        
         String response = json.toJSONString();
-/*        _log.info(response);
-        response = response.replaceAll("\\\\n", "----n");
-        response = response.replaceAll("\\\\", "");
+             
+        response = response.replaceAll("\\\\\\\\n", "----n");
+        response = response.replaceAll("\\\\\\\\t", "----t");
+        response = response.replaceAll("\\\\\\\\", "------");
+        response = response.replaceAll("------------", "\\\\\\\\");
+        response = response.replaceAll("------", "");
         response = response.replaceAll("----n", "\\\\n");
-        _log.info(response);*/
+        response = response.replaceAll("----t", "\\\\t");
         
 /*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
         System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
 	           */
-        
-        _log.info("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-        _log.info("json: "+json);
-        _log.info("string: "+response);
-        _log.info("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-        
         return response;
     }
     
@@ -635,7 +632,6 @@ public class WorkflowGeneric extends GenericPortlet {
             
             HttpEntity entity = new ByteArrayEntity(jiraRequestString.getBytes(StandardCharsets.UTF_8));
             post.setEntity(entity);
-            
             HttpResponse resp = httpclient.execute(post);
              
             if (!((resp.getStatusLine().toString()).equals("HTTP/1.1 201 Created"))) {
