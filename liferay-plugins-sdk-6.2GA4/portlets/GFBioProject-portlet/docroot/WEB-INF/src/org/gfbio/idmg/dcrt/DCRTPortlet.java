@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -119,6 +120,12 @@ public class DCRTPortlet extends MVCPortlet {
 	/* Method for ajax functionality of Category DropDown */
 	private void ajaxCategory(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
+		//Test ApplicationScoped-Session Values
+		//String s = "Hakuna Matata";
+		//PortletSession session = resourceRequest.getPortletSession();
+	    //session.setAttribute("sessionValue", s ,PortletSession.APPLICATION_SCOPE);
+		//_log.info("Value set to PortletSession");
+
 		// Category-DropDown Selection
 		String category = resourceRequest.getParameter("category");
 		_log.info("Category " + category);
@@ -134,7 +141,7 @@ public class DCRTPortlet extends MVCPortlet {
 		} else {
 			recommendedProviders = DataProviderUtil.setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);
 		}
-
+		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
