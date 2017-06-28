@@ -15,25 +15,13 @@ import org.json.simple.parser.ParseException;
 public class Helper {
 
 	static String FILEPATH = ".."+File.separator+".."+File.separator+".."+File.separator+"server_specific_identification"+File.separator+"serverfile.txt";
-	
+	static int jiraArrayLimit  = 30000;
+	static int jiraStringLimit = 200;
+
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
-	
-    //
-    public static String getServerInformation(String path, String key) throws IOException, PortletException {
-    	
-		String value ="";
-		JSONObject fileJson = getAllServerInformation(path);
-		
-		if (fileJson.containsKey(key))
-			value = (String) fileJson.get(key);
-		else
-			value = "ERROR: You sent a wrong server type.";
-			
-		return value;
-	}
-    
+ 
     
     //
     public static JSONObject getAllServerInformation(String path) throws IOException, PortletException {
@@ -81,6 +69,18 @@ public class Helper {
 		return responseInt;
 	}
 	
+	
+	//
+	public static int getJiraStringLimit(){
+		return jiraArrayLimit;
+	}
+	
+	
+	//
+	public static int getJiraArrayLimit(){
+		return jiraStringLimit;
+	}
+	
     
 	//
 	public static long getLongFromJson(JSONObject requestJson, String key){
@@ -113,6 +113,21 @@ public class Helper {
 					responseString = ((JSONArray) requestJson.get(key)).toString();
 
 		return responseString;
+	}
+	
+	
+    //
+    public static String getServerInformation(String path, String key) throws IOException, PortletException {
+    	
+		String value ="";
+		JSONObject fileJson = getAllServerInformation(path);
+		
+		if (fileJson.containsKey(key))
+			value = (String) fileJson.get(key);
+		else
+			value = "ERROR: You sent a wrong server type.";
+			
+		return value;
 	}
 	
 	

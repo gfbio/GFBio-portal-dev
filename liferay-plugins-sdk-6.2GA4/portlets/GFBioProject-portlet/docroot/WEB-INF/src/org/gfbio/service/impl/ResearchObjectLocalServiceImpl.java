@@ -794,118 +794,131 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			String description = requestJson.get("description").toString();
 			
-			try {
-				researchObjectId = createResearchObject(name, label, description);
-				if (researchObjectId !=0)
-					check = true;
-			} catch (SystemException e) {e.printStackTrace();}
-
+			if (name.length() <(Helper.getJiraStringLimit()+1) && label.length()<(Helper.getJiraStringLimit()+1) && description.length() <(Helper.getJiraArrayLimit()+1)){
 			
-			if(requestJson.containsKey("researchobjecttype") && check)
-				check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
-
-			// optional
-									
-			if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames")) && check){
-			
-				if ((requestJson.containsKey("authormail")))
-					check = updateAuthorIdById(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
+				try {
+					researchObjectId = createResearchObject(name, label, description);
+					if (researchObjectId !=0)
+						check = true;
+				} catch (SystemException e) {e.printStackTrace();}
+	
 				
-				if(requestJson.containsKey("authormail") && check)
-					check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim(),"mail");
-						
-				if(requestJson.containsKey("authornames") && check)
-					if (((requestJson.get("authornames").getClass()).toString()).equals("class java.lang.String")){
-						JSONParser parser = new JSONParser();
-						JSONArray parseJson = new JSONArray();
-						try {parseJson = (JSONArray) parser.parse((String) requestJson.get("authornames"));}
-						catch (ParseException e) {e.printStackTrace();}
-						updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, parseJson,"name");
-					}else
-						updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")),"name");
-			}			
-			else if (requestJson.containsKey("userid") && check){
-				JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
+				if(requestJson.containsKey("researchobjecttype") && check)
+					check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
+	
+				// optional
+										
+				if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames")) && check){
 				
-				if (userExtension.containsKey("fullname"))
-					if (!(((String) userExtension.get("fullname")).equals(null)))
-							check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, (String) userExtension.get("fullname"),"name" );
-					else
+					if ((requestJson.containsKey("authormail")))
+						check = updateAuthorIdById(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
+					
+					if(requestJson.containsKey("authormail") && check)
+						check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim(),"mail");
+							
+					if(requestJson.containsKey("authornames") && check)
+						if (((requestJson.get("authornames").getClass()).toString()).equals("class java.lang.String")){
+							JSONParser parser = new JSONParser();
+							JSONArray parseJson = new JSONArray();
+							try {parseJson = (JSONArray) parser.parse((String) requestJson.get("authornames"));}
+							catch (ParseException e) {e.printStackTrace();}
+							updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, parseJson,"name");
+						}else
+							updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")),"name");
+				}			
+				else if (requestJson.containsKey("userid") && check){
+					JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
+					
+					if (userExtension.containsKey("fullname"))
+						if (!(((String) userExtension.get("fullname")).equals(null)))
+								check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, (String) userExtension.get("fullname"),"name" );
+						else
+							check = false;
+					else{
 						check = false;
-				else{
-					check = false;
-					if (userExtension.containsKey("ERROR"))
-						responseJson.put("ERROR", (String) userExtension.get("ERROR"));
-				}
-			}
-
-			
-			if(requestJson.containsKey("categoryids") && check)
-				if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-					updateCategoryIds(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categoryids"));
-				else{
-					if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String")){
-						JSONParser parser = new JSONParser();
-						JSONArray parseJson = new JSONArray();
-						try {parseJson = (JSONArray) parser.parse((String) requestJson.get("categoryids"));}
-						catch (ParseException e) {e.printStackTrace();}
-						updateCategoryIds(researchObjectId, researchObjectVersion, parseJson);
+						if (userExtension.containsKey("ERROR"))
+							responseJson.put("ERROR", (String) userExtension.get("ERROR"));
 					}
 				}
-			else
-				if (requestJson.containsKey("categoryid") && check)
-					updateCategoryId(researchObjectId, researchObjectVersion, (long) requestJson.get("categoryid"));
-				else
-					if (requestJson.containsKey("categorynames") && check)
-						if ((((requestJson.get("categorynames")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-							updateCategoryNames(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categorynames"));
-						else
-							if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String")){
-								JSONParser parser = new JSONParser();
-								JSONArray parseJson = new JSONArray();
-								try {parseJson = (JSONArray) parser.parse((String) requestJson.get("categorynames"));}
-								catch (ParseException e) {e.printStackTrace();}
-								updateCategoryNames(researchObjectId, researchObjectVersion, parseJson);
-							}
-					
-			if(requestJson.containsKey("extendeddata") && check){
-				if ((((requestJson.get("extendeddata")).getClass()).toString()).equals("class java.lang.String"))
-					updateExtendedData(researchObjectId, researchObjectVersion, ((String) requestJson.get("extendeddata")).trim());
-				else
-					updateExtendedData(researchObjectId, researchObjectVersion, ((((JSONObject) requestJson.get("extendeddata"))).toJSONString()).trim());
-			}
-
-			if(requestJson.containsKey("licenselabel") && check)
-				check = updateLicenseId(researchObjectId,  researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
-			
-			if (requestJson.containsKey("licenseid") && check)
-				check = updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
-			
-			if (requestJson.containsKey("metadataid") && check)
-				check = updateMetadataId(researchObjectId, researchObjectVersion, (long) requestJson.get("metadataid"));
-			
-			if (requestJson.containsKey("metadatalabel") && check)
-				check = updateMetadataId(researchObjectId, researchObjectVersion, (String) requestJson.get("metadatalabel"));
-			
-			if (requestJson.containsKey("parentresearchobjectid") && check)
-				check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, (long) requestJson.get("parentresearchobjectid"));
-			
-			if (requestJson.containsKey("projectid") && check)
-				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
-			
-			if (requestJson.containsKey("userid") && check)
-				if ((((requestJson.get("userid")).getClass()).toString()).equals("class java.lang.Integer"))
-					check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) (int) requestJson.get("userid"), "owner");
-				else
-					check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"), "owner");
 	
-			if (check){
-				responseJson.put("researchobjectid", researchObjectId);
-				responseJson.put("researchobjectversion", researchObjectVersion);
-				if (requestJson.containsKey("brokerobjectid")) 
-					responseJson.put("brokerobjectid", requestJson.get("brokerobjectid"));
-			}else
-				responseJson.put("ERROR:", "ERROR: create research object is failed.");
+				
+				if(requestJson.containsKey("categoryids") && check)
+					if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
+						updateCategoryIds(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categoryids"));
+					else{
+						if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String")){
+							JSONParser parser = new JSONParser();
+							JSONArray parseJson = new JSONArray();
+							try {parseJson = (JSONArray) parser.parse((String) requestJson.get("categoryids"));}
+							catch (ParseException e) {e.printStackTrace();}
+							updateCategoryIds(researchObjectId, researchObjectVersion, parseJson);
+						}
+					}
+				else
+					if (requestJson.containsKey("categoryid") && check)
+						updateCategoryId(researchObjectId, researchObjectVersion, (long) requestJson.get("categoryid"));
+					else
+						if (requestJson.containsKey("categorynames") && check)
+							if ((((requestJson.get("categorynames")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
+								updateCategoryNames(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categorynames"));
+							else
+								if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String")){
+									JSONParser parser = new JSONParser();
+									JSONArray parseJson = new JSONArray();
+									try {parseJson = (JSONArray) parser.parse((String) requestJson.get("categorynames"));}
+									catch (ParseException e) {e.printStackTrace();}
+									updateCategoryNames(researchObjectId, researchObjectVersion, parseJson);
+								}
+						
+				if(requestJson.containsKey("extendeddata") && check){
+					if ((((requestJson.get("extendeddata")).getClass()).toString()).equals("class java.lang.String"))
+						updateExtendedData(researchObjectId, researchObjectVersion, ((String) requestJson.get("extendeddata")).trim());
+					else
+						updateExtendedData(researchObjectId, researchObjectVersion, ((((JSONObject) requestJson.get("extendeddata"))).toJSONString()).trim());
+				}
+	
+				if(requestJson.containsKey("licenselabel") && check)
+					check = updateLicenseId(researchObjectId,  researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
+				
+				if (requestJson.containsKey("licenseid") && check)
+					check = updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
+				
+				if (requestJson.containsKey("metadataid") && check)
+					check = updateMetadataId(researchObjectId, researchObjectVersion, (long) requestJson.get("metadataid"));
+				
+				if (requestJson.containsKey("metadatalabel") && check)
+					check = updateMetadataId(researchObjectId, researchObjectVersion, (String) requestJson.get("metadatalabel"));
+				
+				if (requestJson.containsKey("parentresearchobjectid") && check)
+					check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, (long) requestJson.get("parentresearchobjectid"));
+				
+				if (requestJson.containsKey("projectid") && check)
+					check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
+				
+				if (requestJson.containsKey("userid") && check)
+					if ((((requestJson.get("userid")).getClass()).toString()).equals("class java.lang.Integer"))
+						check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) (int) requestJson.get("userid"), "owner");
+					else
+						check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"), "owner");
+		
+				if (check){
+					responseJson.put("researchobjectid", researchObjectId);
+					responseJson.put("researchobjectversion", researchObjectVersion);
+					if (requestJson.containsKey("brokerobjectid")) 
+						responseJson.put("brokerobjectid", requestJson.get("brokerobjectid"));
+				}else
+					responseJson.put("ERROR:", "ERROR: create research object is failed.");
+			}else{
+				String errorString = "ERROR: To create a Research Object, because " ;
+				if (name.length() <201)
+					errorString = errorString.concat("'name' has more as ").concat(String.valueOf(Helper.getJiraStringLimit())).concat(" character, ") ;
+				if (label.length()<201)
+					errorString = errorString.concat("'label' has more as ").concat(String.valueOf(Helper.getJiraStringLimit())).concat(" character, ") ;
+				if (description.length() <30001)
+					errorString = errorString.concat("'description' has more as ").concat(String.valueOf(Helper.getJiraArrayLimit())).concat(" character, ") ;
+				errorString = errorString.substring(0, errorString.length()-1).concat(".");
+				responseJson.put("ERROR", errorString);
+			}
 		}else{
 			String errorString = "ERROR: To create a Research Object, the json need minimal 'name' or 'label' and 'description', 'researchobjecttype' as Strings and 'projectid' or 'userid' as long." ;
 			if (!requestJson.containsKey("name"))
@@ -918,7 +931,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			if (!requestJson.containsKey("userid"))
 				if (!requestJson.containsKey("projectid"))
 					errorString = errorString.concat(" 'userid' or 'projectid,");
-			errorString = errorString.substring(0, errorString.length()-1).concat(" are not correct");
+			errorString = errorString.substring(0, errorString.length()-1).concat(" are not correct.");
 			responseJson.put("ERROR", errorString);
 		}
 		
