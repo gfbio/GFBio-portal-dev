@@ -2,14 +2,18 @@ package org.gfbio.submissionworkflow;
 
 //import LiferayWebserviceClientCallPortalServices;
 
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,15 +36,26 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
 import org.gfbio.helper.Helper;
 import org.gfbio.service.ContentLocalServiceUtil;
@@ -613,6 +628,8 @@ public class WorkflowGeneric extends GenericPortlet {
 
     	String responseString = "";    	
         JSONObject parseJson = getDataJsonAsObject (request);
+/*        try {_log.info("result: "+requestDB());}
+        catch (UnsupportedEncodingException e1) {e1.printStackTrace();}*/
         
         try {
        
@@ -684,10 +701,63 @@ public class WorkflowGeneric extends GenericPortlet {
 			e.printStackTrace();
 			_log.info(e.toString());
 		}
-		
-   
     }
+
     
+    public String requestDB() throws UnsupportedEncodingException{
+    	
+        HttpHost targetHost = new HttpHost("gfbio-dev1.inf-bb.uni-jena.de", 443, "https");
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        httpclient.getCredentialsProvider().setCredentials(
+                new AuthScope(targetHost.getHostName(), targetHost.getPort()),
+                new UsernamePasswordCredentials("Marcel.froemming@uni-jena.de", "Spatz314"));
+
+        // Create AuthCache instance
+        AuthCache authCache = new BasicAuthCache();
+        // Generate BASIC scheme object and add it to the local
+        // auth cache
+        BasicScheme basicAuth = new BasicScheme();
+        authCache.put(targetHost, basicAuth);
+
+        // Add AuthCache to the execution context
+        BasicHttpContext ctx = new BasicHttpContext();
+        ctx.setAttribute(ClientContext.AUTH_CACHE, authCache);
+
+        HttpPost post = new HttpPost("/api/jsonws/GFBioProject-portlet.researchobject/create-research-object");
+        
+        
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        
+        
+        String value = getJsonArray(getJsonObject()).toString();
+        
+        params.add(new BasicNameValuePair("requestJson", value));
+
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
+        post.setEntity(entity);
+        
+        System.out.println(params.get(0));
+        System.out.println("--------------------------------------------------------------------------");
+
+        HttpResponse resp;
+        String respString ="";
+		try {
+			resp = httpclient.execute(targetHost, post, ctx);
+			 resp.getEntity().writeTo(System.out);
+
+		        System.out.println(resp.getParams().toString());
+		        System.out.println(resp.getStatusLine());
+		        
+		        httpclient.getConnectionManager().shutdown();
+		        
+		        respString = resp.getStatusLine().toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        return(respString);
+    }
     
     //
 	@SuppressWarnings("resource")
@@ -807,7 +877,94 @@ public class WorkflowGeneric extends GenericPortlet {
 		response.getWriter().write(responseJson.toString());
 	}
 	
-    
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	////////////////////////////////////////////////////////
+	
+	
+   	@SuppressWarnings("unused")
+		public static URL getURL() throws MalformedURLException{
+    		
+    		JSONArray requestArray = getJsonArray(getJsonObject());
+    		
+            // URL url = new URL("http://localhost:8080/api/jsonws/GFBioProject-portlet.project/get-project-by-id/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("http://localhost:8080/api/jsonws/GFBioProject-portlet.userextension/get-user-by-id/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("http://localhost:8080/api/jsonws/GFBioProject-portlet.project/get-check-project-on-submissions/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("http://localhost:8080/api/jsonws/GFBioProject-portlet.researchobject/get-research-object-absolut-parent/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("http://localhost:8080/api/jsonws/GFBioProject-portlet.researchobject/create-research-object/request-json/".concat(requestArray.toString()));
+            // URL url = new URL("http://localhost:8080/api/jsonws/GFBioProject-portlet.submission/create-submission/request-json/".concat(requestArray.toString()));
+            // URL url = new URL("http://gfbio-dev1.inf-bb.uni-jena.de:8080/api/jsonws/GFBioProject-portlet.project/get-project-by-id/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("http://gfbio-dev1.inf-bb.uni-jena.de:8080/api/jsonws/GFBioProject-portlet.userextension/get-user-by-id/request-json/".concat(requestJson.toString()));
+ 	           URL url = new URL("https://gfbio-dev1.inf-bb.uni-jena.de/api/jsonws/GFBioProject-portlet.researchobject/create-research-object/");
+ 	        //   URL url = new URL("https://gfbio-pub2.inf-bb.uni-jena.de/api/jsonws/GFBioProject-portlet.researchobject/create-research-object/-request-json");
+    	    //   URL url = new URL("https://gfbio-pub2.inf-bb.uni-jena.de/api/jsonws/GFBioProject-portlet.researchobject/create-research-object/request-json/");
+    		// URL url = new URL("http://gfbio-pub2.inf-bb.uni-jena.de:8080/api/jsonws/GFBioProject-portlet.project/get-check-project-on-submissions/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("http://gfbio-pub2.inf-bb.uni-jena.de:8080/api/jsonws/GFBioProject-portlet.project/update-project/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("http://gfbio-pub2.inf-bb.uni-jena.de:8080/api/jsonws/GFBioProject-portlet.submission/update-submission/request-json/".concat(requestArray.toString()));
+            // URL url = new URL("http://gfbio-pub2.inf-bb.uni-jena.de:8080/api/jsonws/GFBioProject-portlet.submission/create-submission/request-json/".concat(requestArray.toString()));
+    		// URL url = new URL("https://gfbio-pub2.inf-bb.uni-jena.de/api/jsonws/GFBioProject-portlet.project/get-project-by-id/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("https://gfbio-pub2.inf-bb.uni-jena.de/api/jsonws/GFBioProject-portlet.project/get-project-by-id/request-json/".concat(requestJson.toString()));
+            // URL url = new URL("https://gfbio-pub2.inf-bb.uni-jena.de:8080/api/jsonws/GFBioProject-portlet.userextension/get-user-by-id/request-json/".concat(requestJson.toString()));
+    		// URL url = new URL("http://gfbio.org/api/jsonws/GFBioProject-portlet.researchobject/create-research-object/request-json/".concat(requestArray.toString()));
+             
+    	       System.out.println(url);
+    	       
+    	       return url;
+    	}
+    	
+    	
+    	@SuppressWarnings("unchecked")
+    	public static JSONObject getJsonObject(){
+    		
+            JSONObject requestJson = new JSONObject();
+            
+            //extendedJson.put("name", "data");
+            requestJson.put("name", "legnth test");
+           //requestJson.put("label", "testx");
+          //   requestJson.put("extendeddata", extendedJson);
+           //requestJson.put("researchobjectid",301);
+           //requestJson.put("latestx",3);
+           //requestJson.put("brokersubmissionid", "E7DAA13C-1AA7-40E7-AFCA-D0986F0AAC97");
+           //  requestJson.put("submitterid", 15926);
+           //requestJson.put("researchobjectversion", 1);
+           //requestJson.put("archive", "SGN");
+           //requestJson.put("archivepid", "ACC4711");
+           //requestJson.put("projectid",1);
+           //requestJson.put("researchobjecttype", "example");
+             requestJson.put("description", "01234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890012345678900123456789001234567890");
+             requestJson.put("researchobjecttype", "test");
+           //requestJson.put("projectid", 1302);
+           //  requestJson.put("userid", 10199); //local
+           //  requestJson.put("userid", 15926); //pub2             
+           requestJson.put("userid", 15926); //dev1
+             
+             return requestJson;
+    	}
+    	
+    	
+    	public static String getUserpass() throws MalformedURLException{
+            String userpass= "Marcel.froemming@uni-jena.de:Spatz314";
+            //String userpass = "external.user@gfbio.org:GFBio.WS.";
+            //String userpass = "broker.agent@gfbio.org:AgentPhase2";
+    		return userpass;
+    	}
+    	
+    	
+    	
+    	@SuppressWarnings("unchecked")
+    	public static JSONArray getJsonArray(JSONObject requestJson){
+    		JSONArray requestArray = new JSONArray();
+    		requestArray.add(requestJson);
+            return requestArray;
+    	}
 
 }

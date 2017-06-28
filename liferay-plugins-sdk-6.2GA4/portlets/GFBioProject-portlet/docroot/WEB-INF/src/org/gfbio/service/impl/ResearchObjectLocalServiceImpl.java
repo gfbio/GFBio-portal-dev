@@ -26,6 +26,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.gfbio.NoSuchContentException;
 import org.gfbio.NoSuchHeadException;
@@ -47,6 +49,7 @@ import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectPK;
+import org.gfbio.submissionworkflow.WorkflowGeneric;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -68,6 +71,7 @@ import org.json.simple.parser.ParseException;
  */
 public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBaseImpl {
 
+	private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
 	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
 	
 	//------------------------------ Manage Delete Functions --------------------------------------------//
@@ -957,6 +961,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	@SuppressWarnings({ "unchecked", "unused" })
 	public JSONObject updateResearchObjectByJson(JSONObject requestJson){
 		
+		_log.info("result: "+requestJson);
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
@@ -1114,6 +1119,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING", ignoreParameter);
+		
+		_log.info("result: "+responseJson);
 		
 		return responseJson;
 	}

@@ -602,3 +602,33 @@ INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy_project')),'gfbio_project');
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_policy_project')),'lastmodifieddate');
 
+
+
+------------------------------------------------------------------------------------------------
+----------------------------------       research object        -- 28.06.2017 ------------------
+------------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_researchobject ALTER COLUMN name  TYPE text;
+ALTER TABLE gfbio_researchobject ALTER COLUMN name  SET NOT NULL;
+ALTER TABLE gfbio_researchobject ALTER COLUMN label  TYPE text;
+ALTER TABLE gfbio_researchobject ALTER COLUMN label  SET NOT NULL;
+ALTER TABLE gfbio_researchobject ALTER COLUMN researchobjecttype  TYPE text;
+
+------------------------------------------------------------------------------------------------
+--------------------------------------       project        -- 28.06.2017 ----------------------
+------------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_project ALTER COLUMN name  TYPE text;
+ALTER TABLE gfbio_project ALTER COLUMN name  SET NOT NULL;
+ALTER TABLE gfbio_project ALTER COLUMN label  TYPE text;
+ALTER TABLE gfbio_project ALTER COLUMN label  SET NOT NULL;
+ALTER TABLE gfbio_project ALTER COLUMN status  TYPE text;
+
+
+-------------------------------------------------------------------------------------------------
+-------------------------------------       submission        -- 28.06.2017 ---------------------
+-------------------------------------------------------------------------------------------------
+
+ALTER TABLE gfbio_primarydata ALTER COLUMN name  TYPE text;
+ALTER TABLE gfbio_primarydata ALTER COLUMN path  TYPE text;
+
