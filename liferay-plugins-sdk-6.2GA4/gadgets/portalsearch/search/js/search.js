@@ -9,42 +9,87 @@ function listenToEnterPress() {
 	$("#gfbioSearchInput").keyup(function (event) {
 		if (event.keyCode == 13) {
 			$('#gfbioSearchInput').autocomplete('close');
-			$("#QueryButton").click();
-			var value = document.getElementById("gfbioSearchInput").value;
-			insertParam("q_", value);
+			searchButtonClicked();
 		}
 	});
 }
+
+function searchButtonClicked(){
+			var value = document.getElementById("gfbioSearchInput").value;
+	insertParam("q", value);
+	if (value == ''){
+		if (gadgets.Hub.isConnected()){
+			gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+		}
+		showLatestTenDataset("","");
+	}else{
+		newQuery(true);
+	});
+}
+
+function isValueNotEmpty(value){
+	return (!value.isArray && value!='' & value !='[]') || (value.isArray && value.length >0);
+}
+
 function insertParam(key, value) {
-			console.log(':::insertParam');
-        key = escape(key); value = escape(value);
-        var url = document.referrer.split('?');
-			console.log(url);
-		var newUrl = '';
+	var urlString = document.referrer;
+	var valueNotEmpty = isValueNotEmpty(value);
+	if (parent.history.state != null){ 
+		//if any parameter has been popped to the state
+		urlString = parent.history.state.path;
+	}
+	var url = urlString.split('?');
+	var urlDomain = url[0];
+	//console.log(url);
+	var newUrl = urlDomain;
+
+	key = encodeURIComponent(escape(key)); 
+	value = encodeURIComponent(escape(value));
+
+	var isNewParam = true;
 		if (url.length >1){
 			// if url already has parameters
-            var params = url[1].split('&');
-            for (i=0; i< params.length; i++){
-				var par = params[i].split('=');
+		var urlParam = url[1];
+		var paramsArray = urlParam.split('&');
+		var paramsString = '';
+		for (i=0; i< paramsArray.length; i++){
+			var par = paramsArray[i].split('=');
 
                 if (par[0] == key) {
                     par[1] = value;
-                    params[i] = par.join('=');
-                    break;
-                }
-            }
-			newUrl = url[0]+'?'+params.join('&');
+				isNewParam = false;
+			}
+			if (par[0] != key || valueNotEmpty){
+				if (paramsString == ''){
+					paramsString += par.join('=');
+				}else{
+					paramsString += '&'+par.join('=');
+        }
+			}
+		}
 
-		}else if (url.length==1){
-			newUrl = url[0]+"?"+key+"="+value;
+		if (paramsString!=''){
+			newUrl += '?'+paramsString;
+			if (isNewParam && valueNotEmpty) {
+				newUrl += '&'+key+"="+value;
+			}
+		}else{
+			if (isNewParam && valueNotEmpty) {
+				newUrl += '?'+key+"="+value;
+			}
 		}
+	}
+	else if (url.length==1 && valueNotEmpty){
+		//if no parameter in url, and there is a parameter to update
+		newUrl += "?"+key+"="+value;
+	}
 		
-		if (history.pushState && newUrl!='') {
-			console.log(':::pushstate');
-			console.log(newUrl);
+	if (parent.history.pushState && newUrl!='') {
+		//console.log(':::pushstate');
+		//console.log(newUrl);
 			parent.history.pushState({path:newUrl},'',newUrl);
-		}
-    }
+	}
+}
 /*
  * Description: set autocomplete to the search textbox
  */
@@ -245,10 +290,22 @@ function newQuery(clearBasket) {
 		document.getElementById("queryKeyword").value = "";
 		document.getElementById("queryFilter").value = "[]";
 	}
+	var filter = [];
+	var yearFilter = '';
 	// read search keywords
 	var keyword = document.getElementById("gfbioSearchInput").value;
-	setCookie("gfbioSearchInput", keyword);
-	var filter = [];
+			
+		var urlFilter = getQueryVariable('filter');
+		var urlYear = getQueryVariable('year');
+		if (urlFilter !=''){
+			console.log(':filter:'+urlFilter);
+			filter = JSON.parse(urlFilter);
+		}
+		if (urlYear !=''){
+			console.log(':year:'+urlYear);
+			yearFilter = urlYear;
+		}
+	//setCookie("gfbioSearchInput", keyword);
 	// reset facet gadget
 	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
@@ -258,7 +315,7 @@ function newQuery(clearBasket) {
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
 	console.log(':: newQuery');
-	getSearchResult(keyword, filter, "");
+	getSearchResult(keyword, filter, yearFilter);
 
 	// send content of visual basket to the mini-map gadget
 	updateMap();
@@ -272,12 +329,13 @@ function newQuery(clearBasket) {
  * Effect: Update TS, rewrite the result table
  */
 function getSearchResult(keyword, filter, yearRange) {
+	console.log(':: getSearchResult');
 	// every submitted query must be sent to TS gadget too
 	if (gadgets.Hub.isConnected() && (keyword != "")) {
 		// prevent calling ts when keyword box is empty
+		console.log(':: TS :'+keyword);
 		gadgets.Hub.publish('gfbio.search.ts', keyword);
 	}
-	console.log(':: getSearchResult');
 	// create a result table as a placeholder
 	writeResultTable();
 	// bound a datatable to pansimple API query
@@ -350,7 +408,6 @@ function submitQueryToServer(keyword, filter, yearRange) {
 		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
 
 		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
 		var filteredQuery = getFilteredQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
 		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
@@ -452,7 +509,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	document.getElementById("queryKeyword").value = keyword;
 	var filterObj;
 	if (yearRange.trim() == "") {
-		if (filterArray != "") {
+		if (isValueNotEmpty(filterArray)) {
 			filterObj = filterArray;
 		} else {
 			return {
@@ -741,9 +798,10 @@ function getSelectedResult() {
  */
 function applyFacetFilter(topic, data, subscriberData) {
 	var facetFilters = data.filtered;
-	var filteredArray = [];
+	var filterArray = [];
 	var yearRange = "";
-	//console.log(':Search: receive facet filter - '+JSON.stringify(facetFilters));
+	//console.log(':Search: receive facet filter ');
+	//console.log(facetFilters);
 	for (var i = 0; i < facetFilters.length; i++) {
 		var facetFilter = facetFilters[i];
 		if ((facetFilter.facetCat == "citation_yearFacet") && (facetFilter.facetTerm.indexOf(" - ") > 0)) {
@@ -752,10 +810,16 @@ function applyFacetFilter(topic, data, subscriberData) {
 			var filterStr = "{\"term\":{\"{0}\":\"{1}\"}}".format(facetFilter.facetCat, facetFilter.facetTerm);
 			//console.log(':Search: filterStr - '+filterStr);
 			var filterTerm = JSON.parse(filterStr);
-			filteredArray.push(filterTerm);
+			filterArray.push(filterTerm);
 		}
 	}
-	filterQuery(filteredArray, yearRange);
+		//console.log('applyFacetFilter:: '+JSON.stringify(filterArray));
+		insertParam("filter", JSON.stringify(filterArray));
+
+		//console.log('applyFacetFilter:: '+yearRange);
+		insertParam("year", yearRange);
+
+	filterQuery(filterArray, yearRange);
 };
 
 /*

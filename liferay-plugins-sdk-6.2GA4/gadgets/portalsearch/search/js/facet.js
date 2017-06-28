@@ -5,6 +5,20 @@ var maxFilteredYear;
 var minFilteredYear;
 
 ///////////////////////////////////////  Create Main Facet Tree  ////////////////////////////////////
+function getQueryVariable(variable) {
+	var url = document.referrer;
+	var query = url.split('?');
+	if (query.length > 1){
+		var vars = query[1].split('&');
+		for (var i = 0; i < vars.length; i++) {
+			var pair = vars[i].split('=');
+			if (decodeURIComponent(pair[0]) == variable) {
+				return decodeURIComponent(pair[1]);
+			}
+		}
+	}
+	return '';
+}
 function writeFacetTree(topic, data, subscriberData) {
 	//console.log(':Facet: refresh facet tray');
 	//console.log(data);
@@ -114,6 +128,10 @@ function createYearSlider() {
 }
 
 function resetFacet(topic, data, subscriberData) {
+	var urlFilter = getQueryVariable('filter');
+	var urlYear = getQueryVariable('year');
+	var keyword = getQueryVariable('q');
+	if ((keyword == '')||((urlFilter =='')&& (urlYear ==''))){
 	resetFacetTray();
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////

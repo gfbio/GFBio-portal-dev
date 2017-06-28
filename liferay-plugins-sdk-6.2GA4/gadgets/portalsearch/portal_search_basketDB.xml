@@ -41,8 +41,7 @@
 						autocomplete="off"/> 
 						<input id="QueryButton" name="QueryButton"
 						type="button" value="" class="acButton"
-						onclick="javascript:	insertParam('q_',document.getElementById('gfbioSearchInput').value);
-						newQuery(true);" />
+						onclick="javascript:searchButtonClicked();" />
 						</span>
 					</label> <div style="height:10px"></div>
 					<div id="search_result_table"></div>
@@ -66,21 +65,18 @@
 					listenToEnterPress();
 					setAutoComplete();
 					
-					var q = getQueryVariable('q_');
+					var q = getQueryVariable('q');
 					if (q != '') {
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = q.replace(/\+/g," ");
 						newQuery(true);
 					}
 					// Check if there's any input cookie stored
-					else if(getCookie("gfbioSearchInput")==null){
+					else 
+					{
 						// no keyword, no filter
 						showLatestTenDataset("","");
-					} else{
-						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = getCookie("gfbioSearchInput");
-						newQuery(true);
-					}
+					} 
 				});
 				parent.window.onpopstate = function (e) {
 					//TODO: this reloading page takes time, consider to call our ajax function instead

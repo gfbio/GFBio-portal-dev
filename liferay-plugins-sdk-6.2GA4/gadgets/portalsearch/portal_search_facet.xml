@@ -67,7 +67,24 @@
 						$(document.getElementById('facetTags').getElementsByClassName('ui-widget-content')).attr("readOnly","true");
 						addFacetDialogToPage();
 
-					});
+						var urlFilter = getQueryVariable('filter');
+						var urlYear = getQueryVariable('year');
+						if (urlFilter !=''){
+							console.log('::Facet:filter:');
+							var filterArr = JSON.parse(urlFilter);
+							for (var filterObj in filterArr){
+								var filterTerm = filterArr[filterObj].term;
+								console.log(filterTerm);
+								for (var filterItem in filterTerm){
+									addToFacetTray(filterItem, filterTerm[filterItem]);	
+								}
+							}
+						}
+						if (urlYear !=''){
+							console.log('::Facet:year:'+urlYear);
+							addToFacetTray('citation_yearFacet', urlYear);
+						}
+											});
 
 
 				</script>
