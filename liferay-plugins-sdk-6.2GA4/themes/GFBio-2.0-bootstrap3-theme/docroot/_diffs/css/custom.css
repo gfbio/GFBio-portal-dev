@@ -884,6 +884,7 @@ a.btn-footer:hover {
 
 div.toggler {
 	margin-top: 20px;
+	margin-left:0px;
 	cursor: pointer;
 	color: rgb(60, 172, 228);
 	
@@ -1202,6 +1203,10 @@ $breakpoint_tablet: 979px;
 	}
 }
 
+/*****************************************************
+Liferay specific classes
+*****************************************************/
+
 /*Facebook css bug - misalignment*/
  .fb_iframe_widget span 
 {
@@ -1235,4 +1240,11 @@ $breakpoint_tablet: 979px;
 }
 .portlet-body > .footer{
 	margin-bottom: -10px;
+}
+
+/*remove space at the bottom of asset entries*/
+.portlet-asset-publisher .asset-content {
+ 
+    margin-bottom: 0px;
+  
 }
