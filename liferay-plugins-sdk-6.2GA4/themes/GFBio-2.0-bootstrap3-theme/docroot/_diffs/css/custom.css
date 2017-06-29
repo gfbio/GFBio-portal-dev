@@ -87,16 +87,23 @@
 		 text-decoration-style: none;
         }
 	
-		.journal-content-article a.btn-footer {
-		 color:#fff;
-		 text-decoration:none;
+		.journal-content-article{ 
+		  a.btn-footer {
+		      color:#fff;
+		      text-decoration:none;
+		  }
+		  a.btn-footer:hover {
+		    color:#345aa2;
+		    background-color:#fff;
+		   text-decoration:none;
+		  }
+		  a.btn{
+		    color:#fff;
+		    text-decoration:none;
+		  }
 		}
 		
-		.journal-content-article a.btn-footer:hover {
-		 color:#345aa2;
-		 background-color:#fff;
-		 text-decoration:none;
-		}
+		
 		
 	}
 	
