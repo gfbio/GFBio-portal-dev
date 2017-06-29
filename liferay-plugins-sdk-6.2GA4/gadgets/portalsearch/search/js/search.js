@@ -14,15 +14,28 @@ function listenToEnterPress() {
 	});
 }
 
+function resetSearch(){
+	document.getElementById("visualBasket").value = "";
+	document.getElementById("basketID").value = 0; 
+	document.getElementById("queryJSON").value = "";
+	document.getElementById("queryKeyword").value = "";
+	document.getElementById("queryFilter").value = "[]";
+	document.getElementById("gfbioSearchInput").value = "";
+	insertParam("q", "");
+	insertParam("filter", "");
+	insertParam("year", "");
+	if (gadgets.Hub.isConnected()){
+		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+	showLatestTenDataset([],"");
 function searchButtonClicked(){
 			var value = document.getElementById("gfbioSearchInput").value;
 	insertParam("q", value);
 	if (value == ''){
+		resetSearch();
+	}else{
 		if (gadgets.Hub.isConnected()){
 			gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
 		}
-		showLatestTenDataset("","");
-	}else{
 		newQuery(true);
 	});
 }
@@ -43,8 +56,7 @@ function insertParam(key, value) {
 	//console.log(url);
 	var newUrl = urlDomain;
 
-	key = encodeURIComponent(escape(key)); 
-	value = encodeURIComponent(escape(value));
+	value = encodeURIComponent(value);
 
 	var isNewParam = true;
 		if (url.length >1){
@@ -134,12 +146,15 @@ function setAutoComplete() {
  */
 function getQueryVariable(variable) {
 	var url = document.referrer;
+	if (parent.history.state != null){ 
+		url = parent.history.state.path;
+	}
 	var query = url.split('?');
 	if (query.length > 1){
 		var vars = query[1].split('&');
 		for (var i = 0; i < vars.length; i++) {
 			var pair = vars[i].split('=');
-			if (decodeURIComponent(pair[0]) == variable) {
+			if (pair[0] == variable) {
 				return decodeURIComponent(pair[1]);
 			}
 		}
@@ -329,11 +344,11 @@ function newQuery(clearBasket) {
  * Effect: Update TS, rewrite the result table
  */
 function getSearchResult(keyword, filter, yearRange) {
-	console.log(':: getSearchResult');
+	//console.log(':: getSearchResult');
 	// every submitted query must be sent to TS gadget too
 	if (gadgets.Hub.isConnected() && (keyword != "")) {
 		// prevent calling ts when keyword box is empty
-		console.log(':: TS :'+keyword);
+		//console.log(':: TS :'+keyword);
 		gadgets.Hub.publish('gfbio.search.ts', keyword);
 	}
 	// create a result table as a placeholder
@@ -374,7 +389,7 @@ function getSearchResult(keyword, filter, yearRange) {
 			"fnDrawCallback": function (oSettings) {
 				// do nothing if table is empty
 				if (!$(".dataTables_empty")[0]) {
-					console.log(':: writeResultTable');
+					//console.log(':: writeResultTable');
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
@@ -401,7 +416,7 @@ function getSearchResult(keyword, filter, yearRange) {
  * Output: JSONObject result : Data to display on the search result table
  */
 function submitQueryToServer(keyword, filter, yearRange) {
-	console.log(':: submitQueryToServer');
+	//console.log(':: submitQueryToServer');
 	return function (sSource, aoData, fnCallback) {
 		// set value for pagination
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
@@ -735,7 +750,7 @@ function loadBasket(topic, data, subscriberData) {
 function addBasket() {
 	var val = document.getElementById("visualBasket").value;
 	if (val == "") {
-		console.log('No basket selected.');
+		//console.log('No basket selected.');
 	} else {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
@@ -1404,7 +1419,9 @@ function getMultiValueField(jObj, id){
 		}
 	}
 	else{
+		if (jObj[id] != null)
 		return jObj[id];
+		else return "";
 		// return the object as it is
 	}
 	return "";

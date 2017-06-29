@@ -32,7 +32,8 @@
 			<body style="height:100%;">
 				<div id="search_facet">
 					<div id="facetDiv" class="invisible" style="margin-top:10px;">Filter Results: 
-					<a href='#' onclick='resetFacetTray();return false;' style='font-size:11px;'>clear filters</a>
+					|<a href='#' onclick='resetFacetTray();return false;' style='font-size:11px;'>clear filters</a>
+					|<a href='#' onclick='resetSearch();return false;' style='font-size:11px;'>reset search</a>|
 					<ul id="facetTags"></ul>
 					</div>
 					<div id="search_facet_tree">
@@ -70,18 +71,15 @@
 						var urlFilter = getQueryVariable('filter');
 						var urlYear = getQueryVariable('year');
 						if (urlFilter !=''){
-							console.log('::Facet:filter:');
 							var filterArr = JSON.parse(urlFilter);
 							for (var filterObj in filterArr){
 								var filterTerm = filterArr[filterObj].term;
-								console.log(filterTerm);
 								for (var filterItem in filterTerm){
 									addToFacetTray(filterItem, filterTerm[filterItem]);	
 								}
 							}
 						}
 						if (urlYear !=''){
-							console.log('::Facet:year:'+urlYear);
 							addToFacetTray('citation_yearFacet', urlYear);
 						}
 											});
