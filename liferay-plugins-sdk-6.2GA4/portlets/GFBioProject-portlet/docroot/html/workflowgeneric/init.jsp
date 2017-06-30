@@ -131,23 +131,23 @@
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title<span style='color:darkred'>*</span> </label>"+
 					"<p 	class='field-description'				id='gwf_ro_name_d'>Provide a short, descriptive title for your dataset.</p>"+
-					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text' onchange=\"goToNormal(\'"+fieldCheckList[0]+"\')\" maxlength='75' value=''>"+
+					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text' onchange=\"goToNormal(\'"+fieldCheckList[0]+"\')\" maxlength='200' value=''>"+
 				"</div >"+
 				"<div 			class='control-group'>"+
 					"<label		class='control-label' 					id='gwf_ro_description_l'> Description<span style='color:darkred'>*</span> </label>"+
-					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract). <br/>Please note: Only 2000 characters are permitted.</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+fieldCheckList[1]+"\')\" ></textarea>"+ //maxlength='2000'
+					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract). <br/>Please note: Only 15000 characters are permitted.</p>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+fieldCheckList[1]+"\')\" maxlength='15000'></textarea>"+ 
 				"</div>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_dct_l'> Data collection time </label>"+
 					"<p 	class='field-description'				id='gwf_ro_dct_d'>Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).</p>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value='' onchange=\"goToNormal(\'"+fieldCheckList[4]+"\')\" maxlength='75'>"+
+					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value='' onchange=\"goToNormal(\'"+fieldCheckList[4]+"\')\" maxlength='2000'>"+
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					 id='gwf_ro_label_l'> Dataset label </label>"+
 					"<p 	class='field-description'				 id='gwf_ro_label_d'>Provide labels for the dataset, describe it in keywords or use internal identifiers.</p>"+
-					"<input class='field lfr-input-text-container'	 id='gwf_ro_label'	type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[5]+"\')\" maxlength='75'>"+
+					"<input class='field lfr-input-text-container'	 id='gwf_ro_label'	type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[5]+"\')\" maxlength='200'>"+
 				"</div>"+
 				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
 				"<p 	class='field-description'			 	id='gwf_ro_categories_d'>Choose one or more categories, that are related with the dataset.</p>"+
@@ -156,7 +156,7 @@
 				"<div 			class='control-group'>"+
 					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author<span style='color:darkred'>*</span> </label>"+
 					"<p 		class='field-description'			 	id='gwf_ro_author_d'>Please, enter the author(s) for the data set (one author per line).</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+fieldCheckList[2]+"\')\" maxlength='500'></textarea>"+
+					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+fieldCheckList[2]+"\')\" maxlength='2000'></textarea>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_license_l'> License<span style='color:darkred'>*</span>   </label>"+
@@ -172,7 +172,7 @@
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publication(s) </label>"+
 					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset is related to a publication.<br>Please note: Only 500 characters are permitted.</p>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[6]+"\')\" maxlength='500'>"+
+					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[6]+"\')\" maxlength='2000'>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_metadatalabel_l'> Metadata schema  </label>"+
@@ -372,11 +372,11 @@
 		divLi.empty();
 		divLi.append(
 			"<div class='row2'>"+
-				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_nagoya' name='legalrequirements' value='Nagoya'> Nagoya</div>"+
+				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_nagoya' name='legalrequirements' value='Nagoya Protocol'> Nagoya</div>"+
 				"<div class='rowField'><input type='checkbox' id='gwf_ro_legalrequirements_red'    name='legalrequirements' value='Red List'>  Red List</div>"+
 			"</div>"+
 			"<div class='row2'>"+
-				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_personal'   name='legalrequirements' value='Personal'> Personal</div>"+
+				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_personal'   name='legalrequirements' value='Personal'> Personally Identifiable Information</div>"+
 				"<div class='rowField'><input type='checkbox' id='gwf_ro_legalrequirements_uncertain'  name='legalrequirements' value='Uncertain'>  Uncertain</div>"+
 			"</div>"+
 			"<div style='clear:left'></div>"

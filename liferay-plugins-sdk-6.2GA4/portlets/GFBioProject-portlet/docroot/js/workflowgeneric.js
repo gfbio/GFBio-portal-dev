@@ -138,7 +138,7 @@ function checkInputLength(){
 	
 	console.log(check);
 	
-	if ((document.getElementById("gwf_ro_name").value).length > 75){
+	if ((document.getElementById("gwf_ro_name").value).length > 200){
 		check = false;
 		failList.push(" title");
 		document.getElementById("gwf_ro_name_l").className="labelFalse";
@@ -151,7 +151,7 @@ function checkInputLength(){
 	}
 	
 	
-	if ((document.getElementById("gwf_ro_dct").value).length > 75){
+	if ((document.getElementById("gwf_ro_dct").value).length > 2000){
 		check = false;
 		failList.push(" data collection time");
 		document.getElementById("gwf_ro_dct_l").className="labelFalse";
@@ -164,7 +164,7 @@ function checkInputLength(){
 	}
 	
 	
-	if ((document.getElementById("gwf_ro_label").value).length > 75){
+	if ((document.getElementById("gwf_ro_label").value).length > 200){
 		check = false;
 		failList.push(" dataset label");
 		document.getElementById("gwf_ro_label_l").className="labelFalse";
@@ -179,7 +179,7 @@ function checkInputLength(){
 	console.log(check);
 	
 	if (!check)
-		buildErrorMessage('gwf_lf_comentarField',"Please reduce the length of"+failList +" under 75 characters." );
+		buildErrorMessage('gwf_lf_comentarField',"Please reduce the length of"+failList +" under 200 characters." );
 	else
 		buildWaitringMessage('gwf_lf_comentarField');
 	
@@ -207,7 +207,7 @@ function checkMinimalResearchObjectInput(){
 	
 	//description
 	var description = document.getElementById("gwf_ro_description").value;
-	if (description=="" ){//})|| description.length > 2000){
+	if (description=="" || description.length > 15000){
 		check = false;
 		document.getElementById("gwf_ro_description_l").className="labelFalse";
 		document.getElementById("gwf_ro_description_d").className="labelFalse";
@@ -245,7 +245,7 @@ function checkMinimalResearchObjectInput(){
 	}
 	
 	
-	if ((document.getElementById("gwf_ro_publications").value).length > 500){
+	if ((document.getElementById("gwf_ro_publications").value).length > 2000){
 		check = false;
 		document.getElementById("gwf_ro_publications_l").className="labelFalse";
 		document.getElementById("gwf_ro_publications_d").className="labelFalse";

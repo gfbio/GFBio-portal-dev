@@ -314,9 +314,9 @@ public class WorkflowGeneric extends GenericPortlet {
 		
 		//preparation data source
 		
-/*    	System.out.println("--------------------------------");
+    	System.out.println("--------------------------------");
     	System.out.println(requestJson);
-    	System.out.println("--------------------------------");*/
+    	System.out.println("--------------------------------");
     	 
 /*    	_log.info("--------------------------------");
     	_log.info(requestJson);
@@ -429,7 +429,8 @@ public class WorkflowGeneric extends GenericPortlet {
         			inputString = inputString.concat(author).concat(", ");
         		}
         		inputString = inputString.substring(0, inputString.length()-2);
-        		fields.put("customfield_10205", JSONObject.escape((String) researchObjectJson.get(inputString)));
+        		
+        		fields.put("customfield_10205", JSONObject.escape(inputString));
         	}
         }
         
@@ -573,10 +574,10 @@ public class WorkflowGeneric extends GenericPortlet {
         response = response.replaceAll("----n", "\\\\n");
         response = response.replaceAll("----t", "\\\\t");
         
-/*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
         System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-	           */
+	           
         return response;
     }
     
