@@ -151,7 +151,7 @@ function checkInputLength(){
 	}
 	
 	
-	if ((document.getElementById("gwf_ro_dct").value).length > 2000){
+	if ((document.getElementById("gwf_ro_dct").value).length > 2200){
 		check = false;
 		failList.push(" data collection time");
 		document.getElementById("gwf_ro_dct_l").className="labelFalse";
@@ -245,7 +245,7 @@ function checkMinimalResearchObjectInput(){
 	}
 	
 	
-	if ((document.getElementById("gwf_ro_publications").value).length > 2000){
+	if ((document.getElementById("gwf_ro_publications").value).length > 2200){
 		check = false;
 		document.getElementById("gwf_ro_publications_l").className="labelFalse";
 		document.getElementById("gwf_ro_publications_d").className="labelFalse";

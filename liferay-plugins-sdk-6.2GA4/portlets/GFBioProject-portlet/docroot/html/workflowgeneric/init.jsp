@@ -171,7 +171,7 @@
 				"</div>"+
 				"<div 		class='control-group'>"+
 					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publication(s) </label>"+
-					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset is related to a publication.<br>Please note: Only 500 characters are permitted.</p>"+
+					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset is related to a publication.<br>Please note: Only 2000 characters are permitted.</p>"+
 					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[6]+"\')\" maxlength='2000'>"+
 				"</div>"+
 				"<div 		class='control-group' >"+
