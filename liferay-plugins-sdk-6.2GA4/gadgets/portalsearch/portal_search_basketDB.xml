@@ -41,8 +41,7 @@
 						autocomplete="off"/> 
 						<input id="QueryButton" name="QueryButton"
 						type="button" value="" class="acButton"
-						onclick="javascript:	insertParam('q_',document.getElementById('gfbioSearchInput').value);
-						newQuery(true);" />
+						onclick="javascript:searchButtonClicked();" />
 						</span>
 					</label> <div style="height:10px"></div>
 					<div id="search_result_table"></div>
@@ -60,32 +59,43 @@
 				gadgets.HubSettings.onConnect = function(hub, suc, err) {
 					gadgets.Hub.subscribe("gfbio.search.facetfilter", applyFacetFilter);
 					gadgets.Hub.subscribe("gfbio.search.basketData", loadBasket);
+					gadgets.Hub.subscribe("gfbio.search.resetsearch", resetSearch);
 					$.holdReady( false );
 				};
 				$(document).ready(function() {
 					listenToEnterPress();
 					setAutoComplete();
 					
-					var q = getQueryVariable('q_');
+					var q = getQueryVariable('q');
+					var urlFilter = getQueryVariable('filter');
+					var urlFilterArr = [];
+					if (urlFilter != '') urlFilterArr = JSON.parse(urlFilter);
+					var urlYear = getQueryVariable('year');
+
 					if (q != '') {
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = q.replace(/\+/g," ");
+
 						newQuery(true);
 					}
 					// Check if there's any input cookie stored
-					else if(getCookie("gfbioSearchInput")==null){
+					else 
+					//if(getCookie("gfbioSearchInput")==null)
+					{
 						// no keyword, no filter
-						showLatestTenDataset("","");
-					} else{
+						showLatestTenDataset(urlFilterArr,urlYear);
+					} 
+					//remove cookie feature
+					/*else{
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = getCookie("gfbioSearchInput");
 						newQuery(true);
-					}
+					}*/
 				});
 				parent.window.onpopstate = function (e) {
 					//TODO: this reloading page takes time, consider to call our ajax function instead
-					console.log(':::popstate');
-					console.log(parent.document.location.href);
+					//console.log(':::popstate');
+					//console.log(parent.document.location.href);
 				  parent.window.location.href = parent.document.location.href;
 				};
 				$(document).ajaxComplete(function( event, xhr, settings ) {

@@ -5,6 +5,24 @@ var maxFilteredYear;
 var minFilteredYear;
 
 ///////////////////////////////////////  Create Main Facet Tree  ////////////////////////////////////
+function getQueryVariable(variable) {
+	var url = document.referrer;
+	if (parent.history.state != null){ 
+		url = parent.history.state.path;
+	}
+	var query = url.split('?');
+	if (query.length > 1){
+		var vars = query[1].split('&');
+		for (var i = 0; i < vars.length; i++) {
+			var pair = vars[i].split('=');
+			if (decodeURIComponent(pair[0]) == variable) {
+				return decodeURIComponent(pair[1]);
+			}
+		}
+	}
+	return '';
+}
+
 function writeFacetTree(topic, data, subscriberData) {
 	//console.log(':Facet: refresh facet tray');
 	//console.log(data);
@@ -114,6 +132,10 @@ function createYearSlider() {
 }
 
 function resetFacet(topic, data, subscriberData) {
+	var urlFilter = getQueryVariable('filter');
+	var urlYear = getQueryVariable('year');
+	var keyword = getQueryVariable('q');
+	if ((keyword == '')||((urlFilter =='')&& (urlYear ==''))){
 	resetFacetTray();
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,8 +244,6 @@ function addToFacetTray(filterCat, filterTerm) {
 		//if the filterTerm == true, accessRestricted == false
 		if (filterTerm){filterTerm = false;} //show only non-restricted download
 		else {filterTerm = true;} // show all
-		console.log(filterCat);
-		console.log(filterTerm);
 	}else{
 		isExist = isInJSON(jsonData.filtered, "facetTerm", filterTerm);
 	}
@@ -278,6 +298,14 @@ function resetFacetTray() {
 	tray.value = JSON.stringify(jsonData);
 	// reset the Tag box
 	$("#facetTags").tagit('removeAll');
+}
+
+function resetSearch(){
+	resetFacetTray();
+	
+	if (gadgets.Hub.isConnected()){
+		gadgets.Hub.publish('gfbio.search.resetsearch', 'reset');
+	}
 }
 
 function removeFromFacetTray(filterTerm) {

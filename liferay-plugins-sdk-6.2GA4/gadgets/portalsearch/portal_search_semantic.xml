@@ -44,13 +44,11 @@
 						autocomplete="off"/> 
 						<input id="normalQueryButton" name="QueryButton"
 						type="button" value="Search" 
-						onclick="javascript:	insertParam('q_',document.getElementById('gfbioSearchInput').value);
-						normalQuery(true);" title="Original search, no semantic terms will be included."/>
+						onclick="javascript: searchButtonClicked(false);" title="Original search, no semantic terms will be included."/>
 						<input id="SemanticQueryButton" name="SemanticQueryButton"
 						type="button" value="Semantic Search" 
 						title="This will include semantic terms, including more relevant results, but could take longer processing time." 
-						onclick="javascript:	insertParam('q_',document.getElementById('gfbioSearchInput').value);
-						semanticQuery(true);" class="tooltip">
+						onclick="javascript: searchButtonClicked(true);" class="tooltip">
 						</input>
 						<a class="tooltip" href="#"><img src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E" class="icon-info"><span class="classic"><em>What is a semantic search engine?</em><p>The conventional text-based search can be enhanced by NLP, e.g. Biologists vs. Biology, so that we can explore more of datasets.</p><p>But what will happen when we are looking for a scientific term, for instance, Lepidoptera, but the common name like "butterfly" is overlooked? </p><p>Here, we offer the search combined with terminologies. This allows us to get synonyms, common names, scientific names, translation in other languages, etc. This would broaden the search results when the given query is not specific enough, or even too specific.</p></span></a>
 						</span>
@@ -73,14 +71,18 @@
 				gadgets.HubSettings.onConnect = function(hub, suc, err) {
 					gadgets.Hub.subscribe("gfbio.search.facetfilter", applyFacetFilter);
 					gadgets.Hub.subscribe("gfbio.search.basketData", loadBasket);
+					gadgets.Hub.subscribe("gfbio.search.resetsearch", resetSearch);
 					$.holdReady( false );
 				};
 				$(document).ready(function() {
 					listenToEnterPress();
 					setAutoComplete();
 					
-					var q = getQueryVariable('q_');
-					// check if the search is redirected
+					var q = getQueryVariable('q');
+					var urlFilter = getQueryVariable('filter');
+					var urlFilterArr = [];
+					if (urlFilter != '') urlFilterArr = JSON.parse(urlFilter);
+					var urlYear = getQueryVariable('year');
 					if (q != '') {
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = q.replace(/\+/g," ");
@@ -88,19 +90,23 @@
 						semanticQuery(true);
 					}
 					// check if there's any input cookie stored
-					else if(getCookie("gfbioSearchInput")==null){
+					else 
+					//if(getCookie("gfbioSearchInput")==null)
+					{
 						// no keyword, no filter
-						showLatestTenDataset("","");
-					} else{
+						showLatestTenDataset(urlFilterArr,urlYear);
+					} 
+					//remove cookie feature
+					/*else{
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = getCookie("gfbioSearchInput");
 						semanticQuery(true);
-					} 
+					}*/
 				});
 				parent.window.onpopstate = function (e) {
 					//TODO: this reloading page takes time, consider to call our ajax function instead
-					console.log(':::popstate');
-					console.log(parent.document.location.href);
+					//console.log(':::popstate');
+					//console.log(parent.document.location.href);
 				  parent.window.location.href = parent.document.location.href;
 				};
 				$(document).ajaxComplete(function( event, xhr, settings ) {

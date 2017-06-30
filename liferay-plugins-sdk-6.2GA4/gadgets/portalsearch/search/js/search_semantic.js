@@ -15,38 +15,99 @@ function listenToEnterPress() {
 	$("#gfbioSearchInput").keyup(function (event) {
 		if (event.keyCode == 13) {
 			$('#gfbioSearchInput').autocomplete('close');
-			// set the default enter event to semantic search
-			$("#SemanticQueryButton").click();
-			var value = document.getElementById("gfbioSearchInput").value;
-			insertParam("q_", value);
+      searchButtonClicked(true);
 		}
 	});
 }
+			// set the default enter event to semantic search
+function resetSearch(){
+	document.getElementById("visualBasket").value = "";
+	document.getElementById("basketID").value = 0; 
+	document.getElementById("queryJSON").value = "";
+	document.getElementById("queryKeyword").value = "";
+	document.getElementById("queryFilter").value = "[]";
+	document.getElementById("gfbioSearchInput").value = "";
+	insertParam("q", "");
+	insertParam("filter", "");
+	insertParam("year", "");
+	if (gadgets.Hub.isConnected()){
+		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+	}
+	showLatestTenDataset([],"");
+}
+function searchButtonClicked(isSemantic){
+			var value = document.getElementById("gfbioSearchInput").value;
+	insertParam("q", value);
+	if (value == ''){
+		resetSearch();
+	}else{
+		if (gadgets.Hub.isConnected()){
+			gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+		}
+    if (isSemantic) {semanticQuery(true);}
+		else {normalQuery(true);}
+	}
+}
+function isValueNotEmpty(value){
+	return (!value.isArray && value!='' & value !='[]') || (value.isArray && value.length >0);
+}
 function insertParam(key, value) {
+	var urlString = document.referrer;
+	var valueNotEmpty = isValueNotEmpty(value);
+	if (parent.history.state != null){ 
+		//if any parameter has been popped to the state
 		//console.log(':::insertParam');
-        key = escape(key); value = escape(value);
-        var url = document.referrer.split('?');
+		//console.log(parent.history.state.path);
+		urlString = parent.history.state.path;
+	}
+	var url = urlString.split('?');
+	var urlDomain = url[0];
 		//onsole.log(url);
-		var newUrl = '';
+	var newUrl = urlDomain;
+	value = encodeURIComponent(value);
+	var isNewParam = true;
 		if (url.length >1){
 			// if url already has parameters
-            var params = url[1].split('&');
-            for (i=0; i< params.length; i++){
-				var par = params[i].split('=');
+		var urlParam = url[1];
+		var paramsArray = urlParam.split('&');
+		var paramsString = '';
+		for (i=0; i< paramsArray.length; i++){
+			var par = paramsArray[i].split('=');
 
                 if (par[0] == key) {
                     par[1] = value;
-                    params[i] = par.join('=');
-                    break;
-                }
-            }
-			newUrl = url[0]+'?'+params.join('&');
-
-		}else if (url.length==1){
-			newUrl = url[0]+"?"+key+"="+value;
+				isNewParam = false;
+			}
+			if (par[0] != key || valueNotEmpty){
+				if (paramsString == ''){
+					paramsString += par.join('=');
+				}else{
+					paramsString += '&'+par.join('=');
+				}
+			}
 		}
+			
+		if (paramsString!=''){
+			//console.log(':::insertParam append to Params in URL');	
+			newUrl += '?'+paramsString;
+			if (isNewParam && valueNotEmpty) {
+				newUrl += '&'+key+"="+value;
+			}
+		}else{
+			//console.log(':::insertParam add to URL');	
+			if (isNewParam && valueNotEmpty) {
+				newUrl += '?'+key+"="+value;
+			}
+		}
+	}
+	else if (url.length==1 && valueNotEmpty){
+		//if no parameter in url, and there is a parameter to update
+		//console.log(':::insertParam add new Parameter');	
+		newUrl += "?"+key+"="+value;
+	}
 		
-		if (history.pushState && newUrl!='') {
+	// push new url to the history state	
+	if (parent.history.pushState && newUrl!='') {
 			//console.log(':::pushstate');
 			//console.log(newUrl);
 			parent.history.pushState({path:newUrl},'',newUrl);
@@ -97,12 +158,15 @@ function setAutoComplete() {
  */
 function getQueryVariable(variable) {
 	var url = document.referrer;
+	if (parent.history.state != null){ 
+		url = parent.history.state.path;
+	}
 	var query = url.split('?');
 	if (query.length > 1){
 		var vars = query[1].split('&');
 		for (var i = 0; i < vars.length; i++) {
 			var pair = vars[i].split('=');
-			if (decodeURIComponent(pair[0]) == variable) {
+			if (pair[0] == variable) {
 				return decodeURIComponent(pair[1]);
 			}
 		}
@@ -218,10 +282,9 @@ function getFilteredLatestDataset(filter, yearRange) {
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
 		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
 		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
 		var filteredQuery = getFilteredQuery("", filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 
 		// add sorting by citation date
 		completeQuery.sort = {
@@ -243,11 +306,13 @@ function getFilteredLatestDataset(filter, yearRange) {
 				// display facet only if the search return more than 1 result
 				if (datasrc.length > 0) {
 					var facet = json.aggregations;
-					if (gadgets.Hub.isConnected())
+					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
+					}
 				} else {
-					if (gadgets.Hub.isConnected())
+					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', '');
+					}
 				}
 				// Prepare the returned result in usable format
 				var res = parseReturnedJSONfromSearch(datasrc);
@@ -284,10 +349,21 @@ function normalQuery(clearBasket) {
 		document.getElementById("queryKeyword").value = "";
 		document.getElementById("queryFilter").value = "[]";
 	}
+	var filter = [];
+	var yearFilter = '';
 	// read search keywords
 	var keyword = document.getElementById("gfbioSearchInput").value;
-	setCookie("gfbioSearchInput", keyword);
-	var filter = [];
+		var urlFilter = getQueryVariable('filter');
+		var urlYear = getQueryVariable('year');
+		if (urlFilter !=''){
+			console.log(':filter:'+urlFilter);
+			filter = JSON.parse(urlFilter);
+		}
+		if (urlYear !=''){
+			console.log(':year:'+urlYear);
+			yearFilter = urlYear;
+		}
+	//setCookie("gfbioSearchInput", keyword);
 	// reset facet gadget
 	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
@@ -297,7 +373,7 @@ function normalQuery(clearBasket) {
 	$('#gfbioSearchInput').autocomplete('close');
 	// send query to pansimple and parse result to the table
 	//console.log(':: newQuery');
-	getSearchResult(keyword, filter, "");
+	getSearchResult(keyword, filter, yearFilter);
 	// Save query to DB
 	if (saveSearch && keyword != "" && clearBasket) {
 		//console.log('New query is made.');
@@ -439,10 +515,9 @@ function submitQueryToServer(keyword, filter, yearRange) {
 		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
 
 		// Construct query message in JSON format
-		var queryfield = createQueryFieldArray();
 		var filteredQuery = getFilteredQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
-		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength, queryfield);
+		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 
 		// Store query string for sending to VAT
 		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
@@ -542,12 +617,12 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	document.getElementById("queryKeyword").value = keyword;
 	var filterObj;
 	if (yearRange.trim() == "") {
-		if (filterArray != "") {
+		if (isValueNotEmpty(filterArray)) {
 			filterObj = filterArray;
 		} else {
 			return {
 				"bool": {
-					"should": queryObj
+					"must": queryObj
 				}
 			};
 		}
@@ -811,7 +886,7 @@ function addBasket() {
 		
 		//console.log("addBasket queryJSON:");
 		//console.log(query);
-		var keyword = document.getElementById("gfbioSearchInput").value;
+		var keyword = document.getElementById("queryKeyword").value;
 		var filter = document.getElementById("queryFilter").value;
 		/*console.log("addBasket queryKeyword:");
 		console.log(keyword);
@@ -884,7 +959,7 @@ function getSelectedResult() {
  */
 function applyFacetFilter(topic, data, subscriberData) {
 	var facetFilters = data.filtered;
-	var filteredArray = [];
+	var filterArray = [];
 	var yearRange = "";
 	//console.log(':Search: receive facet filter - '+JSON.stringify(facetFilters));
 	for (var i = 0; i < facetFilters.length; i++) {
@@ -895,10 +970,17 @@ function applyFacetFilter(topic, data, subscriberData) {
 			var filterStr = "{\"term\":{\"{0}\":\"{1}\"}}".format(facetFilter.facetCat, facetFilter.facetTerm);
 			//console.log(':Search: filterStr - '+filterStr);
 			var filterTerm = JSON.parse(filterStr);
-			filteredArray.push(filterTerm);
+			filterArray.push(filterTerm);
 		}
 	}
-	filterQuery(filteredArray, yearRange);
+	
+		//console.log('applyFacetFilter:: '+JSON.stringify(filterArray));
+		insertParam("filter", JSON.stringify(filterArray));
+
+		//console.log('applyFacetFilter:: '+yearRange);
+		insertParam("year", yearRange);
+		
+	filterQuery(filterArray, yearRange);
 };
 
 /*
@@ -925,7 +1007,8 @@ function filterQuery(filter, yearRange) {
 			getSemanticSearchResult(jArr, filter, yearRange);
 		}
 		else{
-		getSearchResult(keyword, filter, yearRange);}
+		  getSearchResult(keyword, filter, yearRange);
+    }
 	} else {
 		showLatestTenDataset(filter, yearRange);
 	}
@@ -1947,7 +2030,6 @@ function getBooleanQuery(keyword, filterArray, yearRange) {
 	}
 	var filterObj = {};
 
-	if (filterArray != "" || yearRange != "") {
 		if (yearRange != "") {
 			var splitPos = yearRange.indexOf(' - ');
 			var minYear = yearRange.substring(0, splitPos);
