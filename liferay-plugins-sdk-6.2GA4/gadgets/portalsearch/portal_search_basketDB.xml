@@ -59,6 +59,7 @@
 				gadgets.HubSettings.onConnect = function(hub, suc, err) {
 					gadgets.Hub.subscribe("gfbio.search.facetfilter", applyFacetFilter);
 					gadgets.Hub.subscribe("gfbio.search.basketData", loadBasket);
+					gadgets.Hub.subscribe("gfbio.search.resetsearch", resetSearch);
 					$.holdReady( false );
 				};
 				$(document).ready(function() {
@@ -66,22 +67,35 @@
 					setAutoComplete();
 					
 					var q = getQueryVariable('q');
+					var urlFilter = getQueryVariable('filter');
+					var urlFilterArr = [];
+					if (urlFilter != '') urlFilterArr = JSON.parse(urlFilter);
+					var urlYear = getQueryVariable('year');
+
 					if (q != '') {
 						var searchbox = document.getElementById("gfbioSearchInput");
 						searchbox.value = q.replace(/\+/g," ");
+
 						newQuery(true);
 					}
 					// Check if there's any input cookie stored
 					else 
+					//if(getCookie("gfbioSearchInput")==null)
 					{
 						// no keyword, no filter
-						showLatestTenDataset("","");
+						showLatestTenDataset(urlFilterArr,urlYear);
 					} 
+					//remove cookie feature
+					/*else{
+						var searchbox = document.getElementById("gfbioSearchInput");
+						searchbox.value = getCookie("gfbioSearchInput");
+						newQuery(true);
+					}*/
 				});
 				parent.window.onpopstate = function (e) {
 					//TODO: this reloading page takes time, consider to call our ajax function instead
-					console.log(':::popstate');
-					console.log(parent.document.location.href);
+					//console.log(':::popstate');
+					//console.log(parent.document.location.href);
 				  parent.window.location.href = parent.document.location.href;
 				};
 				$(document).ajaxComplete(function( event, xhr, settings ) {

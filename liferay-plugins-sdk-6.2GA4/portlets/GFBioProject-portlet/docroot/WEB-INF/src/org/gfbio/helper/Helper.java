@@ -15,8 +15,9 @@ import org.json.simple.parser.ParseException;
 public class Helper {
 
 	static String FILEPATH = ".."+File.separator+".."+File.separator+".."+File.separator+"server_specific_identification"+File.separator+"serverfile.txt";
-	static int jiraArrayLimit  = 30000;
-	static int jiraStringLimit = 200;
+	static int jiraTextareaSmallLimit  = 2000;
+	static int jiraTextareaLimit  = 15000;
+	static int jiraTextfieldLimit = 200;
 
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
@@ -70,15 +71,33 @@ public class Helper {
 	}
 	
 	
+	
 	//
-	public static int getJiraStringLimit(){
-		return jiraArrayLimit;
+	public static int getJiraTextareaLimit(){
+		return jiraTextareaLimit;
 	}
 	
 	
 	//
-	public static int getJiraArrayLimit(){
-		return jiraStringLimit;
+	public static int getJiraTextareaSmallLimit(){
+		return jiraTextareaSmallLimit;
+	}
+	
+	
+	//
+	public static int getJiraTextfieldLimit(){
+		return jiraTextfieldLimit;
+	}
+	
+	
+	//
+	public static JSONArray getJsonArrayFromString(String requestString){
+		
+		JSONParser parser = new JSONParser();
+		JSONArray responseJson = new JSONArray();
+		try {responseJson = (JSONArray) parser.parse(requestString);}
+		catch (ParseException e) {e.printStackTrace();}
+		return responseJson;
 	}
 	
     
@@ -107,10 +126,10 @@ public class Helper {
 			responseString = ((String) requestJson.get(key)).trim();
 		else
 			if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONObject"))
-				responseString = ((JSONObject) requestJson.get(key)).toString();
+				responseString = (((JSONObject) requestJson.get(key)).toString()).trim();
 			else 
 				if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-					responseString = ((JSONArray) requestJson.get(key)).toString();
+					responseString = (((JSONArray) requestJson.get(key)).toString()).trim();
 
 		return responseString;
 	}
