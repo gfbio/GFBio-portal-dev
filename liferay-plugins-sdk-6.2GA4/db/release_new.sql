@@ -460,7 +460,7 @@ WHERE
 	columnid != (select getcolumnidbynames('gfbio_category', 'name')) and
 	columnid != (select getcolumnidbynames('gfbio_category', 'description')) and
 	columnid != (select getcolumnidbynames('gfbio_category', 'lastmodifieddate')) and
-	cellcontent = 'Other'
+	cellcontent = 'Other';
 			
 			
 -----------------------------------------------------------------------------------------------
@@ -635,7 +635,7 @@ ALTER TABLE gfbio_primarydata ALTER COLUMN path  TYPE text;
 
 -----------------------------------------------------------------------------------------------
 ------------------------------------ Head, Column & Content -----------------------------------
---------------------------------       legal requirements        -- 22.06.2017 ----------------
+--------------------------------       legal requirements        -- 28.06.2017 ----------------
 -----------------------------------------------------------------------------------------------
 
 DELETE FROM gfbio_content WHERE headid = (select getHeadIdByName('gfbio_legalrequirement'));

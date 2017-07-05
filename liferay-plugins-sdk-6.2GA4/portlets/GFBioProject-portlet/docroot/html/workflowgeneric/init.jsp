@@ -372,12 +372,12 @@
 		divLi.empty();
 		divLi.append(
 			"<div class='row2'>"+
-				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_nagoya' name='legalrequirements' value='Nagoya Protocol'> Nagoya</div>"+
-				"<div class='rowField'><input type='checkbox' id='gwf_ro_legalrequirements_red'    name='legalrequirements' value='Red List'>  Red List</div>"+
+				"<div class='rowLato'>  	<input type='checkbox' id='gwf_ro_legalrequirements_nagoya' name='legalrequirements' value='Nagoya Protocol'> Nagoya</div>"+
+				"<div class='rowField'> 	<input type='checkbox' id='gwf_ro_legalrequirements_personal'   name='legalrequirements' value='Personally Identifiable Information'> Personally Identifiable Information</div>"+
 			"</div>"+
 			"<div class='row2'>"+
-				"<div class='rowLato'> <input type='checkbox' id='gwf_ro_legalrequirements_personal'   name='legalrequirements' value='Personal'> Personally Identifiable Information</div>"+
-				"<div class='rowField'><input type='checkbox' id='gwf_ro_legalrequirements_uncertain'  name='legalrequirements' value='Uncertain'>  Uncertain</div>"+
+				"<div class='rowLato'>		<input type='checkbox' id='gwf_ro_legalrequirements_red'    name='legalrequirements' value='Red List'>  Red List</div>"+
+				"<div class='rowField'>		<input type='checkbox' id='gwf_ro_legalrequirements_uncertain'  name='legalrequirements' value='Uncertain'>  Uncertain</div>"+
 			"</div>"+
 			"<div style='clear:left'></div>"
 		);
