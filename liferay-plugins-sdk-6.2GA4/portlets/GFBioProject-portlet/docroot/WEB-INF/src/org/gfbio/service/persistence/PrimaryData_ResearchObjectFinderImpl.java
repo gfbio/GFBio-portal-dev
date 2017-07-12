@@ -18,11 +18,57 @@ public class PrimaryData_ResearchObjectFinderImpl extends BasePersistenceImpl<Pr
 
 	
 	public static String FINDER_CLASS_NAME_ENTITY							 	= PrimaryData_ResearchObjectFinderImpl.class.getName();
+	public static String GET_CHECK_OF_PRIMARYDATAID			 					= FINDER_CLASS_NAME_ENTITY + ".getCheckOfPrimaryDataId";
+	public static String GET_CHECK_OF_RESEARCHOBJECTID			 				= FINDER_CLASS_NAME_ENTITY + ".getCheckOfResearchObjectId";
 	public static String GET_CHECK_OF_RESEARCHOBJECTID_AND_VERSION 				= FINDER_CLASS_NAME_ENTITY + ".getCheckOfResearchObjectIdAndVersion";
 	public static String GET_PRIMARYDATAIDS_BY_RESEARCHOBJECTID_AND_VERSION 	= FINDER_CLASS_NAME_ENTITY + ".getPrimaryDataIdsByResearchObjectIdAndVersion";
 	public static String GET_RESEARCHOBJECTS_BY_PRIMARYDATAID 					= FINDER_CLASS_NAME_ENTITY + ".getResearchObjectsByPrimaryDataId";
 
-
+	
+	
+	//check relation table for a specific research object. If this in the relation table, then 'check' is true, else 'check' is wrong.
+	@SuppressWarnings({  "unchecked" })
+	public List<Boolean> getCheckOfPrimaryDataId(long primaryDataId) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CHECK_OF_PRIMARYDATAID);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(primaryDataId);
+			return (List<Boolean>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	//check relation table for a specific research object. If this in the relation table, then 'check' is true, else 'check' is wrong.
+	@SuppressWarnings({  "unchecked" })
+	public List<Boolean> getCheckOfResearchObjectId(long researchObjectId) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CHECK_OF_RESEARCHOBJECTID);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(researchObjectId);
+			return (List<Boolean>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
 	//check relation table for a specific research object. If this in the relation table, then 'check' is true, else 'check' is wrong.
 	@SuppressWarnings({  "unchecked" })
 	public List<Boolean> getCheckOfResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {

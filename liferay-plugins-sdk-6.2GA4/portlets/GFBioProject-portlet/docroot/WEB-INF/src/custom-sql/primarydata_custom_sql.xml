@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+   <sql id="org.gfbio.service.persistence.PrimaryDataFinderImpl.getCheckPrimaryDataById">
+	    <![CDATA[
+			SELECT 
+				(CASE WHEN sum(primarydataid) >0 THEN true ELSE false END ) as check
+			FROM 
+			 	public.gfbio_primarydata
+			 WHERE
+			 	primarydataid = ?
+		]]>
+    </sql>
+
    <sql id="org.gfbio.service.persistence.PrimaryDataFinderImpl.getCheckPrimaryDataExists">
 	    <![CDATA[
 			SELECT 

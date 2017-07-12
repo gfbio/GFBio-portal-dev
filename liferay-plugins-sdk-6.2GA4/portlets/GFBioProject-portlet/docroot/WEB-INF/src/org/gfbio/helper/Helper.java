@@ -55,7 +55,7 @@ public class Helper {
     
     
 	//
-	public static long getIntFromJson(JSONObject requestJson, String key){
+	public static int getIntFromJson(JSONObject requestJson, String key){
 		
 		int responseInt = 0;
 		if ((((requestJson.get(key)).getClass()).toString()).equals("class java.lang.Integer"))
@@ -91,12 +91,46 @@ public class Helper {
 	
 	
 	//
+	public static JSONArray getJsonArrayFromJson(JSONObject requestJson, String key){
+		
+		JSONArray responseJson = new JSONArray();
+		if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONArray"))
+			responseJson = (JSONArray) requestJson.get(key);
+		else
+			if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String")){
+				JSONParser parser = new JSONParser();
+				try {responseJson = (JSONArray) parser.parse((String) requestJson.get(key));}
+				catch (ParseException e) {e.printStackTrace();}
+			}
+
+		return responseJson;
+	}
+	
+	
+	//
 	public static JSONArray getJsonArrayFromString(String requestString){
 		
 		JSONParser parser = new JSONParser();
 		JSONArray responseJson = new JSONArray();
 		try {responseJson = (JSONArray) parser.parse(requestString);}
 		catch (ParseException e) {e.printStackTrace();}
+		return responseJson;
+	}
+	
+	
+	//
+	public static JSONObject getJsonObjectFromJson(JSONObject requestJson, String key){
+		
+		JSONObject responseJson = new JSONObject();
+		if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONObject"))
+			responseJson = (JSONObject) requestJson.get(key);
+		else
+			if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String")){
+				JSONParser parser = new JSONParser();
+				try {responseJson = (JSONObject) parser.parse((String) requestJson.get(key));}
+				catch (ParseException e) {e.printStackTrace();}
+			}
+
 		return responseJson;
 	}
 	
@@ -130,6 +164,9 @@ public class Helper {
 			else 
 				if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONArray"))
 					responseString = (((JSONArray) requestJson.get(key)).toString()).trim();
+				else
+					if ((((requestJson.get(key)).getClass()).toString()).equals("class java.lang.Long"))
+						responseString = (Long.toString((long)requestJson.get(key))).trim();
 
 		return responseString;
 	}

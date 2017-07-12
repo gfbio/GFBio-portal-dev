@@ -14,6 +14,7 @@
 
 package org.gfbio.service.impl;
 
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,7 +22,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.gfbio.NoSuchPrimaryDataException;
+import org.gfbio.helper.Helper;
 import org.gfbio.model.PrimaryData;
+import org.gfbio.service.PrimaryDataLocalServiceUtil;
 import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.PrimaryDataLocalServiceBaseImpl;
@@ -30,6 +33,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -49,7 +53,82 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.PrimaryDataLocalServiceUtil
  */
 public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl {
-
+	
+	//private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+	
+	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
+	
+	//------------------------------ Manage Delete Functions --------------------------------------------//
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject deletePrimaryData (JSONObject requestJson){
+		
+		JSONObject responseJson = new JSONObject();
+		Boolean check = false;
+		
+		if (requestJson.containsKey("primarydataid")){
+			
+			long primaryDataId = Helper.getLongFromJson(requestJson, "primarydataid");
+			
+			
+			if (checkPrimaryDataById(primaryDataId)){
+				Boolean optionalCheck = true;
+				
+				if (PrimaryData_ResearchObjectLocalServiceUtil.checkPrimaryDataId(primaryDataId)){
+					JSONObject primaryDataJson = new JSONObject();
+					primaryDataJson.put("primarydataid", primaryDataId);
+					primaryDataJson = PrimaryData_ResearchObjectLocalServiceUtil.deletePrimaryDataResearchObject(primaryDataJson);
+					if (primaryDataJson.containsKey("check"))
+						optionalCheck = (Boolean) primaryDataJson.get("check");
+				}
+					
+				if (optionalCheck)
+					check = deletePrimaryDataById(primaryDataId);
+			}
+		}
+		
+		responseJson.put("check", check);
+		return responseJson;
+	}
+	
+	//---------------------------------- Delete Functions ------------------------------------------------//
+	
+	
+	private Boolean deletePrimaryDataById (long primaryDataId){
+		
+		Boolean check = false;
+		
+		if (checkPrimaryDataById(primaryDataId)){
+			
+			
+			PrimaryData primaryData = null;
+			
+			try {
+				primaryData = primaryDataPersistence.findByPrimaryKey(primaryDataId);
+				
+				if (primaryData != null){
+					String path = primaryData.getPath();
+					File file = new File(path);
+					if (file.delete())
+						check = true;
+					
+					if (check)
+						PrimaryDataLocalServiceUtil.deletePrimaryData(primaryData);
+					
+					if (!checkPrimaryDataById(primaryDataId) && check)
+						check = true;
+					else
+						check = false;
+				}
+			}
+			catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with id: "+primaryDataId+" is found");}
+			
+		}
+			
+		return check;
+	}
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
@@ -123,6 +202,17 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 		else
 			ignoredParameter ="";
 		return ignoredParameter;
+	}
+	
+	private Boolean checkPrimaryDataById(long primaryDataId){
+		Boolean check = false;
+		
+		List <Boolean> checkList =  PrimaryDataFinderUtil.getCheckPrimaryDataById(primaryDataId);
+		
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		
+		return check;
 	}
 	
 	

@@ -364,7 +364,15 @@ public class WorkflowGeneric extends GenericPortlet {
         fields.put("reporter", reporter);	
         try {fields.put("customfield_10010", Helper.getServerInformation((String) requestJson.get("path"),"jiracustomfield10010"));}
         catch (IOException | PortletException e1) {e1.printStackTrace();}
-        fields.put("summary", "Automated Data Submission");
+        if (researchObjectJson.containsKey("name")){
+        	String name = Helper.getStringFromJson(researchObjectJson, "name");
+        	if (name.length()>47)
+        		name = name.substring(0, 44).concat("...");
+        	name = JSONObject.escape(name);
+        	fields.put("summary",name);
+        }
+   		else
+   			fields.put("summary", "Automated Data Submission");
 
         
         //project informations

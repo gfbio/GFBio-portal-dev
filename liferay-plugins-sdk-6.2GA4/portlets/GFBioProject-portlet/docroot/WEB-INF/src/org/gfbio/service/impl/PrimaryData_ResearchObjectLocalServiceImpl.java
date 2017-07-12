@@ -19,8 +19,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchPrimaryData_ResearchObjectException;
+import org.gfbio.helper.Helper;
 import org.gfbio.model.PrimaryData_ResearchObject;
 import org.gfbio.model.ResearchObject;
+import org.gfbio.service.PrimaryDataLocalServiceUtil;
+import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.PrimaryData_ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderUtil;
@@ -47,6 +50,150 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil
  */
 public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_ResearchObjectLocalServiceBaseImpl {
+	
+	//private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+	
+	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
+	
+	
+	//------------------------------ Manage Delete Functions --------------------------------------------//
+	
+		
+	@SuppressWarnings("unchecked")
+	public JSONObject deletePrimaryDataResearchObject (JSONObject requestJson){
+				
+		JSONObject responseJson = new JSONObject();
+		Boolean check = false;
+		Boolean researchObjectIdCheck = false;
+		Boolean researchObjectVersionCeck = false;
+		Boolean primarydDtaIdCheck = false;
+		long researchObjectId =0;
+		int researchObjectVersion =0;
+		long primaryDataId = 0;
+		
+		if (requestJson.containsKey("researchobjectid")){
+			researchObjectId = Helper.getLongFromJson(requestJson, "researchobjectid");
+			researchObjectIdCheck = true;
+		}
+		
+		if (requestJson.containsKey("researchobjectversion")){
+			researchObjectVersion = Helper.getIntFromJson(requestJson, "researchobjectversion");
+			researchObjectVersionCeck = true;
+		}
+		
+		if (requestJson.containsKey("primarydataid")){
+			primaryDataId = Helper.getLongFromJson(requestJson, "primarydataid");
+			primarydDtaIdCheck = true;	
+		}
+		
+		if ((!researchObjectIdCheck && !researchObjectVersionCeck && primarydDtaIdCheck))	// 0 0 1 = 1
+			check = deletePrimaryDataResearchObjectByPrimaryDataId(primaryDataId);
+
+		if ((researchObjectIdCheck && !researchObjectVersionCeck && !primarydDtaIdCheck))	// 1 0 0 = 4
+			check = deletePrimaryDataResearchObjectByResearchObjectId(researchObjectId);
+		
+		if ((researchObjectIdCheck && researchObjectVersionCeck && !primarydDtaIdCheck))	// 1 1 0 = 6
+			check = deletePrimaryDataResearchObjectByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		
+		if ((researchObjectIdCheck && researchObjectVersionCeck && primarydDtaIdCheck))		// 1 1 1 = 7 
+			check = deletePrimaryDataResearchObjectByIds(researchObjectId, researchObjectVersion, primaryDataId);
+
+		
+		responseJson.put("check", check);
+		return responseJson;
+	}
+	
+	
+		
+	//---------------------------------- Delete Functions ------------------------------------------------//
+
+	
+	//
+	private Boolean deletePrimaryDataResearchObjectByPrimaryDataId(long primaryDataId){
+		Boolean check = false;
+		
+		try {
+			List <PrimaryData_ResearchObject> primaryDataResearchObjectList = primaryData_ResearchObjectPersistence.findByPrimaryDataID(primaryDataId);
+			if (primaryDataResearchObjectList.size() >0){
+				for (int i =0; i< primaryDataResearchObjectList.size();i++)
+					PrimaryData_ResearchObjectLocalServiceUtil.deletePrimaryData_ResearchObject(primaryDataResearchObjectList.get(i));
+				List <PrimaryData_ResearchObject> checkPrimaryDataResearchObjectList = primaryData_ResearchObjectPersistence.findByPrimaryDataID(primaryDataId);
+				if (checkPrimaryDataResearchObjectList.size() ==0)
+					check = true;
+			}else
+				check = true;
+		} catch ( SystemException e) {e.printStackTrace();}	
+		return check;
+	}
+	
+	
+	//
+	@SuppressWarnings("unchecked")
+	private Boolean deletePrimaryDataResearchObjectByIds(long researchObjectId, int researchObjectVersion, long primaryDataId){
+		Boolean check = false;
+		
+		try {
+			PrimaryData_ResearchObjectPK pk = new PrimaryData_ResearchObjectPK(primaryDataId, researchObjectId, researchObjectVersion);
+			PrimaryData_ResearchObject primaryDataResearchObject = primaryData_ResearchObjectPersistence.findByPrimaryKey(pk);
+			if (primaryDataResearchObject != null){
+				PrimaryData_ResearchObjectLocalServiceUtil.deletePrimaryData_ResearchObject(primaryDataResearchObject);
+			
+				PrimaryData_ResearchObject checkPrimaryDataResearchObject = primaryData_ResearchObjectPersistence.findByPrimaryKey(pk);
+				if (checkPrimaryDataResearchObject == null){
+					check = true;
+					if (checkResearchObjectId(researchObjectId)){
+						JSONObject primaryDataJson = new JSONObject();
+						primaryDataJson.put("primarydataid", primaryDataId);
+						PrimaryDataLocalServiceUtil.deletePrimaryData(primaryDataJson);
+					}
+				}
+			}else
+				check = true;
+			
+		} catch ( SystemException | NoSuchPrimaryData_ResearchObjectException e) {e.printStackTrace();}	
+		return check;
+		
+	}
+	
+	
+	//
+	private Boolean deletePrimaryDataResearchObjectByResearchObjectId(long primaryDataId){
+		Boolean check = false;
+		
+		try {
+			List <PrimaryData_ResearchObject> primaryDataResearchObjectList = primaryData_ResearchObjectPersistence.findByPrimaryDataID(primaryDataId);
+			if (primaryDataResearchObjectList.size() >0){
+				for (int i =0; i< primaryDataResearchObjectList.size();i++)
+					PrimaryData_ResearchObjectLocalServiceUtil.deletePrimaryData_ResearchObject(primaryDataResearchObjectList.get(i));
+				List <PrimaryData_ResearchObject> checkPrimaryDataResearchObjectList = primaryData_ResearchObjectPersistence.findByPrimaryDataID(primaryDataId);
+				if (checkPrimaryDataResearchObjectList.size() ==0)
+					check = true;
+			}else
+				check = true;
+		} catch ( SystemException e) {e.printStackTrace();}	
+		return check;
+		
+	}
+	
+	
+	//
+	private Boolean deletePrimaryDataResearchObjectByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion){
+		Boolean check = false;
+		
+		try {
+			List <PrimaryData_ResearchObject> primaryDataResearchObjectList = primaryData_ResearchObjectPersistence.findByResearchObjectIDAndVersion(researchObjectId, researchObjectVersion);
+			if (primaryDataResearchObjectList.size() >0){
+				for (int i =0; i< primaryDataResearchObjectList.size();i++)
+					PrimaryData_ResearchObjectLocalServiceUtil.deletePrimaryData_ResearchObject(primaryDataResearchObjectList.get(i));
+				List <PrimaryData_ResearchObject> checkPrimaryDataResearchObjectList = primaryData_ResearchObjectPersistence.findByResearchObjectIDAndVersion(researchObjectId, researchObjectVersion);
+				if (checkPrimaryDataResearchObjectList.size() ==0)
+					check = true;
+			}else
+				check = true;
+		} catch ( SystemException e) {e.printStackTrace();}	
+		return check;
+		
+	}
 	
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
@@ -138,10 +285,36 @@ public class PrimaryData_ResearchObjectLocalServiceImpl	extends PrimaryData_Rese
 	
 	
 	//
+	public Boolean checkPrimaryDataId(long primaryDataId) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  PrimaryData_ResearchObjectFinderUtil.getCheckOfPrimaryDataId(primaryDataId);
+		
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		
+		return check;
+	}
+	
+	
+	//
 	public Boolean checkResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion) {
 		
 		Boolean check = false;
 		List <Boolean> checkList =  PrimaryData_ResearchObjectFinderUtil.getCheckOfResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		
+		if (checkList.size()>0)
+			check = checkList.get(0);
+		
+		return check;
+	}
+	
+	
+	//
+	public Boolean checkResearchObjectId(long researchObjectId) {
+		
+		Boolean check = false;
+		List <Boolean> checkList =  PrimaryData_ResearchObjectFinderUtil.getCheckOfResearchObjectId(researchObjectId);
 		
 		if (checkList.size()>0)
 			check = checkList.get(0);
