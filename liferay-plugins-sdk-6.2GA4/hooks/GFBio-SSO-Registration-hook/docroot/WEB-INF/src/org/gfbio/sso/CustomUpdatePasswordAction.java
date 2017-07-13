@@ -145,39 +145,38 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			throws PortalException, SystemException, UserPasswordException {
 
 		log.info(":: Hook on updateUser.");
-		User user = super.getUser(
-				userId);/*
-						 * else { // no new password is set if
-						 * (oldPassword.length() > 0) { // add new user
-						 * log.info(":: add new user"); } else { log.info(
-						 * ":: update user without changing password"); } }
-						 */
-		boolean isVerified = user.getEmailAddressVerified();
+		User user = super.getUser(userId);
+		if (user != null) {
+			boolean isVerified = user.getEmailAddressVerified();
+			PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+			try {
+				if (isVerified || permissionChecker.isOmniadmin()) {
+					user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
+							reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
+							languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId,
+							suffixId, male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn,
+							jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds,
+							roleIds, userGroupRoles, userGroupIds, serviceContext);
 
-		PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
-
-		if (isVerified || permissionChecker.isOmniadmin()) {
-			user = super.updateUser(userId, oldPassword, newPassword1, newPassword2, passwordReset,
-					reminderQueryQuestion, reminderQueryAnswer, screenName, emailAddress, facebookId, openId,
-					languageId, timeZoneId, greeting, comments, firstName, middleName, lastName, prefixId, suffixId,
-					male, birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
-					mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
-					userGroupIds, serviceContext);
-
-			if (newPassword1.length() > 0) { // from setting new password
-				log.info(":: change password");
-				log.info(":: " + newPassword1);
-				// update LDAP user without connecting to JIRA
-				try {
-					LDAPUserAccount.LDAPaddUser(user, newPassword1);
-				} catch (Exception e) {
-					log.error(e.toString());
-					e.printStackTrace();
+					if (newPassword1.length() > 0) { // from setting new
+														// password
+						log.info(":: change password");
+						log.info(":: " + newPassword1);
+						// update LDAP user without connecting to JIRA
+						try {
+							LDAPUserAccount.LDAPaddUser(user, newPassword1);
+						} catch (Exception e) {
+							log.error(e.toString());
+							e.printStackTrace();
+						}
+					}
+				} else { // prevent re-sending a verification email after adding
+							// LDAP user
+					log.warn(":: no user update - non verified user");
 				}
+			} catch (NullPointerException e) {
+				log.warn("Failed to import user " + userId + ".");
 			}
-		} else { // prevent re-sending a verification email after adding
-					// LDAP user
-			log.warn(":: no user update - non verified user");
 		}
 		return user;
 

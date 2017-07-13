@@ -132,6 +132,39 @@ AUI().ready(function() {
 			$(this).toggleClass("open");
 			}
 		});
+		
+		//ignore click event on first level menu when using a mobile layout
+		$('a.dropdown-toggle').on('click', function() {
+			if ($(document).width() <= 979){
+				return false;
+				}
+			});
+		var timeout = 0;
+		var lastTap = 0;
+		$('a.dropdown-toggle').on('touchstart', function() {
+	    	// listen to double tap event when using a mobile layout
+			if ($(document).width() <= 979){
+			    var currentTime = new Date().getTime();
+			    var tapLength = currentTime - lastTap;
+			    clearTimeout(timeout);
+		    	
+			    if (tapLength < 500 && tapLength > 0) {
+			    	// this is two times tap 
+			        window.location = this.href;
+			        return true; 
+			    }else{
+			    	// this is one time tap
+					$(this).parent().toggleClass("open");
+			    	timeout = setTimeout(function() {
+			            // set timeout after the first tap
+			            clearTimeout(timeout);
+				        return false;
+			        }, 500);
+			    }
+			    lastTap = currentTime; 
+			}
+	        return false;
+		});
 	}
 	// clear all the extension class from mobile responsive
 	// layout
@@ -234,6 +267,7 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
       }).keypress(function(event) {
         if (event.keyCode == 13) activate($(this));
       });
+      
     });
   })(jQuery);
   

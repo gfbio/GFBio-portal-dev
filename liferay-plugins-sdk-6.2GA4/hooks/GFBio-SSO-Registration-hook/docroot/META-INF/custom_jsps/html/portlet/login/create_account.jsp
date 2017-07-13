@@ -163,7 +163,7 @@
 		</c:if>
 
 		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORD_TOO_TRIVIAL %>">
-			<liferay-ui:message key="that-password-is-too-trivial" />
+			Please try again with a strong password: <%=passwordRules %>
 		</c:if>
 
 		<c:if test="<%= upe.getType() == UserPasswordException.PASSWORDS_DO_NOT_MATCH %>">
