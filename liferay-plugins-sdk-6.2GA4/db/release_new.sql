@@ -483,7 +483,7 @@ ALTER TABLE gfbio_primarydata ALTER COLUMN path TYPE character(250);
 -------------------------------------       head        -- 08.06.2017 -------------------------
 -----------------------------------------------------------------------------------------------
 
-ALTER TABLE gfbio_head ALTER COLUMN description TYPE text;
+ALTER TABLE gfbio_head ADD description text;
 
 
 UPDATE gfbio_head SET  description='In this table we store keywords for some tools. This table is related with the "gfbio_type" table.'			WHERE table_name = 'gfbio_category';
