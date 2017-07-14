@@ -43,7 +43,10 @@
 				
 			$(document).ready(function(){
 				TMS.init('widget');
-
+				var q = getURLVariable('q');
+				if (q != ''){
+					TMS.performSearch(q);
+				}
 			});
 			
 			$( document ).ajaxComplete(function( event, xhr, settings ) {
@@ -56,6 +59,23 @@
 			    console.log('adjust ausgefuehrt ' + height);
 			}
 			
+			function getURLVariable(variable) {
+				var url = document.referrer;
+				if (parent.history.state != null){ 
+					url = parent.history.state.path;
+				}
+				var query = url.split('?');
+				if (query.length > 1){
+					var vars = query[1].split('&');
+					for (var i = 0; i < vars.length; i++) {
+						var pair = vars[i].split('=');
+						if (pair[0] == variable) {
+							return decodeURIComponent(pair[1]);
+						}
+					}
+				}
+				return '';
+			}
 			</script>
 			</head>
 			<body>

@@ -26,7 +26,9 @@ function resetSearch(){
 	insertParam("year", "");
 	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
+	}
 	showLatestTenDataset([],"");
+}
 function searchButtonClicked(){
 			var value = document.getElementById("gfbioSearchInput").value;
 	insertParam("q", value);
@@ -37,7 +39,7 @@ function searchButtonClicked(){
 			gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
 		}
 		newQuery(true);
-	});
+	}
 }
 
 function isValueNotEmpty(value){
@@ -393,7 +395,7 @@ function getSearchResult(keyword, filter, yearRange) {
 					addColorPicker();
 					setSelectedRowStyle();
 					// activate parameter show/hide event
-					toggleParametersField()
+					toggleParametersField();
 				}
 			},
 			// define the event after each table row is created
