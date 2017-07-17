@@ -10,7 +10,7 @@
 
 ------------------------------------- Head Table Content -------------------------------------
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_category_dataprovider','relationship');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_category_dataprovider','relationship','',now());
 
 
 ------------------------------------- Column Table Content -------------------------------------

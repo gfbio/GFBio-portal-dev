@@ -6,13 +6,13 @@
 CREATE TABLE gfbio_project
 (
   projectid bigint NOT NULL,
-  name varchar(75),
-  label varchar(75),
+  name text NOT NULL,
+  label text NOT NULL,
   extendeddata text,
   description text,
   startdate timestamp without time zone,
   enddate timestamp without time zone,
-  status varchar(75),
+  status text,
   parentprojectid bigint,
   lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_project_pkey PRIMARY KEY (projectId)

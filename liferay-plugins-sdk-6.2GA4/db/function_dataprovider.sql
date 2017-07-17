@@ -4,7 +4,6 @@
 ---------------------------------------------------------------------------------------------
 
 
-
 --
 create or replace function getDataProviderIdByLabel(in dataproviderlabel text) RETURNS TABLE (dataproviderid bigint) AS
 $$

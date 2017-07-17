@@ -254,4 +254,3 @@ $$
 		columnid = (SELECT getColumnIdByNames(hename, colname));
 $$	
 language 'sql' STABLE;
-

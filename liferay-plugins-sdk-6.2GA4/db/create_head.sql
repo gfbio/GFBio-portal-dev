@@ -8,6 +8,7 @@ CREATE TABLE gfbio_head
   headid bigint NOT NULL,
   table_name text NOT NULL,
   table_type text NOT NULL,
+  description text,
   lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_head_pkey PRIMARY KEY (headid)
 )

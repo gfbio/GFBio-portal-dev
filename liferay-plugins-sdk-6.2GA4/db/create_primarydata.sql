@@ -8,8 +8,8 @@
 CREATE TABLE gfbio_primarydata
 (
   primarydataid bigint NOT NULL,
-  path character(150),
-  name character(200),
+  path text,
+  name text,
   lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_primarydata_pkey PRIMARY KEY (primarydataid)
 )

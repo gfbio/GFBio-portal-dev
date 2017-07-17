@@ -11,7 +11,7 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_category','entity', now());
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_category','entity','In this table we store keywords for some tools. This table is related with the "gfbio_type" table.', now());
 
 
 ------------------------------------- Column Table Content -------------------------------------
