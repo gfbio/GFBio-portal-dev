@@ -6,11 +6,13 @@
 	<portlet>
 		<portlet-name>archiving</portlet-name>
 		<icon>/icon.png</icon>
+		<!-- <private-request-attributes>false</private-request-attributes> -->
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
+		
 	</portlet>
 	<portlet>
 		<portlet-name>data-provider-managment</portlet-name>
@@ -128,6 +130,7 @@
 	<portlet>
 		<portlet-name>workflow-generic</portlet-name>
 		<icon>/icon.png</icon>
+		<private-request-attributes>false</private-request-attributes>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js

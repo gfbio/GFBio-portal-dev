@@ -322,7 +322,12 @@ function saveAllInput(){
 	if (checkMinimalInput()){
 		projectJson = saveProjectInput();
 		projectJson = saveResearchObjectInput(projectJson);
-		projectJson["submittermail"]=document.getElementById("gwf_user_mail").innerHTML;	
+		projectJson["submittermail"]=document.getElementById("gwf_user_mail").innerHTML;
+		
+		console.log(document.getElementById("gwf_dcrtinformation").innerHTML);
+		if (document.getElementById("gwf_dcrtinformation").innerHTML!=null)
+			projectJson["dcrtinformation"]=document.getElementById("gwf_dcrtinformation").innerHTML;
+		
 		
 		if (projectJson.researchobjects.researchobjectid >0){
 			console.log('Information were stored');
