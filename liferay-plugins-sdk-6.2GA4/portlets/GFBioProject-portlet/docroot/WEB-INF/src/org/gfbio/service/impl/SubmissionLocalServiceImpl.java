@@ -69,14 +69,16 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		Boolean check = false;
 
 		if (requestJson.containsKey("submissionid"))
-			check = deleteSubmissionBySubmissionId((long)requestJson.get("submissionid"));
+			check = deleteSubmissionBySubmissionId(Helper.getLongFromJson(requestJson, "submissionid"));
 		else
 			if (requestJson.containsKey("brokersubmissionid"))
 				check = deleteSubmissionByBrokerSubmissionId((String)requestJson.get("brokersubmissionid"));
 			else
 				if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion") &&requestJson.containsKey("archive"))
-					check = deleteSubmissionByIds((long)requestJson.get("researchobjectid"), (int) (long)requestJson.get("researchobjectversion"), (String)requestJson.get("archive"));
-					
+					check = deleteSubmissionByIds(Helper.getLongFromJson(requestJson, "researchobjectid"), Helper.getIntFromJson(requestJson, "researchobjectversion"), Helper.getStringFromJson(requestJson, "archive"));
+				else
+					if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion"))
+						check = deleteSubmissionByResearchObjectIdAndVersion(Helper.getLongFromJson(requestJson, "researchobjectid"), Helper.getIntFromJson(requestJson, "researchobjectversion"));
 		
 		responseJson.put("check", check);
 		return responseJson;
@@ -108,6 +110,20 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		}
 		
 		return !checkOfBrokerSubmissionId(brokerSubmissionId);
+	}
+	
+	
+	//
+	private Boolean deleteSubmissionByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion){
+		
+		if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
+			JSONArray submissionIdArray = getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			for (int i =0; i < submissionIdArray.size();i++)
+				try {deleteSubmission((long) submissionIdArray.get(i));}
+				catch (PortalException | SystemException e) {e.printStackTrace();}	
+		}
+		
+		return !checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
 	}
 	
 	
@@ -758,9 +774,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createSubmission (JSONObject requestJson){
-		
-		System.out.println(requestJson);
-		
+	
 		Boolean check = false;
 		JSONObject keyJson = new JSONObject();
 		Set<String> set = new HashSet<String>();

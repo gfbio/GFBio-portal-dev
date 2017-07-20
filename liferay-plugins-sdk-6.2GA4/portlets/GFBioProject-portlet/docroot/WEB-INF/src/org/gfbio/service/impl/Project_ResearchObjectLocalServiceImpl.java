@@ -21,8 +21,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.gfbio.NoSuchProject_ResearchObjectException;
+import org.gfbio.helper.Helper;
 import org.gfbio.model.Project_ResearchObject;
 import org.gfbio.model.ResearchObject;
+import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.Project_ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
@@ -49,6 +51,122 @@ import org.json.simple.parser.ParseException;
  */
 public class Project_ResearchObjectLocalServiceImpl extends Project_ResearchObjectLocalServiceBaseImpl {
 
+	//private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+	
+	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
+	
+	//------------------------------ Manage Delete Functions --------------------------------------------//
+	
+		
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject deleteProjectResearchObject (JSONObject requestJson){
+		
+		JSONObject responseJson = new JSONObject();
+		Boolean check = false;
+		Boolean researchObjectIdCheck = false;
+		Boolean researchObjectVersionCeck = false;
+		Boolean projectIdCheck = false;
+		long researchObjectId =0;
+		int researchObjectVersion =0;
+		long projectId = 0;
+		
+		if (requestJson.containsKey("researchobjectid")){
+			researchObjectId = Helper.getLongFromJson(requestJson, "researchobjectid");
+			researchObjectIdCheck = true;
+		}
+		
+		if (requestJson.containsKey("researchobjectversion")){
+			researchObjectVersion = Helper.getIntFromJson(requestJson, "researchobjectversion");
+			researchObjectVersionCeck = true;
+		}
+		
+		if (requestJson.containsKey("projectid")){
+			projectId = Helper.getLongFromJson(requestJson, "projectid");
+			projectIdCheck = true;	
+		}
+
+		if ((researchObjectIdCheck && !researchObjectVersionCeck && !projectIdCheck))
+			check = deleteProjectResearchObjectByResearchObjectId(researchObjectId);
+		
+		if ((researchObjectIdCheck && researchObjectVersionCeck && !projectIdCheck))
+			check = deleteProjectResearchObjectByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		
+		if ((researchObjectIdCheck && researchObjectVersionCeck && projectIdCheck))
+			check = deleteProjectResearchObjectByIds(researchObjectId, researchObjectVersion, projectId);
+		
+		responseJson.put("check", check);
+		return responseJson;
+	}
+	
+	
+		
+	//---------------------------------- Delete Functions ------------------------------------------------//
+
+	
+	//
+	private Boolean deleteProjectResearchObjectByIds(long researchObjectId, int researchObjectVersion, long projectId){
+		Boolean check = false;
+		
+		try {
+			Project_ResearchObjectPK pk = new Project_ResearchObjectPK(projectId, researchObjectId, researchObjectVersion);
+			Project_ResearchObject projectResearchObject = project_ResearchObjectPersistence.findByPrimaryKey(pk);
+			if (projectResearchObject != null){
+				Project_ResearchObjectLocalServiceUtil.deleteProject_ResearchObject(projectResearchObject);
+			
+				Project_ResearchObject checkProjectResearchObject = project_ResearchObjectPersistence.findByPrimaryKey(pk);
+				if (checkProjectResearchObject == null)
+					check = true;
+			}else
+				check = true;
+			
+		} catch ( SystemException | NoSuchProject_ResearchObjectException e) {e.printStackTrace();}	
+		return check;
+		
+	}
+	
+	
+	//
+	private Boolean deleteProjectResearchObjectByResearchObjectId(long researchObjectId){
+		Boolean check = false;
+		
+		try {
+			List <Project_ResearchObject> projectResearchObjectList = project_ResearchObjectPersistence.findByResearchObjectID2(researchObjectId);
+			if (projectResearchObjectList.size() >0){
+				for (int i =0; i< projectResearchObjectList.size();i++)
+					Project_ResearchObjectLocalServiceUtil.deleteProject_ResearchObject(projectResearchObjectList.get(i));
+				List <Project_ResearchObject> checkProjectResearchObjectList = project_ResearchObjectPersistence.findByResearchObjectID2(researchObjectId);
+				if (checkProjectResearchObjectList.size() ==0)
+					check = true;
+			}else
+				check = true;
+		} catch ( SystemException e) {e.printStackTrace();}	
+		return check;
+		
+	}
+	
+	
+	//
+	private Boolean deleteProjectResearchObjectByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion){
+		Boolean check = false;
+		
+		try {
+			List <Project_ResearchObject> projectResearchObjectList = project_ResearchObjectPersistence.findByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+			if (projectResearchObjectList.size() >0){
+				for (int i =0; i< projectResearchObjectList.size();i++)
+					Project_ResearchObjectLocalServiceUtil.deleteProject_ResearchObject(projectResearchObjectList.get(i));
+				List <Project_ResearchObject> checkProjectResearchObjectList = project_ResearchObjectPersistence.findByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+				if (checkProjectResearchObjectList.size() ==0)
+					check = true;
+			}
+			else
+				check = true;
+		} catch ( SystemException e) {e.printStackTrace();}	
+		
+		return check;
+		
+	}
+	
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	

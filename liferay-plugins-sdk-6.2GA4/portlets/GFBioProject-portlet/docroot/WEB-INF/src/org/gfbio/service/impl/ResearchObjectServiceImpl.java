@@ -93,17 +93,17 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	public JSONArray createResearchObject(String requestJson){
 		
 		System.out.println(requestJson);
-		_log.info("createRO request |" + requestJson);
+		_log.info("createRO request:" + requestJson);
 
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
 
-		_log.info("createRO start |" + parseJson);
+		_log.info("createRO start:" + parseJson);
 		
 		try {parseJson = (JSONArray) parser.parse(requestJson);}
 		catch (ParseException e) {e.printStackTrace();}
 		
-		_log.info("createRO response|" + parseJson);
+		_log.info("createRO response:" + parseJson);
 
 		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
 	}

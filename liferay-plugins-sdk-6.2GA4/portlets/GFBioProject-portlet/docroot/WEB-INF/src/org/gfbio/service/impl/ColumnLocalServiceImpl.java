@@ -15,6 +15,7 @@
 package org.gfbio.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -114,6 +115,14 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 		return name;
 	}
 	
+	
+	//
+	@SuppressWarnings("rawtypes")
+	public List getColumnNamesByHeadId (long headId){
+		List responseList = ColumnFinderUtil.getColumnNamesByHeadId(headId);
+		return responseList;
+	}
+	
 		
 	/**
 	 * Returns all column entries, that have a specific content of attribute 'headid' of entity gfbio_column
@@ -191,7 +200,6 @@ public class ColumnLocalServiceImpl extends ColumnLocalServiceBaseImpl {
 	private long getMaxId(){
 		long id = 0;
 		List idList = ColumnFinderUtil.getMaxId();
-		System.out.println(idList);
 		if (idList.size()>0)
 		id = (long) idList.get(0);
 		return id;

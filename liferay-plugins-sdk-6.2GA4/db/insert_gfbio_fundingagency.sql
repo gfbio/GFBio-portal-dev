@@ -8,7 +8,7 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_fundingagency','entity');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_fundingagency','entity','In this table we store information of funding agencies, that are related with the GFBio Conext. For example via DMP Tool.',now());
 
 
 ------------------------------------- Column Table Content -------------------------------------

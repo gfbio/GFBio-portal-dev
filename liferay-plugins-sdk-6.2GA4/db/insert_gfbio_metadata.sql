@@ -8,7 +8,7 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_metadata','entity');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_metadata','entity','In this table we store information about the metadata, that we use in GFBio.',now());
 
 
 ------------------------------------- Column Table Content -------------------------------------

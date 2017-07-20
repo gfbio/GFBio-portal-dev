@@ -1,17 +1,22 @@
 package org.gfbio.submissionworkflow;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
+//import LiferayWebserviceClientCallPortalServices;
+
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.util.PortalUtil;
+
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -42,6 +47,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
@@ -50,6 +56,7 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.util.EntityUtils;
 import org.gfbio.helper.Helper;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
@@ -63,9 +70,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.util.PortalUtil;
 
 
 /**
@@ -73,7 +77,7 @@ import com.liferay.portal.util.PortalUtil;
  */
 @SuppressWarnings("deprecation")
 public class WorkflowGeneric extends GenericPortlet {
-
+	
     protected String viewTemplate;
     private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
     
@@ -310,9 +314,13 @@ public class WorkflowGeneric extends GenericPortlet {
 		
 		//preparation data source
 		
-/*    	System.out.println("--------------------------------");
+    	System.out.println("--------------------------------");
     	System.out.println(requestJson);
-    	System.out.println("--------------------------------");*/
+    	System.out.println("--------------------------------");
+    	 
+/*    	_log.info("--------------------------------");
+    	_log.info(requestJson);
+    	_log.info("--------------------------------");*/
     	
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
@@ -356,20 +364,40 @@ public class WorkflowGeneric extends GenericPortlet {
         fields.put("reporter", reporter);	
         try {fields.put("customfield_10010", Helper.getServerInformation((String) requestJson.get("path"),"jiracustomfield10010"));}
         catch (IOException | PortletException e1) {e1.printStackTrace();}
-        fields.put("summary", "Automated Data Submission");
+        if (researchObjectJson.containsKey("name")){
+        	String name = Helper.getStringFromJson(researchObjectJson, "name");
+        	if (name.length()>47)
+        		name = name.substring(0, 44).concat("...");
+        	name = JSONObject.escape(name);
+        	fields.put("summary",name);
+        }
+   		else
+   			fields.put("summary", "Automated Data Submission");
 
         
         //project informations
         
         
+        //dcrt information
+        if (projectJson.containsKey("dcrtinformation")){
+        	JSONObject dcrtInformationJson = new JSONObject();
+        	JSONArray dcrtInformationArray = new JSONArray();
+        	dcrtInformationJson.put("value", Helper.getStringFromJson(projectJson, "dcrtinformation"));
+        	dcrtInformationArray.add(dcrtInformationJson);
+        	fields.put("customfield_10217", dcrtInformationArray);
+        	
+        	String dcrtinput = "Physical objects: false \n Taxon based: null \n Alive: null \n Primarily sequence Data: true \n Category: None ";
+        	fields.put("customfield_10500", dcrtinput);
+        }
+        
+        	
+        
         //project id
-        if (projectJson.containsKey("projectid"))
-        	if (((projectJson.get("projectid")).getClass()).toString().equals("class java.lang.Long")){
-        		if (!((long) projectJson.get("projectid")==0));
-        			fields.put("customfield_10314", String.valueOf((long) projectJson.get("projectid")));
-        	}else
-	        	if (!((String) projectJson.get("projectid")).equals("0"))
-	        		fields.put("customfield_10314", (String) projectJson.get("projectid"));	
+        if (projectJson.containsKey("projectid")){
+        	String projectIdString = Helper.getStringFromJson(projectJson, "projectid");
+        	if (!projectIdString.equals("0"))
+        		fields.put("customfield_10314", projectIdString);
+        }
         
         
         
@@ -377,32 +405,21 @@ public class WorkflowGeneric extends GenericPortlet {
         
         
         //dataset indetifier
-        if (researchObjectJson.containsKey("researchobjectid"))
-        	if (((researchObjectJson.get("researchobjectid")).getClass()).toString().equals("class java.lang.Long")){
-	        	if (!((long) researchObjectJson.get("researchobjectid")==0)){
-	        		
-	        		//dataset id 
-	        		fields.put("customfield_10309",String.valueOf((long) researchObjectJson.get("researchobjectid")));	
-	        		
-	                //dataset version
-	                fields.put("customfield_10310", String.valueOf((long) researchObjectJson.get("researchobjectversion"))); 		
-	        	}
-        	}else
- 	        	if (!((String) researchObjectJson.get("researchobjectid")).equals("0")){
-		        	fields.put("customfield_10309",(String) researchObjectJson.get("researchobjectid"));	
-		            fields.put("customfield_10310", (String) researchObjectJson.get("researchobjectversion")); 		
-	        	}
+        if (researchObjectJson.containsKey("researchobjectid")){
+        	fields.put("customfield_10309",JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "researchobjectid")));
+        	fields.put("customfield_10310",JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "researchobjectversion")));
+        }
 
         
         //dataset title
-        fields.put("customfield_10201", (String) researchObjectJson.get("name")); 							
+        fields.put("customfield_10201", JSONObject.escape(Helper.getStringFromJson(researchObjectJson,"name"))); 							
         
         //dataset label
-        datasetlabelArray.add(((String) researchObjectJson.get("label")).trim().replace(' ', '_'));
+        datasetlabelArray.add((Helper.getStringFromJson(researchObjectJson, "label")).trim().replace(' ', '_'));
         fields.put("customfield_10308", datasetlabelArray); 			
         
         //dataset description
-        fields.put("customfield_10208", (String) researchObjectJson.get("description"));
+        fields.put("customfield_10208", JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "description")));
 
         
         //dataset author
@@ -420,20 +437,21 @@ public class WorkflowGeneric extends GenericPortlet {
         			inputString = inputString.concat(author).concat(", ");
         		}
         		inputString = inputString.substring(0, inputString.length()-2);
-        		fields.put("customfield_10205", inputString);
+        		
+        		fields.put("customfield_10205", JSONObject.escape(inputString));
         	}
         }
         
         //dataset collection time
         if (extendeddataJsonResearchObject.containsKey("datacollectiontime"))
         	if (!(extendeddataJsonResearchObject.get("datacollectiontime").equals("")))
-        		fields.put("customfield_10311", (String) extendeddataJsonResearchObject.get("datacollectiontime")); 			
+        		fields.put("customfield_10311", JSONObject.escape((String) extendeddataJsonResearchObject.get("datacollectiontime"))); 			
         
         
         //related publications
         if (extendeddataJsonResearchObject.containsKey("publications"))
         	if (!(extendeddataJsonResearchObject.get("publications").equals("")))
-        		fields.put("customfield_10307", (String) extendeddataJsonResearchObject.get("publications"));		
+        		fields.put("customfield_10307", JSONObject.escape((String) extendeddataJsonResearchObject.get("publications")));		
         
         
        //metadata shema description
@@ -441,12 +459,7 @@ public class WorkflowGeneric extends GenericPortlet {
             
             String metadataName = "";
 			JSONArray metadataValueArray = new JSONArray();
-            
-			String metadataId ="";
-			if (((researchObjectJson.get("metadataid").getClass()).toString()).equals("class java.lang.Long"))
-            	metadataId = String.valueOf((long) researchObjectJson.get("metadataid"));
-            else
-            	metadataId = (String) researchObjectJson.get("metadataid");
+			String metadataId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "metadataid"));
             		
             JSONObject commandJson = new JSONObject();
             commandJson.put("tablename","gfbio_metadata");
@@ -468,7 +481,7 @@ public class WorkflowGeneric extends GenericPortlet {
         			}
         		}
         	}
-            metadata.put("value", metadataName);
+            metadata.put("value", JSONObject.escape(metadataName));
             metadataArray.add(metadata);
             fields.put("customfield_10229", metadataArray);	
         }
@@ -477,7 +490,7 @@ public class WorkflowGeneric extends GenericPortlet {
         //Embargo
         if (extendeddataJsonResearchObject.containsKey("embargo"))
         	if (!(extendeddataJsonResearchObject.get("embargo").equals("")))
-      		fields.put("customfield_10200", (String) extendeddataJsonResearchObject.get("embargo"));
+      		fields.put("customfield_10200", JSONObject.escape((String) extendeddataJsonResearchObject.get("embargo")));
         
         
         //Category/Keywords
@@ -491,7 +504,7 @@ public class WorkflowGeneric extends GenericPortlet {
         				categoryString = categoryString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", (String) categoryArray.get(i)), "name")).concat(", ");
         			categoryString = categoryString.substring(0, categoryString.length()-2);
         		}
-                fields.put("customfield_10313", categoryString); 	
+                fields.put("customfield_10313", JSONObject.escape(categoryString)); 	
         		
            	}
         
@@ -514,12 +527,7 @@ public class WorkflowGeneric extends GenericPortlet {
 
         	String licenseName = "";
         	JSONArray licenseArray = new JSONArray();
-	            
-        	String licenseId ="";
-        	if (((researchObjectJson.get("licenseid").getClass()).toString()).equals("class java.lang.Long"))
-        		licenseId = String.valueOf((long) researchObjectJson.get("licenseid"));
-        	else
-        		licenseId = (String) researchObjectJson.get("licenseid");
+         	String licenseId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "licenseid"));
 	                    		
         	JSONObject commandJson = new JSONObject();
         	commandJson.put("tablename","gfbio_license");
@@ -535,13 +543,12 @@ public class WorkflowGeneric extends GenericPortlet {
         		}else
         			i = i+1;
         	}
-        	license.put("value", licenseName);
+        	license.put("value", JSONObject.escape(licenseName));
         	fields.put("customfield_10202", license);
         }
         
-        long researchObjectId =(long) researchObjectJson.get("researchobjectid");
-        int researchObjectVersion = (int) (long) researchObjectJson.get("researchobjectversion");
-        
+        long researchObjectId =Helper.getLongFromJson(researchObjectJson, "researchobjectid");
+        int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
         fields.put("customfield_10303", (SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, "GFBio collections")).trim());
        
         //this line ist for testing and stop the submission to JIRA
@@ -553,16 +560,25 @@ public class WorkflowGeneric extends GenericPortlet {
         try {json.put("authorization", "Token "+Helper.getServerInformation((String) requestJson.get("path"),"brokeragenttoken"));}
         catch (IOException | PortletException e) {e.printStackTrace();}
        	
-   
+       
         String response = json.toJSONString();
-        response = response.replaceAll("\\\\n", "----n");
-        response = response.replaceAll("\\\\", "");
+             
+        response = response.replaceAll("\\\\\\\\n", "----n");
+        response = response.replaceAll("\\\\\\\\t", "----t");
+        response = response.replaceAll("\\\\\\\\", "------");
+        response = response.replaceAll("------------", "\\\\\\\\");
+        response = response.replaceAll("------", "");
         response = response.replaceAll("----n", "\\\\n");
+        response = response.replaceAll("----t", "\\\\t");
         
-/*      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+      System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
         System.out.println(response);
         System.out.println("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-	           */
+        
+        _log.info("--------------------------------");
+    	_log.info(response);
+    	_log.info("--------------------------------");
+	           
         return response;
     }
     
@@ -609,150 +625,89 @@ public class WorkflowGeneric extends GenericPortlet {
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "resource" })
 	public void startSubmission (ResourceRequest request, ResourceResponse response){
 
     	String responseString = "";    	
         JSONObject parseJson = getDataJsonAsObject (request);
+/*        try {_log.info("result: "+requestDB());}
+        catch (UnsupportedEncodingException e1) {e1.printStackTrace();}*/
         
-       /* try {
-	        HttpHost targetHost = new HttpHost("helpdesk.gfbio.org", 8443, "https");
-	        DefaultHttpClient httpclient = new DefaultHttpClient();
-	        
-	        
-	        String user ="";
-	        String pw ="";
-			user = Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauser");
-			pw= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirapw");
-
-	        
-	        
-	        httpclient.getCredentialsProvider().setCredentials(
-	                new AuthScope(targetHost.getHostName(), targetHost.getPort()),
-	                new UsernamePasswordCredentials(user, pw));
-	
-	
-	        AuthCache authCache = new BasicAuthCache();
-	        BasicScheme basicAuth = new BasicScheme();
-	        authCache.put(targetHost, basicAuth);
-	        BasicHttpContext ctx = new BasicHttpContext();
-	        ctx.setAttribute(ClientContext.AUTH_CACHE, authCache);
-	
-	        HttpPost post = new HttpPost("/rest/api/2/issue/");
-	        
-	        List<NameValuePair> params = new ArrayList<NameValuePair>();
-	        
-	        String value = getJSON_Body((JSONObject) parseJson);
-	        
-	        params.add(new BasicNameValuePair("requestJson", value));
-	
-	        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
-	        post.setEntity(entity);
-	        
-	        System.out.println(params.get(0));
-	        System.out.println("--------------------------------------------------------------------------");
-	
-	        HttpResponse resp = httpclient.execute(targetHost, post, ctx);
-	        resp.getEntity().writeTo(System.out);
-	
-	        System.out.println(resp.getParams().toString());
-	        System.out.println(resp.getStatusLine());
-	        
-	        httpclient.getConnectionManager().shutdown();
-        }catch (IOException | PortletException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
-        
-    	try {
-
-            URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/");
-            System.out.println(System.getenv("JAVA_Home"));
-            String path = System.getenv("JAVA_Home") +File.separator+"jre"+File.separator+"lib"+File.separator+"security"+File.separator+"cacerts";
-            //String path = System.getenv("JAVA_Home") +"/jre/lib/security/cacerts";
-            System.out.println(path);
-            System.setProperty("javax.net.ssl.keyStore", path);
-            System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
-	        	       
-            String jiraRequestString = getJSON_Body((JSONObject) parseJson);
+        try {
+       
+        	HttpClient httpclient = new DefaultHttpClient();
+        	HttpPost post = new HttpPost("https://helpdesk.gfbio.org/rest/api/2/issue/");
+            post.addHeader("Content-Type","application/json");
+            post.addHeader("Accept","application/json");
+            post.addHeader("setDoInput","true");
+            post.addHeader("setDoOutput","true");
             
-	        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setUseCaches(false);
-	        conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-	        conn.setRequestProperty("Accept", "application/json");
-	        conn.setRequestProperty("Content-Length", String.valueOf((jiraRequestString.getBytes()).length));
-
-            conn.setUseCaches(false);
             String userpass= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauserpass");
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
-	        conn.addRequestProperty ("Authorization", basicAuth);
-	        
-	        try( DataOutputStream os = new DataOutputStream( conn.getOutputStream())) {
-		        os.write(jiraRequestString.getBytes());
-		        os.flush(); 
-		        os.close();
-	        }
-	        if (conn.getResponseCode() != 201) {
-	        	_log.info("Failed : HTTPS error code : "+conn.getResponseCode());
-	           throw new RuntimeException("Failed : HTTPS error code : " + conn.getResponseCode());
-	        }
-	        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-	        String output;
-	        _log.info("Output from Server .... \n");
-	        while ((output = br.readLine()) != null){
-			
-		        JSONParser parser = new JSONParser();
-				JSONObject jraResponseJson = new JSONObject();
-				try {jraResponseJson = (JSONObject) parser.parse(output);}
-				catch (ParseException e) {e.printStackTrace();}
-				JSONObject jiraRequestJson = new JSONObject();
-				try {jiraRequestJson = (JSONObject) parser.parse(jiraRequestString);}
-				catch (ParseException e) {e.printStackTrace();}
+            if (basicAuth != null) 
+                post.addHeader("Authorization", basicAuth);
+
+            String jiraRequestString = getJSON_Body((JSONObject) parseJson);
+            
+            HttpEntity entity = new ByteArrayEntity(jiraRequestString.getBytes(StandardCharsets.UTF_8));
+            post.setEntity(entity);
+            HttpResponse resp = httpclient.execute(post);
+             
+            if (!((resp.getStatusLine().toString()).equals("HTTP/1.1 201 Created"))) {
+            	_log.info("Failed : HTTPS error code : "+resp.getStatusLine());
+            	throw new RuntimeException("Failed : HTTPS error code : " + resp.getStatusLine());
+	        }else{
+ 	        
+	        	String result = EntityUtils.toString(resp.getEntity());
+	        	_log.info("Output from Server .... \n");
+	        	_log.info("result: "+result);
+	            
+	        	JSONParser parser = new JSONParser();
+	        	JSONObject jiraResponseJson = new JSONObject();
+	        	try {jiraResponseJson = (JSONObject) parser.parse(result);}
+	        	catch (ParseException e) {e.printStackTrace();}
 				
+	        	JSONObject jiraRequestJson = new JSONObject();
+	        	try {jiraRequestJson = (JSONObject) parser.parse(jiraRequestString);}
+				catch (ParseException e) {e.printStackTrace();}
+					
 				JSONObject fieldJson = (JSONObject) jiraRequestJson.get("fields");
-				
 				long researchObjectId = Long.parseLong((String)fieldJson.get("customfield_10309"));
-				int researchObjectVersion = Integer.parseInt((String) fieldJson.get("customfield_10310"));
-				
-				SubmissionLocalServiceUtil.updateJiraKey(researchObjectId, researchObjectVersion, "GFBio collections", (String) jraResponseJson.get("key"));
-				SubmissionLocalServiceUtil.updateJiraId (researchObjectId, researchObjectVersion, "GFBio collections", (String) jraResponseJson.get("id"));
-				
+				int researchObjectVersion = Integer.parseInt((String) fieldJson.get("customfield_10310"));			
+				SubmissionLocalServiceUtil.updateJiraKey(researchObjectId, researchObjectVersion, "GFBio collections", (String) jiraResponseJson.get("key"));
+				SubmissionLocalServiceUtil.updateJiraId (researchObjectId, researchObjectVersion, "GFBio collections", (String) jiraResponseJson.get("id"));
+
 				if (PrimaryData_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
 					List <Long> idList = PrimaryData_ResearchObjectLocalServiceUtil.getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId,researchObjectVersion);
 					Boolean check = true;
 					int i =0;
 					while (i<idList.size() && check){
-						check = addAttachmentToIssue(userpass, (String) jraResponseJson.get("id"), (String) PrimaryDataLocalServiceUtil.getPathByPrimaryDataId(idList.get(i)));
-						
+						check = addAttachmentToIssue(userpass, (String) jiraResponseJson.get("id"), (String) PrimaryDataLocalServiceUtil.getPathByPrimaryDataId(idList.get(i)));
 						i = i+1;
 					}
-					jraResponseJson.put("fileToJiraResponse", check);
+					jiraResponseJson.put("fileToJiraResponse", check);
 				}
-				
-				
-				responseString = responseString.concat(jraResponseJson.toString());
+				responseString = responseString.concat(jiraResponseJson.toString());
 	        }
-	        conn.disconnect();
-	     } catch (Exception e) {
-	    	 e.printStackTrace();
-	     	System.out.println(e.toString());
-	     }
-        
+            httpclient.getConnectionManager().shutdown();
+            
+        }catch (Exception e) {
+        	e.printStackTrace();
+        	_log.info(e);
+        }
+                    
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		try {response.getWriter().write(responseString);}
-		catch (IOException e) {e.printStackTrace();
-		System.out.println(e.toString());}
-		
-        
+		catch (IOException e) {
+			e.printStackTrace();
+			_log.info(e.toString());
+		}
     }
-    
-    
+
+
     //
-	@SuppressWarnings({ "resource", "unused" })
+	@SuppressWarnings("resource")
 	public Boolean addAttachmentToIssue(String userpass, String issueKey, String path){
 
 		try{
@@ -777,7 +732,7 @@ public class WorkflowGeneric extends GenericPortlet {
 		    catch (ClientProtocolException e) {return false;}
 		    catch (IOException e) {return false; }
 		    
-		    HttpEntity result = response.getEntity();
+		    //HttpEntity result = response.getEntity();
 		    if(response.getStatusLine().getStatusCode() == 200)
 		        return true;
 		    else
@@ -869,7 +824,16 @@ public class WorkflowGeneric extends GenericPortlet {
 		response.getWriter().write(responseJson.toString());
 	}
 	
-    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 }

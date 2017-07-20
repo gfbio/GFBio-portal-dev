@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+   <sql id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl.getCheckOfPrimaryDataId">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_primarydata_researchobject
+			 WHERE
+			 primarydataid = ?
+		]]>
+   </sql>
+   
+   
+   <sql id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl.getCheckOfResearchObjectId">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_primarydata_researchobject
+			 WHERE
+			 researchobjectid = ?
+		]]>
+   </sql>
+   
+    
    <sql id="org.gfbio.service.persistence.PrimaryData_ResearchObjectFinderImpl.getCheckOfResearchObjectIdAndVersion">
 	    <![CDATA[
 			SELECT 

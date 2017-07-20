@@ -32,6 +32,22 @@
 
 .aui{
 	
+body{
+    .journal-content-article a.btn-effect{
+	  color: #fff;
+      border-color: #fff;
+      text-decoration:none;
+    }
+    
+    .journal-content-article a.btn-effect:hover, .journal-content-article a.btn-effect:active,
+    .journal-content-article a.btn-effect:focus{
+	  color: #345aa2;
+      border-color: #fff;
+      
+    }
+}
+
+
 
 figure, p, address {
     margin: 0;
@@ -635,8 +651,9 @@ h3.landing-area {
 }
 
 
+
 .sec-title {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     background:transparent;
 }
 

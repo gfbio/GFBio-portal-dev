@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 
+    <sql id="org.gfbio.service.persistence.HeadFinderImpl.getDescriptionByHeadId">
+	    <![CDATA[
+		  SELECT
+		  	description
+		  FROM
+		  	public.gfbio_head
+		  WHERE
+		  	gfbio_head.headid = ? 
+		]]>
+    </sql>
+
     <sql id="org.gfbio.service.persistence.HeadFinderImpl.getEntitiesByHeadId">
 	    <![CDATA[
 			SELECT 

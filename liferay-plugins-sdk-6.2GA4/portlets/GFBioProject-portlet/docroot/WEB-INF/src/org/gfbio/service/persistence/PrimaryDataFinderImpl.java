@@ -16,11 +16,36 @@ public class PrimaryDataFinderImpl extends BasePersistenceImpl<PrimaryData> impl
 
 	
 	public static String FINDER_CLASS_NAME_ENTITY							 	= PrimaryDataFinderImpl.class.getName();
+	public static String GET_CHECK_PRIMARYDATA_BY_ID							= FINDER_CLASS_NAME_ENTITY + ".getCheckPrimaryDataById";
 	public static String GET_CHECK_PRIMARYDATA_EXISTS 							= FINDER_CLASS_NAME_ENTITY + ".getCheckPrimaryDataExists";
 	public static String GET_MAX_ID 											= FINDER_CLASS_NAME_ENTITY + ".getMaxId";
 	public static String GET_PATH_BY_PRIMARYDATAID	 							= FINDER_CLASS_NAME_ENTITY + ".getPathByPrimaryDataId";
 
 
+	
+	
+	//check relation table for a specific research object. If this in the relation table, then 'check' is true, else 'check' is wrong.
+	@SuppressWarnings({  "unchecked" })
+	public List<Boolean> getCheckPrimaryDataById(long primaryDataId) {
+		
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(GET_CHECK_PRIMARYDATA_BY_ID);
+			SQLQuery queryObject = session.createSQLQuery(sql);
+			queryObject.setCacheable(false);
+			queryObject.addScalar("check", Type.BOOLEAN);
+			QueryPos qPos = QueryPos.getInstance(queryObject);
+			qPos.add(primaryDataId);
+			return (List<Boolean>) queryObject.list();
+		} catch (Exception e) {e.printStackTrace();}
+		finally {
+			closeSession(session);
+		}
+		return null;
+	}
+	
+	
 	//check relation table for a specific research object. If this in the relation table, then 'check' is true, else 'check' is wrong.
 	@SuppressWarnings({  "unchecked" })
 	public List<Boolean> getCheckPrimaryDataExists(String name, String path) {

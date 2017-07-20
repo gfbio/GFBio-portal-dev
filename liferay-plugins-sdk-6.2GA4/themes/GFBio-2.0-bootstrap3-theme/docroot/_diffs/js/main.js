@@ -1,5 +1,3 @@
-
-jQueryCode = function(){// if jquery is not loaded, load it first (see bottom of the page). 
 AUI().ready(
 				'liferay-navigation-interaction',
 				'liferay-sign-in-modal',
@@ -134,6 +132,39 @@ AUI().ready(function() {
 			$(this).toggleClass("open");
 			}
 		});
+		
+		//ignore click event on first level menu when using a mobile layout
+		$('a.dropdown-toggle').on('click', function() {
+			if ($(document).width() <= 979){
+				return false;
+				}
+			});
+		var timeout = 0;
+		var lastTap = 0;
+		$('a.dropdown-toggle').on('touchstart', function() {
+	    	// listen to double tap event when using a mobile layout
+			if ($(document).width() <= 979){
+			    var currentTime = new Date().getTime();
+			    var tapLength = currentTime - lastTap;
+			    clearTimeout(timeout);
+		    	
+			    if (tapLength < 500 && tapLength > 0) {
+			    	// this is two times tap 
+			        window.location = this.href;
+			        return true; 
+			    }else{
+			    	// this is one time tap
+					$(this).parent().toggleClass("open");
+			    	timeout = setTimeout(function() {
+			            // set timeout after the first tap
+			            clearTimeout(timeout);
+				        return false;
+			        }, 500);
+			    }
+			    lastTap = currentTime; 
+			}
+	        return false;
+		});
 	}
 	// clear all the extension class from mobile responsive
 	// layout
@@ -173,15 +204,70 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
 	     
 	      });
 	});
-}
 
-// check if jquery is loaded, if not load it first.
-if(window.jQuery)  jQueryCode();
-else{    
-    var script = document.createElement('script'); 
-    document.head.appendChild(script);  
-    script.type = 'text/javascript';
-    script.src = "//code.jquery.com/jquery-1.11.1.min.js";
 
-    script.onload = jQueryCode;
-}
+(function($) {
+    $(document).ready(function() {
+		var hash = window.location.hash;
+		if (hash.length >0){
+			// show the accordion that is linked via url
+			var index = $(hash).index('div.toggler');
+		    $(document).accordion({
+			    // Put custom options here
+			    heightStyle: 'content',
+			    header: 'div.toggler',
+			    collapsible: true,
+			    active: index,
+			 });
+			$('html,body').animate({ //auto scroll
+			 	scrollTop: $(hash).offset().top-80
+			 //minus the menu height
+			});
+		}else{
+	        //if no accordion is called
+	        $(document).accordion({
+		        // Put custom options here
+		        heightStyle: 'content',
+		        header: 'div.toggler',
+		        collapsible: true,
+		        active: false,
+		    });
+      	}
+      var activate = function(tog) {
+        var tgs = $('div.toggler');
+        
+        // read the position for autoscroll
+        var togTop = tog.offset().top;
+        var pTogTop = $('div.accordion.ui-accordion-content-active').prev().offset().top;
+        var pAccordionHeight = 0
+        // if the newly open accordion is below the current one,
+        // get the previously opened accordion height
+        if (pTogTop < togTop) 
+        	pAccordionHeight = $('div.accordion.ui-accordion-content-active').height();
+        	
+        tgs.removeClass('active');
+        tog.addClass('active');
+        tgs.next('div.accordion').attr('aria-hidden', 'true');
+        tog.next('div.accordion').attr('aria-hidden', 'false');
+        
+         $('html,body').animate({
+         	// tog.top alone doesn't work here because the old accordion 
+         	// is open, so we have to minus the old accordion height
+		     scrollTop: togTop-pAccordionHeight-65
+		  });
+      };
+	
+      $('div.toggler').focus(function(e) {
+        $('div.toggler').attr('tabindex', 0);
+        $(this).attr('tabindex', -1);
+      }).blur(function() {
+        $(this).attr('tabindex', 0);
+      }).click(function() {
+        activate($(this));
+      }).keypress(function(event) {
+        if (event.keyCode == 13) activate($(this));
+      });
+      
+    });
+  })(jQuery);
+  

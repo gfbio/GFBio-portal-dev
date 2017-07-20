@@ -6,11 +6,13 @@
 	<portlet>
 		<portlet-name>archiving</portlet-name>
 		<icon>/icon.png</icon>
+		<!-- <private-request-attributes>false</private-request-attributes> -->
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
+		
 	</portlet>
 	<portlet>
 		<portlet-name>data-provider-managment</portlet-name>
@@ -26,6 +28,7 @@
 	 <portlet>
 		<portlet-name>dcrt</portlet-name>
 		<icon>/icon.png</icon>
+		<private-session-attributes>false</private-session-attributes>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
@@ -36,6 +39,7 @@
     <portlet>
 		<portlet-name>dmpt</portlet-name>
 		<icon>/icon.png</icon>
+		<private-session-attributes>false</private-session-attributes>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
@@ -128,6 +132,7 @@
 	<portlet>
 		<portlet-name>workflow-generic</portlet-name>
 		<icon>/icon.png</icon>
+		<private-request-attributes>false</private-request-attributes>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
@@ -149,7 +154,7 @@
 	<portlet>
 		<portlet-name>submissions</portlet-name>
 		<icon>/icon.png</icon>
-		<struts-path>my_pages</struts-path>
+		<!-- <struts-path>my_pages</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>my</control-panel-entry-category>
 		<control-panel-entry-weight>5.0</control-panel-entry-weight>
@@ -157,13 +162,13 @@
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
+		<render-weight>50</render-weight> -->
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>submissions-portlet</css-class-wrapper>
-		<system>true</system>
+<!-- 		<system>true</system> -->
 		
 	</portlet>
 	<role-mapper>

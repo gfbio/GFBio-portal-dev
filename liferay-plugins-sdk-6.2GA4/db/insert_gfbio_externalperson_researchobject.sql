@@ -8,7 +8,7 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_externalperson_researchobject','relationship');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_externalperson_researchobject','relationship','',now());
 
 
 ------------------------------------- Column Table Content -------------------------------------

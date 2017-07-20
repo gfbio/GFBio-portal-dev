@@ -8,7 +8,7 @@
 
 ------------------------------------- Head Table Content -------------------------------------
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_dataprovider_persistentidentifier','relationship');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_dataprovider_persistentidentifier','relationship','',now());
 
 
 ------------------------------------- Column Table Content -------------------------------------

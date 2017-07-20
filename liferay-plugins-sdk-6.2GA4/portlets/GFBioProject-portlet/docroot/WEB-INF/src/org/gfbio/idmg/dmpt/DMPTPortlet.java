@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -52,7 +53,7 @@ public class DMPTPortlet extends MVCPortlet {
 		//Setting variable for context path
 		String contextPath = renderResponse.encodeURL(renderRequest.getContextPath());
 		renderRequest.setAttribute("contextPath", contextPath);
-		
+	    
 		super.render(renderRequest, renderResponse); 
 	}
 	

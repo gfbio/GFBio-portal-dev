@@ -33,7 +33,18 @@
 	<input type="hidden" class="widthL" id="path"  					value="<%=request.getContextPath()%>" />
 	<input type="hidden" class="widthL" id="workflowgenericurl"  	value="<%=workflowgenericURL %>" />
 
+	<%
+		PortletSession ps = renderRequest.getPortletSession();
+		String s = (String)ps.getAttribute("testSessionValue", PortletSession.APPLICATION_SCOPE);
+		s ="ENA";
+	%>
+	<%="--------------" %>
+	<%=s %>
+	<%="--------------" %>
+	<%=PortletSession.APPLICATION_SCOPE %>
+
 	<div id="generic"></div>
+	<div id="gwf_dcrtinformation" class="swHide"><%=s %></div>
 		
 	<div id="gwf_user_path" class="swHide">
 		<%= getServletContext().getRealPath("/")%>

@@ -336,9 +336,9 @@
 		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 
-		<finder name="ProjectID" 			return-type="Collection">	<finder-column name="projectID" />	</finder>
-		<finder name="ResearchObjectID" 	return-type="Collection">	<finder-column name="researchObjectID" />		<finder-column name="researchObjectVersion" />	</finder>
-		<finder name="ResearchObjectID2" 	return-type="Collection">	<finder-column name="researchObjectID" />		</finder>
+		<finder name="ProjectID" 					return-type="Collection">	<finder-column name="projectID" />	</finder>
+		<finder name="ResearchObjectIdAndVersion" 	return-type="Collection">	<finder-column name="researchObjectID" />		<finder-column name="researchObjectVersion" />	</finder>
+		<finder name="ResearchObjectID2" 			return-type="Collection">	<finder-column name="researchObjectID" />		</finder>
 	</entity>
 
 
@@ -403,9 +403,10 @@
 		<column name="userType" 				type="String" />	
 		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
-		<finder name="researchObjectID"	return-type="Collection">			<finder-column name="researchObjectID" />												</finder>
-		<finder name="UserID" 			return-type="Collection">			<finder-column name="userID" />													</finder>
-		<finder name="findByPrimaryKey" return-type="ResearchObject_User">	<finder-column	name="researchObjectID" />			<finder-column	name="userID" />	</finder>
+		<finder name="researchObjectID"				return-type="Collection">			<finder-column name="researchObjectID" />															</finder>
+		<finder name="researchObjectIdAndVersion"	return-type="Collection">			<finder-column name="researchObjectID" 	/>		<finder-column	name="researchObjectVersion" />		</finder>
+		<finder name="UserID" 						return-type="Collection">			<finder-column name="userID" />													</finder>
+		<finder name="findByPrimaryKey" 			return-type="ResearchObject_User">	<finder-column	name="researchObjectID" />		<finder-column	name="researchObjectVersion" />		<finder-column	name="userID" />	</finder>
 	</entity>
 	
 

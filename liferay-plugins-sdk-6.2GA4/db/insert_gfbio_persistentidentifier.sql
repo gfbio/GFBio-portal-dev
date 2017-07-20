@@ -11,7 +11,7 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_persistentidentifier','entity');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_persistentidentifier','entity','In this table we store the information about persistent identifier, that the archives/datacenter use.',now());
 
 ------------------------------------- Column Table Content -------------------------------------
 

@@ -49,8 +49,6 @@ import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectPK;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  * The implementation of the research object local service.
@@ -68,19 +66,59 @@ import org.json.simple.parser.ParseException;
  */
 public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBaseImpl {
 
+	//private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+	
 	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
 	
 	//------------------------------ Manage Delete Functions --------------------------------------------//
 	
 	
+	
 	@SuppressWarnings("unchecked")
-	public JSONObject deleteSubmission (JSONObject requestJson){
+	public JSONObject deleteResearchObject (JSONObject requestJson){
+		
 		JSONObject responseJson = new JSONObject();
 		Boolean check = false;
+	
+		
+		if (requestJson.containsKey("researchobjectid")){
+			
+			long researchObjectId = Helper.getLongFromJson(requestJson, "researchobjectid");
+			if (checkResearchObjectId(researchObjectId)){
+			
+				if (requestJson.containsKey("researchobjectversion")){
+					
+					int researchObjectVersion = Helper.getIntFromJson(requestJson, "researchobjectversion");
+					if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) != null){
+						
+						responseJson = ResearchObject_UserLocalServiceUtil.deleteResearchObjectUser(requestJson);
+						if (responseJson.containsKey("check"))
+							if ((Boolean) responseJson.get("check")){
+								responseJson = Project_ResearchObjectLocalServiceUtil.deleteProjectResearchObject(requestJson);
+								if (responseJson.containsKey("check"))
+									if ((Boolean) responseJson.get("check")){
+										responseJson = PrimaryData_ResearchObjectLocalServiceUtil.deletePrimaryDataResearchObject(requestJson);
+										if (responseJson.containsKey("check"))
+											if ((Boolean) responseJson.get("check")){
+												responseJson = SubmissionLocalServiceUtil.deleteSubmission(requestJson);
+												if (responseJson.containsKey("check"))
+													if ((Boolean) responseJson.get("check")){
+														//ContentLocalServiceUtil.deleteRelationContentsByCellContent("gfbio_category_researchobject", "gfbio_researchobject", Long.toString(researchObjectId));
+														//ContentLocalServiceUtil.deleteRelationContentsByCellContent("gfbio_externalperson_researchobject", "gfbio_researchobject", Long.toString(researchObjectId));
+														//ContentLocalServiceUtil.deleteRelationContentsByCellContent("gfbio_legalrequirement_researchobject", "gfbio_researchobject", Long.toString(researchObjectId));
+														check = (Boolean) responseJson.get("check");
+													}
+											}
+									}
+							}
 
-		if (requestJson.containsKey("researchobjectid") && requestJson.containsKey("researchobjectversion"))
-			check = deleteResearchObject((long)requestJson.get("researchobjectid"), (int) requestJson.get("researchobjectversion"));
 
+						if (check)
+							check = deleteResearchObject(researchObjectId, researchObjectVersion);
+					}
+				}
+			}
+		}
 		
 		responseJson.put("check", check);
 		return responseJson;
@@ -91,8 +129,18 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	private Boolean deleteResearchObject (long researchObjectId, int researchObjectVersion){
 		
-		if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) != null)
-			deleteResearchObject(researchObjectId, researchObjectVersion);
+		if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) != null){
+			
+			ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+			ResearchObject researchObject = null;
+			
+			try {
+				researchObject = researchObjectPersistence.findByPrimaryKey(pk);				
+				ResearchObjectLocalServiceUtil.deleteResearchObject(researchObject);
+			}
+			catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+			
+		}
 			
 		return !checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
 	}
@@ -790,118 +838,185 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			
 			String description = requestJson.get("description").toString();
 			
-			try {
-				researchObjectId = createResearchObject(name, label, description);
-				if (researchObjectId !=0)
-					check = true;
-			} catch (SystemException e) {e.printStackTrace();}
-
+			if (name.length() <=Helper.getJiraTextfieldLimit() && label.length()<=Helper.getJiraTextfieldLimit() && description.length() <=Helper.getJiraTextareaLimit()){
 			
-			if(requestJson.containsKey("researchobjecttype") && check)
-				check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
-
-			// optional
-									
-			if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames")) && check){
-			
-				if ((requestJson.containsKey("authormail")))
-					check = updateAuthorIdById(researchObjectId, researchObjectVersion, (long) requestJson.get("authorid"));
+				try {
+					researchObjectId = createResearchObject(name, label, description);
+					if (researchObjectId !=0)
+						check = true;
+				} catch (SystemException e) {e.printStackTrace();}
+	
 				
-				if(requestJson.containsKey("authormail") && check)
-					check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, ((String) requestJson.get("authormail")).trim(),"mail");
+				if(requestJson.containsKey("researchobjecttype") && check)
+					if (Helper.getStringFromJson(requestJson, "researchobjecttype").length()<=Helper.getJiraTextfieldLimit())
+						check = updateResearchObjectType(researchObjectId, researchObjectVersion, ((String) requestJson.get("researchobjecttype")).trim());
+					else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'researchobjecttype' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+						check=false;
+					}
 						
-				if(requestJson.containsKey("authornames") && check)
-					if (((requestJson.get("authornames").getClass()).toString()).equals("class java.lang.String")){
-						JSONParser parser = new JSONParser();
-						JSONArray parseJson = new JSONArray();
-						try {parseJson = (JSONArray) parser.parse((String) requestJson.get("authornames"));}
-						catch (ParseException e) {e.printStackTrace();}
-						updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, parseJson,"name");
-					}else
-						updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")),"name");
-			}			
-			else if (requestJson.containsKey("userid") && check){
-				JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
+	
+				// optional
+										
+				if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames")) && check){
 				
-				if (userExtension.containsKey("fullname"))
-					if (!(((String) userExtension.get("fullname")).equals(null)))
-							check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, (String) userExtension.get("fullname"),"name" );
-					else
-						check = false;
-				else{
-					check = false;
-					if (userExtension.containsKey("ERROR"))
-						responseJson.put("ERROR", (String) userExtension.get("ERROR"));
-				}
-			}
+					if ((requestJson.containsKey("authormail")))
+						if (Helper.getStringFromJson(requestJson, "authormail").length()<=Helper.getJiraTextareaSmallLimit())
+							check = updateAuthorIdById(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "authorid"));
+						else{
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authormail' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+							check=false;
+						}
 
-			
-			if(requestJson.containsKey("categoryids") && check)
-				if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-					updateCategoryIds(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categoryids"));
-				else{
-					if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String")){
-						JSONParser parser = new JSONParser();
-						JSONArray parseJson = new JSONArray();
-						try {parseJson = (JSONArray) parser.parse((String) requestJson.get("categoryids"));}
-						catch (ParseException e) {e.printStackTrace();}
-						updateCategoryIds(researchObjectId, researchObjectVersion, parseJson);
+					
+					if(requestJson.containsKey("authormail") && check)
+						if (Helper.getStringFromJson(requestJson, "authormail").length()<=Helper.getJiraTextareaSmallLimit())
+							check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "authormail"),"mail");
+						else{
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authormail' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+							check=false;
+						}
+
+					//by the length check we have a special character problem, so we don't have exact 2000 character
+					if(requestJson.containsKey("authornames") && check)
+						if (((requestJson.get("authornames").getClass()).toString()).equals("class java.lang.String"))
+							if (Helper.getStringFromJson(requestJson, "authornames").length() <=Helper.getJiraTextareaSmallLimit())
+								updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "authornames")),"name");
+							else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+								check=false;
+							}
+						else
+							if (((JSONArray) requestJson.get("authornames")).size() <=Helper.getJiraTextareaSmallLimit())
+								updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, ((JSONArray) requestJson.get("authornames")),"name");
+							else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+								check=false;
+							}
+				}			
+				else if (requestJson.containsKey("userid") && check){
+					JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
+					
+					if (userExtension.containsKey("fullname"))
+						if (!(((String) userExtension.get("fullname")).equals(null)))
+								check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, (String) userExtension.get("fullname"),"name" );
+						else
+							check = false;
+					else{
+						check = false;
+						if (userExtension.containsKey("ERROR"))
+							responseJson.put("ERROR", (String) userExtension.get("ERROR"));
 					}
 				}
-			else
-				if (requestJson.containsKey("categoryid") && check)
-					updateCategoryId(researchObjectId, researchObjectVersion, (long) requestJson.get("categoryid"));
-				else
-					if (requestJson.containsKey("categorynames") && check)
-						if ((((requestJson.get("categorynames")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-							updateCategoryNames(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categorynames"));
-						else
-							if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String")){
-								JSONParser parser = new JSONParser();
-								JSONArray parseJson = new JSONArray();
-								try {parseJson = (JSONArray) parser.parse((String) requestJson.get("categorynames"));}
-								catch (ParseException e) {e.printStackTrace();}
-								updateCategoryNames(researchObjectId, researchObjectVersion, parseJson);
-							}
-					
-			if(requestJson.containsKey("extendeddata") && check){
-				if ((((requestJson.get("extendeddata")).getClass()).toString()).equals("class java.lang.String"))
-					updateExtendedData(researchObjectId, researchObjectVersion, ((String) requestJson.get("extendeddata")).trim());
-				else
-					updateExtendedData(researchObjectId, researchObjectVersion, ((((JSONObject) requestJson.get("extendeddata"))).toJSONString()).trim());
-			}
-
-			if(requestJson.containsKey("licenselabel") && check)
-				check = updateLicenseId(researchObjectId,  researchObjectVersion, ((String) requestJson.get("licenselabel")).trim());
-			
-			if (requestJson.containsKey("licenseid") && check)
-				check = updateLicenseId(researchObjectId, researchObjectVersion, (long) requestJson.get("licenseid"));
-			
-			if (requestJson.containsKey("metadataid") && check)
-				check = updateMetadataId(researchObjectId, researchObjectVersion, (long) requestJson.get("metadataid"));
-			
-			if (requestJson.containsKey("metadatalabel") && check)
-				check = updateMetadataId(researchObjectId, researchObjectVersion, (String) requestJson.get("metadatalabel"));
-			
-			if (requestJson.containsKey("parentresearchobjectid") && check)
-				check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, (long) requestJson.get("parentresearchobjectid"));
-			
-			if (requestJson.containsKey("projectid") && check)
-				check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject((long) requestJson.get("projectid"), researchObjectId, researchObjectVersion);
-			
-			if (requestJson.containsKey("userid") && check)
-				if ((((requestJson.get("userid")).getClass()).toString()).equals("class java.lang.Integer"))
-					check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) (int) requestJson.get("userid"), "owner");
-				else
-					check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, (long) requestJson.get("userid"), "owner");
 	
-			if (check){
-				responseJson.put("researchobjectid", researchObjectId);
-				responseJson.put("researchobjectversion", researchObjectVersion);
-				if (requestJson.containsKey("brokerobjectid")) 
-					responseJson.put("brokerobjectid", requestJson.get("brokerobjectid"));
-			}else
-				responseJson.put("ERROR:", "ERROR: create research object is failed.");
+				
+				if(requestJson.containsKey("categoryids") && check)
+					if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
+						updateCategoryIds(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categoryids"));
+					else{
+						if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String"))
+							updateCategoryIds(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "categoryids")));
+					}
+				else
+					if (requestJson.containsKey("categoryid") && check)
+						updateCategoryId(researchObjectId, researchObjectVersion, (long) requestJson.get("categoryid"));
+					else
+						if (requestJson.containsKey("categorynames") && check)
+							if ((((requestJson.get("categorynames")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
+								if (Helper.getStringFromJson(requestJson, "categorynames").length() <=Helper.getJiraTextfieldLimit())
+									updateCategoryNames(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categorynames"));
+								else{
+									responseJson.put("ERROR", "ERROR: To create a Research Object, because 'categorynames' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+									check=false;
+								}
+							else
+								if ((((requestJson.get("categorynames")).getClass()).toString()).equals("class java.lang.String"))
+									if (Helper.getStringFromJson(requestJson, "categorynames").length() <=Helper.getJiraTextfieldLimit())
+										updateCategoryNames(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "categorynames")));
+									else{
+										responseJson.put("ERROR", "ERROR: To create a Research Object, because 'categorynames' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+										check=false;
+									}
+			
+				
+						
+				if(requestJson.containsKey("extendeddata") && check){
+					JSONObject extendedDataJson = (JSONObject) requestJson.get("extendeddata");
+					Boolean extendedDataCheck = true;
+					if(extendedDataJson.containsKey("datacollectiontime") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "datacollectiontime")).length() >Helper.getJiraTextareaSmallLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'datacollectiontime' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+					if(extendedDataJson.containsKey("publications") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "publications")).length() >Helper.getJiraTextareaSmallLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'publications' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+					if(extendedDataJson.containsKey("embargo") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "embargo")).length() >Helper.getJiraTextfieldLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+							
+					if (extendedDataCheck)
+						updateExtendedData(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "extendeddata"));
+					else
+						check = false;
+				}
+				
+				if (requestJson.containsKey("licenseid") && check)
+					check = updateLicenseId(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "licenseid"));
+
+				
+				if(requestJson.containsKey("licenselabel") && check)
+					if ((Helper.getStringFromJson(requestJson, "licenselabel")).length() <=Helper.getJiraTextfieldLimit())
+						check = updateLicenseId(researchObjectId,  researchObjectVersion, Helper.getStringFromJson(requestJson, "licenselabel"));
+					else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'licenselabel' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+						check=false;
+					}
+								
+				if (requestJson.containsKey("metadataid") && check)
+					check = updateMetadataId(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "metadataid"));
+				
+				if (requestJson.containsKey("metadatalabel") && check)
+					if ((Helper.getStringFromJson(requestJson, "metadatalabel")).length() <=Helper.getJiraTextfieldLimit())
+						check = updateMetadataId(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "metadatalabel"));
+					else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'metadatalabel' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+						check=false;
+					}
+
+				if (requestJson.containsKey("parentresearchobjectid") && check)
+					check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "parentresearchobjectid"));
+				
+				if (requestJson.containsKey("projectid") && check)
+					check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(Helper.getLongFromJson(requestJson, "projectid"), researchObjectId, researchObjectVersion);
+				
+				if (requestJson.containsKey("userid") && check)
+					check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "userid"), "owner");
+					
+				if (check){
+					responseJson.put("researchobjectid", researchObjectId);
+					responseJson.put("researchobjectversion", researchObjectVersion);
+					if (requestJson.containsKey("brokerobjectid")) 
+						responseJson.put("brokerobjectid", requestJson.get("brokerobjectid"));
+				}else{
+					responseJson.put("ERROR:", "ERROR: create research object is failed.");
+					check=false;
+				}
+			}else{
+				String errorString = "ERROR: To create a Research Object, because " ;
+				if (name.length() >Helper.getJiraTextfieldLimit())
+					errorString = errorString.concat("'name' has more as ").concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character, ") ;
+				if (label.length()>Helper.getJiraTextfieldLimit())
+					errorString = errorString.concat("'label' has more as ").concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character, ") ;
+				if (description.length() >Helper.getJiraTextareaLimit())
+					errorString = errorString.concat("'description' has more as ").concat(String.valueOf(Helper.getJiraTextareaLimit())).concat(" character, ") ;
+				errorString = errorString.substring(0, errorString.length()-2).concat(".");
+				responseJson.put("ERROR", errorString);
+			}
 		}else{
 			String errorString = "ERROR: To create a Research Object, the json need minimal 'name' or 'label' and 'description', 'researchobjecttype' as Strings and 'projectid' or 'userid' as long." ;
 			if (!requestJson.containsKey("name"))
@@ -914,7 +1029,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			if (!requestJson.containsKey("userid"))
 				if (!requestJson.containsKey("projectid"))
 					errorString = errorString.concat(" 'userid' or 'projectid,");
-			errorString = errorString.substring(0, errorString.length()-1).concat(" are not correct");
+			errorString = errorString.substring(0, errorString.length()-1).concat(" are not correct.");
 			responseJson.put("ERROR", errorString);
 		}
 		
@@ -938,25 +1053,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 	
 	//
-	private JSONArray getJsonArrayFromJson(JSONObject requestJson, String key){
-		
-		JSONArray responseJson = new JSONArray();
-		if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-			responseJson = (JSONArray) requestJson.get(key);
-		else
-			if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String")){
-				JSONParser parser = new JSONParser();
-				try {responseJson = (JSONArray) parser.parse((String) requestJson.get(key));}
-				catch (ParseException e) {e.printStackTrace();}
-			}
-
-		return responseJson;
-	}
-	
-	//
 	@SuppressWarnings({ "unchecked", "unused" })
 	public JSONObject updateResearchObjectByJson(JSONObject requestJson){
-		
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
@@ -967,7 +1065,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 		if (requestJson.containsKey("researchobjectid")){
 	
-			long researchObjectId = (long) requestJson.get("researchobjectid");
+			long researchObjectId = Helper.getLongFromJson(requestJson, "researchobjectid");
 			int researchObjectVersion = getLatestVersionById(researchObjectId);
 			int startVersion = researchObjectVersion;
 				
@@ -985,9 +1083,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				
 				//author
 				if(requestJson.containsKey("authornames") && check){
-					JSONArray authorNames = getJsonArrayFromJson(requestJson, "authornames");
-					researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-					check = updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, authorNames, "name");
+					if (Helper.getStringFromJson(requestJson, "authornames").length() <=Helper.getJiraTextareaSmallLimit()){
+						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+						check = updateAuthorIdsByColumn(researchObjectId, researchObjectVersion,  Helper.getJsonArrayFromJson(requestJson, "authornames"), "name");
+					}else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						check=false;
+					}
 				}else
 					if(requestJson.containsKey("authorid") && check){
 						long authorId = Helper.getLongFromJson(requestJson, "authorid");
@@ -995,16 +1097,20 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						check = updateAuthorIdById(researchObjectId, researchObjectVersion, authorId);
 					}else
 						if(requestJson.containsKey("authormail") && check){
-							String authorMail = Helper.getStringFromJson(requestJson, "authormail");
-							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-							check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, authorMail, "mail");
+							if (Helper.getStringFromJson(requestJson, "authormail").length()<=Helper.getJiraTextareaSmallLimit()){
+								String authorMail = Helper.getStringFromJson(requestJson, "authormail");
+								researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+								check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, authorMail, "mail");
+							}else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authormail' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+								check=false;
+							}
 						}
-				
+
 				//category
 				if(requestJson.containsKey("categoryids") && check){
-					JSONArray categoryIds = getJsonArrayFromJson(requestJson, "categoryids");
 					researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-					check = updateCategoryIds(researchObjectId, researchObjectVersion, categoryIds);
+					check = updateCategoryIds(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "categoryids"));
 				}else
 					if(requestJson.containsKey("categoryid") && check){
 						long categoryId = Helper.getLongFromJson(requestJson, "categoryid");
@@ -1012,44 +1118,86 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						check = updateCategoryId(researchObjectId, researchObjectVersion, categoryId);
 					}else
 						if (requestJson.containsKey("categorynames") && check){
-							JSONArray categoryIds = getJsonArrayFromJson(requestJson, "categorynames");
-							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-							check = updateCategoryNames(researchObjectId, researchObjectVersion, categoryIds);
+							if (Helper.getStringFromJson(requestJson, "categorynames").length() <=Helper.getJiraTextfieldLimit()){
+								JSONArray categoryIds = Helper.getJsonArrayFromJson(requestJson, "categorynames");
+								researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+								check = updateCategoryNames(researchObjectId, researchObjectVersion, categoryIds);
+							}else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'categorynames' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+								check=false;
+							}
 						}
-				
+
 				//description
 				if(requestJson.containsKey("description") && check){
 					String description = Helper.getStringFromJson(requestJson, "description");
-					if (!description.equals(researchObject.getDescription())){
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateDescription(researchObjectId, researchObjectVersion, description);
+					if (description.length()<=Helper.getJiraTextareaLimit()){
+						if (!description.equals(researchObject.getDescription())){
+							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+							check = updateDescription(researchObjectId, researchObjectVersion, description);
+						}
+					}else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'description' has more as ".concat("String.valueOf(Helper.getJiraTextareaLimit())").concat(" character. ") );
+						check=false;
 					}
 				}
-				
+
 				//extendedData
 				if(requestJson.containsKey("extendeddata") && check){
 					String extendedData = Helper.getStringFromJson(requestJson, "extendeddata");
-					if (!extendedData.equals(researchObject.getExtendeddata())){
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateExtendedData(researchObjectId, researchObjectVersion, extendedData);
-					}
+					JSONObject extendedDataJson = Helper.getJsonObjectFromJson(requestJson, "extendeddata");
+					Boolean extendedDataCheck = true;
+					if(extendedDataJson.containsKey("datacollectiontime") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "datacollectiontime")).length() >Helper.getJiraTextareaSmallLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'datacollectiontime' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+
+					if(extendedDataJson.containsKey("publications") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "publications")).length() >Helper.getJiraTextareaSmallLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'publications' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+					if(extendedDataJson.containsKey("embargo") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "embargo")).length() >Helper.getJiraTextfieldLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+							
+					if (extendedDataCheck){
+						if (!extendedData.equals(researchObject.getExtendeddata())){
+							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+							check = updateExtendedData(researchObjectId, researchObjectVersion, extendedData);
+						}
+					}else
+						check = false;
 				}
-				
+
 				//label
 				if(requestJson.containsKey("label") && check){
 					String label = Helper.getStringFromJson(requestJson, "label");
-					if (!label.equals(researchObject.getLabel())){
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateLabel(researchObjectId, researchObjectVersion, label);
+					if (label.length()<=Helper.getJiraTextfieldLimit()){
+						if (!label.equals(researchObject.getLabel())){
+							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+							check = updateLabel(researchObjectId, researchObjectVersion, label);
+						}
+					}else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'label' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+						check=false;
 					}
 				}
-				
+
 				//license
 				if(requestJson.containsKey("licenselabel") && check){
 					String licenseLabel = Helper.getStringFromJson(requestJson, "licenselabel");
-					if ((ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_license", "label", licenseLabel), "id").trim()).equals(String.valueOf(researchObject.getLicenseID()))){
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateLicenseId(researchObjectId,  researchObjectVersion, licenseLabel);
+					if (licenseLabel.length() <=Helper.getJiraTextfieldLimit()){
+						if ((ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_license", "label", licenseLabel), "id").trim()).equals(String.valueOf(researchObject.getLicenseID()))){
+							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+							check = updateLicenseId(researchObjectId,  researchObjectVersion, licenseLabel);
+						}
+					}else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'licenselabel' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+						check=false;
 					}
 				}else
 					if(requestJson.containsKey("licenseid") && check){
@@ -1059,13 +1207,19 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 							check = updateLicenseId(researchObjectId, researchObjectVersion, licenseId);
 						}
 					}
-				
+
 				//metadata
 				if(requestJson.containsKey("metadatalabel") && check){
 					String metadataeLabel = Helper.getStringFromJson(requestJson, "metadatalabel");
-					if (!(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_metadata", "label", metadataeLabel), "id").trim()).equals(String.valueOf(researchObject.getMetadataID()))){
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateMetadataId(researchObjectId,  researchObjectVersion, metadataeLabel);
+
+					if (metadataeLabel.length() <=Helper.getJiraTextfieldLimit()){
+						if (!(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_metadata", "label", metadataeLabel), "id").trim()).equals(String.valueOf(researchObject.getMetadataID()))){
+							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+							check = updateMetadataId(researchObjectId,  researchObjectVersion, metadataeLabel);
+						}
+					}else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'metadatalabel' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+						check=false;
 					}
 				}else
 					if(requestJson.containsKey("metadataid") && check){
@@ -1075,16 +1229,21 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 							check = updateMetadataId(researchObjectId, researchObjectVersion, metadataId);
 						}
 					}
-				
+
 				//name
 				if(requestJson.containsKey("name") && check){
 					String name = Helper.getStringFromJson(requestJson, "name");
-					if (!name.equals(researchObject.getName())){
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateName(researchObjectId, researchObjectVersion, name);
+					if (name.length() <=Helper.getJiraTextfieldLimit()){
+						if (!name.equals(researchObject.getName())){
+							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
+							check = updateName(researchObjectId, researchObjectVersion, name);
+						}	
+					}else{
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'name' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+						check=false;
 					}
 				}
-				
+
 				//parent
 				if(requestJson.containsKey("parentresearchobjectid") && check){
 					long parentId = Helper.getLongFromJson(requestJson, "parentresearchobjectid");
@@ -1093,9 +1252,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, parentId);
 					}
 				}
-
-				if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) && !check && researchObjectVersion != startVersion)
-					deleteResearchObject (researchObjectId, researchObjectVersion);
+			
+				if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) && !check && researchObjectVersion != startVersion){
+					JSONObject deleteJson = new JSONObject();
+					deleteJson.put("researchobjectid", researchObjectId);
+					deleteJson.put("researchobjectversion", researchObjectVersion);
+					deleteResearchObject (deleteJson);
+				}
 				
 				if (check){
 					responseJson.put("researchobjectid", researchObjectId);
