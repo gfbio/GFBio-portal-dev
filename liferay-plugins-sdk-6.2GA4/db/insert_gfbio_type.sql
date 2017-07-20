@@ -11,7 +11,7 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_type','entity');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_type','entity','The type table specify the category.',now());
 
 ------------------------------------- Column Table Content -------------------------------------
 

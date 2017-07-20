@@ -6,11 +6,13 @@
 	<portlet>
 		<portlet-name>archiving</portlet-name>
 		<icon>/icon.png</icon>
+		<!-- <private-request-attributes>false</private-request-attributes> -->
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>archiving-portlet</css-class-wrapper>
+		
 	</portlet>
 	<portlet>
 		<portlet-name>data-provider-managment</portlet-name>
@@ -26,6 +28,7 @@
 	 <portlet>
 		<portlet-name>dcrt</portlet-name>
 		<icon>/icon.png</icon>
+		<private-session-attributes>false</private-session-attributes>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
@@ -36,6 +39,7 @@
     <portlet>
 		<portlet-name>dmpt</portlet-name>
 		<icon>/icon.png</icon>
+		<private-session-attributes>false</private-session-attributes>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
@@ -128,6 +132,7 @@
 	<portlet>
 		<portlet-name>workflow-generic</portlet-name>
 		<icon>/icon.png</icon>
+		<private-request-attributes>false</private-request-attributes>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js

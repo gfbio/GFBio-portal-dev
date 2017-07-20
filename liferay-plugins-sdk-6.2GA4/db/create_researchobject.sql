@@ -9,13 +9,13 @@ CREATE TABLE gfbio_researchobject
   researchobjectid bigint NOT NULL,
   researchobjectversion smallint NOT NULL DEFAULT 1,
   parentresearchobjectid bigint,
-  name character varying(75),
-  label character varying(75) NOT NULL,
+  name text NOT NULL,
+  label text NOT NULL,
   extendeddata text,
   description text,
   metadataid bigint,
   licenseid bigint,
-  researchobjecttype character varying(75),
+  researchobjecttype text,
   lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion)
 )

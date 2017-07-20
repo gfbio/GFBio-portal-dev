@@ -8,7 +8,7 @@
 ------------------------------------- Head Table Content -------------------------------------
 
 
-INSERT INTO gfbio_head (headid, table_name, table_type)VALUES(getNewHeadId(),'gfbio_institution','entity');
+INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifieddate)VALUES(getNewHeadId(),'gfbio_institution','entity','In this table we store information of institutions, taht are related with GFBio as partner or from the user.',now());
 
 ------------------------------------- Column Table Content -------------------------------------
 

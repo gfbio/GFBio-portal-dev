@@ -34,6 +34,16 @@
 			</div>
 	
 		<%}else { %>
+		
+<%-- 			<%	
+				String s = "test01";
+				PortletSession testSession = resourceRequest.getPortletSession();
+				testSession.setAttribute("testSessionValue", s ,PortletSession.APPLICATION_SCOPE);
+			%>
+			<%="--------------" %>
+			<%=s %>
+			<%="--------------" %> --%>
+
 
 				
 			<%
