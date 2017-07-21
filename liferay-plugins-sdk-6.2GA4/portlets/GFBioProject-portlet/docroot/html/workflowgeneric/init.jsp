@@ -206,13 +206,9 @@
 				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"+
 				
 				"<h3>3. Submission options</h3><hr>"+
-				
-/* 				"<div class='row2'>"+
-					"<span class='widthM' id='gwf_b_start' onclick='submitInput()'>		<span class='btn btn-success'><i class='fa fa-play' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Start submission</span></span>"+
- 					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset</span></span>"+
-				"</div>"+ */
-				
+								
 				"<div>"+
+					"<div id='gwf_dcrtdatacenter'></div>"+
 					"<span  style='width:25%; display:inline-block' id='gwf_b_start' onclick='submitInput()'>		<span style='width:100%' class='btn btn-success'><i class='fa fa-play' 		aria-hidden='true'>&nbsp; &nbsp;  </i>Start submission</span></span>"+
 					"<span style='width:50%; display:inline-block'></span>"+
 					"<span  style='width:25%; display:inline-block' id='gwf_b_reset' onclick='resetInput()'>		<span style='width:100%' class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset</span></span>"+
@@ -422,10 +418,52 @@
 					
 				}
 			} 
-		}); 
-
+		});
+		
+		//dcrt information
+		var targetDcrtDiv = 'gwf_dcrtdatacenter';
+		var divDcrt = $("#".concat(targetDcrtDiv));
+		divDcrt.empty();
+		console.log(document.getElementById("gwf_dcrtinformation").innerHTML);
+		setToDefaultArchive(targetDcrtDiv);
+		if (document.getElementById("gwf_dcrtinformation").innerHTML!='null'){
+			
+ 			divDcrt.append(
+ 				/*
+ 				"<div 		class='control-group'>"+
+					"<span style='width:74%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'>With Start submission you will send your information to a currator of "+document.getElementById("gwf_dcrtinformation").innerHTML+". This curator will suport you by the rest of submission process and clear the next steps to finish the archiving of your data.</span>"+
+					"<span style='width:1%; display:inline-block'></span>"+
+					"<span style='width:25%; display:inline-block' onclick=setToDefaultArchive('"+targetDcrtDiv+"')>		<span class='btn btn-danger' style='width:100%'><i class='fa fa-trash-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Delete "+document.getElementById("gwf_dcrtinformation").innerHTML+" as target</span></span>"+
+				"</div>"
+				*/
+				"<div 		class='control-group'>"+
+					"<fieldset> "+
+						"<span style='width:49%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'><input type='radio' id='mc' name='Zahlmethode' value='Mastercard'>"+document.getElementById("gwf_dcrtinformation").innerHTML+"</input></span>"+
+						"<span style='width:2%; display:inline-block'></span>"+
+						"<span style='width:49%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'><input type='radio' id='vi' name='Zahlmethode' value='Visa'>foo2</input></span> "+
+					"</fieldset>"+
+				"</div>"
+			); 
+			
+			
+			
+		}else{
+			setToDefaultArchive(targetDcrtDiv);
+			console.log("no");
+			console.log(divDcrt);
+		}
 	}
 
+	
+	function setToDefaultArchive(targetDiv){
+		var divDcrt = $("#".concat(targetDiv));
+		divDcrt.empty();
+		divDcrt.append(
+				"<div 		class='control-group'>"+
+					"<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the GFBio curator team. A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>"+
+				"</div>"
+			);
+	}
 	
 	//
 	function fillDefaultSubmitterInformations(data, div){
