@@ -51,29 +51,33 @@ function myFunction()
 {}
 function GetResearchObjectById()
 {
-Liferay.Service(
-		  '/GFBioProject-portlet.researchobject/get-research-object-by-id',
-		  {
-		    requestJson: '[{"researchobjectid":1,"kindofresponse":"extended"}]'
-		  },
-		  function(obj) {
-		    console.log(obj);
-		  }
-		);
-/*var ajaxData = {"userid":data.userid};
-	$.ajax({
-	"type" : "POST",
-	"url": url.concat('/WorkflowGenericPortlet'),
-	"data" : {
-		"<portlet:namespace />data" : JSON.stringify(ajaxData),
-		"<portlet:namespace />responseTarget" : "getuserbyid"
-	},
-	async: false,
-		success :  function (obj){
-		document.getElementById("gwf_ro_author").innerHTML= obj.fullname;
-		}
-	});
-*/
+	var requestJson = {"researchobjectid":1,"kindofresponse":"extended"};
+	var requestArray = [requestJson];
+	
+	;
+	Liferay.Service(
+			  '/GFBioProject-portlet.researchobject/get-research-object-by-id',
+			  {
+			    requestJson: JSON.stringify(requestArray)
+			  },
+			  function(obj) {
+			    console.log(obj);
+			  }
+			);
+	/*var ajaxData = {"userid":data.userid};
+		$.ajax({
+		"type" : "POST",
+		"url": url.concat('/WorkflowGenericPortlet'),
+		"data" : {
+			"<portlet:namespace />data" : JSON.stringify(ajaxData),
+			"<portlet:namespace />responseTarget" : "getuserbyid"
+		},
+		async: false,
+			success :  function (obj){
+			document.getElementById("gwf_ro_author").innerHTML= obj.fullname;
+			}
+		});
+	*/
 }
 
 </script>
