@@ -6,22 +6,22 @@
 	</div>
     <div id="physical" class="row">
        	<h4>Do you want to submit physical objects along with your data?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
 				<label><input name="physical" type="radio" value="true" />Yes</label>
-			</div>
-			<div style="display: block;">
-				<label><input name="physical" type="radio" value="false" />No</label>
-			</div>
+     		</div>
+      		<div class="col-xs-6 col-sm-3 col-md-2">
+		        <label><input name="physical" type="radio" value="false" />No</label>
+          	</div>
 		</div>
     </div>
     <div id="alive" class="row">
        	<h4>Is your object dead or alive?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
 				<label><input name="alive" type="radio" value="true" />Alive</label>
 			</div>
-			<div style="display: block;">
+			<div class="col-xs-6 col-sm-3 col-md-2">
 				<label><input name="alive" type="radio" value="false" />Dead</label>
 			</div>
 		</div>
@@ -29,11 +29,11 @@
     </div>
     <div id="taxon" class="row">
        	<h4>Is your object taxon-based?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
 				<label><input name="taxon" type="radio" value="true" />Yes</label>
 			</div>
-			<div style="display: block;">
+			<div class="col-xs-6 col-sm-3 col-md-2">
 				<label><input name="taxon" type="radio" value="false" />No</label>
 			</div>
 		</div>
@@ -41,11 +41,11 @@
     </div>
     <div id="sequenced" class="row">
        	<h4>Do you have mainly sequence data?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
 				<label><input name="sequenced" type="radio" value="true" />Yes</label>
 			</div>
-			<div style="display: block;">
+			<div class="col-xs-6 col-sm-3 col-md-2">
 				<label><input name="sequenced" type="radio" value="false" >No</label>
 			</div>
 		</div>

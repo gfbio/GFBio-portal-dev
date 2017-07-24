@@ -26,8 +26,7 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 	       	<div class="col-md-12">
 				<c:forEach var="legal" items="${requirements}">
 					<div>
-						<label><input id="legal-${legal.label}" name="${legal.label}" type="checkbox" /> 
-						<c:out value="${legal.name}" /></label>
+						<label><input id="legal-${legal.label}" name="${legal.label}" type="checkbox" /><c:out value="${legal.name}" /></label>
 					</div>
 				</c:forEach>
 				<div>
@@ -63,8 +62,7 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 	       	
 	       	<c:forEach var="license" items="${licenses}">
 				<div>
-					<label><input id="license-${license.label}" name="license" type="radio" /> 
-					<c:out value="${license.name}" /></label>
+					<label><input id="license-${license.label}" name="license" type="radio" /><c:out value="${license.name}" /></label>
 				</div>
 			</c:forEach>
 			<div>
