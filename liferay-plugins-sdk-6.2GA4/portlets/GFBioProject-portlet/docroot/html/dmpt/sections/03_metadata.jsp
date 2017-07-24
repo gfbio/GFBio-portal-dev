@@ -16,8 +16,8 @@ If you don't know which metadata standard to choose, please select 'other' and d
 			<div class="col-md-12">
 				<c:forEach var="meta" items="${metadata}">
 					<div>
-						<input id="metadata-${meta.label}" name="${meta.label}" type="checkbox" /> 
-						<label><c:out value="${meta.name}" /></label>
+						<label><input id="metadata-${meta.label}" name="${meta.label}" type="checkbox" /> 
+						<c:out value="${meta.name}" /></label>
 					</div>
 				</c:forEach>
 			</div>
