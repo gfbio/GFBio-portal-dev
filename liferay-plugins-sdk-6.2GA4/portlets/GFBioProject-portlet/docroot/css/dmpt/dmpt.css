@@ -27,9 +27,11 @@ input[type=button]:disabled {
     color: lightgray;
 }
 
-input[type=radio] {
-	margin-right: 3px;
-    margin-bottom: 3px;
+input[type=radio],
+input[type=checkbox] 
+{
+	margin-right: 3px !important;
+    margin-bottom: 3px !important;
 }
 
 input[name=services] {

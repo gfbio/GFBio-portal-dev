@@ -15,7 +15,7 @@ public class DMPTInput {
 	private String phoneNumber;
 	private String email;
 	private GFunding funding;
-	//private String policies; Kommt aus DB - benötigt DTO
+	private GPolicy policies; //Kommt aus DB
 	
 	// Data Collection
 	private Boolean physical;
@@ -33,7 +33,7 @@ public class DMPTInput {
 	
 	// Ethics
 	
-	//private GLegalRequirement requirement; Kommt aus DB - benötigt DTO
+	private GLegalRequirement requirement; //Kommt aus DB 
 	private GLicense license;
 	private boolean accessRestriction;
 	//if accessRestriction true
@@ -52,11 +52,12 @@ public class DMPTInput {
 
 	public DMPTInput(String projectName, String category, boolean reproducible, List<String> projectTypes,
 			String projectAbstract, List<String> investigators, String responsibleName, String phoneNumber,
-			String email, GFunding funding, Boolean physical, Boolean alive, Boolean taxonBased, Boolean sequenced,
-			List<String> dataformats, boolean openlyDocumented, String dataVolume, String datasets,
-			String methodologies, List<GMetadata> metadata, GLicense license, boolean accessRestriction,
-			String accessDuration, String accessReason, List<String> dataArchives, String pid, boolean estimatingHelp,
-			List<String> gfbioServices) {
+			String email, GFunding funding, GPolicy policies, Boolean physical, Boolean alive, Boolean taxonBased,
+			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String datasets,
+			String methodologies, List<GMetadata> metadata, GLegalRequirement requirement, GLicense license,
+			boolean accessRestriction, String accessDuration, String accessReason, List<String> dataArchives,
+			String pid, boolean estimatingHelp, List<String> gfbioServices) {
+		super();
 		this.projectName = projectName;
 		this.category = category;
 		this.reproducible = reproducible;
@@ -67,6 +68,7 @@ public class DMPTInput {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.funding = funding;
+		this.policies = policies;
 		this.physical = physical;
 		this.alive = alive;
 		this.taxonBased = taxonBased;
@@ -77,6 +79,7 @@ public class DMPTInput {
 		this.datasets = datasets;
 		this.methodologies = methodologies;
 		this.metadata = metadata;
+		this.requirement = requirement;
 		this.license = license;
 		this.accessRestriction = accessRestriction;
 		this.accessDuration = accessDuration;
@@ -311,18 +314,34 @@ public class DMPTInput {
 		this.gfbioServices = gfbioServices;
 	}
 
+	public GPolicy getPolicies() {
+		return policies;
+	}
+
+	public void setPolicies(GPolicy policies) {
+		this.policies = policies;
+	}
+
+	public GLegalRequirement getRequirement() {
+		return requirement;
+	}
+
+	public void setRequirement(GLegalRequirement requirement) {
+		this.requirement = requirement;
+	}
+
 	@Override
 	public String toString() {
 		return "DMPTInput [projectName=" + projectName + ", category=" + category + ", reproducible=" + reproducible
 				+ ", projectTypes=" + projectTypes + ", projectAbstract=" + projectAbstract + ", investigators="
 				+ investigators + ", responsibleName=" + responsibleName + ", phoneNumber=" + phoneNumber + ", email="
-				+ email + ", funding=" + funding + ", physical=" + physical + ", alive=" + alive + ", taxonBased="
-				+ taxonBased + ", sequenced=" + sequenced + ", dataformats=" + dataformats + ", openlyDocumented="
-				+ openlyDocumented + ", dataVolume=" + dataVolume + ", datasets=" + datasets + ", methodologies="
-				+ methodologies + ", metadata=" + metadata + ", license=" + license + ", accessRestriction="
-				+ accessRestriction + ", accessDuration=" + accessDuration + ", accessReason=" + accessReason
-				+ ", dataArchives=" + dataArchives + ", pid=" + pid + ", estimatingHelp=" + estimatingHelp
-				+ ", gfbioServices=" + gfbioServices + "]";
+				+ email + ", funding=" + funding + ", policies=" + policies + ", physical=" + physical + ", alive="
+				+ alive + ", taxonBased=" + taxonBased + ", sequenced=" + sequenced + ", dataformats=" + dataformats
+				+ ", openlyDocumented=" + openlyDocumented + ", dataVolume=" + dataVolume + ", datasets=" + datasets
+				+ ", methodologies=" + methodologies + ", metadata=" + metadata + ", requirement=" + requirement
+				+ ", license=" + license + ", accessRestriction=" + accessRestriction + ", accessDuration="
+				+ accessDuration + ", accessReason=" + accessReason + ", dataArchives=" + dataArchives + ", pid=" + pid
+				+ ", estimatingHelp=" + estimatingHelp + ", gfbioServices=" + gfbioServices + "]";
 	}
-	
+
 }
