@@ -7,17 +7,15 @@ import java.util.List;
 import org.gfbio.NoSuchHeadException;
 import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.dto.GFunding;
+import org.gfbio.idmg.dto.GLegalRequirement;
 import org.gfbio.idmg.dto.GLicense;
 import org.gfbio.idmg.dto.GMetadata;
-import org.gfbio.model.DataProvider;
-import org.gfbio.service.ColumnLocalServiceUtil;
+import org.gfbio.idmg.dto.GPolicy;
 import org.gfbio.service.ContentLocalServiceUtil;
-import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -88,6 +86,16 @@ public class ContentUtil {
 		        {
 		        	GFunding funding = new GFunding(json);
 		        	list.add(cl.cast(funding));
+		        }
+		        else if(inst instanceof GLegalRequirement)
+		        {
+		        	GLegalRequirement requirement = new GLegalRequirement(json);
+		        	list.add(cl.cast(requirement));
+		        }
+		        else if(inst instanceof GPolicy)
+		        {
+		        	GPolicy policy = new GPolicy(json);
+		        	list.add(cl.cast(policy));
 		        }
 				
 			}

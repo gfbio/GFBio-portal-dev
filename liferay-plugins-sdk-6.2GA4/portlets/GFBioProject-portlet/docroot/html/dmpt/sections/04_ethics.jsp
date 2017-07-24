@@ -14,30 +14,37 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
 	    </h4>
-	    <div id="sensitiveData" class="col-md-12">
-	    
-	    	<!-- <div class="col-md-12">
-				<c:forEach var="legal" items="${sensitiveData}">
+	    <div id="legRequirement" >
+		<!-- <select id="requirement" name="requirement" multiple="multiple" size="6"> 
+ 	           <c:forEach var="req" items="${requirements}"> 
+ 	           		<option value="${req.id}" title="${req.description}" >${req.name}</option> 
+ 				</c:forEach> 
+ 	           <option value="other" >Other</option> 
+	           <option value="none" >Not applicable</option> 
+ 	       	</select> -->
+	       	
+	       	<div class="col-md-12">
+				<c:forEach var="legal" items="${requirements}">
 					<div>
 						<input id="legal-${legal.label}" name="${legal.label}" type="checkbox" /> 
 						<label><c:out value="${legal.name}" /></label>
 					</div>
 				</c:forEach>
-			</div> -->
-	       	<select id="sensitive" name="sensitive" multiple="multiple" size="6">
-	           <option value="individual" >Nagoya Protocol</option>
-	           <option value="coordinated" >Red List</option>
-	           <option value="excellence" >Personally Identifiable Information</option>
-	           <option value="other" >Other</option>
-	           <option value="uncertain" >Uncertain</option>
-	           <option value="none" >None</option>
-	       	</select>
-	       	<div>
-				<input id="sensitiveOther" name="sensitiveOther" type="text" class="inputtext_long" 
-	        	placeholder="Other sensitive data"/>
-	       </div>
+				<div>
+					<input id="legal-other" type="checkbox" /> 
+					<label>Other</label>
+				</div>
+				<div>
+					<input id="legal-none" type="checkbox" /> 
+					<label>Not applicable</label>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<input id="requirementOther" name="requirementOther" type="text" class="inputtext_long" placeholder="Other legal requirement"/>
+       		</div>
 	   	</div>
     </div>
+    
 	<div class="row">
     	<h4>How will your data be licensed for reuse?
     		<a href="#" title="The overall goal of GFBio is to provide a sustainable, service oriented, national data infrastructure facilitating data sharing. 
@@ -47,20 +54,35 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 			</a>
     	</h4>
     	<div class="col-md-12">
-	       	<select id="licenses" name="licenses" multiple="multiple" size="8">
+	       	<!--<select id="licenses" name="licenses" >
 	           <c:forEach var="license" items="${licenses}">
-					<option value="<c:out value="${license.label}"/>"
-							title="<c:out value="${license.name}"/>">
-							<c:out value="${license.label}" />
+					<option value="${license.label}" title="${license.name}">
+						<c:out value="${license.label}" />
 					</option>
 				</c:forEach>
-	       	</select>
+				<option value="none" >Not applicable</option>
+	       	</select>-->
+	       	
+	       	<c:forEach var="license" items="${licenses}">
+				<div>
+					<input id="license-${license.label}" name="license" type="radio" /> 
+					<label><c:out value="${license.name}" /></label>
+				</div>
+			</c:forEach>
+			<div>
+				<input id="license-not" name="license" type="radio" /> 
+				<label><c:out value="Not applicable" /></label>
+			</div>
+	       	
 	       	<div>
-				<input id="licenseOther" name="licenseOther" type="text" class="inputtext_long" 
+				<input id="licenseOther" type="text" class="inputtext_long" 
 	        	placeholder="Other license"/>
 	       </div>
+	       <div>
+	       <!-- extended data -->
+	       		<a id="licensceUrl" href=""></a>
+	       </div>
 	   	</div>
-    	
     </div>
 	<div class="row">
         <h4>Do you need access restriction for your data?</h4>

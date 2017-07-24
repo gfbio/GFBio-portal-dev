@@ -147,6 +147,7 @@ $(document).ready(function(){
 			$("div.steps").hide();
 			$("div.actions").hide();
 			$("#gfbioServicesStep").hide();
+			$("#handleInput").show();
 		},
 		onInit : function() {
 		    //General Information
@@ -188,11 +189,12 @@ $(document).ready(function(){
 		    $("#metadataDesc").hide();
 		    
 		    //Ethics and Legal Compliance
-		    $("#sensitive").on("click", handleSensitive);
-		    $("#sensitiveOther").hide();
+		    $("#legal-other").on("click", checkboxRequirement);
+		    $("#requirementOther").hide();
 		
 		    $("#licenses").on("click", handleLicenses);
 		    $("#licenseOther").hide();
+		    $("#licensceUrl").hide();
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
@@ -201,7 +203,7 @@ $(document).ready(function(){
 		    $("#archives").on("change", handleArchives);
 		    $("#archiveOther").hide();
 		    
-		    //Handling of inputs at the end of the wizard
+		    //Handling inputs at the end of the wizard
 		    $("#handleInput").hide();
 		}
   	})

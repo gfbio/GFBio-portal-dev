@@ -57,7 +57,7 @@ function checkboxTypes(event) {
     'use strict';
     
     if ($(event.target).is(':checked')) {
-        $("#typesOther").show();
+        $("#typesOther").show("slow");
     } else {
         $("#typesOther").hide();
         $("#typesOther").val("");
@@ -68,12 +68,37 @@ function checkboxDataformat(event) {
     'use strict';
     
     if ($(event.target).is(':checked')) {
-        $("#dataformatOther").show();
+        $("#dataformatOther").show("slow");
     } else {
         $("#dataformatOther").hide();
         $("#dataformatOther").val("");
     }
 }
+
+function checkboxRequirement(event) {
+	'use strict';
+	
+	var other = $("#requirementOther");
+	if ($(event.target).is(':checked')) {
+		other.show("slow");
+	} else {
+		other.hide();
+		other.val("");
+	}
+}
+
+//function handleRequirement(event) {
+//	'use strict';
+//	
+//	var selection = $(event.target).val(),
+//		other = $("#requirementOther");
+//	if (selection === "other") {
+//		other.show("slow");
+//	} else {
+//		other.hide();
+//		other.val("");
+//	}
+//}
 
 function getPrincipal() {
     'use strict';
@@ -127,19 +152,6 @@ function handleMetadataOther(event) {
         $("#metadataDesc").hide();
         $("#metadataDesc").val("");
     }
-}
-
-function handleSensitive(event) {
-	'use strict';
-	
-	var selection = $(event.target).val(),
-		other = $("#sensitiveOther");
-	if (selection === "other") {
-		other.show("slow");
-	} else {
-		other.hide();
-		other.val("");
-	}
 }
 
 function handleLicenses(event) {
