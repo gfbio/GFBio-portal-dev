@@ -209,9 +209,9 @@
 								
 				"<div>"+
 					"<div id='gwf_dcrtdatacenter'></div>"+
-					"<span  style='width:25%; display:inline-block' id='gwf_b_start' onclick='submitInput()'>		<span style='width:100%' class='btn btn-success'><i class='fa fa-play' 		aria-hidden='true'>&nbsp; &nbsp;  </i>Start submission</span></span>"+
+					"<span  style='width:25%; display:inline-block' id='gwf_b_start' onclick='submitInput()'>		<span style='width:100%' class='btn btn-success'><i class='fa fa-play' 		aria-hidden='true'>&nbsp; &nbsp;  </i>Request submission</span></span>"+
 					"<span style='width:50%; display:inline-block'></span>"+
-					"<span  style='width:25%; display:inline-block' id='gwf_b_reset' onclick='resetInput()'>		<span style='width:100%' class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset</span></span>"+
+					"<span  style='width:25%; display:inline-block' id='gwf_b_reset' onclick='resetInput()'>		<span style='width:100%' class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset all information</span></span>"+
 			
 				"</div>"+
 				
@@ -438,9 +438,9 @@
 				*/
 				"<div 		class='control-group'>"+
 					"<fieldset> "+
-						"<span style='width:49%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'><input type='radio' id='mc' name='Zahlmethode' value='Mastercard'>"+document.getElementById("gwf_dcrtinformation").innerHTML+"</input></span>"+
-						"<span style='width:2%; display:inline-block'></span>"+
-						"<span style='width:49%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'><input type='radio' id='vi' name='Zahlmethode' value='Visa'>foo2</input></span> "+
+						"<span style='width:25%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_special' name='gwf_ro_dcrt_radio' value='"+document.getElementById("gwf_dcrtinformation").innerHTML+"' checked='checked'> to the curator of "+document.getElementById("gwf_dcrtinformation").innerHTML+"</input></span>"+
+						"<span style='width:25%; display:inline-block'></span>"+
+						"<span style='width:50%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_default' name='gwf_ro_dcrt_radio' value='none'> to the whole GFBio curator team</input></span> "+
 					"</fieldset>"+
 				"</div>"
 			); 

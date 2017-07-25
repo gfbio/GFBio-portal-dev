@@ -324,8 +324,13 @@ function saveAllInput(){
 		projectJson = saveResearchObjectInput(projectJson);
 		projectJson["submittermail"]=document.getElementById("gwf_user_mail").innerHTML;
 		
-		if (document.getElementById("gwf_dcrtinformation").innerHTML!=null)
-			projectJson["dcrtinformation"]=document.getElementById("gwf_dcrtinformation").innerHTML;
+		
+		if (document.getElementById("gwf_dcrtinformation").innerHTML!=null){
+			var checkList = document.getElementsByName('gwf_ro_dcrt_radio');
+			for (i=0; i <checkList.length; i++)
+				if (checkList[i].checked==true)
+					projectJson["dcrtinformation"]=checkList[i].value;
+		}
 		
 		
 		if (projectJson.researchobjects.researchobjectid >0){
