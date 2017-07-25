@@ -32,19 +32,16 @@
         </h4>
         <div id="persistentIdentifier">
 	        <div style="display: block;">
-	            <input class="radio_input" name="pid"
-	                type="radio" value="yes" />
-				<label>Yes (recommended)</label>
+	            <label><input class="radio_input" name="pid"
+	                type="radio" value="yes" />Yes (recommended)</label>
 	        </div>
 	        <div style="display: block;">
-                <input class="radio_input" name="pid"
-	                type="radio" value="no" />
-				<label>No</label>
+                <label><input class="radio_input" name="pid"
+	                type="radio" value="no" />No</label>
 	        </div>
 	        <div style="display: block;">
-	        	<input class="radio_input" name="pid"
-	                type="radio" value="dontknow" />
-	            <label>Don't know yet</label>
+	        	<label><input class="radio_input" name="pid"
+	                type="radio" value="dontknow" />Don't know yet</label>
 	        </div>
         </div>
     </div>
@@ -52,14 +49,12 @@
 	    <h4>Do you need help estimating the cost and effort for data management?</h4>
 	    <div id="needHelp">
 	    	<div style="display: block;">
-	            <input class="radio_input" name="help"
-	            type="radio" value="yes" />
-	            <label>Yes</label>
+	            <label><input class="radio_input" name="help"
+	            type="radio" value="yes" />Yes</label>
 	        </div>
 	        <div style="display: block;">
-	            <input class="radio_input" name="help"
-	            type="radio" value="no" />
-	            <label>No</label>
+	            <label><input class="radio_input" name="help"
+	            type="radio" value="no" />No</label>
 	        </div>
 	    </div>
 	</div>

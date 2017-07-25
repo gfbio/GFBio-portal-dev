@@ -14,9 +14,11 @@ import org.gfbio.idmg.dto.GLicense;
 import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.idmg.util.ContentUtil;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Phone;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -45,14 +47,28 @@ public class DMPTPortlet extends MVCPortlet {
 		//Setting email and username if user is logged in
 		String username = "";
 		String email = "";
+		List<Phone> phones = null;
+		
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		if (themeDisplay.isSignedIn()) {
 			username = themeDisplay.getUser().getFullName();
 			email = themeDisplay.getUser().getEmailAddress();
+			try {
+				phones = themeDisplay.getUser().getPhones();
+			} catch (SystemException e) {
+				_log.error("Error while getting phonenumbers from themedisplay", e);
+			}
 		}
 		
 		renderRequest.setAttribute("username", username);
 		renderRequest.setAttribute("email", email);
+		if (phones != null && !phones.isEmpty()) {
+			for (Phone p : phones) {
+				if (p.isPrimary()) {
+					renderRequest.setAttribute("phone", p.getNumber());
+				}
+			}
+		}
 		
 		//Setting variable for context path
 		String contextPath = renderResponse.encodeURL(renderRequest.getContextPath());

@@ -26,17 +26,14 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 	       	<div class="col-md-12">
 				<c:forEach var="legal" items="${requirements}">
 					<div>
-						<input id="legal-${legal.label}" name="${legal.label}" type="checkbox" /> 
-						<label><c:out value="${legal.name}" /></label>
+						<label><input id="legal-${legal.label}" name="${legal.label}" type="checkbox" /><c:out value="${legal.name}" /></label>
 					</div>
 				</c:forEach>
 				<div>
-					<input id="legal-other" type="checkbox" /> 
-					<label>Other</label>
+					<label><input id="legal-other" type="checkbox" />Other</label>
 				</div>
 				<div>
-					<input id="legal-none" type="checkbox" /> 
-					<label>Not applicable</label>
+					<label><input id="legal-none" type="checkbox" />Not applicable</label>
 				</div>
 			</div>
 			<div class="col-md-12">
@@ -65,13 +62,11 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 	       	
 	       	<c:forEach var="license" items="${licenses}">
 				<div>
-					<input id="license-${license.label}" name="license" type="radio" /> 
-					<label><c:out value="${license.name}" /></label>
+					<label><input id="license-${license.label}" name="license" type="radio" /><c:out value="${license.name}" /></label>
 				</div>
 			</c:forEach>
 			<div>
-				<input id="license-not" name="license" type="radio" /> 
-				<label><c:out value="Not applicable" /></label>
+				<label><input id="license-not" name="license" type="radio" />Not applicable</label>
 			</div>
 	       	
 	       	<div>
@@ -88,14 +83,12 @@ Open access does not mean everyone can use your data at his leisure. Data can be
         <h4>Do you need access restriction for your data?</h4>
         <div class="col-md-12">
 	        <div style="display: block;">
-	            <input class="radio_input" name="restriction"
-	                type="radio" value="yes" />
-	          	<label>Yes</label>
+	            <label><input class="radio_input" name="restriction"
+	                type="radio" value="yes" />Yes</label>
 	        </div>
 	        <div style="display: block;">
-	      		<input class="radio_input" name="restriction"
-	                type="radio" value="no" />
-	          	<label>No</label>
+	      		<label><input class="radio_input" name="restriction"
+	                type="radio" value="no" />No</label>
 	        </div>
         </div>
         <div id="accessYes" class="col-md-12">

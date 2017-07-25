@@ -235,13 +235,13 @@ function handlePhysical(event) {
 	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
         $("#alive").removeClass("disabledDiv");
         $("#sequenced").addClass("disabledDiv");
-        resetInput("#sequenced");
+        resetInput("sequenced");
     } else {
         $("#sequenced").removeClass("disabledDiv");
         $("#alive").addClass("disabledDiv");
-        resetInput("#alive");
+        resetInput("alive");
         $("#taxon").addClass("disabledDiv");
-        resetInput("#taxon");
+        resetInput("taxon");
     }
 }
 
@@ -252,7 +252,7 @@ function handleAlive(event) {
         $("#taxon").removeClass("disabledDiv");
     } else {
     	$("#taxon").addClass("disabledDiv");
-    	resetInput("#taxon");
+    	resetInput("taxon");
     }
 }
 

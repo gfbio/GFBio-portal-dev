@@ -114,15 +114,16 @@ Most commonly this is: you - the one preparing the DMP.">
     	
     	<div id="responsible" style="overflow: auto;">
 	 		<div class="col-md-6">
-	    		<input id="responsibleName" name="responsibleName" type="text" placeholder="Name" onfocus="getPrincipal()" />
+	    		<input id="responsibleName" name="responsibleName" type="text" placeholder="Name" 
+	    		value="<c:out value="${username}" />" onfocus="getPrincipal()" />
 	    	</div>
 	    	
 		 	<div class="col-md-6" >
-		    	<input name="phoneNumber" type="tel" placeholder="Phone Number"/> 
+		    	<input name="phoneNumber" type="tel" placeholder="Phone Number" value="<c:out value="${phone}" />" /> 
 		    </div>
 		    
 		    <div class="col-md-12" >
-	     		<input name="email" type="email" placeholder="E-Mail"/>
+	     		<input name="email" type="email" placeholder="E-Mail" value="<c:out value="${email}" />" />
 	 		</div>
     	</div>
 	</div>
