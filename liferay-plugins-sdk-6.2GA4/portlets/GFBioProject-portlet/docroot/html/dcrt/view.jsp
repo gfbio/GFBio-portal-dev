@@ -199,6 +199,18 @@ function clearForm() {
     $("#errorAnswer").hide();
 }
 
+function getDataCenterList(defaultContact) {
+	dataCenterList = new Array;
+	var data = $("span[name='dataCenter']");
+	console.info("Data: " + data);
+	if(defaultContact === "false") {
+		$.each( data, function( index ) {
+			dataCenterList.push($(this).attr("id"));
+			console.info("index: " + $(this).attr("id"));
+		})
+	}
+}
+
 function createJiraTicket(defaultContact, dc) {
 	
 	var dataCenter = dc;
@@ -211,14 +223,7 @@ function createJiraTicket(defaultContact, dc) {
 		category = "None";
 	}
 	
-	var dataCenterList = new Array;
-	var data = $("span[name='dataCenter']");
-	if(defaultContact === "true") {
-		$.each( data, function( index ) {
-			dataCenterList.push($(this).attr("id"));
-			//console.info("index" + $(this).attr("id"));
-		})
-	}
+	getDataCenterList(defaultContact);
 	
     $.ajax({
 	        "method": "POST",
@@ -260,17 +265,53 @@ function sleep (time) {
 
 $(document).ready(
 	function() {
-		$("div#result").on('click', "button[name=submissionButton]",
-				function() {
-					//Submission logic
-				});
+		$("div#result").on('click', "button[name=submissionButton]", function(){
+			submissionRequest("false", $(this));
+		});
 	});
+
+function submissionRequest(defaultContact, btnId) {
+	var btn = $(btnId);
+	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
+	
+	getRadioInputs();
+	console.info("IHIAIHI");
+	getDataCenterList(defaultContact);
+	
+	category = $("#category").val();
+	if(typeof category != "string") {
+		category = "None";
+	}
+	material = $("#material").val();
+	if(typeof material != "string") {
+		material = "None";
+	}
+	
+	$.ajax({
+        "method": "POST",
+        "url": '<%=ajaxUrlSubmission%>',
+        "data": {
+        	dataCenter : dataCenter,
+			dataCenterList : dataCenterList,
+        	category: category,
+        	material: material,
+        	physical: physicalval,
+        	taxon: taxonval,
+        	alive: aliveval,
+        	sequenced: sequencedval
+        },
+        success: function(text) {
+        	var link = text;
+        	window.open(link, '_self' // open in the same window.
+        			);
+        }
+       
+	});
+}
 
 $(document).ready(
 	function() {
-		$("div#result").on(
-				'click',
-				"button[name=detailsButton]",
+		$("div#result").on('click', "button[name=detailsButton]",
 				function() {
 					var dataCenter = $(this).parent().parent().find(
 							"span[name='dataCenter']").attr("id");
@@ -278,7 +319,7 @@ $(document).ready(
 							+ "/about/data-centers#portfolio-"
 							+ dataCenter.toLowerCase();
 					window.open(link, '_blank' // open in a new window.
-					);
+							);
 				});
 	});
 
