@@ -192,7 +192,7 @@ $(document).ready(function(){
 		    $("#legal-other").on("click", checkboxRequirement);
 		    $("#requirementOther").hide();
 		
-		    $("#licenses").on("click", handleLicenses);
+		    $("#license-other").on("click", handleLicenses);
 		    $("#licenseOther").hide();
 		    $("#licensceUrl").hide();
 		    
