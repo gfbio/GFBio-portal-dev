@@ -326,13 +326,13 @@ public class DCRTPortlet extends MVCPortlet {
 		//_log.info("Value set to PortletSession");
 		
 	    ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	    //String submissionLink = themeDisplay.getPortalURL() + "/data/submit/generic";
-	    String dmptLink = themeDisplay.getPortalURL() + "/web/guest/dmpt";
+	    String submissionLink = themeDisplay.getPortalURL() + "/data/submit/generic";
+	    //String dmptLink = themeDisplay.getPortalURL() + "/web/guest/dmpt";
 	    
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
-		writer.println(dmptLink);
+		writer.println(submissionLink);
 
 		writer.flush();
 		writer.close();
