@@ -303,7 +303,7 @@ function submissionRequest(btnId) {
         },
         success: function(text) {
         	var link = text;
-        	window.open(link, '_blank' // open in the same window.
+        	window.open(link, '_self' // open in the same window.
         			);
         }
        
@@ -319,7 +319,7 @@ $(document).ready(
 				var link = themeDisplay.getPortalURL()
 						+ "/about/data-centers#portfolio-"
 						+ dataCenter.toLowerCase();
-				window.open(link, '_self' // open in a new window.
+				window.open(link, '_blank' // open in a new window.
 						);
 			});
 	});
