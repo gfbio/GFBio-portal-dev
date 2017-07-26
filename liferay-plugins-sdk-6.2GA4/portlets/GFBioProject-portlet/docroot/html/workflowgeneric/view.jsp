@@ -32,22 +32,41 @@
 
 	<input type="hidden" class="widthL" id="path"  					value="<%=request.getContextPath()%>" />
 	<input type="hidden" class="widthL" id="workflowgenericurl"  	value="<%=workflowgenericURL %>" />
-
+<br>
 	<%
 		PortletSession ps = renderRequest.getPortletSession();
-		String s = (String)ps.getAttribute("testSessionValue", PortletSession.APPLICATION_SCOPE);
-		s ="BGBM";
+		String s = (String)ps.getAttribute("dataCenter",PortletSession.APPLICATION_SCOPE);
+		
+		//session muss dann noch sauber gemacht werden bei request submission und reset information
+		
+		JSONObject dcrtInput = new JSONObject();
+		if (!(s.equals("") || s==null)){
+			if ((String)ps.getAttribute("physical",PortletSession.APPLICATION_SCOPE)!=null)
+				dcrtInput.put("physical", (String)ps.getAttribute("physical",PortletSession.APPLICATION_SCOPE));
+			
+			if ((String)ps.getAttribute("taxon",PortletSession.APPLICATION_SCOPE)!=null)
+				dcrtInput.put("taxon", (String)ps.getAttribute("taxon",PortletSession.APPLICATION_SCOPE));
+			
+			if ((String)ps.getAttribute("alive",PortletSession.APPLICATION_SCOPE)!=null)
+				dcrtInput.put("alive", (String)ps.getAttribute("alive",PortletSession.APPLICATION_SCOPE));
+			
+			if ((String)ps.getAttribute("sequenced",PortletSession.APPLICATION_SCOPE)!=null)
+				dcrtInput.put("sequenced", (String)ps.getAttribute("sequenced",PortletSession.APPLICATION_SCOPE));
+			
+			if (!((String)ps.getAttribute("category",PortletSession.APPLICATION_SCOPE)).equals("default"))
+				dcrtInput.put("category", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(Long.parseLong((String)ps.getAttribute("category",PortletSession.APPLICATION_SCOPE))),"name"));	
+
+			if (!((String)ps.getAttribute("material",PortletSession.APPLICATION_SCOPE)).equals("default"))
+				dcrtInput.put("material", ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById(Long.parseLong((String)ps.getAttribute("material",PortletSession.APPLICATION_SCOPE))),"name"));
+		}
+		
+		
 	%>
-	<%="--------------" %>
-	<%=s %>
-	<%="--------------" %>
-	<%=ps.getId() %>	
-	<%="--------------" %>
-	<%=ps.getAttribute("testSessionValue") %>
-	<%="--------------" %>
 
 	<div id="generic"></div>
-	<div id="gwf_dcrtinformation" class="swHide"><%=s %></div>
+	<div id="gwf_dcrtassignee" 			class="swMain"><%=s %></div>
+	<div id="gwf_dcrtinput" 			class="swMain"><%=dcrtInput %></div>
+	<div id="gwf_dcrtrecommendation" 	class="swMain"><%="BGBM" %></div>
 		
 	<div id="gwf_user_path" class="swHide">
 		<%= getServletContext().getRealPath("/")%>

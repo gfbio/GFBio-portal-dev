@@ -215,9 +215,6 @@
 			
 				"</div>"+
 				
-				
-				
-				"<br>"+
  				"<div class='row' id='gwf_lf_comentarField'><div id='gwf_lf_comentar'></div></div></br>"
  					
 			);
@@ -424,22 +421,22 @@
 		var targetDcrtDiv = 'gwf_dcrtdatacenter';
 		var divDcrt = $("#".concat(targetDcrtDiv));
 		divDcrt.empty();
-		console.log(document.getElementById("gwf_dcrtinformation").innerHTML);
+		console.log(document.getElementById("gwf_dcrtassignee").innerHTML);
 		setToDefaultArchive(targetDcrtDiv);
-		if (document.getElementById("gwf_dcrtinformation").innerHTML!='null'){
+		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
 			
  			divDcrt.append(
  				/*
  				"<div 		class='control-group'>"+
-					"<span style='width:74%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'>With Start submission you will send your information to a currator of "+document.getElementById("gwf_dcrtinformation").innerHTML+". This curator will suport you by the rest of submission process and clear the next steps to finish the archiving of your data.</span>"+
+					"<span style='width:74%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'>With Start submission you will send your information to a currator of "+document.getElementById("gwf_dcrtassignee").innerHTML+". This curator will suport you by the rest of submission process and clear the next steps to finish the archiving of your data.</span>"+
 					"<span style='width:1%; display:inline-block'></span>"+
-					"<span style='width:25%; display:inline-block' onclick=setToDefaultArchive('"+targetDcrtDiv+"')>		<span class='btn btn-danger' style='width:100%'><i class='fa fa-trash-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Delete "+document.getElementById("gwf_dcrtinformation").innerHTML+" as target</span></span>"+
+					"<span style='width:25%; display:inline-block' onclick=setToDefaultArchive('"+targetDcrtDiv+"')>		<span class='btn btn-danger' style='width:100%'><i class='fa fa-trash-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Delete "+document.getElementById("gwf_dcrtassignee").innerHTML+" as target</span></span>"+
 				"</div>"
 				*/
 				"<div 		class='control-group'>"+
 					"<fieldset> "+
-						"<span style='width:25%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_special' name='gwf_ro_dcrt_radio' value='"+document.getElementById("gwf_dcrtinformation").innerHTML+"' checked='checked'> to the curator of "+document.getElementById("gwf_dcrtinformation").innerHTML+"</input></span>"+
-						"<span style='width:25%; display:inline-block'></span>"+
+						"<span style='width:48%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_special' name='gwf_ro_dcrt_radio' value='"+document.getElementById("gwf_dcrtassignee").innerHTML+"' checked='checked'> to the curator of "+document.getElementById("gwf_dcrtassignee").innerHTML+"</input></span>"+
+						"<span style='width:2%; display:inline-block'></span>"+
 						"<span style='width:50%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_default' name='gwf_ro_dcrt_radio' value='none'> to the whole GFBio curator team</input></span> "+
 					"</fieldset>"+
 				"</div>"

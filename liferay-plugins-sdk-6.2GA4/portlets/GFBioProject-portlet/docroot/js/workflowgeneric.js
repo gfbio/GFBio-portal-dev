@@ -325,11 +325,13 @@ function saveAllInput(){
 		projectJson["submittermail"]=document.getElementById("gwf_user_mail").innerHTML;
 		
 		
-		if (document.getElementById("gwf_dcrtinformation").innerHTML!=null){
+		if (document.getElementById("gwf_dcrtassignee").innerHTML!=null){
 			var checkList = document.getElementsByName('gwf_ro_dcrt_radio');
 			for (i=0; i <checkList.length; i++)
 				if (checkList[i].checked==true)
-					projectJson["dcrtinformation"]=checkList[i].value;
+					projectJson["dcrtassignee"]=checkList[i].value;
+			projectJson["dcrtinput"]=document.getElementById("gwf_dcrtinput").innerHTML;
+			projectJson["dcrtrecommendation"]=document.getElementById("gwf_dcrtrecommendation").innerHTML;
 		}
 		
 		
@@ -342,6 +344,7 @@ function saveAllInput(){
 		}
 		
 	}
+	console.log(projectJson);
 	return projectJson;
 }
 

@@ -309,7 +309,7 @@ public class WorkflowGeneric extends GenericPortlet {
     //
     @SuppressWarnings({ "unchecked", "unused" })
     private static String getJSON_Body(JSONObject requestJson){
-    	
+    	   	
       	JSONParser parser = new JSONParser();
 		
 		//preparation data source
@@ -379,15 +379,26 @@ public class WorkflowGeneric extends GenericPortlet {
         
         
         //dcrt information
-        if (projectJson.containsKey("dcrtinformation")){
+        
+        //assignee
+        if (projectJson.containsKey("dcrtassignee")){
+        	JSONObject assignee = new JSONObject();
+        	assignee.put("name", Helper.getStringFromJson(projectJson, "dcrtassignee"));
+            fields.put("assignee", assignee);	
+        }        
+        
+/*        //recommendation
+        if (projectJson.containsKey("dcrtrecommendation")){
         	JSONObject dcrtInformationJson = new JSONObject();
         	JSONArray dcrtInformationArray = new JSONArray();
-        	dcrtInformationJson.put("value", Helper.getStringFromJson(projectJson, "dcrtinformation"));
+        	dcrtInformationJson.put("value", Helper.getStringFromJson(projectJson, "dcrtrecommendation"));
         	dcrtInformationArray.add(dcrtInformationJson);
         	fields.put("customfield_10217", dcrtInformationArray);
-        	
-        	String dcrtinput = "Physical objects: false \n Taxon based: null \n Alive: null \n Primarily sequence Data: true \n Category: None ";
-        	fields.put("customfield_10500", dcrtinput);
+        }*/
+        
+        //information / input
+        if (projectJson.containsKey("dcrtinput")){
+        	fields.put("customfield_10500", Helper.getStringFromJson(projectJson, "dcrtinput"));
         }
         
         	
