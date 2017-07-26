@@ -128,21 +128,21 @@ function getRadioInputs() {
 
 $(document).ready(function () {
     $("div#result").on('click', 'button[name=contactButton]', function () {
-    	openConfirmDialog("false", $(this));
+    	openConfirmDialog($(this));
     });
 });
 
 $(document).ready(function () {
     $("div#defaultResult").on('click', 'button[name=contactButton]', function () {
-    	openConfirmDialog("true", $(this));
+    	openConfirmDialog($(this));
     });
 });
 
-function openConfirmDialog(defaultContact, btnId) {
+function openConfirmDialog(btnId) {
 	
 	var btn = $(btnId);
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
-	//console.log("DataCenter: " + dataCenter);
+	console.log("DataCenter: " + dataCenter);
 	
 	var confirmDialog = $("#dialog-confirm").dialog({
 		autoOpen: false,
@@ -157,7 +157,7 @@ function openConfirmDialog(defaultContact, btnId) {
 	        		$('#dialogForm').hide();
         			$('#dialogLoader').show();
         			$('#dialog-confirm').dialog('option', 'buttons', {} )
-              		createJiraTicket(defaultContact, dataCenter);
+              		createJiraTicket(dataCenter);
         			$('#dialog-confirm').dialog('option', 'buttons', {
         		    	'Ok': function() {
         		        	$(this).dialog('close');
@@ -199,19 +199,18 @@ function clearForm() {
     $("#errorAnswer").hide();
 }
 
-function getDataCenterList(defaultContact) {
-	dataCenterList = new Array;
+function getDataCenterList(dataCenterList) {
+	
 	var data = $("span[name='dataCenter']");
 	console.info("Data: " + data);
-	if(defaultContact === "false") {
-		$.each( data, function( index ) {
-			dataCenterList.push($(this).attr("id"));
-			console.info("index: " + $(this).attr("id"));
-		})
-	}
+	
+	$.each( data, function( index ) {
+		dataCenterList.push($(this).attr("id"));
+		console.info("index: " + $(this).attr("id"));
+	})
 }
 
-function createJiraTicket(defaultContact, dc) {
+function createJiraTicket(dc) {
 	
 	var dataCenter = dc;
 	
@@ -223,7 +222,8 @@ function createJiraTicket(defaultContact, dc) {
 		category = "None";
 	}
 	
-	getDataCenterList(defaultContact);
+	var dataCenterList = new Array;
+	getDataCenterList(dataCenterList);
 	
     $.ajax({
 	        "method": "POST",
@@ -270,13 +270,15 @@ $(document).ready(
 		});
 	});
 
-function submissionRequest(defaultContact, btnId) {
+function submissionRequest(btnId) {
 	var btn = $(btnId);
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
 	
 	getRadioInputs();
 	console.info("IHIAIHI");
-	getDataCenterList(defaultContact);
+	
+	var dataCenterList = new Array;
+	getDataCenterList(dataCenterList);
 	
 	category = $("#category").val();
 	if(typeof category != "string") {

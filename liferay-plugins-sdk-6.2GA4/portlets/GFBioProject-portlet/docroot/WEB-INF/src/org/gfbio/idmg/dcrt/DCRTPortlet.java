@@ -93,12 +93,6 @@ public class DCRTPortlet extends MVCPortlet {
 		String alive = resourceRequest.getParameter("alive");
 		String sequenced = resourceRequest.getParameter("sequenced");
 
-		_log.info("==========VALUES=========");
-		_log.info("Physical: " + physical);
-		_log.info("Taxon: " + taxon);
-		_log.info("Alive: " + alive);
-		_log.info("Sequenced: " + sequenced);
-
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
@@ -248,8 +242,7 @@ public class DCRTPortlet extends MVCPortlet {
 		List<Customfield_10217> dataCenters = new ArrayList<>();
 		if (dataCenter.equals("GFBio")) {
 			user = "";
-			// Get List of all possible Data Centers if GFBio default contact is
-			// used
+			// Get List of all possible Data Centers if GFBio default contact is used
 			String[] dcs = resourceRequest.getParameterValues("dataCenterList[]");
 			for (int i = 0; i < dcs.length; i++) {
 				if (!dcs[i].equals("GFBio")) {
@@ -298,8 +291,16 @@ public class DCRTPortlet extends MVCPortlet {
 
 		// Get Button Value
 		String dataCenter = resourceRequest.getParameter("dataCenter");
-		String[] dcList = resourceRequest.getParameterValues("dataCenterList");
-		if (dcList != null) _log.info(dcList);
+		
+		String dataCenterList = "";
+		String[] dcs = resourceRequest.getParameterValues("dataCenterList[]");
+		for (int i = 0; i < dcs.length; i++) {
+			if (!dcs[i].equals("GFBio")) {
+				dataCenterList = dataCenterList.concat(dcs[i] + ", ");
+			}
+		}
+		dataCenterList = dataCenterList.replaceAll(", $", "");
+		_log.info(dataCenterList);
 		
 		// Get Radio-Inputs
 		String physical = resourceRequest.getParameter("physical");
@@ -321,16 +322,17 @@ public class DCRTPortlet extends MVCPortlet {
 	    session.setAttribute("dataCenter", dataCenter ,PortletSession.APPLICATION_SCOPE);
 	    session.setAttribute("category", category ,PortletSession.APPLICATION_SCOPE);
 	    session.setAttribute("material", material ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("possibleDataCenter", dataCenterList,PortletSession.APPLICATION_SCOPE);
 		//_log.info("Value set to PortletSession");
 		
 	    ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	    String submissionLink = themeDisplay.getPortalURL() + "/data/submit/generic";
-	    //String dmptLink = themeDisplay.getPortalURL() + "/web/guest/dmpt";
+	    //String submissionLink = themeDisplay.getPortalURL() + "/data/submit/generic";
+	    String dmptLink = themeDisplay.getPortalURL() + "/web/guest/dmpt";
 	    
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
-		writer.println(submissionLink);
+		writer.println(dmptLink);
 
 		writer.flush();
 		writer.close();
