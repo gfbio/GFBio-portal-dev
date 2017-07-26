@@ -266,7 +266,7 @@ function sleep (time) {
 $(document).ready(
 	function() {
 		$("div#result").on('click', "button[name=submissionButton]", function(){
-			submissionRequest("false", $(this));
+			submissionRequest($(this));
 		});
 	});
 
@@ -275,7 +275,6 @@ function submissionRequest(btnId) {
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
 	
 	getRadioInputs();
-	console.info("IHIAIHI");
 	
 	var dataCenterList = new Array;
 	getDataCenterList(dataCenterList);
@@ -304,7 +303,7 @@ function submissionRequest(btnId) {
         },
         success: function(text) {
         	var link = text;
-        	window.open(link, '_self' // open in the same window.
+        	window.open(link, '_blank' // open in the same window.
         			);
         }
        
@@ -314,15 +313,15 @@ function submissionRequest(btnId) {
 $(document).ready(
 	function() {
 		$("div#result").on('click', "button[name=detailsButton]",
-				function() {
-					var dataCenter = $(this).parent().parent().find(
-							"span[name='dataCenter']").attr("id");
-					var link = themeDisplay.getPortalURL()
-							+ "/about/data-centers#portfolio-"
-							+ dataCenter.toLowerCase();
-					window.open(link, '_blank' // open in a new window.
-							);
-				});
+			function() {
+				var dataCenter = $(this).parent().parent().find(
+						"span[name='dataCenter']").attr("id");
+				var link = themeDisplay.getPortalURL()
+						+ "/about/data-centers#portfolio-"
+						+ dataCenter.toLowerCase();
+				window.open(link, '_self' // open in a new window.
+						);
+			});
 	});
 
 $(document).ready(function() {
