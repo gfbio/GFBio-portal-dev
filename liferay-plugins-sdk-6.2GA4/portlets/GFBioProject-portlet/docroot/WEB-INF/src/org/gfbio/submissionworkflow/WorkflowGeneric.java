@@ -314,13 +314,13 @@ public class WorkflowGeneric extends GenericPortlet {
 		
 		//preparation data source
 		
-    	System.out.println("--------------------------------");
+/*    	System.out.println("--------------------------------");
     	System.out.println(requestJson);
-    	System.out.println("--------------------------------");
+    	System.out.println("--------------------------------");*/
     	 
-/*    	_log.info("--------------------------------");
+    	_log.info("--------------------------------");
     	_log.info(requestJson);
-    	_log.info("--------------------------------");*/
+    	_log.info("--------------------------------");
     	
 		JSONObject projectJson = new JSONObject();
     	projectJson = (JSONObject) requestJson.get("mrr");
@@ -381,20 +381,21 @@ public class WorkflowGeneric extends GenericPortlet {
         //dcrt information
         
         //assignee
-        if (projectJson.containsKey("dcrtassignee")){
+/*        if (projectJson.containsKey("dcrtassignee")){
         	JSONObject assignee = new JSONObject();
-        	assignee.put("name", Helper.getStringFromJson(projectJson, "dcrtassignee"));
+        	assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
             fields.put("assignee", assignee);	
-        }        
+        }  */  
+    
         
-/*        //recommendation
+        //recommendation
         if (projectJson.containsKey("dcrtrecommendation")){
         	JSONObject dcrtInformationJson = new JSONObject();
         	JSONArray dcrtInformationArray = new JSONArray();
         	dcrtInformationJson.put("value", Helper.getStringFromJson(projectJson, "dcrtrecommendation"));
         	dcrtInformationArray.add(dcrtInformationJson);
         	fields.put("customfield_10217", dcrtInformationArray);
-        }*/
+        }
         
         //information / input
         if (projectJson.containsKey("dcrtinput")){
