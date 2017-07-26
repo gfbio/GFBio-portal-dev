@@ -9,11 +9,9 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,26 +34,15 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.util.EntityUtils;
 import org.gfbio.helper.Helper;
 import org.gfbio.service.ContentLocalServiceUtil;
@@ -378,32 +365,6 @@ public class WorkflowGeneric extends GenericPortlet {
         //project informations
         
         
-        //dcrt information
-        
-        //assignee
-/*        if (projectJson.containsKey("dcrtassignee")){
-        	JSONObject assignee = new JSONObject();
-        	assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
-            fields.put("assignee", assignee);	
-        }  */  
-    
-        
-        //recommendation
-        if (projectJson.containsKey("dcrtrecommendation")){
-        	JSONObject dcrtInformationJson = new JSONObject();
-        	JSONArray dcrtInformationArray = new JSONArray();
-        	dcrtInformationJson.put("value", Helper.getStringFromJson(projectJson, "dcrtrecommendation"));
-        	dcrtInformationArray.add(dcrtInformationJson);
-        	fields.put("customfield_10217", dcrtInformationArray);
-        }
-        
-        //information / input
-        if (projectJson.containsKey("dcrtinput")){
-        	fields.put("customfield_10500", Helper.getStringFromJson(projectJson, "dcrtinput"));
-        }
-        
-        	
-        
         //project id
         if (projectJson.containsKey("projectid")){
         	String projectIdString = Helper.getStringFromJson(projectJson, "projectid");
@@ -412,6 +373,38 @@ public class WorkflowGeneric extends GenericPortlet {
         }
         
         
+        //dcrt information
+        
+        
+        //assignee
+        if (projectJson.containsKey("dcrtassignee")){
+        	JSONObject assignee = new JSONObject();
+        	assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
+            fields.put("assignee", assignee);	
+        	_log.info(assignee);
+        }  
+    
+        
+        //recommendation
+        if (projectJson.containsKey("dcrtrecommendation")){
+     	
+        	JSONArray dcrtInformationArray = new JSONArray();
+        	String dcrtRecommendation = Helper.getStringFromJson(projectJson, "dcrtrecommendation");
+        	List<String> items = Arrays.asList(dcrtRecommendation.split(","));
+        	for(int i=0; i < items.size();i++){
+        		JSONObject dcrtInformationJson = new JSONObject();
+        		dcrtInformationJson.put("value", (items.get(i)).trim());
+            	dcrtInformationArray.add(dcrtInformationJson);
+        	}
+        	fields.put("customfield_10217", dcrtInformationArray);
+        }
+        
+        
+        //information / input
+        if (projectJson.containsKey("dcrtinput")){
+        	fields.put("customfield_10500", Helper.getStringFromJson(projectJson, "dcrtinput"));
+        }
+                
         
         //dataset informations
         

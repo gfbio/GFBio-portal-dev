@@ -214,7 +214,7 @@
 					"<span  style='width:25%; display:inline-block' id='gwf_b_reset' onclick='resetInput()'>		<span style='width:100%' class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset all information</span></span>"+
 			
 				"</div>"+
-				
+				"<br>"+
  				"<div class='row' id='gwf_lf_comentarField'><div id='gwf_lf_comentar'></div></div></br>"
  					
 			);
