@@ -157,9 +157,8 @@ function handleMetadataOther(event) {
 function handleLicenses(event) {
 	'use strict';
 	
-	var selection = $(event.target).val(),
-    other = $("#licenseOther");
-	if (selection === "other") {
+    var other = $("#licenseOther");
+    if ($(event.target).is(':checked')) {
 		other.show("slow");
 	} else {
 	    other.hide();

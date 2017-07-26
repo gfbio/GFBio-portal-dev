@@ -80,5 +80,5 @@
         </div>
     </div>
     
-    <jsp:include page="handleInput.jsp" />
+    <jsp:include page="07_handleInput.jsp" />
 </section>
