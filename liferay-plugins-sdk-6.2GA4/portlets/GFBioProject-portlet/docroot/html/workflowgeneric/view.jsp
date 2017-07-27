@@ -66,9 +66,9 @@
 	%>
 
 	<div id="generic"></div>
-	<div id="gwf_dcrtassignee" 			class="swMHide"><%=dataCenter %></div>
-	<div id="gwf_dcrtinput" 			class="swMHide"><%=dcrtInput %></div>
-	<div id="gwf_dcrtrecommendation" 	class="swMHide"><%=possibleDataCenter %></div>
+	<div id="gwf_dcrtassignee" 			class="swHide"><%=dataCenter %></div>
+	<div id="gwf_dcrtinput" 			class="swHide"><%=dcrtInput %></div>
+	<div id="gwf_dcrtrecommendation" 	class="swHide"><%=possibleDataCenter %></div>
 		
 	<div id="gwf_user_path" class="swHide">
 		<%= getServletContext().getRealPath("/")%>

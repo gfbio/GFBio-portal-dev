@@ -426,13 +426,6 @@
 		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
 			
  			divDcrt.append(
- 				/*
- 				"<div 		class='control-group'>"+
-					"<span style='width:74%; display:inline-block' class='field-description' id='gwf_ro_dcrt_d'>With Start submission you will send your information to a currator of "+document.getElementById("gwf_dcrtassignee").innerHTML+". This curator will suport you by the rest of submission process and clear the next steps to finish the archiving of your data.</span>"+
-					"<span style='width:1%; display:inline-block'></span>"+
-					"<span style='width:25%; display:inline-block' onclick=setToDefaultArchive('"+targetDcrtDiv+"')>		<span class='btn btn-danger' style='width:100%'><i class='fa fa-trash-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Delete "+document.getElementById("gwf_dcrtassignee").innerHTML+" as target</span></span>"+
-				"</div>"
-				*/
 				"<div 		class='control-group'>"+
 					"<fieldset> "+
 						"<span style='width:48%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_special' name='gwf_ro_dcrt_radio' value='"+document.getElementById("gwf_dcrtassignee").innerHTML+"' checked='checked'> to the curator of "+document.getElementById("gwf_dcrtassignee").innerHTML+"</input></span>"+
@@ -854,6 +847,29 @@
 			}
 	
 		});	 
+	}
+	
+	
+	function resetDCRTInput(){
+
+		var url = document.getElementById('workflowgenericurl').value;
+
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />responseTarget" : "resetportletsession"
+			},
+			async: false,
+			success :  function (obj){
+				document.getElementById("gwf_dcrtassignee").innerHTML = "null";
+				document.getElementById("gwf_dcrtinput").innerHTML = "";
+				document.getElementById("gwf_dcrtrecommendation").innerHTML = "";
+			},
+			error :  function (obj){
+				console.log("error");
+			}
+		});
 	}
 	
 	

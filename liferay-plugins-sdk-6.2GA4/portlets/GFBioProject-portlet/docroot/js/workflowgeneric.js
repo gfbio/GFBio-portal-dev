@@ -298,14 +298,18 @@ function checkMinimalResearchObjectInput(){
 
 //
 function resetInput(){
+	resetDCRTInput();
+	
 	sentShowHideInformation(true);
 	var div =   $("#generic");
 	div.empty();
 	var data = {"userid":Number(themeDisplay.getUserId())};
 	buildGenericForm(data, div);
 	fillDefaultInformations(data, div);
+		
 	sentResetRequest();
 }
+
 
 
 //
@@ -401,6 +405,8 @@ function submitInput(url){
 							var data ={};
 							data["mrr"]= mrrJson;
 							startSubmission(data);
+							
+							resetDCRTInput();
 							
 							//sent to Broker
 							//data["submissionregistry"]= registryJson;

@@ -9,6 +9,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -138,6 +140,11 @@ public class WorkflowGeneric extends GenericPortlet {
 				registerFileUpload(request, response);
 			
 			//
+			if ("resetportletsession".toString().equals(request.getParameter("responseTarget").toString())){
+				resetPortletSession(request, response);
+			}
+			
+			//
 			if ("startsubmission".toString().equals(request.getParameter("responseTarget").toString()))
 				startSubmission(request, response);
 
@@ -162,6 +169,30 @@ public class WorkflowGeneric extends GenericPortlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());
+	}	
+	
+	
+	//
+	public void resetPortletSession(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
+
+		PortletSession session = request.getPortletSession();
+		session.removeAttribute("physical",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("taxon",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("alive",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("sequenced",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("dataCenter",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("category",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("physical",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("material",PortletSession.APPLICATION_SCOPE);
+		session.removeAttribute("possibleDataCenter",PortletSession.APPLICATION_SCOPE);
+		
+		response.setContentType("text/html");
+		PrintWriter writer = response.getWriter();
+
+		writer.flush();
+		writer.close();
+
+		super.serveResource(request, response);
 	}	
 	
 	
@@ -378,10 +409,11 @@ public class WorkflowGeneric extends GenericPortlet {
         
         //assignee
         if (projectJson.containsKey("dcrtassignee")){
-        	JSONObject assignee = new JSONObject();
-        	assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
-            fields.put("assignee", assignee);	
-        	_log.info(assignee);
+	        if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals("none"))){
+	        	JSONObject assignee = new JSONObject();
+	        	assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
+	            fields.put("assignee", assignee);	
+        	}
         }  
     
         
