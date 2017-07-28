@@ -26,6 +26,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.gfbio.NoSuchContentException;
 import org.gfbio.NoSuchHeadException;
@@ -47,6 +49,7 @@ import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectPK;
+import org.gfbio.submissionworkflow.WorkflowGeneric;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -66,7 +69,7 @@ import org.json.simple.JSONObject;
  */
 public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBaseImpl {
 
-	//private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+	private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
 	
 	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
 	
@@ -866,17 +869,18 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						long  authorId = Helper.getLongFromJson(requestJson, "authorid");
 						if (authorId !=0)
 							check = updateAuthorIdById(researchObjectId, researchObjectVersion, authorId);
-						else{
-							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authorid' is 0." );
-							check=false;
-						}
+						else
+							responseJson.put("WARNING", "WARNING: 'authorid' is 0 and will be ignored.");
 					}
 					
 					if(requestJson.containsKey("authormail") && check){
 						String authorMail = Helper.getStringFromJson(requestJson, "authormail");
-						if (authorMail.length()<=Helper.getJiraTextareaSmallLimit() && !authorMail.equals("") && authorMail != null)
-							check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "authormail"),"mail");
-						else{
+						if (authorMail.length()<=Helper.getJiraTextareaSmallLimit()){
+							if (authorMail != null && !authorMail.equals(""))
+								check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "authormail"),"mail");
+							else
+								responseJson.put("WARNING", "WARNING: 'authormail' is empty and will be ignored.");
+						}else{
 							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authormail' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
 							check=false;
 						}
@@ -886,18 +890,24 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					if(requestJson.containsKey("authornames") && check){
 						if (((requestJson.get("authornames").getClass()).toString()).equals("class java.lang.String")){
 							String authorNames = Helper.getStringFromJson(requestJson, "authornames");
-							if (authorNames.length() <=Helper.getJiraTextareaSmallLimit() && !authorNames.equals("") && authorNames != null)
-								updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "authornames")),"name");
-							else{
+							if (authorNames.length() <=Helper.getJiraTextareaSmallLimit()){
+								if (!authorNames.equals("") && authorNames != null)
+									updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "authornames")),"name");
+								else
+									responseJson.put("WARNING", "WARNING: 'authornames' is empty and will be ignored.");
+							}else{
 								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
 								check=false;
 							}
 						}else{
 							JSONArray authorNamesArray = new JSONArray();
 							authorNamesArray = (JSONArray) requestJson.get("authornames");
-							if (authorNamesArray.size() <=Helper.getJiraTextareaSmallLimit() && !authorNamesArray.equals("") && authorNamesArray != null)
-								updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, authorNamesArray,"name");
-							else{
+							if (authorNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
+								if( !authorNamesArray.equals("") && authorNamesArray != null)
+									updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, authorNamesArray,"name");
+								else
+									responseJson.put("WARNING", "WARNING: 'authornames' is empty and will be ignored.");
+							}else{
 								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
 								check=false;
 							}
@@ -908,7 +918,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				else if (requestJson.containsKey("userid") && check)
 					if (Helper.getLongFromJson(requestJson, "userid") >0){
 						JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
-						
 						
 						if (userExtension.containsKey("fullname"))
 							if (!(((String) userExtension.get("fullname")).equals(null)))
@@ -956,9 +965,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						
 				if(requestJson.containsKey("extendeddata") && check){
 					
-					JSONObject extendedDataJson = (JSONObject) requestJson.get("extendeddata");
+					JSONObject extendedDataJson = Helper.getJsonObjectFromJson(requestJson,"extendeddata");
 					if (extendedDataJson!=null && extendedDataJson.size()>0){
-						
 						Boolean extendedDataCheck = true;
 						if(extendedDataJson.containsKey("datacollectiontime") && extendedDataCheck)
 							if ((Helper.getStringFromJson(extendedDataJson, "datacollectiontime")).length() >Helper.getJiraTextareaSmallLimit()){
@@ -975,7 +983,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 								extendedDataCheck = false;
 								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
 							}
-								
 						if (extendedDataCheck)
 							updateExtendedData(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "extendeddata"));
 						else
@@ -991,9 +998,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				
 				if(requestJson.containsKey("licenselabel") && check){
 					String licenseLabel = Helper.getStringFromJson(requestJson, "licenselabel");
-					if (licenseLabel.length() <=Helper.getJiraTextfieldLimit() && !licenseLabel.equals("") && licenseLabel != null)
-						check = updateLicenseId(researchObjectId,  researchObjectVersion, licenseLabel);
-					else{
+					if (licenseLabel.length() <=Helper.getJiraTextfieldLimit()){
+						if (!licenseLabel.equals("") && licenseLabel != null)
+							check = updateLicenseId(researchObjectId,  researchObjectVersion, licenseLabel);
+						else
+							responseJson.put("WARNING", "WARNING: 'licenselabel' is empty and will be ignored.");
+					}else{
 						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'licenselabel' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
 						check=false;
 					}
@@ -1005,9 +1015,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				
 				if (requestJson.containsKey("metadatalabel") && check){
 					String metadataLabel = Helper.getStringFromJson(requestJson, "metadatalabel");
-					if (metadataLabel.length() <=Helper.getJiraTextfieldLimit() && !metadataLabel.equals("") && metadataLabel != null)
-						check = updateMetadataId(researchObjectId, researchObjectVersion, metadataLabel);
-					else{
+					if (metadataLabel.length() <=Helper.getJiraTextfieldLimit()){
+						if (!metadataLabel.equals("") && metadataLabel != null)
+							check = updateMetadataId(researchObjectId, researchObjectVersion, metadataLabel);
+						else
+							responseJson.put("WARNING", "WARNING: 'metadatalabel' is empty and will be ignored.");
+					}else{
 						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'metadatalabel' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
 						check=false;
 					}
