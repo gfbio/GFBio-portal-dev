@@ -700,8 +700,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			String extendedDataSteing = researchObject.getExtendeddata();
 			
 			JSONParser parser = new JSONParser();
-			JSONArray extendeddataJson = new JSONArray();
-			try {extendeddataJson = (JSONArray) parser.parse(extendedDataSteing);}
+			JSONObject extendeddataJson = new JSONObject();
+			try {extendeddataJson = (JSONObject) parser.parse(extendedDataSteing);}
 			catch (ParseException e) {e.printStackTrace();}
 			
 			responseJson.put("description", researchObject.getDescription());
@@ -716,6 +716,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("researchobjectversion", researchObject.getResearchObjectVersion());
 			responseJson.put("lastmodifieddate", researchObject.getLastModifiedDate().toString());
 		}
+		
+		System.out.println(responseJson);
+		
 		return checkNullParent(responseJson);
 	}
 	

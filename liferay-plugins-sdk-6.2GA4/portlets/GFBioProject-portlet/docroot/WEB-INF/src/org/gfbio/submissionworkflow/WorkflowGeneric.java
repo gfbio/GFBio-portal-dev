@@ -83,12 +83,14 @@ public class WorkflowGeneric extends GenericPortlet {
     
     
 	public void init() {
-        viewTemplate = getInitParameter("view-template");
+		
+		viewTemplate = getInitParameter("view-template");
     }
 
     
     public void doView( RenderRequest renderRequest, RenderResponse renderResponse)     throws IOException, PortletException {
     	   	
+    	
    	    include(viewTemplate, renderRequest, renderResponse);
     }
 
