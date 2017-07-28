@@ -49,65 +49,58 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i);%>
 
 <script>
 
-function GetResearchObjectById(researchobjectid)
-{
-
-	var requestJson = {"researchobjectid":researchobjectid,"kindofresponse":"extended"};
-	console.log(requestJson);
-	var requestArray = [requestJson];
-	console.log(requestArray);
+	function GetResearchObjectById(researchobjectid)
+	{
 	
-	;
-	Liferay.Service(
-			  '/GFBioProject-portlet.researchobject/get-research-object-by-id',
-			  {
-			    requestJson: JSON.stringify(requestArray)
-			  },
-			  function (obj)
-			  {console.log("Before calling");
-				  console.log(obj[0]);
-				  buildDatasetInformation ();
-				buildDatasetInformation (obj[0]);
-			    
-			  }
-			);
-	/*var ajaxData = {"userid":data.userid};
-		$.ajax({
-		"type" : "POST",
-		"url": url.concat('/WorkflowGenericPortlet'),
-		"data" : {
-			"<portlet:namespace />data" : JSON.stringify(ajaxData),
-			"<portlet:namespace />responseTarget" : "getuserbyid"
-		},
-		async: false,
-			success :  function (obj){
-			document.getElementById("gwf_ro_author").innerHTML= obj.fullname;
-			}
-		});
-	*/
-}
-
-function buildDatasetInformation()
-{console.log("Empty test");}
-
-function buildDatasetInformation(researchObjectInformation)
-{
-	console.log("test");
-    console.log(researchObjectInformation);
-
-	    var firstcolum = "30%";
+		var requestJson = {"researchobjectid":researchobjectid,"kindofresponse":"extended"};
+		console.log(requestJson);
+		var requestArray = [requestJson];
+		console.log(requestArray);
+		
+		;
+		Liferay.Service(
+				'/GFBioProject-portlet.researchobject/get-research-object-by-id',{
+					requestJson: JSON.stringify(requestArray)
+				},
+				function (obj) {
+					var response = obj[0];
+					buildDatasetInformation (response);
+				}
+		);
+		/*var ajaxData = {"userid":data.userid};
+			$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "getuserbyid"
+			},
+			async: false,
+				success :  function (obj){
+				document.getElementById("gwf_ro_author").innerHTML= obj.fullname;
+				}
+			});
+		*/
+	}
+	
+	function buildDatasetInformation(researchObjectInformation)
+	{	
+		console.log(researchObjectInformation);
+		var firstcolum = "30%";
 	    var secoundcolum = "2%";
 	    var thirdcolum = "65%";
 	    var div =   $("#SubmissionInfo");
-	    div.Empty();
+	    div.empty();
 	    div.append(
+	    	"<h3>Dataset Information</h3>"+
 	    	"<div 	  class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description'	>Title </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"span style='width:"+thirdcolum+ "; display:inline-block' class='field-description'	>"+researchObjectInformation.name+ "</span>"+
-				"</div >"
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description'	>"+researchObjectInformation.name+ "</span>"+
+			"</div >"
 	    );
-	    console.log(div);
+	
+	}
 <%-- 		
 		</div >
 		
@@ -208,7 +201,7 @@ class='field-description'	>N/A	</span>
 			</div >
 
 */ --%>
-}
+
 </script>
 
  
