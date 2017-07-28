@@ -49,6 +49,8 @@ import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectPK;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * The implementation of the research object local service.
@@ -694,8 +696,16 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public JSONObject constructResearchObjectJson (ResearchObject researchObject){
 		JSONObject responseJson = new JSONObject();
 		if (researchObject != null){
+			
+			String extendedDataSteing = researchObject.getExtendeddata();
+			
+			JSONParser parser = new JSONParser();
+			JSONArray extendeddataJson = new JSONArray();
+			try {extendeddataJson = (JSONArray) parser.parse(extendedDataSteing);}
+			catch (ParseException e) {e.printStackTrace();}
+			
 			responseJson.put("description", researchObject.getDescription());
-			responseJson.put("extendeddata", researchObject.getExtendeddata());
+			responseJson.put("extendeddata", extendeddataJson);
 			responseJson.put("label", researchObject.getLabel());
 			responseJson.put("licenseid", researchObject.getLicenseID());	
 			responseJson.put("metadataid", researchObject.getMetadataID());	
