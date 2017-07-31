@@ -302,6 +302,7 @@
  		document.getElementById("gwf_ro_publications").value= "";
  		document.getElementById("gwf_ro_metadatalabel").selectedIndex = 0;
  		
+ 		//metadata
   		var div =   $("#gwf_ro_metadatalabel_v");
 		div.empty();
 		div.append(
@@ -335,6 +336,7 @@
  			}
  		}); 
 
+ 		//license
 		ajaxData = {"tablename":"gfbio_license"};
  		$.ajax({
 			"type" : "POST",
@@ -361,20 +363,45 @@
  			}
  		});
  		
- 		var divLi = $("#".concat('gwf_ro_legalrequirements'));
-		divLi.empty();
-		divLi.append(
-			"<div class='row2'>"+
-				"<div class='rowLato'>  	<input type='checkbox' id='gwf_ro_legalrequirements_nagoya' name='legalrequirements' value='Nagoya Protocol'> Nagoya</div>"+
-				"<div class='rowField'> 	<input type='checkbox' id='gwf_ro_legalrequirements_personal'   name='legalrequirements' value='Personally Identifiable Information'> Personally Identifiable Information</div>"+
-			"</div>"+
-			"<div class='row2'>"+
-				"<div class='rowLato'>		<input type='checkbox' id='gwf_ro_legalrequirements_red'    name='legalrequirements' value='Red List'>  Red List</div>"+
-				"<div class='rowField'>		<input type='checkbox' id='gwf_ro_legalrequirements_uncertain'  name='legalrequirements' value='Uncertain'>  Uncertain</div>"+
-			"</div>"+
-			"<div style='clear:left'></div>"
-		);
+ 		//legal requirements
+		ajaxData = {"tablename":"gfbio_legalrequirement"};
+ 		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(ajaxData),
+				"<portlet:namespace />responseTarget" : "gettablebyname"
+			},
+			async: false,
+ 			success :  function (obj){
+ 				var divLi = $("#".concat('gwf_ro_legalrequirements'));
+ 				divLi.empty();
+ 				divLi.append("<br>");
+ 				for (i=0; i < obj.length;i++){
+					if (i < obj.length-1){
+						var j = i+1;
+						divLi.append(
+							"<div 		class='control-group'>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
+								"<span style='width:2%; display:inline-block'></span>"+
+								"<span style='width:50%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[j].id+"' name='legalrequirements' value='"+obj[j].id+"'> "+obj[j].name+"</span>"+
+							"</div>"		
+						);
+						i = i+1;
+					}else{
+						divLi.append(
+							"<div 		class='control-group'>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
+							"</div>"
+						);
+					}
+					divLi.append("<div style='clear:left'></div>");
+					
+				}
+ 			}
+		});
 		
+		//categories
 		ajaxData = {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
 		$.ajax({
 			"type" : "POST",
@@ -387,27 +414,22 @@
  			success :  function (obj){
 				var divKey = $("#".concat('gwf_ro_categories'));
 				divKey.empty();
-
+				divKey.append("<br>");
 				for (i=0; i < obj.length;i++){
 					if (i < obj.length-1){
 						var j = i+1;
 						divKey.append(
-							"<div class='row2'>"+
-								"<div class='rowLato'>"+
-									"<input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+
-								"</div>"+
-								"<div class='rowField'>"+
-									"<input type='checkbox' id='gwf_ro_categories"+obj[j].id+"' name='categories' value='"+obj[j].id+"'> "+obj[j].name+
-								"</div>"+
-							"</div>"
+							"<div 		class='control-group'>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
+								"<span style='width:2%; display:inline-block'></span>"+
+								"<span style='width:50%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[j].id+"' name='categories' value='"+obj[j].id+"'> "+obj[j].name+"</span>"+
+							"</div>"		
 						);
 						i = i+1;
 					}else{
 						divKey.append(
-							"<div class='row2'>"+
-								"<div class='rowLato'>"+
-									"<input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+
-								"</div>"+
+							"<div 		class='control-group'>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
 							"</div>"
 						);
 					}

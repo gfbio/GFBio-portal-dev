@@ -124,7 +124,7 @@ public class Helper {
 	
 	//
 	public static JSONObject getJsonObjectFromJson(JSONObject requestJson, String key){
-		
+				
 		JSONObject responseJson = new JSONObject();
 		if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONObject"))
 			responseJson = (JSONObject) requestJson.get(key);
@@ -134,7 +134,6 @@ public class Helper {
 				try {responseJson = (JSONObject) parser.parse((String) requestJson.get(key));}
 				catch (ParseException e) {e.printStackTrace();}
 			}
-		
 		return responseJson;
 	}
 	
