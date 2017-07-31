@@ -716,9 +716,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("researchobjectversion", researchObject.getResearchObjectVersion());
 			responseJson.put("lastmodifieddate", researchObject.getLastModifiedDate().toString());
 		}
-		
-		System.out.println(responseJson);
-		
+				
 		return checkNullParent(responseJson);
 	}
 	
