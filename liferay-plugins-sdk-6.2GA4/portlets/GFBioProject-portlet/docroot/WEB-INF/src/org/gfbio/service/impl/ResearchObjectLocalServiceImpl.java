@@ -219,7 +219,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					if((((String)requestJson.get("kindofresponse")).trim()).equals("extended"))
 						responseJson = constructExtendedResearchObjectJson(researchObject);
 					else
-						responseJson = constructResearchObjectJson(researchObject);
+						if((((String)requestJson.get("kindofresponse")).trim()).equals("extraextended"))
+							responseJson = constructExtraExtendedResearchObjectJson(researchObject);
+						else
+							responseJson = constructResearchObjectJson(researchObject);
 				else
 					responseJson = constructResearchObjectJson(researchObject);
 			else
@@ -785,6 +788,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		if (ResearchObject_UserLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) || true)
 			responseJson.put("userids", getAllUserIdsByResearchObject(responseJson));
 		
+		return checkNullParent(responseJson);
+	}
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructExtraExtendedResearchObjectJson (ResearchObject researchObject){
+		JSONObject responseJson = new JSONObject();
 		return checkNullParent(responseJson);
 	}
 	
