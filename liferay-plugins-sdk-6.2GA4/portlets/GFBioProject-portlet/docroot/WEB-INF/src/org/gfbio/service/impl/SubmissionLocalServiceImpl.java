@@ -35,6 +35,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -56,6 +58,9 @@ import org.json.simple.parser.JSONParser;
  */
 public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 
+	
+
+	private static Log _log = LogFactoryUtil.getLog(SubmissionLocalServiceImpl.class);
 	
 	/////////////////////////////////// Delete Functions /////////////////////////////////////////////////
 
@@ -366,7 +371,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		if (requestJson.containsKey("researchobjectid")){
 			
-			long researchObjectId = (long)requestJson.get("researchobjectid");
+			long researchObjectId = Helper.getLongFromJson(requestJson, "researchobjectid");
 			int researchObjectVersion = getResearchObjectVersionFromJson(requestJson);
 			
 			
@@ -390,20 +395,27 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	@SuppressWarnings({ "unchecked"})
 	public JSONArray getSubmissionIdsByResearchObjectIdAndVersion (JSONObject requestJson){
 		
+		_log.info("start get submission "+requestJson);
+		
 		JSONArray responseJson = new JSONArray();
 		
 		if (requestJson.containsKey("researchobjectid")){
 			
-			long researchObjectId = (long)requestJson.get("researchobjectid");
+			long researchObjectId = Helper.getLongFromJson(requestJson, "researchobjectid");
 			int researchObjectVersion = 0;
 			
 			if (requestJson.containsKey("researchobjectversion"))
-				researchObjectVersion = (int) requestJson.get("researchobjectversion");
+				researchObjectVersion = Helper.getIntFromJson(requestJson, "researchobjectversion");
 			else
 				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);		
 			
-			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion))
+			_log.info("start get submission "+researchObjectId + " | "+researchObjectVersion);
+			
+			if (checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
+				_log.info("check");
 				responseJson = getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+				_log.info(responseJson);
+			}
 			else
 				responseJson.add("ERROR: Research object with ID "+ researchObjectId +" and version "+ researchObjectVersion+" has no relation to primary data");
 		}
@@ -618,7 +630,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	private JSONArray getSubmissionIdsByResearchObjectIdAndVersion(long researchObjectId, int researchObjectVersion){
 		JSONArray responseJson = new JSONArray();
 		List submissionIdList = SubmissionFinderUtil.getSubmissionIdsByResearchObjectIdAndVersion(researchObjectId, researchObjectVersion);
+		_log.info(submissionIdList);
 		if (submissionIdList.size()>0){
+			_log.info("check");
 			JSONParser parser = new JSONParser();
 			try {responseJson = (JSONArray) parser.parse(submissionIdList.toString());}
 			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
@@ -741,8 +755,8 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		json.put("lastchanged", (submission.getLastChanged().toString()).trim());
 		json.put("lastmodifieddate", (submission.getLastChanged().toString()).trim());
 		json.put("ispublic", submission.getIsPublic());
-		json.put("jiraid", submission.getJiraID());
-		json.put("jirakey", submission.getJiraKey());
+		json.put("jiraid", submission.getJiraID().trim());
+		json.put("jirakey", submission.getJiraKey().trim());
 		if (submission.getPublicAfter() != null)
 			json.put("publicafter", (submission.getPublicAfter().toString()).trim());
 		else
