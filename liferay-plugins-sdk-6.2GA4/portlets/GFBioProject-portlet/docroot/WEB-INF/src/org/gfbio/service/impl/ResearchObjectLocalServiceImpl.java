@@ -26,6 +26,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import org.gfbio.NoSuchContentException;
 import org.gfbio.NoSuchHeadException;
@@ -68,7 +70,7 @@ import org.json.simple.parser.ParseException;
  */
 public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBaseImpl {
 
-	//private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+	private static Log _log = LogFactoryUtil.getLog(ResearchObjectLocalServiceImpl.class);
 	
 	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
 	
@@ -219,7 +221,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					if((((String)requestJson.get("kindofresponse")).trim()).equals("extended"))
 						responseJson = constructExtendedResearchObjectJson(researchObject);
 					else
-						responseJson = constructResearchObjectJson(researchObject);
+						if((((String)requestJson.get("kindofresponse")).trim()).equals("extraextended"))
+							responseJson = constructExtraExtendedResearchObjectJson(researchObject);
+						else
+							responseJson = constructResearchObjectJson(researchObject);
 				else
 					responseJson = constructResearchObjectJson(researchObject);
 			else
@@ -716,9 +721,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("researchobjectversion", researchObject.getResearchObjectVersion());
 			responseJson.put("lastmodifieddate", researchObject.getLastModifiedDate().toString());
 		}
-		
-		System.out.println(responseJson);
-		
+				
 		return checkNullParent(responseJson);
 	}
 	
@@ -780,14 +783,53 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("projectids",Project_ResearchObjectLocalServiceUtil.getProjectIdsByResearchObject(responseJson));
 		
 		//submission
-		if (SubmissionLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
+		if (SubmissionLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
+			_log.info("open get submission gate");
 			responseJson.put("submissionids", SubmissionLocalServiceUtil.getSubmissionIdsByResearchObjectIdAndVersion(responseJson));
+		}
 		
 		//user
 		if (ResearchObject_UserLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) || true)
 			responseJson.put("userids", getAllUserIdsByResearchObject(responseJson));
 		
+		_log.info(responseJson);
+		
 		return checkNullParent(responseJson);
+	}
+	
+	//
+	@SuppressWarnings("unchecked")
+	public JSONObject constructExtraExtendedResearchObjectJson (ResearchObject researchObject){
+		
+		JSONObject responseJson = new JSONObject();
+		JSONObject researchObjectJson = constructExtendedResearchObjectJson (researchObject);
+		responseJson.put("researchobject",  researchObjectJson);
+		
+		//parental research object information
+		if (researchObjectJson.containsKey("parentresearchobjectid"))
+			if (researchObjectJson.get("parentresearchobjectid")!=null){
+				JSONObject requestJson = new JSONObject();
+				requestJson.put("researchobjectid", Helper.getLongFromJson(researchObjectJson, "parentresearchobjectid"));
+				responseJson.put("parentresearchobject",  getResearchObjectAsJsonById(requestJson));
+			}
+		
+		//submission information
+		if (researchObjectJson.containsKey("submissionids"))
+			responseJson.put("submissions",  SubmissionLocalServiceUtil.getSubmissionsByResearchObjectIdAndVersion(researchObjectJson));
+				
+		//project information
+		if (researchObjectJson.containsKey("projectids"))
+			responseJson.put("projects",  ProjectLocalServiceUtil.getProjectById(Helper.getJsonArrayFromJson(researchObjectJson, "projectids")));
+		
+		//license information
+		if (researchObjectJson.containsKey("licenseid"))
+			responseJson.put("license",  ContentLocalServiceUtil.getRowInformationByContentId(Helper.getLongFromJson(researchObjectJson, "licenseid")));
+	
+		//metadata information
+		if (researchObjectJson.containsKey("metadataid"))
+			responseJson.put("metadata",  ContentLocalServiceUtil.getRowInformationByContentId(Helper.getLongFromJson(researchObjectJson, "metadataid")));
+		
+		return responseJson;
 	}
 	
 	
