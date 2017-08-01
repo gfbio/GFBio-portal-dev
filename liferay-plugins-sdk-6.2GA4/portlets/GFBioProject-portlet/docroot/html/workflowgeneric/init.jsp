@@ -1,8 +1,20 @@
 <script>
 
 	var fieldCheckList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license','gwf_ro_dct', 'gwf_ro_label', 'gwf_ro_publications', 'gwf_ro_embargo'];
+	var limitExtrageSmall = 10;
+	var limitSmall = 200;
+	var limitLarge = 2000;
+	var limitExtrageLarge = 15000;
 
-
+	
+/////////////////////////////////////////   helper  //////////////////////////////////////////////
+	
+	//character counter for inputfields
+	function countChars(countfrom,displayto, limit, targetOutputField) {
+	  var len = limit - document.getElementById(countfrom).value.length;
+	  document.getElementById(displayto).innerHTML = len;
+	}
+	
 /////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
 
@@ -84,6 +96,31 @@
 	});	
 	
 	
+	//
+	function addInputfieldTo(div, fieldBasicId, fileLabel, fieldLabelStar, fieldDescription, limit, fieldCheck,value){
+		div.append(
+			"<div 		class='control-group'>"+
+				"<label class='control-label' 				   	id='"+fieldBasicId+"_l'>"+fileLabel+"<span style='color:darkred'>"+fieldLabelStar+"</span> </label>"+
+				"<p 	class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
+				"<p 	class='field-description'				style='text-align: right;'>Available characters: <span id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
+				"<input	class='field lfr-input-text-container'	id='"+fieldBasicId+"' type='text' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit +"' value='"+value+"'>"+
+			"</div >"
+		);
+	}
+	
+	
+	//
+	function addInputAreaTo(div, fieldBasicId, fileLabel, fieldLabelStar, fieldDescription, limit, fieldCheck,value, rows){
+		div.append(
+			"<div 			class='control-group'>"+
+				"<label 	class='control-label' 				   	id='"+fieldBasicId+"_l'>"+fileLabel+"<span style='color:darkred'>"+fieldLabelStar+"</span> </label>"+
+				"<p 		class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
+				"<p 		class='field-description'				style='text-align: right;'><span id='"+fieldBasicId+"_c'>0</span>/"+limit+"</p>"+
+				"<textarea	class='field lfr-input-text-container'	id='"+fieldBasicId+"' rows='"+rows+"' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit  +"'></textarea>"+ 
+			"</div >"
+		);
+	}
+	
 	
 	//
 	function buildGenericForm(data, div){
@@ -127,37 +164,20 @@
 						"<label class='control-label' 					id='gwf_ro_researchobjecttype_l'> Type </label>"+
 						"<div 	class='field lfr-input-text-container' 	id='gwf_ro_researchobjecttype'></div>"+
 					"</div>"+
-				"</div>"+
-				"<div 		class='control-group'>"+
-					"<label class='control-label' 				   	id='gwf_ro_name_l'>Title<span style='color:darkred'>*</span> </label>"+
-					"<p 	class='field-description'				id='gwf_ro_name_d'>Provide a short, descriptive title for your dataset.</p>"+
-					"<input	class='field lfr-input-text-container'	id='gwf_ro_name' type='text' onchange=\"goToNormal(\'"+fieldCheckList[0]+"\')\" maxlength='200' value=''>"+
-				"</div >"+
-				"<div 			class='control-group'>"+
-					"<label		class='control-label' 					id='gwf_ro_description_l'> Description<span style='color:darkred'>*</span> </label>"+
-					"<p 		class='field-description'				id='gwf_ro_description_d'>Provide a summary of the work you did to produce the dataset (similar to an article abstract). <br/>Please note: Only 15000 characters are permitted.</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_description' rows='6' onchange=\"goToNormal(\'"+fieldCheckList[1]+"\')\" maxlength='15000'></textarea>"+ 
-				"</div>"+
-				"</div>"+
-				"<div 		class='control-group'>"+
-					"<label class='control-label' 					id='gwf_ro_dct_l'> Data collection time </label>"+
-					"<p 	class='field-description'				id='gwf_ro_dct_d'>Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).</p>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_dct' 	type='text' value='' onchange=\"goToNormal(\'"+fieldCheckList[4]+"\')\" maxlength='2000'>"+
-				"</div>"+
-				"<div 		class='control-group'>"+
-					"<label class='control-label' 					 id='gwf_ro_label_l'> Dataset label </label>"+
-					"<p 	class='field-description'				 id='gwf_ro_label_d'>Provide labels for the dataset, describe it in keywords or use internal identifiers.</p>"+
-					"<input class='field lfr-input-text-container'	 id='gwf_ro_label'	type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[5]+"\')\" maxlength='200'>"+
-				"</div>"+
+				"</div>"
+			);
+			addInputfieldTo(div, "gwf_ro_name", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
+			addInputAreaTo (div, "gwf_ro_description", "Description"		  , "*", "Provide a summary of the work you did to produce the dataset (similar to an article abstract)."	 , limitExtrageLarge, fieldCheckList[1],"", 6);
+			addInputfieldTo(div, "gwf_ro_dct"  		 , "Data collection time" , "" , "Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).", limitLarge		, fieldCheckList[4],"");
+			addInputfieldTo(div, "gwf_ro_label"		 , "Dataset label"        , "" , "Provide labels for the dataset, describe it in keywords or use internal identifiers."              , limitSmall		, fieldCheckList[5],"");
+			div.append(
 				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
 				"<p 	class='field-description'			 	id='gwf_ro_categories_d'>Choose one or more categories, that are related with the dataset.</p>"+
 				"<div 											id='gwf_ro_categories'></div>"+
-				"</br>"+
-				"<div 			class='control-group'>"+
-					"<label 	class='control-label' 					id='gwf_ro_author_l'> Dataset author<span style='color:darkred'>*</span> </label>"+
-					"<p 		class='field-description'			 	id='gwf_ro_author_d'>Please, enter the author(s) for the data set (one author per line).</p>"+
-					"<textarea	class='field lfr-input-text-container'	id='gwf_ro_author' rows='3' onchange=\"goToNormal(\'"+fieldCheckList[2]+"\')\" maxlength='2000'></textarea>"+
-				"</div>"+
+				"</br>"
+			);
+			addInputAreaTo (div, "gwf_ro_author", "Dataset author"		  , "*", "Please, enter the author(s) for the data set (one author per line)."	 , limitLarge, fieldCheckList[2],"", 3);
+			div.append(
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_license_l'> License<span style='color:darkred'>*</span>   </label>"+
 					"<p 	class='field-description'			 	id='gwf_ro_license_d'> Under which license will your data be accessible?</p>"+
@@ -168,12 +188,10 @@
 							"</select>"+
 						"</form>"+
 					"</div>"+
-				"</div>"+
-				"<div 		class='control-group'>"+
-					"<label class='control-label' 					id='gwf_ro_publications_l'> Related publication(s) </label>"+
-					"<p 	class='field-description'			 	id='gwf_ro_publications_d'>Provide this information, if the dataset is related to a publication.<br>Please note: Only 2000 characters are permitted.</p>"+
-					"<input class='field lfr-input-text-container'	id='gwf_ro_publications' type='text'  value='' onchange=\"goToNormal(\'"+fieldCheckList[6]+"\')\" maxlength='2000'>"+
-				"</div>"+
+				"</div>"
+			);
+			addInputfieldTo(div, "gwf_ro_publications"  		 , "Related publication(s)" , "" , "Provide this information, if the dataset is related to a publication.", limitLarge		, fieldCheckList[6],"");
+			div.append(	
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_metadatalabel_l'> Metadata schema  </label>"+
 					"<p 	class='field-description'			 	id='gwf_ro_metadatalabel_d'>Which metadata schema does your data support (if any)?</p>"+
@@ -184,12 +202,15 @@
 							"</select>"+
 						"</form>"+
 					"</div>"+
-				"</div>"+
-				"<div 											class='control-group'>"+
-					"<label 									class='control-label' 					id='gwf_ro_embargo_l'> Embargo </label>"+
-					"<p 										class='field-description'			 	id='gwf_ro_embargo_d'>Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd')</p>"+
-					"<span onmousemove='datePickler()'><input   class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value='' onchange=\"goToNormal(\'"+fieldCheckList[7]+"\')\" maxlength='10'></span>"+
-				"</div>"+
+				"</div>"
+			);
+			/* addInputfieldTo(div, "gwf_ro_embargo"  		 , "Embargo" , "" , "Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd').", limitExtrageSmall		, fieldCheckList[7],""); */
+ 			div.append(
+ 				"<div 											class='control-group'>"+
+ 					"<label 									class='control-label' 					id='gwf_ro_embargo_l'> Embargo </label>"+
+ 					"<p 										class='field-description'			 	id='gwf_ro_embargo_d'>Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd')</p>"+
+ 					"<span onmousemove='datePickler()'><input   class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value='' onchange=\"goToNormal(\'"+fieldCheckList[7]+"\')\" maxlength='"+limitExtrageSmall  +"'></span>"+
+ 				"</div>"+ 
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_legalrequirements_l'> Legal requirements  </label>"+
 					"<p 	class='field-description'			 	id='gwf_ro_embargo_d'>Select legal requirements that apply to the dataset.</p>"+

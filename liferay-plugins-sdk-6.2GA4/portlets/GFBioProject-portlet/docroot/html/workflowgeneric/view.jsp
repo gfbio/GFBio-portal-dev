@@ -33,6 +33,7 @@
 	<input type="hidden" class="widthL" id="path"  					value="<%=request.getContextPath()%>" />
 	<input type="hidden" class="widthL" id="workflowgenericurl"  	value="<%=workflowgenericURL %>" />
 <br>
+
 	<%
 		PortletSession ps = renderRequest.getPortletSession();
 		String dataCenter = (String)ps.getAttribute("dataCenter",PortletSession.APPLICATION_SCOPE);
