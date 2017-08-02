@@ -102,7 +102,7 @@
 			"<div 		class='control-group'>"+
 				"<label class='control-label' 				   	id='"+fieldBasicId+"_l'>"+fileLabel+"<span style='color:darkred'>"+fieldLabelStar+"</span> </label>"+
 				"<p 	class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
-				"<p 	class='field-description'				style='text-align: right;'>Available characters: <span id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
+				"<p 	class='field-description'				style='text-align: right; color:#A9A9A9'><span title='left characters' id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
 				"<input	class='field lfr-input-text-container'	id='"+fieldBasicId+"' type='text' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit +"' value='"+value+"'>"+
 			"</div >"
 		);
@@ -115,7 +115,7 @@
 			"<div 			class='control-group'>"+
 				"<label 	class='control-label' 				   	id='"+fieldBasicId+"_l'>"+fileLabel+"<span style='color:darkred'>"+fieldLabelStar+"</span> </label>"+
 				"<p 		class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
-				"<p 		class='field-description'				style='text-align: right;'><span id='"+fieldBasicId+"_c'>0</span>/"+limit+"</p>"+
+				"<p 		class='field-description'				style='text-align: right; color:#A9A9A9'><span title='left characters' id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
 				"<textarea	class='field lfr-input-text-container'	id='"+fieldBasicId+"' rows='"+rows+"' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit  +"'></textarea>"+ 
 			"</div >"
 		);
@@ -204,13 +204,14 @@
 					"</div>"+
 				"</div>"
 			);
-			/* addInputfieldTo(div, "gwf_ro_embargo"  		 , "Embargo" , "" , "Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd').", limitExtrageSmall		, fieldCheckList[7],""); */
+			//addInputfieldTo(div, "gwf_ro_embargo"  		 , "Embargo" , "" , "Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd').", limitExtrageSmall		, fieldCheckList[7],"");
  			div.append(
- 				"<div 											class='control-group'>"+
+  				"<div 											class='control-group'>"+
  					"<label 									class='control-label' 					id='gwf_ro_embargo_l'> Embargo </label>"+
  					"<p 										class='field-description'			 	id='gwf_ro_embargo_d'>Provide a date until which the dataset should be under an embargo  (yyyy-mm-dd')</p>"+
+ 					"<br>"+
  					"<span onmousemove='datePickler()'><input   class='field lfr-input-text-container' 	id='gwf_ro_embargo' 	type='text'   value='' onchange=\"goToNormal(\'"+fieldCheckList[7]+"\')\" maxlength='"+limitExtrageSmall  +"'></span>"+
- 				"</div>"+ 
+ 				"</div>"+  
 				"<div 		class='control-group' >"+
 					"<label class='control-label' 					id='gwf_ro_legalrequirements_l'> Legal requirements  </label>"+
 					"<p 	class='field-description'			 	id='gwf_ro_embargo_d'>Select legal requirements that apply to the dataset.</p>"+
