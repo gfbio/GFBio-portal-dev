@@ -119,11 +119,11 @@ Most commonly this is: you - the one preparing the DMP.">
 	    	</div>
 	    	
 		 	<div class="col-md-6" >
-		    	<input name="phoneNumber" type="tel" placeholder="Phone Number" value="<c:out value="${phone}" />" /> 
+		    	<input id="phone" name="phoneNumber" type="tel" placeholder="Phone Number" value="<c:out value="${phone}" />" /> 
 		    </div>
 		    
 		    <div class="col-md-12" >
-	     		<input name="email" type="email" placeholder="E-Mail" value="<c:out value="${email}" />" />
+	     		<input id="email" name="email" type="email" placeholder="E-Mail" value="<c:out value="${email}" />" />
 	 		</div>
     	</div>
 	</div>

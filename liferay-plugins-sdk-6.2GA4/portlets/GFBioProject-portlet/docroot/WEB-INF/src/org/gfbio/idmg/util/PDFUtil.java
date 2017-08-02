@@ -79,9 +79,9 @@ public class PDFUtil {
 		contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
 
 		// Setting the position for the line
-		contentStream.newLineAtOffset(25, 200);
+		contentStream.newLineAtOffset(25, 500);
 
-		String text = "Project Name:";
+		String text = "Project Name: " + userInput.getProjectName();
 
 		// Adding text in the form of string
 		contentStream.showText(text);

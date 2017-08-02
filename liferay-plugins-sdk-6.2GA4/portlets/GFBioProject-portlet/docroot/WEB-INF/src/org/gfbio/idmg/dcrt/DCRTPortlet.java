@@ -93,6 +93,8 @@ public class DCRTPortlet extends MVCPortlet {
 		String alive = resourceRequest.getParameter("alive");
 		String sequenced = resourceRequest.getParameter("sequenced");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
@@ -102,7 +104,7 @@ public class DCRTPortlet extends MVCPortlet {
 			writer.println(
 					"For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
-			dataproviderOutput(writer, recommendedProviders);
+			dataproviderOutput(writer, recommendedProviders, themeDisplay.isSignedIn());
 		}
 
 		writer.flush();
@@ -135,6 +137,8 @@ public class DCRTPortlet extends MVCPortlet {
 		} else {
 			recommendedProviders = DataProviderUtil.setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
@@ -143,7 +147,7 @@ public class DCRTPortlet extends MVCPortlet {
 			writer.println(
 					"For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
-			dataproviderOutput(writer, recommendedProviders);
+			dataproviderOutput(writer, recommendedProviders, themeDisplay.isSignedIn());
 		}
 
 		writer.flush();
@@ -153,9 +157,16 @@ public class DCRTPortlet extends MVCPortlet {
 	}
 	
 	/* Building the html output for the datacenter results */
-	private void dataproviderOutput(PrintWriter writer, List<DataProvider> providers) {
+	private void dataproviderOutput(PrintWriter writer, List<DataProvider> providers, boolean isSignedIn) {
 
 		writer.println("<table style=\"width: 100%;\">");
+		
+		String disabled = "false";
+		String title = "";
+		if (!isSignedIn) {
+			disabled = "true";
+			title = "You have to be logged in";
+		}
 
 		for (DataProvider dp : providers) {
 			String name = dp.getName();
@@ -174,8 +185,9 @@ public class DCRTPortlet extends MVCPortlet {
 									.with(
 											button().withClass("dcrtbutton contact").withText("Contact")
 													.withName("contactButton").withType("button").withValue(label),
-											button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
-													.withType("button").attr("style","margin-left: 2px; margin-right: 2px").withValue(label),
+											button().withClass("dcrtbutton submission").withText("Request").withName("submissionButton")
+													.withType("button").attr("style","margin-left: 2px; margin-right: 2px").attr("disabled", disabled)
+													.attr("title", title).withValue(label),
 											button().withClass("dcrtbutton details").withText("Details")
 													.withName("detailsButton").withType("button").withValue(label)
 													//.attr("style", "margin-left: 2px;")
@@ -339,5 +351,4 @@ public class DCRTPortlet extends MVCPortlet {
 
 		super.serveResource(resourceRequest, resourceResponse);
 	}
-
 }

@@ -1,8 +1,11 @@
 package org.gfbio.idmg.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DMPTInput {
+public class DMPTInput implements Serializable {
+
+	private static final long serialVersionUID = -9212800098322282803L;
 
 	// General Information
 	private String projectName;
@@ -15,7 +18,7 @@ public class DMPTInput {
 	private String phoneNumber;
 	private String email;
 	private GFunding funding;
-	private GPolicy policies; //Kommt aus DB
+	private List<GPolicy> policies; //Kommt aus DB
 	
 	// Data Collection
 	private Boolean physical;
@@ -52,7 +55,7 @@ public class DMPTInput {
 
 	public DMPTInput(String projectName, String category, boolean reproducible, List<String> projectTypes,
 			String projectAbstract, List<String> investigators, String responsibleName, String phoneNumber,
-			String email, GFunding funding, GPolicy policies, Boolean physical, Boolean alive, Boolean taxonBased,
+			String email, GFunding funding, List<GPolicy> policies, Boolean physical, Boolean alive, Boolean taxonBased,
 			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String datasets,
 			String methodologies, List<GMetadata> metadata, GLegalRequirement requirement, GLicense license,
 			boolean accessRestriction, String accessDuration, String accessReason, List<String> dataArchives,
@@ -314,11 +317,11 @@ public class DMPTInput {
 		this.gfbioServices = gfbioServices;
 	}
 
-	public GPolicy getPolicies() {
+	public List<GPolicy> getPolicies() {
 		return policies;
 	}
 
-	public void setPolicies(GPolicy policies) {
+	public void setPolicies(List<GPolicy> policies) {
 		this.policies = policies;
 	}
 
