@@ -62,18 +62,18 @@ $(document).ready(function () {
     	
     	var response = '';
         $.ajax({
-		            "method": "POST",
-		            "url": '<%=ajaxUrlRadio%>',
-		            "data": {
-		            	physical: physicalval,
-		            	taxon: taxonval,
-		            	alive: aliveval,
-		            	sequenced: sequencedval
-		            },
-		            success: function(text) {
-	                    response = text;
-	                    $("#result").html(response);
-	                }
+            "method": "POST",
+            "url": '<%=ajaxUrlRadio%>',
+            "data": {
+            	physical: physicalval,
+            	taxon: taxonval,
+            	alive: aliveval,
+            	sequenced: sequencedval
+            },
+            success: function(text) {
+                response = text;
+                $("#result").html(response);
+            }
         });
     });
 });
@@ -102,20 +102,19 @@ function categoryChange(category) {
 	
 	var response = '';
     $.ajax({
-	            "method": "POST",
-	            "url": '<%=ajaxUrlCategory%>',
-	            "data": {
-	            	category: category,
-	            	physical: physicalval,
-	            	taxon: taxonval,
-	            	alive: aliveval,
-	            	sequenced: sequencedval
-	            },
-	            success: function(text) {
-                    response = text;
-                    $("#result").html(response);
-                }
-               
+       "method": "POST",
+       "url": '<%=ajaxUrlCategory%>',
+       "data": {
+       		category: category,
+	       	physical: physicalval,
+	       	taxon: taxonval,
+	       	alive: aliveval,
+	       	sequenced: sequencedval
+       },
+       success: function(text) {
+       	  response = text;
+          $("#result").html(response);
+       }
     });
 }
 
@@ -199,15 +198,18 @@ function clearForm() {
     $("#errorAnswer").hide();
 }
 
-function getDataCenterList(dataCenterList) {
+function getDataCenterList() {
 	
+	var list = []
 	var data = $("span[name='dataCenter']");
 	console.info("Data: " + data);
 	
 	$.each( data, function( index ) {
-		dataCenterList.push($(this).attr("id"));
+		list.push($(this).attr("id"));
 		console.info("index: " + $(this).attr("id"));
 	})
+	
+	return list;
 }
 
 function createJiraTicket(dc) {
@@ -223,7 +225,7 @@ function createJiraTicket(dc) {
 	}
 	
 	var dataCenterList = new Array;
-	getDataCenterList(dataCenterList);
+	dataCenterList = getDataCenterList();
 	
     $.ajax({
 	        "method": "POST",
@@ -277,7 +279,7 @@ function submissionRequest(btnId) {
 	getRadioInputs();
 	
 	var dataCenterList = new Array;
-	getDataCenterList(dataCenterList);
+	dataCenterList = getDataCenterList();
 	
 	category = $("#category").val();
 	if(typeof category != "string") {

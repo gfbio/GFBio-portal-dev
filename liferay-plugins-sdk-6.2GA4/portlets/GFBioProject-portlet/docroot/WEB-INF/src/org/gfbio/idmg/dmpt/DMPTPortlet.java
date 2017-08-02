@@ -1,20 +1,25 @@
 package org.gfbio.idmg.dmpt;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
-import org.gfbio.idmg.dcrt.DCRTPortlet;
+import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.dto.GLegalRequirement;
 import org.gfbio.idmg.dto.GLicense;
 import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.idmg.util.ContentUtil;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +30,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 
 public class DMPTPortlet extends MVCPortlet {
 
-	private static Log _log = LogFactoryUtil.getLog(DCRTPortlet.class);
+	private static Log _log = LogFactoryUtil.getLog(DMPTPortlet.class);
 	
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws PortletException, IOException {
@@ -74,8 +79,56 @@ public class DMPTPortlet extends MVCPortlet {
 		//Setting variable for context path
 		String contextPath = renderResponse.encodeURL(renderRequest.getContextPath());
 		renderRequest.setAttribute("contextPath", contextPath);
+		_log.info(contextPath);
 	    
 		super.render(renderRequest, renderResponse); 
 	}
 	
+	/* Handling ajax requests by getting ResourceID's from resourceRequest */
+	@Override
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		if (resourceRequest.getResourceID().equals("wizard")) {
+			finishWizard(resourceRequest, resourceResponse);
+		} 
+	}
+	
+	/* Method for ajax functionality of Radio Buttons */
+	private void finishWizard(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		
+		// Get DMPTInput
+		_log.info("Handle Input Method reached");
+
+		String jsonString = resourceRequest.getParameter("json");
+		_log.info(jsonString);
+
+		DMPTInput input = null;
+		String response = "";
+		
+		try {
+			Gson gson = new Gson();
+			input = gson.fromJson(jsonString, DMPTInput.class);
+			
+			//Set DMPTInput to PortletSession
+			PortletSession session = resourceRequest.getPortletSession();
+		    session.setAttribute("dmptInput", input, PortletSession.APPLICATION_SCOPE);
+		    
+		    response = "Parsing successful!";
+		} catch (JsonSyntaxException e) {
+			_log.error("Error while parsing jsonString to POJO", e);
+			response = "Error while parsing jsonString to POJO!";
+		}
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+
+		writer.println(response);
+
+		writer.flush();
+		writer.close();
+
+		super.serveResource(resourceRequest, resourceResponse);
+			
+	}
 }
