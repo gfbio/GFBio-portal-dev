@@ -4,6 +4,10 @@
 <%@ include file="/html/init.jsp" %> <!-- library imports -->
 
 <portlet:defineObjects />
+<portlet:resourceURL escapeXml="false" id="submissiondashboardURL" var="submissiondashboardURL" />
+<meta charset="UTF-8">
+
+	<input type="hidden" class="widthL" id="submissiondashboardurl"  	value="<%=submissiondashboardURL %>" />
 
 
 
@@ -67,38 +71,58 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 	function GetResearchObjectById(researchobjectid)
 	{
 
-		var requestJson = {"researchobjectid":researchobjectid,"kindofresponse":"extended"};
+		var requestJson = {"researchobjectid":researchobjectid,"kindofresponse":"extraextended"};
 		console.log(requestJson);
 		var requestArray = [requestJson];
 		console.log(requestArray);
 
 		
-		Liferay.Service(
+/* 		Liferay.Service(
 				'/GFBioProject-portlet.researchobject/get-research-object-by-id',{
 					requestJson: JSON.stringify(requestArray)
 				},
 				function(obj) {
+					console.log(obj);
 					var response = obj[0];
 					console.log(response);
 					buildDatasetInformation (response);
 				}
-		);
-		/*var ajaxData = {"userid":data.userid};
-			$.ajax({
+		); */
+		var url = document.getElementById('submissiondashboardurl').value;
+		var ajaxData = requestJson;
+		$.ajax({
 			"type" : "POST",
-			"url": url.concat('/WorkflowGenericPortlet'),
+			"url": url.concat('/SubmissionsPortlet'),
 			"data" : {
 				"<portlet:namespace />data" : JSON.stringify(ajaxData),
-				"<portlet:namespace />responseTarget" : "getuserbyid"
+				"<portlet:namespace />responseTarget" : "getresearchobjectinformation"
 			},
 			async: false,
-				success : function(obj) {
-				document.getElementById("gwf_ro_author").innerHTML= obj.fullname;
-				}
-			});
-		*/
+			success : function(obj) {
+				console.log("success");
+				console.log(obj);
+/* 				var response = {};
+				response = obj[0];
+				console.log(response);
+				buildDatasetInformation (response); */
+			},
+			error : function(request,status,errorThrown) {
+				console.log("error");
+				console.log(request);
+				console.log(status);
+				console.log(errorThrown);
+/* 				console.log(obj.responseText);
+				var newresponse = obj.responseText;
+				console.log(newresponse);
+				var newresponse2 = {};
+				newresponse2 = obj.responseText;
+				console.log(newresponse2); */
+			}
+		});
 	}
 
+	
+	//
 	function buildDatasetInformation(researchObjectInformation)
 	{
 		//var div = $("#tabs");

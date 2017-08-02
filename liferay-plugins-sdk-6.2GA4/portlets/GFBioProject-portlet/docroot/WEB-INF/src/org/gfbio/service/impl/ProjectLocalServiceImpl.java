@@ -402,12 +402,22 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 	public JSONObject constructProjectAsJson (Project project){
 
 		JSONObject json = new JSONObject();
+		
+		JSONObject extendeddataJson = new JSONObject();
+		String extendedDataSting = project.getExtendeddata();
+		if (!extendedDataSting.equals("")){
+			JSONParser parser = new JSONParser();
+			try {extendeddataJson = (JSONObject) parser.parse(extendedDataSting);}
+			catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+		}
+		
+		
 		json.put("projectid", project.getProjectID());
 		json.put("parentprojectid", project.getParentProjectID());
 		json.put("name", project.getName());
 		json.put("label", project.getLabel());
 		json.put("description", project.getDescription());
-		json.put("extendeddata", project.getExtendeddata());
+		json.put("extendeddata", extendeddataJson);
 		if (project.getStartDate() != null)
 			json.put("startdate", project.getStartDate().toString());
 		else
@@ -417,7 +427,7 @@ public class ProjectLocalServiceImpl extends ProjectLocalServiceBaseImpl {
 		else
 			json.put("enddate", "");			
 		json.put("status", project.getStatus());
-		json.put("lastmodifieddate", project.getLastModifiedDate());
+		json.put("lastmodifieddate", project.getLastModifiedDate().toString());
 		return json;
 	}
 	
