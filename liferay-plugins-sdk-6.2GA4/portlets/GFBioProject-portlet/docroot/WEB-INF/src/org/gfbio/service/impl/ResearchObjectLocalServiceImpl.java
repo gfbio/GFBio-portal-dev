@@ -234,8 +234,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING",ignoreParameter);
-				
-		return checkNullParent(responseJson);
+		
+		_log.info(responseJson);
+		responseJson = 	checkNullParent(responseJson);
+		_log.info(responseJson);
+		return responseJson;
 	}
 
 	
@@ -702,11 +705,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		JSONObject responseJson = new JSONObject();
 		if (researchObject != null){
 			
-			String extendedDataSteing = researchObject.getExtendeddata();
+			String extendedDataSting = researchObject.getExtendeddata();
 			
 			JSONParser parser = new JSONParser();
 			JSONObject extendeddataJson = new JSONObject();
-			try {extendeddataJson = (JSONObject) parser.parse(extendedDataSteing);}
+			try {extendeddataJson = (JSONObject) parser.parse(extendedDataSting);}
 			catch (ParseException e) {e.printStackTrace();}
 			
 			responseJson.put("description", researchObject.getDescription());
@@ -806,20 +809,23 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		responseJson.put("researchobject",  researchObjectJson);
 		
 		//parental research object information
-		if (researchObjectJson.containsKey("parentresearchobjectid"))
+				if (researchObjectJson.containsKey("parentresearchobjectid"))
 			if (researchObjectJson.get("parentresearchobjectid")!=null){
 				JSONObject requestJson = new JSONObject();
 				requestJson.put("researchobjectid", Helper.getLongFromJson(researchObjectJson, "parentresearchobjectid"));
 				responseJson.put("parentresearchobject",  getResearchObjectAsJsonById(requestJson));
 			}
 		
-		//submission information
-		if (researchObjectJson.containsKey("submissionids"))
-			responseJson.put("submissions",  SubmissionLocalServiceUtil.getSubmissionsByResearchObjectIdAndVersion(researchObjectJson));
-				
-		//project information
-		if (researchObjectJson.containsKey("projectids"))
-			responseJson.put("projects",  ProjectLocalServiceUtil.getProjectById(Helper.getJsonArrayFromJson(researchObjectJson, "projectids")));
+				//submission information
+				if (researchObjectJson.containsKey("submissionids")){
+			JSONArray responseArray =  SubmissionLocalServiceUtil.getSubmissionsByResearchObjectIdAndVersion(researchObjectJson);
+			List <JSONObject> responseList= new ArrayList<JSONObject>();
+			for (int i =0; i < responseArray.size();i++)
+				if (((responseArray.get(i).getClass()).toString()).equals("class org.json.simple.JSONObject"))
+					responseList.add((JSONObject) responseArray.get(i));
+			responseJson.put("submissions",  responseList);
+		}
+
 		
 		//license information
 		if (researchObjectJson.containsKey("licenseid"))
@@ -828,6 +834,19 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		//metadata information
 		if (researchObjectJson.containsKey("metadataid"))
 			responseJson.put("metadata",  ContentLocalServiceUtil.getRowInformationByContentId(Helper.getLongFromJson(researchObjectJson, "metadataid")));
+		
+		//project information
+		if (researchObjectJson.containsKey("projectids")){
+			JSONArray responseArray = ProjectLocalServiceUtil.getProjectById(Helper.getJsonArrayFromJson(researchObjectJson, "projectids"));
+			List <JSONObject> responseList= new ArrayList<JSONObject>();
+			for (int i =0; i < responseArray.size();i++)
+				if (((responseArray.get(i).getClass()).toString()).equals("class org.json.simple.JSONObject"))
+					responseList.add((JSONObject) responseArray.get(i));
+			_log.info("3.5: "+responseList);
+			responseJson.put("projects", responseList );
+		}
+		
+		_log.info("4: "+responseJson);
 		
 		return responseJson;
 	}

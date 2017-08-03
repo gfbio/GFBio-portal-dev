@@ -4,6 +4,10 @@
 <%@ include file="/html/init.jsp" %> <!-- library imports -->
 
 <portlet:defineObjects />
+<portlet:resourceURL escapeXml="false" id="submissiondashboardURL" var="submissiondashboardURL" />
+<meta charset="UTF-8">
+
+	<input type="hidden" class="widthL" id="submissiondashboardurl"  	value="<%=submissiondashboardURL %>" />
 
 
 
@@ -26,7 +30,7 @@ System.out.println("Error");
 <%if (ResearchObjects!=null && ResearchObjects.size()>0){ %>
   <div "ID=datasets">
   <h2>Your GfBio datasets</h2><br>
-  <span style='width:60% ; display:inline-block; font-weight:bold' class='field-description' >DataSet name</span>
+  <span style='width:50% ; display:inline-block; font-weight:bold' class='field-description' >DataSet name</span>
 	<span style='width:2%; display:inline-block'></span>
 	<span style='width:13% ; display:inline-block; font-weight:bold' class='field-description' >Status</span>
 	<span style='width:2%; display:inline-block'></span>
@@ -34,11 +38,11 @@ System.out.println("Error");
 <% for (int i = 0; i < ResearchObjects.size(); i++) {
 JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 <div>
-  <span style='width:60% ; display:inline-block; font-weight:bold' class='field-description' ><%= responseJson.get("researchobjectname") %></span>
+  <span style='width:50% ; display:inline-block; font-weight:bold' class='field-description' ><%= responseJson.get("researchobjectname") %></span>
 	<span style='width:2%; display:inline-block'></span>
-	<span style='width:13% ; display:inline-block; font-weight:bold' class='field-description' >Status</span>
+	<span style='width:13% ; display:inline-block; font-weight:bold' class='field-description' ><%= responseJson.get("status") %></span>
 	<span style='width:2%; display:inline-block'></span>
-	<span style='width:23% ; display:inline-block; font-weight:bold' class='field-description' ></span>
+	<span style='width:23% ; display:inline-block; font-weight:bold' class='field-description' ><button onclick="GetResearchObjectById(<%= responseJson.get("researchobjectid") %>)">Get details</button></span>
 </div>
 
   </div>
@@ -91,34 +95,45 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 
 		var requestJson = {"researchobjectid":researchobjectid,"kindofresponse":"extraextended"};
 		console.log(requestJson);
-		var requestArray = [requestJson];
-		console.log(requestArray);
+/* 		var requestArray = [requestJson];
+		console.log(requestArray); */
 
 		
-		Liferay.Service(
+/* 		Liferay.Service(
 				'/GFBioProject-portlet.researchobject/get-research-object-by-id',{
 					requestJson: JSON.stringify(requestArray)
 				},
 				function(obj) {
+					console.log(obj);
 					var response = obj[0];
 					console.log(response);
 					buildDatasetInformation (response);
 				}
-		);
-		/*var ajaxData = {"userid":data.userid};
-			$.ajax({
+		); */
+		var url = document.getElementById('submissiondashboardurl').value;
+		var ajaxData = requestJson;
+		$.ajax({
 			"type" : "POST",
-			"url": url.concat('/WorkflowGenericPortlet'),
+			"url": url.concat('/SubmissionsPortlet'),
 			"data" : {
 				"<portlet:namespace />data" : JSON.stringify(ajaxData),
-				"<portlet:namespace />responseTarget" : "getuserbyid"
+				"<portlet:namespace />responseTarget" : "getresearchobjectinformation"
 			},
 			async: false,
-				success : function(obj) {
-				document.getElementById("gwf_ro_author").innerHTML= obj.fullname;
-				}
-			});
-		*/
+			success : function(obj) {
+
+ 				var response = {};
+				response = obj;
+				console.log(response);
+				buildDatasetInformation (response); 
+			},
+			error : function(request,status,errorThrown) {
+				console.log("error");
+				console.log(request);
+				console.log(status);
+				console.log(errorThrown);
+			}
+		});
 	}
 
 	function buildDatasetInformation(bundle)
