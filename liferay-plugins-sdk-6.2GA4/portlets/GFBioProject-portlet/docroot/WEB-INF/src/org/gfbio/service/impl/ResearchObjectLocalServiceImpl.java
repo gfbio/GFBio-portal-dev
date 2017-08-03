@@ -801,15 +801,15 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		responseJson.put("researchobject",  researchObjectJson);
 		
 		//parental research object information
-		if (researchObjectJson.containsKey("parentresearchobjectid"))
+				if (researchObjectJson.containsKey("parentresearchobjectid"))
 			if (researchObjectJson.get("parentresearchobjectid")!=null){
 				JSONObject requestJson = new JSONObject();
 				requestJson.put("researchobjectid", Helper.getLongFromJson(researchObjectJson, "parentresearchobjectid"));
 				responseJson.put("parentresearchobject",  getResearchObjectAsJsonById(requestJson));
 			}
 		
-	//submission information
-		if (researchObjectJson.containsKey("submissionids")){
+				//submission information
+				if (researchObjectJson.containsKey("submissionids")){
 			JSONArray responseArray =  SubmissionLocalServiceUtil.getSubmissionsByResearchObjectIdAndVersion(researchObjectJson);
 			List <JSONObject> responseList= new ArrayList<JSONObject>();
 			for (int i =0; i < responseArray.size();i++)
@@ -823,7 +823,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		if (researchObjectJson.containsKey("licenseid"))
 			responseJson.put("license",  ContentLocalServiceUtil.getRowInformationByContentId(Helper.getLongFromJson(researchObjectJson, "licenseid")));
 	
-				//metadata information
+		//metadata information
 		if (researchObjectJson.containsKey("metadataid"))
 			responseJson.put("metadata",  ContentLocalServiceUtil.getRowInformationByContentId(Helper.getLongFromJson(researchObjectJson, "metadataid")));
 		

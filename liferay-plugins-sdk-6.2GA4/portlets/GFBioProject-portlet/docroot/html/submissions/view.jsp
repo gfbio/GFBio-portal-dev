@@ -28,20 +28,42 @@ System.out.println("Error");
 
 
 <%if (ResearchObjects!=null && ResearchObjects.size()>0){ %>
-<h2>Your GfBio datasets</h2><br>
-<table><tr>
-<td>Dataset Name </td><td>Version</td><td>Status</td></tr>
+  <div "ID=datasets">
+  <h2>Your GfBio datasets</h2><br>
+  <span style='width:50% ; display:inline-block; font-weight:bold' class='field-description' >DataSet name</span>
+	<span style='width:2%; display:inline-block'></span>
+	<span style='width:13% ; display:inline-block; font-weight:bold' class='field-description' >Status</span>
+	<span style='width:2%; display:inline-block'></span>
+	<span style='width:23% ; display:inline-block; font-weight:bold' class='field-description' ></span>
 <% for (int i = 0; i < ResearchObjects.size(); i++) {
 JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
-<tr><td><%= responseJson.get("researchobjectname") %> <%= responseJson.get("researchobjectid") %> </td>
-<td><%= (Integer) ((JSONObject )ResearchObjects.get(i)).get("researchobjectversion") %></td>
+<div>
+  <span style='width:50% ; display:inline-block; font-weight:bold' class='field-description' ><%= responseJson.get("researchobjectname") %></span>
+	<span style='width:2%; display:inline-block'></span>
+	<span style='width:13% ; display:inline-block; font-weight:bold' class='field-description' ><%= responseJson.get("status") %></span>
+	<span style='width:2%; display:inline-block'></span>
+	<span style='width:23% ; display:inline-block; font-weight:bold' class='field-description' ><button onclick="GetResearchObjectById(<%= responseJson.get("researchobjectid") %>)">Get details</button></span>
+</div>
+
+  </div>
+  		
+	<%} %>
+
+<%}} %>	
+  		
+<%-- <h2>Your GfBio datasets</h2><br>
+<table><tr>
+<td>Dataset Name </td><td>Status</td></tr>
+<% for (int i = 0; i < ResearchObjects.size(); i++) {
+JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
+<tr><td><%= responseJson.get("researchobjectname") %> </td>
 
 <td><%= responseJson.get("status") %></td>
 <td><button onclick="GetResearchObjectById(<%= responseJson.get("researchobjectid") %>)">Get details</button></td>
 </tr>
 <%} %>
-</table>
-<%}} %>
+</table> --%>
+
 <Div ID="SubmissionInfo"></Div>
 
 <div id="tabs" class="container">
@@ -51,21 +73,21 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 		<li class="tab-link" data-tab="tab-2">Project</li>
 		<li class="tab-link" data-tab="tab-3">Submissions</li>
 		<li class="tab-link" data-tab="tab-4">License</li>
+		 <li class="tab-link" data-tab="tab-5">Extended INformation</li>
 	</ul>
 
-	<div id="tab-1" class="tab-content current">
-	</div>
-	<div id="tab-2" class="tab-content">
-	</div>
-	<div id="tab-3" class="tab-content">
-	</div>
-	<div id="tab-4" class="tab-content">
-	</div>
+	<div id="tab-1" class="tab-content current">	</div>
+	<div id="tab-2" class="tab-content">	</div>
+	<div id="tab-3" class="tab-content">	</div>
+	<div id="tab-4" class="tab-content">	</div>
+	<div id="tab-5" class="tab-content">	</div>
 
 </div><!-- container -->
-<Div></Div>
-<Div></Div>
-<Div></Div>
+
+<br>
+<br>
+<br>
+<br>
 <script>
 
 	function GetResearchObjectById(researchobjectid)
@@ -73,8 +95,8 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 
 		var requestJson = {"researchobjectid":researchobjectid,"kindofresponse":"extraextended"};
 		console.log(requestJson);
-		var requestArray = [requestJson];
-		console.log(requestArray);
+/* 		var requestArray = [requestJson];
+		console.log(requestArray); */
 
 		
 /* 		Liferay.Service(
@@ -99,32 +121,28 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 			},
 			async: false,
 			success : function(obj) {
-				console.log("success");
-				console.log(obj);
-/* 				var response = {};
-				response = obj[0];
+
+ 				var response = {};
+				response = obj;
 				console.log(response);
-				buildDatasetInformation (response); */
+				buildDatasetInformation (response); 
 			},
 			error : function(request,status,errorThrown) {
 				console.log("error");
 				console.log(request);
 				console.log(status);
 				console.log(errorThrown);
-/* 				console.log(obj.responseText);
-				var newresponse = obj.responseText;
-				console.log(newresponse);
-				var newresponse2 = {};
-				newresponse2 = obj.responseText;
-				console.log(newresponse2); */
 			}
 		});
 	}
 
-	
-	//
-	function buildDatasetInformation(researchObjectInformation)
+	function buildDatasetInformation(bundle)
 	{
+		var researchObjectInformation = bundle.researchobject;
+		var license=bundle.license;
+		var metadata=bundle.metadata;
+		//var ParentResearchObject= bundle.parentresearchobject;
+		
 		//var div = $("#tabs");
 		//[div].visible = true;
 		//var elem = document.getElementById('tabs');
@@ -141,6 +159,7 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 	    div.empty();
 	    div.append(
 	    	//"<h3>Dataset Information</h3>"+
+	    	// check if parentresearchobjectid is null so no parentresearchobject in the bundle
 	    	"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Title </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
@@ -166,28 +185,24 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+extdata.datacollectiontime+ "</span>"+
 				"</div >"+
-				"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Last Modified Date</span>"+
-				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.lastmodifieddate+ "</span>"+
-				"</div >"+
+				
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Embargo Time </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+extdata.embargo+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Last Modified Date</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.lastmodifieddate+ "</span>"+
 				"</div >"+
 				// Extended
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Publications </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+extdata.publications+ "</span>"+
-				"</div >"+
-				//license
-				"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >License Label </span>"+
-				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.licenselabel+ "</span>"+
 				"</div >"
+				
 			
 	    );
 	    
@@ -195,13 +210,33 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 	    div.empty();
 	    div.append(
 	    	
-	    	"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Title </span>"+
+	    		//license
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.name+ "</span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.name+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Label</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.label+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Version</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.version+ "</span>"+
+				"</div >"+
+				
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Discription</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.description+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Weblink</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.extendeddata+ "</span>"+
 				"</div >"
-				
-				
 			
 			
 	    );
