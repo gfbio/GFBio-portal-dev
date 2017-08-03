@@ -259,7 +259,7 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 		json.put("primarydataid", primaryData.getPrimaryDataID());
 		json.put("name", (primaryData.getName()).trim());
 		json.put("path", (primaryData.getPath()).trim());
-		json.put("lastmodifieddate", primaryData.getLastModifiedDate());
+		json.put("lastmodifieddate", primaryData.getLastModifiedDate().toString());
 		return json;
 	}
 	

@@ -770,14 +770,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		if (PrimaryData_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
 			JSONArray primaryDataIdList =  PrimaryData_ResearchObjectLocalServiceUtil.getPrimaryDatasIdsByResearchObject(responseJson);
 			responseJson.put("primarydataids", primaryDataIdList);
-			JSONArray primaryDataList = new JSONArray();
-			for (int i =0; i < primaryDataIdList.size();i++){
-				JSONObject primaryDataId = new JSONObject();
-				primaryDataId.put("primarydataid", primaryDataIdList.get(0));
-				JSONObject primaryData = PrimaryDataLocalServiceUtil.getPrimaryDataById(primaryDataId);
-				primaryDataList.add(primaryData);
-			}
-			responseJson.put("primarydata", primaryDataList);
 		}
 			
 		
@@ -845,6 +837,31 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			_log.info("3.5: "+responseList);
 			responseJson.put("projects", responseList );
 		}
+		
+		//primarydata
+		if (researchObjectJson.containsKey("primarydataids")){
+			JSONArray primarydataIdsArray = Helper.getJsonArrayFromJson(researchObjectJson, "primarydataids");
+			List <JSONObject> responseList= new ArrayList<JSONObject>();
+			for (int i =0; i < primarydataIdsArray.size();i++){
+				JSONObject primaryData = new JSONObject();
+				primaryData.put("primarydataid", primarydataIdsArray.get(i));
+				primaryData = PrimaryDataLocalServiceUtil.getPrimaryDataById(primaryData);
+				responseList.add((JSONObject) primaryData);
+			}
+			_log.info("3.75: "+responseList);
+			responseJson.put("primarydatas", responseList );
+		}
+		
+/*		List <JSONObject> responseList= new ArrayList<JSONObject>();
+		//JSONArray primaryDataList = new JSONArray();
+		for (int i =0; i < primaryDataIdList.size();i++){
+			JSONObject primaryDataId = new JSONObject();
+			primaryDataId.put("primarydataid", primaryDataIdList.get(i));
+			//JSONObject primaryData = PrimaryDataLocalServiceUtil.getPrimaryDataById(primaryDataId);
+			//primaryDataList.add(primaryData);
+			responseList.add((JSONObject) PrimaryDataLocalServiceUtil.getPrimaryDataById(primaryDataId));
+		}
+		responseJson.put("primarydata", responseList);*/
 		
 		_log.info("4: "+responseJson);
 		
