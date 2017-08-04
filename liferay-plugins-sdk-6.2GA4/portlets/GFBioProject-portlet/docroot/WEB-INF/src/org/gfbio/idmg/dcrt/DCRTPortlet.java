@@ -161,10 +161,8 @@ public class DCRTPortlet extends MVCPortlet {
 
 		writer.println("<table style=\"width: 100%;\">");
 		
-		String disabled = "false";
 		String title = "";
 		if (!isSignedIn) {
-			disabled = "true";
 			title = "You have to be logged in";
 		}
 
@@ -185,8 +183,8 @@ public class DCRTPortlet extends MVCPortlet {
 									.with(
 											button().withClass("dcrtbutton contact").withText("Contact")
 													.withName("contactButton").withType("button").withValue(label),
-											button().withClass("dcrtbutton submission").withText("Request").withName("submissionButton")
-													.withType("button").attr("style","margin-left: 2px; margin-right: 2px").attr("disabled", disabled)
+											button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
+													.withType("button").attr("style","margin-left: 2px; margin-right: 2px").condAttr(!isSignedIn, "disabled", "true")
 													.attr("title", title).withValue(label),
 											button().withClass("dcrtbutton details").withText("Details")
 													.withName("detailsButton").withType("button").withValue(label)
