@@ -92,6 +92,12 @@ input.dialogtext {
 	margin: 5px 0 5px !important;
 }
 	
+button[disabled='true']{
+  background-color: #cccccc !important;
+  color: #DDDDDD !important;
+  pointer-events: none;
+}	
+	
 .dcrtbutton {
 	border: 1px;
    	border-style: solid;

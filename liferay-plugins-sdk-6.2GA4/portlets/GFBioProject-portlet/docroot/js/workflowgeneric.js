@@ -298,14 +298,18 @@ function checkMinimalResearchObjectInput(){
 
 //
 function resetInput(){
+	resetDCRTInput();
+	
 	sentShowHideInformation(true);
 	var div =   $("#generic");
 	div.empty();
 	var data = {"userid":Number(themeDisplay.getUserId())};
 	buildGenericForm(data, div);
 	fillDefaultInformations(data, div);
+		
 	sentResetRequest();
 }
+
 
 
 //
@@ -324,9 +328,15 @@ function saveAllInput(){
 		projectJson = saveResearchObjectInput(projectJson);
 		projectJson["submittermail"]=document.getElementById("gwf_user_mail").innerHTML;
 		
-		console.log(document.getElementById("gwf_dcrtinformation").innerHTML);
-		if (document.getElementById("gwf_dcrtinformation").innerHTML!=null)
-			projectJson["dcrtinformation"]=document.getElementById("gwf_dcrtinformation").innerHTML;
+		
+		if (document.getElementById("gwf_dcrtassignee").innerHTML!=null){
+			var checkList = document.getElementsByName('gwf_ro_dcrt_radio');
+			for (i=0; i <checkList.length; i++)
+				if (checkList[i].checked==true)
+					projectJson["dcrtassignee"]=checkList[i].value;
+			projectJson["dcrtinput"]=document.getElementById("gwf_dcrtinput").innerHTML;
+			projectJson["dcrtrecommendation"]=document.getElementById("gwf_dcrtrecommendation").innerHTML;
+		}
 		
 		
 		if (projectJson.researchobjects.researchobjectid >0){
@@ -338,6 +348,7 @@ function saveAllInput(){
 		}
 		
 	}
+	console.log(projectJson);
 	return projectJson;
 }
 
@@ -394,6 +405,8 @@ function submitInput(url){
 							var data ={};
 							data["mrr"]= mrrJson;
 							startSubmission(data);
+							
+							resetDCRTInput();
 							
 							//sent to Broker
 							//data["submissionregistry"]= registryJson;

@@ -93,12 +93,8 @@ public class DCRTPortlet extends MVCPortlet {
 		String alive = resourceRequest.getParameter("alive");
 		String sequenced = resourceRequest.getParameter("sequenced");
 
-		_log.info("==========VALUES=========");
-		_log.info("Physical: " + physical);
-		_log.info("Taxon: " + taxon);
-		_log.info("Alive: " + alive);
-		_log.info("Sequenced: " + sequenced);
-
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
@@ -108,7 +104,7 @@ public class DCRTPortlet extends MVCPortlet {
 			writer.println(
 					"For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
-			dataproviderOutput(writer, recommendedProviders);
+			dataproviderOutput(writer, recommendedProviders, themeDisplay.isSignedIn());
 		}
 
 		writer.flush();
@@ -141,6 +137,8 @@ public class DCRTPortlet extends MVCPortlet {
 		} else {
 			recommendedProviders = DataProviderUtil.setRecommendedProvidersWithCategory(physical, taxon, alive, sequenced, category);
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
@@ -149,7 +147,7 @@ public class DCRTPortlet extends MVCPortlet {
 			writer.println(
 					"For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
 		} else {
-			dataproviderOutput(writer, recommendedProviders);
+			dataproviderOutput(writer, recommendedProviders, themeDisplay.isSignedIn());
 		}
 
 		writer.flush();
@@ -157,11 +155,16 @@ public class DCRTPortlet extends MVCPortlet {
 
 		super.serveResource(resourceRequest, resourceResponse);
 	}
-
+	
 	/* Building the html output for the datacenter results */
-	private void dataproviderOutput(PrintWriter writer, List<DataProvider> providers) {
+	private void dataproviderOutput(PrintWriter writer, List<DataProvider> providers, boolean isSignedIn) {
 
 		writer.println("<table style=\"width: 100%;\">");
+		
+		String title = "";
+		if (!isSignedIn) {
+			title = "You have to be logged in";
+		}
 
 		for (DataProvider dp : providers) {
 			String name = dp.getName();
@@ -174,20 +177,19 @@ public class DCRTPortlet extends MVCPortlet {
 							.with(img().withClass("img-zoom").withSrc("/GFBioProject-portlet/images/" + label + ".jpg")
 									.attr("style", "width: 80px;")),
 							div().withName("recommendation").withClass("col-xs-9 col-sm-6 col-lg-7")
-									.attr("style",
-											"padding-left: 1.5em;")
+									.attr("style", "padding-left: 1.5em;")
 									.with(span().withId(label).withName("dataCenter").withText(name)),
 							div().withClass("col-xs-12 col-sm-4 col-lg-3").attr("style", "text-align: center;")
-									.with(button().withClass("dcrtbutton contact").withText("Contact")
-											.withName("contactButton").withType("button").withValue(label),
-											// button().withClass("dcrtbutton
-											// submission").withText("Submission").withName("submissionButton")
-											// .withType("button").attr("style",
-											// "margin-left: 2px; margin-right:
-											// 2px").withValue(label),
+									.with(
+											button().withClass("dcrtbutton contact").withText("Contact")
+													.withName("contactButton").withType("button").withValue(label),
+											button().withClass("dcrtbutton submission").withText("Submission").withName("submissionButton")
+													.withType("button").attr("style","margin-left: 2px; margin-right: 2px").condAttr(!isSignedIn, "disabled", "true")
+													.attr("title", title).withValue(label),
 											button().withClass("dcrtbutton details").withText("Details")
 													.withName("detailsButton").withType("button").withValue(label)
-													.attr("style", "margin-left: 2px;")))
+													//.attr("style", "margin-left: 2px;")
+											))
 					.render());
 		}
 
@@ -250,8 +252,7 @@ public class DCRTPortlet extends MVCPortlet {
 		List<Customfield_10217> dataCenters = new ArrayList<>();
 		if (dataCenter.equals("GFBio")) {
 			user = "";
-			// Get List of all possible Data Centers if GFBio default contact is
-			// used
+			// Get List of all possible Data Centers if GFBio default contact is used
 			String[] dcs = resourceRequest.getParameterValues("dataCenterList[]");
 			for (int i = 0; i < dcs.length; i++) {
 				if (!dcs[i].equals("GFBio")) {
@@ -300,16 +301,52 @@ public class DCRTPortlet extends MVCPortlet {
 
 		// Get Button Value
 		String dataCenter = resourceRequest.getParameter("dataCenter");
+		
+		String dataCenterList = "";
+		String[] dcs = resourceRequest.getParameterValues("dataCenterList[]");
+		for (int i = 0; i < dcs.length; i++) {
+			if (!dcs[i].equals("GFBio")) {
+				dataCenterList = dataCenterList.concat(dcs[i] + ", ");
+			}
+		}
+		dataCenterList = dataCenterList.replaceAll(", $", "");
+		_log.info(dataCenterList);
+		
+		// Get Radio-Inputs
+		String physical = resourceRequest.getParameter("physical");
+		String taxon = resourceRequest.getParameter("taxon");
+		String alive = resourceRequest.getParameter("alive");
+		String sequenced = resourceRequest.getParameter("sequenced");
 
+		// Get Category
+		String category = resourceRequest.getParameter("category");
+		String material = resourceRequest.getParameter("material");
+
+		
+		//Set Values to PortletSession for Submission Portlet
+		PortletSession session = resourceRequest.getPortletSession();
+	    session.setAttribute("physical", physical ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("taxon", taxon ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("alive", alive ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("sequenced", sequenced ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("dataCenter", dataCenter ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("category", category ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("material", material ,PortletSession.APPLICATION_SCOPE);
+	    session.setAttribute("possibleDataCenter", dataCenterList,PortletSession.APPLICATION_SCOPE);
+		//_log.info("Value set to PortletSession");
+		
+	    ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+	    String submissionLink = themeDisplay.getPortalURL() + "/data/submit/generic";
+	    //String dmptLink = themeDisplay.getPortalURL() + "/web/guest/dmpt";
+	    
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
-		writer.println("Submission: " + dataCenter);
+		writer.println(submissionLink);
 
 		writer.flush();
 		writer.close();
 
 		super.serveResource(resourceRequest, resourceResponse);
 	}
-
 }
