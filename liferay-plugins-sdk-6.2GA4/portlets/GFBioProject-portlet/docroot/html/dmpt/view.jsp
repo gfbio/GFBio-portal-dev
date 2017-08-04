@@ -67,7 +67,7 @@ $(document).ready(function(){
            	},
            	phoneNumber : {
            		required: true,
-           		number: true
+           		//number: true
            	},
 		}
 	});
@@ -160,9 +160,13 @@ $(document).ready(function(){
 		    
 		    //07 Handling inputs at the end of the wizard
 		    $("#handleInput").hide();
-		    //$("#downloadDMP").on("click", method for downloading pdf);
 		    
 		    $("#downloadDMP").click(function() {
+				var fileName = $("#name").val() + ".pdf";
+				fileName = fileName.replace(/\s/g, "_");
+				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+			});
+		    $("#downloadDMPtest").click(function() {
 				var fileName = $("#name").val();
 				fileName = fileName.replace(/\s/g, "_");
 				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
@@ -175,8 +179,9 @@ function getInputAsJson() {
 	
 	// 01 General Information
 	var projectName = $("#name").val();
-	var category = $("#category").val(); 
-	if (category = "Select") category = "";
+	var category = $("#category").find(":selected").text();
+	console.log("Category: " + category);
+	if (category === "Select") category = "";
 	var reproducible = $("input[name='nature']:checked").val();
 	
 	var projectTypes = [];
@@ -206,7 +211,7 @@ function getInputAsJson() {
 		fundingLink = $("#fundingLink").val();
 	}
 	
-	var policies = $("#policies").val();
+	var policies = $("#policies").text();
 	var policyLink = "";
 	if ($.inArray("Other", policies) > -1) {
 		policies.splice($.inArray("Other", policies), 1);
@@ -243,13 +248,13 @@ function getInputAsJson() {
 		dmptInput.investigators = investigators;
 	}
 	
-	if (policies != null) {
-		policies.map(function(item) {        
-	  		dmptInput.policies.push({ 
-	    		"value" : item,
-	    	});
-		});
-	}
+// 	if (policies != null) {
+// 		policies.map(function(item) {        
+// 	  		dmptInput.policies.push({ 
+// 	    		"value" : item,
+// 	    	});
+// 		});
+// 	}
 	
 	console.log(dmptInput);
 	console.log("JSon");

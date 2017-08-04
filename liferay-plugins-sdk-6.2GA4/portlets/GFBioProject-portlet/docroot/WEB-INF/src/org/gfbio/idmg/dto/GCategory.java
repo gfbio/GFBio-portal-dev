@@ -1,8 +1,10 @@
 package org.gfbio.idmg.dto;
 
+import java.io.Serializable;
+
 import org.json.simple.JSONObject;
 
-public class GCategory implements Comparable<GCategory> {
+public class GCategory implements Comparable<GCategory>, Serializable {
 
 	long id;
 	String name;

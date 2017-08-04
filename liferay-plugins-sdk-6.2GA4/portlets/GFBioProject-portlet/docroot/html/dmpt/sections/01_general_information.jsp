@@ -12,6 +12,10 @@
 		   <input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
 		</div>
 	</div>
+	<!-- Following div with download button must be removed after development -->
+	<div>
+		<input id="downloadDMPtest" type="button" value="Download" />
+	</div>
 	<div class="row">
 		<h4>Please select a category</h4>
 		<div class="col-md-12">
@@ -33,10 +37,10 @@
       	</h4>
       	<div id="nature">
       		<div class="col-xs-12 col-sm-6 col-md-4">
-            	<label><input name="nature" type="radio" value="snapshot" />Onetime observation</label>
+            	<label><input name="nature" type="radio" value="Onetime observation" />Onetime observation</label>
      		</div>
       		<div class="col-xs-12 col-sm-6 col-md-4">
-		        <label><input name="nature" type="radio" value="reapeatable" />Repeatable experiments</label>
+		        <label><input name="nature" type="radio" value="Reapeatable experiments" />Repeatable experiments</label>
           	</div>
      	</div>
 	</div>

@@ -1,8 +1,10 @@
 package org.gfbio.idmg.dto;
 
+import java.io.Serializable;
+
 import org.json.simple.JSONObject;
 
-public class GFunding implements Comparable<GFunding> {
+public class GFunding implements Comparable<GFunding>, Serializable {
 
 	long id;
 	String name;

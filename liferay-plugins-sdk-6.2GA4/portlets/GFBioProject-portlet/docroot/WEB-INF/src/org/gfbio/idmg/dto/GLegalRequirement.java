@@ -1,8 +1,10 @@
 package org.gfbio.idmg.dto;
 
+import java.io.Serializable;
+
 import org.json.simple.JSONObject;
 
-public class GLegalRequirement implements Comparable<GLegalRequirement> {
+public class GLegalRequirement implements Comparable<GLegalRequirement>, Serializable {
 
 	long id;
 	String name;

@@ -1,8 +1,10 @@
 package org.gfbio.idmg.dto;
 
+import java.io.Serializable;
+
 import org.json.simple.JSONObject;
 
-public class GMetadata implements Comparable<GMetadata> {
+public class GMetadata implements Comparable<GMetadata>, Serializable {
 
 	long id;
 	String name;

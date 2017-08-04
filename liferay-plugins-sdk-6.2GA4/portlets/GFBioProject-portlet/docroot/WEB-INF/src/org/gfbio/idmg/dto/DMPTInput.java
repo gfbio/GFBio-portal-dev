@@ -10,7 +10,7 @@ public class DMPTInput implements Serializable {
 	// General Information
 	private String projectName;
 	private String category;
-	private boolean reproducible;
+	private String reproducible;
 	private List<String> projectTypes;
 	private String projectAbstract;
 	private List<String> investigators;
@@ -53,7 +53,7 @@ public class DMPTInput implements Serializable {
 	
 	public DMPTInput() {}
 
-	public DMPTInput(String projectName, String category, boolean reproducible, List<String> projectTypes,
+	public DMPTInput(String projectName, String category, String reproducible, List<String> projectTypes,
 			String projectAbstract, List<String> investigators, String responsibleName, String phoneNumber,
 			String email, GFunding funding, List<GPolicy> policies, Boolean physical, Boolean alive, Boolean taxonBased,
 			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String datasets,
@@ -109,11 +109,11 @@ public class DMPTInput implements Serializable {
 		this.category = category;
 	}
 
-	public boolean isReproducible() {
+	public String getReproducible() {
 		return reproducible;
 	}
 
-	public void setReproducible(boolean reproducible) {
+	public void setReproducible(String reproducible) {
 		this.reproducible = reproducible;
 	}
 
