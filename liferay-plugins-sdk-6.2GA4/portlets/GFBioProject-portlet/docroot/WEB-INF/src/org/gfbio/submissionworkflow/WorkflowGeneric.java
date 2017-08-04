@@ -420,7 +420,9 @@ public class WorkflowGeneric extends GenericPortlet {
         //recommendation
         if (projectJson.containsKey("dcrtrecommendation")){
         	String dcrtRecommendation = Helper.getStringFromJson(projectJson, "dcrtrecommendation");
-        	if(!dcrtRecommendation.equals("null")){
+        	_log.info("dcrtrecommendation" +dcrtRecommendation);
+        	if(!dcrtRecommendation.equals("null") && !dcrtRecommendation.equals("")){
+        		_log.info("dcrtrecommendation inside");
 	        	JSONArray dcrtInformationArray = new JSONArray();
 	        	List<String> items = Arrays.asList(dcrtRecommendation.split(","));
 	        	for(int i=0; i < items.size();i++){
@@ -431,6 +433,7 @@ public class WorkflowGeneric extends GenericPortlet {
 	        	fields.put("customfield_10217", dcrtInformationArray);
         	}
         }
+        
         
         
         //information / input
@@ -556,25 +559,30 @@ public class WorkflowGeneric extends GenericPortlet {
         
         
         //legal requirements
-        System.out.println("legal requirements 01");
+        _log.info("legal requirements 01");
          if (extendeddataJsonResearchObject.containsKey("legalrequirements")){
-        	 System.out.println("legal requirements 03");
+        	 _log.info("legal requirements 03");
         	if (!(extendeddataJsonResearchObject.get("legalrequirements").equals(""))){
-        		System.out.println("legal requirements 05");
-        		JSONArray legalRequirementArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
-        		if (legalRequirementArray.size()>0){
-        			System.out.println("legal requirements 07");
-	        		String legalRequirementString = "";
-	        		for (int i=0;i<legalRequirementArray.size();i++){
-	        			System.out.println("legal requirements 09."+i);
-        				legalRequirementString = legalRequirementString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementArray.get(i)), "name")).concat(", ");
+        		_log.info("legal requirements 05");
+        		JSONArray legalRequirementArray = new JSONArray();
+        		JSONArray legalRequirementIdArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
+        		if (legalRequirementIdArray.size()>0){
+        			_log.info("legal requirements 07");
+	        		//String legalRequirementString = "";
+	        		for (int i=0;i<legalRequirementIdArray.size();i++){
+	        			_log.info("legal requirements 09."+i);
+        				//legalRequirementString = legalRequirementString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")).concat(", ");
+        				JSONObject legalRequirements = new JSONObject();
+ 	        			legalRequirements.put("value", JSONObject.escape(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")));
+ 	        		  	legalRequirementsArray.add(legalRequirements);
 	        		}
-	        		legalRequirementString = legalRequirementString.substring(0, legalRequirementString.length()-2);
-	        		fields.put("customfield_10216", JSONObject.escape(legalRequirementString));                 	
+	        		//legalRequirementString = legalRequirementString.substring(0, legalRequirementString.length()-2);
+	        		fields.put("customfield_10216", legalRequirementsArray);                 	
         		}
         	}
         }
          
+               
 			
         
         //license Question
