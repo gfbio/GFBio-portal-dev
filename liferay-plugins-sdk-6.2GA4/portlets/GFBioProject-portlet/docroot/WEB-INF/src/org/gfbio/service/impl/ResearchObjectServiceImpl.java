@@ -15,7 +15,6 @@
 package org.gfbio.service.impl;
 
 
-import org.gfbio.idmg.dcrt.DCRTPortlet;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
 import org.json.simple.JSONArray;
@@ -90,28 +89,32 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(ResearchObjectLocalServiceImpl.class);
 	
 	//
+	@SuppressWarnings("unchecked")
 	public JSONArray createResearchObject(String requestJson){
 		
-		System.out.println(requestJson);
 		_log.info("createRO request:" + requestJson);
 
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
-
-		_log.info("createRO start:" + parseJson);
 		
 		try {parseJson = (JSONArray) parser.parse(requestJson);}
 		catch (ParseException e) {e.printStackTrace();}
 		
-		_log.info("createRO response:" + parseJson);
+		if (parseJson ==null){
+			JSONArray errorArray = new JSONArray();
+			errorArray.add("ERROR: html code 400. There is a problem with the format of the request.");
+			return errorArray;
+			
+		}else
 
-		return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
+			return ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson);
 	}
 	
 		
 	//
 	public JSONArray updateResearchObject(String requestJson){
-		System.out.println(requestJson);
+		_log.info("updateRO request:" + requestJson);
+
 		JSONParser parser = new JSONParser();
 		JSONArray parseJson = new JSONArray();
 		try {parseJson = (JSONArray) parser.parse(requestJson);}

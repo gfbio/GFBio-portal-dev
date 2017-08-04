@@ -6,7 +6,13 @@
 
 		<h5>Download PDF-File</h5>
 		<div>
-			<a href="#" id="download">Download File</a>
+			<input id="downloadDMP" type="button" value="Download" />
 		</div>
+		
+		<h5>Save Data Management Plan</h5>
+		<div>
+			<input id="saveDMP" type="button" value="Save" />
+		</div>
+		
 	</div>
 </div>

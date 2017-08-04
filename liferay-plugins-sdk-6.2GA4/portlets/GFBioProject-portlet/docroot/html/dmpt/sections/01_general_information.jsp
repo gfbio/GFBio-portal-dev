@@ -33,12 +33,10 @@
       	</h4>
       	<div id="nature">
       		<div class="col-xs-12 col-sm-6 col-md-4">
-            	<input name="nature" type="radio" value="snapshot" />
-            	<label>Onetime observation</label>
+            	<label><input name="nature" type="radio" value="snapshot" />Onetime observation</label>
      		</div>
       		<div class="col-xs-12 col-sm-6 col-md-4">
-		        <input name="nature" type="radio" value="reapeatable" />
-		        <label>Repeatable experiments</label>
+		        <label><input name="nature" type="radio" value="reapeatable" />Repeatable experiments</label>
           	</div>
      	</div>
 	</div>
@@ -51,46 +49,38 @@
         <div id="projectTypes" >
         	<div class="col-xs-6 col-sm-3">
             	<div>
-                	<input name="types" type="checkbox"/>
-                    <label>Field Work</label>
+                	<label><input name="types" type="checkbox"/>Field Work</label>
                 </div>
                 <div>
-                      <input name="types" type="checkbox"/>
-                      <label>Observational</label>
+                      <label><input name="types" type="checkbox"/>Observational</label>
                 </div>
             </div>
             <div class="col-xs-6 col-sm-3">
            		<div>
-                	<input name="types" type="checkbox"/>
-                    <label>Simulation</label>
+                	<label><input name="types" type="checkbox"/>Simulation</label>
                 </div>
                 <div>
-                  	<input name="types" type="checkbox"/>
-                    <label>Assimilation</label>
+                  	<label><input name="types" type="checkbox"/>Assimilation</label>
                 </div>
             </div>
             <div class="col-xs-6 col-sm-3">
             	<div>	
-                	<input name="types" type="checkbox"/>
-                    <label>Experimental</label>
+                	<label><input name="types" type="checkbox"/>Experimental</label>
                 </div>
                 <div>	
-                    <input name="types" type="checkbox"/>
-                    <label>Laboratory</label>
+                    <label><input name="types" type="checkbox"/>Laboratory</label>
                 </div>
             </div>
             <div class="col-xs-6 col-sm-3">
                 <div>
-                    <input name="types" type="checkbox"/>
-                    <label>Modelling</label>
+                    <label><input name="types" type="checkbox"/>Modelling</label>
                 </div>
                 <div>	
-                    <input id="types-cb" name="types" type="checkbox"/>
-                    <label>Other</label>
+                    <label><input id="types-cb" name="types" type="checkbox"/>Other</label>
                 </div>
             </div>
             <div class="col-md-12">
-            	<input id="typesOther" name="typesOther" type="text" />
+            	<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
             </div>
         </div>
         
@@ -124,15 +114,16 @@ Most commonly this is: you - the one preparing the DMP.">
     	
     	<div id="responsible" style="overflow: auto;">
 	 		<div class="col-md-6">
-	    		<input id="responsibleName" name="responsibleName" type="text" placeholder="Name" onfocus="getPrincipal()" />
+	    		<input id="responsibleName" name="responsibleName" type="text" placeholder="Name" 
+	    		value="<c:out value="${username}" />" onfocus="getPrincipal()" />
 	    	</div>
 	    	
 		 	<div class="col-md-6" >
-		    	<input name="phoneNumber" type="tel" placeholder="Phone Number"/> 
+		    	<input id="phone" name="phoneNumber" type="tel" placeholder="Phone Number" value="<c:out value="${phone}" />" /> 
 		    </div>
 		    
 		    <div class="col-md-12" >
-	     		<input name="email" type="email" placeholder="E-Mail"/>
+	     		<input id="email" name="email" type="email" placeholder="E-Mail" value="<c:out value="${email}" />" />
 	 		</div>
     	</div>
 	</div>

@@ -7,6 +7,8 @@
 <link href="<%=request.getContextPath()%>/css/dmpt/jquery-steps.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
+<portlet:resourceURL var="ajaxUrlWizard" id="wizard" />
+
 <script type="text/javascript">   
 
 var userEmail = '${email}';
@@ -14,11 +16,6 @@ var userName = '${username}';
 var contextPath = '${contextPath}';
 
 $(document).ready(function(){
-	
-	$("#download").click(function() {
-		var fileName="test.pdf"; // any file
-		window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
-	});
 	
     $(document).tooltip({
     	tooltipClass: "jqueryTooltip",
@@ -46,76 +43,32 @@ $(document).ready(function(){
 	form.validate({
 		errorPlacement : function errorPlacement(error, element) {
 			if (element.attr("name") == "responsibleName" || element.attr("name") == "email") {
-                   error.insertAfter(element.parent());
-               } else if (element.attr("name") == "nature") {
-			    error.attr("style", "display: block;")
-                   error.insertAfter(element.parent().parent());
-               } else if (element.attr("name") == "types" || element.attr("name") == "dataformat") {    
-                   error.attr("style", "display: block;")
-                   error.insertAfter(element.parent().parent().parent());
-               } else {
-                   error.attr("style", "display: block; margin-top: 5px")
-			    error.insertAfter(element);
+               	error.hide();
+           	} else if (element.attr("name") == "nature") {
+   				error.attr("style", "display: block;")
+               	error.insertAfter(element.parent().parent());
+           	} else {
+               	error.attr("style", "display: block; margin-top: 5px")
+   				error.insertAfter(element);
 			}
 		},
 		rules : {
-//              types : {
-// 					required: true,
-// 		            minlength: 1
-// 				},
-// 				nature : {
-// 					required: true,
-// 		            minlength: 1
-// 				},
-//                 email : {
-//                     required: true,
-//                     email: true
-//                 },
-//                 phoneNumber : {
-//                     required: false,
-//                     number: true
-//                 },
-//                 typesOther: {
-//                     required: {
-//                         depends: function(element) {
-//                             return $("#types-cb").is(":checked");
-//                         }
-//                     }
-//                 },
-//                 funding: {
-//                     notEqual: "select"
-//                 },
-//                 fundingOther: {
-//                     required: {
-//                         depends: function(element) {
-//                             return $("#funding").val() == "other";
-//                         }
-//                     }
-//                 },
-//                 policies: {
-//                     required: true
-//                 },
-//                 policyOther: {
-//                     required: {
-//                         depends: function(element) {
-//                             return $("#policies").val() == "other";
-//                         }
-//                     }
-//                 },
-// 				dataformat: {
-//                     required: true
-//                 },
-//                 dataformatOther: {
-//                     required: {
-//                         depends: function(element) {
-//                             return $("#dataformat-cb").is(":checked");
-//                         }
-//                     }
-//                 },
-//              documentated: {
-//                  required: true,
-//                  minlength: 1
-//              }
+			projectName : {
+				required: true,
+         		minlength: 3
+           	},
+           	responsibleName: {
+           		required: true,
+           		minlength: 3
+           	},
+           	email : {
+             	required: true,
+             	email: true
+           	},
+           	phoneNumber : {
+           		required: true,
+           		number: true
+           	},
 		}
 	});
 	
@@ -146,10 +99,13 @@ $(document).ready(function(){
 		onFinished : function(event, currentIndex) {
 			$("div.steps").hide();
 			$("div.actions").hide();
+			$("div[name='title']").hide();
 			$("#gfbioServicesStep").hide();
+			$("#handleInput").show();
+			sendInput();
 		},
 		onInit : function() {
-		    //General Information
+		    //01 General Information
 			$("#firstPrincInput").on("keyup focus", handlePrincipalButton);
 		    
 		    $("#types-cb").on("click", checkboxTypes);
@@ -165,7 +121,7 @@ $(document).ready(function(){
 		    $("#policyOther").hide();
 		    $("#policyLink").hide();
 		
-		    //Data Collection DCRT
+		    //02 Data Collection DCRT
 		    $("#alive").addClass("disabledDiv");
 		    $("#taxon").addClass("disabledDiv");
 		    $("#sequenced").addClass("disabledDiv");
@@ -176,36 +132,149 @@ $(document).ready(function(){
 		    $("input[value='true'][name='alive']").on("click", handleAlive);
 		    $("input[value='false'][name='alive']").on("click", handleAlive);
 		    
-		    //Data Collection
+		    //02 Data Collection
 		    $("#dataformat-cb").on("click", checkboxDataformat);
 		    $("#dataformatOther").hide();
 		    
 		    $("#volumeSlider").on("input change", showDataVolume);
 		    $("#datasetSlider").on("input change", showNumberOfDatasets);
 		    
-		    //Documentation and Metadata
+		    //03 Documentation and Metadata
 		    $("#metadata-other").on("click", handleMetadataOther);
 		    $("#metadataDesc").hide();
 		    
-		    //Ethics and Legal Compliance
-		    $("#sensitive").on("click", handleSensitive);
-		    $("#sensitiveOther").hide();
+		    //04 Ethics and Legal Compliance
+		    $("#legal-other").on("click", checkboxRequirement);
+		    $("#requirementOther").hide();
 		
-		    $("#licenses").on("click", handleLicenses);
+		    $("#license-other").on("click", handleLicenses);
 		    $("#licenseOther").hide();
+		    $("#licensceUrl").hide();
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
 		    
-		    //Preservation and Sharing
+		    //05 Preservation and Sharing
 		    $("#archives").on("change", handleArchives);
 		    $("#archiveOther").hide();
 		    
-		    //Handling of inputs at the end of the wizard
+		    //07 Handling inputs at the end of the wizard
 		    $("#handleInput").hide();
+		    //$("#downloadDMP").on("click", method for downloading pdf);
+		    
+		    $("#downloadDMP").click(function() {
+				var fileName = $("#name").val();
+				fileName = fileName.replace(/\s/g, "_");
+				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+			});
 		}
   	})
 });
+
+function getInputAsJson() {
+	
+	// 01 General Information
+	var projectName = $("#name").val();
+	var category = $("#category").val(); 
+	if (category = "Select") category = "";
+	var reproducible = $("input[name='nature']:checked").val();
+	
+	var projectTypes = [];
+	$("input[name='types']:checked").each(function() {
+      	projectTypes.push($(this).parent().text());
+    });
+	if ($.inArray("Other", projectTypes) > -1) {
+		projectTypes.splice($.inArray("Other", projectTypes), 1);
+		projectTypes.push($("#typesOther").val());
+	}
+	
+	var projectAbstract = $("#abstract").val();
+	
+	var investigators = [];
+	$("input[name='investigator']").each(function() {
+		investigators.push($(this).val());
+    });
+	
+	var responsibleName = $("#responsibleName").val();
+	var phoneNumber = $("#phone").val();
+	var email = $("#email").val();
+	
+	var funding = $("#funding").val();
+	var fundingLink = "";
+	if (funding === "other") {
+		funding = $("#fundingOther").val();
+		fundingLink = $("#fundingLink").val();
+	}
+	
+	var policies = $("#policies").val();
+	var policyLink = "";
+	if ($.inArray("Other", policies) > -1) {
+		policies.splice($.inArray("Other", policies), 1);
+		policies.push($("#policyOther").val());
+		policyLink = $("#policyLink").val();
+	}
+	
+	// 02 Data Collection
+	
+	var dmptInput = {
+			"projectName" : projectName,
+			"category" : category,
+			"reproducible" : reproducible,
+			"projectTypes": [],
+			"projectAbstract" : projectAbstract,
+			"investigators" : [],
+			"responsibleName" : responsibleName,
+			"phoneNumber" : phoneNumber,
+			"email" : email,
+			"funding" : {
+				"name" : funding
+			},
+			"policies" : []
+				
+	};
+	
+	console.log(projectTypes);
+	
+	if (projectTypes != null) {
+		dmptInput.projectTypes = projectTypes;
+	}
+
+	if (investigators != null) {
+		dmptInput.investigators = investigators;
+	}
+	
+	if (policies != null) {
+		policies.map(function(item) {        
+	  		dmptInput.policies.push({ 
+	    		"value" : item,
+	    	});
+		});
+	}
+	
+	console.log(dmptInput);
+	console.log("JSon");
+	
+	return JSON.stringify(dmptInput);
+	
+}
+
+function sendInput() {
+	
+	jsonInput = getInputAsJson();
+	console.log("Send: " + jsonInput);
+	
+	var response = '';
+    $.ajax({
+	   		"method": "POST",
+	   		"url": '<%=ajaxUrlWizard%>',
+	   		"data": {
+	   			json: jsonInput
+	   		},
+	   		success: function(text) {
+	          	console.log(text);
+	      	}
+    });
+}
 
 </script>
 

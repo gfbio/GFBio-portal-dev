@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import javax.portlet.PortletSession;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.util.PDFUtil;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -37,10 +40,23 @@ public class DownloadFile extends HttpServlet {
 		BufferedOutputStream output = null;
 		ByteArrayOutputStream byteStream = null;
 		PDDocument pdf = null;
-		DMPTInput input = new DMPTInput();
+		
+		//String jsonString = (String) request.getSession(true).getAttribute("dmptInput");
+		//_log.info(jsonString);
+		DMPTInput input = (DMPTInput) request.getSession(true).getAttribute("dmptInput");
+		
+//		try {
+//			Gson gson = new Gson();
+//			input = gson.fromJson(jsonString, DMPTInput.class);
+//		    _log.info(input.toString());
+//		} catch (JsonSyntaxException e) {
+//			_log.error("Error while parsing jsonString to POJO", e);
+//		}
+		
+		_log.info(input.toString());
 		
 		try {
-			pdf = PDFUtil.createPDF("test.pdf", input);
+			pdf = PDFUtil.createPDF(fName, input);
 			
 			byteStream = new ByteArrayOutputStream();
 			pdf.save(byteStream);

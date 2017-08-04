@@ -62,18 +62,18 @@ $(document).ready(function () {
     	
     	var response = '';
         $.ajax({
-		            "method": "POST",
-		            "url": '<%=ajaxUrlRadio%>',
-		            "data": {
-		            	physical: physicalval,
-		            	taxon: taxonval,
-		            	alive: aliveval,
-		            	sequenced: sequencedval
-		            },
-		            success: function(text) {
-	                    response = text;
-	                    $("#result").html(response);
-	                }
+            "method": "POST",
+            "url": '<%=ajaxUrlRadio%>',
+            "data": {
+            	physical: physicalval,
+            	taxon: taxonval,
+            	alive: aliveval,
+            	sequenced: sequencedval
+            },
+            success: function(text) {
+                response = text;
+                $("#result").html(response);
+            }
         });
     });
 });
@@ -102,20 +102,19 @@ function categoryChange(category) {
 	
 	var response = '';
     $.ajax({
-	            "method": "POST",
-	            "url": '<%=ajaxUrlCategory%>',
-	            "data": {
-	            	category: category,
-	            	physical: physicalval,
-	            	taxon: taxonval,
-	            	alive: aliveval,
-	            	sequenced: sequencedval
-	            },
-	            success: function(text) {
-                    response = text;
-                    $("#result").html(response);
-                }
-               
+       "method": "POST",
+       "url": '<%=ajaxUrlCategory%>',
+       "data": {
+       		category: category,
+	       	physical: physicalval,
+	       	taxon: taxonval,
+	       	alive: aliveval,
+	       	sequenced: sequencedval
+       },
+       success: function(text) {
+       	  response = text;
+          $("#result").html(response);
+       }
     });
 }
 
@@ -128,21 +127,21 @@ function getRadioInputs() {
 
 $(document).ready(function () {
     $("div#result").on('click', 'button[name=contactButton]', function () {
-    	openConfirmDialog("false", $(this));
+    	openConfirmDialog($(this));
     });
 });
 
 $(document).ready(function () {
     $("div#defaultResult").on('click', 'button[name=contactButton]', function () {
-    	openConfirmDialog("true", $(this));
+    	openConfirmDialog($(this));
     });
 });
 
-function openConfirmDialog(defaultContact, btnId) {
+function openConfirmDialog(btnId) {
 	
 	var btn = $(btnId);
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
-	//console.log("DataCenter: " + dataCenter);
+	console.log("DataCenter: " + dataCenter);
 	
 	var confirmDialog = $("#dialog-confirm").dialog({
 		autoOpen: false,
@@ -157,7 +156,7 @@ function openConfirmDialog(defaultContact, btnId) {
 	        		$('#dialogForm').hide();
         			$('#dialogLoader').show();
         			$('#dialog-confirm').dialog('option', 'buttons', {} )
-              		createJiraTicket(defaultContact, dataCenter);
+              		createJiraTicket(dataCenter);
         			$('#dialog-confirm').dialog('option', 'buttons', {
         		    	'Ok': function() {
         		        	$(this).dialog('close');
@@ -199,7 +198,21 @@ function clearForm() {
     $("#errorAnswer").hide();
 }
 
-function createJiraTicket(defaultContact, dc) {
+function getDataCenterList() {
+	
+	var list = []
+	var data = $("span[name='dataCenter']");
+	console.info("Data: " + data);
+	
+	$.each( data, function( index ) {
+		list.push($(this).attr("id"));
+		console.info("index: " + $(this).attr("id"));
+	})
+	
+	return list;
+}
+
+function createJiraTicket(dc) {
 	
 	var dataCenter = dc;
 	
@@ -212,13 +225,7 @@ function createJiraTicket(defaultContact, dc) {
 	}
 	
 	var dataCenterList = new Array;
-	var data = $("span[name='dataCenter']");
-	if(defaultContact === "true") {
-		$.each( data, function( index ) {
-			dataCenterList.push($(this).attr("id"));
-			//console.info("index" + $(this).attr("id"));
-		})
-	}
+	dataCenterList = getDataCenterList();
 	
     $.ajax({
 	        "method": "POST",
@@ -260,26 +267,63 @@ function sleep (time) {
 
 $(document).ready(
 	function() {
-		$("div#result").on('click', "button[name=submissionButton]",
-				function() {
-					//Submission logic
-				});
+		$("div#result").on('click', "button[name=submissionButton]", function(){
+			submissionRequest($(this));
+		});
 	});
+
+function submissionRequest(btnId) {
+	var btn = $(btnId);
+	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
+	
+	getRadioInputs();
+	
+	var dataCenterList = new Array;
+	dataCenterList = getDataCenterList();
+	
+	category = $("#category").val();
+	if(typeof category != "string") {
+		category = "None";
+	}
+	material = $("#material").val();
+	if(typeof material != "string") {
+		material = "None";
+	}
+	
+	$.ajax({
+        "method": "POST",
+        "url": '<%=ajaxUrlSubmission%>',
+        "data": {
+        	dataCenter : dataCenter,
+			dataCenterList : dataCenterList,
+        	category: category,
+        	material: material,
+        	physical: physicalval,
+        	taxon: taxonval,
+        	alive: aliveval,
+        	sequenced: sequencedval
+        },
+        success: function(text) {
+        	var link = text;
+        	window.open(link, '_self' // open in the same window.
+        			);
+        }
+       
+	});
+}
 
 $(document).ready(
 	function() {
-		$("div#result").on(
-				'click',
-				"button[name=detailsButton]",
-				function() {
-					var dataCenter = $(this).parent().parent().find(
-							"span[name='dataCenter']").attr("id");
-					var link = themeDisplay.getPortalURL()
-							+ "/about/data-centers#portfolio-"
-							+ dataCenter.toLowerCase();
-					window.open(link, '_blank' // open in a new window.
-					);
-				});
+		$("div#result").on('click', "button[name=detailsButton]",
+			function() {
+				var dataCenter = $(this).parent().parent().find(
+						"span[name='dataCenter']").attr("id");
+				var link = themeDisplay.getPortalURL()
+						+ "/about/data-centers#portfolio-"
+						+ dataCenter.toLowerCase();
+				window.open(link, '_blank' // open in a new window.
+						);
+			});
 	});
 
 $(document).ready(function() {

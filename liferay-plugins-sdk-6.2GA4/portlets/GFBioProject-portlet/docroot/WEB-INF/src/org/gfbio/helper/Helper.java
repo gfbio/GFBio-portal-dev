@@ -12,6 +12,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 public class Helper {
 
 	static String FILEPATH = ".."+File.separator+".."+File.separator+".."+File.separator+"server_specific_identification"+File.separator+"serverfile.txt";
@@ -19,6 +22,7 @@ public class Helper {
 	static int jiraTextareaLimit  = 15000;
 	static int jiraTextfieldLimit = 200;
 
+	private static Log _log = LogFactoryUtil.getLog(Helper.class);
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
@@ -120,7 +124,7 @@ public class Helper {
 	
 	//
 	public static JSONObject getJsonObjectFromJson(JSONObject requestJson, String key){
-		
+				
 		JSONObject responseJson = new JSONObject();
 		if (((requestJson.get(key).getClass()).toString()).equals("class org.json.simple.JSONObject"))
 			responseJson = (JSONObject) requestJson.get(key);
@@ -130,7 +134,6 @@ public class Helper {
 				try {responseJson = (JSONObject) parser.parse((String) requestJson.get(key));}
 				catch (ParseException e) {e.printStackTrace();}
 			}
-
 		return responseJson;
 	}
 	

@@ -57,7 +57,7 @@ function checkboxTypes(event) {
     'use strict';
     
     if ($(event.target).is(':checked')) {
-        $("#typesOther").show();
+        $("#typesOther").show("slow");
     } else {
         $("#typesOther").hide();
         $("#typesOther").val("");
@@ -68,12 +68,37 @@ function checkboxDataformat(event) {
     'use strict';
     
     if ($(event.target).is(':checked')) {
-        $("#dataformatOther").show();
+        $("#dataformatOther").show("slow");
     } else {
         $("#dataformatOther").hide();
         $("#dataformatOther").val("");
     }
 }
+
+function checkboxRequirement(event) {
+	'use strict';
+	
+	var other = $("#requirementOther");
+	if ($(event.target).is(':checked')) {
+		other.show("slow");
+	} else {
+		other.hide();
+		other.val("");
+	}
+}
+
+//function handleRequirement(event) {
+//	'use strict';
+//	
+//	var selection = $(event.target).val(),
+//		other = $("#requirementOther");
+//	if (selection === "other") {
+//		other.show("slow");
+//	} else {
+//		other.hide();
+//		other.val("");
+//	}
+//}
 
 function getPrincipal() {
     'use strict';
@@ -129,25 +154,11 @@ function handleMetadataOther(event) {
     }
 }
 
-function handleSensitive(event) {
-	'use strict';
-	
-	var selection = $(event.target).val(),
-		other = $("#sensitiveOther");
-	if (selection === "other") {
-		other.show("slow");
-	} else {
-		other.hide();
-		other.val("");
-	}
-}
-
 function handleLicenses(event) {
 	'use strict';
 	
-	var selection = $(event.target).val(),
-    other = $("#licenseOther");
-	if (selection === "other") {
+    var other = $("#licenseOther");
+    if ($(event.target).is(':checked')) {
 		other.show("slow");
 	} else {
 	    other.hide();
@@ -223,13 +234,13 @@ function handlePhysical(event) {
 	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
         $("#alive").removeClass("disabledDiv");
         $("#sequenced").addClass("disabledDiv");
-        resetInput("#sequenced");
+        resetInput("sequenced");
     } else {
         $("#sequenced").removeClass("disabledDiv");
         $("#alive").addClass("disabledDiv");
-        resetInput("#alive");
+        resetInput("alive");
         $("#taxon").addClass("disabledDiv");
-        resetInput("#taxon");
+        resetInput("taxon");
     }
 }
 
@@ -240,7 +251,7 @@ function handleAlive(event) {
         $("#taxon").removeClass("disabledDiv");
     } else {
     	$("#taxon").addClass("disabledDiv");
-    	resetInput("#taxon");
+    	resetInput("taxon");
     }
 }
 

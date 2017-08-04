@@ -6,55 +6,47 @@
 	</div>
     <div id="physical" class="row">
        	<h4>Do you want to submit physical objects along with your data?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
-				<input name="physical" type="radio" value="true" />
-				<label>Yes</label>
-			</div>
-			<div style="display: block;">
-				<input name="physical" type="radio" value="false" />
-				<label>No</label>
-			</div>
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
+				<label><input name="physical" type="radio" value="true" />Yes</label>
+     		</div>
+      		<div class="col-xs-6 col-sm-3 col-md-2">
+		        <label><input name="physical" type="radio" value="false" />No</label>
+          	</div>
 		</div>
     </div>
     <div id="alive" class="row">
        	<h4>Is your object dead or alive?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
-				<input name="alive" type="radio" value="true" /> 
-				<label>Alive</label>
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
+				<label><input name="alive" type="radio" value="true" />Alive</label>
 			</div>
-			<div style="display: block;">
-				<input name="alive" type="radio" value="false" /> 
-				<label>Dead</label>
+			<div class="col-xs-6 col-sm-3 col-md-2">
+				<label><input name="alive" type="radio" value="false" />Dead</label>
 			</div>
 		</div>
 		
     </div>
     <div id="taxon" class="row">
        	<h4>Is your object taxon-based?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
-				<input name="taxon" type="radio" value="true" /> 
-				<label>Yes</label>
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
+				<label><input name="taxon" type="radio" value="true" />Yes</label>
 			</div>
-			<div style="display: block;">
-				<input name="taxon" type="radio" value="false" /> 
-				<label>No</label>
+			<div class="col-xs-6 col-sm-3 col-md-2">
+				<label><input name="taxon" type="radio" value="false" />No</label>
 			</div>
 		</div>
 		
     </div>
     <div id="sequenced" class="row">
        	<h4>Do you have mainly sequence data?</h4> 
-       	<div class="col-md-12">
-			<div style="display: block;">
-				<input name="sequenced" type="radio" value="true" /> 
-				<label>Yes</label>
+       	<div>
+			<div class="col-xs-6 col-sm-3 col-md-2">
+				<label><input name="sequenced" type="radio" value="true" />Yes</label>
 			</div>
-			<div style="display: block;">
-				<input name="sequenced" type="radio" value="false" > 
-				<label>No</label>
+			<div class="col-xs-6 col-sm-3 col-md-2">
+				<label><input name="sequenced" type="radio" value="false" >No</label>
 			</div>
 		</div>
     </div>
@@ -67,36 +59,29 @@
         	<div id="projectTypes">
               	<div class="col-md-6 col-lg-4">
 	                <div>
-	                    <input name="dataformat" type="checkbox"/>
-	                    <label>Text (notes, surveys, etc.)</label>
+	                    <label><input name="dataformat" type="checkbox"/>Text (notes, surveys, etc.)</label>
 	                </div>
 	                <div>
-	                    <input name="dataformat" type="checkbox"/>
-	                    <label>Models, code</label>
+	                    <label><input name="dataformat" type="checkbox"/>Models, code</label>
 	                </div>
 	                <div>
-	                    <input name="dataformat" type="checkbox"/>
-	                    <label>GIS data</label>
+	                    <label><input name="dataformat" type="checkbox"/>GIS data</label>
 	                </div>
             	</div>
 	            <div class="col-md-6 col-lg-8">
 	                <div>
-	                    <input name="dataformat" type="checkbox"/>
-	                    <label>Numeric (spreadsheet, measurements, etc.)</label>
+	                    <label><input name="dataformat" type="checkbox"/>Numeric (spreadsheet, measurements, etc.)</label>
 	                </div>
 	                <div>	
-	                    <input name="dataformat" type="checkbox"/>
-	                    <label>Multimedia (images, sounds, video, etc.)</label>
+	                    <label><input name="dataformat" type="checkbox"/>Multimedia (images, sounds, video, etc.)</label>
 	                </div>
 	                <div>	
-	                    <input name="dataformat" type="checkbox"/>
-	                    <label>Moleculare Sequence Data </label>
+	                    <label><input name="dataformat" type="checkbox"/>Moleculare Sequence Data </label>
 	                </div>
 	            </div>
 	            <div class="col-md-12">
 	            	<div>
-	                    <input id="dataformat-cb" name="dataformat" type="checkbox"/>
-	                    <label>Other</label>
+	                    <label><input id="dataformat-cb" name="dataformat" type="checkbox"/>Other</label>
 	                </div>
 	            </div>
 	            <div class="col-md-12">
@@ -115,12 +100,10 @@
 	  	</h4>
 	    <div id="formatDocumentated" class="col-md-12">
 	        <div style="display: block;">
-				<input name="documentated" type="radio" value="true" /> 
-				<label>Openly documented</label>
+				<label><input name="documentated" type="radio" value="true" />Openly documented</label>
 			</div>
 			<div style="display: block;">
-				<input name="documentated" type="radio" value="false" > 
-				<label>Only legible with special software</label>
+				<label><input name="documentated" type="radio" value="false" >Only legible with special software</label>
 			</div>
 	    </div>
 	</div>
