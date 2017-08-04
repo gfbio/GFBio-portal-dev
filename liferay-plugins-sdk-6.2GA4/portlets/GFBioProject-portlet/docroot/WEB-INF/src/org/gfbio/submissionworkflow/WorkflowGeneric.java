@@ -419,22 +419,24 @@ public class WorkflowGeneric extends GenericPortlet {
         
         //recommendation
         if (projectJson.containsKey("dcrtrecommendation")){
-     	
-        	JSONArray dcrtInformationArray = new JSONArray();
         	String dcrtRecommendation = Helper.getStringFromJson(projectJson, "dcrtrecommendation");
-        	List<String> items = Arrays.asList(dcrtRecommendation.split(","));
-        	for(int i=0; i < items.size();i++){
-        		JSONObject dcrtInformationJson = new JSONObject();
-        		dcrtInformationJson.put("value", (items.get(i)).trim());
-            	dcrtInformationArray.add(dcrtInformationJson);
+        	if(!dcrtRecommendation.equals("null")){
+	        	JSONArray dcrtInformationArray = new JSONArray();
+	        	List<String> items = Arrays.asList(dcrtRecommendation.split(","));
+	        	for(int i=0; i < items.size();i++){
+	        		JSONObject dcrtInformationJson = new JSONObject();
+	        		dcrtInformationJson.put("value", (items.get(i)).trim());
+	            	dcrtInformationArray.add(dcrtInformationJson);
+	        	}
+	        	fields.put("customfield_10217", dcrtInformationArray);
         	}
-        	fields.put("customfield_10217", dcrtInformationArray);
         }
         
         
         //information / input
         if (projectJson.containsKey("dcrtinput")){
-        	fields.put("customfield_10500", Helper.getStringFromJson(projectJson, "dcrtinput"));
+        	if (Helper.getJsonObjectFromJson(projectJson, "dcrtinput").size()>0)
+        		fields.put("customfield_10500", Helper.getStringFromJson(projectJson, "dcrtinput"));
         }
                 
         
@@ -468,14 +470,16 @@ public class WorkflowGeneric extends GenericPortlet {
 				try {parseJson = (JSONArray) parser2.parse((String) researchObjectJson.get("authornames"));}
 				catch (ParseException e) {e.printStackTrace();}
 
-        		String inputString ="";
-        		for (int i =0; i< parseJson.size();i++){
-        			String author = ((String) parseJson.get(i)).trim();
-        			inputString = inputString.concat(author).concat(", ");
-        		}
-        		inputString = inputString.substring(0, inputString.length()-2);
-        		
-        		fields.put("customfield_10205", JSONObject.escape(inputString));
+				if (parseJson.size()>0){
+	        		String inputString ="";
+	        		for (int i =0; i< parseJson.size();i++){
+	        			String author = ((String) parseJson.get(i)).trim();
+	        			inputString = inputString.concat(author).concat(", ");
+	        		}
+	        		inputString = inputString.substring(0, inputString.length()-2);
+	        		
+	        		fields.put("customfield_10205", JSONObject.escape(inputString));
+				}
         	}
         }
         
@@ -493,95 +497,111 @@ public class WorkflowGeneric extends GenericPortlet {
         
        //metadata shema description
         if (researchObjectJson.containsKey("metadataid")){
-            
-            String metadataName = "";
-			JSONArray metadataValueArray = new JSONArray();
-			String metadataId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "metadataid"));
-            		
-            JSONObject commandJson = new JSONObject();
-            commandJson.put("tablename","gfbio_metadata");
-            JSONArray allMetadataArray = new JSONArray();
-            allMetadataArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
-
-       		int i =0;
-       		while (i <allMetadataArray.size()){
-       			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
-        		if ((metadataId.equals((String) metadataInformations.get("id")))){
-        			metadataName = (String)metadataInformations.get("label");
-       				i = allMetadataArray.size();
-        		}else{
-        			if ((metadataId.equals((String) metadataInformations.get("label")))){
-            			metadataName = (String)metadataInformations.get("label");
-           				i = allMetadataArray.size();
-        			}else{
-        				i = i+1;
-        			}
-        		}
+        	if (Helper.getLongFromJson(researchObjectJson, "metadataid")!=0){
+        	
+	        	String metadataId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "metadataid"));     	
+	            String metadataName = "";
+				JSONArray metadataValueArray = new JSONArray();
+				
+	            		
+	            JSONObject commandJson = new JSONObject();
+	            commandJson.put("tablename","gfbio_metadata");
+	            JSONArray allMetadataArray = new JSONArray();
+	            allMetadataArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
+	
+	       		int i =0;
+	       		while (i <allMetadataArray.size()){
+	       			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
+	        		if ((metadataId.equals((String) metadataInformations.get("id")))){
+	        			metadataName = (String)metadataInformations.get("label");
+	       				i = allMetadataArray.size();
+	        		}else{
+	        			if ((metadataId.equals((String) metadataInformations.get("label")))){
+	            			metadataName = (String)metadataInformations.get("label");
+	           				i = allMetadataArray.size();
+	        			}else{
+	        				i = i+1;
+	        			}
+	        		}
+	        	}
+	            metadata.put("value", JSONObject.escape(metadataName));
+	            metadataArray.add(metadata);
+	            fields.put("customfield_10229", metadataArray);	
         	}
-            metadata.put("value", JSONObject.escape(metadataName));
-            metadataArray.add(metadata);
-            fields.put("customfield_10229", metadataArray);	
         }
         
         
         //Embargo
         if (extendeddataJsonResearchObject.containsKey("embargo"))
-        	if (!(extendeddataJsonResearchObject.get("embargo").equals("")))
-      		fields.put("customfield_10200", JSONObject.escape((String) extendeddataJsonResearchObject.get("embargo")));
+        	if (!(Helper.getStringFromJson(extendeddataJsonResearchObject, "embargo").equals("")))
+        		fields.put("customfield_10200", JSONObject.escape(Helper.getStringFromJson(extendeddataJsonResearchObject, "embargo")));
         
         
         //Category/Keywords
-        if (researchObjectJson.containsKey("categoryids"))
+        if (researchObjectJson.containsKey("categoryids")){
         	if (!(researchObjectJson.get("categoryids").equals(""))){
         		JSONArray categoryArray = (JSONArray) researchObjectJson.get("categoryids");
-        		String categoryString = "";
-        		
         		if (categoryArray.size()>0){
-        			for (int i=0;i<categoryArray.size();i++)
-        				categoryString = categoryString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", (String) categoryArray.get(i)), "name")).concat(", ");
-        			categoryString = categoryString.substring(0, categoryString.length()-2);
+	        		String categoryString = "";
+	        		
+	        		if (categoryArray.size()>0){
+	        			for (int i=0;i<categoryArray.size();i++)
+	        				categoryString = categoryString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", (String) categoryArray.get(i)), "name")).concat(", ");
+	        			categoryString = categoryString.substring(0, categoryString.length()-2);
+	        		}
+	                fields.put("customfield_10313", JSONObject.escape(categoryString)); 	
         		}
-                fields.put("customfield_10313", JSONObject.escape(categoryString)); 	
-        		
-           	}
+        	}
+        }
         
         
         //legal requirements
-        if (extendeddataJsonResearchObject.containsKey("legalrequirements"))
+        System.out.println("legal requirements 01");
+         if (extendeddataJsonResearchObject.containsKey("legalrequirements")){
+        	 System.out.println("legal requirements 03");
         	if (!(extendeddataJsonResearchObject.get("legalrequirements").equals(""))){
-        		JSONArray lrArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
-        		for (int i = 0; i < lrArray.size();i++){
-        			JSONObject legalRequirements = new JSONObject();
-        			legalRequirements.put("value", (String) lrArray.get(i));
-        		  	legalRequirementsArray.add(legalRequirements);
+        		System.out.println("legal requirements 05");
+        		JSONArray legalRequirementArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
+        		if (legalRequirementArray.size()>0){
+        			System.out.println("legal requirements 07");
+	        		String legalRequirementString = "";
+	        		for (int i=0;i<legalRequirementArray.size();i++){
+	        			System.out.println("legal requirements 09."+i);
+        				legalRequirementString = legalRequirementString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementArray.get(i)), "name")).concat(", ");
+	        		}
+	        		legalRequirementString = legalRequirementString.substring(0, legalRequirementString.length()-2);
+	        		fields.put("customfield_10216", JSONObject.escape(legalRequirementString));                 	
         		}
-    			fields.put("customfield_10216", legalRequirementsArray);
         	}
+        }
+         
 			
         
         //license Question
         if (researchObjectJson.containsKey("licenseid")){
+        	if (Helper.getLongFromJson(researchObjectJson, "licenseid")!=0){
 
-        	String licenseName = "";
-        	JSONArray licenseArray = new JSONArray();
-         	String licenseId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "licenseid"));
-	                    		
-        	JSONObject commandJson = new JSONObject();
-        	commandJson.put("tablename","gfbio_license");
-        	JSONArray allLicenseArray = new JSONArray();
-        	allLicenseArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
-
-        	int i =0;
-        	while (i <allLicenseArray.size()){
-        		JSONObject licenseInformations =  (JSONObject) allLicenseArray.get(i);
-        		if ((licenseId.equals((String) licenseInformations.get("id")))){
-        			licenseName = (String)licenseInformations.get("label");
-        			i = allLicenseArray.size();
-        		}else
-        			i = i+1;
+	        	String licenseName = "";
+	        	JSONArray licenseArray = new JSONArray();
+	         	String licenseId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "licenseid"));
+		                    		
+	        	JSONObject commandJson = new JSONObject();
+	        	commandJson.put("tablename","gfbio_license");
+	        	JSONArray allLicenseArray = new JSONArray();
+	        	allLicenseArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
+	
+	        	int i =0;
+	        	while (i <allLicenseArray.size()){
+	        		JSONObject licenseInformations =  (JSONObject) allLicenseArray.get(i);
+	        		if ((licenseId.equals((String) licenseInformations.get("id")))){
+	        			licenseName = (String)licenseInformations.get("label");
+	        			i = allLicenseArray.size();
+	        		}else
+	        			i = i+1;
+	        	}
+	        	license.put("value", JSONObject.escape(licenseName));
+	        	fields.put("customfield_10202", license);
         	}
-        	license.put("value", JSONObject.escape(licenseName));
-        	fields.put("customfield_10202", license);
         }
         
         long researchObjectId =Helper.getLongFromJson(researchObjectJson, "researchobjectid");
