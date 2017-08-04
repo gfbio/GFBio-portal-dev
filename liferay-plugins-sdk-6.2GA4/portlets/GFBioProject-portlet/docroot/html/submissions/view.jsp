@@ -20,34 +20,37 @@
 
 <%}else { %>
 <%JSONArray ResearchObjects = new JSONArray();
-	try{
-ResearchObjects=ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(userID);
-}catch(Exception e) {
+try
+{ResearchObjects=ResearchObjectLocalServiceUtil.getResearchObjectInformationByUserId(userID);
+}catch(Exception e)
+	{
 System.out.println("Error");
-} %>
+	} %>
 
 
 <%if (ResearchObjects!=null && ResearchObjects.size()>0){ %>
-  <div "ID=datasets">
+  <div "ID=datasets" style='width:100%'>
   <h2>Your GfBio datasets</h2><br>
-  <span style='width:50% ; display:inline-block; font-weight:bold' class='field-description' >DataSet name</span>
+  <div style='width:100%'>
+  	<span style='width:60% ; display:inline-block; font-weight:bold' class='field-description' >DataSet name</span>
 	<span style='width:2%; display:inline-block'></span>
-	<span style='width:13% ; display:inline-block; font-weight:bold' class='field-description' >Status</span>
+	<span style='width:12% ; display:inline-block; font-weight:bold' class='field-description' >Status</span>
 	<span style='width:2%; display:inline-block'></span>
 	<span style='width:23% ; display:inline-block; font-weight:bold' class='field-description' ></span>
+  </div>
 <% for (int i = 0; i < ResearchObjects.size(); i++) {
 JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
-<div>
-  <span style='width:50% ; display:inline-block; font-weight:bold' class='field-description' ><%= responseJson.get("researchobjectname") %></span>
+<div style='width:100%'>
+  <span style='width:60% ; display:inline-block' class='field-description' ><%= responseJson.get("researchobjectname") %></span>
 	<span style='width:2%; display:inline-block'></span>
-	<span style='width:13% ; display:inline-block; font-weight:bold' class='field-description' ><%= responseJson.get("status") %></span>
+	<span style='width:11% ; display:inline-block' class='field-description' ><%= responseJson.get("status") %></span>
 	<span style='width:2%; display:inline-block'></span>
-	<span style='width:23% ; display:inline-block; font-weight:bold' class='field-description' ><button onclick="GetResearchObjectById(<%= responseJson.get("researchobjectid") %>)">Get details</button></span>
-</div>
-
+	<span style='width:23% ; display:inline-block' class='field-description' >	<span   style='width:100%' onclick="GetResearchObjectById(<%= responseJson.get("researchobjectid") %>)" class='btn btn-primary'><i class='fa fa-file-text-o'  aria-hidden='true'>&nbsp; &nbsp;  </i>Get details</span></span>
+</div><br>
+	<%} %>
   </div>
   		
-	<%} %>
+
 
 <%}} %>	
   		
@@ -70,10 +73,10 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="tab-1">DataSet</li>
-		<li class="tab-link" data-tab="tab-2">Project</li>
+		<li class="tab-link" data-tab="tab-2">Projects</li>
 		<li class="tab-link" data-tab="tab-3">Submissions</li>
 		<li class="tab-link" data-tab="tab-4">License</li>
-		 <li class="tab-link" data-tab="tab-5">Extended INformation</li>
+		 <li class="tab-link" data-tab="tab-5">Extended Information</li>
 	</ul>
 
 	<div id="tab-1" class="tab-content current">	</div>
@@ -139,8 +142,18 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 	function buildDatasetInformation(bundle)
 	{
 		var researchObjectInformation = bundle.researchobject;
+		/*  if(researchObjectInformation.)
+		var parentresearchObjectInformation = bundle.parentresearchobject;
+		*/
 		var license=bundle.license;
 		var metadata=bundle.metadata;
+		var projects=bundle.projects[0];
+		console.log(projects);
+		var primarydata=bundle.primarydatas[0];
+		var submissions=bundle.submissions[0];
+
+		var extdata = researchObjectInformation.extendeddata;
+			
 		//var ParentResearchObject= bundle.parentresearchobject;
 		
 		//var div = $("#tabs");
@@ -152,7 +165,7 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 	    var secoundcolum = "2%";
 	    var thirdcolum = "65%";
 	    
-	    var extdata = researchObjectInformation.extendeddata;
+	   
 	    console.log(extdata);
 	   // var div = $("#SubmissionInfo");
 	    var div = $("#tab-1");
@@ -205,8 +218,73 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 				
 			
 	    );
-	    
 	    var div = $("#tab-2");
+	    div.empty();
+	    div.append(
+	    	
+	    		//license
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.name+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Label</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.label+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Description</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.description+ "</span>"+
+				"</div >"+
+				
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Status</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.status+ "</span>"+
+				"</div >"
+			
+	    );
+	    var div = $("#tab-3");
+	    div.empty();
+	    div.append(
+	    	
+	    		//license
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.archive+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Status</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.status+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Is public</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.ispublic+ "</span>"+
+				"</div >"+
+				
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Last change</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.lastchanged+ "</span>"+
+				"</div >"+
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >JIRAkey</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.jirakey+ "</span>"+
+				"</div >"
+			
+			
+	    );
+	    
+	    
+	    
+	    
+	    var div = $("#tab-4");
 	    div.empty();
 	    div.append(
 	    	
