@@ -43,16 +43,12 @@ $( document ).ready(function() {
 		$("input[name=alive]").attr("checked", false);
 		$("input[name=material]").attr("checked", false);
 	})
-}); 
 
-$(document).ready(function () {
 	$("input[name=physical]").on("click", function (event) {
 		$("div#defaultResult").show();
 		$("input[name=physical]").off(event);
 	})
-});
 
-$(document).ready(function () {
 	$("input[type='radio']").click(function () {
     
    	    $("#category").val("default");
@@ -76,25 +72,58 @@ $(document).ready(function () {
             }
         });
     });
-});
- 
-$(document).ready(function () {
-    $("#category").on('change', function () {
-    	   
-    	category = $("#category").val();
-    	
-    	categoryChange(category);
-    });
-});
 
-$(document).ready(function () {
-    $("#material").on('change', function () {
-    	   
-    	category = $("#material").val();
-    	
+    $("#category").on('change', function () {
+    	category = $("#category").val();
     	categoryChange(category);
     });
-});
+	
+    $("#material").on('change', function () {
+    	category = $("#material").val();
+    	categoryChange(category);
+    });
+    
+    $("div#result").on('click', 'button[name=contactButton]', function () {
+    	openConfirmDialog($(this));
+    });
+    
+    $("div#defaultResult").on('click', 'button[name=contactButton]', function () {
+    	openConfirmDialog($(this));
+    });
+    
+    $("div#result").on('click', "button[name=submissionButton]", function(){
+		submissionRequest($(this));
+	});
+    
+    $("div#result").on('click', "button[name=detailsButton]", function() {
+		var dataCenter = $(this).parent().parent().find(
+				"span[name='dataCenter']").attr("id");
+		var link = themeDisplay.getPortalURL()
+				+ "/about/data-centers#portfolio-"
+				+ dataCenter.toLowerCase();
+		window.open(link, '_blank'); //open in new window
+	});
+    
+    var form = $("#dialogForm");
+	form.validate({
+		errorPlacement : function() {
+			return false; // suppresses error message text
+		},
+		rules : {
+			contactName : {
+				required : true,
+				minlength : 3
+			},
+			contactEmail : {
+				required : true,
+				email : true
+			},
+			contactMessage : {
+				required : true
+			}
+		}
+	});
+}); 
 
 function categoryChange(category) {
 	
@@ -124,18 +153,6 @@ function getRadioInputs() {
 	aliveval = $("input[name='alive']:checked").val();
 	sequencedval = $("input[name='sequenced']:checked").val();
 }
-
-$(document).ready(function () {
-    $("div#result").on('click', 'button[name=contactButton]', function () {
-    	openConfirmDialog($(this));
-    });
-});
-
-$(document).ready(function () {
-    $("div#defaultResult").on('click', 'button[name=contactButton]', function () {
-    	openConfirmDialog($(this));
-    });
-});
 
 function openConfirmDialog(btnId) {
 	
@@ -265,13 +282,6 @@ function sleep (time) {
   	});
 }
 
-$(document).ready(
-	function() {
-		$("div#result").on('click', "button[name=submissionButton]", function(){
-			submissionRequest($(this));
-		});
-	});
-
 function submissionRequest(btnId) {
 	var btn = $(btnId);
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
@@ -311,42 +321,6 @@ function submissionRequest(btnId) {
        
 	});
 }
-
-$(document).ready(
-	function() {
-		$("div#result").on('click', "button[name=detailsButton]",
-			function() {
-				var dataCenter = $(this).parent().parent().find(
-						"span[name='dataCenter']").attr("id");
-				var link = themeDisplay.getPortalURL()
-						+ "/about/data-centers#portfolio-"
-						+ dataCenter.toLowerCase();
-				window.open(link, '_blank' // open in a new window.
-						);
-			});
-	});
-
-$(document).ready(function() {
-	var form = $("#dialogForm");
-	form.validate({
-		errorPlacement : function() {
-			return false; // suppresses error message text
-		},
-		rules : {
-			contactName : {
-				required : true,
-				minlength : 3
-			},
-			contactEmail : {
-				required : true,
-				email : true
-			},
-			contactMessage : {
-				required : true
-			}
-		}
-	});
-});
 </script>
 
 <div id="dialog-confirm" style="display: none;">
