@@ -69,7 +69,7 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 
 <Div ID="SubmissionInfo"></Div>
 
-<div id="tabs" class="container">
+<div id="tabs" class="container" style='width:100%; display:none' >
 
 	<ul class="tabs">
 		<li class="tab-link current" data-tab="tab-1">DataSet</li>
@@ -141,16 +141,17 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 
 	function buildDatasetInformation(bundle)
 	{
-		var researchObjectInformation = bundle.researchobject;
+		//empty Divs
+		
+	    var researchObjectInformation = bundle.researchobject;
 		/*  if(researchObjectInformation.)
 		var parentresearchObjectInformation = bundle.parentresearchobject;
 		*/
-		var license=bundle.license;
-		var metadata=bundle.metadata;
-		var projects=bundle.projects[0];
-		console.log(projects);
-		var primarydata=bundle.primarydatas[0];
-		var submissions=bundle.submissions[0];
+		
+		//var metadata=bundle.metadata;
+		
+		//var primarydata=bundle.primarydatas[0];
+		//var submissions=bundle.submissions[0];
 
 		var extdata = researchObjectInformation.extendeddata;
 			
@@ -158,15 +159,14 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 		
 		//var div = $("#tabs");
 		//[div].visible = true;
-		//var elem = document.getElementById('tabs');
-		//elem.style.visibility = 'visible';
+		var elem = document.getElementById('tabs');
+		elem.style.display = 'block';
 		console.log(researchObjectInformation);
 		var firstcolum = "30%";
 	    var secoundcolum = "2%";
 	    var thirdcolum = "65%";
 	    
 	   
-	    console.log(extdata);
 	   // var div = $("#SubmissionInfo");
 	    var div = $("#tab-1");
 	    div.empty();
@@ -177,115 +177,193 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Title </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.name+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Description </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.description+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Label </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.label+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Version </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.researchobjectversion+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Data Collection Time </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+extdata.datacollectiontime+ "</span>"+
-				"</div >"+
-				
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Embargo Time </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+extdata.embargo+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Last Modified Date</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+researchObjectInformation.lastmodifieddate+ "</span>"+
-				"</div >"+
-				// Extended
-				"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Publications </span>"+
-				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+extdata.publications+ "</span>"+
-				"</div >"
-				
+				"</div >");
+	    // Authors
+	     /* if (researchObjectInformation.authorname!=null )
+	    	{
+	    	 var authors="";
+	    	 for ( var key in researchobject.authorname ) 
+	    	 {	
+	    		 authors=authors+researchobject.authorname[key]+" and ";
+	    	 }
+	    	console.log(authors);
+	    	 
+	    	 div.append(
+						
+						"<div class='control-group'>"+
+						"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Authors </span>"+
+						"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+						"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+authors+ "</span>"+
+	    	 			"</div >");
+		    	
+		    } 
+	     else
+	    {
+		    	console.log("NO Authors available");
+				div.append(
+						
+						"<div class='control-group'>"+
+						"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Authors </span>"+
+						"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+						"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >N/A</span>"+
+						"</div >");
+	    } */
+	    
 			
-	    );
+	    
 	    var div = $("#tab-2");
 	    div.empty();
-	    div.append(
-	    	
-	    		//license
-				"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
-				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.name+ "</span>"+
-				"</div >"+
-				"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Label</span>"+
-				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.label+ "</span>"+
-				"</div >"+
-				"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Description</span>"+
-				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.description+ "</span>"+
-				"</div >"+
-				
-				"<div class='control-group'>"+
-				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Status</span>"+
-				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects.status+ "</span>"+
-				"</div >"
-			
-	    );
+	    
+	    if ("projects" in bundle)
+	    {
+	    	var projects=bundle.projects;
+	    	console.log("This is project");
+			console.log(projects);
+			div.append(
+			   
+					"<div class='control-group'>"+
+					"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
+					"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+					"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects[0].name+ "</span>"+
+					"</div >");
+		    div.append(
+					"<div class='control-group'>"+
+					"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Label</span>"+
+					"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+					"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects[0].label+ "</span>"+
+					"</div >");
+		    div.append(
+					"<div class='control-group'>"+
+					"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Description</span>"+
+					"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+					"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects[0].description+ "</span>"+
+					"</div >");
+		    div.append(
+					"<div class='control-group'>"+
+					"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Status</span>"+
+					"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+					"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+projects[0].status+ "</span>"+
+					"</div >");
+	    }
+		
+	    else
+	    {
+	    	console.log("NO projects available");
+
+	    	 div.append(
+	    		    	
+	 				"<div class='control-group'>"+
+	 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >projects </span>"+
+	 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+	 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >N/A</span>"+
+	 				"</div >");
+	    
+	    }
 	    var div = $("#tab-3");
 	    div.empty();
+	    if ("submissions" in bundle)
+	    {
+	    var submissions=bundle.submissions;
 	    div.append(
-	    	
-	    		//license
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.archive+ "</span>"+
-				"</div >"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions[0].archive+ "</span>"+
+				"</div >");
+		div.append(
+	    		"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Submission id </span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions[0].brokersubmissionid+ "</span>"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Status</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.status+ "</span>"+
-				"</div >"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions[0].status+ "</span>"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Is public</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.ispublic+ "</span>"+
-				"</div >"+
-				
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions[0].ispublic+ "</span>"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Last change</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.lastchanged+ "</span>"+
-				"</div >"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions[0].lastchanged+ "</span>"+
+				"</div >");
+	    div.append(
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Public after</span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions[0].publicafter+ "</span>"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >JIRAkey</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
-				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions.jirakey+ "</span>"+
-				"</div >"
-			
-			
-	    );
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+submissions[0].jirakey+ "</span>"+
+				"</div >" );
+	    }
 	    
+	    else
+	    {
+	    	console.log("No submissions available");
+
+	    	 div.append(
+	    		    	
+	 				"<div class='control-group'>"+
+	 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >submissions </span>"+
+	 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+	 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >N/A</span>"+
+	 				"</div >");
 	    
-	    
+	    }
 	    
 	    var div = $("#tab-4");
 	    div.empty();
+	    if ("license" in bundle)
+	    {
+	    	var license=bundle.license;
+
 	    div.append(
 	    	
 	    		//license
@@ -293,34 +371,95 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.name+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Label</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.label+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Version</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.version+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Discription</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.description+ "</span>"+
-				"</div >"+
+				"</div >");
+	    div.append(
 				"<div class='control-group'>"+
 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Weblink</span>"+
 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+license.extendeddata+ "</span>"+
-				"</div >"
-			
-			
-	    );
+				"</div >");
+	    }
+	    else
+	    	{
+	    	console.log("NO License available");
+
+	    	 div.append(
+	    		    	
+	 				"<div class='control-group'>"+
+	 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >License </span>"+
+	 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+	 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >N/A</span>"+
+	 				"</div >");
+	    	}
 	    
+	    var div = $("#tab-5");
+	    div.empty();
+	    div.append(
+				// Extended
+				"<div class='control-group'>"+
+				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Publications </span>"+
+				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+extdata.publications+ "</span>"+
+				"</div >");
+	 // primarydatas
+	    if ("primarydatas" in bundle)
+	    {
+	    	var primarydatas=bundle.primarydatas;
+	    	div.append(
+					
+					"<div class='control-group'>"+
+					"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Primary data </span>"+
+					"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+					"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description'</span>"+
+					"</div >");
+	    	 for ( var key in primarydatas ) 
+	    	 {	
+	    		 div.append(
+	    					"<div class='control-group'>"+
+	    					"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Name </span>"+
+	    					"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+	    					"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+primarydatas[key].name+ "</span>"+
+	    					"</div >");
+	    		 div.append(
+	    					"<div class='control-group'>"+
+	    					"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Url </span>"+
+	    					"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+	    					"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >"+primarydatas[key].path+ "</span>"+
+	    					"</div >");
+	    	 }
+	    }
+	    else
+	    {
+	   	    	 div.append(
+	    		    	
+	 				"<div class='control-group'>"+
+	 				"<span style='width:"+firstcolum+" ; display:inline-block; font-weight:bold' class='field-description' >Primary data </span>"+
+	 				"<span style='width:"+secoundcolum+"; display:inline-block'></span>"+
+	 				"<span style='width:"+thirdcolum+ "; display:inline-block' class='field-description' >N/A</span>"+
+	 				"</div >");
 	    
+	    }
 	    
+	
 
 	}
 	
