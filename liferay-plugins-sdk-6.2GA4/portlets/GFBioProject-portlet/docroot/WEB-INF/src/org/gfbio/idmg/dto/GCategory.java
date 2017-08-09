@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 
 public class GCategory implements Comparable<GCategory>, Serializable {
 
+	private static final long serialVersionUID = 9119252194717360069L;
+
 	long id;
 	String name;
 	String label;

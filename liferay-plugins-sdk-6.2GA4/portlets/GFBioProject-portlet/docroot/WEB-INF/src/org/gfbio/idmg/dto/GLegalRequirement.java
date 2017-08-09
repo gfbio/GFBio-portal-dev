@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 
 public class GLegalRequirement implements Comparable<GLegalRequirement>, Serializable {
 
+	private static final long serialVersionUID = 8408718539947134085L;
+
 	long id;
 	String name;
 	String label;

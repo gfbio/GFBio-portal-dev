@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 
 public class GFunding implements Comparable<GFunding>, Serializable {
 
+	private static final long serialVersionUID = 6983072511590980421L;
+
 	long id;
 	String name;
 	String label;

@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 
 public class GMetadata implements Comparable<GMetadata>, Serializable {
 
+	private static final long serialVersionUID = 8424946293409674241L;
+	
 	long id;
 	String name;
 	String label;
@@ -85,8 +87,11 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 
 	@Override
 	public int compareTo(GMetadata o) {
-		int i = this.label.compareTo(o.getLabel());
-		if (this.label.equalsIgnoreCase("other")) {
+		int i = 0;
+		if(o != null && this.label != null) {
+			i = this.label.compareTo(o.getLabel());
+		}
+		if (this.label != null && this.label.equalsIgnoreCase("other")) {
 			i = 1;
 		}
 		return i;

@@ -6,6 +6,8 @@ import org.json.simple.JSONObject;
 
 public class GLicense implements Comparable<GLicense>, Serializable {
 	
+	private static final long serialVersionUID = 3269683332315255768L;
+
 	long id;
 	String name;
 	String label;
