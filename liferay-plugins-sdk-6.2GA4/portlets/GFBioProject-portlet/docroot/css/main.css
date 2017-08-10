@@ -1,5 +1,7 @@
 
-	#usersTable td{width:150px;font-size: 12px;	font-weight: bold;}
+/* 	@import url(submission_dashboard/sub_dash.css)
+ */
+ 	#usersTable td{width:150px;font-size: 12px;	font-weight: bold;}
 	#tabTableMenu{width:5500px;}
 	#tabContentMenu{width:5500px;}
 		
