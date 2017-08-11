@@ -25,15 +25,24 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 	       	
 	       	<div class="col-md-12">
 				<c:forEach var="legal" items="${requirements}">
-					<div>
-						<label><input id="legal-${legal.label}" name="${legal.label}" type="checkbox" /><c:out value="${legal.name}" /></label>
+					<div class="col-md-6">
+						<label class="mod-cb">
+							<input id="legal-${legal.label}" name="requirements" type="checkbox" />
+							<span><c:out value="${legal.name}" /></span>
+						</label>
 					</div>
 				</c:forEach>
-				<div>
-					<label><input id="legal-other" type="checkbox" />Other</label>
+				<div class="col-md-6">
+					<label class="mod-cb">
+						<input id="legal-other" name="requirements" type="checkbox" />
+						<span>Other</span>
+					</label>
 				</div>
-				<div>
-					<label><input id="legal-none" type="checkbox" />Not applicable</label>
+				<div class="col-md-6">
+					<label class="mod-cb">
+						<input id="legal-none" name="requirements" type="checkbox" />
+						<span>Not applicable</span>
+					</label>
 				</div>
 			</div>
 			<div class="col-md-12">
@@ -61,12 +70,18 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 	       	</select>-->
 	       	
 	       	<c:forEach var="license" items="${licenses}">
-				<div>
-					<label><input id="license-${license.label}" name="license" type="radio" /><c:out value="${license.name}" /></label>
+				<div class="col-md-6">
+					<label class="mod-cb">
+						<input id="license-${license.label}" name="license" type="radio" value="${license.name}" />
+						<span><c:out value="${license.name}" /></span>
+					</label>
 				</div>
 			</c:forEach>
-			<div>
-				<label><input id="license-not" name="license" type="radio" />Not applicable</label>
+			<div class="col-md-6">
+				<label class="mod-cb">
+					<input id="license-not" name="license" type="radio" />
+					<span>Not applicable</span>
+				</label>
 			</div>
 	       	
 	       	<div>
@@ -82,13 +97,17 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 	<div class="row">
         <h4>Do you need access restriction for your data?</h4>
         <div class="col-md-12">
-	        <div style="display: block;">
-	            <label><input class="radio_input" name="restriction"
-	                type="radio" value="yes" />Yes</label>
+	        <div class="col-xs-6 col-md-3">
+	            <label class="mod-cb">
+		            <input class="radio_input" name="restriction" type="radio" value="true" />
+		            <span>Yes</span>
+	            </label>
 	        </div>
-	        <div style="display: block;">
-	      		<label><input class="radio_input" name="restriction"
-	                type="radio" value="no" />No</label>
+	        <div class="col-xs-6 col-md-3">
+	      		<label class="mod-cb">
+	      			<input class="radio_input" name="restriction" type="radio" value="false" />
+	                <span>No</span>
+	            </label>
 	        </div>
         </div>
         <div id="accessYes" class="col-md-12">

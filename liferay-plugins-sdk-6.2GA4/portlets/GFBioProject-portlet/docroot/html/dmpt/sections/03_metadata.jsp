@@ -13,10 +13,13 @@ If you don't know which metadata standard to choose, please select 'other' and d
 			</a>
 		</h4>
 		<div id="metadata">
-			<div class="col-md-12">
+			<div class="col-md-8 col-lg-6" >
 				<c:forEach var="meta" items="${metadata}">
 					<div>
-						<label><input id="metadata-${meta.label}" name="${meta.label}" type="checkbox" /><c:out value="${meta.name}" /></label>
+						<label class="mod-cb">
+							<input id="metadata-${meta.label}" name="metadata" type="checkbox" />
+							<span><c:out value="${meta.name}" /></span>
+						</label>
 					</div>
 				</c:forEach>
 			</div>

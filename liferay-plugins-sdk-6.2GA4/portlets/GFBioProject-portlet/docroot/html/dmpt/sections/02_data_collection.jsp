@@ -6,47 +6,71 @@
 	</div>
     <div id="physical" class="row">
        	<h4>Do you want to submit physical objects along with your data?</h4> 
-       	<div>
-			<div class="col-xs-6 col-sm-3 col-md-2">
-				<label><input name="physical" type="radio" value="true" />Yes</label>
+       	<div class="col-md-12">
+			<div class="col-xs-6 col-md-3">
+				<label class="mod-cb">
+					<input name="physical" type="radio" value="true" />
+					<span>Yes</span>
+				</label>
      		</div>
-      		<div class="col-xs-6 col-sm-3 col-md-2">
-		        <label><input name="physical" type="radio" value="false" />No</label>
+      		<div class="col-xs-6 col-md-3">
+		        <label class="mod-cb">
+			        <input name="physical" type="radio" value="false" />
+			        <span>No</span>
+		        </label>
           	</div>
 		</div>
     </div>
     <div id="alive" class="row">
        	<h4>Is your object dead or alive?</h4> 
-       	<div>
-			<div class="col-xs-6 col-sm-3 col-md-2">
-				<label><input name="alive" type="radio" value="true" />Alive</label>
+       	<div class="col-md-12">
+			<div class="col-xs-6 col-md-3">
+				<label class="mod-cb">
+					<input name="alive" type="radio" value="true" />
+					<span>Alive</span>
+				</label>
 			</div>
-			<div class="col-xs-6 col-sm-3 col-md-2">
-				<label><input name="alive" type="radio" value="false" />Dead</label>
+			<div class="col-xs-6 col-md-3">
+				<label class="mod-cb">
+					<input name="alive" type="radio" value="false" />
+					<span>Dead</span>
+				</label>
 			</div>
 		</div>
 		
     </div>
     <div id="taxon" class="row">
        	<h4>Is your object taxon-based?</h4> 
-       	<div>
-			<div class="col-xs-6 col-sm-3 col-md-2">
-				<label><input name="taxon" type="radio" value="true" />Yes</label>
+       	<div class="col-md-12">
+			<div class="col-xs-6 col-md-3">
+				<label class="mod-cb">
+					<input name="taxon" type="radio" value="true" />
+					<span>Yes</span>
+				</label>
 			</div>
-			<div class="col-xs-6 col-sm-3 col-md-2">
-				<label><input name="taxon" type="radio" value="false" />No</label>
+			<div class="col-xs-6 col-md-3">
+				<label class="mod-cb">
+					<input name="taxon" type="radio" value="false" />
+					<span>No</span>
+				</label>
 			</div>
 		</div>
 		
     </div>
     <div id="sequenced" class="row">
        	<h4>Do you have mainly sequence data?</h4> 
-       	<div>
-			<div class="col-xs-6 col-sm-3 col-md-2">
-				<label><input name="sequenced" type="radio" value="true" />Yes</label>
+       	<div class="col-md-12">
+			<div class="col-xs-6 col-md-3">
+				<label class="mod-cb">
+					<input name="sequenced" type="radio" value="true" />
+					<span>Yes</span>
+				</label>
 			</div>
-			<div class="col-xs-6 col-sm-3 col-md-2">
-				<label><input name="sequenced" type="radio" value="false" >No</label>
+			<div class="col-xs-6 col-md-3">
+				<label class="mod-cb">
+					<input name="sequenced" type="radio" value="false" >
+					<span>No</span>
+				</label>
 			</div>
 		</div>
     </div>
@@ -56,32 +80,53 @@
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
       	</h4>
-        	<div id="projectTypes">
-              	<div class="col-md-6 col-lg-4">
+        	<div class="col-md-12">
+              	<div class="col-md-6">
 	                <div>
-	                    <label><input name="dataformat" type="checkbox"/>Text (notes, surveys, etc.)</label>
+	                    <label class="mod-cb">
+	                    	<input name="dataformat" type="checkbox"/>
+	                    	<span>Text (notes, surveys, etc.)</span>
+	                    </label>
 	                </div>
 	                <div>
-	                    <label><input name="dataformat" type="checkbox"/>Models, code</label>
+	                    <label class="mod-cb">
+	                    	<input name="dataformat" type="checkbox"/>
+	                    	<span>Models, code</span>
+                    	</label>
 	                </div>
 	                <div>
-	                    <label><input name="dataformat" type="checkbox"/>GIS data</label>
+	                    <label class="mod-cb">
+	                    	<input name="dataformat" type="checkbox"/>
+	                    	<span>GIS data</span>
+                    	</label>
 	                </div>
             	</div>
-	            <div class="col-md-6 col-lg-8">
+	            <div class="col-md-6">
 	                <div>
-	                    <label><input name="dataformat" type="checkbox"/>Numeric (spreadsheet, measurements, etc.)</label>
+	                    <label class="mod-cb">
+	                    	<input name="dataformat" type="checkbox"/>
+	                    	<span>Numeric (spreadsheet, measurements, etc.)</span>
+                    	</label>
 	                </div>
 	                <div>	
-	                    <label><input name="dataformat" type="checkbox"/>Multimedia (images, sounds, video, etc.)</label>
+	                    <label class="mod-cb">
+	                    	<input name="dataformat" type="checkbox"/>
+	                    	<span>Multimedia (images, sounds, video, etc.)</span>
+                    	</label>
 	                </div>
 	                <div>	
-	                    <label><input name="dataformat" type="checkbox"/>Moleculare Sequence Data </label>
+	                    <label class="mod-cb">
+	                    	<input name="dataformat" type="checkbox"/>
+	                    	<span>Moleculare Sequence Data</span>
+                   		</label>
 	                </div>
 	            </div>
-	            <div class="col-md-12">
+	            <div class="col-md-6">
 	            	<div>
-	                    <label><input id="dataformat-cb" name="dataformat" type="checkbox"/>Other</label>
+	                    <label class="mod-cb">
+	                    	<input id="dataformat-cb" name="dataformat" type="checkbox"/>
+	                    	<span>Other</span>
+	                    </label>
 	                </div>
 	            </div>
 	            <div class="col-md-12">
@@ -99,11 +144,17 @@
 			</a>
 	  	</h4>
 	    <div id="formatDocumentated" class="col-md-12">
-	        <div style="display: block;">
-				<label><input name="documentated" type="radio" value="true" />Openly documented</label>
+	        <div class="col-md-6">
+				<label class="mod-cb">
+					<input name="documentated" type="radio" value="true" />
+					<span>Openly documented</span>
+				</label>
 			</div>
-			<div style="display: block;">
-				<label><input name="documentated" type="radio" value="false" >Only legible with special software</label>
+			<div class="col-md-6">
+				<label class="mod-cb">
+					<input name="documentated" type="radio" value="false" >
+					<span>Only legible with special software</span>
+				</label>
 			</div>
 	    </div>
 	</div>

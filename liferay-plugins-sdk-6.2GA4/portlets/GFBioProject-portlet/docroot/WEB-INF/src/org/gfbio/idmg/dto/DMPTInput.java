@@ -28,11 +28,12 @@ public class DMPTInput implements Serializable {
 	private List<String> dataformats;
 	private boolean openlyDocumented;
 	private String dataVolume;
-	private String datasets;
+	private String dataSets;
 	private String methodologies;
 	
 	// Metadata
 	private List<GMetadata> metadata;
+	private String metadataDescription;
 	
 	// Ethics
 	
@@ -56,10 +57,10 @@ public class DMPTInput implements Serializable {
 	public DMPTInput(String projectName, String category, String reproducible, List<String> projectTypes,
 			String projectAbstract, List<String> investigators, String responsibleName, String phoneNumber,
 			String email, GFunding funding, List<GPolicy> policies, Boolean physical, Boolean alive, Boolean taxonBased,
-			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String datasets,
-			String methodologies, List<GMetadata> metadata, GLegalRequirement requirement, GLicense license,
-			boolean accessRestriction, String accessDuration, String accessReason, List<String> dataArchives,
-			String pid, boolean estimatingHelp, List<String> gfbioServices) {
+			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String dataSets,
+			String methodologies, List<GMetadata> metadata, String metadataDescription, GLegalRequirement requirement,
+			GLicense license, boolean accessRestriction, String accessDuration, String accessReason,
+			List<String> dataArchives, String pid, boolean estimatingHelp, List<String> gfbioServices) {
 		super();
 		this.projectName = projectName;
 		this.category = category;
@@ -79,9 +80,10 @@ public class DMPTInput implements Serializable {
 		this.dataformats = dataformats;
 		this.openlyDocumented = openlyDocumented;
 		this.dataVolume = dataVolume;
-		this.datasets = datasets;
+		this.dataSets = dataSets;
 		this.methodologies = methodologies;
 		this.metadata = metadata;
+		this.metadataDescription = metadataDescription;
 		this.requirement = requirement;
 		this.license = license;
 		this.accessRestriction = accessRestriction;
@@ -229,12 +231,12 @@ public class DMPTInput implements Serializable {
 		this.dataVolume = dataVolume;
 	}
 
-	public String getDatasets() {
-		return datasets;
+	public String getDataSets() {
+		return dataSets;
 	}
 
-	public void setDatasets(String datasets) {
-		this.datasets = datasets;
+	public void setDataSets(String datasets) {
+		this.dataSets = datasets;
 	}
 
 	public String getMethodologies() {
@@ -333,6 +335,14 @@ public class DMPTInput implements Serializable {
 		this.requirement = requirement;
 	}
 
+	public String getMetadataDescription() {
+		return metadataDescription;
+	}
+
+	public void setMetadataDescription(String metadataDescription) {
+		this.metadataDescription = metadataDescription;
+	}
+
 	@Override
 	public String toString() {
 		return "DMPTInput [projectName=" + projectName + ", category=" + category + ", reproducible=" + reproducible
@@ -340,11 +350,11 @@ public class DMPTInput implements Serializable {
 				+ investigators + ", responsibleName=" + responsibleName + ", phoneNumber=" + phoneNumber + ", email="
 				+ email + ", funding=" + funding + ", policies=" + policies + ", physical=" + physical + ", alive="
 				+ alive + ", taxonBased=" + taxonBased + ", sequenced=" + sequenced + ", dataformats=" + dataformats
-				+ ", openlyDocumented=" + openlyDocumented + ", dataVolume=" + dataVolume + ", datasets=" + datasets
-				+ ", methodologies=" + methodologies + ", metadata=" + metadata + ", requirement=" + requirement
-				+ ", license=" + license + ", accessRestriction=" + accessRestriction + ", accessDuration="
-				+ accessDuration + ", accessReason=" + accessReason + ", dataArchives=" + dataArchives + ", pid=" + pid
-				+ ", estimatingHelp=" + estimatingHelp + ", gfbioServices=" + gfbioServices + "]";
+				+ ", openlyDocumented=" + openlyDocumented + ", dataVolume=" + dataVolume + ", dataSets=" + dataSets
+				+ ", methodologies=" + methodologies + ", metadata=" + metadata + ", metadataDescription="
+				+ metadataDescription + ", requirement=" + requirement + ", license=" + license + ", accessRestriction="
+				+ accessRestriction + ", accessDuration=" + accessDuration + ", accessReason=" + accessReason
+				+ ", dataArchives=" + dataArchives + ", pid=" + pid + ", estimatingHelp=" + estimatingHelp
+				+ ", gfbioServices=" + gfbioServices + "]";
 	}
-
 }

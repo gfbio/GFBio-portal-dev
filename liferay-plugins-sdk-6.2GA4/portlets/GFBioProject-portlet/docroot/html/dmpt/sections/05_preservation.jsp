@@ -30,31 +30,41 @@
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
         </h4>
-        <div id="persistentIdentifier">
-	        <div style="display: block;">
-	            <label><input class="radio_input" name="pid"
-	                type="radio" value="yes" />Yes (recommended)</label>
+        <div id="persistentIdentifier" class="col-md-12">
+	        <div class="col-md-3">
+	            <label class="mod-cb">
+		            <input class="radio_input" name="pid" type="radio" value="Yes" />
+		            <span>Yes (recommended)</span>
+				</label>
 	        </div>
-	        <div style="display: block;">
-                <label><input class="radio_input" name="pid"
-	                type="radio" value="no" />No</label>
+	        <div class="col-md-3">
+                <label class="mod-cb">
+                	<input class="radio_input" name="pid" type="radio" value="No" />
+	               	<span>No</span>
+	            </label>
 	        </div>
-	        <div style="display: block;">
-	        	<label><input class="radio_input" name="pid"
-	                type="radio" value="dontknow" />Don't know yet</label>
+	        <div class="col-md-3">
+	        	<label class="mod-cb">
+	        		<input class="radio_input" name="pid" type="radio" value="Don't know yet" />
+        			<span>Don't know yet</span>
+        		</label>
 	        </div>
         </div>
     </div>
 	<div class="row">
 	    <h4>Do you need help estimating the cost and effort for data management?</h4>
-	    <div id="needHelp">
-	    	<div style="display: block;">
-	            <label><input class="radio_input" name="help"
-	            type="radio" value="yes" />Yes</label>
+	    <div id="needHelp" class="col-md-12">
+	    	<div class="ccol-md-3">
+	            <label class="mod-cb">
+	            	<input class="radio_input" name="help" type="radio" value="true" />
+	            	<span>Yes</span>
+	            </label>
 	        </div>
-	        <div style="display: block;">
-	            <label><input class="radio_input" name="help"
-	            type="radio" value="no" />No</label>
+	        <div class="col-md-3">
+	            <label class="mod-cb">
+	            	<input class="radio_input" name="help" type="radio" value="false" />
+	            	<span>No</span>
+	            </label>
 	        </div>
 	    </div>
 	</div>

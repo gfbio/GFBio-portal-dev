@@ -22,6 +22,7 @@ input[type=email]
 
 input[type=button] {
 	border: 1px solid lightgrey;
+	border-radius: 5px;
 }
 input[type=button]:disabled {
     color: lightgray;
@@ -36,6 +37,11 @@ input[type=checkbox]
 
 input[name=services] {
 	margin-bottom: 20px;
+}
+
+select {
+	border: 1px solid lightgrey;
+	width: 100%;
 }
 
 select[multiple=multiple] {
@@ -131,6 +137,31 @@ h4 {
     pointer-events: none;
     opacity: 0.4;
 }
+
+.mod-cb {
+	width: 100%;
+}
+
+.mod-cb input {
+	display: none !important;
+}
+
+.mod-cb span {
+	height: 100%;
+    display: block;
+    background: #eeeeee;
+    text-align: center;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.mod-cb input:checked + span {
+    background: #9dbee2;
+    border-color: #9dbee2;
+    color: #ffffff;
+}
+
+
 
 /* do not group these rules */
 *::-webkit-input-placeholder {
