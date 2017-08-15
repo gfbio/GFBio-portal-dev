@@ -660,7 +660,7 @@ public class WorkflowGeneric extends GenericPortlet {
             post.setEntity(entity);
             HttpResponse resp = httpclient.execute(post);
              
-            if (!((resp.getStatusLine().toString()).equals("HTTP/1.1 201 Created"))) {
+            if (!((resp.getStatusLine().toString()).contains("HTTP/1.1 201"))) {
             	_log.info("Failed : HTTPS error code : "+resp.getStatusLine());
             	throw new RuntimeException("Failed : HTTPS error code : " + resp.getStatusLine());
 	        }else{
