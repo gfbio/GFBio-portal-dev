@@ -1,8 +1,12 @@
 package org.gfbio.idmg.dto;
 
+import java.io.Serializable;
+
 import org.json.simple.JSONObject;
 
-public class GPolicy implements Comparable<GPolicy> {
+public class GPolicy implements Comparable<GPolicy>, Serializable {
+
+	private static final long serialVersionUID = 3101060534949900447L;
 
 	long id;
 	String name;

@@ -110,9 +110,12 @@ public class DMPTPortlet extends MVCPortlet {
 			Gson gson = new Gson();
 			input = gson.fromJson(jsonString, DMPTInput.class);
 			
+			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			
 			//Set DMPTInput to PortletSession
 			PortletSession session = resourceRequest.getPortletSession();
 		    session.setAttribute("dmptInput", input, PortletSession.APPLICATION_SCOPE);
+		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.APPLICATION_SCOPE);
 		    
 		    response = "Parsing successful!";
 		} catch (JsonSyntaxException e) {

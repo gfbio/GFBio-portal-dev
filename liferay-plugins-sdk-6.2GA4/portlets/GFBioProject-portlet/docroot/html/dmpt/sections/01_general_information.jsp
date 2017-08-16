@@ -12,6 +12,10 @@
 		   <input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
 		</div>
 	</div>
+	<!-- Following div with download button must be removed after development -->
+	<div>
+		<input id="downloadDMPtest" type="button" value="Download" />
+	</div>
 	<div class="row">
 		<h4>Please select a category</h4>
 		<div class="col-md-12">
@@ -32,11 +36,17 @@
 			</a>
       	</h4>
       	<div id="nature">
-      		<div class="col-xs-12 col-sm-6 col-md-4">
-            	<label><input name="nature" type="radio" value="snapshot" />Onetime observation</label>
+      		<div class="col-xs-12 col-sm-6">
+            	<label class="mod-cb">
+            		<input name="nature" type="radio" value="Onetime observation" />
+            		<span>Onetime observation</span>
+            	</label>
      		</div>
-      		<div class="col-xs-12 col-sm-6 col-md-4">
-		        <label><input name="nature" type="radio" value="reapeatable" />Repeatable experiments</label>
+      		<div class="col-xs-12 col-sm-6">
+		        <label class="mod-cb">
+			        <input name="nature" type="radio" value="Reapeatable experiments" />
+			        <span>Repeatable experiments</span>
+		        </label>
           	</div>
      	</div>
 	</div>
@@ -47,36 +57,63 @@
 			</a>
    		</h4>
         <div id="projectTypes" >
-        	<div class="col-xs-6 col-sm-3">
+        	<div class="col-xs-12 col-sm-6">
             	<div>
-                	<label><input name="types" type="checkbox"/>Field Work</label>
+                	<label class="mod-cb">
+		               	<input name="types" type="checkbox"/>
+		               	<span>Field Work</span>
+                	</label>
                 </div>
                 <div>
-                      <label><input name="types" type="checkbox"/>Observational</label>
+                      <label class="mod-cb">
+                      	<input name="types" type="checkbox"/>
+                      	<span>Observational</span>
+                      </label>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-12 col-sm-6">
            		<div>
-                	<label><input name="types" type="checkbox"/>Simulation</label>
+                	<label class="mod-cb">
+		               	<input name="types" type="checkbox"/>
+		               	<span>Simulation</span>
+                	</label>
                 </div>
                 <div>
-                  	<label><input name="types" type="checkbox"/>Assimilation</label>
+                  	<label class="mod-cb">
+	                  	<input name="types" type="checkbox"/>
+	                  	<span>Assimilation</span>
+                  	</label>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-3">
+            <div class="hidden-xs hidden-sm">
+            	<div style="width=100%"></div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
             	<div>	
-                	<label><input name="types" type="checkbox"/>Experimental</label>
+                	<label class="mod-cb">
+		               	<input name="types" type="checkbox"/>
+		               	<span>Experimental</span>
+                	</label>
                 </div>
                 <div>	
-                    <label><input name="types" type="checkbox"/>Laboratory</label>
+                    <label class="mod-cb">
+	                    <input name="types" type="checkbox"/>
+	                    <span>Laboratory</span>
+                    </label>
                 </div>
             </div>
-            <div class="col-xs-6 col-sm-3">
+            <div class="col-xs-12 col-sm-6">
                 <div>
-                    <label><input name="types" type="checkbox"/>Modelling</label>
+                    <label class="mod-cb">
+                    	<input name="types" type="checkbox"/>
+                    	<span>Modelling</span>
+                    </label>
                 </div>
                 <div>	
-                    <label><input id="types-cb" name="types" type="checkbox"/>Other</label>
+                    <label class="mod-cb">
+                    	<input id="types-cb" name="types" type="checkbox"/>
+                    	<span>Other</span>
+                    </label>
                 </div>
             </div>
             <div class="col-md-12">
@@ -136,7 +173,7 @@ We support you in meeting their requirements.">
     	</h4>
     	
     	<div id="fundings" class="col-md-12">
-        	<select id="funding" name="funding" style="border: 1px solid lightgrey;">
+        	<select id="funding" name="funding" >
 	            <option selected="selected" label="Select" value="select" >Select</option>
 	          	<option value="individual" >DFG Individual Grants Programmes</option>
 	        	<option value="coordinated" >DFG Coordinated Programmes</option>

@@ -3,8 +3,9 @@ package org.gfbio.idmg.dmpt;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.portlet.PortletSession;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.gfbio.idmg.dto.DMPTInput;
+import org.gfbio.idmg.dto.GFunding;
 import org.gfbio.idmg.util.PDFUtil;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -31,7 +31,9 @@ public class DownloadFile extends HttpServlet {
 			throws IOException, ServletException {
 
 		String fName = request.getParameter("fileName"); // getting file name from request parameter
-		_log.info("fileName from request Object" + fName);
+		if (fName == null || fName.isEmpty()) {
+			fName = "data_management_plan.pdf";
+		}
 
 		response.setContentType("application/pdf");
 		response.setHeader("Cache-Control", "max-age=3600, must-revalidate");
@@ -41,22 +43,39 @@ public class DownloadFile extends HttpServlet {
 		ByteArrayOutputStream byteStream = null;
 		PDDocument pdf = null;
 		
-		//String jsonString = (String) request.getSession(true).getAttribute("dmptInput");
-		//_log.info(jsonString);
 		DMPTInput input = (DMPTInput) request.getSession(true).getAttribute("dmptInput");
+		String themePath = (String) request.getSession(true).getAttribute("themePath");
 		
-//		try {
-//			Gson gson = new Gson();
-//			input = gson.fromJson(jsonString, DMPTInput.class);
-//		    _log.info(input.toString());
-//		} catch (JsonSyntaxException e) {
-//			_log.error("Error while parsing jsonString to POJO", e);
-//		}
+		if (input != null) {
+			_log.info(input.toString());
+		} else {
+			// Can be removed after development phase
+			input = new DMPTInput();
+			input.setProjectName("Test Project");
+			input.setCategory("Category2");
+			input.setReproducible("snapshot");
+			List<String> types = new ArrayList<>();
+			types.add("Field Work");
+			types.add("Observable");
+			input.setProjectTypes(types);
+			List<String> inv = new ArrayList<>();
+			inv.add("Paul");
+			inv.add("Johann");
+			input.setInvestigators(inv);
+			input.setProjectAbstract("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.");
+			input.setResponsibleName("Herbert Schwachkoviak");
+			input.setPhoneNumber("0800 666666");
+			input.setEmail("h.sch@web.de");
+			input.setFunding(new GFunding(1, "Fndingtst", "TestLabFund", "2340"));
+			
+		}
 		
-		_log.info(input.toString());
+		if (themePath == null || themePath.isEmpty()) {
+			themePath = "http://localhost:8080/GFBio-2.0-bootstrap3-theme/images";
+		}
 		
 		try {
-			pdf = PDFUtil.createPDF(fName, input);
+			pdf = PDFUtil.createPDF(fName, input, themePath);
 			
 			byteStream = new ByteArrayOutputStream();
 			pdf.save(byteStream);

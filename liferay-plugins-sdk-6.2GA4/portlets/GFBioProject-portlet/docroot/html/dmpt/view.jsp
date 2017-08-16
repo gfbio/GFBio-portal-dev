@@ -42,15 +42,7 @@ $(document).ready(function(){
     var form = $("#dmpt-wizard");
 	form.validate({
 		errorPlacement : function errorPlacement(error, element) {
-			if (element.attr("name") == "responsibleName" || element.attr("name") == "email") {
-               	error.hide();
-           	} else if (element.attr("name") == "nature") {
-   				error.attr("style", "display: block;")
-               	error.insertAfter(element.parent().parent());
-           	} else {
-               	error.attr("style", "display: block; margin-top: 5px")
-   				error.insertAfter(element);
-			}
+            error.hide();
 		},
 		rules : {
 			projectName : {
@@ -67,7 +59,7 @@ $(document).ready(function(){
            	},
            	phoneNumber : {
            		required: true,
-           		number: true
+           		//number: true
            	},
 		}
 	});
@@ -160,9 +152,13 @@ $(document).ready(function(){
 		    
 		    //07 Handling inputs at the end of the wizard
 		    $("#handleInput").hide();
-		    //$("#downloadDMP").on("click", method for downloading pdf);
 		    
 		    $("#downloadDMP").click(function() {
+				var fileName = $("#name").val() + ".pdf";
+				fileName = fileName.replace(/\s/g, "_");
+				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+			});
+		    $("#downloadDMPtest").click(function() {
 				var fileName = $("#name").val();
 				fileName = fileName.replace(/\s/g, "_");
 				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
@@ -175,13 +171,14 @@ function getInputAsJson() {
 	
 	// 01 General Information
 	var projectName = $("#name").val();
-	var category = $("#category").val(); 
-	if (category = "Select") category = "";
+	var category = $("#category").find(":selected").text();
+	console.log("Category: " + category);
+	if (category === "Select") category = "";
 	var reproducible = $("input[name='nature']:checked").val();
 	
 	var projectTypes = [];
 	$("input[name='types']:checked").each(function() {
-      	projectTypes.push($(this).parent().text());
+      	projectTypes.push($(this).siblings('span').text());
     });
 	if ($.inArray("Other", projectTypes) > -1) {
 		projectTypes.splice($.inArray("Other", projectTypes), 1);
@@ -206,7 +203,7 @@ function getInputAsJson() {
 		fundingLink = $("#fundingLink").val();
 	}
 	
-	var policies = $("#policies").val();
+	var policies = $("#policies").text();
 	var policyLink = "";
 	if ($.inArray("Other", policies) > -1) {
 		policies.splice($.inArray("Other", policies), 1);
@@ -215,6 +212,71 @@ function getInputAsJson() {
 	}
 	
 	// 02 Data Collection
+	
+	var physical = $("input[name='physical']:checked").val();
+	var alive = $("input[name='alive']:checked").val();
+	var taxon = $("input[name='taxon']:checked").val();
+	var sequenced = $("input[name='sequenced']:checked").val();
+	
+	var dataformats = [];
+	$("input[name='dataformat']:checked").each(function() {
+		dataformats.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other", dataformats) > -1) {
+		dataformats.splice($.inArray("Other", dataformats), 1);
+		dataformats.push($("#dataformatOther").val());
+	}
+	
+	var documentated = $("input[name='documentated']:checked").val();
+	
+	var dataVolume = $("#volumeSlider").val();
+	var dataSet = $("#datasetSlider").val();
+
+	var methodologies = $("#methodologies").val();
+	
+	// 03 Metadata
+	
+	var metadata = [];
+	var metadataDesc = "";
+	$("input[name='metadata']:checked").each(function() {
+		dataformats.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other", metadata) > -1) {
+		metadata.splice($.inArray("Other metadata schema or version", metadata), 1);
+		metadataDesc = $("metadataDesc").val();	
+	}
+
+	// 04 Ethics
+	
+	var requirements = [];
+	$("input[name='requirements']:checked").each(function() {
+		requirements.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other", requirements) > -1) {
+		requirements.splice($.inArray("Other", requirements), 1);
+		requirements.push($("requirementOther").val());	
+	}
+	
+	var license = $("input[name='license']:checked").val();
+	var otherLicense = "";
+	if (license === "Other License") {
+		otherLicense = $("licenseOther").val()
+	}
+	 
+	var accessRestriction = $("input[name='restriction']:checked").val();
+	var accessDuration = "";
+	var accessReason = "";
+	if (restriction) {
+		accessDuration = $("#accessDuration").val();
+		accessReason = $("#accessReason").val();
+	}
+	
+	// 05 Preservation
+	
+	var dataArchives = [];
+	
+	
+	//Create jsonObject
 	
 	var dmptInput = {
 			"projectName" : projectName,
@@ -229,11 +291,20 @@ function getInputAsJson() {
 			"funding" : {
 				"name" : funding
 			},
-			"policies" : []
+			"policies" : [],
+			"physical" : physical,
+			"alive" : alive,
+			"taxon" : taxon,
+			"sequenced" : sequenced,
+			"dataformats" : [],
+			"openlyDocumentated" : documentated,
+			"dataVolume" : dataVolume,
+			"dataSets" : dataSet,
+			"methodologies" : methodologies,
+			"metadata" : [],
+			"metadataDescription" : metadataDesc
 				
 	};
-	
-	console.log(projectTypes);
 	
 	if (projectTypes != null) {
 		dmptInput.projectTypes = projectTypes;
@@ -243,12 +314,22 @@ function getInputAsJson() {
 		dmptInput.investigators = investigators;
 	}
 	
-	if (policies != null) {
-		policies.map(function(item) {        
-	  		dmptInput.policies.push({ 
-	    		"value" : item,
-	    	});
-		});
+	console.log(policies);
+	
+ 	if (policies != null) {
+// 		policies.map(function(item) {        
+// 	  		dmptInput.policies.push({ 
+// 	    		"value" : item,
+// 	    	});
+// 		});
+ 	}
+
+	if (dataformats != null) {
+		dmptInput.dataformats = dataformats;
+	}
+	
+	if (metadata != null) {
+		
 	}
 	
 	console.log(dmptInput);
