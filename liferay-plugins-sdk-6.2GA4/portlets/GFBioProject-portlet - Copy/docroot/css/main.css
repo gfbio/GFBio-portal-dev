@@ -1,0 +1,116 @@
+
+	#usersTable td{width:150px;font-size: 12px;	font-weight: bold;}
+	#tabTableMenu{width:5500px;}
+	#tabContentMenu{width:5500px;}
+		
+	td{	text-align:left; }
+	label{cursor:default;}
+
+
+	.portlet-success	{
+		background-color: #f1fbd1;
+		border: 1px solid #f1d875;
+		border-color: #bce830; 
+		border-radius: 2px;
+		color: #488f06; 
+ 		cursor: auto !important; 
+		margin: 20px 0; 
+		padding: 8px 35px 8px 14px;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+		word-wrap: break-word; 
+	}
+
+	.swHide {display: none}
+	.swMain{display: block}
+	
+
+	.dBorder{ outline-style:solid; outline-color:rgb(200,200,200); outline-width:thin; padding-top:5px; padding-bottom:5px; padding-left:2px; padding-right:2px}
+
+	.row{width:100%; padding-left: 50px ;padding-bottom:10px}
+	.row2{width:100%; padding-bottom:10px}
+	.rowLato{clear:left;float:left;			width:22%; }
+	.rowLatofalse{clear:left;float:left;	width:22%; color:darkred}
+	.rowLava{float:left;width:34%}
+	.rowField{float:left;width:51% }
+	.rowFieldB{float:left;width:28% }
+	.rowInput{float:left;width:34% }
+	
+	.dynamicIcon1st{  clear:left;	float:left;	width:15px}
+	.dynamicTable1st{ clear:left;	float:left;	width:50px;  font-weight:bold}
+	.dynamicHeadIst{				float:left;	width:250px; font-weight:bold}
+	.dynamicIcon{	 		 		float:left;	width:80px}
+	.dynamicTableIst{	 		 	float:left;	width:250px}
+
+	input[type=text].widthM{width:85%}
+	input[type=text].widthL{width:92%}
+	input[type=button].widthM{width:20%}
+	input[type=button].widthL{width:50%}
+
+
+	.navigator {  height:32px }
+	.tabs { }
+	.navigator .tabs span 		{display:inline;  text-decoration:none;floar:left}
+	.navigator .tabs .gap	 	{						   border-bottom:1px solid #c8c8c8; padding-bottom:5px; display:inline-block}
+	.navigator .tabs .tab 		{border:1px solid #e6e6e6; border-bottom:1px solid #c8c8c8; padding-bottom:5px; display:inline-block; text-align:center; cursor:pointer}
+	.navigator .tabs .tabCurrent{border:1px solid #c8c8c8; border-bottom:1px solid #ffffff; padding-bottom:5px; display:inline-block; text-align:center; cursor:pointer; font-weight: bold}
+
+	div .section {display: none}
+	div .section .active {display: block}
+	
+ 	.inputTextContainerFalse{
+	    margin-bottom: 10px;
+	    border: 1px solid darkred;
+	    border-radius: 0;
+	    box-shadow: none;
+	    color:darkred;
+	    height: 50px;
+	    width :100%;
+	} 
+	
+	 .textareaFalse{
+	    margin-bottom: 10px;
+	    border: 1px solid;
+	    border-color: darkred ! important;
+	    border-radius: 0;
+	    box-shadow: none;
+	    width :100%;
+	    
+	}   
+	
+	.labelFalse{
+		color:darkred;
+	}
+	
+	
+	
+	.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+
+.ui-widget-header {
+    color: #818181;
+    font-weight: bold;
+}
+
+
+.ui-datepicker-next span {
+    background-image: url(http://legacy.australianetwork.com/img/icon_arrow_right_black.png) !important;
+        background-position: 0px 0px !important;
+}
+	
+	
+	

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+
+
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.checkExistenceOfColumn">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN count(Distinct(gfbio_column.columnid)) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_content, 
+			  public.gfbio_column
+			WHERE 
+			  gfbio_column.columnid = gfbio_content.columnid AND
+			  gfbio_column.headid = ? AND
+			  gfbio_column.column_name = ? 
+			  
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnIdByNames">
+	    <![CDATA[
+			SELECT 
+			  gfbio_column.columnid
+			FROM 
+			  public.gfbio_head,
+			  public.gfbio_column
+			WHERE
+			  gfbio_head.headid = gfbio_column.headid AND
+			  gfbio_head.table_name = ? AND
+			  gfbio_column.column_name = ?
+		]]>
+    </sql>
+
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnsWithRelation">
+	    <![CDATA[
+			SELECT
+				*
+			FROM
+				public.gfbio_column
+			WHERE
+				public.gfbio_column.headid in(
+			
+					SELECT
+						public.gfbio_head.headid
+					FROM
+						public.gfbio_head,
+						public.gfbio_column
+					WHERE
+						gfbio_column.headid = gfbio_head.headid AND
+						gfbio_head.table_type ='relationship' AND
+						gfbio_column.column_name = ?
+					) AND
+				public.gfbio_column.column_name != ?
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getHeadIdsWithoutRelationshipsByColumnName">
+	    <![CDATA[
+			SELECT
+				public.gfbio_head.headid
+			FROM
+				public.gfbio_head
+			WHERE
+				public.gfbio_head.table_type='entity' AND
+				public.gfbio_head.table_name not in(
+					SELECT
+						public.gfbio_column.column_name
+					FROM
+						public.gfbio_column
+					WHERE
+						public.gfbio_column.headid in(
+							SELECT
+								public.gfbio_head.headid
+							FROM
+								public.gfbio_head,
+								public.gfbio_column
+							WHERE
+								gfbio_column.headid = gfbio_head.headid AND
+								gfbio_head.table_type ='relationship' AND
+								gfbio_column.column_name = ?
+							) AND
+						public.gfbio_column.column_name != ?
+				)
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getColumnNameById">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_column.column_name 
+			FROM 
+			  public.gfbio_column
+			where
+			  public.gfbio_column.columnid = ?
+		]]>
+    </sql>
+    
+        <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getCountofColumns">
+	    <![CDATA[
+			SELECT 
+			  count(public.gfbio_column.columnid)
+			FROM 
+			  public.gfbio_column
+			WHERE
+			  gfbio_column.headid = ?
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getHeadIdsByColumnName">
+	    <![CDATA[
+			SELECT 
+			  headid 
+			FROM 
+			  public.gfbio_column
+			where
+			  column_name = ?
+		]]>
+    </sql>
+    
+     <sql id="org.gfbio.service.persistence.ColumnFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(columnid)  AS columnid
+			FROM
+				public.gfbio_column
+		]]>
+    </sql>
+    
+</custom-sql>

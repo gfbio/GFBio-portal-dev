@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+   <sql id="org.gfbio.service.persistence.PrimaryDataFinderImpl.getCheckPrimaryDataExists">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(primarydataid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_primarydata
+			 WHERE
+			 name = ? AND
+			 path = ?
+		]]>
+    </sql>
+    
+    
+	<sql id="org.gfbio.service.persistence.PrimaryDataFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(primarydataid)  AS primarydataid
+			FROM
+				public.gfbio_primarydata
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.PrimaryDataFinderImpl.getPathByPrimaryDataId">
+	    <![CDATA[
+			SELECT 
+			  gfbio_primarydata.path
+			FROM 
+			  public.gfbio_primarydata
+			Where
+			  primarydataid = ?
+		]]>
+    </sql>
+
+
+
+  
+    
+</custom-sql>

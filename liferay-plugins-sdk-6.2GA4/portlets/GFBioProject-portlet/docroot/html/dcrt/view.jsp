@@ -353,13 +353,13 @@ $(document).ready(function() {
 	<form id="dialogForm">
 		<fieldset>
 			<label for="contactName" style="display: block">Name</label> 
-			<input id="contactName" type="text" name="contactName" value="<c:out value="${username}" />"
+			<input id="contactName" type="text" name="<portlet:namespace />contactName" value="<c:out value="${username}" />"
 				placeholder="Name" class="text ui-widget-content ui-corner-all dialogtext"> 
 			<label for="contactEmail" style="display: block">E-Mail</label> 
-			<input id="contactEmail" type="text" name="contactEmail" value="<c:out value="${email}" />"
+			<input id="contactEmail" type="text" name="<portlet:namespace />contactEmail" value="<c:out value="${email}" />"
 				placeholder="E-Mail" class="text ui-widget-content ui-corner-all dialogtext"> 
 			<label for="message" style="display: block">Message</label>
-			<textarea id="message" name="contactMessage" rows="4" cols="100"
+			<textarea id="message" name="<portlet:namespace />contactMessage" rows="4" cols="100"
 				placeholder="Your Message"></textarea>
 		</fieldset>
 	</form>

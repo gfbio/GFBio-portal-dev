@@ -4,10 +4,10 @@
 	<info
 		organisation="com.liferay"
 		module="com.liferay.sdk.dependencies.com.liferay.ant.bnd"
-		revision="working@Thinkpad"
+		revision="working@DESKTOP-J2O8FOM"
 		conf="internal"
 		confs="default, internal"
-		date="20150911083455"/>
+		date="20170803112437"/>
 	<dependencies>
 	</dependencies>
 </ivy-report>

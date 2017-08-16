@@ -102,15 +102,25 @@ function IsDataNull(data)
 		return false;
 	
 }
-function AppendDiv(div, firstcolumn,thirdcolumn)
+function AppendDiv(div, firstcolumn,thirdcolumn,marginleft)
 {
 	var firstcolumstyle = "30%";
-    var secoundcolumstyle = "2%";
+    var secoundcolumstyle = "2%";	
     var thirdcolumstyle = "65%";
     
+
     
+     if (marginleft)
+    	{
+		div.append("<div class='control-group' style='margin-left: 2em;'>");
+		console.log("indented");
+    	}
+	else
+		div.append("<div class='control-group'>"); 
+		
+	//div.append("<div class='control-group' style='margin-left: 2em;'>");
+		//div.append("<div class='control-group'>");
 	div.append(
-			"<div class='control-group'>"+
 			"<span style='width:"+firstcolumstyle+" ; display:inline-block; font-weight:bold' class='field-description' >"+firstcolumn+ "</span>"+
 			"<span style='width:"+secoundcolumstyle+"; display:inline-block'></span>"+
 			"<span style='width:"+thirdcolumstyle+ "; display:inline-block' class='field-description' >"+thirdcolumn+ "</span>"+
@@ -171,10 +181,10 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 	   // var div = $("#SubmissionInfo");
 	    var div1 = $("#tab-1");
 	    div1.empty();
-	    AppendDiv(div1,"Title",researchObjectInformation.name);
-	 	AppendDiv(div1,"Description",researchObjectInformation.description);	
-	   	AppendDiv(div1,"Label",researchObjectInformation.label);							
-		AppendDiv(div1,"Version",researchObjectInformation.researchobjectversion);	
+	    AppendDiv(div1,"Title",researchObjectInformation.name,false);
+	 	AppendDiv(div1,"Description",researchObjectInformation.description,false);	
+	   	AppendDiv(div1,"Label",researchObjectInformation.label,false);							
+		AppendDiv(div1,"Version",researchObjectInformation.researchobjectversion,false);	
 				
 		if(researchObjectInformation.parentresearchobjectid!=null)
 		{
@@ -182,17 +192,17 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 					{
 						var parentdataset=bundle.parentresearchobject;
 						
-						AppendDiv(div1,"Parent data set",parentdataset.name);			
+						AppendDiv(div1,"Parent data set",parentdataset.name,false);			
 
 					}
 					else
 				    {
-				    	 AppendDiv(div1,"Parent data set","N/A");
+				    	 AppendDiv(div1,"Parent data set","N/A",false);
 				    }
 		}
-		AppendDiv(div1,"Data Collection Time",extdata.datacollectiontime);	
-		AppendDiv(div1,"Embargo Time",extdata.embargo);			
-		AppendDiv(div1,"Last Modified Date",researchObjectInformation.lastmodifieddate);
+		AppendDiv(div1,"Data Collection Time",extdata.datacollectiontime,false);	
+		AppendDiv(div1,"Embargo Time",extdata.embargo,false);			
+		AppendDiv(div1,"Last Modified Date",researchObjectInformation.lastmodifieddate,false);
 	    // Authors
 	   
 	      if (researchObjectInformation.authorname!=null && researchObjectInformation.authorname.length>0)
@@ -212,11 +222,11 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 	    		
 	    	 }
 	    	
-	 		AppendDiv(div1,"Authors",authors);
+	 		AppendDiv(div1,"Authors",authors,false);
 		    	
 		    } 
 	     else
-	       	 AppendDiv(div1,"Authors","N/A");
+	       	 AppendDiv(div1,"Authors","N/A",false);
 		  
 	   // End Authors
 			    
@@ -229,16 +239,16 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 	    	for ( var key in projects) 
 	    	{	
 	    		
-	    	 AppendDiv(div2,"Name",projects[key].name);			
-			 AppendDiv(div2,"Label",projects[key].label);	
-			 AppendDiv(div2,"Description",projects[key].description);
-		     AppendDiv(div2,"Status",projects[key].status);
+	    	 AppendDiv(div2,"Name",projects[key].name,false);			
+			 AppendDiv(div2,"Label",projects[key].label,true);	
+			 AppendDiv(div2,"Description",projects[key].description,true);
+		     AppendDiv(div2,"Status",projects[key].status,true);
 
 	    	 }
 	    }
 		
 	    else
-		    AppendDiv(div2,"projects","N/A");
+		    AppendDiv(div2,"projects","N/A",false);
 	    
 	  
 	    var div3 = $("#tab-3");
@@ -274,11 +284,11 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 	    for ( var key in submissions) 
    	 	{
 	    	
-	    	AppendDiv(div3,"Name",submissions[key].archive);	
-		    AppendDiv(div3,"Submission id",submissions[key].brokersubmissionid);
-			AppendDiv(div3,"Status",submissions[key].status);
-			AppendDiv(div3,"Is public",submissions[key].ispublic);
-			AppendDiv(div3,"Last change",submissions[key].lastchanged);
+	    	AppendDiv(div3,"Name",submissions[key].archive,false);	
+		    AppendDiv(div3,"Submission id",submissions[key].brokersubmissionid,true);
+			AppendDiv(div3,"Status",submissions[key].status,true);
+			AppendDiv(div3,"Is public",submissions[key].ispublic,true);
+			AppendDiv(div3,"Last change",submissions[key].lastchanged,true);
 			userid=submissions[key].userid;
 			// submitter name userid
 				Liferay.Service( '/GFBioProject-portlet.userextension/get-user-by-id', 
@@ -287,22 +297,19 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 					console.log("User---");
 					console.log(obj);
 					if ("fullname" in obj) name2=obj["fullname"];
-					AppendDiv(div3,"Submitter name",name2);
 					console.log(name2);
+					AppendDiv(div3,"Submitter name",name2,true);
+					AppendDiv(div3,"Public after",submissions[key].publicafter,true);
+				    AppendDiv(div3,"JIRAkey",submissions[key].jirakey,true);
+					
 					
 					} 
 				);
-			
-				
-			//
-			AppendDiv(div3,"Public after",submissions[key].publicafter);
-		    AppendDiv(div3,"JIRAkey",submissions[key].jirakey);
-	
 	    }
 	   }
 	    
 	    else
-	    	AppendDiv(div3,"submissions","N/A");
+	    	AppendDiv(div3,"submissions","N/A",false);
   	
 	    	    
 	    var div4 = $("#tab-4");
@@ -310,58 +317,66 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 	    if ("license" in bundle)
 	    {
 	    	var license=bundle.license;
-			AppendDiv(div4,"Name",license.name);
-			AppendDiv(div4,"Label",license.label);	
-			AppendDiv(div4,"Version",license.version);	
-			AppendDiv(div4,"Discription",license.description);	
-			AppendDiv(div4,"Weblink",license.extendeddata);
+			AppendDiv(div4,"Name",license.name,false);
+			AppendDiv(div4,"Label",license.label,false);	
+			AppendDiv(div4,"Version",license.version,false);	
+			AppendDiv(div4,"Discription",license.description,false);	
+			AppendDiv(div4,"Weblink",license.extendeddata,false);
 
 	    }
 	    else
-			AppendDiv(div4,"License","N/A");  	
+			AppendDiv(div4,"License","N/A",false);  	
 	    
 	    var div5 = $("#tab-5");
 	    div5.empty();
-		AppendDiv(div5,"Publications",extdata.publications);
+		AppendDiv(div5,"Publications",extdata.publications,false);
 	 // primarydatas
 	    if ("primarydatas" in bundle)
 	    {
 	    	var primarydatas=bundle.primarydatas;
-	    	AppendDiv(div5,"Primary data","");
+	    	AppendDiv(div5,"Primary data","",false);
 	    	
 	    	 for ( var key in primarydatas ) 
 	    	 {	
-	 	    	AppendDiv(div5,"Name",primarydatas[key].name); 		
-	 	    	/* var firstcolumstyle = "30%";
+	 	    	AppendDiv(div5,"Name",primarydatas[key].name,true); 		
+	 	    	 var firstcolumstyle = "30%";
 	 	       var secoundcolumstyle = "2%";
 	 	       var thirdcolumstyle = "65%";
 	 	       
 	 	       
-	 	   	div5.append(
-	 	   			"<div class='control-group' style='margin-left: 1em;'>"+
+	 	   /* 	div5.append(
+	 	   			"<div class='control-group' style='margin-left: 1em;'>");
+	 	   		div5.append(		
 	 	   			"<span style='width:"+firstcolumstyle+" ; display:inline-block; font-weight:bold' class='field-description' >"+"Name"+ "</span>"+
 	 	   			"<span style='width:"+secoundcolumstyle+"; display:inline-block'></span>"+
 	 	   			"<span style='width:"+thirdcolumstyle+ "; display:inline-block' class='field-description' >"+primarydatas[key].name+ "</span>"+
-	 	   			"</div >"); */
-		 	    AppendDiv(div5,"Url",primarydatas[key].path);
+	 	   			"</div >"); 
+	 	   	
+	 		div5.append(
+	 	   			"<div class='control-group' style='margin-left: 1em;'>"+
+	 	   			"<span style='width:"+firstcolumstyle+" ; display:inline-block; font-weight:bold' class='field-description' >"+"Url"+ "</span>"+
+	 	   			"<span style='width:"+secoundcolumstyle+"; display:inline-block'></span>"+
+	 	   			"<span style='width:"+thirdcolumstyle+ "; display:inline-block' class='field-description' >"+primarydatas[key].path+ "</span>"+
+	 	   			"</div >");  */
+		 	    AppendDiv(div5,"Url",primarydatas[key].path,true);
 
 	    	 }
 	    }
 	    else
- 	    	AppendDiv(div5,"Primary data","N/A");
+ 	    	AppendDiv(div5,"Primary data","N/A",false);
 	    
 	   //metadata
 	      if ("metadata" in bundle)
 	    {
 	    	var metadata=bundle.metadata;
-	    	AppendDiv(div5,"Metadata","");
-	    	AppendDiv(div5,"Label",metadata.label);
-	    	AppendDiv(div5,"Name",metadata.name);
-	    	AppendDiv(div5,"Version",metadata.version);
+	    	AppendDiv(div5,"Metadata","",false);
+	    	AppendDiv(div5,"Label",metadata.label,true);
+	    	AppendDiv(div5,"Name",metadata.name,true);
+	    	AppendDiv(div5,"Version",metadata.version,true);
 	    }
 	    else
 	    {
- 	    	AppendDiv(div5,"Metadata","N/A");
+ 	    	AppendDiv(div5,"Metadata","N/A",false);
 	    }
 	 //legal requir
 	// extdata.legalrequirements
@@ -382,12 +397,12 @@ function AppendDiv(div, firstcolumn,thirdcolumn)
 	    		
 	    		 
 	    	 }
-	 	    	AppendDiv(div5,"Legal requirements",Legalrequirements);
+	 	    	AppendDiv(div5,"Legal requirements",Legalrequirements,false);
 
 		    	
 		    } 
 	     else
-	 	    	AppendDiv(div5,"Legal requirements","N/A");
+	 	    	AppendDiv(div5,"Legal requirements","N/A",false);
 	   
 	  
 	

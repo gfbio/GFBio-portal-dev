@@ -4,10 +4,10 @@
 	<info
 		organisation="com.liferay"
 		module="com.liferay.sdk.dependencies.org.freemarker"
-		revision="working@Thinkpad"
+		revision="working@DESKTOP-J2O8FOM"
 		conf="internal"
 		confs="default, internal"
-		date="20150911083457"/>
+		date="20170803112438"/>
 	<dependencies>
 	</dependencies>
 </ivy-report>

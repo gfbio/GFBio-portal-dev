@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+    <sql id="org.gfbio.service.persistence.Project_UserFinderImpl.getOwnerAndPiByProjectId">
+	    <![CDATA[
+			SELECT 
+			  userid 
+			FROM 
+			  public.gfbio_project_user
+			WHERE
+			  (usertype ='PI' or
+			  usertype ='owner') AND
+			  projectid = ?
+		]]>
+    </sql>
+    
+        <sql id="org.gfbio.service.persistence.Project_UserFinderImpl.getProjectIdsByUserId">
+	    <![CDATA[
+			SELECT 
+			  projectid 
+			FROM 
+			  public.gfbio_project_user
+			WHERE
+			  userid = ?
+			ORDER BY projectid
+		]]>
+    </sql>
+
+</custom-sql>
+
+

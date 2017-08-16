@@ -4,18 +4,18 @@
 	<info
 		organisation="com.liferay"
 		module="com.liferay.sdk.dependencies.org.codehaus.groovy"
-		revision="working@Thinkpad"
+		revision="working@DESKTOP-J2O8FOM"
 		conf="default"
 		confs="default, internal"
-		date="20150911083457"/>
+		date="20170803112438"/>
 	<dependencies>
 		<module organisation="org.codehaus.groovy" name="groovy-all">
 			<revision name="2.0.1" status="release" pubdate="20120725142639" resolver="liferay-public" artresolver="default" homepage="http://groovy.codehaus.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, master" position="0">
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-				<metadata-artifact status="no" details="" size="5568" time="0" location="D:\GFBIO_code\gfbio-portal-dev\liferay-plugins-sdk-6.2GA4\.ivy\cache\org.codehaus.groovy\groovy-all\ivy-2.0.1.xml" searched="false" original-local-location="D:\GFBIO_code\gfbio-portal-dev\liferay-plugins-sdk-6.2GA4\.ivy\cache\org.codehaus.groovy\groovy-all\ivy-2.0.1.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/codehaus/groovy/groovy-all/2.0.1/groovy-all-2.0.1.pom"/>
-				<caller organisation="com.liferay" name="com.liferay.sdk.dependencies.org.codehaus.groovy" conf="default" rev="2.0.1" rev-constraint-default="2.0.1" rev-constraint-dynamic="2.0.1" callerrev="working@Thinkpad"/>
+				<metadata-artifact status="no" details="" size="5505" time="0" location="D:\WORK\GfBio\GFBio-portal-dev\liferay-plugins-sdk-6.2GA4\.ivy\cache\org.codehaus.groovy\groovy-all\ivy-2.0.1.xml" searched="false" original-local-location="D:\WORK\GfBio\GFBio-portal-dev\liferay-plugins-sdk-6.2GA4\.ivy\cache\org.codehaus.groovy\groovy-all\ivy-2.0.1.xml.original" origin-is-local="false" origin-location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/codehaus/groovy/groovy-all/2.0.1/groovy-all-2.0.1.pom"/>
+				<caller organisation="com.liferay" name="com.liferay.sdk.dependencies.org.codehaus.groovy" conf="default" rev="2.0.1" rev-constraint-default="2.0.1" rev-constraint-dynamic="2.0.1" callerrev="working@DESKTOP-J2O8FOM"/>
 				<artifacts>
-					<artifact name="groovy-all" type="jar" ext="jar" status="no" details="" size="6191960" time="0" location="D:\GFBIO_code\gfbio-portal-dev\liferay-plugins-sdk-6.2GA4\.ivy\cache\org.codehaus.groovy\groovy-all\jars\groovy-all-2.0.1.jar">
+					<artifact name="groovy-all" type="jar" ext="jar" status="no" details="" size="6191960" time="0" location="D:\WORK\GfBio\GFBio-portal-dev\liferay-plugins-sdk-6.2GA4\.ivy\cache\org.codehaus.groovy\groovy-all\jars\groovy-all-2.0.1.jar">
 						<origin-location is-local="false" location="http://cdn.repository.liferay.com/nexus/content/groups/public/org/codehaus/groovy/groovy-all/2.0.1/groovy-all-2.0.1.jar"/>
 					</artifact>
 				</artifacts>
