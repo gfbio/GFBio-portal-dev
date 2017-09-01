@@ -174,6 +174,30 @@ AUI().ready(function() {
 		navigationDiv.removeClass('hide');
 		navigationDiv.removeClass('open');
 	};
+	
+    // show citation on printable page
+    if (document.getElementById("printOnly") != null){
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var n =  new Date();
+        var y = n.getFullYear();
+        var m = monthNames[n.getMonth()];
+        var d = n.getDate();
+        var date = d + " " + m + " " + y;
+        var url = window.location.href;
+        if (url.lastIndexOf('?')>=0){
+            url = url.substring(0,url.lastIndexOf('?'));
+        }
+        url = url.split("/-/")[0];
+
+        var printFooter = "<img src='/documents/10184/0/120px-By-nc.svg%5B1%5D.png' "
+        	+"style='float:left;padding-right:10px;'/>"
+        	+"<p>Recommended citation:</br>German Federation for Biological Data ("+y
+        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet „Publish“."
+        	+" Retrieved "+date+" from "+url+".</p>";
+
+        document.getElementById("printOnly").innerHTML=printFooter;
+    }
 }
 
 );
