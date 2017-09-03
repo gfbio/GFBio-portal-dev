@@ -930,9 +930,11 @@ div.toggler.ui-state-default{
 	font-weight: 400;
 }
 div.toggler.ui-state-default a {
-	color: #818181;
+	color: #3cace4;
 	text-decoration: none;
 }
+
+
 div.toggler.ui-state-hover,
 div.toggler.ui-state-focus,
 div.toggler .ui-state-active {
