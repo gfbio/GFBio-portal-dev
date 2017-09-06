@@ -22,7 +22,7 @@
 
 <%if (userID==0){ %>
 
-			<div class="portlet-msg-alert">
+			<div class="portlet-msg-alert" style='margin-left: 15%;margin-right: 15%'>
 				Please sign in to explore your submissions.
 			</div>
 
@@ -62,8 +62,8 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 <!-- 	 --end of for -->  
 </div>
  <%} else {%>
-			<div class="portlet-msg-alert">
-				Please add submissions to explore your submission dashboard.
+			<div class="portlet-msg-alert" style='margin-left: 15%;margin-right: 15%'>
+				Please add your submissions to explore the submission dashboard.
 			</div>
  <%} %>
 <%} %>
