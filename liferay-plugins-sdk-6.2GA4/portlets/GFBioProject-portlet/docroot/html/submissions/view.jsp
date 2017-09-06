@@ -59,9 +59,15 @@ JSONObject responseJson = (JSONObject) ResearchObjects.get(i); %>
 	<span style='width:23% ; display:inline-block' class='field-description' >	<span   style='width:100%' onclick="GetResearchObjectById(<%= responseJson.get("researchobjectid") %>)" class='btn btn-primary'><i class='fa fa-file-text-o'  aria-hidden='true'>&nbsp; &nbsp;  </i>Get details</span></span>
 </div><br>
 	<%} %>
-  </div>
- <%}} %>	
-
+<!-- 	 --end of for -->  
+</div>
+ <%} else {%>
+			<div class="portlet-msg-alert">
+				Please add submissions to explore your submission dashboard.
+			</div>
+ <%} %>
+<%} %>
+<!-- end of outer else -->
 <div id="tabs" class="container" style='display:none' >
 
 	<ul class="tabs">
