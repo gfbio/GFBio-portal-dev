@@ -81,13 +81,31 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		}
 		return jBasket;
 	}
+	public JSONArray getBasketById(long basketId, boolean isMinimal) throws SystemException, NoSuchModelException {
+		JSONArray jBasket = JSONFactoryUtil.createJSONArray();
+		try {
+
+			Basket basket = this.basketPersistence.findByBasketId(basketId);
+			JSONObject jObj = JSONFactoryUtil.createJSONObject();
+			if (isMinimal){
+				jObj = convertMiniBasketToJSONObject(basket);
+			}else{
+				jObj = convertBasketToJSONObject(basket);	
+			}
+			
+			jBasket.put(jObj);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return jBasket;
+	}
 
 	// get baskets from baskets' Ids
 
 	public JSONArray getBasketsByIds(long[] basketIds) throws NoSuchModelException, SystemException {
 		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
 		try {
-			;
 			List<Basket> basketList = this.basketPersistence.findByBasketIds(basketIds);
 			jBasketList = convertBasketListToJSONArray(basketList);
 		} catch (Exception e) {
@@ -97,9 +115,25 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 		return jBasketList;
 	}
+	public JSONArray getBasketsByIds(long[] basketIds, boolean isMinimal) throws NoSuchModelException, SystemException {
+		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
+		try {
+			List<Basket> basketList = this.basketPersistence.findByBasketIds(basketIds);
+			if (isMinimal){
+				jBasketList = convertMiniBasketListToJSONArray(basketList,0,0);
+			}else{
+				jBasketList = convertBasketListToJSONArray(basketList);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
 
-	// get list of all baskets of a specific user updated within a specific
-	// period
+		return jBasketList;
+	}
+
+	// get list of all baskets of a specific user updated 
+	// within a specific period
 
 	public JSONArray getBasketsByUserAndPeriod(long userId, int period) throws NoSuchModelException, SystemException {
 		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
@@ -112,6 +146,47 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 				basketList = basketPersistence.findByUserIdSince(userId, startDate);
 			}
 			jBasketList = convertBasketListToJSONArray(basketList);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+
+		return jBasketList;
+	}
+	public int getCountBasketsByUserAndPeriod(long userId, int period) throws NoSuchModelException, SystemException {
+
+		List<Basket> basketList = null;
+		try {
+			if (period == 0)
+				basketList = basketPersistence.findByUserId(userId);
+			else {
+				Date startDate = getStartDateFromPeriod(period);
+				basketList = basketPersistence.findByUserIdSince(userId, startDate);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+
+		return basketList.size();
+	}
+
+
+	public JSONArray getBasketsByUserAndPeriod(long userId, int period, boolean isMinimal, int from, int count) throws NoSuchModelException, SystemException {
+		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
+		try {
+			List<Basket> basketList = null;
+			if (period == 0)
+				basketList = basketPersistence.findByUserId(userId);
+			else {
+				Date startDate = getStartDateFromPeriod(period);
+				basketList = basketPersistence.findByUserIdSince(userId, startDate);
+			}
+			if (isMinimal){
+				jBasketList = convertMiniBasketListToJSONArray(basketList, from, count);
+			}else{
+				jBasketList = convertBasketListToJSONArray(basketList, from, count);
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
@@ -135,6 +210,37 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 		return jBasketList;
 	}
+
+	public int getCountBasketsByUserId(long userId) throws SystemException, NoSuchModelException {
+
+		List<Basket> basketList = null;
+		try {
+			basketList = basketPersistence.findByUserId(userId);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return basketList.size();
+	}
+	
+	public JSONArray getBasketsByUserId(long userId, boolean isMinimal, int from, int count) throws SystemException, NoSuchModelException {
+
+		JSONArray jBasketList = JSONFactoryUtil.createJSONArray();
+		try {
+			List<Basket> basketList = basketPersistence.findByUserId(userId);
+			if (isMinimal){
+				jBasketList = convertMiniBasketListToJSONArray(basketList, from, count);
+			}else{
+				jBasketList = convertBasketListToJSONArray(basketList, from, count);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+
+		return jBasketList;
+	}
+
 
 	// get list of all baskets' Ids of a specific user updated within a specific
 	// period
@@ -394,6 +500,56 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			e.printStackTrace();
 		}
 		return jObj;
+	}	
+	
+	private JSONObject convertMiniBasketToJSONObject(Basket basket) {
+		JSONObject jObj = JSONFactoryUtil.createJSONObject();
+		try {
+			if (basket != null) {
+				jObj.put("basketID", Long.valueOf(basket.getBasketID()));
+				jObj.put("userID", Long.valueOf(basket.getUserID()));
+				jObj.put("name", basket.getName());
+				jObj.put("lastModifiedDate", basket.getLastModifiedDate());
+
+				String strBasket = basket.getBasketContent();
+				JSONObject jBasket = JSONFactoryUtil.createJSONObject(strBasket);
+				JSONObject jMiniBasket = JSONFactoryUtil.createJSONObject();
+				JSONArray jaMiniBasket = JSONFactoryUtil.createJSONArray();
+				JSONArray jaMiniItems = JSONFactoryUtil.createJSONArray();
+				JSONArray selected = jBasket.getJSONArray("selected");
+				for (int i =0; i<selected.length(); i++){
+					JSONObject jSelectedItem = selected.getJSONObject(i);
+					JSONObject jMiniItem = JSONFactoryUtil.createJSONObject();
+					jMiniItem.put("title", jSelectedItem.getString("title"));
+					jMiniItem.put("authors", jSelectedItem.getString("authors"));
+					jMiniItem.put("metadatalink", jSelectedItem.getString("metadatalink"));
+					jMiniItem.put("dcType", jSelectedItem.getString("dcType"));
+					jMiniItem.put("parentIdentifier", jSelectedItem.getString("parentIdentifier"));
+					jMiniItem.put("unitType", jSelectedItem.getString("unitType"));
+					jMiniItem.put("dcIdentifier", jSelectedItem.getString("dcIdentifier"));
+					jaMiniItems.put(jMiniItem);
+				}
+				jMiniBasket.put("selected", jaMiniItems);
+				jaMiniBasket.put(jMiniBasket);
+				jObj.put("basketContent", jaMiniBasket);
+				
+//				String strQuery = basket.getQueryJSON();
+//				JSONObject jQuery = JSONFactoryUtil.createJSONObject(strQuery);
+//				JSONArray jaQuery = JSONFactoryUtil.createJSONArray();
+//				jaQuery.put(jQuery);
+//				jObj.put("queryJSON", jaQuery);
+				
+				jObj.put("queryKeyword", basket.getQueryKeyword());
+				
+//				String strQueryFilter = basket.getQueryFilter();
+//				JSONArray jaFilter = JSONFactoryUtil.createJSONArray(strQueryFilter);
+//				jObj.put("queryFilter", jaFilter);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		return jObj;
 	}
 
 	private JSONArray convertBasketListToJSONArray(List<Basket> basketList) {
@@ -401,6 +557,35 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		for (int iBasket = 0; iBasket < basketList.size(); iBasket++) {
 			Basket basket = (Basket) basketList.get(iBasket);
 			JSONObject jBasket = convertBasketToJSONObject(basket);
+			jArr.put(jBasket);
+		}
+		return jArr;
+	}
+	private JSONArray convertBasketListToJSONArray(List<Basket> basketList,int fromInd, int count) {
+		JSONArray jArr = JSONFactoryUtil.createJSONArray();
+		int startInd = 0;
+		int stopInd = basketList.size();
+		if (fromInd > 0) startInd = fromInd-1;
+		if (count > 0 && startInd+count<stopInd) stopInd = startInd+count;
+		
+		for (int iBasket = startInd; iBasket < stopInd; iBasket++) {
+			Basket basket = (Basket) basketList.get(iBasket);
+			JSONObject jBasket = convertBasketToJSONObject(basket);
+			jArr.put(jBasket);
+		}
+		return jArr;
+	}
+	
+	private JSONArray convertMiniBasketListToJSONArray(List<Basket> basketList,int fromInd, int count) {
+		JSONArray jArr = JSONFactoryUtil.createJSONArray();
+		int startInd = 0;
+		int stopInd = basketList.size();
+		if (fromInd > 0) startInd = fromInd-1;
+		if (count > 0 && startInd+count<stopInd) stopInd = startInd+count;
+		
+		for (int iBasket = startInd; iBasket < stopInd; iBasket++) {
+			Basket basket = (Basket) basketList.get(iBasket);
+			JSONObject jBasket = convertMiniBasketToJSONObject(basket);
 			jArr.put(jBasket);
 		}
 		return jArr;
