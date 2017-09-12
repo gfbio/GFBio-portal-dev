@@ -1257,3 +1257,11 @@ Liferay specific classes
     margin-bottom: 0px;
   
 }
+
+.by-nc{
+	background: url('../images/120px-By-nc.svg.png') no-repeat center center;
+	float:left;
+	margin-right:10px;
+	width: 120px;
+	height:42px;
+}

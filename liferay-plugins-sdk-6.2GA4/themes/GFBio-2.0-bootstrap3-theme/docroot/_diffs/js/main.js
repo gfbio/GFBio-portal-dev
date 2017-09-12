@@ -190,8 +190,7 @@ AUI().ready(function() {
         }
         url = url.split("/-/")[0];
 
-        var printFooter = "<img src='/documents/10184/0/120px-By-nc.svg%5B1%5D.png' "
-        	+"style='float:left;padding-right:10px;'/>"
+        var printFooter = "<div class='by-nc'></div>"
         	+"<p>Recommended citation:</br>German Federation for Biological Data ("+y
         	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet „Publish“."
         	+" Retrieved "+date+" from "+url+".</p>";
