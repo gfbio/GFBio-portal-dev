@@ -192,7 +192,7 @@ AUI().ready(function() {
 
         var printFooter = "<div class='by-nc'></div>"
         	+"<p>Recommended citation:</br>German Federation for Biological Data ("+y
-        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet „Publish“."
+        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet." //TODO: add  „[page name]“ before full stop.
         	+" Retrieved "+date+" from "+url+".</p>";
 
         document.getElementById("printOnly").innerHTML=printFooter;
