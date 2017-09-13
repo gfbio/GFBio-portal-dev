@@ -132,6 +132,39 @@ AUI().ready(function() {
 			$(this).toggleClass("open");
 			}
 		});
+		
+		//ignore click event on first level menu when using a mobile layout
+		$('a.dropdown-toggle').on('click', function() {
+			if ($(document).width() <= 979){
+				return false;
+				}
+			});
+		var timeout = 0;
+		var lastTap = 0;
+		$('a.dropdown-toggle').on('touchstart', function() {
+	    	// listen to double tap event when using a mobile layout
+			if ($(document).width() <= 979){
+			    var currentTime = new Date().getTime();
+			    var tapLength = currentTime - lastTap;
+			    clearTimeout(timeout);
+		    	
+			    if (tapLength < 500 && tapLength > 0) {
+			    	// this is two times tap 
+			        window.location = this.href;
+			        return true; 
+			    }else{
+			    	// this is one time tap
+					$(this).parent().toggleClass("open");
+			    	timeout = setTimeout(function() {
+			            // set timeout after the first tap
+			            clearTimeout(timeout);
+				        return false;
+			        }, 500);
+			    }
+			    lastTap = currentTime; 
+			}
+	        return false;
+		});
 	}
 	// clear all the extension class from mobile responsive
 	// layout
@@ -141,6 +174,29 @@ AUI().ready(function() {
 		navigationDiv.removeClass('hide');
 		navigationDiv.removeClass('open');
 	};
+	
+    // show citation on printable page
+    if (document.getElementById("printOnly") != null){
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var n =  new Date();
+        var y = n.getFullYear();
+        var m = monthNames[n.getMonth()];
+        var d = n.getDate();
+        var date = d + " " + m + " " + y;
+        var url = window.location.href;
+        if (url.lastIndexOf('?')>=0){
+            url = url.substring(0,url.lastIndexOf('?'));
+        }
+        url = url.split("/-/")[0];
+
+        var printFooter = "<div class='by-nc'></div>"
+        	+"<p>Recommended citation:</br>German Federation for Biological Data ("+y
+        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet." //TODO: add  „[page name]“ before full stop.
+        	+" Retrieved "+date+" from "+url+".</p>";
+
+        document.getElementById("printOnly").innerHTML=printFooter;
+    }
 }
 
 );
@@ -234,6 +290,7 @@ AUI().use('aui-base','aui-io-request', 'node','selector-css3',function(A){
       }).keypress(function(event) {
         if (event.keyCode == 13) activate($(this));
       });
+      
     });
   })(jQuery);
   

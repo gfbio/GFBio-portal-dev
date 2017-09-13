@@ -930,9 +930,11 @@ div.toggler.ui-state-default{
 	font-weight: 400;
 }
 div.toggler.ui-state-default a {
-	color: #818181;
+	color: #3cace4;
 	text-decoration: none;
 }
+
+
 div.toggler.ui-state-hover,
 div.toggler.ui-state-focus,
 div.toggler .ui-state-active {
@@ -1254,4 +1256,12 @@ Liferay specific classes
  
     margin-bottom: 0px;
   
+}
+
+.by-nc{
+	background: url('../images/120px-By-nc.svg.png') no-repeat center center;
+	float:left;
+	margin-right:10px;
+	width: 120px;
+	height:42px;
 }
