@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Map;
 
-import com.liferay.portal.kernel.json.JSONArray;
+//import com.liferay.portal.kernel.json.JSONArray;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import org.gfbio.model.Basket;
 import org.gfbio.service.BasketLocalServiceUtil;
 import org.gfbio.service.base.BasketServiceBaseImpl;
@@ -48,7 +52,7 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		}
 
 		return null;
-	}	public JSONArray getBasketById(long basketId, boolean isMinimal) throws SystemException {
+	}	public com.liferay.portal.kernel.json.JSONObject getBasketById(long basketId, boolean isMinimal) throws SystemException {
 		try {
 			if (isMinimal){ 
 				System.out.println(":: getBasketById :: minimal Basket.");
@@ -93,16 +97,16 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 
 		return null;
 	}
-	public int getCountBasketsByUserAndPeriod(long userId, int period) throws SystemException {
-		try {
-			return BasketLocalServiceUtil.getCountBasketsByUserAndPeriod(userId, period);
-		} catch (NoSuchModelException e) {
-			e.printStackTrace();
-		}
-
-		return 0;
-	}
-	public JSONArray getBasketsByUserAndPeriod(long userId, int period, boolean isMinimal, int from, int count) throws SystemException {
+//	public int getCountBasketsByUserAndPeriod(long userId, int period) throws SystemException {
+//		try {
+//			return BasketLocalServiceUtil.getCountBasketsByUserAndPeriod(userId, period);
+//		} catch (NoSuchModelException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return 0;
+//	}
+	public com.liferay.portal.kernel.json.JSONObject getBasketsByUserAndPeriod(long userId, int period, boolean isMinimal, int from, int count) throws SystemException {
 		try {
 			if (isMinimal){ 
 				System.out.println(":: getBasketsByUserAndPeriod :: minimal Baskets start from index: "+from+" for:"+count+" items.");
@@ -128,17 +132,17 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return null;
 	}
 
-	public int getCountBasketsByUserId(long userId) throws SystemException {
-		try {
-			return BasketLocalServiceUtil.getCountBasketsByUserId(userId);
-		} catch (NoSuchModelException e) {
-			e.printStackTrace();
-		}
-
-		return 0;
-	}
-	
-	public JSONArray getBasketsByUserId(long userId, boolean isMinimal, int from, int count) throws SystemException {
+//	public int getCountBasketsByUserId(long userId) throws SystemException {
+//		try {
+//			return BasketLocalServiceUtil.getCountBasketsByUserId(userId);
+//		} catch (NoSuchModelException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return 0;
+//	}
+//	
+	public com.liferay.portal.kernel.json.JSONObject getBasketsByUserId(long userId, boolean isMinimal, int from, int count) throws SystemException {
 		try {
 			if (isMinimal){ 
 				System.out.println(":: getBasketsByUserId :: minimal Baskets start from index: "+from+" for:"+count+" items.");
