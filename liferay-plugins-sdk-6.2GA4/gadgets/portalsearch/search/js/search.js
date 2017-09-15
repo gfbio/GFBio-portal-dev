@@ -1,6 +1,8 @@
 var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
-var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'/>";
-
+var cartDiv = "<div id='cart' class='cart_unselected invisible' title="+cartDivTitle+"/>";
+var cartDivTitle = 'Click to add/remove dataset to/from VAT (for registered user).';
+var cartDivDisabledNoGeo = 'This dataset does not provide geolocation detail.';
+var cartDivDisabledAccessRestricted = 'An access to this dataset is restricted.';
 /////////////////////////////// Search initial functions ////////////////////////////////
 /*
  * Description: Make enter press in search textbox equivalent to clicking search button
@@ -899,6 +901,7 @@ function setSelectedRowStyle() {
 function onRowClick() {
 	$('#tableId tbody').off('click');
 	$('#tableId tbody').on('click', '#cart', function (e) {
+		if (!$(this).hasClass('cart_disabled')){
 		var cell = $(this).parent();
 		var row = cell.parent();
 		var icol = row.children().index(cell);
@@ -950,6 +953,7 @@ function onRowClick() {
 		}
 		//update visualisation
 		updateMap();
+		}
 	});
 }
 
@@ -1192,15 +1196,25 @@ function addColorPicker() {
  */
 function showCartIcon(nRow, aData) {
 	// show the cart icon only if the geological data is provided
+	var elmRow = $(nRow);
+	var elmTD = $(elmRow[0].lastElementChild);
+	var elmDiv = $(elmTD[0].lastElementChild);
+	// show the cart icon only if the geological data is provided
 	if (((aData.maxLatitude != '') || (aData.minLatitude != '')) &&
-		((aData.maxLongitude != '') || (aData.minLongitude != ''))) {
+		((aData.maxLongitude != '') || (aData.minLongitude != ''))&&
+		(!aData.accessRestricted)) {
 		// read the current row number and get a div for the cart
-		var elmRow = $(nRow);
-		var elmTD = $(elmRow[0].lastElementChild);
-		var elmDiv = $(elmTD[0].lastElementChild);
 		// show the cart's div
-		//console.log(elmDiv);
 		elmDiv.removeClass('invisible');
+	}else if (aData.accessRestricted){
+		elmDiv.removeClass('invisible');
+		elmDiv.addClass('cart_disabled');
+		elmDiv.attr('title', cartDivDisabledAccessRestricted);
+	}
+	else{
+		elmDiv.removeClass('invisible');
+		elmDiv.addClass('cart_disabled');
+		elmDiv.attr('title', cartDivDisabledNoGeo);
 	}
 }
 //////////////////////////// End Search result UI functions //////////////////////////////

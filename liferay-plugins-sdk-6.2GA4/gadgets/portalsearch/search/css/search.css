@@ -188,6 +188,14 @@ div.dataTables_paginate{
 	cursor: pointer;
 	margin-left: -5px;
 }
+.cart_disabled{
+	height: 36px;
+	width: 36px;
+	background: url('../images/cart_disabled.png') no-repeat center center;
+	cursor: pointer;
+	margin-left: -5px;
+	cursor: default;
+}
 td.color-control {
 	vertical-align: middle;
 	text-align: center;
