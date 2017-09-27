@@ -11,8 +11,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-import org.gfbio.service.SubmissionLocalServiceUtil;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -53,16 +51,13 @@ public class Submissions extends GenericPortlet {
     
     //
 	public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
-		_log.info("a");
+
 		response.setContentType("text/html");
 				
 		if (request.getParameter("responseTarget") != null) {
-			
-			_log.info("b");
 					
 			//
 			if ("getresearchobjectinformation".toString().equals(request.getParameter("responseTarget").toString())){
-				_log.info("c");
 				getResearchObjectInformation(request, response);	
 			}
 		}
@@ -74,15 +69,10 @@ public class Submissions extends GenericPortlet {
 	//
 	public void getResearchObjectInformation(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 		
-		_log.info("d");
 		JSONObject responseJson = new JSONObject();
 		JSONObject parseJson = getDataJsonAsObject (request);
-		
-		JSONObject testObject = new JSONObject();
-		testObject.put("foo", "bar");
 
 		responseJson = ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(parseJson);
-		_log.info("e "+responseJson);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(responseJson.toString());

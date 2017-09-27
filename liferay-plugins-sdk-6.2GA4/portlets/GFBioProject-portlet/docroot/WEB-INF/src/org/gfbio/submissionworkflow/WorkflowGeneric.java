@@ -869,7 +869,7 @@ public class WorkflowGeneric extends GenericPortlet {
 	        		fileJson.put("path", userPath);
 	        		dbJson.add(fileJson);
 	        		File fileOut = new File(userPath, thisItem.getName());
-	        		fileOut.deleteOnExit();
+	        		//fileOut.deleteOnExit();
 	        		try {thisItem.write(fileOut);} 
 	        		catch (Exception e) {e.printStackTrace();}
 	        	}
