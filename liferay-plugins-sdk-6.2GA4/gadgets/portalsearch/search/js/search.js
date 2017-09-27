@@ -1,8 +1,8 @@
 var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var cartDiv = "<div id='cart' class='cart_unselected invisible' title="+cartDivTitle+"/>";
 var cartDivTitle = 'Click to add/remove dataset to/from VAT (for registered user).';
-var cartDivDisabledNoGeo = 'This dataset does not provide geolocation detail.';
-var cartDivDisabledAccessRestricted = 'An access to this dataset is restricted.';
+var cartDivDisabled = 'This dataset cannot be visualized.';
+
 /////////////////////////////// Search initial functions ////////////////////////////////
 /*
  * Description: Make enter press in search textbox equivalent to clicking search button
@@ -665,7 +665,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.minLongitude = getMultiValueField(fields, "minLongitude");
 		inner.metadatalink = getMultiValueField(fields, "metadatalink");
 		inner.datalink = getMultiValueField(fields, "datalink");
-		inner.accessRestricted = getMultiValueField(fields, "accessRestricted");
+		inner.vatVisualizable = getMultiValueField(fields, "vatVisualizable");
 		/* pangeae doesn't return license field
 		inner.license = getMultiValueField(fields, "license");*/
 		inner.format = getMultiValueField(fields, "format");
@@ -988,7 +988,7 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
 		"xml": value.xml,
-		"accessRestricted": value.accessRestricted,
+		"vatVisualizable": value.vatVisualizable,
 		/* pangeae doesn't return license field
 		"license":value.license*/
 	};
@@ -1206,15 +1206,12 @@ function showCartIcon(nRow, aData) {
 		// read the current row number and get a div for the cart
 		// show the cart's div
 		elmDiv.removeClass('invisible');
-	}else if (aData.accessRestricted){
-		elmDiv.removeClass('invisible');
-		elmDiv.addClass('cart_disabled');
-		elmDiv.attr('title', cartDivDisabledAccessRestricted);
+		elmDiv.attr('title', '');
 	}
 	else{
 		elmDiv.removeClass('invisible');
 		elmDiv.addClass('cart_disabled');
-		elmDiv.attr('title', cartDivDisabledNoGeo);
+		elmDiv.attr('title', cartDivDisabled);
 	}
 }
 //////////////////////////// End Search result UI functions //////////////////////////////

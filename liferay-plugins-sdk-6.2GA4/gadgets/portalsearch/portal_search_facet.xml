@@ -82,7 +82,7 @@
 						if (urlYear !=''){
 							addToFacetTray('citation_yearFacet', urlYear);
 						}
-											});
+					});
 
 
 				</script>
