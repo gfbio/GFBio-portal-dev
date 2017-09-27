@@ -1,6 +1,8 @@
 var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
 var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
-var cartDiv = "<div id='cart' class='cart_unselected invisible' title='Click to add/remove dataset to/from VAT (for registered user).'></div>";
+var cartDiv = "<div id='cart' class='cart_unselected invisible' title="+cartDivTitle+"/>";
+var cartDivTitle = 'Click to add/remove dataset to/from VAT (for registered user).';
+var cartDivDisabled = 'This dataset cannot be visualized.';
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 var showRating = 0;
 var saveSearch = 0;
@@ -108,12 +110,11 @@ function insertParam(key, value) {
 		
 	// push new url to the history state	
 	if (parent.history.pushState && newUrl!='') {
-			//console.log(':::pushstate');
-			//console.log(newUrl);
-			parent.history.pushState({path:newUrl},'',newUrl);
-		}
-    }
-
+		//console.log(':::pushstate');
+		//console.log(newUrl);
+		parent.history.pushState({path:newUrl},'',newUrl);
+	}
+}
 /*
  * Description: set autocomplete to the search textbox
  */
@@ -353,6 +354,7 @@ function normalQuery(clearBasket) {
 	var yearFilter = '';
 	// read search keywords
 	var keyword = document.getElementById("gfbioSearchInput").value;
+					
 		var urlFilter = getQueryVariable('filter');
 		var urlYear = getQueryVariable('year');
 		if (urlFilter !=''){
@@ -760,7 +762,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 		inner.minLongitude = getMultiValueField(fields, "minLongitude");
 		inner.metadatalink = getMultiValueField(fields, "metadatalink");
 		inner.datalink = getMultiValueField(fields, "datalink");
-		inner.accessRestricted = getMultiValueField(fields, "accessRestricted");
+		inner.vatVisualizable = getMultiValueField(fields, "vatVisualizable");
 		/* pangeae doesn't return license field
 		inner.license = getMultiValueField(fields, "license");*/
 		inner.format = getMultiValueField(fields, "format");
@@ -768,12 +770,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 			// this field is used only for displaying data
 			var html = fields["html-1"];
 			html = html.replace(/@target@/gi, "_blank").replace("<table", "<table class=\"html-1\"");
-			/*if (inner.accessRestricted){
-				html = html.replace(">Data Download</a>",">Data Download<i class='padlock' title='This download link requires login.'/></a>");
-				console.log('Download restricted.');
-			}else{
-				console.log('No restriction.');
-			}*/
+
 			html = writeShowHideFields(html);
 			// use highlight field to highlight html
 			if (highlight!=null){	
@@ -1149,7 +1146,7 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
 		"xml": value.xml,
-		"accessRestricted": value.accessRestricted,
+		"vatVisualizable": value.vatVisualizable,
 		/* pangeae doesn't return license field, only provide facets			"license":value.license*/
 	};
 	return result;
@@ -1371,16 +1368,21 @@ function addColorPicker() {
  * Effect: Cart icon will appear for each search result if they have geological data
  */
 function showCartIcon(nRow, aData) {
-	// show the cart icon only if the geological data is provided
-	if (((aData.maxLatitude != '') || (aData.minLatitude != '')) &&
-		((aData.maxLongitude != '') || (aData.minLongitude != ''))) {
-		// read the current row number and get a div for the cart
+  // read the current row number and get a div for the cart
 		var elmRow = $(nRow);
 		var elmTD = $(elmRow[0].lastElementChild);
 		var elmDiv = $($(elmTD[0]).find('#cart')[0]);
+	// show the cart icon only if the visualizable flag is true
+	if (aData.vatVisualizable) {
 		// show the cart's div
 		//console.log(elmDiv);
 		elmDiv.removeClass('invisible');
+		elmDiv.attr('title', '');
+	}
+	else{
+		elmDiv.removeClass('invisible');
+		elmDiv.addClass('cart_disabled');
+		elmDiv.attr('title', cartDivDisabled);
 	}
 }
 //////////////////////////// End Search result UI functions //////////////////////////////
