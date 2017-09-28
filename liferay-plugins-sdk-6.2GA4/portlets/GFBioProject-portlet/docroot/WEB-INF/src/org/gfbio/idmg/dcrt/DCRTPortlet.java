@@ -116,15 +116,8 @@ public class DCRTPortlet extends MVCPortlet {
 	/* Method for ajax functionality of Category DropDown */
 	private void ajaxCategory(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
-		//Test ApplicationScoped-Session Values
-		//String s = "Hakuna Matata";
-		//PortletSession session = resourceRequest.getPortletSession();
-	    //session.setAttribute("sessionValue", s ,PortletSession.APPLICATION_SCOPE);
-		//_log.info("Value set to PortletSession");
-
 		// Category-DropDown Selection
 		String category = resourceRequest.getParameter("category");
-		_log.info("Category " + category);
 		// Radio-Inputs
 		String physical = resourceRequest.getParameter("physical");
 		String taxon = resourceRequest.getParameter("taxon");
@@ -169,7 +162,6 @@ public class DCRTPortlet extends MVCPortlet {
 		for (DataProvider dp : providers) {
 			String name = dp.getName();
 			String label = dp.getLabel().trim();
-			_log.info(name);
 
 			writer.print(div()
 					.withClass("row dcrttable")
@@ -200,8 +192,6 @@ public class DCRTPortlet extends MVCPortlet {
 	/* Method for Contact Button */
 	private void ajaxContactButton(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
-		_log.info("Contact Button Method reached!");
-
 		// Get Data Center
 		String dataCenter = resourceRequest.getParameter("dataCenter");
 
@@ -297,8 +287,6 @@ public class DCRTPortlet extends MVCPortlet {
 	/* Method for Submission Button */
 	private void ajaxSubmissionButton(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
-		_log.info("Submission Button Method reached!");
-
 		// Get Button Value
 		String dataCenter = resourceRequest.getParameter("dataCenter");
 		
@@ -310,7 +298,6 @@ public class DCRTPortlet extends MVCPortlet {
 			}
 		}
 		dataCenterList = dataCenterList.replaceAll(", $", "");
-		_log.info(dataCenterList);
 		
 		// Get Radio-Inputs
 		String physical = resourceRequest.getParameter("physical");
@@ -333,12 +320,16 @@ public class DCRTPortlet extends MVCPortlet {
 	    session.setAttribute("category", category ,PortletSession.APPLICATION_SCOPE);
 	    session.setAttribute("material", material ,PortletSession.APPLICATION_SCOPE);
 	    session.setAttribute("possibleDataCenter", dataCenterList,PortletSession.APPLICATION_SCOPE);
-		//_log.info("Value set to PortletSession");
 		
 	    ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-	    String submissionLink = themeDisplay.getPortalURL() + "/data/submit/generic";
+	    String submissionLink = themeDisplay.getPortalURL();
+	    if (dataCenter.equals("ENA")) {
+	    	submissionLink = submissionLink.concat("/data/submit/molecular");
+	    } else {
+	    	submissionLink = submissionLink.concat("/data/submit/generic");
+
+	    }
 	    //String dmptLink = themeDisplay.getPortalURL() + "/web/guest/dmpt";
-	    
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
