@@ -106,9 +106,12 @@
 											"screenName")%>'>
 					<aui:input disabled="<%=true%>" name="screenName" />
 				</c:when>
-				<c:otherwise><div class="icon-info" style="float:left;margin-top:3px;margin-right:5px;"
-						title="Please do not use special characters since this name will be used to create a URL."></div>
-				<aui:input name="screenName" />
+				<c:otherwise>
+					<div class="icon-question" style="position: relative; left: 180px; top: 70px;"
+						title="Please do not use special characters since this name will be used to create a URL.">
+					</div>
+					<div class="control-label" style="position: relative; left: 195px; top: 50px;">Hint</div>
+					<aui:input name="screenName" />
 				</c:otherwise>
 			</c:choose>
 		</c:if>
