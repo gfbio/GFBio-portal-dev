@@ -1200,9 +1200,7 @@ function showCartIcon(nRow, aData) {
 	var elmTD = $(elmRow[0].lastElementChild);
 	var elmDiv = $(elmTD[0].lastElementChild);
 	// show the cart icon only if the geological data is provided
-	if (((aData.maxLatitude != '') || (aData.minLatitude != '')) &&
-		((aData.maxLongitude != '') || (aData.minLongitude != ''))&&
-		(!aData.accessRestricted)) {
+	if (aData.vatVisualizable) {
 		// read the current row number and get a div for the cart
 		// show the cart's div
 		elmDiv.removeClass('invisible');
