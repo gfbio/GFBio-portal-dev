@@ -220,20 +220,23 @@
 
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
-				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
-				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>If you use a seperate file upload platform or host, then you can choose the external upload option, to take GFBio the URL to this source.</p>"+
+				"<br>"+
+				"<div 													class='control-group'>"+
+						"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' checked='checked'> Direct upload</input></span>"+
+						"<span style='width:2%; display:inline-block'></span>"+
+						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external'> External upload</input></span> "+
+				"</div>"+
+				"<div id='gwf_ro_upload'></div>"+
+				/* "<p   class='field-description'			 id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
+				"<div  	 class='fileUpload btn btn-primary'  style='width:25%'>"+
 				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
 				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
 				"</div>"+
 				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"+
-				//"<br>"+
-				//"<div 													class='control-group'>"+
-				//		"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' checked='checked'> Direct upload</input></span>"+
-				//		"<span style='width:2%; display:inline-block'></span>"+
-				//		"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external'> External upload</input></span> "+
-				//"</div>"+
-				//"<p   class='field-description'			 	id='gwf_ro_upload_d'>If you use a seperate file upload platform or host, then you can choose the external upload option, to take GFBio the URL to this source.</p>"+
-				//"<span id='gwf_b_upload_inputarea'></span>"+
+				"<br>"+
+				
+				"<span id='gwf_b_upload_inputarea'></span>"+ */
 				
 				"<h3>3. Submission options</h3><hr>"+
 								
@@ -406,13 +409,13 @@
 			},
 			async: false,
  			success :  function (obj){
- 				var divLi = $("#".concat('gwf_ro_legalrequirements'));
- 				divLi.empty();
- 				divLi.append("<br>");
+ 				var divLR = $("#".concat('gwf_ro_legalrequirements'));
+ 				divLR.empty();
+ 				divLR.append("<br>");
  				for (i=0; i < obj.length;i++){
 					if (i < obj.length-1){
 						var j = i+1;
-						divLi.append(
+						divLR.append(
 							"<div 		class='control-group'>"+
 								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
 								"<span style='width:2%; display:inline-block'></span>"+
@@ -421,34 +424,49 @@
 						);
 						i = i+1;
 					}else{
-						divLi.append(
+						divLR.append(
 							"<div 		class='control-group'>"+
 								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
 							"</div>"
 						);
 					}
-					divLi.append("<div style='clear:left'></div>");
+					divLR.append("<div style='clear:left'></div>");
 					
 				}
  			}
 		});
  		
  		
- 		//primarydata
-		//if (document.getElementById("gwf_ro_upload_direct").checked){
-			//console.log("1111 yes");
-		//	var uploaddiv = $("#".concat(uploadDivTarget));
-		//	uploaddiv.append(
-		//		"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
-		//		    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
-		//		    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
-		//		"</div>"+
-		//		"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
-		//	);
-		//}else{
-		//	console.log("1111 no");
-		//	addInputfieldTo(uploaddiv, "gwf_ro_upload_direct", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
-		//}
+  		//primarydata
+  		var uploadDivTarget = "gwf_ro_upload";
+  		
+		if (document.getElementById("gwf_ro_upload_direct").checked){
+			console.log("1111 yes");
+			var uploaddiv = $("#".concat(uploadDivTarget));
+			uploaddiv.append(
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
+				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
+				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
+				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
+				"</div>"+
+				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
+			);
+		}else{
+			console.log("1111 no");
+			addInputfieldTo(uploaddiv, "gwf_ro_upload_direct", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
+		} 
+		uploaddiv.append("<span id='gwf_b_upload_inputarea'></span>");
+		/*
+		"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
+				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
+				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
+				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
+				"</div>"+
+				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"+
+				"<br>"+
+				
+				"<span id='gwf_b_upload_inputarea'></span>"+ */
+				
 
 		
 		//categories
@@ -517,10 +535,10 @@
 	}
 
 	
-/* 	function fillDefaultPrimaryDataInformation(uploadDivTarget){
-		console.log("1111 "+uploadDivTarget);
+  	function fillDefaultPrimaryDataInformation(uploadDivTarget){
+		console.log("1115 "+uploadDivTarget);
 		if (document.getElementById("gwf_ro_upload_direct").checked){
-			console.log("1111 yes");
+			console.log("1115 yes");
 			var uploaddiv = $("#".concat(uploadDivTarget));
 			uploaddiv.append(
 				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
@@ -530,10 +548,10 @@
 				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
 			);
 		}else{
-			console.log("1111 no");
+			console.log("1115 no");
 			addInputfieldTo(uploaddiv, "gwf_ro_upload_direct", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
 		}
-	} */
+	}  
 	
 	
 	function setToDefaultArchive(targetDiv){
@@ -849,7 +867,14 @@
 	
 	//
 	function showUpload(){
-		
+		/*
+						"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
+				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
+				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
+				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
+				"</div>"+
+				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
+		*/
 		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
 		
 			document.getElementById("gwf_ro_id").innerHTML= 0;
