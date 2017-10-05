@@ -202,9 +202,11 @@
 
 
 				<aui:fieldset label="new-password">
-					<div class="icon-info"
-						style="float: left; padding-top: 3px; padding-right: 3px;"
+					<div class="icon-question"
+						style="position: relative; left: 240px; top: 70px;"
 						title="<%=passwordRules%>"></div>
+					<div class="control-label"
+						style="position: relative; left: 255px; top: 50px;">Password Rules</div>	
 					<aui:input autoFocus="<%=true%>" class="lfr-input-text-container"
 						label="password" name="password1" type="password" />
 
