@@ -331,6 +331,7 @@ public class WorkflowGeneric extends GenericPortlet {
     private static String getJSON_Body(JSONObject requestJson){
     	   	
       	JSONParser parser = new JSONParser();
+      	String archive = "GFBio collection";
 		
 		//preparation data source
 		
@@ -410,11 +411,13 @@ public class WorkflowGeneric extends GenericPortlet {
         
         
         //assignee
+                
         if (projectJson.containsKey("dcrtassignee")){
 	        if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals("none"))){
 	        	JSONObject assignee = new JSONObject();
 	        	assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
 	            fields.put("assignee", assignee);	
+	            archive = Helper.getStringFromJson(projectJson, "dcrtassignee");
         	}
         }  
     
@@ -616,12 +619,13 @@ public class WorkflowGeneric extends GenericPortlet {
         
         long researchObjectId =Helper.getLongFromJson(researchObjectJson, "researchobjectid");
         int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
-        fields.put("customfield_10303", (SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, "GFBio collections")).trim());
+        fields.put("customfield_10303", (SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, archive)).trim());
        
         //this line ist for testing and stop the submission to JIRA
         //fields.put("customfield_1", "stopper");
         
         
+        json.put("archive", archive);
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("userid"));
         try {json.put("authorization", "Token "+Helper.getServerInformation((String) requestJson.get("path"),"brokeragenttoken"));}
@@ -740,9 +744,12 @@ public class WorkflowGeneric extends GenericPortlet {
 					
 				JSONObject fieldJson = (JSONObject) jiraRequestJson.get("fields");
 				long researchObjectId = Long.parseLong((String)fieldJson.get("customfield_10309"));
-				int researchObjectVersion = Integer.parseInt((String) fieldJson.get("customfield_10310"));			
-				SubmissionLocalServiceUtil.updateJiraKey(researchObjectId, researchObjectVersion, "GFBio collections", (String) jiraResponseJson.get("key"));
-				SubmissionLocalServiceUtil.updateJiraId (researchObjectId, researchObjectVersion, "GFBio collections", (String) jiraResponseJson.get("id"));
+				int researchObjectVersion = Integer.parseInt((String) fieldJson.get("customfield_10310"));
+				//String archive = (String) jiraRequestJson.get("archive");
+				String archive = Helper.getStringFromJson(jiraRequestJson, "archive");
+				_log.info("archive: "+archive);
+				SubmissionLocalServiceUtil.updateJiraKey(researchObjectId, researchObjectVersion, archive, (String) jiraResponseJson.get("key"));
+				SubmissionLocalServiceUtil.updateJiraId (researchObjectId, researchObjectVersion, archive, (String) jiraResponseJson.get("id"));
 
 				if (PrimaryData_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId,researchObjectVersion)){
 					List <Long> idList = PrimaryData_ResearchObjectLocalServiceUtil.getPrimaryDataIdsByResearchObjectIdAndVersion(researchObjectId,researchObjectVersion);
