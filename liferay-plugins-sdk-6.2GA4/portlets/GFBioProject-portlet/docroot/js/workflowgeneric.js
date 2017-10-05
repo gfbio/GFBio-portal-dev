@@ -95,9 +95,13 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 	var registryJson = {};
 	registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
 	registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
-	registryJson["archive"] = "GFBio collections";
+	if (document.getElementById("gwf_dcrtassignee").innerHTML!='null')
+		registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
+	else
+		registryJson["archive"] = "GFBio collections";
 	//registryJson["brokersubmissionid"] ="";
 	registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
+	console.log(registryJson);
 	return registryJson;
 }
 
