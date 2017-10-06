@@ -331,7 +331,7 @@ public class WorkflowGeneric extends GenericPortlet {
     private static String getJSON_Body(JSONObject requestJson){
     	   	
       	JSONParser parser = new JSONParser();
-      	String archive = "GFBio collection";
+      	String archive = "GFBio collections";
 		
 		//preparation data source
 		
@@ -411,7 +411,8 @@ public class WorkflowGeneric extends GenericPortlet {
         
         
         //assignee
-                
+          
+        
         if (projectJson.containsKey("dcrtassignee")){
 	        if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals("none"))){
 	        	JSONObject assignee = new JSONObject();
@@ -425,9 +426,7 @@ public class WorkflowGeneric extends GenericPortlet {
         //recommendation
         if (projectJson.containsKey("dcrtrecommendation")){
         	String dcrtRecommendation = Helper.getStringFromJson(projectJson, "dcrtrecommendation");
-        	_log.info("dcrtrecommendation" +dcrtRecommendation);
         	if(!dcrtRecommendation.equals("null") && !dcrtRecommendation.equals("")){
-        		_log.info("dcrtrecommendation inside");
 	        	JSONArray dcrtInformationArray = new JSONArray();
 	        	List<String> items = Arrays.asList(dcrtRecommendation.split(","));
 	        	for(int i=0; i < items.size();i++){
@@ -439,8 +438,7 @@ public class WorkflowGeneric extends GenericPortlet {
         	}
         }
         
-        
-        
+       
         //information / input
         if (projectJson.containsKey("dcrtinput")){
         	if (Helper.getJsonObjectFromJson(projectJson, "dcrtinput").size()>0)
@@ -502,7 +500,6 @@ public class WorkflowGeneric extends GenericPortlet {
         	if (!(extendeddataJsonResearchObject.get("publications").equals("")))
         		fields.put("customfield_10307", JSONObject.escape((String) extendeddataJsonResearchObject.get("publications")));		
         
-        
        //metadata shema description
         if (researchObjectJson.containsKey("metadataid")){
         	if (Helper.getLongFromJson(researchObjectJson, "metadataid")!=0){
@@ -538,12 +535,10 @@ public class WorkflowGeneric extends GenericPortlet {
         	}
         }
         
-        
         //Embargo
         if (extendeddataJsonResearchObject.containsKey("embargo"))
         	if (!(Helper.getStringFromJson(extendeddataJsonResearchObject, "embargo").equals("")))
         		fields.put("customfield_10200", JSONObject.escape(Helper.getStringFromJson(extendeddataJsonResearchObject, "embargo")));
-        
         
         //Category/Keywords
         if (researchObjectJson.containsKey("categoryids")){
@@ -562,20 +557,14 @@ public class WorkflowGeneric extends GenericPortlet {
         	}
         }
         
-        
         //legal requirements
-        _log.info("legal requirements 01");
          if (extendeddataJsonResearchObject.containsKey("legalrequirements")){
-        	 _log.info("legal requirements 03");
         	if (!(extendeddataJsonResearchObject.get("legalrequirements").equals(""))){
-        		_log.info("legal requirements 05");
         		JSONArray legalRequirementArray = new JSONArray();
         		JSONArray legalRequirementIdArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
         		if (legalRequirementIdArray.size()>0){
-        			_log.info("legal requirements 07");
 	        		//String legalRequirementString = "";
 	        		for (int i=0;i<legalRequirementIdArray.size();i++){
-	        			_log.info("legal requirements 09."+i);
         				//legalRequirementString = legalRequirementString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")).concat(", ");
         				JSONObject legalRequirements = new JSONObject();
  	        			legalRequirements.put("value", JSONObject.escape(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")));
@@ -587,8 +576,6 @@ public class WorkflowGeneric extends GenericPortlet {
         	}
         }
          
-               
-			
         
         //license Question
         if (researchObjectJson.containsKey("licenseid")){
@@ -616,11 +603,12 @@ public class WorkflowGeneric extends GenericPortlet {
 	        	fields.put("customfield_10202", license);
         	}
         }
-        
+
         long researchObjectId =Helper.getLongFromJson(researchObjectJson, "researchobjectid");
         int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
-        fields.put("customfield_10303", (SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, archive)).trim());
-       
+        _log.info("archive: |"+archive+"|");
+        fields.put("customfield_10303", (SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim())).trim());
+
         //this line ist for testing and stop the submission to JIRA
         //fields.put("customfield_1", "stopper");
         

@@ -358,10 +358,11 @@
 				choMeta.append("<option value='none'></option>");
 				for (i =0; i <obj.length;i++){
 					var json = obj[i];
-					if (json.label == 'other')
-						choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
-					else
-						choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.label+" "+json.version+"</option>");
+					if (json.preferredbygfbio =='true')
+						if (json.label == 'other')
+							choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+						else
+							choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.label+" "+json.version+"</option>");
 				}
  			}
  		}); 
@@ -384,12 +385,13 @@
 				divLi.append("<option value='none'></option>");
 				for (i =0; i <obj.length;i++){
 					var json = obj[i];
-					if (json.label == "other")
-						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
-					else if (json.label == "CC BY")
-						divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.label+": "+json.name+" "+json.version+"</option>");
-						else	
-							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.label+": "+json.name+" "+json.version+"</option>");
+					if (json.preferredbygfbio =='true')
+						if (json.label == "other")
+							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+						else if (json.label == "CC BY")
+							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.label+": "+json.name+" "+json.version+"</option>");
+							else	
+								divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.label+": "+json.name+" "+json.version+"</option>");
 				}
  			}
  		});
