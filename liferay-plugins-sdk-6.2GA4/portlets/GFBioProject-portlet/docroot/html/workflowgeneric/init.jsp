@@ -23,7 +23,7 @@
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
 			
 			var div =   $("#generic");
-			
+
 			if (data.projectid==0){
 				if (data.researchobjectid==0){
 					fillDefaultInformations(data, div);
@@ -493,7 +493,6 @@
 		var targetDcrtDiv = 'gwf_dcrtdatacenter';
 		var divDcrt = $("#".concat(targetDcrtDiv));
 		divDcrt.empty();
-		console.log(document.getElementById("gwf_dcrtassignee").innerHTML);
 		setToDefaultArchive(targetDcrtDiv);
 		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
 			
@@ -511,8 +510,6 @@
 			
 		}else{
 			setToDefaultArchive(targetDcrtDiv);
-			console.log("no");
-			console.log(divDcrt);
 		}
 	}
 
@@ -578,7 +575,7 @@
 	
 	//
 	function fillResearchObjectInformations(data, div){
-
+		
 		var url = document.getElementById('workflowgenericurl').value;
 		if (Number(data.researchobjectid)!=0){
 			var ajaxData = [{"researchobjectid":Number(data.researchobjectid), "kindofresponse":"extended"}];
@@ -591,38 +588,36 @@
 				},
 				async: false,
 	 			success :  function (obj){
-	 				
 					var json = obj[0];
 					if (json.extendeddata != "")
 						var ed = json.extendeddata;
 					else
-						var ed = "[]";
-					
-					for (i=0;i<ed.length/2;i++)
+						var ed = "[]";					
+					for (i=0;i<ed.length/2;i++){
 						ed = ed.replace("'",'"');
-					var extendeddata = JSON.parse(ed);
-					
+					}
+					var extendeddata = ed;
+
 					document.getElementById("gwf_ro_id").innerHTML= json.researchobjectid;
 					document.getElementById("gwf_ro_version").innerHTML= json.researchobjectversion;
 					document.getElementById("gwf_ro_name").value= json.name;
 					document.getElementById("gwf_ro_label").value= json.label;
-					
+
 					//datacolectiontime
 					if (extendeddata.datacollectiontime !=null)
 						document.getElementById("gwf_ro_dct").value= extendeddata.datacollectiontime;
 					else
 						document.getElementById("gwf_ro_dct").value= "";
-					
+
 					//description
 					document.getElementById("gwf_ro_description").value= json.description;
-					
+
 					
 					//metadata
 					if (json.hasOwnProperty('metadataid')) {
 						var metadataJson = JSON.parse(json.metadataid);
 						document.getElementById("gwf_ro_metadatalabel").value= metadataJson;
 					}
-
 					
 					//author
 					if (json.authorname != null && json.authorname.length !=0){
@@ -634,13 +629,10 @@
 					}else
 						document.getElementById("gwf_ro_author").innerHTML= "";
 					
-					
 					//category
 					if (json.categoryids !=null && json.categoryids!="")
 						for (i =0; i < json.categoryids.length;i++)
 							document.getElementById("gwf_ro_categories"+json.categoryids[i]).checked  =true;
-						
-					
 					
 					//publications
 					if (extendeddata.publications !=null)
@@ -653,7 +645,6 @@
 					else
 						document.getElementById("gwf_ro_embargo").value= "";
 
-					
 					//legal requirements
 					if (extendeddata.legalrequirements !=null && extendeddata.legalrequirements!="")
 						for (i =0; i < extendeddata.legalrequirements.length;i++)
@@ -669,13 +660,12 @@
 										if (extendeddata.legalrequirements[i]=="Uncertain")
 											document.getElementById("gwf_ro_legalrequirements_uncertain").checked  =true;
 					
-					
 					//license
 					if (json.hasOwnProperty('licenseid')) {
 						var licenseid = JSON.parse(json.licenseid);
 						document.getElementById("gwf_ro_licenselabel").value =licenseid;
 					}
-					
+
 					//primarydata
 					if (json.primarydata !=null && json.primarydata.length!=0){
 				    	var nameList = "";
@@ -685,7 +675,6 @@
 					    nameList = nameList + '</ul>';
 					    document.getElementById("gwf_ro_upload").innerHTML = nameList;
 					}
-				    
 
 	 			},
 				error :  function (obj){

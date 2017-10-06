@@ -705,7 +705,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	public JSONObject constructResearchObjectJson (ResearchObject researchObject){
 		JSONObject responseJson = new JSONObject();
 		if (researchObject != null){
-			
+			System.out.println(" see all 01"+researchObject);
 			String extendedDataSting = researchObject.getExtendeddata();
 			
 			JSONParser parser = new JSONParser();
@@ -724,6 +724,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("researchobjecttype", researchObject.getResearchObjectType());
 			responseJson.put("researchobjectversion", researchObject.getResearchObjectVersion());
 			responseJson.put("lastmodifieddate", researchObject.getLastModifiedDate().toString());
+			
+			System.out.println(" see all 02"+responseJson);
 		}
 				
 		return checkNullParent(responseJson);
