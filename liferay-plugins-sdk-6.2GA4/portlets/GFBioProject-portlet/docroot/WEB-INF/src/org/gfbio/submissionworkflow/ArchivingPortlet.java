@@ -91,6 +91,8 @@ public class ArchivingPortlet extends GenericPortlet {
 	@SuppressWarnings("unchecked")
 	public void chooseProject(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
 
+
+		
 		JSONObject responseJson = new JSONObject();
 		String dataJson = request.getParameter("data");
 		JSONParser parser = new JSONParser();
@@ -99,6 +101,8 @@ public class ArchivingPortlet extends GenericPortlet {
 			parseJson = (JSONObject) parser.parse(dataJson);
 		} catch (ParseException e) {e.printStackTrace();}
 
+		System.out.println(parseJson);
+		
 		if (parseJson.containsKey("projectid")) {
 			if (((parseJson.get("projectid")).getClass().toString()).equals("class java.lang.String")){
 				if (!(((String) parseJson.get("projectid")).equals("none")))
@@ -109,6 +113,8 @@ public class ArchivingPortlet extends GenericPortlet {
 						responseJson.put("researchobjects", ProjectLocalServiceUtil.getResearchObjectsByProjectId((long) parseJson.get("projectid")));
 				}else
 					responseJson.put("projectid", 0);
+			
+			System.out.println(responseJson);
 			
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
