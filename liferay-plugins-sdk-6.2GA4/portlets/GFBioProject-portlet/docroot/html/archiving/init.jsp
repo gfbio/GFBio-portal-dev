@@ -83,19 +83,18 @@
 	
 	//
 	function sentResearchObjectInformations(userId, projectId, researchObjectId) {
-
  		var toSubmit = {
  			"userid"   : userId,
  			"projectid"   : projectId,
  			"researchobjectid"   : researchObjectId,
 		};
+
 		Liferay.fire('gadget:gfbio.archiving.submit', toSubmit); 
 	}
 	
 		
 	//
 	function ajaxActionRequest_ChooseResearchObject(archivingURL, method, data, divId, as) {
-
 		$.ajax({
 			"type" : "POST",
 			"url": archivingURL.concat("/GFBioArchiving"),
