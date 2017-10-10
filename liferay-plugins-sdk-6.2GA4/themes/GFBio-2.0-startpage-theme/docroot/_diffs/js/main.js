@@ -189,7 +189,7 @@ AUI().ready(
 		        		menuToggleBtn.removeClass('open');
 		        		navigationDiv.removeClass('open');
 		        		navigationDiv.addClass('hide');
-//						body.removeClass('lfr-has-dockbar-vertical');
+						body.removeClass('lfr-has-dockbar-vertical');
 		        	}else{
 		        		// expand the menu bar 
 		        		menuToggleBtn.addClass('open');
@@ -200,11 +200,11 @@ AUI().ready(
 						if (portletDockbar){
 							portletDockbar.removeClass('over');
 		        		}
-//						body.removeClass('lfr-has-dockbar-vertical');
+						body.removeClass('lfr-has-dockbar-vertical');
 		        	}
 		        }
 		        
-		    );}
+		    );
 
 		/*
 		 * #965 Responsive layout: second tier menu is not working on mobile
@@ -225,6 +225,40 @@ AUI().ready(
 			$(this).toggleClass("open");
 			}
 		});
+
+		//ignore click event on first level menu when using a mobile layout
+		$('a.dropdown-toggle').on('click', function() {
+			if ($(document).width() <= 979){
+				return false;
+				}
+			});
+		var timeout = 0;
+		var lastTap = 0;
+		$('a.dropdown-toggle').on('touchstart', function() {
+	    	// listen to double tap event when using a mobile layout
+			if ($(document).width() <= 979){
+			    var currentTime = new Date().getTime();
+			    var tapLength = currentTime - lastTap;
+			    clearTimeout(timeout);
+		    	
+			    if (tapLength < 500 && tapLength > 0) {
+			    	// this is two times tap 
+			        window.location = this.href;
+			        return true; 
+			    }else{
+			    	// this is one time tap
+					$(this).parent().toggleClass("open");
+			    	timeout = setTimeout(function() {
+			            // set timeout after the first tap
+			            clearTimeout(timeout);
+				        return false;
+			        }, 500);
+			    }
+			    lastTap = currentTime; 
+			}
+	        return false;
+		});
+    }
 		// clear all the extension class from mobile responsive layout
 		window.onresize = function(event) {
 		    var navigationDiv = $('#nav'); // get default navigation ul element
