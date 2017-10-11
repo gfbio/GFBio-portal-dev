@@ -5,14 +5,15 @@
 	var limitSmall = 200;
 	var limitLarge = 2000;
 	var limitExtrageLarge = 15000;
+	var buttonwidth = '220px';
 
 	
 /////////////////////////////////////////   helper  //////////////////////////////////////////////
 	
 	//character counter for inputfields
 	function countChars(countfrom,displayto, limit, targetOutputField) {
-	  var len = limit - document.getElementById(countfrom).value.length;
-	  document.getElementById(displayto).innerHTML = len;
+		var len = limit - document.getElementById(countfrom).value.length;
+		document.getElementById(displayto).innerHTML = len;
 	}
 	
 /////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
@@ -99,11 +100,11 @@
 	//
 	function addInputfieldTo(div, fieldBasicId, fileLabel, fieldLabelStar, fieldDescription, limit, fieldCheck,value){
 		div.append(
-			"<div 		class='control-group'>"+
+			"<div 		class='control-group' style='width:100%'>"+
 				"<label class='control-label' 				   	id='"+fieldBasicId+"_l'>"+fileLabel+"<span style='color:darkred'>"+fieldLabelStar+"</span> </label>"+
 				"<p 	class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
 				"<p 	class='field-description'				style='text-align: right; color:#A9A9A9'><span title='left characters' id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
-				"<input	class='field lfr-input-text-container'	id='"+fieldBasicId+"' type='text' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit +"' value='"+value+"'>"+
+				"<input	class='field lfr-input-text-container'	style='width:100%' id='"+fieldBasicId+"' type='text' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit +"' value='"+value+"'>"+
 			"</div >"
 		);
 	}
@@ -112,11 +113,11 @@
 	//
 	function addInputAreaTo(div, fieldBasicId, fileLabel, fieldLabelStar, fieldDescription, limit, fieldCheck,value, rows){
 		div.append(
-			"<div 			class='control-group'>"+
+			"<div 			class='control-group' style='width:100%'>"+
 				"<label 	class='control-label' 				   	id='"+fieldBasicId+"_l'>"+fileLabel+"<span style='color:darkred'>"+fieldLabelStar+"</span> </label>"+
 				"<p 		class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
 				"<p 		class='field-description'				style='text-align: right; color:#A9A9A9'><span title='left characters' id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
-				"<textarea	class='field lfr-input-text-container'	id='"+fieldBasicId+"' rows='"+rows+"' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit  +"'></textarea>"+ 
+				"<textarea	class='field lfr-input-text-container'	style='width:100%' id='"+fieldBasicId+"' rows='"+rows+"' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit  +"'></textarea>"+ 
 			"</div >"
 		);
 	}
@@ -221,7 +222,7 @@
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
 				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
-				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
+				"<div  class='fileUpload btn btn-primary'  style='width:"+buttonwidth+"'>"+
 				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
 				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
 				"</div>"+
@@ -239,9 +240,9 @@
 								
 				"<div>"+
 					"<div id='gwf_dcrtdatacenter'></div>"+
-					"<span  style='width:25%; display:inline-block' id='gwf_b_start' onclick='submitInput()'>		<span style='width:100%' class='btn btn-success'><i class='fa fa-play' 		aria-hidden='true'>&nbsp; &nbsp;  </i>Request submission</span></span>"+
+					"<span  style='width:25%; display:inline-block' id='gwf_b_start' onclick='submitInput()'>		<span style='width:"+buttonwidth+"' class='btn btn-success'><i class='fa fa-play' 		aria-hidden='true'>&nbsp; &nbsp;  </i>Request submission</span></span>"+
 					"<span style='width:50%; display:inline-block'></span>"+
-					"<span  style='width:25%; display:inline-block' id='gwf_b_reset' onclick='resetInput()'>		<span style='width:100%' class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset all information</span></span>"+
+					"<span  style='width:25%; display:inline-block' id='gwf_b_reset' onclick='resetInput()'>		<span style='width:"+buttonwidth+"' class='btn btn-primary'><i class='fa fa-refresh' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Reset all information</span></span>"+
 			
 				"</div>"+
 				"<br>"+
@@ -603,17 +604,20 @@
 					document.getElementById("gwf_ro_id").innerHTML= json.researchobjectid;
 					document.getElementById("gwf_ro_version").innerHTML= json.researchobjectversion;
 					document.getElementById("gwf_ro_name").value= json.name;
+					countChars('gwf_ro_name', 'gwf_ro_name_c', limitSmall);
 					document.getElementById("gwf_ro_label").value= json.label;
+					countChars('gwf_ro_label', 'gwf_ro_label_c', limitSmall);
 
 					//datacolectiontime
 					if (extendeddata.datacollectiontime !=null)
 						document.getElementById("gwf_ro_dct").value= extendeddata.datacollectiontime;
 					else
 						document.getElementById("gwf_ro_dct").value= "";
+					countChars('gwf_ro_dct', 'gwf_ro_dct_c', limitLarge);
 
 					//description
 					document.getElementById("gwf_ro_description").value= json.description;
-
+					countChars('gwf_ro_description', 'gwf_ro_description_c', limitExtrageLarge);
 					
 					//metadata
 					if (json.hasOwnProperty('metadataid')) {
@@ -630,6 +634,8 @@
 						document.getElementById("gwf_ro_author").innerHTML= author;
 					}else
 						document.getElementById("gwf_ro_author").innerHTML= "";
+					countChars('gwf_ro_author', 'gwf_ro_author_c', limitLarge);
+
 					
 					//category
 					if (json.categoryids !=null && json.categoryids!="")
@@ -641,7 +647,9 @@
 						document.getElementById("gwf_ro_publications").value= extendeddata.publications;
 					else
 						document.getElementById("gwf_ro_publications").value= "";
+					countChars('gwf_ro_publications', 'gwf_ro_publications_c', limitLarge);
 					
+					//embargo
 					if (extendeddata.embargo !=null)
 						document.getElementById("gwf_ro_embargo").value= extendeddata.embargo;
 					else
