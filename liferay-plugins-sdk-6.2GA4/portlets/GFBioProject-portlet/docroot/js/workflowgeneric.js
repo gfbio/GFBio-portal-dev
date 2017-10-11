@@ -307,16 +307,23 @@ function checkMinimalResearchObjectInput(){
 
 //
 function resetInput(){
-	resetDCRTInput();
 	
-	sentShowHideInformation(true);
-	var div =   $("#generic");
-	div.empty();
-	var data = {"userid":Number(themeDisplay.getUserId())};
-	buildGenericForm(data, div);
-	fillDefaultInformations(data, div);
+	if (confirm("If you confirm the reset, then all fields are cleared. ") == true) {
+		resetDCRTInput();
 		
-	sentResetRequest();
+		sentShowHideInformation(true);
+		var div =   $("#generic");
+		div.empty();
+		var data = {"userid":Number(themeDisplay.getUserId())};
+		buildGenericForm(data, div);
+		fillDefaultInformations(data, div);
+			
+		sentResetRequest();
+	} else {
+	    
+	} 
+	
+
 }
 
 
