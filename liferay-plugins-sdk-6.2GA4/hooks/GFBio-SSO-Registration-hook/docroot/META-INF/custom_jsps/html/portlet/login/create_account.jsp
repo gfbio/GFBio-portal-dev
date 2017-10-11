@@ -83,11 +83,11 @@
 		}
 		passwordRules += ". ";
 		
-		String passRegex = passwordPolicy.getRegex();
+		/*String passRegex = passwordPolicy.getRegex();
 		if (!passRegex.isEmpty()) {
 			passwordRules += "\nPlease set your password following this regular expression: "
 							+passRegex+" ";
-		}
+		}*/
 	}
 
 	if (passwordPolicy.isHistory()) {
@@ -187,9 +187,14 @@
 			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
+					
+				<div class="portlet-msg-info" style="max-width:75%;font-size:13px;margin-top:30px; margin-bottom:0px;">
+					<div class="icon-info" title=""></div>
+					Please do not use special characters, such as ' ' (space) or 'ä' (german umlaut), since this screenname will be used to create a URL.
+				</div>
 				<aui:input model="<%= User.class %>" name="screenName"  style="max-width:75%;" type="text">
 				<aui:validator name="required" />
-			</aui:input>
+				</aui:input>
 			</c:if>
 
 			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  style="max-width:75%;" type="text">
@@ -201,7 +206,10 @@
 
 		<aui:col width="<%= 50 %>">
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
-				<div class="icon-info" style="float:left; padding-top:3px; padding-right:3px;" title="<%=passwordRules%>"></div>
+				<div class="portlet-msg-info" style="font-size:13px; margin-bottom:0px;">
+				<div class="icon-info" title=""></div>
+				<%=passwordRules%>
+				</div>
 				
 				<aui:input label="password" name="password1" size="30" type="password" value="" />
 
@@ -237,12 +245,14 @@
 
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
+			
+			<aui:button type="submit" />
 		</aui:col>
 	</aui:fieldset>
 
-	<aui:button-row>
-		<aui:button type="submit" />
-	</aui:button-row>
+	<!-- <aui:button-row>
+			<aui:button type="submit" />
+	</aui:button-row> -->
 </aui:form>
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
 </div>

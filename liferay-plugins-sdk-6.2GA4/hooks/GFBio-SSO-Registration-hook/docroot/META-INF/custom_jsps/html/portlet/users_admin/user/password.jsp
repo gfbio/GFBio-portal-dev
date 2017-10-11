@@ -71,12 +71,12 @@
 			passwordRules += Integer.toString(passMinSym)+" symbol(s)";
 		}
 		passwordRules += ". ";
-		
+		/*
 		String passRegex = passwordPolicy.getRegex();
 		if (!passRegex.isEmpty()) {
 			passwordRules += "\nPlease set your password following this regular expression: "
 							+passRegex+" ";
-		}
+		}*/
 	}
 
 	if (passwordPolicy.isHistory()) {
@@ -184,11 +184,11 @@
 	</c:if>
 
 	<c:if test="<%=!passwordRules.isEmpty()%>">
-					<div class="icon-question"
-						style="position: relative; left: 240px; top: 70px;"
-						title="<%=passwordRules%>"></div>
-					<div class="control-label"
-						style="position: relative; left: 255px; top: 50px;">Password Rules</div>	
+					
+					<div class="portlet-msg-info" style="font-size:13px;margin-top:30px;">
+					<div class="icon-info" title=""></div>
+					<%=passwordRules%>
+					</div>
 	</c:if>
 
 	<aui:input autocomplete="off" label="new-password" name="password1"
@@ -208,7 +208,7 @@
 	</c:if>
 </aui:fieldset>
 
-<div class="portlet-msg-info">
+<div class="portlet-msg-info" style="font-size:13px;">
 	Please note that you can use the same username and password to access
 	the GFBio Help Center. </br> If you already have a Help Center account with
 	a different email, please <a

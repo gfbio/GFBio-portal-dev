@@ -94,10 +94,10 @@
 		}
 		passwordRules += ". ";
 
-		String passRegex = passwordPolicy.getRegex();
+		/*String passRegex = passwordPolicy.getRegex();
 		if (!passRegex.isEmpty()) {
 			passwordRules += "\nPlease set your password following this regular expression: " + passRegex + " ";
-		}
+		}*/
 	}
 
 	if (passwordPolicy.isHistory()) {
@@ -199,14 +199,12 @@
 						</c:if>
 					</div>
 				</c:if>
-
-
+				
 				<aui:fieldset label="new-password">
-					<div class="icon-question"
-						style="position: relative; left: 240px; top: 70px;"
-						title="<%=passwordRules%>"></div>
-					<div class="control-label"
-						style="position: relative; left: 255px; top: 50px;">Password Rules</div>	
+					<div class="portlet-msg-info" style="font-size:13px;margin-bottom:0px;">
+					<div class="icon-info" title=""></div>
+					<%=passwordRules%>
+					</div>
 					<aui:input autoFocus="<%=true%>" class="lfr-input-text-container"
 						label="password" name="password1" type="password" />
 
