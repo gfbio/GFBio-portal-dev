@@ -27,6 +27,16 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.DataManagementPlanLocalService" class="org.gfbio.service.impl.DataManagementPlanLocalServiceImpl" />
+	<bean id="org.gfbio.service.DataManagementPlanService" class="org.gfbio.service.impl.DataManagementPlanServiceImpl" />
+	<bean id="org.gfbio.service.persistence.DataManagementPlanPersistence" class="org.gfbio.service.persistence.DataManagementPlanPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
+	<bean id="org.gfbio.service.persistence.DataManagementPlanFinder" class="org.gfbio.service.persistence.DataManagementPlanFinderImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.DataProviderLocalService" class="org.gfbio.service.impl.DataProviderLocalServiceImpl" />
 	<bean id="org.gfbio.service.DataProviderService" class="org.gfbio.service.impl.DataProviderServiceImpl" />
 	<bean id="org.gfbio.service.persistence.DataProviderPersistence" class="org.gfbio.service.persistence.DataProviderPersistenceImpl" parent="basePersistence">

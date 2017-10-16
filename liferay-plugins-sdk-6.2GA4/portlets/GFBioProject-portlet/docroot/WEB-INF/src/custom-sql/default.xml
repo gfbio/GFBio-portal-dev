@@ -3,6 +3,7 @@
 <custom-sql>
     <sql file="custom-sql/column_custom_sql.xml"/>
     <sql file="custom-sql/content_custom_sql.xml"/>
+        <sql file="custom-sql/datamanagementplan_custom_sql.xml"/>
     <sql file="custom-sql/dataprovider_custom_sql.xml"/>
     <sql file="custom-sql/dataprovider_persistentidentifier_custom_sql.xml"/>
     <sql file="custom-sql/head_custom_sql.xml"/>

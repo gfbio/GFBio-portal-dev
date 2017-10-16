@@ -59,3 +59,30 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, last
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','preferredbygfbio'), getrowIdByContentId(getContentIdByNames('gfbio_metadata', 'label', 'INSPIRE')), 'true', now());
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','preferredbygfbio'), getrowIdByContentId(getContentIdByNames('gfbio_metadata', 'label', 'ISO 19115')), 'true', now());
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','preferredbygfbio'), getrowIdByContentId(getContentIdByNames('gfbio_metadata', 'label', 'MIxS')), 'true', now());
+
+
+----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+-------------------------------------       iteration 10 changes start here        -- 16.10.2017 ---------------------
+----------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------------------------
+-------------------------------------              datamanagementplan              -- 06.10.2017 ---------------------
+----------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE gfbio_datamanagementplan
+(
+  dmpid bigint NOT NULL,
+  name character(150) NOT NULL,
+  userid bigint NOT NULL,
+  dmptinput text,
+  lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT gfbio_datamanagementplan_pkey PRIMARY KEY (dmpid)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE gfbio_datamanagementplan
+  OWNER TO liferay_gfbio;
