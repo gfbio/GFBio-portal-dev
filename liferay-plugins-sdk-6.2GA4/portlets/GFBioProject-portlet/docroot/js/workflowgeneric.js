@@ -308,7 +308,7 @@ function checkMinimalResearchObjectInput(){
 //
 function resetInput(){
 	
-	if (confirm("If you confirm the reset, then all fields are cleared. ") == true) {
+	if (confirm("If you confirm the reset, then all fields are cleared.") == true) {
 		resetDCRTInput();
 		
 		sentShowHideInformation(true);
@@ -399,25 +399,30 @@ function saveResearchObjectInput(projectJson){
 function submitInput(url){
 	
 	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-		
+		console.log("1");
 		if (checkInput()){
-			
+			console.log("2");
 			if (checkInputLength()){
-			
+				console.log("3");
 				//create research object /project
 				var mrrJson = saveAllInput();
 				
 				//create primary data
 				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
+					console.log("4");
+					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0){
+						console.log("5");
 						fileUplaod();
+					}
 				
 					//create submission registry
 					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+						console.log("6");
 						startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
 						
 						//sent to JIRA
 						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+							console.log("7");
 							var data ={};
 							data["mrr"]= mrrJson;
 							startSubmission(data);
