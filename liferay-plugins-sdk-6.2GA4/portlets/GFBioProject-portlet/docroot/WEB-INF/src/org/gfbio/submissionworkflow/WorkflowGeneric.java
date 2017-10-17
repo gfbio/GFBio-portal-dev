@@ -3,6 +3,7 @@ package org.gfbio.submissionworkflow;
 //import LiferayWebserviceClientCallPortalServices;
 
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -47,7 +48,9 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.gfbio.helper.Helper;
+import org.gfbio.model.DataManagementPlan;
 import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.DataManagementPlanLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PrimaryDataLocalServiceUtil;
 import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
@@ -72,15 +75,17 @@ public class WorkflowGeneric extends GenericPortlet {
     
     
 	public void init() {
-		
+		   	
 		viewTemplate = getInitParameter("view-template");
     }
 
     
     public void doView( RenderRequest renderRequest, RenderResponse renderResponse)     throws IOException, PortletException {
-    	   	
-    	
+	 
    	    include(viewTemplate, renderRequest, renderResponse);
+   	    
+   	    
+
     }
 
     
