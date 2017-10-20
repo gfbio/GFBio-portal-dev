@@ -61,39 +61,36 @@
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
 
-		passwordRules += "\nIt should have at least " + Integer.toString(passMinLen) + " character(s)";
-		if (passMinAlp > 0 || passMinLowCase > 0 || passMinUppCase > 0 || passMinNum > 0 || passMinSym > 0) {
-			passwordRules += " consists of ";
+		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character";
+		if (passMinLen>1) passwordRules +="s";
+		
+		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
+			passwordRules += " including at least ";
+		if (passMinAlp>0) {
+			passwordRules += Integer.toString(passMinAlp)+" alphabet and number character";
+			if (passMinAlp>1) passwordRules +="s";
 		}
-		if (passMinAlp > 0) {
-			passwordRules += Integer.toString(passMinAlp) + " alphanumeric";
+		if (passMinLowCase>0) {
+			if (passMinAlp>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinLowCase)+" lowercase letter";
+			if (passMinLowCase>1) passwordRules +="s";
 		}
-		if (passMinLowCase > 0) {
-			if (passMinAlp > 0) {
+		if (passMinUppCase>0) {
+			if (passMinAlp>0 || passMinLowCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinUppCase)+ " uppercase letter";
+			if (passMinUppCase>1) passwordRules +="s";
+		}
+		if (passMinNum>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0) passwordRules += ", ";
+			passwordRules += Integer.toString(passMinNum)+" number";
+			if (passMinNum>1) passwordRules +="s";
+		}
+		if (passMinSym>0){
+			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0) 
 				passwordRules += ", ";
-			}
-			passwordRules += Integer.toString(passMinLowCase) + " lowercase";
-		}
-		if (passMinUppCase > 0) {
-			if (passMinAlp > 0 || passMinLowCase > 0){
-				passwordRules += ", ";
-		}
-			passwordRules += Integer.toString(passMinUppCase) + " uppercase";
-		}
-		if (passMinNum > 0) {
-			if (passMinAlp > 0 || passMinLowCase > 0 || passMinUppCase > 0){
-				passwordRules += ", ";
-			}
-			passwordRules += Integer.toString(passMinNum) + " numeric";
-		}
-		if (passMinSym > 0) {
-			if (passMinAlp > 0 || passMinLowCase > 0 || passMinUppCase > 0 || passMinNum > 0){
-				passwordRules += ", ";
-			}
-			passwordRules += Integer.toString(passMinSym) + " symbol(s)";
+			passwordRules += Integer.toString(passMinSym)+" symbol(s)";
 		}
 		passwordRules += ". ";
-
 		/*String passRegex = passwordPolicy.getRegex();
 		if (!passRegex.isEmpty()) {
 			passwordRules += "\nPlease set your password following this regular expression: " + passRegex + " ";
