@@ -107,10 +107,12 @@
 					<aui:input disabled="<%=true%>" name="screenName" />
 				</c:when>
 				<c:otherwise>
-					<div class="icon-question" style="position: relative; left: 180px; top: 70px;"
-						title="Please do not use special characters since this name will be used to create a URL.">
+				
+					<div class="portlet-msg-info" style="font-size:12px;">
+					<div class="icon-info" title="">
 					</div>
-					<div class="control-label" style="position: relative; left: 195px; top: 50px;">Hint</div>
+					Please do not use special characters, such as ' ' (space) or 'ä' (german umlaut), since this screenname will be used to create a URL.
+					</div>
 					<aui:input name="screenName" />
 				</c:otherwise>
 			</c:choose>

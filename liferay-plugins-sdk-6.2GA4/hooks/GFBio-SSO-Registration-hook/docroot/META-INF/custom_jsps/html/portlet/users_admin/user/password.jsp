@@ -48,22 +48,29 @@
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
 			
-		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character(s)";
+		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character";
+		if (passMinLen>1) passwordRules +="s";
+		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
-			passwordRules += " consists of ";
-		if (passMinAlp>0) 
-			passwordRules += Integer.toString(passMinAlp)+" alphanumeric";
+			passwordRules += " including at least ";
+		if (passMinAlp>0) {
+			passwordRules += Integer.toString(passMinAlp)+" alphabet and number character";
+			if (passMinAlp>1) passwordRules +="s";
+		}
 		if (passMinLowCase>0) {
 			if (passMinAlp>0) passwordRules += ", ";
-			passwordRules += Integer.toString(passMinLowCase)+" lowercase";
+			passwordRules += Integer.toString(passMinLowCase)+" lowercase letter";
+			if (passMinLowCase>1) passwordRules +="s";
 		}
 		if (passMinUppCase>0) {
 			if (passMinAlp>0 || passMinLowCase>0) passwordRules += ", ";
-			passwordRules += Integer.toString(passMinUppCase)+ " uppercase";
+			passwordRules += Integer.toString(passMinUppCase)+ " uppercase letter";
+			if (passMinUppCase>1) passwordRules +="s";
 		}
 		if (passMinNum>0){
 			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0) passwordRules += ", ";
-			passwordRules += Integer.toString(passMinNum)+" numeric";
+			passwordRules += Integer.toString(passMinNum)+" number";
+			if (passMinNum>1) passwordRules +="s";
 		}
 		if (passMinSym>0){
 			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0) 
@@ -71,12 +78,12 @@
 			passwordRules += Integer.toString(passMinSym)+" symbol(s)";
 		}
 		passwordRules += ". ";
-		
+		/*
 		String passRegex = passwordPolicy.getRegex();
 		if (!passRegex.isEmpty()) {
 			passwordRules += "\nPlease set your password following this regular expression: "
 							+passRegex+" ";
-		}
+		}*/
 	}
 
 	if (passwordPolicy.isHistory()) {
@@ -184,11 +191,11 @@
 	</c:if>
 
 	<c:if test="<%=!passwordRules.isEmpty()%>">
-					<div class="icon-question"
-						style="position: relative; left: 240px; top: 70px;"
-						title="<%=passwordRules%>"></div>
-					<div class="control-label"
-						style="position: relative; left: 255px; top: 50px;">Password Rules</div>	
+					
+					<div class="portlet-msg-info" style="font-size:13px;margin-top:30px;">
+					<div class="icon-info" title=""></div>
+					<%=passwordRules%>
+					</div>
 	</c:if>
 
 	<aui:input autocomplete="off" label="new-password" name="password1"
@@ -208,7 +215,7 @@
 	</c:if>
 </aui:fieldset>
 
-<div class="portlet-msg-info">
+<div class="portlet-msg-info" style="font-size:13px;">
 	Please note that you can use the same username and password to access
 	the GFBio Help Center. </br> If you already have a Help Center account with
 	a different email, please <a

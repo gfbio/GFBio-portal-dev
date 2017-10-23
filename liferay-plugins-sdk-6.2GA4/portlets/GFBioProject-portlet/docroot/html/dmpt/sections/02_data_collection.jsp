@@ -165,10 +165,10 @@ Think about the data you plan to collect. Will there be any areal photos or vide
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
 		</h4>
-		<div class="col-md-12"> 
-		    <div id="dataVolume" class="col-sm-8 col-md-6 col-lg-4">
+		<div class="col-md-12">
+		    <div id="dataVolume" class="col-sm-8 col-lg-6" style="text-align: center">
 		        <input id="volumeSlider" type="range" min="0" max="40" value="0" step="10"/>
-		        <span id="volume" >&lt; 1GB</span>
+		        <span id="volume" >Cannot estimate</span>
 		    </div>
 	    </div>
 	</div>
@@ -180,9 +180,9 @@ The amount of data sets you will create is closely linked to your style of worki
 			</a>
 		</h4>
 		<div class="col-md-12">
-		    <div id="datasetNumber" class="col-sm-8 col-md-6 col-lg-4">
+		    <div id="datasetNumber" class="col-sm-8 col-lg-6" style="text-align: center">
 		        <input id="datasetSlider" type="range" min="0" max="40" value="0" step="10"/>
-		        <span id="datasets" >&lt; 10</span>
+		        <span id="datasets" >Cannot estimate</span>
 		    </div>
 	    </div>
 	</div>

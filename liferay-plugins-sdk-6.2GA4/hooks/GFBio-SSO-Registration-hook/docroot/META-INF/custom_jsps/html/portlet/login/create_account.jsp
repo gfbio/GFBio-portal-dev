@@ -59,22 +59,29 @@
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
 			
-		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character(s)";
+		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character";
+		if (passMinLen>1) passwordRules +="s";
+		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
-			passwordRules += " consists of ";
-		if (passMinAlp>0) 
-			passwordRules += Integer.toString(passMinAlp)+" alphanumeric";
+			passwordRules += " including at least ";
+		if (passMinAlp>0) {
+			passwordRules += Integer.toString(passMinAlp)+" alphabet and number character";
+			if (passMinAlp>1) passwordRules +="s";
+		}
 		if (passMinLowCase>0) {
 			if (passMinAlp>0) passwordRules += ", ";
-			passwordRules += Integer.toString(passMinLowCase)+" lowercase";
+			passwordRules += Integer.toString(passMinLowCase)+" lowercase letter";
+			if (passMinLowCase>1) passwordRules +="s";
 		}
 		if (passMinUppCase>0) {
 			if (passMinAlp>0 || passMinLowCase>0) passwordRules += ", ";
-			passwordRules += Integer.toString(passMinUppCase)+ " uppercase";
+			passwordRules += Integer.toString(passMinUppCase)+ " uppercase letter";
+			if (passMinUppCase>1) passwordRules +="s";
 		}
 		if (passMinNum>0){
 			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0) passwordRules += ", ";
-			passwordRules += Integer.toString(passMinNum)+" numeric";
+			passwordRules += Integer.toString(passMinNum)+" number";
+			if (passMinNum>1) passwordRules +="s";
 		}
 		if (passMinSym>0){
 			if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0) 
@@ -83,11 +90,11 @@
 		}
 		passwordRules += ". ";
 		
-		String passRegex = passwordPolicy.getRegex();
+		/*String passRegex = passwordPolicy.getRegex();
 		if (!passRegex.isEmpty()) {
 			passwordRules += "\nPlease set your password following this regular expression: "
 							+passRegex+" ";
-		}
+		}*/
 	}
 
 	if (passwordPolicy.isHistory()) {
@@ -187,9 +194,14 @@
 			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
+					
+				<div class="portlet-msg-info" style="max-width:75%;font-size:13px;margin-top:30px; margin-bottom:0px;">
+					<div class="icon-info" title=""></div>
+					Please do not use special characters, such as ' ' (space) or 'ä' (german umlaut), since this screenname will be used to create a URL.
+				</div>
 				<aui:input model="<%= User.class %>" name="screenName"  style="max-width:75%;" type="text">
 				<aui:validator name="required" />
-			</aui:input>
+				</aui:input>
 			</c:if>
 
 			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  style="max-width:75%;" type="text">
@@ -201,7 +213,10 @@
 
 		<aui:col width="<%= 50 %>">
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
-				<div class="icon-info" style="float:left; padding-top:3px; padding-right:3px;" title="<%=passwordRules%>"></div>
+				<div class="portlet-msg-info" style="font-size:13px; margin-bottom:0px;">
+				<div class="icon-info" title=""></div>
+				<%=passwordRules%>
+				</div>
 				
 				<aui:input label="password" name="password1" size="30" type="password" value="" />
 
@@ -237,12 +252,14 @@
 
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
+			
+			<aui:button type="submit" />
 		</aui:col>
 	</aui:fieldset>
 
-	<aui:button-row>
-		<aui:button type="submit" />
-	</aui:button-row>
+	<!-- <aui:button-row>
+			<aui:button type="submit" />
+	</aui:button-row> -->
 </aui:form>
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
 </div>

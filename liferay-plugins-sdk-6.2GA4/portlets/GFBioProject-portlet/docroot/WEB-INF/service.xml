@@ -181,6 +181,23 @@
 	</entity>
 
 
+	<!-- Data Management Plan -->
+
+	<entity name="DataManagementPlan" data-source="gfbioDataSource" 
+		local-service="true" remote-service="true" session-factory="gfbioSessionFactory"
+		tx-manager="gfbioTransactionManager" cache-enabled="false">
+		<column name="dmpID" 					type="long" 	db-name="dmpid"		primary="true" />
+		<column name="name" 					type="String" 	db-name="name"/>
+		<column name="userID" 					type="long" 	db-name="userid"/>
+		<column name="dmpTInput" 				type="String" 	db-name="dmptinput"/>
+		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
+
+		<order by="asc">			<order-column name="name" />		</order>
+
+		<finder name="DmpID" 			return-type="DataManagementPlan">	<finder-column name="dmpID" />				</finder>
+		<finder name="UserID" 			return-type="Collection">			<finder-column name="userID" />				</finder>
+	</entity>
+
 
 	<!-- Project -->
 

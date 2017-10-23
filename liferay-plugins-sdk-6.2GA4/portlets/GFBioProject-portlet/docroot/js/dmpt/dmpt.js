@@ -132,7 +132,7 @@ function handlePolicy(event) {
     var selection = $(event.target).val(),
         other = $("#policyOther"),
         link = $("#policyLink");
-    if ($.inArray("other", selection) !== -1) {
+    if ($(event.target).is(':checked')) {
         other.show("slow");
         link.show("slow");
     } else {
@@ -170,11 +170,12 @@ function handleLicenses(event) {
 function handleRestriction(event) {
 	'use strict';
 	
+	console.log('Test Restriction');
 	var selection = $(event.target).val(),
 		howLong = $("#accessDuration"),
 		why = $("#accessReason"),
 		div = $("#accessYes");
-	if (selection === "yes") {
+	if (selection === "true") {
 		div.show("slow");
 	} else {
 		div.hide();
@@ -186,9 +187,8 @@ function handleRestriction(event) {
 function handleArchives(event) {
 	'use strict';
 	
-	var selection = $(event.target).val(),
-		other = $("#archiveOther");
-	if ($.inArray("other", selection) !== -1) {
+	var other = $("#archiveOther");
+	if ($(event.target).is(':checked')) {
 		other.show("slow");
 	} else {
 		other.hide();
@@ -199,15 +199,17 @@ function handleArchives(event) {
 function showDataVolume(event) {
     'use strict';
     
-    var volume = $(event.target).val(), answer = "Cannot estimate";
+    var volume = $(event.target).val(), answer;
     if (volume === "0") {
-        answer = "&lt; 1GB";
+        answer = "Cannot estimate";
     } else if (volume === "10") {
-        answer = "&lt; 10GB";
+        answer = "&lt; 1GB";
     } else if (volume === "20") {
-        answer = "&lt; 100GB";
+        answer = "&lt; 10GB";
     } else if (volume === "30") {
-        answer = "&gt; 100GB";
+        answer = "&lt; 100GB";
+    } else if (volume === "40") {
+    	answer = "&gt; 100GB";
     }
     document.getElementById("volume").innerHTML = answer;
 }
@@ -215,15 +217,17 @@ function showDataVolume(event) {
 function showNumberOfDatasets(event) {
     'use strict';
     
-    var number = $(event.target).val(), answer = "Cannot estimate";
+    var number = $(event.target).val(), answer;
     if (number === "0") {
-        answer = "&lt; 10";
+        answer = "Cannot estimate";
     } else if (number === "10") {
-        answer = "&lt; 100";
+        answer = "&lt; 10";
     } else if (number === "20") {
-        answer = "&lt; 1000";
+        answer = "&lt; 100";
     } else if (number === "30") {
-        answer = "&gt; 1000";
+        answer = "&lt; 1000";
+    } else if (number === "40") {
+    	answer = "&gt; 1000";
     }
     document.getElementById("datasets").innerHTML = answer;
 }
