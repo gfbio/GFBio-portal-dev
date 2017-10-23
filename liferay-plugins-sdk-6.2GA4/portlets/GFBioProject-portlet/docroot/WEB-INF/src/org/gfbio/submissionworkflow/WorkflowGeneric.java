@@ -603,6 +603,14 @@ public class WorkflowGeneric extends GenericPortlet {
 	        	fields.put("customfield_10202", license);
         	}
         }
+        
+        if (researchObjectJson.containsKey("primarydata")){
+        	JSONObject primaryData = Helper.getJsonObjectFromJson(researchObjectJson, "primarydata");
+        	String primaryDataPath = Helper.getStringFromJson(primaryData, "path");
+        	fields.put("customfield_10600 ", primaryDataPath);
+        	
+        }
+        
 
         long researchObjectId =Helper.getLongFromJson(researchObjectJson, "researchobjectid");
         int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
@@ -646,13 +654,25 @@ public class WorkflowGeneric extends GenericPortlet {
 		
 	
 	//
+	@SuppressWarnings("unchecked")
 	public void createResearchObject (ResourceRequest request, ResourceResponse response){
 		
         String responseString = "";
         JSONObject parseJson = getDataJsonAsObject (request);
-	
 		responseString = (ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson)).toString();
 		
+		if (parseJson.containsKey("primarydata")){
+			JSONObject primaryDataJson = new JSONObject();
+			primaryDataJson = Helper.getJsonObjectFromJson(parseJson, "primarydata");
+			JSONParser parser = new JSONParser();
+			try {parseJson = (JSONObject) parser.parse(responseString);}
+			catch (ParseException e) {e.printStackTrace();}
+			if (parseJson.containsKey("researchobjectid")){
+				primaryDataJson.put("researchobjectid", Helper.getLongFromJson(parseJson, "researchobjectid"));
+				primaryDataJson.put("researchobjectversion", Helper.getLongFromJson(parseJson, "researchobjectversion"));
+			}
+			parseJson = PrimaryDataLocalServiceUtil.createPrimaryData(primaryDataJson);
+		}
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		try {response.getWriter().write(responseString);}
@@ -864,7 +884,6 @@ public class WorkflowGeneric extends GenericPortlet {
 	        		fileJson.put("path", userPath);
 	        		dbJson.add(fileJson);
 	        		File fileOut = new File(userPath, thisItem.getName());
-	        		//fileOut.deleteOnExit();
 	        		try {thisItem.write(fileOut);} 
 	        		catch (Exception e) {e.printStackTrace();}
 	        	}

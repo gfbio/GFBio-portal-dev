@@ -67,13 +67,24 @@ function buildCommonResearchObjectJson(projectJson){
 
 //
 function buildResearchObjectJsonForCreate(projectJson){
-	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
+	var researchObjectJson = {};
+	researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	
 	if (document.getElementById("gwf_ro_metadatalabel").value != 'none')
 		researchObjectJson["metadataid"]= Number(document.getElementById("gwf_ro_metadatalabel").value);
 	
 	researchObjectJson["licenseid"] = Number(document.getElementById("gwf_ro_licenselabel").value);
 	researchObjectJson["researchobjecttype"]= document.getElementById("gwf_ro_researchobjecttype").innerHTML;
+
+	if (document.getElementById("gwf_ro_upload_direct").checked != true)
+		if (document.getElementById("gwf_ro_externalupload_path").value != ""){
+			var primaryDataJson = {
+				"name": document.getElementById("gwf_ro_externalupload_name").value,
+				"path": document.getElementById("gwf_ro_externalupload_path").value
+			};
+			researchObjectJson["primarydata"] = primaryDataJson;
+		}
+
 	return researchObjectJson;
 }
 
@@ -96,17 +107,13 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 	registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
 	registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
 	if (document.getElementById("gwf_dcrtassignee").innerHTML!='null')
-		if(document.getElementById("gwf_ro_dcrt_default").checked ==true){
-			console.log("check true");
+		if(document.getElementById("gwf_ro_dcrt_default").checked ==true)
 			registryJson["archive"] = "GFBio collections";
-		}else{
-			console.log("check nope");
+		else
 			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
-		}
 	else
 		registryJson["archive"] = "GFBio collections";
 	registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
-	console.log(registryJson);
 	return registryJson;
 }
 
@@ -145,8 +152,6 @@ function checkInputLength(){
 	failList = [];
 	failListLength =0;
 	
-	console.log(check);
-	
 	if ((document.getElementById("gwf_ro_name").value).length > 200){
 		check = false;
 		failList.push(" title");
@@ -184,8 +189,6 @@ function checkInputLength(){
 		document.getElementById("gwf_ro_label_d").className="field-description";
 		document.getElementById("gwf_ro_label").className="field lfr-input-text-container";
 	}
-
-	console.log(check);
 	
 	if (!check)
 		buildErrorMessage('gwf_lf_comentarField',"Please reduce the length of"+failList +" under 200 characters." );
@@ -364,7 +367,6 @@ function saveAllInput(){
 		}
 		
 	}
-	console.log(projectJson);
 	return projectJson;
 }
 
@@ -399,30 +401,27 @@ function saveResearchObjectInput(projectJson){
 function submitInput(url){
 	
 	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-		console.log("1");
+
 		if (checkInput()){
-			console.log("2");
 			if (checkInputLength()){
-				console.log("3");
+
 				//create research object /project
 				var mrrJson = saveAllInput();
 				
 				//create primary data
 				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-					console.log("4");
-					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0){
-						console.log("5");
-						fileUplaod();
-					}
+					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
+						if(document.getElementById("gwf_ro_upload_direct").checked==true)
+							fileUplaod();
+						
 				
 					//create submission registry
 					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-						console.log("6");
 						startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
 						
 						//sent to JIRA
 						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-							console.log("7");
+
 							var data ={};
 							data["mrr"]= mrrJson;
 							startSubmission(data);

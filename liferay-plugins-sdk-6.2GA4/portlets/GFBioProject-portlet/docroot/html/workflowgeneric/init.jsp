@@ -524,7 +524,9 @@
 					"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
 				);
 			}else{
-				addInputfieldWithoutLabelTo(uploaddiv, "gwf_ro_externalupload", "Provide the source URL of your dataset.", limitSmall, fieldCheckList[0],"");
+							//(div, 		fieldBasicId, 				fileLabel, fieldLabelStar, fieldDescription, limit, fieldCheck,value)
+				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_name", 	"Name", ""							,"If the file bundle has one name, provide this name. ", limitSmall, fieldCheckList[0],"");
+				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL/URI", ""						,"Provide the source URL of your dataset.", limitSmall, fieldCheckList[0],"");
 			} 
 			uploaddiv.append("<span id='gwf_b_upload_inputarea'></span>");
 		}
@@ -679,7 +681,7 @@
 					    for (i =0; i < json.primarydata.length;i++)
 					    	nameList = nameList +"<li><span id='gwf_ro_upload"+json.primarydata[i].name+"'>"+json.primarydata[i].name+ "</span></li>";
 					    nameList = nameList + '</ul>';
-					    console.log(document.getElementById("gwf_ro_upload"));
+
 					    document.getElementById("gwf_ro_upload").innerHTML = nameList;
 					}
 
