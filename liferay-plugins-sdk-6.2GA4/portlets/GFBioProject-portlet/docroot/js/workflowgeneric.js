@@ -123,6 +123,11 @@ function checkEmbargoDate(date){
 	return /^2\d{3}-[01]\d-[0123]\d$/.test(date);
 }
 
+//
+function checkExternalLinkUrl(url){
+	return /^((https:\/\/|http:\/\/|ftp:\/\/|fstp:\/\/).*|)$/.test(url);
+}
+
 
 //
 function checkInput(){
@@ -136,6 +141,7 @@ function checkInput(){
 
 	return check;
 }
+
 
 
 //
@@ -286,6 +292,24 @@ function checkMinimalResearchObjectInput(){
 			check = subcheck;
 	}
 	
+	//external link
+	if (document.getElementById("gwf_ro_upload_direct").checked != true){
+		var subcheck = checkExternalLinkUrl(document.getElementById("gwf_ro_externalupload_path").value);
+		if (!subcheck){
+			document.getElementById("gwf_ro_externalupload_path_l").className="labelFalse";
+			document.getElementById("gwf_ro_externalupload_path_d").className="labelFalse";
+			document.getElementById("gwf_ro_externalupload_path").style='border-color:darkred !important';
+		}else{
+			document.getElementById("gwf_ro_externalupload_path_l").className="control-label";
+			document.getElementById("gwf_ro_externalupload_path_d").className="field-description";
+			document.getElementById("gwf_ro_externalupload_path").style='';
+		}
+		
+		if(!subcheck)
+			check = subcheck;
+	}
+	
+	
 	/*
 	 * 	if (document.getElementById("gwf_ro_name").value==""){
 		check = false;
@@ -314,18 +338,25 @@ function resetInput(){
 	if (confirm("If you confirm the reset, then all fields are cleared.") == true) {
 		resetDCRTInput();
 		
-		sentShowHideInformation(true);
-		var div =   $("#generic");
-		div.empty();
-		var data = {"userid":Number(themeDisplay.getUserId())};
-		buildGenericForm(data, div);
-		fillDefaultInformations(data, div);
-			
-		sentResetRequest();
-	} else {
-	    
+		restartInput();
+		
 	} 
+}
+
+
+//
+function restartInput(){
 	
+	
+	
+	sentShowHideInformation(true);
+	var div =   $("#generic");
+	div.empty();
+	var data = {"userid":Number(themeDisplay.getUserId())};
+	buildGenericForm(data, div);
+	fillDefaultInformations(data, div);
+			
+	sentResetRequest();
 
 }
 

@@ -11,6 +11,7 @@ import com.liferay.portal.util.PortalUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -612,7 +613,7 @@ public class WorkflowGeneric extends GenericPortlet {
         if (researchObjectJson.containsKey("primarydata")){
         	JSONObject primaryData = Helper.getJsonObjectFromJson(researchObjectJson, "primarydata");
         	String primaryDataPath = Helper.getStringFromJson(primaryData, "path");
-        	fields.put("customfield_10600 ", primaryDataPath);
+        	fields.put("customfield_10600", primaryDataPath);
         	
         }
         

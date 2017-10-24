@@ -1,6 +1,6 @@
 <script>
 
-	var fieldCheckList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license','gwf_ro_dct', 'gwf_ro_label', 'gwf_ro_publications', 'gwf_ro_embargo'];
+	var fieldCheckList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license','gwf_ro_dct', 'gwf_ro_label', 'gwf_ro_publications', 'gwf_ro_embargo', 'gwf_ro_externalupload_path'];
 	var limitExtrageSmall = 10;
 	var limitSmall = 200;
 	var limitLarge = 2000;
@@ -509,6 +509,7 @@
 	}
 	
 		function primaryRadioButtonCheck(){
+			console.log("primaryRadioButtonCheck");
 	  		var uploadDivTarget = "gwf_ro_upload";
 	  		var uploaddiv = $("#".concat(uploadDivTarget));
 	  		uploaddiv.empty();
@@ -524,9 +525,10 @@
 					"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
 				);
 			}else{
-							//(div, 		fieldBasicId, 				fileLabel, fieldLabelStar, fieldDescription, limit, fieldCheck,value)
-				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_name", 	"Name", ""							,"If the file bundle has one name, provide this name. ", limitSmall, fieldCheckList[0],"");
-				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL/URI", ""						,"Provide the source URL of your dataset.", limitSmall, fieldCheckList[0],"");
+				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_name", 	"Name", 	""				,"If the file bundle has one name, provide this name. ", limitSmall, fieldCheckList[8],"");
+				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL/URI", 	""				,"Provide the source URL of your dataset. Please use only http, https, ftp and sftp as protocol", 			 limitSmall, fieldCheckList[8],"");
+				document.getElementById("gwf_ro_externalupload_path").placeholder = "http://"; //placeholder="First name
+				console.log(document.getElementById("gwf_ro_externalupload_path"));
 			} 
 			uploaddiv.append("<span id='gwf_b_upload_inputarea'></span>");
 		}
@@ -702,7 +704,7 @@
 			document.getElementById(block+"_l").className="control-label";
 			document.getElementById(block+"_d").className="field-description";
 			var testfield = $("#".concat("gwf_lf_comentarField"));
-			if (block == fieldCheckList[0] || block == fieldCheckList[4] || block == fieldCheckList[5] || block == fieldCheckList[6] || block == fieldCheckList[7]){
+			if (block == fieldCheckList[0] || block == fieldCheckList[4] || block == fieldCheckList[5] || block == fieldCheckList[6] || block == fieldCheckList[7]|| block == fieldCheckList[8]){
 				document.getElementById(block).className = 'field lfr-input-text-container';
 				document.getElementById(block).style = 'width: 100%';
 			}else
@@ -935,7 +937,7 @@
 						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
 						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
 					"</div>"+
-					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
 				);
 			},
 			error :  function (obj){
