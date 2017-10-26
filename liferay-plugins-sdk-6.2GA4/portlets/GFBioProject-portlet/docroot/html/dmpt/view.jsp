@@ -31,7 +31,7 @@ $(document).ready(function(){
         },
         hide: {
             effect: "fade",
-            delay: 600
+            delay: 500
         }
    	});   
     
@@ -58,7 +58,7 @@ $(document).ready(function(){
              	email: true
            	},
            	phoneNumber : {
-           		required: true,
+           		//required: true,
            		//number: true
            	},
 		}
@@ -109,7 +109,7 @@ $(document).ready(function(){
 		    $("#fundingOther").hide();
 		    $("#fundingLink").hide();
 		
-		    $("#policies").on("change", handlePolicy);
+		    $("#pol-cb").on("click", handlePolicy);
 		    $("#policyOther").hide();
 		    $("#policyLink").hide();
 		
@@ -118,11 +118,9 @@ $(document).ready(function(){
 		    $("#taxon").addClass("disabledDiv");
 		    $("#sequenced").addClass("disabledDiv");
 		    
-		    $("input[value='true'][name='physical']").on("click", handlePhysical);
-		    $("input[value='false'][name='physical']").on("click", handlePhysical);
+		    $("input[name='physical']").on("click", handlePhysical);
 		
-		    $("input[value='true'][name='alive']").on("click", handleAlive);
-		    $("input[value='false'][name='alive']").on("click", handleAlive);
+		    $("input[name='alive']").on("click", handleAlive);
 		    
 		    //02 Data Collection
 		    $("#dataformat-cb").on("click", checkboxDataformat);
@@ -147,7 +145,7 @@ $(document).ready(function(){
 		    $("#accessYes").hide();
 		    
 		    //05 Preservation and Sharing
-		    $("#archives").on("change", handleArchives);
+		    $("#archives-cb").on("click", handleArchives);
 		    $("#archiveOther").hide();
 		    
 		    //07 Handling inputs at the end of the wizard
@@ -203,7 +201,11 @@ function getInputAsJson() {
 		fundingLink = $("#fundingLink").val();
 	}
 	
-	var policies = $("#policies").text();
+	var policies = [];
+	$("input[name='policies']:checked").each(function() {
+      	policies.push($(this).siblings('span').text());
+    });
+	//var policies = $("#policies").text();
 	var policyLink = "";
 	if ($.inArray("Other", policies) > -1) {
 		policies.splice($.inArray("Other", policies), 1);

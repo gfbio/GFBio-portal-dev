@@ -3,6 +3,7 @@ package org.gfbio.submissionworkflow;
 //import LiferayWebserviceClientCallPortalServices;
 
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -10,6 +11,7 @@ import com.liferay.portal.util.PortalUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -47,7 +49,9 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.gfbio.helper.Helper;
+import org.gfbio.model.DataManagementPlan;
 import org.gfbio.service.ContentLocalServiceUtil;
+import org.gfbio.service.DataManagementPlanLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.PrimaryDataLocalServiceUtil;
 import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
@@ -72,15 +76,17 @@ public class WorkflowGeneric extends GenericPortlet {
     
     
 	public void init() {
-		
+		   	
 		viewTemplate = getInitParameter("view-template");
     }
 
     
     public void doView( RenderRequest renderRequest, RenderResponse renderResponse)     throws IOException, PortletException {
-    	   	
-    	
+	 
    	    include(viewTemplate, renderRequest, renderResponse);
+   	    
+   	    
+
     }
 
     
@@ -603,6 +609,14 @@ public class WorkflowGeneric extends GenericPortlet {
 	        	fields.put("customfield_10202", license);
         	}
         }
+        
+        if (researchObjectJson.containsKey("primarydata")){
+        	JSONObject primaryData = Helper.getJsonObjectFromJson(researchObjectJson, "primarydata");
+        	String primaryDataPath = Helper.getStringFromJson(primaryData, "path");
+        	fields.put("customfield_10600", primaryDataPath);
+        	
+        }
+        
 
         long researchObjectId =Helper.getLongFromJson(researchObjectJson, "researchobjectid");
         int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
@@ -646,13 +660,25 @@ public class WorkflowGeneric extends GenericPortlet {
 		
 	
 	//
+	@SuppressWarnings("unchecked")
 	public void createResearchObject (ResourceRequest request, ResourceResponse response){
 		
         String responseString = "";
         JSONObject parseJson = getDataJsonAsObject (request);
-	
 		responseString = (ResearchObjectLocalServiceUtil.createResearchObjectByJson(parseJson)).toString();
 		
+		if (parseJson.containsKey("primarydata")){
+			JSONObject primaryDataJson = new JSONObject();
+			primaryDataJson = Helper.getJsonObjectFromJson(parseJson, "primarydata");
+			JSONParser parser = new JSONParser();
+			try {parseJson = (JSONObject) parser.parse(responseString);}
+			catch (ParseException e) {e.printStackTrace();}
+			if (parseJson.containsKey("researchobjectid")){
+				primaryDataJson.put("researchobjectid", Helper.getLongFromJson(parseJson, "researchobjectid"));
+				primaryDataJson.put("researchobjectversion", Helper.getLongFromJson(parseJson, "researchobjectversion"));
+			}
+			parseJson = PrimaryDataLocalServiceUtil.createPrimaryData(primaryDataJson);
+		}
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		try {response.getWriter().write(responseString);}
@@ -864,7 +890,6 @@ public class WorkflowGeneric extends GenericPortlet {
 	        		fileJson.put("path", userPath);
 	        		dbJson.add(fileJson);
 	        		File fileOut = new File(userPath, thisItem.getName());
-	        		//fileOut.deleteOnExit();
 	        		try {thisItem.write(fileOut);} 
 	        		catch (Exception e) {e.printStackTrace();}
 	        	}

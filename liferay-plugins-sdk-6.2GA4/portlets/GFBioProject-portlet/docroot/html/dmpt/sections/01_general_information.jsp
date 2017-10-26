@@ -13,9 +13,9 @@
 		</div>
 	</div>
 	<!-- Following div with download button must be removed after development -->
-	<div>
+	<!-- <div>
 		<input id="downloadDMPtest" type="button" value="Download" />
-	</div>
+	</div> -->
 	<div class="row">
 		<h4>Please select a category</h4>
 		<div class="col-md-12">
@@ -84,9 +84,6 @@
 	                  	<span>Assimilation</span>
                   	</label>
                 </div>
-            </div>
-            <div class="hidden-xs hidden-sm">
-            	<div style="width=100%"></div>
             </div>
             <div class="col-xs-12 col-sm-6">
             	<div>	
@@ -195,18 +192,56 @@ We support you in meeting their requirements.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
     	</h4>
-	    <div id="follow-policies" class="col-md-12">
-	        <select id="policies" name="policies" multiple="multiple" size="5">
+	    <div id="follow-policies">
+	    	<div class="col-md-12">
+            	<div>
+                	<label class="mod-cb">
+		               	<input name="policies" type="checkbox"/>
+		               	<span>DFG Guidelines on the Handling of Research Data</span>
+                	</label>
+                </div>
+                <div>
+                      <label class="mod-cb">
+                      	<input name="policies" type="checkbox"/>
+                      	<span>DFG Guidelines on the Handling of Research Data in Biodiversity Research</span>
+                      </label>
+                </div>
+            </div>
+            <div class="col-md-12">
+           		<div>
+                	<label class="mod-cb">
+		               	<input name="policies" type="checkbox"/>
+		               	<span>DFG Guidelines for Safeguarding Good Scientific Practice</span>
+                	</label>
+                </div>
+                <div>
+                  	<label class="mod-cb">
+	                  	<input id="pol-cb" name="policies" type="checkbox"/>
+	                  	<span>Other</span>
+                  	</label>
+                </div>
+            </div>
+            <div class="col-md-12">
+            	<div>	
+                	<label class="mod-cb">
+		               	<input name="policies" type="checkbox"/>
+		               	<span>None</span>
+                	</label>
+                </div>
+            </div>
+	    	
+	        <!-- <select id="policies" name="policies" multiple="multiple" size="5">
 	            <option value="individual" >DFG Guidelines on the Handling of Research Data</option>
 	            <option value="coordinated" >DFG Guidelines on the Handling of Research Data in Biodiversity Research</option>
 	            <option value="excellence" >DFG Guidelines for Safeguarding Good Scientific Practice</option>
 	            <option value="other" >Other</option>
 	            <option value="none" >None</option>
-	        </select>
+	        </select> -->
+	        
 	        <div>
 	         	<input id="policyOther" name="policyOther" type="text" class="inputtext_long" placeholder="Other Research Data Policy and Guideline"/>
 	         	<input id="policyLink" type="text" class="inputtext_long" placeholder="Link Research Data Policy or Guideline"/>
-	        </div>
+	        </div> 
 	    </div>   
 	</div>
 </section>
