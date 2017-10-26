@@ -10,6 +10,7 @@
 	font-size: 16px ;
 	line-height:24px;
 	padding:0;
+
 	
 	body{
 	
@@ -21,7 +22,14 @@
 		line-height:24px;
 		padding:0;
 		margin-top: -10px;
-	 
+	  
+	    /* settings for sticky footer */
+	    display: -webkit-box;
+	    display: flex;
+	    -webkit-box-orient: vertical;
+	    -webkit-box-direction: normal;
+	    flex-direction: column;
+	    /* end of settings for sticky footer */
 	 
 	 a {
 	    -webkit-transition: all 0.3s ease-out 0s;
@@ -1234,22 +1242,23 @@ Liferay specific classes
 	padding-bottom: 0px;
 }
 
-.wrapper {
+/*------------sticky footer---------------*/
+ .wrapper {
   min-height: 100%;
-
+  -webkit-box-flex: 1;
+  flex: 1;
   /* Equal to height of footer */
   /* But also accounting for potential margin-bottom of last child */
-  margin-bottom: -200px;
+  margin-bottom: 0px;
 }
-.embeddedFooter {
-  height: 200px;
-}
+
 .push{
-	height: 50px;
+	height: 0px;
 }
 .portlet-body > .footer{
 	margin-bottom: -10px;
 }
+/*---------------------------------------------*/
 
 /*remove space at the bottom of asset entries*/
 .portlet-asset-publisher .asset-content {
@@ -1257,7 +1266,7 @@ Liferay specific classes
     margin-bottom: 0px;
   
 }
-
+/*an icon for copyright*/
 .by-nc{
 	background: url('../images/120px-By-nc.svg.png') no-repeat center center;
 	float:left;
@@ -1265,3 +1274,5 @@ Liferay specific classes
 	width: 120px;
 	height:42px;
 }
+
+/**/
