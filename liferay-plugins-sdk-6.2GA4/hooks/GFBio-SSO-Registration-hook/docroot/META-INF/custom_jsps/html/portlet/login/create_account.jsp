@@ -203,7 +203,7 @@
 				</aui:input>
 			</c:if>
 
-			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  type="text">
+			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  type="text" showRequiredLabel="<%= false %>" >
 				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 					<aui:validator name="required" />
 				</c:if>
@@ -211,7 +211,9 @@
 
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
 				
-				<aui:input label="password" name="password1" size="30" type="password" value="" placeholder="<%=passwordRules%>" title="<%=passwordRules%>"/>
+				<aui:input label="password" name="password1" size="30" type="password" value="" placeholder="<%=passwordRules%>" title="<%=passwordRules%>" showRequiredLabel="<%= false %>" >
+					<aui:validator name="required" />
+				</aui:input>
 <!-- 			<aui:input label="enter-again" name="password2" size="30" type="password" value="">
 					<aui:validator name="equalTo">
 						'#<portlet:namespace />password1'
@@ -254,7 +256,6 @@
 	</aui:button-row> 
 </aui:form>
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
-    <div class="push"></div>
 </div>
 <% 
 String footerContent = "";
@@ -268,4 +269,4 @@ try{
 	footerContent = "Sorry, there is no web content with this title";
 }
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<p><%=footerContent%></p>

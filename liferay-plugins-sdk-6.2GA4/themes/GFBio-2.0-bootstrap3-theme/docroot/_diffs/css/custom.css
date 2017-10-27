@@ -24,11 +24,8 @@
 		margin-top: -10px;
 	  
 	    /* settings for sticky footer */
-	    display: -webkit-box;
-	    display: flex;
-	    -webkit-box-orient: vertical;
-	    -webkit-box-direction: normal;
-	    flex-direction: column;
+	 	height: 100%;
+	 	margin: 0;
 	    /* end of settings for sticky footer */
 	 
 	 a {
@@ -1245,18 +1242,7 @@ Liferay specific classes
 /*------------sticky footer---------------*/
  .wrapper {
   min-height: 100%;
-  -webkit-box-flex: 1;
-  flex: 1;
-  /* Equal to height of footer */
-  /* But also accounting for potential margin-bottom of last child */
-  margin-bottom: 0px;
-}
-
-.push{
-	height: 0px;
-}
-.portlet-body > .footer{
-	margin-bottom: -10px;
+  min-height: calc(100vh - 400px);
 }
 /*---------------------------------------------*/
 
@@ -1266,7 +1252,7 @@ Liferay specific classes
     margin-bottom: 0px;
   
 }
-/*an icon for copyright*/
+/*---------------an icon for copyright---------*/
 .by-nc{
 	background: url('../images/120px-By-nc.svg.png') no-repeat center center;
 	float:left;
@@ -1275,4 +1261,5 @@ Liferay specific classes
 	height:42px;
 }
 
-/**/
+/*---------------------------------------------*/
+

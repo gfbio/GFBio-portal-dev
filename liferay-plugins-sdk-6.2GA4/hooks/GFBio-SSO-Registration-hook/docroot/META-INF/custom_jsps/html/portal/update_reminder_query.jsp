@@ -26,7 +26,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 }
 %>
 
-<div  class="wrapper" style="padding:0 10%;">
+<div  class="wrapper" style="margin:20px auto; max-width:500px">
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_reminder_query" %>' autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="update-reminder-query" method="post" name="fm">
 	<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
@@ -56,7 +56,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button type="submit" style="width:100%"/>
 	</aui:button-row>
 </aui:form>
 
@@ -91,7 +91,6 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 		);
 	}
 </aui:script>
-    <div class="push"></div>
 </div>
 <% 
 String footerContent = "";
@@ -105,4 +104,4 @@ try{
 	footerContent = "Sorry, there is no web content with this title";
 }
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<p><%=footerContent%></p>

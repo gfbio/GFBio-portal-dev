@@ -164,7 +164,6 @@
 		</aui:script>
 	</c:otherwise>
 </c:choose>
-    <div class="push"></div>
 </div>
 <% 
 String footerContent = "";
@@ -178,4 +177,4 @@ try{
 	footerContent = "Sorry, there is no web content with this title";
 }
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<%=footerContent%>
