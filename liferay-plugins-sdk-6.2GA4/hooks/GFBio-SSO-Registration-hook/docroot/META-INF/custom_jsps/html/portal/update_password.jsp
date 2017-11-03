@@ -13,6 +13,51 @@
  * details.
  */
 --%>
+<style type="text/css">
+.portlet-title{
+display:none;
+}
+[data-tip] {
+	position:relative;
+}
+[data-tip]:before {
+	content:'';
+	/* hides the tooltip when not hovered */
+	display:none;
+	content:'';
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #1a1a1a;	
+	position:relative;
+	top:85px;
+	left:35px;
+	z-index:8;
+	font-size:0;
+	line-height:0;
+	width:0;
+	height:0;
+}
+[data-tip]:after {
+	display:none;
+	content:attr(data-tip);
+	position:relative;
+	top:-10px;
+	left:0px;
+	padding:5px 8px;
+	background:#1a1a1a;
+	color:#fff;
+	z-index:9;
+	font-size: 0.75em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	word-wrap:normal;
+}
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+	display:block;
+}
+</style>
 
 <%@ include file="/html/portal/init.jsp"%>
 
@@ -27,6 +72,7 @@
 			&& Validator.isNotNull(ticketKey)) {
 		referer = themeDisplay.getPathMain();
 	}
+	
 %>
 
 <%
@@ -61,8 +107,7 @@
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
 
-		passwordRules += "The password should have at least "+Integer.toString(passMinLen)+" character";
-		if (passMinLen>1) passwordRules +="s";
+		passwordRules += "A minimum length is "+Integer.toString(passMinLen);
 		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
 			passwordRules += " including at least ";
@@ -199,9 +244,10 @@
 				</c:if>
 				
 				<aui:fieldset>
-					<aui:input autoFocus="<%=true%>" class="lfr-input-text-container"
-						label="new-password" name="password1" type="password" placeholder="<%=passwordRules%>" title="<%=passwordRules%>" />
-
+					<div data-tip="<%=passwordRules%>">
+					<aui:input autoFocus="<%=true%>" class="lfr-input-text-container" style="text-overflow: ellipsis;"
+						label="new-password" name="password1" type="password" placeholder="<%=passwordRules%>"/>
+					</div>
 					<!-- <aui:input class="lfr-input-text-container" label="enter-again"
 						name="password2" type="password" /> -->
 				</aui:fieldset>

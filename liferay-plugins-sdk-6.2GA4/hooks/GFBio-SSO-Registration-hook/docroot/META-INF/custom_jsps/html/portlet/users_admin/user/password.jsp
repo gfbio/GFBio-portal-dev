@@ -13,6 +13,49 @@
  * details.
  */
 --%>
+<style>
+[data-tip] {
+	position:relative;
+	max-width:fit-content;
+}
+[data-tip]:before {
+	content:'';
+	/* hides the tooltip when not hovered */
+	display:none;
+	content:'';
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #1a1a1a;	
+	position:relative;
+	top:60px;
+	left:35px;
+	z-index:8;
+	font-size:0;
+	line-height:0;
+	width:0;
+	height:0;
+}
+[data-tip]:after {
+	display:none;
+	content:attr(data-tip);
+	position:relative;
+	top:-33px;
+	left:0px;
+	padding:5px 8px;
+	background:#1a1a1a;
+	color:#fff;
+	z-index:9;
+	font-size: 0.75em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	word-wrap:normal;
+}
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+	display:block;
+}
+</style>
 
 <%@ include file="/html/portlet/users_admin/init.jsp"%>
 
@@ -48,8 +91,7 @@
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
 
-		passwordRules += "The password should have at least "+Integer.toString(passMinLen)+" character";
-		if (passMinLen>1) passwordRules +="s";
+		passwordRules += "A minimum length is "+Integer.toString(passMinLen);
 		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
 			passwordRules += " including at least ";
@@ -189,9 +231,11 @@
 		<aui:input autocomplete="off" label="current-password"
 			name="password0" size="30" type="password" />
 	</c:if>
-
-	<aui:input autocomplete="off" label="new-password" name="password1"
-		size="30" type="password" placeholder="<%=passwordRules%>" title="<%=passwordRules%>"/>
+	<span>
+	<div data-tip="<%=passwordRules%>">
+	<aui:input autocomplete="off" label="new-password" name="password1" style="text-overflow: ellipsis;"
+		size="30" type="password" placeholder="<%=passwordRules%>"/>
+	</div>
 	<aui:input autocomplete="off" label="enter-again" name="password2"
 		size="30" type="password">
 		<aui:validator name="equalTo">
