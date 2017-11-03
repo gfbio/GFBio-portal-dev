@@ -2079,10 +2079,8 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		primarydataJson.put("researchobjectversion", researchObjectVersion);
 			
 		if (primarydataJson.containsKey("primarydataid")){
-			_log.info("update Pri");
 			primarydataJson = PrimaryDataLocalServiceUtil.updatePrimaryData(primarydataJson);
 		}else{
-			_log.info("create Pri");
 			primarydataJson = PrimaryDataLocalServiceUtil.createPrimaryData(primarydataJson);
 		}
 		
