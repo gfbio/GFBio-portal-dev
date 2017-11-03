@@ -38,17 +38,17 @@
 
 	String passwordRules = "";
 	if (passwordPolicy.isCheckSyntax()) {
-		if (passwordPolicy.isAllowDictionaryWords()) {
+		/*if (passwordPolicy.isAllowDictionaryWords()) {
 			passwordRules += "The new password should not contain dictionary words. ";
-		}
+		}*/
 		int passMinAlp = passwordPolicy.getMinAlphanumeric();
 		int passMinLen = passwordPolicy.getMinLength();
 		int passMinLowCase = passwordPolicy.getMinLowerCase();
 		int passMinNum = passwordPolicy.getMinNumbers();
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
-			
-		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character";
+
+		passwordRules += "The password should have at least "+Integer.toString(passMinLen)+" character";
 		if (passMinLen>1) passwordRules +="s";
 		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
@@ -190,16 +190,8 @@
 			name="password0" size="30" type="password" />
 	</c:if>
 
-	<c:if test="<%=!passwordRules.isEmpty()%>">
-					
-					<div class="portlet-msg-info" style="font-size:13px;margin-top:30px;">
-					<div class="icon-info" title=""></div>
-					<%=passwordRules%>
-					</div>
-	</c:if>
-
 	<aui:input autocomplete="off" label="new-password" name="password1"
-		size="30" type="password" />
+		size="30" type="password" placeholder="<%=passwordRules%>" title="<%=passwordRules%>"/>
 	<aui:input autocomplete="off" label="enter-again" name="password2"
 		size="30" type="password">
 		<aui:validator name="equalTo">

@@ -51,9 +51,9 @@
 
 	String passwordRules = "";
 	if (passwordPolicy.isCheckSyntax()) {
-		if (passwordPolicy.isAllowDictionaryWords()) {
+		/*if (passwordPolicy.isAllowDictionaryWords()) {
 			passwordRules += "The new password should not contain dictionary words. ";
-		}
+		}*/
 		int passMinAlp = passwordPolicy.getMinAlphanumeric();
 		int passMinLen = passwordPolicy.getMinLength();
 		int passMinLowCase = passwordPolicy.getMinLowerCase();
@@ -61,7 +61,7 @@
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
 
-		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character";
+		passwordRules += "The password should have at least "+Integer.toString(passMinLen)+" character";
 		if (passMinLen>1) passwordRules +="s";
 		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
@@ -101,7 +101,8 @@
 		passwordRules += "The old password cannot be reused. ";
 	}
 %>
-<div class="wrapper" style="padding: 0 10%;">
+
+<div class="wrapper" style="margin:20px auto; max-width:500px">
 	<c:choose>
 		<c:when
 			test="<%=SessionErrors.contains(request, UserLockoutException.class.getName())%>">
@@ -125,11 +126,11 @@
 					value="<%=referer%>" />
 				<aui:input name="ticketKey" type="hidden" value="<%=ticketKey%>" />
 
-				<div class="alert alert-info">
+<!-- 				<div class="alert alert-info">
 					<liferay-ui:message key="please-set-a-new-password" />
 					<c:if test="<%=!passwordRules.isEmpty()%>">
 					</c:if>
-				</div>
+				</div> -->
 
 				<c:if
 					test="<%=SessionErrors.contains(request, UserPasswordException.class.getName())%>">
@@ -197,16 +198,12 @@
 					</div>
 				</c:if>
 				
-				<aui:fieldset label="new-password">
-					<div class="portlet-msg-info" style="font-size:13px;margin-bottom:0px;">
-					<div class="icon-info" title=""></div>
-					<%=passwordRules%>
-					</div>
+				<aui:fieldset>
 					<aui:input autoFocus="<%=true%>" class="lfr-input-text-container"
-						label="password" name="password1" type="password" />
+						label="new-password" name="password1" type="password" placeholder="<%=passwordRules%>" title="<%=passwordRules%>" />
 
-					<aui:input class="lfr-input-text-container" label="enter-again"
-						name="password2" type="password" />
+					<!-- <aui:input class="lfr-input-text-container" label="enter-again"
+						name="password2" type="password" /> -->
 				</aui:fieldset>
 
 				<div class="portlet-msg-info">
@@ -218,12 +215,11 @@
 				</div>
 
 				<aui:button-row>
-					<aui:button type="submit" />
+					<aui:button type="submit" style="width:100%"/>
 				</aui:button-row>
 			</aui:form>
 		</c:otherwise>
 	</c:choose>
-	<div class="push"></div>
 </div>
 
 <%
@@ -240,4 +236,4 @@
 		footerContent = "Sorry, there is no web content with this title";
 	}
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<p><%=footerContent%></p>
