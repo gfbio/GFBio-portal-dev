@@ -254,6 +254,9 @@
 		<column name="metadataID" 				type="long" 	db-name="metadataid"/>
 		<column name="licenseID" 				type="long" 	db-name="licenseid"/>	
 		<column name="researchObjectType" 		type="String"	db-name="researchobjecttype"/>	
+		<column name="publications"				type="String" 	db-name="publications"/>
+		<column name="dataCollectionTime"		type="String" 	db-name="datacollectiontime"/>
+		<column name="embargo" 					type="Date" 	db-name="embargo"/>
 		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 

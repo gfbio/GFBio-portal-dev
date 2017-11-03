@@ -288,6 +288,13 @@
 			<basic name="researchObjectType">
 				<column name="RESEARCHOBJECTTYPE" />
 			</basic>
+			<basic name="publications" />
+			<basic name="dataCollectionTime">
+				<column name="DATACOLLECTIONTIME" />
+			</basic>
+			<basic name="embargo">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<basic name="lastModifiedDate">
 				<column name="LASTMODIFIEDDATE" />
 				<temporal>TIMESTAMP</temporal>

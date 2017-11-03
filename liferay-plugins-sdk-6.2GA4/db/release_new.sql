@@ -42,3 +42,13 @@ WHERE
       headid =  (select getHeadIdByName('gfbio_license')) and
       cellcontent = 'CC BY-SA'
   )
+
+  
+  ------------------------------------------------------------------------------------------------
+-----------------------------------       researchobject        -- 02.11.2017 --------------------
+-------------------------------------------------------------------------------------------------- 
+
+ALTER TABLE gfbio_researchobject ADD publications text;
+ALTER TABLE gfbio_researchobject ADD datacollectiontime text;
+ALTER TABLE gfbio_researchobject ADD embargo timestamp with time zone;
+
