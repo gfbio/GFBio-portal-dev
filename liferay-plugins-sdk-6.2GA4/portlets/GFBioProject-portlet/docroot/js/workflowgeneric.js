@@ -31,7 +31,7 @@ function buildCommonResearchObjectJson(projectJson){
 	var legalrequirements =[];
 	for (i =0; i<document.getElementsByName("legalrequirements").length;i++)
 		if (document.getElementsByName("legalrequirements")[i].checked)
-			legalrequirements.push(document.getElementsByName("legalrequirements")[i].value);
+			legalrequirements.push(document.getElementsByName("legalrequirementids")[i].value);
 		
 	
 	var category =[];
@@ -44,7 +44,7 @@ function buildCommonResearchObjectJson(projectJson){
 		"publications":document.getElementById("gwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
 		"embargo":document.getElementById("gwf_ro_embargo").value,
-		"legalrequirements":legalrequirements,
+		"legalrequirements":legalrequirements
 	}
 
 	var researchObjectJson = {
@@ -54,6 +54,10 @@ function buildCommonResearchObjectJson(projectJson){
 		"description":document.getElementById("gwf_ro_description").value,
 		"extendeddata": extendetdata,
 		"categoryids":category,
+		"publications":document.getElementById("gwf_ro_publications").value,
+		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
+		"embargo":document.getElementById("gwf_ro_embargo").value,
+		"legalrequirementids":legalrequirements
 	};
 
 	if (projectJson.projectid!=0)
@@ -308,21 +312,7 @@ function checkMinimalResearchObjectInput(){
 		if(!subcheck)
 			check = subcheck;
 	}
-	
-	
-	/*
-	 * 	if (document.getElementById("gwf_ro_name").value==""){
-		check = false;
-		document.getElementById("gwf_ro_name_l").className="labelFalse";
-		document.getElementById("gwf_ro_name_d").className="labelFalse";
-		document.getElementById("gwf_ro_name").className="inputTextContainerFalse";
-	}else{
-		document.getElementById("gwf_ro_name_l").className="control-label";
-		document.getElementById("gwf_ro_name_d").className="field-description";
-		document.getElementById("gwf_ro_name").className="field lfr-input-text-container";
-	}
-	 */
-	
+		
 	if (!check)
 		buildErrorMessage('gwf_lf_comentarField', "Please correct or fill the marked fields.")
 	else

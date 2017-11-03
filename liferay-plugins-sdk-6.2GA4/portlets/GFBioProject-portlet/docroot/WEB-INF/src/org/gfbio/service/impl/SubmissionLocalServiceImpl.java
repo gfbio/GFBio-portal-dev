@@ -788,11 +788,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject createSubmission (JSONObject requestJson){
-	
+		
 		Boolean check = false;
 		JSONObject keyJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "ispublic", "jiraid","jirakey", "publicafter", "researchobjectid", "researchobjectversion", "status", "userid"};
+		String [] keySet = {"archive", "archivepidtype", "archivepid", "brokersubmissionid", "dbrocheck", "ispublic", "jiraid","jirakey", "publicafter", "researchobjectid", "researchobjectversion", "status", "userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = Helper.checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -812,18 +812,22 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			String brokerSubmissionId ="";
 			long userId = Helper.getLongFromJson(requestJson, "userid");
 			Submission submission = null;
+			Boolean dbrocheck = false;
+			
+			if (requestJson.containsKey("dbrocheck"))
+				dbrocheck = Helper.getBooleanFromJson(requestJson, "dbrocheck"); 
 			
 			if (requestJson.containsKey("brokersubmissionid"))
 				brokerSubmissionId = ((String)requestJson.get("brokersubmissionid")).trim();
 			else
 				brokerSubmissionId = (createBrokerSubmissionId()).trim();
 			
-			if (ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion)){
+			if (dbrocheck ||(ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))){
 				
 				if (DataProviderLocalServiceUtil.checkDataProviderLabel(archive)){
 				
 					long submissionId = getSubmissionIdByIds(researchObjectId, researchObjectVersion, archive);
-
+					
 					if (submissionId !=0)
 						try {submission = submissionPersistence.findByPrimaryKey(submissionId);} 
 						catch (SystemException | NoSuchModelException e) {System.out.println("Entry in Submission does not exist with pk: "+submissionId+ " and will be create now");}
@@ -885,7 +889,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			}
 			else{
 				if (DataProviderLocalServiceUtil.checkDataProviderLabel(archive))
-					keyJson.put("ERROR","ERROR: A Archive with this label is not in the database.");
+					keyJson.put("ERROR","ERROR: A ResearchObject with this ID and Version are not in the database.");
 				else
 					keyJson.put("ERROR","ERROR: A ResearchObject with this ID and Version and a Archive with this label are not in the database.");
 			}

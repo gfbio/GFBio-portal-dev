@@ -915,7 +915,7 @@
 		responseData["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
 		responseData["archive"]= "GFBio collections";
 		
- 		$.ajax({
+  		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
 			"data" : {
@@ -945,7 +945,7 @@
 				deleteSubmissionRegistryEntry(responseData);
 				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 			},		
-		});	 
+		});	  
 	}
 	
 	

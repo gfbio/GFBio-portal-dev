@@ -125,6 +125,9 @@
 		<field name="metadataID" type="long" />
 		<field name="licenseID" type="long" />
 		<field name="researchObjectType" type="String" />
+		<field name="publications" type="String" />
+		<field name="dataCollectionTime" type="String" />
+		<field name="embargo" type="Date" />
 		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.ResearchObject_User">
