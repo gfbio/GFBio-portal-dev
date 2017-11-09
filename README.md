@@ -24,7 +24,7 @@ This is the active development environment. Each type of code is differentiated 
    - themes (Themes - main component for web design)
    
 
-# Installation Guide (in progress)
+## Installation Guide (in progress)
 
 * Java version
 * Eclipse version
@@ -35,11 +35,27 @@ This is the active development environment. Each type of code is differentiated 
 * DB setup up
 * build services
 * deploy
-   
-# FAQs   
+
+## Contributing
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Authors
+* Felicitas Löffler
+* Marcel Frömming
+* Kobkaew Opasjumruskit
+
+See also the list of [contributors](https://github.com/gfbio/GFBio-portal-dev/contributors) who participated in this project.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Live System
+[dev.gfbio.org](https://dev.gfbio.org)
+
+## FAQs   
 This section describes known problems and frequent issues occuring during development.
 
-## Error: build version number
+### Error: build version number
 
 Description: Each portlet has a service.properties file that will be updated at each deployment time. Instead of overwriting the existing file you should create a service-ext.properties file.
 
@@ -62,7 +78,7 @@ build.number=1
 7.) have a look into the database, table 'servicecomponent', you are supposed to see a new entry with build space number 1
 
 
-# TO-DO
+## TO-DO
 * Remove webcontent folder (it is enough to keep it in the portal-release repository).
 * add license file
 * describe gadgets, hooks, portlets, layouttpls and themes in more details
