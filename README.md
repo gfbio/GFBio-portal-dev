@@ -21,7 +21,7 @@ This is the active development environment. Each type of code is differentiated 
    - hooks (overwriting Liferay's default behaviour)
    - layouttpl (Layout Templates)
    - portlets (Portlets)
-   - themes (Themes - component for web design)
+   - themes (Themes - main component for web design)
    
 
 # Installation Guide (in progress)
@@ -30,11 +30,36 @@ This is the active development environment. Each type of code is differentiated 
 * Eclipse version
 * Ant version
 * How to integrate the current development environment into eclipse?
-* build.properties
+* liferay server
+* build.properties in sdk folder
 * DB setup up
+* build services
+* deploy
    
 # FAQs   
-* There was an issue of build version number, please add it here as QA.
+This section describes known problems and frequent issues occuring during development.
+
+## Error: build version number
+
+Description: Each portlet has a service.properties file that will be updated at each deployment time. Instead of overwriting the existing file you should create a service-ext.properties file.
+
+1.) stop you liferay server
+
+2.) remove all deployed portlet code (e.g., GFBio-project-portlet) from your 'liferay/tomcat/webapps' folder and your 'liferay/tomcat/temp' folder
+
+3.) go to your local liferay database and remove all entries in table 'servicecomponent' that have the build namespace 'gfbio'
+
+(DELETE FROM servicecomponent where buildnamespace='gfbio')
+
+4.) create a service-ext.properties file in your docroot/WEB-INF/src folder and add the following line:
+
+build.number=1
+
+5.) open your eclipse, clean your project, build services and deploy the code
+
+6.) start your liferay server again
+
+7.) have a look into the database, table 'servicecomponent', you are supposed to see a new entry with build space number 1
 
 
 # TO-DO
