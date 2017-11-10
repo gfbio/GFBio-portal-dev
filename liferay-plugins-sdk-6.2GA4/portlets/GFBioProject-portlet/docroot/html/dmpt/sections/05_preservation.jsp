@@ -6,8 +6,7 @@
 	</div>
 	<div class="row">
         <h4>Where will your data be archived?</h4>
-        <div id="dataArchives" class="col-md-12">
-        	
+        <div id="dataArchives">
         	<div class="col-xs-12 col-sm-6">
             	<div>
                 	<label class="mod-cb">
@@ -85,11 +84,11 @@
     </div>
 	<div class="row">
         <h4>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?
-        	<a href="#" title="With a persistent identifiers (PID) - like DOI - you make your data citable and linkable to publications which is increasingly required by journals. GFBio recommends to add a PID to your data.">
+        	<a name="title" href="#" title="With a persistent identifiers (PID) - like DOI - you make your data citable and linkable to publications which is increasingly required by journals. GFBio recommends to add a PID to your data.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
         </h4>
-        <div id="persistentIdentifier" class="col-md-12">
+        <div id="persistentIdentifier">
 	        <div class="col-md-3">
 	            <label class="mod-cb">
 		            <input class="radio_input" name="pid" type="radio" value="Yes" />

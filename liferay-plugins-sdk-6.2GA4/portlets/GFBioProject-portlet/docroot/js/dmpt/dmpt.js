@@ -1,5 +1,19 @@
 /*global $*/
 
+function hideGeneralInformation() {
+	$("div.steps").hide();
+	$("div.actions").hide();
+	$("div[name='title']").hide();
+	$("#generalinformation").hide();
+	
+	$("#dmpstart").show();
+}
+
+function loadDmp() {
+	console.log("LOADING...");
+	
+}
+
 function handlePrincipalButton(event) {
     'use strict';
     
@@ -129,8 +143,7 @@ function handleFunding(event) {
 function handlePolicy(event) {
     'use strict';
     
-    var selection = $(event.target).val(),
-        other = $("#policyOther"),
+    var other = $("#policyOther"),
         link = $("#policyLink");
     if ($(event.target).is(':checked')) {
         other.show("slow");
@@ -157,8 +170,9 @@ function handleMetadataOther(event) {
 function handleLicenses(event) {
 	'use strict';
 	
-    var other = $("#licenseOther");
-    if ($(event.target).is(':checked')) {
+    var selection = $(event.target).val(),
+    	other = $("#licenseOther");
+    if (selection === "other") {
 		other.show("slow");
 	} else {
 	    other.hide();
@@ -170,13 +184,12 @@ function handleLicenses(event) {
 function handleRestriction(event) {
 	'use strict';
 	
-	console.log('Test Restriction');
 	var selection = $(event.target).val(),
 		howLong = $("#accessDuration"),
 		why = $("#accessReason"),
 		div = $("#accessYes");
 	if (selection === "true") {
-		div.show("slow");
+		div.show();
 	} else {
 		div.hide();
 		howLong.val("");

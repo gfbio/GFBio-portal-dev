@@ -8,6 +8,8 @@
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
 <portlet:resourceURL var="ajaxUrlWizard" id="wizard" />
+<portlet:resourceURL var="ajaxUrlLicense" id="license" />
+<portlet:resourceURL var="ajaxUrlSave" id="savedmp" />
 
 <script type="text/javascript">   
 
@@ -17,24 +19,7 @@ var contextPath = '${contextPath}';
 
 $(document).ready(function(){
 	
-    $(document).tooltip({
-    	tooltipClass: "jqueryTooltip",
-    	position: {
-            my: "left center", // the "anchor point" in the tooltip element
-            at: "right+5 center", // the position of that anchor point relative to selected element
-        },
-        content: function() {
-            return $(this).attr('title');
-        },
-        show: { 
-        	effect: "fade"
-        },
-        hide: {
-            effect: "fade",
-            delay: 500
-        }
-   	});   
-    
+      
     $.validator.addMethod("notEqual", function(value, element, param) {
         return this.optional(element) || value != param;
     }, "Please specify a non-default value");
@@ -97,6 +82,15 @@ $(document).ready(function(){
 			sendInput();
 		},
 		onInit : function() {
+			//Start
+			$("#dmpstart").hide();
+			
+			if (Liferay.ThemeDisplay.isSignedIn()) {
+				hideGeneralInformation();
+			}
+			
+			$("load").on("click", loadDmp);
+			
 		    //01 General Information
 			$("#firstPrincInput").on("keyup focus", handlePrincipalButton);
 		    
@@ -137,9 +131,13 @@ $(document).ready(function(){
 		    $("#legal-other").on("click", checkboxRequirement);
 		    $("#requirementOther").hide();
 		
-		    $("#license-other").on("click", handleLicenses);
+		    $("#licenses").on("change", function(event) {
+		    	handleLicenses(event);
+		    	getLicenseData();
+		    });
 		    $("#licenseOther").hide();
 		    $("#licensceUrl").hide();
+		    $("#licensceDescription").hide();
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
@@ -156,11 +154,58 @@ $(document).ready(function(){
 				fileName = fileName.replace(/\s/g, "_");
 				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
 			});
-		    $("#downloadDMPtest").click(function() {
-				var fileName = $("#name").val();
-				fileName = fileName.replace(/\s/g, "_");
-				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
-			});
+		    
+		    //$("#downloadDMPtest").click(function() {
+			//	var fileName = $("#name").val();
+			//	fileName = fileName.replace(/\s/g, "_");
+			//	window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+			//});
+		    
+		    //Saving DMP
+		    $("#saveDMP").on("click", saveDMPforUser);
+		    
+		    if(!Liferay.ThemeDisplay.isSignedIn()) {
+		    	$("#saveDMP").prop("disabled", true);
+		    	$("#saveDMP").prop("title", "You need to be logged in");
+		    	$("#saveDMP").addClass("wizarddisabled");
+		    }
+		    
+		    //Tooltips
+		    $("a[name=title]").tooltip({
+		    	tooltipClass: "jqueryTooltip",
+		    	position: {
+		            my: "left center", // the "anchor point" in the tooltip element
+		            at: "right+5 center" // the position of that anchor point relative to selected element
+		        },
+		        content: function() {
+		            return $(this).attr('title');
+		        },
+		        show: { 
+		        	effect: "fade"
+		        },
+		        hide: {
+		            effect: "fade",
+		            delay: 500
+		        }
+		    }); 
+
+		    $("span[title]").tooltip({
+		    	tooltipClass: "jqueryTooltip",
+		    	position: {
+		    		my: "center top",
+		            at: "center bottom+5"
+		        },
+		        content: function() {
+		            return $(this).attr('title');
+		        },
+		        show: { 
+		        	effect: "fade"
+		        },
+		        hide: {
+		            effect: "fade",
+		            delay: 500
+		        }
+		    });
 		}
   	})
 });
@@ -268,7 +313,7 @@ function getInputAsJson() {
 	var accessRestriction = $("input[name='restriction']:checked").val();
 	var accessDuration = "";
 	var accessReason = "";
-	if (restriction) {
+	if (accessRestriction) {
 		accessDuration = $("#accessDuration").val();
 		accessReason = $("#accessReason").val();
 	}
@@ -341,12 +386,27 @@ function getInputAsJson() {
 	
 }
 
+function saveDMPforUser() {
+	
+	projectName = $("#name").val();
+	
+	$.ajax({
+	   		"method": "POST",
+	   		"url": '<%=ajaxUrlSave%>',
+	   		"data": {
+	   			name: projectName
+	   		},
+	   		success: function(text) {
+	          	console.log("Save Answer: " + text);
+	      	}
+ 	});
+}
+
 function sendInput() {
 	
 	jsonInput = getInputAsJson();
 	console.log("Send: " + jsonInput);
 	
-	var response = '';
     $.ajax({
 	   		"method": "POST",
 	   		"url": '<%=ajaxUrlWizard%>',
@@ -356,6 +416,40 @@ function sendInput() {
 	   		success: function(text) {
 	          	console.log(text);
 	      	}
+    });
+}
+
+function getLicenseData() {
+	
+	license = $("#licenses").val();
+	console.log("License: " + license);
+	
+    $.ajax({
+	   		"method": "POST",
+	   		"url": '<%=ajaxUrlLicense%>',
+	   		"data": {
+	   			license: license
+	   		},
+	   		success: function(text) {
+	          	console.log(text);
+	          	
+          		var results = text.split(',');
+          		console.log(results[0]);
+          		if (results[0] !== "url") {
+          			console.log(results[0]);
+          			$("#licensceUrl").href = results[0];
+          			$("#licensceUrl").innerHTML = results[0];
+          			$("#licensceUrl").show("slow");
+          		} else {
+          			$("#licensceUrl").hide();
+          		}
+          		if (results[1] !== "desc") {
+          			$("#licenseDescription").innerHTML = results[1];
+          			$("#licenseDescription").show("slow");
+          		} else {
+          			$("#licenseDescription").hide();
+          		}
+	        }
     });
 }
 
