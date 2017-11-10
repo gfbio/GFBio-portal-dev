@@ -1029,7 +1029,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authornames", "authormail","authorid", "authors","brokerobjectid","categoryid", "categoryids", "categorynames", "datacollectiontime",
+		String [] keySet = {"authorid", "authornames", "authormail", "authors","brokerobjectid","categoryid", "categoryids", "categorynames", "datacollectiontime",
 				"description", "embargo", "extendeddata", "label","legalrequirementid","legalrequirementids","legalrequirementnames","legalrestrictionid","legalrestrictionids","legalrestrictionnames",
 				"licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "primarydata", "projectid", "publications","researchobjecttype", "userid"};
 		for (int i = 0; i< keySet.length;i++)
@@ -1416,9 +1416,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authors", "authormail", "authornames", "authorid", "brokerobjectid", "categoryid", "categoryids", "categorynames", 
-				"datacollectiontime", "description", "embargo", "extendeddata", "label","licenseid", "licenselabel", "metadataid", "metadatalabel",
-				"name",	"publications", "primarydata", "researchobjectid","parentresearchobjectid","userid"};
+		String [] keySet = {"authorid", "authormail", "authornames", "authors", "brokerobjectid", "categoryid", "categoryids", "categorynames", 
+				"datacollectiontime", "description", "embargo", "extendeddata", "label", "legalrequirementid", "legalrequirementids", "legalrequirementnames", 
+				"legalrestrictionid", "legalrestrictionids","legalrestrictionnames", "licenseid", "licenselabel", "metadataid", "metadatalabel", "name",
+				"publications", "primarydata", "researchobjectid","parentresearchobjectid","userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
