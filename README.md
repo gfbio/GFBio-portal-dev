@@ -157,3 +157,4 @@ build.number=1
 * Remove webcontent folder (it is enough to keep it in the portal-release repository).
 * describe gadgets, hooks, portlets, layouttpls and themes in more details
 * discuss license, MIT or LGPL?
+
