@@ -26,15 +26,90 @@ This is the active development environment. Each type of code is differentiated 
 
 ## Installation Guide (in progress)
 
-* Java version
-* Eclipse version
-* Ant version
-* How to integrate the current development environment into eclipse?
-* liferay server
-* build.properties in sdk folder
-* DB setup up
-* build services
-* deploy
+###Software:
+* **Java version:** Liferay 6.2 GA 4 don't support Java versions higher as 1.7. So, the current JDK is 1.7.80
+* **IDE:** Liferay IDE Eclipse 2.2.4 ga5 
+* **SDK:** Liferay Plugins SDK 6.2 ce ga4 (part of the GIT)
+* **Liferay Server Bundle:**  Liferay portal tomcat 6.2 ce ga4
+* **Data base:** PostgreSQL 9.3
+* **Data base Managment System:** PGAdmin 3
+* **Usual used OS Software:** Windows 7
+
+### Initialisation
+* Clone the GIT repository (for example to GFBio-portal-dev)
+* Unpack the server bundle and IDE in this folder.
+* Create a build.[operating-system-login-name].properties file in the SDK folder.
+* write in this file:
+```
+#Managed by Liferay IDE (remove this comment to prevent future updates)
+ #Wed Jan 06 11:00:17 CET 2016
+ app.server.tomcat.lib.global.dir = [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42\\lib\\ext
+ app.server.tomcat.deploy.dir =     [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42\\webapps
+ app.server.parent.dir =            [path to folder]\\[repository folder name]\\[server bundle folder name]
+ app.server.tomcat.dir =            [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42
+ app.server.type = tomcat
+ app.server.tomcat.portal.dir =     [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42\\webapps\\ROOT
+ app.server.lib.global.dir =        [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42\\lib\\ext
+ app.server.deploy.dir =            [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42\\webapps
+ app.server.dir =                   [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42
+ app.server.portal.dir =            [path to folder]\\[repository folder name]\\[server bundle folder name]\\tomcat-7.0.42\\webapps\\ROOT
+```
+* The IDE and the server bundle folders and the properties file have to be in the ignore list of the GIT
+
+### IDE and Server
+* Start the IDE/eclipse.
+* Build a new workspace folder and switch to Liferay view.
+  * If you would the workspace folder in your repository folder name, then add the workflow folder to your GIT ignore list. 
+* Switch to the Liferay view of the Eclipse.
+  * Build new server:
+  * Go to File / New / Other / Server / Server. OR create a new server in the server tab.
+  * Choose Liferay, Inc / Liferay v6.2 CE Server (Tomcat 7).
+  * Choose by Server runtime environment: Liferay v.6.2 (Tomcat) GA4 or go to Add. Choose the correctTomcat directory ([repository folder name]\[server bundle folder name]\tomcat-7.0.42) and select jre7 as runtime JRE
+  * !!! eclipse-mars IDE and higher requires Java 8 as Server runtime environment !!!
+
+
+  
+###Database integration
+* GFBio use two databases. The liferay database for user management and the gfbio portal database for gfbio specific applications
+* Create a portal-ext.properties file in the liferay-portal-6.2-ce-ga4 folder
+```
+ ############# Database #########################
+ jdbc.default.driverClassName=org.postgresql.Driver
+ jdbc.default.url=jdbc:postgresql://localhost:5432/lportal
+ jdbc.default.username=gfbiodb
+ jdbc.default.password=test
+ jdbc.gfbio.username=gfbiodb
+ jdbc.gfbio.password=test
+ jdbc.gfbio.driverClassName=org.postgresql.Driver
+ jdbc.gfbio.url=jdbc:postgresql://localhost:5432/gfbio?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+```
+* If you change the database passwords, then you have to change the passwords in this file too
+
+* Start the created server in the IDE.
+* Answer the database question, so that the system build a PostgreSQL 9.3 database on localhost 5432.
+* Start PGAdmin.
+* Go to server PostgreSQL 9.3 (localhost: 5432).
+* Create new login rolle with
+  * **name:** gfbiodb,
+  * **password:** test,
+  * **Role privileges:** Can login, Inherits rights from parent roles, Superuser, Can create databases, Can modify catalog directly.
+* Add new database (use the SQL option in task menu):
+```
+ CREATE DATABASE gfbio
+ WITH OWNER = gfbiodb
+      ENCODING = 'UTF8'
+      TABLESPACE = pg_default
+      LC_COLLATE = 'German_Germany.1252'
+      LC_CTYPE = 'German_Germany.1252'
+      CONNECTION LIMIT = -1;
+```
+
+* build a environmental variable 'PSQL_HOME' for the [..]\PostgreSQL\9.3\bin\ folder
+* Start run_sql.cmd (windows) or run_sql.csh (Linux/Unix) to create the database tables or start the sql files individualy.
+  * All this files are in [path to folder] / [repository folder name] / [sdk folder] / db.
+
+* Liferay use automatic generate classes and services for the relations between database and Portal-Applications/APIs. This services are integrated in the GFBioProject-portlet. To use this services, you have to build the services (right click on GFBioProject-portlet / Liferay / Build Services)
+
 
 ## Contributing
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
