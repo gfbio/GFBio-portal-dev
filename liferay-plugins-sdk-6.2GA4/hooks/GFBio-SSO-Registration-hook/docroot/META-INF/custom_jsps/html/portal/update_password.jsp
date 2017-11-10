@@ -55,7 +55,7 @@ display:none;
 }
 [data-tip]:hover:before,
 [data-tip]:hover:after {
-	display:block;
+	display:table;
 }
 </style>
 
@@ -248,6 +248,7 @@ display:none;
 					<aui:input autoFocus="<%=true%>" class="lfr-input-text-container" style="text-overflow: ellipsis;"
 						label="new-password" name="password1" type="password" placeholder="<%=passwordRules%>"/>
 					</div>
+					<aui:input name="password2" type="hidden" />
 					<!-- <aui:input class="lfr-input-text-container" label="enter-again"
 						name="password2" type="password" /> -->
 				</aui:fieldset>
@@ -261,7 +262,9 @@ display:none;
 				</div>
 
 				<aui:button-row>
-					<aui:button type="submit" style="width:100%"/>
+					<aui:button type="submit" style="width:100%"
+					onclick="document.getElementById('password2').value=document.getElementById('password1').value;"
+					/>
 				</aui:button-row>
 			</aui:form>
 		</c:otherwise>

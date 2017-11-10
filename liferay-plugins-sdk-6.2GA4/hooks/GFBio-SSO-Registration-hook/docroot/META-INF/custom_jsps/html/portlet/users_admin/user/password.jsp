@@ -16,7 +16,6 @@
 <style>
 [data-tip] {
 	position:relative;
-	max-width:fit-content;
 }
 [data-tip]:before {
 	content:'';
@@ -53,7 +52,7 @@
 }
 [data-tip]:hover:before,
 [data-tip]:hover:after {
-	display:block;
+	display:table;
 }
 </style>
 

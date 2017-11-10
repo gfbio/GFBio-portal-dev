@@ -16,6 +16,12 @@
     <style type="text/css">
     	.portlet-title{
     	display:none;}
+		/*------------sticky footer---------------*/
+		 .wrapper {
+		  min-height: 100%;
+		  min-height: calc(100vh - 400px);
+		}
+		/*---------------------------------------------*/
     </style>
 <%@ include file="/html/portal/init.jsp" %>
 
@@ -76,7 +82,7 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 		<c:if test="<%= themeDisplay.isSignedIn() && !user.isEmailAddressVerified() %>">
 			<aui:button href='<%= themeDisplay.getPathMain() + "/portal/verify_email_address?p_l_id=" + layout.getPlid() + "&cmd=" + Constants.SEND + "&referer=" + HttpUtil.encodeURL(referer) %>' value="send-new-verification-code" />
 
-			<aui:button href='<%= themeDisplay.getPathMain() + "/portal/update_email_address?p_l_id=" + layout.getPlid() + "&referer=" + HttpUtil.encodeURL(referer) %>' value="change-email-address" />
+			<!-- <aui:button href='<%= themeDisplay.getPathMain() + "/portal/update_email_address?p_l_id=" + layout.getPlid() + "&referer=" + HttpUtil.encodeURL(referer) %>' value="change-email-address" /> -->
 		</c:if>
 	</aui:button-row>
 </aui:form>

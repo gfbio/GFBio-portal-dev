@@ -253,7 +253,8 @@
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
 				
 				<div data-tip="<%=passwordRules%>">
-				<aui:input label="password" name="password1" size="30" type="password" value="" placeholder="<%=passwordRules%>" showRequiredLabel="<%= false %>" >
+				<aui:input label="password" name="password1" size="30" type="password" 
+				value="" placeholder="<%=passwordRules%>" showRequiredLabel="<%= false %>" >
 					<aui:validator name="required" />
 				</aui:input>
 				</div>
@@ -262,7 +263,7 @@
 						'#<portlet:namespace />password1'
 					</aui:validator>
 				</aui:input> -->
-	
+				<aui:input name="password2" type="hidden" />
 			</c:if>
 
 			<c:choose>
@@ -295,7 +296,9 @@
 	</aui:fieldset>
 
 	<aui:button-row>
-			<aui:button type="submit"  style="width:100%"/>
+			<aui:button type="submit"  style="width:100%"
+			onclick="document.getElementById('_58_password2').value=document.getElementById('_58_password1').value;"
+			/>
 	</aui:button-row> 
 </aui:form>
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
