@@ -26,7 +26,7 @@ This is the active development environment. Each type of code is differentiated 
 
 ## Installation Guide (in progress)
 
-###Software:
+### Software:
 * **Java version:** Liferay 6.2 GA 4 don't support Java versions higher as 1.7. So, the current JDK is 1.7.80
 * **IDE:** Liferay IDE Eclipse 2.2.4 ga5 
 * **SDK:** Liferay Plugins SDK 6.2 ce ga4 (part of the GIT)
@@ -69,7 +69,7 @@ This is the active development environment. Each type of code is differentiated 
 
 
   
-###Database integration
+### Database integration
 * GFBio use two databases. The liferay database for user management and the gfbio portal database for gfbio specific applications
 * Create a portal-ext.properties file in the liferay-portal-6.2-ce-ga4 folder
 ```
@@ -85,11 +85,12 @@ This is the active development environment. Each type of code is differentiated 
 ```
 * If you change the database passwords, then you have to change the passwords in this file too
 
+
 * Start the created server in the IDE.
 * Answer the database question, so that the system build a PostgreSQL 9.3 database on localhost 5432.
 * Start PGAdmin.
 * Go to server PostgreSQL 9.3 (localhost: 5432).
-* Create new login rolle with
+* Create new login role with
   * **name:** gfbiodb,
   * **password:** test,
   * **Role privileges:** Can login, Inherits rights from parent roles, Superuser, Can create databases, Can modify catalog directly.
@@ -104,10 +105,12 @@ This is the active development environment. Each type of code is differentiated 
       CONNECTION LIMIT = -1;
 ```
 
+
 * build a environmental variable 'PSQL_HOME' for the [..]\PostgreSQL\9.3\bin\ folder
 * Start run_sql.cmd (windows) or run_sql.csh (Linux/Unix) to create the database tables or start the sql files individualy.
   * All this files are in [path to folder] / [repository folder name] / [sdk folder] / db.
 
+  
 * Liferay use automatic generate classes and services for the relations between database and Portal-Applications/APIs. This services are integrated in the GFBioProject-portlet. To use this services, you have to build the services (right click on GFBioProject-portlet / Liferay / Build Services)
 
 
