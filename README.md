@@ -127,9 +127,6 @@ See also the list of [contributors](https://github.com/gfbio/GFBio-portal-dev/co
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Live System
-[dev.gfbio.org](https://dev.gfbio.org)
-
 ## FAQs   
 This section describes known problems and frequent issues occuring during development.
 
@@ -158,5 +155,5 @@ build.number=1
 
 ## TO-DO
 * Remove webcontent folder (it is enough to keep it in the portal-release repository).
-* add license file
 * describe gadgets, hooks, portlets, layouttpls and themes in more details
+* discuss license, MIT or LGPL?
