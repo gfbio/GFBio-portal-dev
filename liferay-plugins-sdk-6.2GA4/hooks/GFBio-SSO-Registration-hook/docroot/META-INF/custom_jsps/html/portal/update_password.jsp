@@ -14,9 +14,11 @@
  */
 --%>
 <style type="text/css">
+/* Hide the portlet title */
 .portlet-title{
 display:none;
 }
+/* Style for password tooltip box */
 [data-tip] {
 	position:relative;
 }

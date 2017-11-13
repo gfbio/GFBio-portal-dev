@@ -14,6 +14,7 @@
  */
 --%>
 <style>
+/* Style for password tooltip box */
 [data-tip] {
 	position:relative;
 }
