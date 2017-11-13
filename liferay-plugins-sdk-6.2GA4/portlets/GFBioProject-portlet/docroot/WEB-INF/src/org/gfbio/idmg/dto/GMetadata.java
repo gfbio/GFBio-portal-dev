@@ -12,14 +12,16 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 	String name;
 	String label;
 	String description;
+	boolean preferredByGfbio;
 	String version;
 	String schema;
 	
-	public GMetadata(long id, String name, String label, String description, String version, String schema) {
+	public GMetadata(long id, String name, String label, String description, boolean preferredByGfbio, String version, String schema) {
 		this.id = id;
 		this.name = name;
 		this.label = label;
 		this.description = description;
+		this.preferredByGfbio = preferredByGfbio;
 		this.version = version;
 		this.schema = schema;
 	}
@@ -30,6 +32,7 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
             this.name = (String) metadataJson.get("name");
             this.label = (String) metadataJson.get("label");
             this.description = (String) metadataJson.get("description");
+            this.preferredByGfbio = Boolean.parseBoolean((String) metadataJson.get("preferredbygfbio"));
             this.version = (String) metadataJson.get("version");
             this.schema = (String) metadataJson.get("schema");
         }
@@ -69,6 +72,14 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 		this.description = description;
 	}
 
+	public boolean isPreferredByGfbio() {
+		return preferredByGfbio;
+	}
+
+	public void setPreferredByGfbio(boolean preferredByGfbio) {
+		this.preferredByGfbio = preferredByGfbio;
+	}
+
 	public String getVersion() {
 		return version;
 	}
@@ -96,11 +107,11 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 		}
 		return i;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Metadata [id=" + id + ", name=" + name + ", label=" + label + ", description=" + description
-				+ ", version=" + version + ", schema=" + schema + "]";
+		return "GMetadata [id=" + id + ", name=" + name + ", label=" + label + ", description=" + description
+				+ ", preferredByGfbio=" + preferredByGfbio + ", version=" + version + ", schema=" + schema + "]";
 	}
 	
 }

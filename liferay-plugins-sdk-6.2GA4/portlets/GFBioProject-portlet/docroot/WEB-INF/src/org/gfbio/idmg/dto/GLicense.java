@@ -13,15 +13,19 @@ public class GLicense implements Comparable<GLicense>, Serializable {
 	String label;
 	String description;
 	String extendedData;
+	String url;
+	boolean preferredByGfbio;
 	String version;
 	
-	public GLicense(long id, String name, String label, String description, String extendedData, String version) {
+	public GLicense(long id, String name, String label, String description, String extendedData, String url, boolean preferredByGfbio, String version) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.label = label;
 		this.description = description;
 		this.extendedData = extendedData;
+		this.url = url;
+		this.preferredByGfbio = preferredByGfbio;
 		this.version = version;
 	}
 
@@ -32,6 +36,8 @@ public class GLicense implements Comparable<GLicense>, Serializable {
             this.label = (String) licenseJson.get("label");
             this.description = (String) licenseJson.get("description");
             this.extendedData = (String) licenseJson.get("extendeddata");
+            this.url = (String) licenseJson.get("url");
+            this.preferredByGfbio = Boolean.parseBoolean((String) licenseJson.get("preferredbygfbio"));
             this.version = (String) licenseJson.get("version");
         }
 	}
@@ -78,6 +84,22 @@ public class GLicense implements Comparable<GLicense>, Serializable {
 		this.extendedData = extendedData;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public boolean isPreferredByGfbio() {
+		return preferredByGfbio;
+	}
+
+	public void setPreferredByGfbio(boolean preferredByGfbio) {
+		this.preferredByGfbio = preferredByGfbio;
+	}
+	
 	public String getVersion() {
 		return version;
 	}
@@ -94,11 +116,12 @@ public class GLicense implements Comparable<GLicense>, Serializable {
 		}
 		return i;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "GLicense [id=" + id + ", name=" + name + ", label=" + label + ", description=" + description
-				+ ", extendedData=" + extendedData + ", version=" + version + "]";
+				+ ", extendedData=" + extendedData + ", url=" + url + ", preferredByGfbio=" + preferredByGfbio
+				+ ", version=" + version + "]";
 	}
-	
+
 }

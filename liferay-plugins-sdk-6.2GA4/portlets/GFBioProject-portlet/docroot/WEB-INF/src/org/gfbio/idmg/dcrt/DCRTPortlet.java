@@ -155,7 +155,7 @@ public class DCRTPortlet extends MVCPortlet {
 		
 		String title = "";
 		if (!isSignedIn) {
-			title = "You have to be logged in";
+			title = "You need to be logged in";
 		}
 
 		for (DataProvider dp : providers) {
