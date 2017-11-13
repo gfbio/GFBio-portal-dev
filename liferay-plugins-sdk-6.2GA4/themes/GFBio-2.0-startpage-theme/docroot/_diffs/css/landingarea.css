@@ -70,13 +70,13 @@ section {
 @import "mixins";
 @include respond-to(screens) { 
 	#main{
-		margin-top: 10px;
+		margin-top: 0px;
 	}
 }
 
 @include respond-to(phone, tablet) {
 	#main{
-		margin-top: -14px;
+		margin-top: -24px;
 	}
 }
 
