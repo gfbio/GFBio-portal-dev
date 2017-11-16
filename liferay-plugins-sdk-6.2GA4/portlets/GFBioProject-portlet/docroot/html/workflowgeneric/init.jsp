@@ -1,6 +1,6 @@
 <script>
 
-	var fieldCheckList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license','gwf_ro_dct', 'gwf_ro_label', 'gwf_ro_publications', 'gwf_ro_embargo', 'gwf_ro_externalupload_path'];
+	var fieldCheckList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license','gwf_ro_dct', 'gwf_ro_label', 'gwf_ro_publications', 'gwf_ro_embargo'];
 	var limitExtrageSmall = 10;
 	var limitSmall = 200;
 	var limitLarge = 2000;
@@ -11,7 +11,7 @@
 /////////////////////////////////////////   helper  //////////////////////////////////////////////
 	
 	//character counter for inputfields
-	function countChars(countfrom,displayto, limit) {
+	function countChars(countfrom,displayto, limit, targetOutputField) {
 		var len = limit - document.getElementById(countfrom).value.length;
 		document.getElementById(displayto).innerHTML = len;
 	}
@@ -105,18 +105,6 @@
 				"<p 	class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
 				"<p 	class='field-description'				style='text-align: right; color:#A9A9A9'><span title='left characters' id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
 				"<input	class='field lfr-input-text-container'	style='width:100%' id='"+fieldBasicId+"' type='text' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit +"' value='"+value+"'>"+
-			"</div >"
-		);
-	}
-	
-	//
-	function addInputfieldWithoutLabelTo(div, fieldBasicId, fieldDescription, limit, fieldCheck,value){
-		div.append(
-			"<div 		class='control-group' style='width:100%'>"+
-				"<p 	class='field-description'				id='"+fieldBasicId+"_d'>"+fieldDescription+"</p>"+
-				"<p 	class='field-description'				style='text-align: right; color:#A9A9A9'><span title='left characters' id='"+fieldBasicId+"_c'>"+limit+"</span></p>"+
-				"<input	class='field lfr-input-text-container'	style='width:100%' id='"+fieldBasicId+"' type='text' onchange=\"goToNormal(\'"+fieldCheck+"\')\"; onkeyup=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onkeydown=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +")\"; onmouseout=\"countChars(\'"+fieldBasicId+"\',\'"+fieldBasicId+"_c\', "+limit +");\" maxlength='"+limit +"' value='"+value+"'>"+
-				"<label class='swHide' 				   			id='"+fieldBasicId+"_l'><span style='color:darkred'></span> </label>"+
 			"</div >"
 		);
 	}
@@ -233,15 +221,21 @@
 
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
-				"<p   class='field-description'			 	id='gwf_ro_upload_d'>If you use a seperate file upload platform or host, then you can choose the external upload option, to take GFBio the URL to this source.</p>"+
-				"<br>"+
-				"<div 													class='control-group'>"+
-						"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' 	onclick='primaryRadioButtonCheck()' checked='checked'> Direct upload</input></span>"+
-						"<span style='width:2%; display:inline-block'></span>"+
-						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external' onclick='primaryRadioButtonCheck()'> External upload</input></span> "+
+				"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
+				"<div  class='fileUpload btn btn-primary'  style='width:"+buttonwidth+"'>"+
+				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
+				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
 				"</div>"+
-				"<div id='gwf_ro_upload'  placeholder='Choose File'></div>"+
-		
+				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"+
+				//"<br>"+
+				//"<div 													class='control-group'>"+
+				//		"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' checked='checked'> Direct upload</input></span>"+
+				//		"<span style='width:2%; display:inline-block'></span>"+
+				//		"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external'> External upload</input></span> "+
+				//"</div>"+
+				//"<p   class='field-description'			 	id='gwf_ro_upload_d'>If you use a seperate file upload platform or host, then you can choose the external upload option, to take GFBio the URL to this source.</p>"+
+				//"<span id='gwf_b_upload_inputarea'></span>"+
+				
 				"<h3>3. Submission options</h3><hr>"+
 								
 				"<div>"+
@@ -415,36 +409,50 @@
 			},
 			async: false,
  			success :  function (obj){
- 				var divLR = $("#".concat('gwf_ro_legalrequirements'));
- 				divLR.empty();
- 				divLR.append("<br>");
+ 				var divLi = $("#".concat('gwf_ro_legalrequirements'));
+ 				divLi.empty();
+ 				divLi.append("<br>");
  				for (i=0; i < obj.length;i++){
 					if (i < obj.length-1){
 						var j = i+1;
-						divLR.append(
+						divLi.append(
 							"<div 		class='control-group'>"+
 								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
-								"<span style='width:2%;  display:inline-block'></span>"+
+								"<span style='width:2%; display:inline-block'></span>"+
 								"<span style='width:50%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[j].id+"' name='legalrequirements' value='"+obj[j].id+"'> "+obj[j].name+"</span>"+
 							"</div>"		
 						);
 						i = i+1;
 					}else{
-						divLR.append(
+						divLi.append(
 							"<div 		class='control-group'>"+
 								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
 							"</div>"
 						);
 					}
-					divLR.append("<div style='clear:left'></div>");
+					divLi.append("<div style='clear:left'></div>");
 					
 				}
  			}
 		});
  		
  		
-  		//primarydata
-  		primaryRadioButtonCheck();
+ 		//primarydata
+		//if (document.getElementById("gwf_ro_upload_direct").checked){
+			//console.log("1111 yes");
+		//	var uploaddiv = $("#".concat(uploadDivTarget));
+		//	uploaddiv.append(
+		//		"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
+		//		    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
+		//		    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
+		//		"</div>"+
+		//		"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
+		//	);
+		//}else{
+		//	console.log("1111 no");
+		//	addInputfieldTo(uploaddiv, "gwf_ro_upload_direct", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
+		//}
+
 		
 		//categories
 		ajaxData = {"relationtablename":"gfbio_category_type","entitytablename":"gfbio_type", "entitytablecellcontent":"research field"}
@@ -507,33 +515,25 @@
 			setToDefaultArchive(targetDcrtDiv);
 		}
 	}
+
 	
-		function primaryRadioButtonCheck(){
-			console.log("primaryRadioButtonCheck");
-	  		var uploadDivTarget = "gwf_ro_upload";
-	  		var uploaddiv = $("#".concat(uploadDivTarget));
-	  		uploaddiv.empty();
-	  		
-			if (document.getElementById("gwf_ro_upload_direct").checked){
-				var uploaddiv = $("#".concat(uploadDivTarget));
-				uploaddiv.append(
-					"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
-					"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
-					    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
-					    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
-					"</div>"+
-					"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
-				);
-			}else{
-				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_name", 	"Name", 	""				,"If the file bundle has one name, provide this name. ", limitSmall, fieldCheckList[8],"");
-				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL/URI", 	""				,"Provide the source URL of your dataset. Please use only http, https, ftp and sftp as protocol", 			 limitSmall, fieldCheckList[8],"");
-				document.getElementById("gwf_ro_externalupload_path").placeholder = "http://"; //placeholder="First name
-				console.log(document.getElementById("gwf_ro_externalupload_path"));
-			} 
-			uploaddiv.append("<span id='gwf_b_upload_inputarea'></span>");
+/* 	function fillDefaultPrimaryDataInformation(uploadDivTarget){
+		console.log("1111 "+uploadDivTarget);
+		if (document.getElementById("gwf_ro_upload_direct").checked){
+			console.log("1111 yes");
+			var uploaddiv = $("#".concat(uploadDivTarget));
+			uploaddiv.append(
+				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
+				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
+				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
+				"</div>"+
+				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
+			);
+		}else{
+			console.log("1111 no");
+			addInputfieldTo(uploaddiv, "gwf_ro_upload_direct", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
 		}
-	
-	
+	} */
 	
 	
 	function setToDefaultArchive(targetDiv){
@@ -683,7 +683,6 @@
 					    for (i =0; i < json.primarydata.length;i++)
 					    	nameList = nameList +"<li><span id='gwf_ro_upload"+json.primarydata[i].name+"'>"+json.primarydata[i].name+ "</span></li>";
 					    nameList = nameList + '</ul>';
-
 					    document.getElementById("gwf_ro_upload").innerHTML = nameList;
 					}
 
@@ -704,7 +703,7 @@
 			document.getElementById(block+"_l").className="control-label";
 			document.getElementById(block+"_d").className="field-description";
 			var testfield = $("#".concat("gwf_lf_comentarField"));
-			if (block == fieldCheckList[0] || block == fieldCheckList[4] || block == fieldCheckList[5] || block == fieldCheckList[6] || block == fieldCheckList[7]|| block == fieldCheckList[8]){
+			if (block == fieldCheckList[0] || block == fieldCheckList[4] || block == fieldCheckList[5] || block == fieldCheckList[6] || block == fieldCheckList[7]){
 				document.getElementById(block).className = 'field lfr-input-text-container';
 				document.getElementById(block).style = 'width: 100%';
 			}else
@@ -807,77 +806,49 @@
 	
 	//
 	function fileUplaod(){
-
-		if (document.getElementById("gwf_ro_upload_direct").checked){
-			var url = document.getElementById('workflowgenericurl').value;
-			var formData = new FormData();
-		    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML) +'}'], "uploadInformation.txt");
 	
-			formData.append('file', uploadInformation);
-						var fileSelect = document.getElementById('gwf_b_upload');
-			
-			var files = fileSelect.files;
-			var check = true; 
-			
-			for (var i = 0; i < files.length; i++){
-			  	if (files[i].size> 20971520){
-			  		document.getElementById("gwf_ro_upload"+files[i].name).className="labelFalse";
-			  		check = false;
-			  	}
-			}
-			if (check==true){
-			
-				for (var i = 0; i < files.length; i++)
-				  	formData.append('file', files[i]);
+		var url = document.getElementById('workflowgenericurl').value;
+		var formData = new FormData();
+	    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML) +'}'], "uploadInformation.txt");
+
+		formData.append('file', uploadInformation);
+
+		var fileSelect = document.getElementById('gwf_b_upload');
+		var files = fileSelect.files;
+		var check = true; 
 		
-		 		$.ajax({
-		 			"url": url.concat('/WorkflowCollectionsPortlet'),
-		 			"type" : "POST",
-					processData: false,
-					contentType: false,
-					"data" : formData,
-					async: false,
-					success :  function (){
-						buildWaitringMessage('gwf_lf_comentarField');
-					} 
-				});
-			}else{
-				document.getElementById("gwf_ro_upload_d").className="labelFalse";
-				buildErrorMessage('gwf_lf_comentarField', 'One or more files are larger as 20 MB.');
-			}
+		for (var i = 0; i < files.length; i++){
+		  	if (files[i].size> 20971520){
+		  		document.getElementById("gwf_ro_upload"+files[i].name).className="labelFalse";
+		  		check = false;
+		  	}
+		}
+		if (check==true){
+		
+			for (var i = 0; i < files.length; i++)
+			  	formData.append('file', files[i]);
+	
+	 		$.ajax({
+	 			"url": url.concat('/WorkflowCollectionsPortlet'),
+	 			"type" : "POST",
+				processData: false,
+				contentType: false,
+				"data" : formData,
+				async: false,
+				success :  function (){
+					buildWaitringMessage('gwf_lf_comentarField');
+				} 
+			});
 		}else{
-			if (document.getElementById("gwf_ro_externalupload").value.length !=0){
-				
-				var data ="";
-				
-				$.ajax({
-					"type" : "POST",
-					"url": url.concat('/WorkflowCollectionsPortlet'),
-					"data" : {
-						"<portlet:namespace />data" : JSON.stringify(data),
-						"<portlet:namespace />responseTarget" : "createExternalUpload"
-					},
-					async: false,
-					success :  function (obj){
-						buildWaitringMessage('gwf_lf_comentarField');
-					}		
-				});	
-				
-			}
+			document.getElementById("gwf_ro_upload_d").className="labelFalse";
+			buildErrorMessage('gwf_lf_comentarField', 'One or more files are larger as 20 MB.');
 		}
 	}
 	
 	
 	//
 	function showUpload(){
-		/*
-						"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
-				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
-				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
-				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
-				"</div>"+
-				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
-		*/
+		
 		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
 		
 			document.getElementById("gwf_ro_id").innerHTML= 0;
@@ -897,7 +868,7 @@
 		    	nameList = nameList +"<li><span id='gwf_ro_upload"+fileList[i].name+"'>"+fileList[i].name+ "</span></li>";
 		    nameList = nameList + '</ul>';
 		}
-	    document.getElementById("gwf_b_upload_inputarea").innerHTML = nameList;
+	    document.getElementById("gwf_ro_upload").innerHTML = nameList;
 	}
 	
 	
@@ -915,7 +886,7 @@
 		responseData["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
 		responseData["archive"]= "GFBio collections";
 		
-  		$.ajax({
+ 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
 			"data" : {
@@ -937,7 +908,7 @@
 						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
 						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
 					"</div>"+
-					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+					"<span class='widthM' id='gwf_b_reset' onclick='resetInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
 				);
 			},
 			error :  function (obj){
@@ -945,7 +916,7 @@
 				deleteSubmissionRegistryEntry(responseData);
 				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 			},		
-		});	  
+		});	 
 	}
 	
 	

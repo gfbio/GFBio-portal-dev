@@ -31,7 +31,7 @@ function buildCommonResearchObjectJson(projectJson){
 	var legalrequirements =[];
 	for (i =0; i<document.getElementsByName("legalrequirements").length;i++)
 		if (document.getElementsByName("legalrequirements")[i].checked)
-			legalrequirements.push(document.getElementsByName("legalrequirementids")[i].value);
+			legalrequirements.push(document.getElementsByName("legalrequirements")[i].value);
 		
 	
 	var category =[];
@@ -44,7 +44,7 @@ function buildCommonResearchObjectJson(projectJson){
 		"publications":document.getElementById("gwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
 		"embargo":document.getElementById("gwf_ro_embargo").value,
-		"legalrequirements":legalrequirements
+		"legalrequirements":legalrequirements,
 	}
 
 	var researchObjectJson = {
@@ -54,10 +54,6 @@ function buildCommonResearchObjectJson(projectJson){
 		"description":document.getElementById("gwf_ro_description").value,
 		"extendeddata": extendetdata,
 		"categoryids":category,
-		"publications":document.getElementById("gwf_ro_publications").value,
-		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
-		"embargo":document.getElementById("gwf_ro_embargo").value,
-		"legalrequirementids":legalrequirements
 	};
 
 	if (projectJson.projectid!=0)
@@ -71,24 +67,13 @@ function buildCommonResearchObjectJson(projectJson){
 
 //
 function buildResearchObjectJsonForCreate(projectJson){
-	var researchObjectJson = {};
-	researchObjectJson = buildCommonResearchObjectJson(projectJson);
+	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	
 	if (document.getElementById("gwf_ro_metadatalabel").value != 'none')
 		researchObjectJson["metadataid"]= Number(document.getElementById("gwf_ro_metadatalabel").value);
 	
 	researchObjectJson["licenseid"] = Number(document.getElementById("gwf_ro_licenselabel").value);
 	researchObjectJson["researchobjecttype"]= document.getElementById("gwf_ro_researchobjecttype").innerHTML;
-
-	if (document.getElementById("gwf_ro_upload_direct").checked != true)
-		if (document.getElementById("gwf_ro_externalupload_path").value != ""){
-			var primaryDataJson = {
-				"name": document.getElementById("gwf_ro_externalupload_name").value,
-				"path": document.getElementById("gwf_ro_externalupload_path").value
-			};
-			researchObjectJson["primarydata"] = primaryDataJson;
-		}
-
 	return researchObjectJson;
 }
 
@@ -111,13 +96,17 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 	registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
 	registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
 	if (document.getElementById("gwf_dcrtassignee").innerHTML!='null')
-		if(document.getElementById("gwf_ro_dcrt_default").checked ==true)
+		if(document.getElementById("gwf_ro_dcrt_default").checked ==true){
+			console.log("check true");
 			registryJson["archive"] = "GFBio collections";
-		else
+		}else{
+			console.log("check nope");
 			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
+		}
 	else
 		registryJson["archive"] = "GFBio collections";
 	registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
+	console.log(registryJson);
 	return registryJson;
 }
 
@@ -125,11 +114,6 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 //
 function checkEmbargoDate(date){
 	return /^2\d{3}-[01]\d-[0123]\d$/.test(date);
-}
-
-//
-function checkExternalLinkUrl(url){
-	return /^((https:\/\/|http:\/\/|ftp:\/\/|fstp:\/\/).*|)$/.test(url);
 }
 
 
@@ -147,7 +131,6 @@ function checkInput(){
 }
 
 
-
 //
 function checkMinimalInput(){
 	var check = true;
@@ -161,6 +144,8 @@ function checkInputLength(){
 	check = true;
 	failList = [];
 	failListLength =0;
+	
+	console.log(check);
 	
 	if ((document.getElementById("gwf_ro_name").value).length > 200){
 		check = false;
@@ -199,6 +184,8 @@ function checkInputLength(){
 		document.getElementById("gwf_ro_label_d").className="field-description";
 		document.getElementById("gwf_ro_label").className="field lfr-input-text-container";
 	}
+
+	console.log(check);
 	
 	if (!check)
 		buildErrorMessage('gwf_lf_comentarField',"Please reduce the length of"+failList +" under 200 characters." );
@@ -296,23 +283,19 @@ function checkMinimalResearchObjectInput(){
 			check = subcheck;
 	}
 	
-	//external link
-	if (document.getElementById("gwf_ro_upload_direct").checked != true){
-		var subcheck = checkExternalLinkUrl(document.getElementById("gwf_ro_externalupload_path").value);
-		if (!subcheck){
-			document.getElementById("gwf_ro_externalupload_path_l").className="labelFalse";
-			document.getElementById("gwf_ro_externalupload_path_d").className="labelFalse";
-			document.getElementById("gwf_ro_externalupload_path").style='border-color:darkred !important';
-		}else{
-			document.getElementById("gwf_ro_externalupload_path_l").className="control-label";
-			document.getElementById("gwf_ro_externalupload_path_d").className="field-description";
-			document.getElementById("gwf_ro_externalupload_path").style='';
-		}
-		
-		if(!subcheck)
-			check = subcheck;
+	/*
+	 * 	if (document.getElementById("gwf_ro_name").value==""){
+		check = false;
+		document.getElementById("gwf_ro_name_l").className="labelFalse";
+		document.getElementById("gwf_ro_name_d").className="labelFalse";
+		document.getElementById("gwf_ro_name").className="inputTextContainerFalse";
+	}else{
+		document.getElementById("gwf_ro_name_l").className="control-label";
+		document.getElementById("gwf_ro_name_d").className="field-description";
+		document.getElementById("gwf_ro_name").className="field lfr-input-text-container";
 	}
-		
+	 */
+	
 	if (!check)
 		buildErrorMessage('gwf_lf_comentarField', "Please correct or fill the marked fields.")
 	else
@@ -324,20 +307,7 @@ function checkMinimalResearchObjectInput(){
 
 //
 function resetInput(){
-	
-	if (confirm("If you confirm the reset, then all fields are cleared.") == true) {
-		resetDCRTInput();
-		
-		restartInput();
-		
-	} 
-}
-
-
-//
-function restartInput(){
-	
-	
+	resetDCRTInput();
 	
 	sentShowHideInformation(true);
 	var div =   $("#generic");
@@ -345,9 +315,8 @@ function restartInput(){
 	var data = {"userid":Number(themeDisplay.getUserId())};
 	buildGenericForm(data, div);
 	fillDefaultInformations(data, div);
-			
+		
 	sentResetRequest();
-
 }
 
 
@@ -388,6 +357,7 @@ function saveAllInput(){
 		}
 		
 	}
+	console.log(projectJson);
 	return projectJson;
 }
 
@@ -422,19 +392,18 @@ function saveResearchObjectInput(projectJson){
 function submitInput(url){
 	
 	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-
+		
 		if (checkInput()){
+			
 			if (checkInputLength()){
-
+			
 				//create research object /project
 				var mrrJson = saveAllInput();
 				
 				//create primary data
 				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
-						if(document.getElementById("gwf_ro_upload_direct").checked==true)
-							fileUplaod();
-						
+						fileUplaod();
 				
 					//create submission registry
 					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
@@ -442,7 +411,6 @@ function submitInput(url){
 						
 						//sent to JIRA
 						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-
 							var data ={};
 							data["mrr"]= mrrJson;
 							startSubmission(data);

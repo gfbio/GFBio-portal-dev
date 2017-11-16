@@ -1,19 +1,5 @@
 /*global $*/
 
-function hideGeneralInformation() {
-	$("div.steps").hide();
-	$("div.actions").hide();
-	$("div[name='title']").hide();
-	$("#generalinformation").hide();
-	
-	$("#dmpstart").show();
-}
-
-function loadDmp() {
-	console.log("LOADING...");
-	
-}
-
 function handlePrincipalButton(event) {
     'use strict';
     
@@ -143,9 +129,10 @@ function handleFunding(event) {
 function handlePolicy(event) {
     'use strict';
     
-    var other = $("#policyOther"),
+    var selection = $(event.target).val(),
+        other = $("#policyOther"),
         link = $("#policyLink");
-    if ($(event.target).is(':checked')) {
+    if ($.inArray("other", selection) !== -1) {
         other.show("slow");
         link.show("slow");
     } else {
@@ -170,9 +157,8 @@ function handleMetadataOther(event) {
 function handleLicenses(event) {
 	'use strict';
 	
-    var selection = $(event.target).val(),
-    	other = $("#licenseOther");
-    if (selection === "other") {
+    var other = $("#licenseOther");
+    if ($(event.target).is(':checked')) {
 		other.show("slow");
 	} else {
 	    other.hide();
@@ -188,8 +174,8 @@ function handleRestriction(event) {
 		howLong = $("#accessDuration"),
 		why = $("#accessReason"),
 		div = $("#accessYes");
-	if (selection === "true") {
-		div.show();
+	if (selection === "yes") {
+		div.show("slow");
 	} else {
 		div.hide();
 		howLong.val("");
@@ -200,8 +186,9 @@ function handleRestriction(event) {
 function handleArchives(event) {
 	'use strict';
 	
-	var other = $("#archiveOther");
-	if ($(event.target).is(':checked')) {
+	var selection = $(event.target).val(),
+		other = $("#archiveOther");
+	if ($.inArray("other", selection) !== -1) {
 		other.show("slow");
 	} else {
 		other.hide();
@@ -212,17 +199,15 @@ function handleArchives(event) {
 function showDataVolume(event) {
     'use strict';
     
-    var volume = $(event.target).val(), answer;
+    var volume = $(event.target).val(), answer = "Cannot estimate";
     if (volume === "0") {
-        answer = "Cannot estimate";
-    } else if (volume === "10") {
         answer = "&lt; 1GB";
-    } else if (volume === "20") {
+    } else if (volume === "10") {
         answer = "&lt; 10GB";
-    } else if (volume === "30") {
+    } else if (volume === "20") {
         answer = "&lt; 100GB";
-    } else if (volume === "40") {
-    	answer = "&gt; 100GB";
+    } else if (volume === "30") {
+        answer = "&gt; 100GB";
     }
     document.getElementById("volume").innerHTML = answer;
 }
@@ -230,17 +215,15 @@ function showDataVolume(event) {
 function showNumberOfDatasets(event) {
     'use strict';
     
-    var number = $(event.target).val(), answer;
+    var number = $(event.target).val(), answer = "Cannot estimate";
     if (number === "0") {
-        answer = "Cannot estimate";
-    } else if (number === "10") {
         answer = "&lt; 10";
-    } else if (number === "20") {
+    } else if (number === "10") {
         answer = "&lt; 100";
-    } else if (number === "30") {
+    } else if (number === "20") {
         answer = "&lt; 1000";
-    } else if (number === "40") {
-    	answer = "&gt; 1000";
+    } else if (number === "30") {
+        answer = "&gt; 1000";
     }
     document.getElementById("datasets").innerHTML = answer;
 }

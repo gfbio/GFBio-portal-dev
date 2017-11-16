@@ -287,116 +287,44 @@ public class PrimaryDataLocalServiceImpl extends PrimaryDataLocalServiceBaseImpl
 		Boolean check = false;	
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "path", "researchobjectid", "researchobjectversion", "externallink"};
+		String [] keySet = {"name", "path", "researchobjectid", "researchobjectversion"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
-		Boolean externalLink = false;
-		String name = "";
-		String path = "";
-		
-		if (requestJson.containsKey("externallink"))
-				externalLink = Helper.getBooleanFromJson(requestJson, "externallink");
-		
-		
-		if ((requestJson.containsKey("name") || externalLink) && requestJson.containsKey("path")){
-			
-			if (requestJson.containsKey("name"))
-				name = Helper.getStringFromJson(requestJson, "name");
-			
-			if (!externalLink)
-				path = checkPath(name, Helper.getStringFromJson(requestJson, "path"));
-			else
-				path = Helper.getStringFromJson(requestJson, "path");
-			
-			if (!checkPrimaryDataExists(name, path) || externalLink){
 
-				long primaryDataId = createKernelPrimaryData(name, path);
+		if (requestJson.containsKey("name") && requestJson.containsKey("path")){
+			
+			String path = checkPath(((String)requestJson.get("name")).trim(), ((String)requestJson.get("path")).trim());
+			
+			if (!checkPrimaryDataExists(((String)requestJson.get("name")).trim(), path)){
+
+				long primaryDataId = createKernelPrimaryData(((String)requestJson.get("name")).trim(), path);
 				if (primaryDataId !=0)
 					check = true;
 				
 				if (check && requestJson.containsKey("researchobjectid"))
 					if (requestJson.containsKey("researchobjectversion")){
 						int researchObjectVersion = ResearchObjectLocalServiceUtil.getResearchObjectVersionFromJson(requestJson);
-						check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, Helper.getLongFromJson(requestJson, "researchobjectid"), researchObjectVersion);
+						check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"), researchObjectVersion);
 					}else
-						check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, Helper.getLongFromJson(requestJson, "researchobjectid"));
+						check = PrimaryData_ResearchObjectLocalServiceUtil.updatePrimaryDataResearchObject(primaryDataId, (long)requestJson.get("researchobjectid"));
 				
 				if (check)
 					responseJson.put("primarydataid", primaryDataId);
 				else
 					responseJson.put("ERROR:", "ERROR: create primarydata entry is failed.");
-			}else
+			}else{
 				responseJson.put("ERROR:", "ERROR: A File with this name is part of this research object.");
-
+			}
 		}else{
 			String errorString = "ERROR: Mandatory attribut";
-			if (!requestJson.containsKey("name") && !requestJson.containsKey("externallink"))
+			if (!requestJson.containsKey("name"))
 				errorString = errorString.concat(" 'name',");
 			if (!requestJson.containsKey("path"))
 				errorString = errorString.concat(" 'path',");
 			errorString = errorString.substring(0, errorString.length()-1).concat(" are not correct");
 			responseJson.put("ERROR", errorString);
 		}
-		if (!ignoreParameter.equals(""))
-			responseJson.put("WARNING", ignoreParameter);
-	
-		return responseJson;
-	}
-	
-	
-	//
-	@SuppressWarnings("unchecked")
-	public JSONObject updatePrimaryData (JSONObject requestJson){
-			
-		Boolean check = false;	
-		JSONObject responseJson = new JSONObject();
-		Set<String> set = new HashSet<String>();
-		String [] keySet = {"name", "path", "primarydataid","researchobjectid", "researchobjectversion", "externallink"};
-		for (int i = 0; i< keySet.length;i++)
-			set.add(keySet[i]);
-		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
-		Boolean externalLink = false;
-		String name = "";
-		String path = "";
-		
-		
-		
-		if (requestJson.containsKey("externallink"))
-				externalLink = Helper.getBooleanFromJson(requestJson, "externallink");
-		
-		
-		if (requestJson.containsKey("primarydataid")){
-			
-			responseJson = getPrimaryDataById(requestJson);
-			
-			if (responseJson.size()!=0){
-			
-				if (requestJson.containsKey("name"))
-					name = Helper.getStringFromJson(requestJson, "name");
-				else
-					name = Helper.getStringFromJson(responseJson, "name");
-			
-			
-				if (requestJson.containsKey("path"))
-					if (!externalLink)
-						path = checkPath(name, Helper.getStringFromJson(requestJson, "path"));
-					else
-						path = Helper.getStringFromJson(requestJson, "path");
-				else
-					path = Helper.getStringFromJson(responseJson, "path");
-			}
-			
-			long primaryDataId = updateKernelPrimaryData(Helper.getLongFromJson(requestJson, "primarydataid"),name, path);
-			if (primaryDataId !=0)
-				check = true;
-			
-			if(!check)
-				responseJson.put("ERROR", "ERROR: update primarydata entry is failed.");
-
-		}else
-			responseJson.put("ERROR", "ERROR: Mandatory attribut 'primarydataid' is not correct.");
-		
 		if (!ignoreParameter.equals(""))
 			responseJson.put("WARNING", ignoreParameter);
 	

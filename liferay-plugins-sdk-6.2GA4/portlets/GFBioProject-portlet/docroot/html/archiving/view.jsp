@@ -16,7 +16,7 @@
 <script  src="${pageContext.request.contextPath}/js/main.js"       					type="text/javascript"></script>  	<!--  main.js  imports -->
 <script  src="${pageContext.request.contextPath}/js/workflow.js"			    	type="text/javascript"></script>  	<!--  main.js  imports -->
 
-<%-- <link href="<%= request.getContextPath() %>/docroot/css/main.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports --> --%>
+<link href="<%= request.getContextPath() %>/docroot/css/main.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
 <link href="<%= request.getContextPath() %>/docroot/css/form.css" rel="stylesheet" 	type="text/css">	 				<!-- main.css imports -->
 
 <input id="archivingURL" type="hidden" value="<%= archivingURL %>">

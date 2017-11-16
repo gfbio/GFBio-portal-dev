@@ -8,8 +8,6 @@
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
 <portlet:resourceURL var="ajaxUrlWizard" id="wizard" />
-<portlet:resourceURL var="ajaxUrlLicense" id="license" />
-<portlet:resourceURL var="ajaxUrlSave" id="savedmp" />
 
 <script type="text/javascript">   
 
@@ -19,7 +17,24 @@ var contextPath = '${contextPath}';
 
 $(document).ready(function(){
 	
-      
+    $(document).tooltip({
+    	tooltipClass: "jqueryTooltip",
+    	position: {
+            my: "left center", // the "anchor point" in the tooltip element
+            at: "right+5 center", // the position of that anchor point relative to selected element
+        },
+        content: function() {
+            return $(this).attr('title');
+        },
+        show: { 
+        	effect: "fade"
+        },
+        hide: {
+            effect: "fade",
+            delay: 600
+        }
+   	});   
+    
     $.validator.addMethod("notEqual", function(value, element, param) {
         return this.optional(element) || value != param;
     }, "Please specify a non-default value");
@@ -43,7 +58,7 @@ $(document).ready(function(){
              	email: true
            	},
            	phoneNumber : {
-           		//required: true,
+           		required: true,
            		//number: true
            	},
 		}
@@ -82,15 +97,6 @@ $(document).ready(function(){
 			sendInput();
 		},
 		onInit : function() {
-			//Start
-			$("#dmpstart").hide();
-			
-			if (Liferay.ThemeDisplay.isSignedIn()) {
-				hideGeneralInformation();
-			}
-			
-			$("load").on("click", loadDmp);
-			
 		    //01 General Information
 			$("#firstPrincInput").on("keyup focus", handlePrincipalButton);
 		    
@@ -103,7 +109,7 @@ $(document).ready(function(){
 		    $("#fundingOther").hide();
 		    $("#fundingLink").hide();
 		
-		    $("#pol-cb").on("click", handlePolicy);
+		    $("#policies").on("change", handlePolicy);
 		    $("#policyOther").hide();
 		    $("#policyLink").hide();
 		
@@ -112,9 +118,11 @@ $(document).ready(function(){
 		    $("#taxon").addClass("disabledDiv");
 		    $("#sequenced").addClass("disabledDiv");
 		    
-		    $("input[name='physical']").on("click", handlePhysical);
+		    $("input[value='true'][name='physical']").on("click", handlePhysical);
+		    $("input[value='false'][name='physical']").on("click", handlePhysical);
 		
-		    $("input[name='alive']").on("click", handleAlive);
+		    $("input[value='true'][name='alive']").on("click", handleAlive);
+		    $("input[value='false'][name='alive']").on("click", handleAlive);
 		    
 		    //02 Data Collection
 		    $("#dataformat-cb").on("click", checkboxDataformat);
@@ -131,19 +139,15 @@ $(document).ready(function(){
 		    $("#legal-other").on("click", checkboxRequirement);
 		    $("#requirementOther").hide();
 		
-		    $("#licenses").on("change", function(event) {
-		    	handleLicenses(event);
-		    	getLicenseData();
-		    });
+		    $("#license-other").on("click", handleLicenses);
 		    $("#licenseOther").hide();
 		    $("#licensceUrl").hide();
-		    $("#licensceDescription").hide();
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
 		    
 		    //05 Preservation and Sharing
-		    $("#archives-cb").on("click", handleArchives);
+		    $("#archives").on("change", handleArchives);
 		    $("#archiveOther").hide();
 		    
 		    //07 Handling inputs at the end of the wizard
@@ -154,58 +158,11 @@ $(document).ready(function(){
 				fileName = fileName.replace(/\s/g, "_");
 				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
 			});
-		    
-		    //$("#downloadDMPtest").click(function() {
-			//	var fileName = $("#name").val();
-			//	fileName = fileName.replace(/\s/g, "_");
-			//	window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
-			//});
-		    
-		    //Saving DMP
-		    $("#saveDMP").on("click", saveDMPforUser);
-		    
-		    if(!Liferay.ThemeDisplay.isSignedIn()) {
-		    	$("#saveDMP").prop("disabled", true);
-		    	$("#saveDMP").prop("title", "You need to be logged in");
-		    	$("#saveDMP").addClass("wizarddisabled");
-		    }
-		    
-		    //Tooltips
-		    $("a[name=title]").tooltip({
-		    	tooltipClass: "jqueryTooltip",
-		    	position: {
-		            my: "left center", // the "anchor point" in the tooltip element
-		            at: "right+5 center" // the position of that anchor point relative to selected element
-		        },
-		        content: function() {
-		            return $(this).attr('title');
-		        },
-		        show: { 
-		        	effect: "fade"
-		        },
-		        hide: {
-		            effect: "fade",
-		            delay: 500
-		        }
-		    }); 
-
-		    $("span[title]").tooltip({
-		    	tooltipClass: "jqueryTooltip",
-		    	position: {
-		    		my: "center top",
-		            at: "center bottom+5"
-		        },
-		        content: function() {
-		            return $(this).attr('title');
-		        },
-		        show: { 
-		        	effect: "fade"
-		        },
-		        hide: {
-		            effect: "fade",
-		            delay: 500
-		        }
-		    });
+		    $("#downloadDMPtest").click(function() {
+				var fileName = $("#name").val();
+				fileName = fileName.replace(/\s/g, "_");
+				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+			});
 		}
   	})
 });
@@ -246,11 +203,7 @@ function getInputAsJson() {
 		fundingLink = $("#fundingLink").val();
 	}
 	
-	var policies = [];
-	$("input[name='policies']:checked").each(function() {
-      	policies.push($(this).siblings('span').text());
-    });
-	//var policies = $("#policies").text();
+	var policies = $("#policies").text();
 	var policyLink = "";
 	if ($.inArray("Other", policies) > -1) {
 		policies.splice($.inArray("Other", policies), 1);
@@ -313,7 +266,7 @@ function getInputAsJson() {
 	var accessRestriction = $("input[name='restriction']:checked").val();
 	var accessDuration = "";
 	var accessReason = "";
-	if (accessRestriction) {
+	if (restriction) {
 		accessDuration = $("#accessDuration").val();
 		accessReason = $("#accessReason").val();
 	}
@@ -386,27 +339,12 @@ function getInputAsJson() {
 	
 }
 
-function saveDMPforUser() {
-	
-	projectName = $("#name").val();
-	
-	$.ajax({
-	   		"method": "POST",
-	   		"url": '<%=ajaxUrlSave%>',
-	   		"data": {
-	   			name: projectName
-	   		},
-	   		success: function(text) {
-	          	console.log("Save Answer: " + text);
-	      	}
- 	});
-}
-
 function sendInput() {
 	
 	jsonInput = getInputAsJson();
 	console.log("Send: " + jsonInput);
 	
+	var response = '';
     $.ajax({
 	   		"method": "POST",
 	   		"url": '<%=ajaxUrlWizard%>',
@@ -416,40 +354,6 @@ function sendInput() {
 	   		success: function(text) {
 	          	console.log(text);
 	      	}
-    });
-}
-
-function getLicenseData() {
-	
-	license = $("#licenses").val();
-	console.log("License: " + license);
-	
-    $.ajax({
-	   		"method": "POST",
-	   		"url": '<%=ajaxUrlLicense%>',
-	   		"data": {
-	   			license: license
-	   		},
-	   		success: function(text) {
-	          	console.log(text);
-	          	
-          		var results = text.split(',');
-          		console.log(results[0]);
-          		if (results[0] !== "url") {
-          			console.log(results[0]);
-          			$("#licensceUrl").href = results[0];
-          			$("#licensceUrl").innerHTML = results[0];
-          			$("#licensceUrl").show("slow");
-          		} else {
-          			$("#licensceUrl").hide();
-          		}
-          		if (results[1] !== "desc") {
-          			$("#licenseDescription").innerHTML = results[1];
-          			$("#licenseDescription").show("slow");
-          		} else {
-          			$("#licenseDescription").hide();
-          		}
-	        }
     });
 }
 

@@ -3,13 +3,11 @@ package org.gfbio.submissionworkflow;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
@@ -19,8 +17,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.gfbio.model.DataManagementPlan;
-import org.gfbio.service.DataManagementPlanLocalServiceUtil;
 import org.gfbio.service.ProjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.json.simple.JSONArray;
@@ -51,7 +47,13 @@ public class ArchivingPortlet extends GenericPortlet {
 
 
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
-			
+		
+		//ResearchObjectLocalServiceUtil.getRese
+/*		JSONObject requestJson = new JSONObject();
+		requestJson.put("researchobjectid", 79703);
+		requestJson.put("kindofresponse", "extended");
+		
+		System.out.println(ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(requestJson));*/
 		
 		CacheRegistryUtil.clear();
 		MultiVMPoolUtil.clear();

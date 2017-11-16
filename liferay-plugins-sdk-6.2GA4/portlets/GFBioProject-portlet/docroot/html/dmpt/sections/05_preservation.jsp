@@ -6,65 +6,8 @@
 	</div>
 	<div class="row">
         <h4>Where will your data be archived?</h4>
-        <div id="dataArchives">
-        	<div class="col-xs-12 col-sm-6">
-            	<div>
-                	<label class="mod-cb">
-		               	<input name="archives" type="checkbox"/>
-		               	<span>GFBio Consortium</span>
-                	</label>
-                </div>
-                <div>
-                    <label class="mod-cb">
-                      	<input name="archives" type="checkbox"/>
-                      	<span>DSMZ</span>
-                    </label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-           		<div>
-                	<label class="mod-cb">
-		               	<input name="archives" type="checkbox"/>
-		               	<span>ENA</span>
-                	</label>
-                </div>
-                <div>
-                  	<label class="mod-cb">
-	                  	<input name="archives" type="checkbox"/>
-	                  	<span>MfN</span>
-                  	</label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-            	<div>	
-                	<label class="mod-cb">
-		               	<input name="archives" type="checkbox"/>
-		               	<span>PANGAEA</span>
-                	</label>
-                </div>
-                <div>	
-                    <label class="mod-cb">
-	                    <input name="archives" type="checkbox"/>
-	                    <span>SMNS</span>
-                    </label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-6">
-            	<div>	
-                	<label class="mod-cb">
-		               	<input name="archives" type="checkbox"/>
-		               	<span>ZFMK</span>
-                	</label>
-                </div>
-                <div>	
-                    <label class="mod-cb">
-	                    <input id="archives-cb" name="archives" type="checkbox"/>
-	                    <span>Other</span>
-                    </label>
-                </div>
-            </div>
-        	
-            <!-- <select id="archives" name="sensitive" multiple="multiple" size="6">
+        <div id="dataArchives" class="col-md-12">
+            <select id="archives" name="sensitive" multiple="multiple" size="6">
                 <option value="gfbio" >GFBio Consortium</option>
                 <option value="dsmz" >DSMZ</option>
                 <option value="ena" >ENA</option>
@@ -74,21 +17,20 @@
                 <option value="snsb" >SNSB</option>
                 <option value="zfmk" >ZFMK</option>
                 <option value="other" >Other</option>
-            </select>  -->
-            
-            <div class="col-md-12">
-             	<input id="archiveOther" name="archiveOther" type="text" class="inputtext_long" 
-             	placeholder="Other archive"/>
+            </select>
+            <div>
+             <input id="archiveOther" name="archiveOther" type="text" class="inputtext_long" 
+             placeholder="Other archive"/>
             </div>
         </div>
     </div>
 	<div class="row">
         <h4>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?
-        	<a name="title" href="#" title="With a persistent identifiers (PID) - like DOI - you make your data citable and linkable to publications which is increasingly required by journals. GFBio recommends to add a PID to your data.">
+        	<a href="#" title="With a persistent identifiers (PID) - like DOI - you make your data citable and linkable to publications which is increasingly required by journals. GFBio recommends to add a PID to your data.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
         </h4>
-        <div id="persistentIdentifier">
+        <div id="persistentIdentifier" class="col-md-12">
 	        <div class="col-md-3">
 	            <label class="mod-cb">
 		            <input class="radio_input" name="pid" type="radio" value="Yes" />
@@ -109,7 +51,7 @@
 	        </div>
         </div>
     </div>
-	<!-- <div class="row">
+	<div class="row">
 	    <h4>Do you need help estimating the cost and effort for data management?</h4>
 	    <div id="needHelp" class="col-md-12">
 	    	<div class="ccol-md-3">
@@ -125,5 +67,5 @@
 	            </label>
 	        </div>
 	    </div>
-	</div> -->
+	</div>
 </section>
