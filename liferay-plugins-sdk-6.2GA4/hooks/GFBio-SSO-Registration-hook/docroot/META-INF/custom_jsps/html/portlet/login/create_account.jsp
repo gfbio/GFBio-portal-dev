@@ -15,46 +15,31 @@
 --%>
 
 <style>
+/* Style for password tooltip box */
 [data-tip] {
 	position:relative;
 }
-[data-tip]:before {
-	content:'';
-	/* hides the tooltip when not hovered */
-	display:none;
-	content:'';
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-bottom: 5px solid #1a1a1a;	
-	position:relative;
-	top:85px;
-	left:35px;
-	z-index:8;
-	font-size:0;
-	line-height:0;
-	width:0;
-	height:0;
-}
+/* hides the tooltip when not hovered */
 [data-tip]:after {
 	display:none;
 	content:attr(data-tip);
-	position:relative;
-	top:-10px;
-	left:0px;
+	position:absolute;
+	top:80px;
+	right:0px;
 	padding:5px 8px;
 	background:#1a1a1a;
 	color:#fff;
-	z-index:9;
+	z-index:100;
 	font-size: 0.75em;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	word-wrap:normal;
 }
-[data-tip]:hover:before,
 [data-tip]:hover:after {
-	display:block;
+	display:table;
 }
+
 </style>
 <%@ include file="/html/portlet/login/init.jsp" %>
 
@@ -258,12 +243,9 @@
 					<aui:validator name="required" />
 				</aui:input>
 				</div>
-<!-- 			<aui:input label="enter-again" name="password2" size="30" type="password" value="">
-					<aui:validator name="equalTo">
-						'#<portlet:namespace />password1'
-					</aui:validator>
-				</aui:input> -->
+				<!-- Hide repeat password but required for validation -->
 				<aui:input name="password2" type="hidden" />
+				<!-- The password1 will be copied to password2 box when a submit button is pressed -->
 			</c:if>
 
 			<c:choose>

@@ -14,43 +14,27 @@
  */
 --%>
 <style>
+/* Style for password tooltip box */
 [data-tip] {
 	position:relative;
 }
-[data-tip]:before {
-	content:'';
-	/* hides the tooltip when not hovered */
-	display:none;
-	content:'';
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-bottom: 5px solid #1a1a1a;	
-	position:relative;
-	top:60px;
-	left:35px;
-	z-index:8;
-	font-size:0;
-	line-height:0;
-	width:0;
-	height:0;
-}
+/* hides the tooltip when not hovered */
 [data-tip]:after {
 	display:none;
 	content:attr(data-tip);
-	position:relative;
-	top:-33px;
+	position:absolute;
+	top:60px;
 	left:0px;
 	padding:5px 8px;
 	background:#1a1a1a;
 	color:#fff;
-	z-index:9;
+	z-index:100;
 	font-size: 0.75em;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	word-wrap:normal;
 }
-[data-tip]:hover:before,
 [data-tip]:hover:after {
 	display:table;
 }
