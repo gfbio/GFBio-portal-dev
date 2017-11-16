@@ -14,13 +14,13 @@
  */
 --%>
 
-<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" model="<%= User.class %>" name="firstName" style="max-width:75%;" type="text">
+<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" model="<%= User.class %>" name="firstName" type="text" showRequiredLabel="<%= false %>" >
 <aui:validator name="required" />
 </aui:input>
 
-<aui:input model="<%= User.class %>" name="middleName" style="max-width:75%;" type="text"/>
+<!-- <aui:input model="<%= User.class %>" name="middleName" style="max-width:75%;" type="text"/> -->
 
-<aui:input model="<%= User.class %>" name="lastName" style="max-width:75%;" type="text">
+<aui:input model="<%= User.class %>" name="lastName" type="text" showRequiredLabel="<%= false %>" >
 	<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
 		<aui:validator name="required" />
 	</c:if>

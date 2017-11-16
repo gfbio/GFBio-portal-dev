@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/login/init.jsp" %>
 
-<div  class="wrapper" style="padding:0 10%;">
+<div  class="wrapper" style="margin:20px auto; max-width:500px">
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 
@@ -38,7 +38,7 @@
 		%>
 
 		<%= LanguageUtil.format(pageContext, "you-are-signed-in-as-x", signedInAs, false) %>
-		<div style="height:250px;"></div>
+		
 	</c:when>
 	<c:otherwise>
 
@@ -128,7 +128,7 @@
 				}
 				%>
 
-				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>" cssClass="clearable" label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="<%= login %>">
+				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) || windowState.equals(WindowState.MAXIMIZED) %>" cssClass="clearable" label="<%= loginLabel %>" name="login" showRequiredLabel="<%= false %>" type="text" value="<%= login %>" >
 					<aui:validator name="required" />
 				</aui:input>
 
@@ -139,12 +139,12 @@
 				<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
 
 				<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
-					<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" />
+					<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" style="position:relative;margin:auto;"/>
 				</c:if>
 			</aui:fieldset>
 
 			<aui:button-row>
-				<aui:button type="submit" value="sign-in" />
+				<aui:button type="submit" value="sign-in" style="width:100%"/>
 			</aui:button-row>
 		</aui:form>
 
@@ -164,7 +164,6 @@
 		</aui:script>
 	</c:otherwise>
 </c:choose>
-    <div class="push"></div>
 </div>
 <% 
 String footerContent = "";
@@ -178,4 +177,4 @@ try{
 	footerContent = "Sorry, there is no web content with this title";
 }
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<%=footerContent%>

@@ -14,6 +14,33 @@
  */
 --%>
 
+<style>
+/* Style for password tooltip box */
+[data-tip] {
+	position:relative;
+}
+/* hides the tooltip when not hovered */
+[data-tip]:after {
+	display:none;
+	content:attr(data-tip);
+	position:absolute;
+	top:80px;
+	right:0px;
+	padding:5px 8px;
+	background:#1a1a1a;
+	color:#fff;
+	z-index:100;
+	font-size: 0.75em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	word-wrap:normal;
+}
+[data-tip]:hover:after {
+	display:table;
+}
+
+</style>
 <%@ include file="/html/portlet/login/init.jsp" %>
 
 <%
@@ -49,9 +76,9 @@
 
 	String passwordRules = "";
 	if (passwordPolicy.isCheckSyntax()) {
-		if (passwordPolicy.isAllowDictionaryWords()) {
+		/*if (passwordPolicy.isAllowDictionaryWords()) {
 			passwordRules += "The new password should not contain dictionary words. ";
-		}
+		}*/
 		int passMinAlp = passwordPolicy.getMinAlphanumeric();
 		int passMinLen = passwordPolicy.getMinLength();
 		int passMinLowCase = passwordPolicy.getMinLowerCase();
@@ -59,8 +86,7 @@
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
 			
-		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character";
-		if (passMinLen>1) passwordRules +="s";
+		passwordRules += "A minimum length is "+Integer.toString(passMinLen);
 		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
 			passwordRules += " including at least ";
@@ -105,7 +131,7 @@
 	<portlet:param name="struts_action" value="/login/create_account" />
 </portlet:actionURL>
 
-<div style="padding:0 10%;">
+<div class="wrapper" style="margin:20px auto; max-width:500px">
 <aui:form action="<%= createAccountURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
@@ -189,42 +215,37 @@
 
 	<aui:model-context model="<%= Contact.class %>" />
 
-	<aui:fieldset column="<%= true %>">
-		<aui:col width="<%= 50 %>">
+	<aui:fieldset>
 			<%@ include file="/html/portlet/login/create_account_user_name.jspf" %>
 
 			<c:if test="<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE) %>">
 					
-				<div class="portlet-msg-info" style="max-width:75%;font-size:13px;margin-top:30px; margin-bottom:0px;">
+				<div class="portlet-msg-info" style="font-size:13px;margin-top:30px; margin-bottom:0px;">
 					<div class="icon-info" title=""></div>
 					Please do not use special characters, such as ' ' (space) or 'ä' (german umlaut), since this screenname will be used to create a URL.
 				</div>
-				<aui:input model="<%= User.class %>" name="screenName"  style="max-width:75%;" type="text">
+				<aui:input model="<%= User.class %>" name="screenName"  type="text">
 				<aui:validator name="required" />
 				</aui:input>
 			</c:if>
 
-			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  style="max-width:75%;" type="text">
+			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress"  type="text" showRequiredLabel="<%= false %>" >
 				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 					<aui:validator name="required" />
 				</c:if>
 			</aui:input>
-		</aui:col>
 
-		<aui:col width="<%= 50 %>">
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
-				<div class="portlet-msg-info" style="font-size:13px; margin-bottom:0px;">
-				<div class="icon-info" title=""></div>
-				<%=passwordRules%>
-				</div>
 				
-				<aui:input label="password" name="password1" size="30" type="password" value="" />
-
-				<aui:input label="enter-again" name="password2" size="30" type="password" value="">
-					<aui:validator name="equalTo">
-						'#<portlet:namespace />password1'
-					</aui:validator>
+				<div data-tip="<%=passwordRules%>">
+				<aui:input label="password" name="password1" size="30" type="password" 
+				value="" placeholder="<%=passwordRules%>" showRequiredLabel="<%= false %>" >
+					<aui:validator name="required" />
 				</aui:input>
+				</div>
+				<!-- Hide repeat password but required for validation -->
+				<aui:input name="password2" type="hidden" />
+				<!-- The password1 will be copied to password2 box when a submit button is pressed -->
 			</c:if>
 
 			<c:choose>
@@ -253,13 +274,14 @@
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
 			
-			<aui:button type="submit" />
-		</aui:col>
+			
 	</aui:fieldset>
 
-	<!-- <aui:button-row>
-			<aui:button type="submit" />
-	</aui:button-row> -->
+	<aui:button-row>
+			<aui:button type="submit"  style="width:100%"
+			onclick="document.getElementById('_58_password2').value=document.getElementById('_58_password1').value;"
+			/>
+	</aui:button-row> 
 </aui:form>
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
 </div>

@@ -13,7 +13,16 @@
  * details.
  */
 --%>
-
+    <style type="text/css">
+    	.portlet-title{
+    	display:none;}
+		/*------------sticky footer---------------*/
+		 .wrapper {
+		  min-height: 100%;
+		  min-height: calc(100vh - 400px);
+		}
+		/*---------------------------------------------*/
+    </style>
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
@@ -28,7 +37,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 String ticketKey = ParamUtil.getString(request, "ticketKey");
 %>
 
-<div class="wrapper" style="padding:0 10%;">
+<div class="wrapper" style="margin:20px auto; max-width:500px">
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/verify_email_address" %>' method="post" name="fm">
 	<aui:input name="p_l_id" type="hidden" value="<%= layout.getPlid() %>" />
 	<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
@@ -73,11 +82,10 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 		<c:if test="<%= themeDisplay.isSignedIn() && !user.isEmailAddressVerified() %>">
 			<aui:button href='<%= themeDisplay.getPathMain() + "/portal/verify_email_address?p_l_id=" + layout.getPlid() + "&cmd=" + Constants.SEND + "&referer=" + HttpUtil.encodeURL(referer) %>' value="send-new-verification-code" />
 
-			<aui:button href='<%= themeDisplay.getPathMain() + "/portal/update_email_address?p_l_id=" + layout.getPlid() + "&referer=" + HttpUtil.encodeURL(referer) %>' value="change-email-address" />
+			<!-- <aui:button href='<%= themeDisplay.getPathMain() + "/portal/update_email_address?p_l_id=" + layout.getPlid() + "&referer=" + HttpUtil.encodeURL(referer) %>' value="change-email-address" /> -->
 		</c:if>
 	</aui:button-row>
 </aui:form>
-    <div class="push"></div>
 </div>
 <% 
 String footerContent = "";
@@ -91,4 +99,4 @@ try{
 	footerContent = "Sorry, there is no web content with this title";
 }
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<p><%=footerContent%></p>

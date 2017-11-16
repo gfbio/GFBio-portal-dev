@@ -30,7 +30,7 @@ if (reminderAttempts == null) {
 }
 %>
 
-<div  class="wrapper" style="padding:0 10%;">
+<div  class="wrapper" style="margin:20px auto; max-width:500px">
 <portlet:actionURL var="forgotPasswordURL">
 	<portlet:param name="struts_action" value="/login/forgot_password" />
 </portlet:actionURL>
@@ -78,7 +78,7 @@ if (reminderAttempts == null) {
 
 				<aui:input name="step" type="hidden" value="1" />
 
-				<aui:input label="<%= loginLabel %>" name="<%= loginParameter %>" size="30" type="text" value="<%= loginValue %>">
+				<aui:input label="<%= loginLabel %>" name="<%= loginParameter %>" size="30" type="text" value="<%= loginValue %>" showRequiredLabel="<%= false %>" >
 					<aui:validator name="required" />
 				</aui:input>
 
@@ -91,7 +91,7 @@ if (reminderAttempts == null) {
 				</c:if>
 
 				<aui:button-row>
-					<aui:button type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
+					<aui:button type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' style="width:100%"/>
 				</aui:button-row>
 
 			</c:when>
@@ -138,7 +138,7 @@ if (reminderAttempts == null) {
 						</c:if>
 
 						<aui:button-row>
-							<aui:button type="submit" value='<%= company.isSendPasswordResetLink() ? "send-password-reset-link" : "send-new-password" %>' />
+							<aui:button type="submit" value='<%= company.isSendPasswordResetLink() ? "send-password-reset-link" : "send-new-password" %>' style="width:100%"/>
 						</aui:button-row>
 					</c:otherwise>
 				</c:choose>
@@ -153,7 +153,7 @@ if (reminderAttempts == null) {
 </aui:form>
 
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
-    <div class="push" style="height:200px"></div>
+
 </div>
 <% 
 String footerContent = "";
@@ -167,4 +167,4 @@ try{
 	footerContent = "Sorry, there is no web content with this title";
 }
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<p><%=footerContent%></p>

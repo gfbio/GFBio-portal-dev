@@ -13,7 +13,19 @@
  * details.
  */
 --%>
-
+    <style type="text/css">
+    	.portlet-title{
+    	display:none;}
+		/*------------sticky footer---------------*/
+		 .wrapper {
+		  min-height: 100%;
+		  min-height: calc(100vh - 400px);
+		}
+		/*---------------------------------------------*/
+		.reminder-query-custom{
+			max-width:unset !important;
+		}
+    </style>
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
@@ -26,7 +38,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 }
 %>
 
-<div  class="wrapper" style="padding:0 10%;">
+<div  class="wrapper" style="margin:20px auto; max-width:500px">
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_reminder_query" %>' autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="update-reminder-query" method="post" name="fm">
 	<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
@@ -48,15 +60,17 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
 			<div class="hide" id="customQuestionContainer">
-				<aui:input autoFocus="<%= true %>" bean="<%= user %>" cssClass="reminder-query-custom" fieldParam="reminderQueryCustomQuestion" label="" model="<%= User.class %>" name="reminderQueryQuestion" />
+				<aui:input autoFocus="<%= true %>" bean="<%= user %>" cssClass="reminder-query-custom" fieldParam="reminderQueryCustomQuestion" 
+				label="" model="<%= User.class %>" name="reminderQueryQuestion" />
 			</div>
 		</c:if>
 
-		<aui:input cssClass="reminder-query-answer" label="answer" maxlength="75" name="reminderQueryAnswer" size="50" type="text" value="<%= user.getReminderQueryAnswer() %>" />
+		<aui:input cssClass="reminder-query-answer" label="answer" maxlength="75" name="reminderQueryAnswer" 
+		size="50" type="text" value="<%= user.getReminderQueryAnswer() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button type="submit" style="width:100%"/>
 	</aui:button-row>
 </aui:form>
 
@@ -91,7 +105,6 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 		);
 	}
 </aui:script>
-    <div class="push"></div>
 </div>
 <% 
 String footerContent = "";
@@ -105,4 +118,4 @@ try{
 	footerContent = "Sorry, there is no web content with this title";
 }
 %>
-<p class="embeddedFooter"><%=footerContent%></p>
+<p><%=footerContent%></p>

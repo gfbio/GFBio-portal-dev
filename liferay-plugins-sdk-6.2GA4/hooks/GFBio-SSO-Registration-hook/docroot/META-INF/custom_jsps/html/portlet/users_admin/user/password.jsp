@@ -13,6 +13,32 @@
  * details.
  */
 --%>
+<style>
+/* Style for password tooltip box */
+[data-tip] {
+	position:relative;
+}
+/* hides the tooltip when not hovered */
+[data-tip]:after {
+	display:none;
+	content:attr(data-tip);
+	position:absolute;
+	top:60px;
+	left:0px;
+	padding:5px 8px;
+	background:#1a1a1a;
+	color:#fff;
+	z-index:100;
+	font-size: 0.75em;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	word-wrap:normal;
+}
+[data-tip]:hover:after {
+	display:table;
+}
+</style>
 
 <%@ include file="/html/portlet/users_admin/init.jsp"%>
 
@@ -38,18 +64,17 @@
 
 	String passwordRules = "";
 	if (passwordPolicy.isCheckSyntax()) {
-		if (passwordPolicy.isAllowDictionaryWords()) {
+		/*if (passwordPolicy.isAllowDictionaryWords()) {
 			passwordRules += "The new password should not contain dictionary words. ";
-		}
+		}*/
 		int passMinAlp = passwordPolicy.getMinAlphanumeric();
 		int passMinLen = passwordPolicy.getMinLength();
 		int passMinLowCase = passwordPolicy.getMinLowerCase();
 		int passMinNum = passwordPolicy.getMinNumbers();
 		int passMinSym = passwordPolicy.getMinSymbols();
 		int passMinUppCase = passwordPolicy.getMinUpperCase();
-			
-		passwordRules += "\nIt should have at least "+Integer.toString(passMinLen)+" character";
-		if (passMinLen>1) passwordRules +="s";
+
+		passwordRules += "A minimum length is "+Integer.toString(passMinLen);
 		
 		if (passMinAlp>0 || passMinLowCase>0 || passMinUppCase>0 || passMinNum>0 || passMinSym>0)
 			passwordRules += " including at least ";
@@ -189,17 +214,11 @@
 		<aui:input autocomplete="off" label="current-password"
 			name="password0" size="30" type="password" />
 	</c:if>
-
-	<c:if test="<%=!passwordRules.isEmpty()%>">
-					
-					<div class="portlet-msg-info" style="font-size:13px;margin-top:30px;">
-					<div class="icon-info" title=""></div>
-					<%=passwordRules%>
-					</div>
-	</c:if>
-
-	<aui:input autocomplete="off" label="new-password" name="password1"
-		size="30" type="password" />
+	<span>
+	<div data-tip="<%=passwordRules%>">
+	<aui:input autocomplete="off" label="new-password" name="password1" style="text-overflow: ellipsis;"
+		size="30" type="password" placeholder="<%=passwordRules%>"/>
+	</div>
 	<aui:input autocomplete="off" label="enter-again" name="password2"
 		size="30" type="password">
 		<aui:validator name="equalTo">
