@@ -49,7 +49,6 @@ import org.gfbio.service.base.ResearchObjectLocalServiceBaseImpl;
 import org.gfbio.service.persistence.Project_ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectFinderUtil;
 import org.gfbio.service.persistence.ResearchObjectPK;
-import org.gfbio.submissionworkflow.WorkflowGeneric;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -143,7 +142,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				researchObject = researchObjectPersistence.findByPrimaryKey(pk);				
 				ResearchObjectLocalServiceUtil.deleteResearchObject(researchObject);
 			}
-			catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+			catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
 			
 		}
 			
@@ -173,12 +172,13 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				researchObjectVersion = (int) requestJson.get("researchobjectversion");
 			else
 				researchObjectVersion = ResearchObjectLocalServiceUtil.getLatestVersionById(researchObjectId);
-					
+						
 			if (ResearchObject_UserLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
 				responseJson.put("direct", ResearchObject_UserLocalServiceUtil.getUserIdsByResearchObject(requestJson));
 			
 			if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
 				responseJson.put("partofprojects", ProjectLocalServiceUtil.getUserIdsByResearchObject(requestJson));
+
 		}else
 			responseJson.put("ERROR","ERROR: The json need minimal 'researchobjectid'as long.");
 		
@@ -551,7 +551,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject checkHCCBackground (String tableName, String columnName, String label) {
-
+		
 	
 		JSONObject responseJson = new JSONObject();
 		Boolean check = false;
@@ -575,15 +575,16 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					if (columnId != 0){
 						
 						long contentId =0;
+						long tsContentId =0;
 						rowId= ContentLocalServiceUtil.constructNewId();
-						JSONObject buildResponseJson = ContentLocalServiceUtil.updateContent ( headId, columnId, 0, rowId, label,0);
-
+						JSONObject buildResponseJson = ContentLocalServiceUtil.updateContent ( headId, columnId, contentId, rowId, label,tsContentId);
+						
 						if (buildResponseJson.size() > 0)
 							check = true;
 						
 						if (check){
 
-							long tsContentId = Helper.getLongFromJson(buildResponseJson, "tscontentid");
+							tsContentId = Helper.getLongFromJson(buildResponseJson, "tscontentid");
 							contentId = Helper.getLongFromJson(buildResponseJson, "contentid");
 							
 							//id
@@ -597,24 +598,21 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 								
 							if (check){
 								
-								//mail
-								columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "mail");
-								if (columnId != 0){
-									contentId = contentId+1;
-									buildResponseJson = ContentLocalServiceUtil.updateContent ( headId, columnId, contentId,rowId, "",tsContentId);
-									if (buildResponseJson.size()  == 0)
-										check = false;	
-								}
-										
-								if (check){
-										
-									//orcid
-									columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, "orcid");
-									if (columnId != 0){
-										contentId = contentId+1;
-										buildResponseJson = ContentLocalServiceUtil.updateContent ( headId, columnId, contentId,rowId, "",tsContentId);
-										if (buildResponseJson.size()  == 0)
-											check = false;	
+								List <String> columnNameList = ColumnLocalServiceUtil.getColumnNamesByHeadId(headId);
+								contentId = contentId+1;
+								for (int i =0; i < columnNameList.size();i++){
+									if(check){
+										String futhermoreColumnName = columnNameList.get(i);
+										if (!(futhermoreColumnName.equals(columnName) || futhermoreColumnName.equals("id")||futhermoreColumnName.equals("lastmodifieddate"))){
+											columnId = ColumnLocalServiceUtil.getColumnIdByNames(tableName, futhermoreColumnName);
+											if (columnId != 0){
+												contentId = contentId+1;
+												
+												buildResponseJson = ContentLocalServiceUtil.updateContent ( headId, columnId, contentId,rowId, "",tsContentId);
+												if (buildResponseJson.size()  == 0)
+													check = false;	
+											}
+										}
 									}
 								}
 							}
@@ -706,14 +704,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		JSONObject responseJson = new JSONObject();
 		if (researchObject != null){
 			String extendedDataSting = researchObject.getExtendeddata();
-			
 			JSONParser parser = new JSONParser();
 			JSONObject extendeddataJson = new JSONObject();
-			try {extendeddataJson = (JSONObject) parser.parse(extendedDataSting);}
-			catch (ParseException e) {e.printStackTrace();}
 			
-			responseJson.put("description", researchObject.getDescription());
-			responseJson.put("extendeddata", extendeddataJson);
+			responseJson.put("responseJson", researchObject.getDescription());
+			if (extendedDataSting.length() !=0){
+				try {extendeddataJson = (JSONObject) parser.parse(extendedDataSting);}
+				catch (ParseException e) {e.printStackTrace();}
+				responseJson.put("extendeddata", extendeddataJson);
+			}
+			else
+				responseJson.put("extendeddata", (JSONObject) extendeddataJson);
 			responseJson.put("label", researchObject.getLabel());
 			responseJson.put("licenseid", researchObject.getLicenseID());	
 			responseJson.put("metadataid", researchObject.getMetadataID());	
@@ -722,9 +723,17 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("researchobjectid", researchObject.getResearchObjectID());
 			responseJson.put("researchobjecttype", researchObject.getResearchObjectType());
 			responseJson.put("researchobjectversion", researchObject.getResearchObjectVersion());
-			responseJson.put("lastmodifieddate", researchObject.getLastModifiedDate().toString());
+			responseJson.put("publications", researchObject.getPublications());
+
+			if (researchObject.getEmbargo()!=null)
+				responseJson.put("embargo", researchObject.getEmbargo().toString());
+			else
+				responseJson.put("embargo", researchObject.getEmbargo());
 			
+			responseJson.put("datacollectiontime", researchObject.getDataCollectionTime());
+			responseJson.put("lastmodifieddate", researchObject.getLastModifiedDate().toString());
 		}
+
 				
 		return checkNullParent(responseJson);
 	}
@@ -759,6 +768,11 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			try {responseJson.put("categoryids",ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_category_researchobject"), (Long.toString(researchObjectId))));}
 			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
 	
+		//legal requirements
+		if (ContentLocalServiceUtil.checkExistenceOfKeyId("gfbio_legalrequirement_researchobject",researchObjectId))
+			try {responseJson.put("legalrequirementids",ContentLocalServiceUtil.getOppositeCellContentsOfRelationsByCellContent(HeadLocalServiceUtil.getHeadIdByTableName("gfbio_legalrequirement_researchobject"), (Long.toString(researchObjectId))));}
+			catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		
 		//licenses
 		if (responseJson.containsKey("licenseid"))
 			responseJson.put("licenselabel",ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdById( (long) responseJson.get("licenseid")),"label"));
@@ -773,7 +787,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("primarydataids", primaryDataIdList);
 		}
 			
-		
 		//projects
 		if (Project_ResearchObjectLocalServiceUtil.checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion))
 			responseJson.put("projectids",Project_ResearchObjectLocalServiceUtil.getProjectIdsByResearchObject(responseJson));
@@ -793,6 +806,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		return checkNullParent(responseJson);
 	}
 	
+	
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructExtraExtendedResearchObjectJson (ResearchObject researchObject){
@@ -802,15 +816,15 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		responseJson.put("researchobject",  researchObjectJson);
 		
 		//parental research object information
-				if (researchObjectJson.containsKey("parentresearchobjectid"))
+		if (researchObjectJson.containsKey("parentresearchobjectid"))
 			if (researchObjectJson.get("parentresearchobjectid")!=null){
 				JSONObject requestJson = new JSONObject();
 				requestJson.put("researchobjectid", Helper.getLongFromJson(researchObjectJson, "parentresearchobjectid"));
 				responseJson.put("parentresearchobject",  getResearchObjectAsJsonById(requestJson));
 			}
 		
-				//submission information
-				if (researchObjectJson.containsKey("submissionids")){
+		//submission information
+		if (researchObjectJson.containsKey("submissionids")){
 			JSONArray responseArray =  SubmissionLocalServiceUtil.getSubmissionsByResearchObjectIdAndVersion(researchObjectJson);
 			List <JSONObject> responseList= new ArrayList<JSONObject>();
 			for (int i =0; i < responseArray.size();i++)
@@ -819,7 +833,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			responseJson.put("submissions",  responseList);
 		}
 
-		
 		//license information
 		if (researchObjectJson.containsKey("licenseid"))
 			responseJson.put("license",  ContentLocalServiceUtil.getRowInformationByContentId(Helper.getLongFromJson(researchObjectJson, "licenseid")));
@@ -835,7 +848,6 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			for (int i =0; i < responseArray.size();i++)
 				if (((responseArray.get(i).getClass()).toString()).equals("class org.json.simple.JSONObject"))
 					responseList.add((JSONObject) responseArray.get(i));
-			_log.info("3.5: "+responseList);
 			responseJson.put("projects", responseList );
 		}
 		
@@ -849,23 +861,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 				primaryData = PrimaryDataLocalServiceUtil.getPrimaryDataById(primaryData);
 				responseList.add((JSONObject) primaryData);
 			}
-			_log.info("3.75: "+responseList);
 			responseJson.put("primarydatas", responseList );
 		}
-		
-/*		List <JSONObject> responseList= new ArrayList<JSONObject>();
-		//JSONArray primaryDataList = new JSONArray();
-		for (int i =0; i < primaryDataIdList.size();i++){
-			JSONObject primaryDataId = new JSONObject();
-			primaryDataId.put("primarydataid", primaryDataIdList.get(i));
-			//JSONObject primaryData = PrimaryDataLocalServiceUtil.getPrimaryDataById(primaryDataId);
-			//primaryDataList.add(primaryData);
-			responseList.add((JSONObject) PrimaryDataLocalServiceUtil.getPrimaryDataById(primaryDataId));
-		}
-		responseJson.put("primarydata", responseList);*/
-		
-		_log.info("4: "+responseJson);
-		
+			
 		return responseJson;
 	}
 	
@@ -890,6 +888,126 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	
 	//
+	@SuppressWarnings({ "unchecked"})
+	public JSONObject transferResearchObjectInformationToDb(JSONObject requestJson){
+		JSONObject responseJson = new JSONObject();
+		
+		_log.info("transfer request:" + requestJson);
+		
+		if (requestJson.containsKey("researchobject")){
+			
+			JSONObject researchObjectJson = null;
+			
+			researchObjectJson = Helper.getJsonObjectFromJson(requestJson, "researchobject");
+			
+			_log.info("transfer researchObjectJson:" + researchObjectJson);
+			
+			if (researchObjectJson.containsKey("researchobjectid")){
+				_log.info("update RO");
+				researchObjectJson = updateResearchObjectByJson(researchObjectJson);
+			}else{
+				_log.info("create RO");
+				researchObjectJson = createResearchObjectByJson(researchObjectJson);
+			}
+			_log.info("after change: "+researchObjectJson);
+			responseJson.put("researchobject", researchObjectJson);
+			
+			_log.info("transfer responseJson:" + responseJson);
+						
+			if (researchObjectJson.containsKey("researchobjectid")){
+				
+				long researchObjectId = Helper.getLongFromJson(researchObjectJson, "researchobjectid");
+				int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
+
+				//submission
+				if (requestJson.containsKey("submission")){
+					
+					JSONObject submissionJson = Helper.getJsonObjectFromJson(requestJson, "submission");
+					
+					_log.info(submissionJson);
+					
+					if (submissionJson.containsKey("archive")){
+						
+						submissionJson.put("researchobjectid", researchObjectId);
+						submissionJson.put("researchobjectversion", researchObjectVersion);
+						submissionJson.put("dbrocheck", true);
+						
+						_log.info(submissionJson);
+
+						if (SubmissionLocalServiceUtil.checkOfIds(researchObjectId, researchObjectVersion, (Helper.getStringFromJson(submissionJson, "archive")).trim())){
+							_log.info("update Sub");
+							submissionJson = SubmissionLocalServiceUtil.updateSubmission(submissionJson);
+						}else{
+							_log.info("create Sub");
+							submissionJson = SubmissionLocalServiceUtil.createSubmission(submissionJson);
+						}
+						
+						responseJson.put("submission", submissionJson);
+					}
+				}
+				
+				//project
+				if (requestJson.containsKey("project")){
+					
+					JSONObject projectJson = Helper.getJsonObjectFromJson(requestJson, "project");
+					
+					_log.info(projectJson);
+									
+
+					if (projectJson.containsKey("projectid")){
+						_log.info("update Pro");
+						projectJson = ProjectLocalServiceUtil.updateProjectByJson(projectJson);
+					}else{
+						_log.info("create Pro");
+						projectJson = ProjectLocalServiceUtil.createProjectByJson(projectJson);
+					}
+					
+					Boolean check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(Helper.getLongFromJson(projectJson, "projectid"), researchObjectId, researchObjectVersion);
+					
+					if (check)
+						responseJson.put("project", projectJson);
+				}
+				
+				//primarydata
+				if (requestJson.containsKey("primarydata")){
+					JSONObject primarydataJson = Helper.getJsonObjectFromJson(requestJson, "primarydata");
+					
+					primarydataJson.put("researchobjectid", researchObjectId);
+					primarydataJson.put("researchobjectversion", researchObjectVersion);
+					
+					if (primarydataJson.containsKey("primarydataid")){
+						_log.info("update Pri");
+						primarydataJson = PrimaryDataLocalServiceUtil.updatePrimaryData(primarydataJson);
+					}else{
+						_log.info("create Pri");
+						primarydataJson = PrimaryDataLocalServiceUtil.createPrimaryData(primarydataJson);
+					}
+					responseJson.put("primarydata", primarydataJson);
+					
+				}
+				
+				//answer
+				JSONObject questionJson = new JSONObject ();
+				questionJson.put("kindofresponse","extraextended");
+				questionJson.put("researchobjectid",researchObjectId);
+				JSONObject answerJson = getResearchObjectAsJsonById(questionJson);
+				responseJson.put("all", answerJson);
+				
+				
+			}
+			
+			
+			
+		}
+		else{
+			responseJson.put("Error", "ERROR: You have to sent the researchobjectinformation to use this service." );
+		}
+		
+		return responseJson;
+	}
+	
+	
+	//
 	@SuppressWarnings("unchecked")
 	public JSONArray createResearchObjectByJson(JSONArray requestJson){
 		
@@ -904,12 +1022,16 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	@SuppressWarnings("unchecked")
 	public JSONObject createResearchObjectByJson(JSONObject requestJson){
 		
+		_log.info("create tesearch object");
+		
 		Boolean check = false;
 		long researchObjectId = 0;
 		int researchObjectVersion = 1;
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authornames", "authormail","authorid", "brokerobjectid","categoryid", "categoryids", "categorynames","description", "extendeddata", "label","licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "projectid", "researchobjecttype", "userid"};
+		String [] keySet = {"authorid", "authornames", "authormail", "authors","brokerobjectid","categoryid", "categoryids", "categorynames", "datacollectiontime",
+				"description", "embargo", "extendeddata", "label","legalrequirementid","legalrequirementids","legalrequirementnames","legalrestrictionid","legalrestrictionids","legalrestrictionnames",
+				"licenseid","licenselabel", "metadataid", "metadatalabel", "name","parentresearchobjectid", "primarydata", "projectid", "publications","researchobjecttype", "userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -951,9 +1073,18 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						
 	
 				// optional
-										
-				if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames")) && check){
 				
+				// author
+				_log.info("author "+check);
+				
+				if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames") || requestJson.containsKey("authors")) && check){
+					
+					if ((requestJson.containsKey("authors"))){
+						JSONArray authorsJson = Helper.getJsonArrayFromJson(requestJson, "authors");
+						for (int i =0; i < authorsJson.size();i++)
+							check = updateAuthor(researchObjectId, researchObjectVersion, Helper.getJsonObjectFromJsonArray(authorsJson, i));
+					}
+					
 					if ((requestJson.containsKey("authorid"))){
 						long  authorId = Helper.getLongFromJson(requestJson, "authorid");
 						if (authorId !=0)
@@ -977,33 +1108,18 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 
 					//by the length check we have a special character problem, so we don't have exact 2000 character
 					if(requestJson.containsKey("authornames") && check){
-						if (((requestJson.get("authornames").getClass()).toString()).equals("class java.lang.String")){
-							String authorNames = Helper.getStringFromJson(requestJson, "authornames");
-							if (authorNames.length() <=Helper.getJiraTextareaSmallLimit()){
-								if (!authorNames.equals("") && authorNames != null)
-									updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "authornames")),"name");
-								else
-									responseJson.put("WARNING", "WARNING: 'authornames' is empty and will be ignored.");
-							}else{
-								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
-								check=false;
-							}
+						JSONArray authorNamesArray = Helper.getJsonArrayFromJson(requestJson, "authornames");
+						if (authorNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
+							if( !authorNamesArray.equals("") && authorNamesArray != null)
+								check = updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, authorNamesArray,"name");
+							else
+								responseJson.put("WARNING", "WARNING: 'authornames' is empty and will be ignored.");
 						}else{
-							JSONArray authorNamesArray = new JSONArray();
-							authorNamesArray = (JSONArray) requestJson.get("authornames");
-							if (authorNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
-								if( !authorNamesArray.equals("") && authorNamesArray != null)
-									updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, authorNamesArray,"name");
-								else
-									responseJson.put("WARNING", "WARNING: 'authornames' is empty and will be ignored.");
-							}else{
-								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
-								check=false;
-							}
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+							check=false;
 						}
 					}
 				}
-				
 				else if (requestJson.containsKey("userid") && check)
 					if (Helper.getLongFromJson(requestJson, "userid") >0){
 						JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
@@ -1021,36 +1137,48 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					}
 				
 	
+				// catagory
+				_log.info("catagory "+check);
 				
 				if(requestJson.containsKey("categoryids") && check)
-					if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-						updateCategoryIds(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categoryids"));
-					else{
-						if ((((requestJson.get("categoryids")).getClass()).toString()).equals("class java.lang.String"))
-							updateCategoryIds(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "categoryids")));
-					}
+					updateCategoryIds(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "categoryids"));
 				else
 					if (requestJson.containsKey("categoryid") && check)
-						updateCategoryId(researchObjectId, researchObjectVersion, (long) requestJson.get("categoryid"));
+						updateCategoryId(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "categoryid"));
 					else
 						if (requestJson.containsKey("categorynames") && check)
-							if ((((requestJson.get("categorynames")).getClass()).toString()).equals("class org.json.simple.JSONArray"))
-								if (Helper.getStringFromJson(requestJson, "categorynames").length() <=Helper.getJiraTextfieldLimit())
-									updateCategoryNames(researchObjectId, researchObjectVersion, (JSONArray) requestJson.get("categorynames"));
-								else{
-									responseJson.put("ERROR", "ERROR: To create a Research Object, because 'categorynames' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
-									check=false;
-								}
-							else
-								if ((((requestJson.get("categorynames")).getClass()).toString()).equals("class java.lang.String"))
-									if (Helper.getStringFromJson(requestJson, "categorynames").length() <=Helper.getJiraTextfieldLimit())
-										updateCategoryNames(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromString(Helper.getStringFromJson(requestJson, "categorynames")));
-									else{
-										responseJson.put("ERROR", "ERROR: To create a Research Object, because 'categorynames' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
-										check=false;
-									}
+							if (Helper.getStringFromJson(requestJson, "categorynames").length() <=Helper.getJiraTextfieldLimit()){
+								updateCategoryNames(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "categorynames"));
+							}else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'categorynames' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
+								check=false;
+							}
+				
+				
+				// data collection time
+				_log.info("data collection time "+check);
+				
+				if (requestJson.containsKey("datacollectiontime") && check)
+					if ((Helper.getStringFromJson(requestJson, "datacollectiontime")).length() >Helper.getJiraTextareaSmallLimit()){
+						check = false;
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'datacollectiontime' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+					}else
+						check = updateDataCollectionTime(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "datacollectiontime"));
+
+				
+				// embargo
+				_log.info("embargo "+check);
+				
+				if (requestJson.containsKey("embargo") && check)
+					if ((Helper.getStringFromJson(requestJson, "embargo")).length() >Helper.getJiraTextfieldLimit()){
+						check = false;
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+					}else
+						check = updateEmbargo(researchObjectId, researchObjectVersion, Helper.getDateFromJson(requestJson, "embargo"));
 			
 				
+				// extended data
+				_log.info("extended data "+check);
 						
 				if(requestJson.containsKey("extendeddata") && check){
 					
@@ -1072,6 +1200,12 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 								extendedDataCheck = false;
 								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
 							}
+						if(extendedDataJson.containsKey("legalrequirements") && extendedDataCheck)
+							if ((Helper.getStringFromJson(extendedDataJson, "legalrequirements")).length() >Helper.getJiraTextfieldLimit()){
+								extendedDataCheck = false;
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+							}
+						
 						if (extendedDataCheck)
 							updateExtendedData(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "extendeddata"));
 						else
@@ -1079,12 +1213,70 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					}
 				}
 				
+				// legal requirements
+				_log.info("legal requirements "+check);
+				
+				if(requestJson.containsKey("legalrequirementids") && check)
+					check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "legalrequirementids"), "id");
+				else{
+					if ((requestJson.containsKey("legalrequirementid"))){
+						long  legalRequirementId = Helper.getLongFromJson(requestJson, "legalrequirementid");
+						if (legalRequirementId !=0)
+							check = updateLegalRequirementIdById(researchObjectId, researchObjectVersion, legalRequirementId);
+						else
+							responseJson.put("WARNING", "WARNING: 'legalrequirementid' is 0 and will be ignored.");
+					}else
+						if(requestJson.containsKey("legalrequirementnames") && check){
+							JSONArray legalRequirementNamesArray = Helper.getJsonArrayFromJson(requestJson, "legalrequirementnames");
+							if (legalRequirementNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
+								if( !legalRequirementNamesArray.equals("") && legalRequirementNamesArray != null)
+									check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, legalRequirementNamesArray,"name");
+								else
+									responseJson.put("WARNING", "WARNING: 'legalrequirementnames' is empty and will be ignored.");
+							}else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'legalrequirementnames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+								check=false;
+							}
+						}
+				}
+				
+				
+				// legal restrictions
+				_log.info("legal restrictions "+check);
+				
+				if(requestJson.containsKey("legalrestrictionids") && check)
+					check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "legalrestrictionids"), "id");
+				else{
+					if ((requestJson.containsKey("legalrestrictionid"))){
+						long  legalRequirementId = Helper.getLongFromJson(requestJson, "legalrestrictionid");
+						if (legalRequirementId !=0)
+							check = updateLegalRequirementIdById(researchObjectId, researchObjectVersion, legalRequirementId);
+						else
+							responseJson.put("WARNING", "WARNING: 'legalrequirementid' is 0 and will be ignored.");
+					}else
+						if(requestJson.containsKey("legalrestrictionnames") && check){
+							JSONArray legalRequirementNamesArray = Helper.getJsonArrayFromJson(requestJson, "legalrestrictionnames");
+							if (legalRequirementNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
+								if( !legalRequirementNamesArray.equals("") && legalRequirementNamesArray != null)
+									check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, legalRequirementNamesArray,"name");
+								else
+									responseJson.put("WARNING", "WARNING: 'legalrestrictionnames' is empty and will be ignored.");
+							}else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'legalrestrictionnames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+								check=false;
+							}
+						}
+				}
+				
+						
+				
+				// license
+				_log.info("license "+check);
+				
 				if (requestJson.containsKey("licenseid") && check)
 					if (Helper.getLongFromJson(requestJson, "licenseid") >0)
 						check = updateLicenseId(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "licenseid"));
-				
-
-				
+							
 				if(requestJson.containsKey("licenselabel") && check){
 					String licenseLabel = Helper.getStringFromJson(requestJson, "licenselabel");
 					if (licenseLabel.length() <=Helper.getJiraTextfieldLimit()){
@@ -1097,6 +1289,9 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						check=false;
 					}
 				}
+				
+				// metadata
+				_log.info("metadata "+check);
 								
 				if (requestJson.containsKey("metadataid") && check)
 					if (Helper.getLongFromJson(requestJson, "metadataid") >0)
@@ -1115,18 +1310,51 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					}
 				}
 
+				// parentresearchobjectid
+				_log.info("parentresearchobjectid "+check);
+				
 				if (requestJson.containsKey("parentresearchobjectid") && check)
 					if (Helper.getLongFromJson(requestJson, "parentresearchobjectid") >0)
 						check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "parentresearchobjectid"));
+				
+				// primarydata
+				_log.info("primarydata "+check);
+				
+				if (requestJson.containsKey("primarydata") && check){
+					JSONObject primarydataJson = Helper.getJsonObjectFromJson(requestJson, "primarydata");
+					check = updatePrimaryData(researchObjectId, researchObjectVersion, primarydataJson);
+				}
+				
+				
+				// project
+				_log.info("project "+check);
 				
 				if (requestJson.containsKey("projectid") && check)
 					if (Helper.getLongFromJson(requestJson, "projectid") >0)
 						check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(Helper.getLongFromJson(requestJson, "projectid"), researchObjectId, researchObjectVersion);
 				
+				
+				// publications
+				_log.info("publications "+check);
+				
+				if (requestJson.containsKey("publications") && check)
+					if ((Helper.getStringFromJson(requestJson, "publications")).length() >Helper.getJiraTextareaSmallLimit()){
+						check = false;
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'publications' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+					}else
+					check = updatePublications(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "publications"));
+	
+				
+				// user
+				_log.info("user");
+				
 				if (requestJson.containsKey("userid") && check)
 					if (Helper.getLongFromJson(requestJson, "userid") >0)
 						check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "userid"), "owner");
-					
+				
+				// general response
+				_log.info("general response "+check);
+				
 				if (check){
 					responseJson.put("researchobjectid", researchObjectId);
 					responseJson.put("researchobjectversion", researchObjectVersion);
@@ -1188,7 +1416,10 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 		JSONObject responseJson = new JSONObject();
 		Set<String> set = new HashSet<String>();
-		String [] keySet = {"authormail", "authornames", "authorid", "brokerobjectid", "categoryid", "categoryids", "categorynames", "description", "extendeddata", "label","licenseid", "licenselabel", "metadataid", "metadatalabel", "name", "researchobjectid","parentresearchobjectid"};
+		String [] keySet = {"authorid", "authormail", "authornames", "authors", "brokerobjectid", "categoryid", "categoryids", "categorynames", 
+				"datacollectiontime", "description", "embargo", "extendeddata", "label", "legalrequirementid", "legalrequirementids", "legalrequirementnames", 
+				"legalrestrictionid", "legalrestrictionids","legalrestrictionnames", "licenseid", "licenselabel", "metadataid", "metadatalabel", "name",
+				"publications", "primarydata", "researchobjectid","parentresearchobjectid","userid"};
 		for (int i = 0; i< keySet.length;i++)
 			set.add(keySet[i]);
 		String ignoreParameter = checkForIgnoredParameter(requestJson.keySet().toArray(), set);
@@ -1211,52 +1442,86 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						
 				//optional parameter
 				
-				//author
-				if(requestJson.containsKey("authornames") && check){
-					if (Helper.getStringFromJson(requestJson, "authornames").length() <=Helper.getJiraTextareaSmallLimit()){
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateAuthorIdsByColumn(researchObjectId, researchObjectVersion,  Helper.getJsonArrayFromJson(requestJson, "authornames"), "name");
-					}else{
-						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
-						check=false;
+				// author
+				_log.info("author "+check);
+				
+				if ((requestJson.containsKey("authormail") || requestJson.containsKey("authorid") || requestJson.containsKey("authornames") || requestJson.containsKey("authors")) && check){
+					
+					if ((requestJson.containsKey("authors"))){
+						JSONArray authorsJson = Helper.getJsonArrayFromJson(requestJson, "authors");
+						for (int i =0; i < authorsJson.size();i++)
+							check = updateAuthor(researchObjectId, researchObjectVersion, Helper.getJsonObjectFromJsonArray(authorsJson, i));
 					}
-				}else
-					if(requestJson.containsKey("authorid") && check){
-						long authorId = Helper.getLongFromJson(requestJson, "authorid");
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateAuthorIdById(researchObjectId, researchObjectVersion, authorId);
-					}else
-						if(requestJson.containsKey("authormail") && check){
-							if (Helper.getStringFromJson(requestJson, "authormail").length()<=Helper.getJiraTextareaSmallLimit()){
-								String authorMail = Helper.getStringFromJson(requestJson, "authormail");
-								researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-								check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, authorMail, "mail");
-							}else{
-								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authormail' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
-								check=false;
-							}
+					
+					if ((requestJson.containsKey("authorid"))){
+						long  authorId = Helper.getLongFromJson(requestJson, "authorid");
+						if (authorId !=0)
+							check = updateAuthorIdById(researchObjectId, researchObjectVersion, authorId);
+						else
+							responseJson.put("WARNING", "WARNING: 'authorid' is 0 and will be ignored.");
+					}
+					
+					if(requestJson.containsKey("authormail") && check){
+						String authorMail = Helper.getStringFromJson(requestJson, "authormail");
+						if (authorMail.length()<=Helper.getJiraTextareaSmallLimit()){
+							if (authorMail != null && !authorMail.equals(""))
+								check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "authormail"),"mail");
+							else
+								responseJson.put("WARNING", "WARNING: 'authormail' is empty and will be ignored.");
+						}else{
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authormail' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+							check=false;
 						}
+					}
 
-				//category
-				if(requestJson.containsKey("categoryids") && check){
-					researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-					check = updateCategoryIds(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "categoryids"));
-				}else
-					if(requestJson.containsKey("categoryid") && check){
-						long categoryId = Helper.getLongFromJson(requestJson, "categoryid");
-						researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-						check = updateCategoryId(researchObjectId, researchObjectVersion, categoryId);
-					}else
-						if (requestJson.containsKey("categorynames") && check){
+					//by the length check we have a special character problem, so we don't have exact 2000 character
+					if(requestJson.containsKey("authornames") && check){
+						JSONArray authorNamesArray = Helper.getJsonArrayFromJson(requestJson, "authornames");
+						if (authorNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
+							if( !authorNamesArray.equals("") && authorNamesArray != null)
+								check = updateAuthorIdsByColumn(researchObjectId, researchObjectVersion, authorNamesArray,"name");
+							else
+								responseJson.put("WARNING", "WARNING: 'authornames' is empty and will be ignored.");
+						}else{
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'authornames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+							check=false;
+						}
+					}
+				}
+				else if (requestJson.containsKey("userid") && check)
+					if (Helper.getLongFromJson(requestJson, "userid") >0){
+						JSONObject userExtension = UserExtensionLocalServiceUtil.getUserExtentionById(requestJson);
+						
+						if (userExtension.containsKey("fullname"))
+							if (!(((String) userExtension.get("fullname")).equals(null)))
+									check = updateAuthorIdByColumn(researchObjectId, researchObjectVersion, (String) userExtension.get("fullname"),"name" );
+							else
+								check = false;
+						else{
+							check = false;
+							if (userExtension.containsKey("ERROR"))
+								responseJson.put("ERROR", (String) userExtension.get("ERROR"));
+						}
+					}
+
+				
+				// catagory
+				_log.info("catagory "+check);
+				
+				if(requestJson.containsKey("categoryids") && check)
+					updateCategoryIds(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "categoryids"));
+				else
+					if (requestJson.containsKey("categoryid") && check)
+						updateCategoryId(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "categoryid"));
+					else
+						if (requestJson.containsKey("categorynames") && check)
 							if (Helper.getStringFromJson(requestJson, "categorynames").length() <=Helper.getJiraTextfieldLimit()){
-								JSONArray categoryIds = Helper.getJsonArrayFromJson(requestJson, "categorynames");
-								researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
-								check = updateCategoryNames(researchObjectId, researchObjectVersion, categoryIds);
+								updateCategoryNames(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "categorynames"));
 							}else{
 								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'categorynames' has more as ".concat(String.valueOf(Helper.getJiraTextfieldLimit())).concat(" character. ") );
 								check=false;
 							}
-						}
+				
 
 				//description
 				if(requestJson.containsKey("description") && check){
@@ -1271,29 +1536,59 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						check=false;
 					}
 				}
+				
+
+				// data collection time
+				_log.info("data collection time "+check);
+				
+				if (requestJson.containsKey("datacollectiontime") && check)
+					if ((Helper.getStringFromJson(requestJson, "datacollectiontime")).length() >Helper.getJiraTextareaSmallLimit()){
+						check = false;
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'datacollectiontime' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+					}else
+						check = updateDataCollectionTime(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "datacollectiontime"));
+
+				
+				// embargo
+				_log.info("embargo "+check);
+				
+				if (requestJson.containsKey("embargo") && check)
+					if ((Helper.getStringFromJson(requestJson, "embargo")).length() >Helper.getJiraTextfieldLimit()){
+						check = false;
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+					}else
+						check = updateEmbargo(researchObjectId, researchObjectVersion, Helper.getDateFromJson(requestJson, "embargo"));
+			
+				
 
 				//extendedData
 				if(requestJson.containsKey("extendeddata") && check){
 					String extendedData = Helper.getStringFromJson(requestJson, "extendeddata");
 					JSONObject extendedDataJson = Helper.getJsonObjectFromJson(requestJson, "extendeddata");
 					Boolean extendedDataCheck = true;
+					
 					if(extendedDataJson.containsKey("datacollectiontime") && extendedDataCheck)
 						if ((Helper.getStringFromJson(extendedDataJson, "datacollectiontime")).length() >Helper.getJiraTextareaSmallLimit()){
 							extendedDataCheck = false;
 							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'datacollectiontime' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
-						}
-
-					if(extendedDataJson.containsKey("publications") && extendedDataCheck)
-						if ((Helper.getStringFromJson(extendedDataJson, "publications")).length() >Helper.getJiraTextareaSmallLimit()){
-							extendedDataCheck = false;
-							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'publications' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
 						}
 					if(extendedDataJson.containsKey("embargo") && extendedDataCheck)
 						if ((Helper.getStringFromJson(extendedDataJson, "embargo")).length() >Helper.getJiraTextfieldLimit()){
 							extendedDataCheck = false;
 							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
 						}
-							
+					
+					if(extendedDataJson.containsKey("legalrequirements") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "legalrequirements")).length() >Helper.getJiraTextfieldLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'embargo' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+					if(extendedDataJson.containsKey("publications") && extendedDataCheck)
+						if ((Helper.getStringFromJson(extendedDataJson, "publications")).length() >Helper.getJiraTextareaSmallLimit()){
+							extendedDataCheck = false;
+							responseJson.put("ERROR", "ERROR: To create a Research Object, because 'publications' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+						}
+					
 					if (extendedDataCheck){
 						if (!extendedData.equals(researchObject.getExtendeddata())){
 							researchObjectVersion = updateResearchObjectVersion(researchObjectId, researchObjectVersion, startVersion);
@@ -1317,6 +1612,64 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 					}
 				}
 
+				
+				
+				// legal requirements
+				_log.info("legal requirements "+check);
+				
+				if(requestJson.containsKey("legalrequirementids") && check)
+					check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "legalrequirementids"), "id");
+				else{
+					if ((requestJson.containsKey("legalrequirementid"))){
+						long  legalRequirementId = Helper.getLongFromJson(requestJson, "legalrequirementid");
+						if (legalRequirementId !=0)
+							check = updateLegalRequirementIdById(researchObjectId, researchObjectVersion, legalRequirementId);
+						else
+							responseJson.put("WARNING", "WARNING: 'legalrequirementid' is 0 and will be ignored.");
+					}else
+						if(requestJson.containsKey("legalrequirementnames") && check){
+							JSONArray legalRequirementNamesArray = Helper.getJsonArrayFromJson(requestJson, "legalrequirementnames");
+							if (legalRequirementNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
+								if( !legalRequirementNamesArray.equals("") && legalRequirementNamesArray != null)
+									check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, legalRequirementNamesArray,"name");
+								else
+									responseJson.put("WARNING", "WARNING: 'legalrequirementnames' is empty and will be ignored.");
+							}else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'legalrequirementnames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+								check=false;
+							}
+						}
+				}
+				
+				
+				// legal restrictions
+				_log.info("legal restrictions "+check);
+				
+				if(requestJson.containsKey("legalrestrictionids") && check)
+					check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, Helper.getJsonArrayFromJson(requestJson, "legalrestrictionids"), "id");
+				else{
+					if ((requestJson.containsKey("legalrestrictionid"))){
+						long  legalRequirementId = Helper.getLongFromJson(requestJson, "legalrestrictionid");
+						if (legalRequirementId !=0)
+							check = updateLegalRequirementIdById(researchObjectId, researchObjectVersion, legalRequirementId);
+						else
+							responseJson.put("WARNING", "WARNING: 'legalrequirementid' is 0 and will be ignored.");
+					}else
+						if(requestJson.containsKey("legalrestrictionnames") && check){
+							JSONArray legalRequirementNamesArray = Helper.getJsonArrayFromJson(requestJson, "legalrestrictionnames");
+							if (legalRequirementNamesArray.size() <=Helper.getJiraTextareaSmallLimit()){
+								if( !legalRequirementNamesArray.equals("") && legalRequirementNamesArray != null)
+									check = updateLegalRequirementIdsByColumn(researchObjectId, researchObjectVersion, legalRequirementNamesArray,"name");
+								else
+									responseJson.put("WARNING", "WARNING: 'legalrestrictionnames' is empty and will be ignored.");
+							}else{
+								responseJson.put("ERROR", "ERROR: To create a Research Object, because 'legalrestrictionnames' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+								check=false;
+							}
+						}
+				}
+								
+				
 				//license
 				if(requestJson.containsKey("licenselabel") && check){
 					String licenseLabel = Helper.getStringFromJson(requestJson, "licenselabel");
@@ -1382,6 +1735,45 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 						check = updateParentResearchObjectIdByIds(researchObjectId, researchObjectVersion, parentId);
 					}
 				}
+				
+				
+				// primarydata
+				_log.info("primarydata "+check);
+				
+				if (requestJson.containsKey("primarydata") && check){
+					JSONObject primarydataJson = Helper.getJsonObjectFromJson(requestJson, "primarydata");
+					check = updatePrimaryData(researchObjectId, researchObjectVersion, primarydataJson);
+				}
+				
+				
+
+				// project
+				_log.info("project "+check);
+				
+				if (requestJson.containsKey("projectid") && check)
+					if (Helper.getLongFromJson(requestJson, "projectid") >0)
+						check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(Helper.getLongFromJson(requestJson, "projectid"), researchObjectId, researchObjectVersion);
+				
+				
+				// publications
+				_log.info("publications "+check);
+				
+				if (requestJson.containsKey("publications") && check)
+					if ((Helper.getStringFromJson(requestJson, "publications")).length() >Helper.getJiraTextareaSmallLimit()){
+						check = false;
+						responseJson.put("ERROR", "ERROR: To create a Research Object, because 'publications' has more as ".concat(String.valueOf(Helper.getJiraTextareaSmallLimit())).concat(" character. ") );
+					}else
+					check = updatePublications(researchObjectId, researchObjectVersion, Helper.getStringFromJson(requestJson, "publications"));
+	
+
+				// user
+				_log.info("user");
+				
+				if (requestJson.containsKey("userid") && check)
+					if (Helper.getLongFromJson(requestJson, "userid") >0)
+						check = ResearchObject_UserLocalServiceUtil.updateResearchObjectUser(researchObjectId, researchObjectVersion, Helper.getLongFromJson(requestJson, "userid"), "owner");
+	
+				
 			
 				if (checkResearchObjectIdAndVersion(researchObjectId, researchObjectVersion) && !check && researchObjectVersion != startVersion){
 					JSONObject deleteJson = new JSONObject();
@@ -1434,7 +1826,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		long check =0;
 		
 		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-		catch (NoSuchResearchObjectException | SystemException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		catch (NoSuchResearchObjectException | SystemException e) {_log.info("no enitity with pk: "+pk+" is found");}
 
 		if (researchObject == null){
 			pk = new ResearchObjectPK(constructNewId(), 1);
@@ -1457,6 +1849,54 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		
 
 	//
+	private Boolean updateAuthor (long researchObjectId, int researchObjectVersion, JSONObject authorJson){
+		
+		Boolean check = false;
+		JSONObject hccJson= new JSONObject();
+		
+		String tableName = "gfbio_externalperson";
+		long headId =0;
+		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);}
+		catch (NoSuchHeadException | SystemException e) {e.printStackTrace();}
+		long contentId =0;
+		long rowId =0;
+		
+		
+		if (authorJson.containsKey("orcid"))
+			hccJson = checkHCCBackground(tableName, "orcid", Helper.getStringFromJson(authorJson, "orcid"));
+		else
+			if (authorJson.containsKey("name"))
+				hccJson = checkHCCBackground(tableName, "name", Helper.getStringFromJson(authorJson, "name"));
+			else
+				if (authorJson.containsKey("mail"))
+					hccJson = checkHCCBackground(tableName, "mail", Helper.getStringFromJson(authorJson, "mail"));
+		
+		contentId = Helper.getLongFromJson(hccJson, "contentid");
+		rowId = ContentLocalServiceUtil.getRowIdById(contentId);
+		
+		if (contentId>0)
+			check = true;
+		
+		if (authorJson.containsKey("name") && check)
+			hccJson = ContentLocalServiceUtil.updateContent (headId, ColumnLocalServiceUtil.getColumnIdByNames(tableName, "name"), ContentLocalServiceUtil.getContentIdByRowIdAndColumnName(rowId, "name"), rowId, Helper.getStringFromJson(authorJson, "name"), 0);
+		
+		if (contentId>0)
+			check = true;
+				
+		if (authorJson.containsKey("mail") && check)
+			hccJson = ContentLocalServiceUtil.updateContent (headId, ColumnLocalServiceUtil.getColumnIdByNames(tableName, "mail"), ContentLocalServiceUtil.getContentIdByRowIdAndColumnName(rowId, "mail"), rowId, Helper.getStringFromJson(authorJson, "mail"), 0);
+		
+		if (contentId>0)
+			check = true;
+		
+		if (check)
+			check =  updateAuthorIdById(researchObjectId, researchObjectVersion, contentId);
+		
+		return check;
+	}
+	
+	
+	//
 	private Boolean AddAuthorIdById (long researchObjectId, int researchObjectVersion, long authorId){
 		
 		Boolean check = false;
@@ -1470,12 +1910,24 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	
 	//
 	private Boolean AddCategoryId (long researchObjectId, int researchObjectVersion, long categorieId){
-		Boolean check = false;
-		
+
+		Boolean check = false;		
 		JSONObject hccJson= new JSONObject();
 		hccJson = checkHCCBackground("gfbio_category", "id", Long.toString(categorieId));
 		if ((boolean) hccJson.get("check"))
 			check = HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_researchobject", researchObjectId, "gfbio_category", categorieId);
+		return check;
+	}
+	
+	
+	//
+	private Boolean AddLegalRequirementIdById (long researchObjectId, int researchObjectVersion, long legalRequirementId){
+			
+		Boolean check = false;
+		JSONObject hccJson= new JSONObject();
+		hccJson = checkHCCBackground("gfbio_legalrequirement", "id", Long.toString(legalRequirementId));
+		if ((boolean) hccJson.get("check"))
+			check = HeadLocalServiceUtil.updateInterfaceTableWithContent("gfbio_researchobject", researchObjectId, "gfbio_legalrequirement", legalRequirementId);
 		return check;
 	}
 
@@ -1504,6 +1956,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 	private Boolean updateAuthorIdsByColumn (long researchObjectId, int researchObjectVersion, JSONArray authorColumns, String columnName){
 		Boolean check = false;
 		ContentLocalServiceUtil.deleteRelationContentsByCellContent("gfbio_externalperson_researchobject", "gfbio_researchobject", Long.toString(researchObjectId));
+		
 		if (authorColumns.size() ==0)
 			check = true;
 		else
@@ -1566,6 +2019,45 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		return check;
 	}
 	
+	
+	//
+	private Boolean updateDataCollectionTime (long researchObjectId, int researchObjectVersion, String dataCollectionTime){
+		Boolean check = false;
+		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+		ResearchObject researchObject = null;
+		
+		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
+	
+		if (researchObject != null){
+			researchObject.setDataCollectionTime(dataCollectionTime);
+			researchObject.setLastModifiedDate(new Timestamp(new Date().getTime()));
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
+		}
+		return check;
+	}
+	
+	
+	//
+	private Boolean updateEmbargo (long researchObjectId, int researchObjectVersion, Date  embargo){
+		Boolean check = false;
+		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+		ResearchObject researchObject = null;
+		
+		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
+	
+		if (researchObject != null){
+			researchObject.setEmbargo(embargo);
+			researchObject.setLastModifiedDate(new Timestamp(new Date().getTime()));
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
+		}
+		return check;
+	}
+	
+	
 	//
 	private Boolean updateExtendedData (long researchObjectId, int researchObjectVersion, String extendedData){
 		
@@ -1574,7 +2066,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		
 		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
 	
 		if (researchObject != null){
 			researchObject.setExtendeddata(extendedData);
@@ -1593,7 +2085,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		
 		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
 	
 		if (researchObject != null){
 			researchObject.setDescription(description);
@@ -1612,7 +2104,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		
 		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
 	
 		if (researchObject != null){
 			researchObject.setLabel(label);
@@ -1623,6 +2115,36 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		return check;
 	}
 
+
+	
+	//
+	private Boolean updateLegalRequirementIdById (long researchObjectId, int researchObjectVersion, long legalRequirementId){
+		
+		ContentLocalServiceUtil.deleteRelationContentsByCellContent("gfbio_legalrequirement_researchobject", "gfbio_researchobject", Long.toString(researchObjectId));
+		return AddLegalRequirementIdById (researchObjectId, researchObjectVersion, legalRequirementId);
+	}
+	
+	
+	//
+	private Boolean updateLegalRequirementIdsByColumn (long researchObjectId, int researchObjectVersion, JSONArray legalRequirementColumns, String columnName){
+		
+		Boolean check = false;
+		ContentLocalServiceUtil.deleteRelationContentsByCellContent("gfbio_legalrequirement_researchobject", "gfbio_researchobject", Long.toString(researchObjectId));
+		
+		if (legalRequirementColumns.size() ==0)
+			check = true;
+		else{
+			for (int i=0; i < legalRequirementColumns.size();i++){
+				JSONObject hccJson= new JSONObject();
+				//hccJson = checkHCCBackground("gfbio_legalrequirement", columnName, ((String) legalRequirementColumns.get(i)).trim());
+				hccJson = checkHCCBackground("gfbio_legalrequirement", columnName, Helper.getStringFromJsonArray(legalRequirementColumns, i));
+				if ((boolean) hccJson.get("check"))
+					check =  AddLegalRequirementIdById(researchObjectId, researchObjectVersion, (long) hccJson.get("contentid"));
+			}
+		}
+		return check;
+	}
+	
 
 	//
 	private Boolean updateLicenseId (long researchObjectId, int researchObjectVersion, String licenseLabel){
@@ -1698,7 +2220,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		
 		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
 	
 		if (researchObject != null){
 			researchObject.setName(name);
@@ -1718,10 +2240,51 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 		ResearchObject researchObject = null;
 		
 		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-		catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
 	
 		if (researchObject != null){
 			researchObject.setParentResearchObjectID(parentResearchObjectId);
+			researchObject.setLastModifiedDate(new Timestamp(new Date().getTime()));
+			try {super.updateResearchObject(researchObject); check = true;}
+			catch (SystemException e) {e.printStackTrace();}
+		}
+		return check;
+	}
+	
+	
+	//primarydata
+	@SuppressWarnings({ "unchecked" })
+	private Boolean updatePrimaryData(long researchObjectId, int researchObjectVersion, JSONObject primarydataJson){
+
+		Boolean check = false;
+		
+		primarydataJson.put("researchobjectid", researchObjectId);
+		primarydataJson.put("researchobjectversion", researchObjectVersion);
+			
+		if (primarydataJson.containsKey("primarydataid")){
+			primarydataJson = PrimaryDataLocalServiceUtil.updatePrimaryData(primarydataJson);
+		}else{
+			primarydataJson = PrimaryDataLocalServiceUtil.createPrimaryData(primarydataJson);
+		}
+		
+		if (primarydataJson.containsKey("primarydataid"))
+			check = true;
+		
+		return check;
+	}
+	
+	
+	//
+	private Boolean updatePublications (long researchObjectId, int researchObjectVersion, String publications){
+		Boolean check = false;
+		ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, researchObjectVersion);
+		ResearchObject researchObject = null;
+		
+		try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
+		catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
+	
+		if (researchObject != null){
+			researchObject.setPublications(publications);
 			researchObject.setLastModifiedDate(new Timestamp(new Date().getTime()));
 			try {super.updateResearchObject(researchObject); check = true;}
 			catch (SystemException e) {e.printStackTrace();}
@@ -1767,7 +2330,7 @@ public class ResearchObjectLocalServiceImpl extends ResearchObjectLocalServiceBa
 			ResearchObject researchObject = null;			
 			ResearchObjectPK pk = new ResearchObjectPK(researchObjectId, oldResearchObjectVersion);
 			try {researchObject = researchObjectPersistence.findByPrimaryKey(pk);}
-			catch (SystemException | NoSuchModelException e) {System.out.println("no enitity with pk: "+pk+" is found");}
+			catch (SystemException | NoSuchModelException e) {_log.info("no enitity with pk: "+pk+" is found");}
 			
 			if(researchObject != null){
 	

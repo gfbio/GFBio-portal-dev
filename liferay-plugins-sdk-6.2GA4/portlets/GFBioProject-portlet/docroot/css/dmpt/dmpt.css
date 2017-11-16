@@ -90,19 +90,6 @@ select[multiple=multiple] {
     border: 1px solid lightgrey;
 }
 
-/*@media (max-width: 1024px)
-{
-    .wizard > .steps 
-    {
-        display: none !important; 
-    }
-    
-    .wizard > .content > .body > div[name='title']
-    {
-    	display: block !important;
-    }
-}*/
-
 .aui .row, 
 .aui .row-fluid {
     margin-left: 0px !important;
@@ -161,7 +148,20 @@ h4 {
     color: #ffffff;
 }
 
+.wizardblue {
+	background: #2c59a0;
+    color: #fff !important;
+    display: block;
+    padding: 0.5em 1em;
+    border-radius: 5px !important;
+    border: none !important;
+}
 
+.wizarddisabled {
+	background: rgba(238, 238, 238, 0.4) ;
+    border: 1px solid lightgrey !important;
+    color: #aaa !important;	
+}
 
 /* do not group these rules */
 *::-webkit-input-placeholder {
