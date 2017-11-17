@@ -1,17 +1,23 @@
 /*global $*/
 
 function hideGeneralInformation() {
+	'use strict';
+	
 	$("div.steps").hide();
 	$("div.actions").hide();
 	$("div[name='title']").hide();
 	$("#generalinformation").hide();
-	
-	$("#dmpstart").show();
 }
 
-function loadDmp() {
-	console.log("LOADING...");
+function showGeneralInformation() {
+	'use strict';
 	
+	$("#dmppreview").hide();
+	
+	$("div.steps").show();
+	$("div.actions").show();
+	$("div[name='title']").show();
+	$("#generalinformation").show();
 }
 
 function handlePrincipalButton(event) {
@@ -54,7 +60,6 @@ function addInputField(event) {
         name: 'investigator',
         "class": 'inputtext',
         placeholder: 'Principal Investigator'
-        
     });
     
     newinput.on("keyup focus", handlePrincipalButton);
@@ -153,6 +158,26 @@ function handlePolicy(event) {
         link.hide();
         other.val("");
         link.val("");
+    }
+}
+
+function policyNone(event) {
+	'use strict';
+	
+	var other = $("#policyOther"),
+    link = $("#policyLink");
+	
+	if ($(event.target).is(':checked')) {
+        other.hide();
+        link.hide();
+        other.val("");
+        link.val("");
+        
+        $("input[name='policies']:checked").each(function(e) {
+          	if (e.attr("id") != "pol-none") {
+          		e.prop("checked", false);
+          	}
+        });
     }
 }
 

@@ -2,22 +2,29 @@
 
 <h2>General Project Information</h2>
 <section>
-	<div id="dmpstart">
+	<div id="dmppreview" style="display: none;">
 		<h2>Do you want to load an existing Data Management Plan?</h2>
-		<div class="col-md-6">
-			<select id="dmps" name="dmps">
-				<c:forEach var="dmp" items="${dmpsforuser}">
-					<option label="<c:out value="${dmp.name}" />"
-								value="<c:out value="${dmp.name}"/>"><c:out
-									value="${dmp.name}" /></option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class="col-md-6">
-           	<input id="load" class="" type="button" value="Load Data Management Plan"/>
+		<div class="col-sm-12" style="margin-top: 10px;">
+			<div class="col-sm-5">
+				<select id="dmps" name="dmps" style="width: 100% !important">
+					<c:forEach var="dmp" items="${dmpsforuser}">
+						<option label="<c:out value="${dmp.name}" />"
+									value="<c:out value="${dmp.dmpID}"/>"><c:out
+										value="${dmp.name}" /></option>
+					</c:forEach>
+				</select>
+			</div>
+			<div class="col-sm-1">
+	           	<input id="delete" style="width: 100% !important" type="button" value="Del"/>
+	        </div>
+			<div class="col-sm-6">
+	           	<input id="load" style="width: 100% !important" type="button" value="Load Data Management Plan"/>
+	        </div>
         </div>
-        <div class="col-md-12">
-           	<input id="start" class="" type="button" value="New Data Management Plan"/>
+        <div class="col-sm-12" style="margin-top: 20px;">
+	        <div class="col-sm-12">
+	           	<input id="start" class="startdmp" type="button" value="New Data Management Plan"/>
+	        </div>
         </div>
 	</div>
 	
@@ -42,7 +49,7 @@
 					<option selected="selected" label="Select" value="default">Select</option>
 					<c:forEach var="field" items="${researchfields}">
 						<option label="<c:out value="${field.name}" />"
-									value="<c:out value="${field.id}"/>"><c:out
+									value="<c:out value="${field.name}"/>"><c:out
 										value="${field.name}" /></option>
 					</c:forEach>
 				</select>
@@ -79,13 +86,13 @@
 	        	<div class="col-xs-12 col-sm-6">
 	            	<div>
 	                	<label class="mod-cb">
-			               	<input name="types" type="checkbox"/>
+			               	<input name="types" type="checkbox" value="Field Work"/>
 			               	<span>Field Work</span>
 	                	</label>
 	                </div>
 	                <div>
 	                      <label class="mod-cb">
-	                      	<input name="types" type="checkbox"/>
+	                      	<input name="types" type="checkbox" value="Observational"/>
 	                      	<span>Observational</span>
 	                      </label>
 	                </div>
@@ -93,13 +100,13 @@
 	            <div class="col-xs-12 col-sm-6">
 	           		<div>
 	                	<label class="mod-cb">
-			               	<input name="types" type="checkbox"/>
+			               	<input name="types" type="checkbox" value="Simulation"/>
 			               	<span>Simulation</span>
 	                	</label>
 	                </div>
 	                <div>
 	                  	<label class="mod-cb">
-		                  	<input name="types" type="checkbox"/>
+		                  	<input name="types" type="checkbox" value="Assimilation"/>
 		                  	<span>Assimilation</span>
 	                  	</label>
 	                </div>
@@ -107,13 +114,13 @@
 	            <div class="col-xs-12 col-sm-6">
 	            	<div>	
 	                	<label class="mod-cb">
-			               	<input name="types" type="checkbox"/>
+			               	<input name="types" type="checkbox" value="Experimental"/>
 			               	<span>Experimental</span>
 	                	</label>
 	                </div>
 	                <div>	
 	                    <label class="mod-cb">
-		                    <input name="types" type="checkbox"/>
+		                    <input name="types" type="checkbox" value="Laboratory"/>
 		                    <span>Laboratory</span>
 	                    </label>
 	                </div>
@@ -121,19 +128,19 @@
 	            <div class="col-xs-12 col-sm-6">
 	                <div>
 	                    <label class="mod-cb">
-	                    	<input name="types" type="checkbox"/>
-	                    	<span>Modelling</span>
+	                    		<input name="types" type="checkbox" value="Modelling"/>
+	                    		<span>Modelling</span>
 	                    </label>
 	                </div>
 	                <div>	
 	                    <label class="mod-cb">
-	                    	<input id="types-cb" name="types" type="checkbox"/>
-	                    	<span>Other</span>
+	                    		<input id="types-cb" name="types" type="checkbox" value="Other"/>
+	                    		<span>Other</span>
 	                    </label>
 	                </div>
 	            </div>
 	            <div class="col-md-12">
-	            	<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
+	            		<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
 	            </div>
 	        </div>
 	        
@@ -166,7 +173,7 @@
 	    	</h4>
 	    	
 	    	<div id="responsible" style="overflow: auto;">
-		 		<div class="col-md-6">
+		 	<div class="col-md-6">
 		    		<input id="responsibleName" name="responsibleName" type="text" placeholder="Name" 
 		    		value="<c:out value="${username}" />" onfocus="getPrincipal()" />
 		    	</div>
@@ -243,7 +250,7 @@
 	            <div class="col-md-12">
 	            	<div>	
 	                	<label class="mod-cb">
-			               	<input name="policies" type="checkbox"/>
+			               	<input id="pol-none" name="policies" type="checkbox"/>
 			               	<span>None</span>
 	                	</label>
 	                </div>

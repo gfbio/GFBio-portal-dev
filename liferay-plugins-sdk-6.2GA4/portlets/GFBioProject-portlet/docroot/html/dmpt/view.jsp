@@ -10,12 +10,15 @@
 <portlet:resourceURL var="ajaxUrlWizard" id="wizard" />
 <portlet:resourceURL var="ajaxUrlLicense" id="license" />
 <portlet:resourceURL var="ajaxUrlSave" id="savedmp" />
+<portlet:resourceURL var="ajaxUrlLoad" id="loaddmp" />
 
 <script type="text/javascript">   
 
 var userEmail = '${email}';
 var userName = '${username}';
 var contextPath = '${contextPath}';
+var userHasDmps = '${hasDmps}';
+var dmps = '${dmpsforuser}';
 
 $(document).ready(function(){
 	
@@ -82,14 +85,15 @@ $(document).ready(function(){
 			sendInput();
 		},
 		onInit : function() {
-			//Start
-			$("#dmpstart").hide();
-			
-			if (Liferay.ThemeDisplay.isSignedIn()) {
+			//If the user has dmps to load a preview '#dmppreview' will be shown
+			if (userHasDmps === "true") {
 				hideGeneralInformation();
+				$("#dmppreview").show();
 			}
 			
-			$("load").on("click", loadDmp);
+			$("#load").on("click", loadDmp);
+			
+			$("#start").on("click", showGeneralInformation);
 			
 		    //01 General Information
 			$("#firstPrincInput").on("keyup focus", handlePrincipalButton);
@@ -104,6 +108,7 @@ $(document).ready(function(){
 		    $("#fundingLink").hide();
 		
 		    $("#pol-cb").on("click", handlePolicy);
+		    $("#pol-none").on("click", policyNone);
 		    $("#policyOther").hide();
 		    $("#policyLink").hide();
 		
@@ -165,9 +170,9 @@ $(document).ready(function(){
 		    $("#saveDMP").on("click", saveDMPforUser);
 		    
 		    if(!Liferay.ThemeDisplay.isSignedIn()) {
-		    	$("#saveDMP").prop("disabled", true);
-		    	$("#saveDMP").prop("title", "You need to be logged in");
-		    	$("#saveDMP").addClass("wizarddisabled");
+			    	$("#saveDMP").prop("disabled", true);
+			    	$("#saveDMP").prop("title", "You need to be logged in");
+			    	$("#saveDMP").addClass("wizarddisabled");
 		    }
 		    
 		    //Tooltips
@@ -240,10 +245,9 @@ function getInputAsJson() {
 	var email = $("#email").val();
 	
 	var funding = $("#funding").val();
-	var fundingLink = "";
+	var fundingLink = $("#fundingLink").val();
 	if (funding === "other") {
 		funding = $("#fundingOther").val();
-		fundingLink = $("#fundingLink").val();
 	}
 	
 	var policies = [];
@@ -252,9 +256,9 @@ function getInputAsJson() {
     });
 	//var policies = $("#policies").text();
 	var policyLink = "";
+	var policyOther = "";
 	if ($.inArray("Other", policies) > -1) {
-		policies.splice($.inArray("Other", policies), 1);
-		policies.push($("#policyOther").val());
+		policyOther = $("#policyOther").val();
 		policyLink = $("#policyLink").val();
 	}
 	
@@ -322,10 +326,11 @@ function getInputAsJson() {
 	
 	var dataArchives = [];
 	
+	// 06 GFBio Services
 	
-	//Create jsonObject
-	
+	// Create jsonObject
 	var dmptInput = {
+			// 01 General Information
 			"projectName" : projectName,
 			"category" : category,
 			"reproducible" : reproducible,
@@ -338,7 +343,12 @@ function getInputAsJson() {
 			"funding" : {
 				"name" : funding
 			},
+			"fundingLink" : fundingLink,
+			"fundingOther" : fundingOther,
 			"policies" : [],
+			"policyOther" : policyOther,
+			"policyLink" : policyLink,
+			// 02 Data Collection
 			"physical" : physical,
 			"alive" : alive,
 			"taxon" : taxon,
@@ -348,8 +358,14 @@ function getInputAsJson() {
 			"dataVolume" : dataVolume,
 			"dataSets" : dataSet,
 			"methodologies" : methodologies,
+			// 03 Metadata
 			"metadata" : [],
 			"metadataDescription" : metadataDesc
+			// 04 Ethics
+			
+			// 05 Preservation
+			
+			
 				
 	};
 	
@@ -388,7 +404,7 @@ function getInputAsJson() {
 
 function saveDMPforUser() {
 	
-	projectName = $("#name").val();
+	var projectName = $("#name").val();
 	
 	$.ajax({
 	   		"method": "POST",
@@ -404,7 +420,7 @@ function saveDMPforUser() {
 
 function sendInput() {
 	
-	jsonInput = getInputAsJson();
+	var jsonInput = getInputAsJson();
 	console.log("Send: " + jsonInput);
 	
     $.ajax({
@@ -419,9 +435,197 @@ function sendInput() {
     });
 }
 
+function loadDmp() {
+	
+	console.log("LOADING...");
+	var dmpID = $("#dmps").val();
+	console.log("ID: " + dmpID);
+	
+	var selectedDmp = {};
+	
+	$.ajax({
+   		"method": "POST",
+   		"url": '<%=ajaxUrlLoad%>',
+   		"data": {
+   			dmpID: dmpID
+   		},
+   		success: function(response) {
+   			console.log("JSON: " + response);
+          	selectedDmp = JSON.parse(response);
+   			console.log("Selected: " + selectedDmp);
+			console.log("Name: " + selectedDmp.projectName);
+   			initializeInputs(selectedDmp);
+   			showGeneralInformation();
+      	}
+	});
+}
+
+function addInvestigator(investigator) {
+	var newinput = $('<input/>', {
+        type: 'text',
+        name: 'investigator',
+        "class": 'inputtext',
+        placeholder: 'Principal Investigator'
+    });
+    
+    newinput.on("keyup focus", handlePrincipalButton);
+    newinput.on("focusout", removePrincipalInput);
+    newinput.val(investigator);
+    newinput.appendTo("#principal");
+}
+
+function initializeInputs(dmptInput) {
+	// 01 General Information
+	$("#name").val(dmptInput.projectName);
+	if (dmptInput.category == null || dmptInput.category === "") {
+		$("#category").val("Select");
+	} else {
+		$("#category").val(dmptInput.category);
+	}
+	
+	if (dmptInput.reproducible != null) {
+		$("input[name='nature'][value='" + dmptInput.reproducible + "']").prop("checked", true);
+	}
+	
+	if (dmptInput.projectTypes != null) {
+		var projectTypes = dmptInput.projectTypes;
+		for (var i in projectTypes) {
+			console.log("Ptype: " + projectTypes[i]);
+			$("input[name='types'][value='" + projectTypes[i] + "']").prop("checked", true);
+		}
+	}
+	
+	if (dmptInput.projectAbstract != null) {
+		var projectAbstract = $("#abstract").val(dmptInput.projectAbstract);
+	}
+	
+	if (dmptInput.investigators != null) {
+		var investigators = dmptInput.investigators;
+		$("input[name='investigator']").val(investigators[0]);
+		if (investigators.length > 1) {
+			for (var i = 1; i < investigators.length; i++) {
+				addInvestigator(investigators[i]);
+			}
+		}
+	}
+	
+	if (dmptInput.responsibleName != null) {
+		$("#responsibleName").val(dmptInput.responsibleName);
+	}
+	
+	if (dmptInput.phoneNumber != null) {
+		$("#phone").val(dmptInput.phoneNumber);
+	}
+	
+	if (dmptInput.email != null) {
+		$("#email").val(dmptInput.email);
+	}
+	
+	if (dmptInput.funding != null) {
+		$("#funding").val(dmptInput.funding);
+		
+		if (dmptInput.fundingLink != null) {
+			$("#fundingLink").val(dmptInput.fundingLink);
+			$("#fundingLink").show();
+		}
+		
+		if (dmptInput.fundingOther != null) {
+			$("#fundingOther").val(dmptInput.fundingOther);
+			$("#fundingOther").show();	
+		}
+	}
+	
+	if (dmptInput.policies != null) {
+		var policies = dmptInput.policies;
+		for (var i in policies) {
+			$("input[name='policies']").each(function() {
+		      	if ($(this).siblings('span').text() === policies[i].name) {
+		      		$(this).prop("checked", true);
+		      	}
+		    });
+		}
+		
+		if (policyLink != null) {
+			$("#policyLink").val(dmptInput.policyLink);
+			$("#policyLink").show();
+		}
+		
+		if (policyOther != null) {
+			$("#policyOther").val(dmptInput.policyOther);
+			$("#policyOther").show();
+		}
+	}
+	
+	// 02 Data Collection
+	
+// 	var physical = $("input[name='physical']:checked").val();
+// 	var alive = $("input[name='alive']:checked").val();
+// 	var taxon = $("input[name='taxon']:checked").val();
+// 	var sequenced = $("input[name='sequenced']:checked").val();
+	
+// 	var dataformats = [];
+// 	$("input[name='dataformat']:checked").each(function() {
+// 		dataformats.push($(this).siblings('span').text());
+//     });
+// 	if ($.inArray("Other", dataformats) > -1) {
+// 		dataformats.splice($.inArray("Other", dataformats), 1);
+// 		dataformats.push($("#dataformatOther").val());
+// 	}
+	
+// 	var documentated = $("input[name='documentated']:checked").val();
+	
+// 	var dataVolume = $("#volumeSlider").val();
+// 	var dataSet = $("#datasetSlider").val();
+
+// 	var methodologies = $("#methodologies").val();
+	
+	// 03 Metadata
+	
+// 	var metadata = [];
+// 	var metadataDesc = "";
+// 	$("input[name='metadata']:checked").each(function() {
+// 		dataformats.push($(this).siblings('span').text());
+//     });
+// 	if ($.inArray("Other", metadata) > -1) {
+// 		metadata.splice($.inArray("Other metadata schema or version", metadata), 1);
+// 		metadataDesc = $("metadataDesc").val();	
+// 	}
+
+	// 04 Ethics
+	
+// 	var requirements = [];
+// 	$("input[name='requirements']:checked").each(function() {
+// 		requirements.push($(this).siblings('span').text());
+//     });
+// 	if ($.inArray("Other", requirements) > -1) {
+// 		requirements.splice($.inArray("Other", requirements), 1);
+// 		requirements.push($("requirementOther").val());	
+// 	}
+	
+// 	var license = $("input[name='license']:checked").val();
+// 	var otherLicense = "";
+// 	if (license === "Other License") {
+// 		otherLicense = $("licenseOther").val()
+// 	}
+	 
+// 	var accessRestriction = $("input[name='restriction']:checked").val();
+// 	var accessDuration = "";
+// 	var accessReason = "";
+// 	if (accessRestriction) {
+// 		accessDuration = $("#accessDuration").val();
+// 		accessReason = $("#accessReason").val();
+// 	}
+	
+	// 05 Preservation
+	
+	// var dataArchives = [];
+	
+	// 06 GFBio Services
+}
+
 function getLicenseData() {
 	
-	license = $("#licenses").val();
+	var license = $("#licenses").val();
 	console.log("License: " + license);
 	
     $.ajax({

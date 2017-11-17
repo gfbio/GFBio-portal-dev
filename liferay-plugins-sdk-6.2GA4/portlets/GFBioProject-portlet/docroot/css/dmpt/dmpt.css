@@ -163,6 +163,15 @@ h4 {
     color: #aaa !important;	
 }
 
+.startdmp {
+	background: #2c59a0;
+    color: #fff !important;
+    padding: 0.5em 2.7em;
+    width: 100% !important;
+    border-radius: 5px !important;
+    border: none !important;
+}
+
 /* do not group these rules */
 *::-webkit-input-placeholder {
     opacity: 0.7;

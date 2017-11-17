@@ -11,6 +11,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GCategory;
@@ -63,7 +64,7 @@ public class DMPTPortlet extends MVCPortlet {
 		String email = "";
 		List<Phone> phones = null;
 		List<DataManagementPlan> dmps = null;
-
+		
 		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		if (themeDisplay.isSignedIn()) {
 			username = themeDisplay.getUser().getFullName();
@@ -80,6 +81,7 @@ public class DMPTPortlet extends MVCPortlet {
 		renderRequest.setAttribute("email", email);
 		if (dmps != null && !dmps.isEmpty()) {
 			renderRequest.setAttribute("dmpsforuser", dmps);
+			renderRequest.setAttribute("hasDmps", "true");
 		}
 		if (phones != null && !phones.isEmpty()) {
 			for (Phone p : phones) {
@@ -89,10 +91,9 @@ public class DMPTPortlet extends MVCPortlet {
 			}
 		}
 
-		// Setting variable for context path
+		// Setting context path for downloading pdf 
 		String contextPath = renderResponse.encodeURL(renderRequest.getContextPath());
 		renderRequest.setAttribute("contextPath", contextPath);
-		_log.info(contextPath);
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -107,6 +108,8 @@ public class DMPTPortlet extends MVCPortlet {
 			getLicenseData(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("savedmp")) {
 			saveDMP(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("loaddmp")) {
+			loadDMP(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -146,9 +149,8 @@ public class DMPTPortlet extends MVCPortlet {
 	private void getLicenseData(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
 
-		// Get 
+		// Get data
 		String license = resourceRequest.getParameter("license");
-		_log.info(license);
 		
 		List<GLicense> licenses = ContentUtil.getListByTableName(GLicense.class, "gfbio_license");
 		
@@ -181,7 +183,6 @@ public class DMPTPortlet extends MVCPortlet {
 	private void saveDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
 		
-		_log.info("Save DMP Method");
 		long userId = -1; //Must be validated before set in dmp 
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -214,17 +215,46 @@ public class DMPTPortlet extends MVCPortlet {
 			} catch (SystemException e) {
 				_log.error("Error while saving DMP in database!", e);
 			}
-			
 		} else {
 			response = "DMP is not valid!";
 		}
-		
-		
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
 		writer.println(response);
+
+		writer.flush();
+		writer.close();
+
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+	
+	private void loadDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		
+		//Get id
+		Long dmpID = Long.parseLong(resourceRequest.getParameter("dmpID"));
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		List<DataManagementPlan> dmps = DataManagementPlanLocalServiceUtil.getdmpListByUserId(themeDisplay.getUserId());
+		
+		String dmptInput = "";
+		
+		for (DataManagementPlan d : dmps) {
+			if (d.getDmpID() == dmpID) {
+				dmptInput = d.getDmpTInput();
+			}
+		}
+		_log.info("DmptInput: " + dmptInput);
+		if (dmptInput.equals("")) {
+			_log.info("DMP not found for dmpID " + dmpID);
+		}
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+
+		writer.println(dmptInput);
 
 		writer.flush();
 		writer.close();
