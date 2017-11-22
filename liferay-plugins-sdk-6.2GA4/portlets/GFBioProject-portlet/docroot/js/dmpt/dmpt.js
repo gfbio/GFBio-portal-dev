@@ -145,40 +145,59 @@ function handleFunding(event) {
     }
 }
 
-function handlePolicy(event) {
-    'use strict';
-    
-    var other = $("#policyOther"),
-        link = $("#policyLink");
-    if ($(event.target).is(':checked')) {
-        other.show("slow");
-        link.show("slow");
-    } else {
-        other.hide();
-        link.hide();
-        other.val("");
-        link.val("");
-    }
-}
+//function handlePolicy(event) {
+//    'use strict';
+//    
+//    var other = $("#policyOther"),
+//        link = $("#policyLink");
+//    if ($(event.target).is(':checked')) {
+//        other.show("slow");
+//        link.show("slow");
+//    } else {
+//        other.hide();
+//        link.hide();
+//        other.val("");
+//        link.val("");
+//    }
+//}
 
-function policyNone(event) {
+function policies(event) {
 	'use strict';
 	
 	var other = $("#policyOther"),
-    link = $("#policyLink");
+    link = $("#policyLink"),
+    value = $(event.target).val();
 	
-	if ($(event.target).is(':checked')) {
-        other.hide();
-        link.hide();
-        other.val("");
-        link.val("");
-        
-        $("input[name='policies']:checked").each(function(e) {
-          	if (e.attr("id") != "pol-none") {
-          		e.prop("checked", false);
-          	}
-        });
-    }
+	if (value === "None") {
+		if ($(event.target).is(':checked')) {
+	        other.hide();
+	        link.hide();
+	        other.val("");
+	        link.val("");
+	        
+	        $("input[name='policies']:checked").each(function() {
+	          	if ($(this).attr("id") != "pol-none") {
+	          		$(this).prop("checked", false);
+	          	}
+	        });
+	    }
+	} else {
+		if ($("#pol-none").is(":checked")) {
+			$("#pol-none").prop("checked", false);
+		}
+	} 
+	
+	if (value === "Other") {
+		if ($(event.target).is(':checked')) {
+	        other.show("slow");
+	        link.show("slow");
+	    } else {
+	        other.hide();
+	        link.hide();
+	        other.val("");
+	        link.val("");
+	    }
+	}
 }
 
 function handleMetadataOther(event) {
@@ -312,4 +331,10 @@ function resetInput(j) {
 	$('[name="' + j + '"]').each(function () {
 		this.checked = false;
 	});
+}
+
+function isEmpty(str) {
+	'use strict'
+	
+	return (!str || 0 === str.length);
 }

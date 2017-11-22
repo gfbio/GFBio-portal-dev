@@ -26,6 +26,7 @@ import org.gfbio.service.impl.DataManagementPlanLocalServiceImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -110,6 +111,8 @@ public class DMPTPortlet extends MVCPortlet {
 			saveDMP(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("loaddmp")) {
 			loadDMP(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("deletedmp")) {
+			deleteDMP(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -210,13 +213,15 @@ public class DMPTPortlet extends MVCPortlet {
 			
 			try {
 				plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
-				response = "DMP saved in db with id " + plan.getDmpID() + ".";
-				_log.info("DMP saved in database!");
+				response = "The data managemant plan was saved successfully.";
+				_log.info("DMP saved in database with id " + plan.getDmpID() + "!");
 			} catch (SystemException e) {
+				response = "The data managemant plan could not been saved.";
 				_log.error("Error while saving DMP in database!", e);
 			}
 		} else {
-			response = "DMP is not valid!";
+			_log.error("DMP is not valid!");
+			response = "The Data Managemant Plan could not been saved.";
 		}
 		
 		resourceResponse.setContentType("text/html");
@@ -259,6 +264,35 @@ public class DMPTPortlet extends MVCPortlet {
 		writer.flush();
 		writer.close();
 
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+	
+	private void deleteDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		
+		String response = "";
+		
+		//Get id
+		Long dmpID = Long.parseLong(resourceRequest.getParameter("dmpID"));
+		
+		// Delete Dmp by id
+		try {
+			DataManagementPlanLocalServiceUtil.deleteDataManagementPlan(dmpID);
+			response = "The data management plan was deleted successfully!";
+			_log.info("DMP with the id " + dmpID + "was deleted successfully!");
+		} catch (PortalException | SystemException e) {
+			response = "The data management plan could not been deleted!";
+			_log.error("DMP with the id " + dmpID + " could not been deleted!", e);
+		}
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+		
+		writer.println(response);
+		
+		writer.flush();
+		writer.close();
+		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 }

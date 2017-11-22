@@ -75,12 +75,13 @@ public class ContentUtil {
 				if(inst instanceof GMetadata)
 		        {
 					GMetadata md = new GMetadata(json);
-					list.add(cl.cast(md));
+					if (md.isPreferredByGfbio()) list.add(cl.cast(md));
+					
 		        }
 		        else if(inst instanceof GLicense)
 		        {
 		        	GLicense license = new GLicense(json);
-		        	list.add(cl.cast(license));
+		        	if (license.isPreferredByGfbio()) list.add(cl.cast(license));
 		        }
 		        else if(inst instanceof GFunding)
 		        {

@@ -5,8 +5,8 @@
 	<div id="dmppreview" style="display: none;">
 		<h2>Do you want to load an existing Data Management Plan?</h2>
 		<div class="col-sm-12" style="margin-top: 10px;">
-			<div class="col-sm-5">
-				<select id="dmps" name="dmps" style="width: 100% !important">
+			<div class="col-sm-6">
+				<select id="dmps" name="dmps" style="width: 100% !important; height: 29px;">
 					<c:forEach var="dmp" items="${dmpsforuser}">
 						<option label="<c:out value="${dmp.name}" />"
 									value="<c:out value="${dmp.dmpID}"/>"><c:out
@@ -15,9 +15,9 @@
 				</select>
 			</div>
 			<div class="col-sm-1">
-	           	<input id="delete" style="width: 100% !important" type="button" value="Del"/>
+	           	<input id="delete" style="width: 100% !important; min-height: 29px;" type="button" class="icon-landing-flex icon-bin" value="&#xee44"/>
 	        </div>
-			<div class="col-sm-6">
+			<div class="col-sm-5">
 	           	<input id="load" style="width: 100% !important" type="button" value="Load Data Management Plan"/>
 	        </div>
         </div>
@@ -26,6 +26,10 @@
 	           	<input id="start" class="startdmp" type="button" value="New Data Management Plan"/>
 	        </div>
         </div>
+	</div>
+	
+	<div id="dialog-delete" style="display: none;">
+		<div id="delete-answer" style="text-align: center;"></div>
 	</div>
 	
 	<div id="generalinformation">
@@ -242,7 +246,7 @@
 	                </div>
 	                <div>
 	                  	<label class="mod-cb">
-		                  	<input id="pol-cb" name="policies" type="checkbox"/>
+		                  	<input id="pol-other" name="policies" type="checkbox" value="Other"/>
 		                  	<span>Other</span>
 	                  	</label>
 	                </div>
@@ -250,7 +254,7 @@
 	            <div class="col-md-12">
 	            	<div>	
 	                	<label class="mod-cb">
-			               	<input id="pol-none" name="policies" type="checkbox"/>
+			               	<input id="pol-none" name="policies" type="checkbox" value="None"/>
 			               	<span>None</span>
 	                	</label>
 	                </div>

@@ -1,9 +1,10 @@
 <%@ include file="/html/dmpt/init.jsp"%>
 
 <script src="<%=request.getContextPath()%>/js/dmpt/jquery.steps.min.js"	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/idmg/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/dmpt/dmpt.js"	type="text/javascript"></script>
 
+<link href="<%=request.getContextPath()%>/css/idmg/jquery-ui.min.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/jquery-steps.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
@@ -11,6 +12,7 @@
 <portlet:resourceURL var="ajaxUrlLicense" id="license" />
 <portlet:resourceURL var="ajaxUrlSave" id="savedmp" />
 <portlet:resourceURL var="ajaxUrlLoad" id="loaddmp" />
+<portlet:resourceURL var="ajaxUrlDelete" id="deletedmp" />
 
 <script type="text/javascript">   
 
@@ -82,7 +84,7 @@ $(document).ready(function(){
 			$("div[name='title']").hide();
 			$("#gfbioServicesStep").hide();
 			$("#handleInput").show();
-			sendInput();
+			getInput();
 		},
 		onInit : function() {
 			//If the user has dmps to load a preview '#dmppreview' will be shown
@@ -90,6 +92,8 @@ $(document).ready(function(){
 				hideGeneralInformation();
 				$("#dmppreview").show();
 			}
+			
+			$("#delete").on("click", deleteDmp);
 			
 			$("#load").on("click", loadDmp);
 			
@@ -107,8 +111,7 @@ $(document).ready(function(){
 		    $("#fundingOther").hide();
 		    $("#fundingLink").hide();
 		
-		    $("#pol-cb").on("click", handlePolicy);
-		    $("#pol-none").on("click", policyNone);
+		    $("input[name='policies']").on("click", policies);
 		    $("#policyOther").hide();
 		    $("#policyLink").hide();
 		
@@ -157,7 +160,7 @@ $(document).ready(function(){
 		    $("#downloadDMP").click(function() {
 				var fileName = $("#name").val() + ".pdf";
 				fileName = fileName.replace(/\s/g, "_");
-				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+				window.open(contextPath + '/DownloadFile?fileName=' + fileName, '_blank')
 			});
 		    
 		    //$("#downloadDMPtest").click(function() {
@@ -189,8 +192,7 @@ $(document).ready(function(){
 		        	effect: "fade"
 		        },
 		        hide: {
-		            effect: "fade",
-		            delay: 500
+		            effect: "fade"
 		        }
 		    }); 
 
@@ -207,13 +209,29 @@ $(document).ready(function(){
 		        	effect: "fade"
 		        },
 		        hide: {
-		            effect: "fade",
-		            delay: 500
+		            effect: "fade"
 		        }
 		    });
 		}
   	})
 });
+
+function getInput() {
+	
+	var jsonInput = getInputAsJson();
+	console.log("Send: " + jsonInput);
+	
+    $.ajax({
+	   		"method": "POST",
+	   		"url": '<%=ajaxUrlWizard%>',
+	   		"data": {
+	   			json: jsonInput
+	   		},
+	   		success: function(text) {
+	          	console.log(text);
+	      	}
+    });
+}
 
 function getInputAsJson() {
 	
@@ -229,6 +247,7 @@ function getInputAsJson() {
       	projectTypes.push($(this).siblings('span').text());
     });
 	if ($.inArray("Other", projectTypes) > -1) {
+		//new attribute projecttypesother needed
 		projectTypes.splice($.inArray("Other", projectTypes), 1);
 		projectTypes.push($("#typesOther").val());
 	}
@@ -246,15 +265,13 @@ function getInputAsJson() {
 	
 	var funding = $("#funding").val();
 	var fundingLink = $("#fundingLink").val();
-	if (funding === "other") {
-		funding = $("#fundingOther").val();
-	}
+	var fundingOther = $("fundingOther").val();
 	
 	var policies = [];
 	$("input[name='policies']:checked").each(function() {
       	policies.push($(this).siblings('span').text());
     });
-	//var policies = $("#policies").text();
+	
 	var policyLink = "";
 	var policyOther = "";
 	if ($.inArray("Other", policies) > -1) {
@@ -369,6 +386,7 @@ function getInputAsJson() {
 				
 	};
 	
+	// Set Arrays
 	if (projectTypes != null) {
 		dmptInput.projectTypes = projectTypes;
 	}
@@ -376,15 +394,13 @@ function getInputAsJson() {
 	if (investigators != null) {
 		dmptInput.investigators = investigators;
 	}
-	
-	console.log(policies);
-	
+		
  	if (policies != null) {
-// 		policies.map(function(item) {        
-// 	  		dmptInput.policies.push({ 
-// 	    		"value" : item,
-// 	    	});
-// 		});
+ 		policies.map(function(item) {      
+ 	  		dmptInput.policies.push({ 
+ 	    		"name" : item,
+ 	    	});
+ 		});
  	}
 
 	if (dataformats != null) {
@@ -412,36 +428,79 @@ function saveDMPforUser() {
 	   		"data": {
 	   			name: projectName
 	   		},
-	   		success: function(text) {
-	          	console.log("Save Answer: " + text);
+	   		success: function(response) {
+	          	console.log("Save Answer: " + response);
+	          	
+	          	if (response.includes("success")) {
+		          	$("#saveDMP").prop("disabled", true);
+		          	$("#saveDMP").addClass("wizarddisabled");
+		          	$("#saveDMP").val("Saved");
+	          	}
+	          	
+	          	openSavedDialog(response);
 	      	}
  	});
 }
 
-function sendInput() {
+function openSavedDialog(response) {
+	$("#save-answer").html("<p>" + response + "</p>");
 	
-	var jsonInput = getInputAsJson();
-	console.log("Send: " + jsonInput);
-	
-    $.ajax({
-	   		"method": "POST",
-	   		"url": '<%=ajaxUrlWizard%>',
-	   		"data": {
-	   			json: jsonInput
-	   		},
-	   		success: function(text) {
-	          	console.log(text);
-	      	}
+	$("#dialog-save").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "answer-dialog custom-dialog",
+	    buttons: {
+	      Ok: function() {
+	        $( this ).dialog( "close" );
+	      }
+	    }
     });
 }
+
+function deleteDmp() {
+	console.log("Deleting...");
+	
+	var dmpID = $("#dmps").val();
+	console.log("ID: " + dmpID);
+	
+	$.ajax({
+   		"method": "POST",
+   		"url": '<%=ajaxUrlDelete%>',
+   		"data": {
+   			dmpID: dmpID
+   		},
+   		success: function(response) {
+   			openDeletedDialog(response);
+   			
+   			if (response.includes("success")) {
+   				$("#dmps option[value='" + dmpID + "']").remove();
+   			}
+      	}
+	});
+	
+}
+
+function openDeletedDialog(response) {
+	$("#delete-answer").html("<p>" + response + "</p>");
+	
+	$("#dialog-delete").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "answer-dialog custom-dialog",
+	    buttons: {
+	      Ok: function() {
+	        $( this ).dialog( "close" );
+	      }
+	    }
+    });
+}
+
 
 function loadDmp() {
 	
 	console.log("LOADING...");
 	var dmpID = $("#dmps").val();
 	console.log("ID: " + dmpID);
-	
-	var selectedDmp = {};
 	
 	$.ajax({
    		"method": "POST",
@@ -451,7 +510,7 @@ function loadDmp() {
    		},
    		success: function(response) {
    			console.log("JSON: " + response);
-          	selectedDmp = JSON.parse(response);
+          	var selectedDmp = JSON.parse(response);
    			console.log("Selected: " + selectedDmp);
 			console.log("Name: " + selectedDmp.projectName);
    			initializeInputs(selectedDmp);
@@ -477,29 +536,39 @@ function addInvestigator(investigator) {
 function initializeInputs(dmptInput) {
 	// 01 General Information
 	$("#name").val(dmptInput.projectName);
-	if (dmptInput.category == null || dmptInput.category === "") {
-		$("#category").val("Select");
-	} else {
+	if (!isEmpty(dmptInput.category)) {
 		$("#category").val(dmptInput.category);
 	}
 	
-	if (dmptInput.reproducible != null) {
+	if (dmptInput.reproducible) {
 		$("input[name='nature'][value='" + dmptInput.reproducible + "']").prop("checked", true);
 	}
 	
-	if (dmptInput.projectTypes != null) {
+	if (dmptInput.projectTypes) {
 		var projectTypes = dmptInput.projectTypes;
 		for (var i in projectTypes) {
 			console.log("Ptype: " + projectTypes[i]);
-			$("input[name='types'][value='" + projectTypes[i] + "']").prop("checked", true);
+			var found = false;
+			$("input[name='types']").each(function() {
+				if ($(this).val() === projectTypes[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				} 
+			});
+			if (!found) {
+				$("input[name='types'][value='Other']").prop("checked", true);
+				$("#typesOther").val(projectTypes[i]);
+				$("#typesOther").show();
+			}
+			
 		}
 	}
 	
-	if (dmptInput.projectAbstract != null) {
+	if (!isEmpty(dmptInput.projectAbstract)) {
 		var projectAbstract = $("#abstract").val(dmptInput.projectAbstract);
 	}
 	
-	if (dmptInput.investigators != null) {
+	if (dmptInput.investigators) {
 		var investigators = dmptInput.investigators;
 		$("input[name='investigator']").val(investigators[0]);
 		if (investigators.length > 1) {
@@ -509,51 +578,60 @@ function initializeInputs(dmptInput) {
 		}
 	}
 	
-	if (dmptInput.responsibleName != null) {
+	if (!isEmpty(dmptInput.responsibleName)) {
 		$("#responsibleName").val(dmptInput.responsibleName);
 	}
 	
-	if (dmptInput.phoneNumber != null) {
+	if (!isEmpty(dmptInput.phoneNumber)) {
 		$("#phone").val(dmptInput.phoneNumber);
 	}
 	
-	if (dmptInput.email != null) {
+	if (!isEmpty(dmptInput.email)) {
 		$("#email").val(dmptInput.email);
 	}
 	
-	if (dmptInput.funding != null) {
-		$("#funding").val(dmptInput.funding);
+	if (dmptInput.funding) {
+		$("#funding").val(dmptInput.funding.name);
 		
-		if (dmptInput.fundingLink != null) {
-			$("#fundingLink").val(dmptInput.fundingLink);
-			$("#fundingLink").show();
+		if (dmptInput.funding.name !== "None" && dmptInput.funding.name !== "select") {
+			if (!isEmpty(dmptInput.fundingLink)) {
+				$("#fundingLink").val(dmptInput.fundingLink);
+				$("#fundingLink").show();
+			}
 		}
 		
-		if (dmptInput.fundingOther != null) {
-			$("#fundingOther").val(dmptInput.fundingOther);
-			$("#fundingOther").show();	
+		if (dmptInput.funding.name === "Other") {
+			if (!isEmpty(dmptInput.fundingOther)) {
+				$("#fundingOther").val(dmptInput.fundingOther);
+				$("#fundingOther").show();	
+			}
 		}
 	}
 	
-	if (dmptInput.policies != null) {
+	if (dmptInput.policies) {
 		var policies = dmptInput.policies;
+		console.log("Policies: ", policies);
 		for (var i in policies) {
 			$("input[name='policies']").each(function() {
 		      	if ($(this).siblings('span').text() === policies[i].name) {
 		      		$(this).prop("checked", true);
 		      	}
 		    });
+			
+			if (policies[i].name === "Other") {
+				if (!isEmpty(dmptInput.policyLink)) {
+					$("#policyLink").val(dmptInput.policyLink);
+					$("#policyLink").show();
+				}
+				
+				if (!isEmpty(dmptInput.policyOther)) {
+					$("#policyOther").val(dmptInput.policyOther);
+					$("#policyOther").show();
+				}
+			}
 		}
 		
-		if (policyLink != null) {
-			$("#policyLink").val(dmptInput.policyLink);
-			$("#policyLink").show();
-		}
 		
-		if (policyOther != null) {
-			$("#policyOther").val(dmptInput.policyOther);
-			$("#policyOther").show();
-		}
 	}
 	
 	// 02 Data Collection
