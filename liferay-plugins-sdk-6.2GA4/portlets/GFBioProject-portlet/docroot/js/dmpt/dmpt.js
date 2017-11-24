@@ -39,7 +39,6 @@ function handlePrincipalButton(event) {
             }
         });
     }
-    
 }
 
 function removePrincipalInput(event) {
@@ -106,19 +105,6 @@ function checkboxRequirement(event) {
 	}
 }
 
-//function handleRequirement(event) {
-//	'use strict';
-//	
-//	var selection = $(event.target).val(),
-//		other = $("#requirementOther");
-//	if (selection === "other") {
-//		other.show("slow");
-//	} else {
-//		other.hide();
-//		other.val("");
-//	}
-//}
-
 function getPrincipal() {
     'use strict';
     
@@ -144,22 +130,6 @@ function handleFunding(event) {
         $("#fundingOther").val("");
     }
 }
-
-//function handlePolicy(event) {
-//    'use strict';
-//    
-//    var other = $("#policyOther"),
-//        link = $("#policyLink");
-//    if ($(event.target).is(':checked')) {
-//        other.show("slow");
-//        link.show("slow");
-//    } else {
-//        other.hide();
-//        link.hide();
-//        other.val("");
-//        link.val("");
-//    }
-//}
 
 function policies(event) {
 	'use strict';
@@ -216,7 +186,7 @@ function handleLicenses(event) {
 	
     var selection = $(event.target).val(),
     	other = $("#licenseOther");
-    if (selection === "other") {
+    if (selection === "Other License") {
 		other.show("slow");
 	} else {
 	    other.hide();
@@ -233,7 +203,7 @@ function handleRestriction(event) {
 		why = $("#accessReason"),
 		div = $("#accessYes");
 	if (selection === "true") {
-		div.show();
+		div.show("slow");
 	} else {
 		div.hide();
 		howLong.val("");
@@ -256,37 +226,81 @@ function handleArchives(event) {
 function showDataVolume(event) {
     'use strict';
     
-    var volume = $(event.target).val(), answer;
-    if (volume === "0") {
-        answer = "Cannot estimate";
-    } else if (volume === "10") {
-        answer = "&lt; 1GB";
-    } else if (volume === "20") {
-        answer = "&lt; 10GB";
-    } else if (volume === "30") {
-        answer = "&lt; 100GB";
-    } else if (volume === "40") {
-    	answer = "&gt; 100GB";
-    }
-    document.getElementById("volume").innerHTML = answer;
+    var volume = $(event.target).val();
+    var answer = getDataVolumeBySliderValue(volume);
+    $("#volume").html(answer);
 }
 
-function showNumberOfDatasets(event) {
+function getDataVolumeBySliderValue(number) {
+	'use strict';
+	
+	if (number === "0") {
+        return "Cannot estimate";
+    } else if (number === "10") {
+        return "&lt; 1GB";
+    } else if (number === "20") {
+        return "&lt; 10GB";
+    } else if (number === "30") {
+        return "&lt; 100GB";
+    } else if (number === "40") {
+    	return "&gt; 100GB";
+    }
+}
+
+function getSliderValueByDataVolume(value) {
+	'use strict';
+	
+	if (value === "Cannot estimate") {
+        return "0";
+    } else if (value === "&lt; 1GB") {
+        return "10";
+    } else if (value === "&lt; 10GB") {
+        return "20";
+    } else if (value === "&lt; 100GB") {
+        return "30";
+    } else if (value === "&gt; 100GB") {
+    	return "40";
+    }
+}
+
+function showNumberOfDataSets(event) {
     'use strict';
     
-    var number = $(event.target).val(), answer;
-    if (number === "0") {
-        answer = "Cannot estimate";
+    var number = $(event.target).val();
+    var answer = getDataSetBySliderValue(number)
+    $("#datasets").html(answer);
+}
+
+function getDataSetBySliderValue(number) {
+	'use strict';
+	
+	if (number === "0") {
+        return "Cannot estimate";
     } else if (number === "10") {
-        answer = "&lt; 10";
+        return "&lt; 10";
     } else if (number === "20") {
-        answer = "&lt; 100";
+        return "&lt; 100";
     } else if (number === "30") {
-        answer = "&lt; 1000";
+        return "&lt; 1000";
     } else if (number === "40") {
-    	answer = "&gt; 1000";
+    	return "&gt; 1000";
     }
-    document.getElementById("datasets").innerHTML = answer;
+}
+
+function getSliderValueByDataSet(value) {
+	'use strict';
+	
+	if (value === "Cannot estimate") {
+        return "0";
+    } else if (value === "&lt; 10") {
+        return "10";
+    } else if (value === "&lt; 100") {
+        return "20";
+    } else if (value === "&lt; 1000") {
+        return "30";
+    } else if (value === "&gt; 1000") {
+    	return "40";
+    }
 }
 
 function handlePhysical(event) {

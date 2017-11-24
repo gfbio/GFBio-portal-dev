@@ -15,13 +15,6 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 			</a>
 	    </h4>
 	    <div id="legRequirement" >
-		<!-- <select id="requirement" name="requirement" multiple="multiple" size="6"> 
- 	           <c:forEach var="req" items="${requirements}"> 
- 	           		<option value="${req.id}" title="${req.description}" >${req.name}</option> 
- 				</c:forEach> 
- 	           <option value="other" >Other</option> 
-	           <option value="none" >Not applicable</option> 
- 	       	</select> -->
 	       	
 	       	<div>
 				<c:forEach var="legal" items="${requirements}">
@@ -34,7 +27,7 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 				</c:forEach>
 				<div class="col-md-6">
 					<label class="mod-cb">
-						<input id="legal-other" name="requirements" type="checkbox" />
+						<input id="legal-other" name="requirements" type="checkbox" value="Other"/>
 						<span>Other</span>
 					</label>
 				</div>
@@ -62,8 +55,9 @@ Open access does not mean everyone can use your data at his leisure. Data can be
     	<div>
 	    	<div class="col-md-12">
 		       	<select id="licenses" name="licenses" >
+		       	<option selected="selected" label="Select" value="default">Select</option>
 		           <c:forEach var="license" items="${licenses}">
-						<option value="${license.label}">
+						<option value="${license.name}">
 							<c:out value="${license.name}" />
 						</option>
 					</c:forEach>
@@ -75,21 +69,6 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 		        	placeholder="Other license"/>
 		       </div> 
 		    </div>  
-		     	
-	       	<!-- <c:forEach var="license" items="${licenses}">
-				<div class="col-md-6">
-					<label class="mod-cb">
-						<input id="license-${license.label}" name="license" type="radio" value="${license.name}" />
-						<span><c:out value="${license.name}" /></span>
-					</label>
-				</div>
-			</c:forEach>
-			<div class="col-md-6">
-				<label class="mod-cb">
-					<input id="license-not" name="license" type="radio" />
-					<span>Not applicable</span>
-				</label>
-			</div> -->
 	       	
 	       <!-- extended data -->
 	       <div class="col-md-12">

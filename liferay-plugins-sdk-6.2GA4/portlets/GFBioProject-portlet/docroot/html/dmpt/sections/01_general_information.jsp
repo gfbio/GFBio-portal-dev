@@ -4,8 +4,8 @@
 <section>
 	<div id="dmppreview" style="display: none;">
 		<h2>Do you want to load an existing Data Management Plan?</h2>
-		<div class="col-sm-12" style="margin-top: 10px;">
-			<div class="col-sm-6">
+		<div class="col-xs-12" style="margin-top: 10px;">
+			<div class="col-md-6 col-sm-5 col-xs-10" style="margin-top: 5px;">
 				<select id="dmps" name="dmps" style="width: 100% !important; height: 29px;">
 					<c:forEach var="dmp" items="${dmpsforuser}">
 						<option label="<c:out value="${dmp.name}" />"
@@ -14,15 +14,15 @@
 					</c:forEach>
 				</select>
 			</div>
-			<div class="col-sm-1">
+			<div class="col-md-1 col-sm-2 col-xs-2" style="margin-top: 5px;">
 	           	<input id="delete" style="width: 100% !important; min-height: 29px;" type="button" class="icon-landing-flex icon-bin" value="&#xee44"/>
 	        </div>
-			<div class="col-sm-5">
+			<div class="col-md-5 col-sm-5 col-xs-12" style="margin-top: 5px;">
 	           	<input id="load" style="width: 100% !important" type="button" value="Load Data Management Plan"/>
 	        </div>
         </div>
-        <div class="col-sm-12" style="margin-top: 20px;">
-	        <div class="col-sm-12">
+        <div class="col-xs-12" style="margin-top: 20px;">
+	        <div class="col-xs-12">
 	           	<input id="start" class="startdmp" type="button" value="New Data Management Plan"/>
 	        </div>
         </div>

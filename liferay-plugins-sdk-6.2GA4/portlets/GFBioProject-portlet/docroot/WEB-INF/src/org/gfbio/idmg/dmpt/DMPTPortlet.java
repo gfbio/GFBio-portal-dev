@@ -2,7 +2,6 @@ package org.gfbio.idmg.dmpt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -11,7 +10,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletResponse;
 
 import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GCategory;
@@ -22,7 +20,6 @@ import org.gfbio.idmg.util.ContentUtil;
 import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
 import org.gfbio.service.DataManagementPlanLocalServiceUtil;
-import org.gfbio.service.impl.DataManagementPlanLocalServiceImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -195,9 +192,10 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		PortletSession session = resourceRequest.getPortletSession();
 		String jsonInput = (String) session.getAttribute("dmptInput");
-		
-		Gson gson = new Gson();
-		DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
+		//Not neccessary to convert?
+		//Gson gson = new Gson();
+		//DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
+		//_log.info("Input: " + input.toString);
 		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
@@ -206,7 +204,7 @@ public class DMPTPortlet extends MVCPortlet {
 		if (userId > -1 && !projectName.isEmpty()) {
 		
 			DataManagementPlanImpl plan = new DataManagementPlanImpl();
-			plan.setDmpTInput(gson.toJson(input));
+			plan.setDmpTInput(jsonInput);
 			plan.setUserID(userId);
 			plan.setName(projectName);
 			_log.info("Plan: " + plan);

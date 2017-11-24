@@ -124,7 +124,7 @@
 	            <div class="col-md-6">
 	            	<div>
 	                    <label class="mod-cb">
-	                    	<input id="dataformat-cb" name="dataformat" type="checkbox"/>
+	                    	<input id="dataformat-cb" name="dataformat" type="checkbox" value="Other"/>
 	                    	<span>Other</span>
 	                    </label>
 	                </div>

@@ -129,7 +129,7 @@ $(document).ready(function(){
 		    $("#dataformatOther").hide();
 		    
 		    $("#volumeSlider").on("input change", showDataVolume);
-		    $("#datasetSlider").on("input change", showNumberOfDatasets);
+		    $("#datasetSlider").on("input change", showNumberOfDataSets);
 		    
 		    //03 Documentation and Metadata
 		    $("#metadata-other").on("click", handleMetadataOther);
@@ -247,7 +247,6 @@ function getInputAsJson() {
       	projectTypes.push($(this).siblings('span').text());
     });
 	if ($.inArray("Other", projectTypes) > -1) {
-		//new attribute projecttypesother needed
 		projectTypes.splice($.inArray("Other", projectTypes), 1);
 		projectTypes.push($("#typesOther").val());
 	}
@@ -264,8 +263,10 @@ function getInputAsJson() {
 	var email = $("#email").val();
 	
 	var funding = $("#funding").val();
+	if (funding === "Other") {
+		funding = $("#fundingOther").val();
+	}
 	var fundingLink = $("#fundingLink").val();
-	var fundingOther = $("fundingOther").val();
 	
 	var policies = [];
 	$("input[name='policies']:checked").each(function() {
@@ -273,9 +274,9 @@ function getInputAsJson() {
     });
 	
 	var policyLink = "";
-	var policyOther = "";
 	if ($.inArray("Other", policies) > -1) {
-		policyOther = $("#policyOther").val();
+		policies.splice($.inArray("Other", policies), 1);
+		policies.push($("#policyOther").val());
 		policyLink = $("#policyLink").val();
 	}
 	
@@ -297,8 +298,8 @@ function getInputAsJson() {
 	
 	var documentated = $("input[name='documentated']:checked").val();
 	
-	var dataVolume = $("#volumeSlider").val();
-	var dataSet = $("#datasetSlider").val();
+	var dataVolume = getDataVolumeBySliderValue($("#volumeSlider").val());
+	var dataSet = getDataSetBySliderValue($("#datasetSlider").val());
 
 	var methodologies = $("#methodologies").val();
 	
@@ -307,11 +308,10 @@ function getInputAsJson() {
 	var metadata = [];
 	var metadataDesc = "";
 	$("input[name='metadata']:checked").each(function() {
-		dataformats.push($(this).siblings('span').text());
+		metadata.push($(this).siblings('span').text());
     });
-	if ($.inArray("Other", metadata) > -1) {
-		metadata.splice($.inArray("Other metadata schema or version", metadata), 1);
-		metadataDesc = $("metadataDesc").val();	
+	if ($.inArray("Other metadata schema or version", metadata) > -1) {
+		metadataDesc = $("#metadataDesc").val();	
 	}
 
 	// 04 Ethics
@@ -322,13 +322,12 @@ function getInputAsJson() {
     });
 	if ($.inArray("Other", requirements) > -1) {
 		requirements.splice($.inArray("Other", requirements), 1);
-		requirements.push($("requirementOther").val());	
+		requirements.push($("#requirementOther").val());	
 	}
 	
-	var license = $("input[name='license']:checked").val();
-	var otherLicense = "";
+	var license = $("#licenses").val();
 	if (license === "Other License") {
-		otherLicense = $("licenseOther").val()
+		license = $("#licenseOther").val();
 	}
 	 
 	var accessRestriction = $("input[name='restriction']:checked").val();
@@ -342,8 +341,22 @@ function getInputAsJson() {
 	// 05 Preservation
 	
 	var dataArchives = [];
+	$("input[name='archives']:checked").each(function() {
+		dataArchives.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other", dataArchives) > -1) {
+		dataArchives.splice($.inArray("Other", dataArchives), 1);
+		dataArchives.push($("#archiveOther").val());	
+	}
+	
+	var pid = $("input[name='pid']:checked").val();
 	
 	// 06 GFBio Services
+	
+	var services = [];
+	$("input[name='services']:checked").each(function() {
+		services.push($(this).siblings('span').text());
+    });
 	
 	// Create jsonObject
 	var dmptInput = {
@@ -361,9 +374,6 @@ function getInputAsJson() {
 				"name" : funding
 			},
 			"fundingLink" : fundingLink,
-			"fundingOther" : fundingOther,
-			"policies" : [],
-			"policyOther" : policyOther,
 			"policyLink" : policyLink,
 			// 02 Data Collection
 			"physical" : physical,
@@ -377,42 +387,69 @@ function getInputAsJson() {
 			"methodologies" : methodologies,
 			// 03 Metadata
 			"metadata" : [],
-			"metadataDescription" : metadataDesc
+			"metadataDescription" : metadataDesc,
 			// 04 Ethics
-			
+			"requirements" : [],
+			"license" : {
+				"name" : license
+			},
+			"accessRestriction" : accessRestriction,
+			"accessDuration" : accessDuration,
+			"accessReason" : accessReason,
 			// 05 Preservation
-			
-			
-				
+			"dataArchives" : [],
+			"pid" : pid,
+			// 06 GFbio Services
+			"gfbioServices" : []			
 	};
 	
 	// Set Arrays
-	if (projectTypes != null) {
+	if (projectTypes) {
 		dmptInput.projectTypes = projectTypes;
 	}
 
-	if (investigators != null) {
+	if (investigators) {
 		dmptInput.investigators = investigators;
 	}
 		
- 	if (policies != null) {
- 		policies.map(function(item) {      
+ 	if (policies) {
+ 		policies.map(function(value) {      
  	  		dmptInput.policies.push({ 
- 	    		"name" : item,
+ 	    		"name" : value
  	    	});
  		});
  	}
 
-	if (dataformats != null) {
+	if (dataformats) {
 		dmptInput.dataformats = dataformats;
 	}
 	
-	if (metadata != null) {
-		
+	if (metadata) {
+		metadata.map(function(value) {
+			dmptInput.metadata.push({
+				"name" : value
+			})
+		})
 	}
 	
-	console.log(dmptInput);
-	console.log("JSon");
+	if (requirements) {
+		requirements.map(function(value) {
+			dmptInput.requirements.push({
+				"name" : value
+			})
+			
+		})
+	}
+	
+	if (dataArchives) {
+		dmptInput.dataArchives = dataArchives;
+	}
+	
+	if (services) {
+		dmptInput.gfbioServices = services;
+	}
+	
+	console.log("Json:", dmptInput);
 	
 	return JSON.stringify(dmptInput);
 	
@@ -534,6 +571,7 @@ function addInvestigator(investigator) {
 }
 
 function initializeInputs(dmptInput) {
+	
 	// 01 General Information
 	$("#name").val(dmptInput.projectName);
 	if (!isEmpty(dmptInput.category)) {
@@ -591,19 +629,24 @@ function initializeInputs(dmptInput) {
 	}
 	
 	if (dmptInput.funding) {
-		$("#funding").val(dmptInput.funding.name);
+		var found = false;
+		$("#funding option").each(function() {
+			if ($(this).val() === dmptInput.funding.name) {
+				$("#funding").val(dmptInput.funding.name);
+				found = true;
+			}
+	    });
+		if (!found) {
+			$("#funding").val("Other");
+			$("#fundingOther").val(dmptInput.funding.name);
+			$("#fundingOther").show();
+			//Bug
+		}
 		
 		if (dmptInput.funding.name !== "None" && dmptInput.funding.name !== "select") {
 			if (!isEmpty(dmptInput.fundingLink)) {
 				$("#fundingLink").val(dmptInput.fundingLink);
 				$("#fundingLink").show();
-			}
-		}
-		
-		if (dmptInput.funding.name === "Other") {
-			if (!isEmpty(dmptInput.fundingOther)) {
-				$("#fundingOther").val(dmptInput.fundingOther);
-				$("#fundingOther").show();	
 			}
 		}
 	}
@@ -612,93 +655,196 @@ function initializeInputs(dmptInput) {
 		var policies = dmptInput.policies;
 		console.log("Policies: ", policies);
 		for (var i in policies) {
+			var found = false;
 			$("input[name='policies']").each(function() {
 		      	if ($(this).siblings('span').text() === policies[i].name) {
 		      		$(this).prop("checked", true);
+		      		found = true;
 		      	}
 		    });
-			
-			if (policies[i].name === "Other") {
+			if (!found) {
+				$("input[name='policies'][value='Other']").prop("checked", true);
 				if (!isEmpty(dmptInput.policyLink)) {
 					$("#policyLink").val(dmptInput.policyLink);
 					$("#policyLink").show();
 				}
-				
 				if (!isEmpty(dmptInput.policyOther)) {
-					$("#policyOther").val(dmptInput.policyOther);
+					$("#policyOther").val(policies[i].name);
 					$("#policyOther").show();
 				}
 			}
 		}
-		
-		
 	}
 	
 	// 02 Data Collection
 	
-// 	var physical = $("input[name='physical']:checked").val();
-// 	var alive = $("input[name='alive']:checked").val();
-// 	var taxon = $("input[name='taxon']:checked").val();
-// 	var sequenced = $("input[name='sequenced']:checked").val();
-	
-// 	var dataformats = [];
-// 	$("input[name='dataformat']:checked").each(function() {
-// 		dataformats.push($(this).siblings('span').text());
-//     });
-// 	if ($.inArray("Other", dataformats) > -1) {
-// 		dataformats.splice($.inArray("Other", dataformats), 1);
-// 		dataformats.push($("#dataformatOther").val());
-// 	}
-	
-// 	var documentated = $("input[name='documentated']:checked").val();
-	
-// 	var dataVolume = $("#volumeSlider").val();
-// 	var dataSet = $("#datasetSlider").val();
+	if (dmptInput.physical != null) {
+		$("input[name='physical'][value='" + dmptInput.physical + "']").prop("checked", true);
+	}
 
-// 	var methodologies = $("#methodologies").val();
+	if (dmptInput.alive != null) {
+		$("input[name='alive'][value='" + dmptInput.alive + "']").prop("checked", true);
+		$("#alive").removeClass("disabledDiv");
+	}
+	
+	if (dmptInput.taxon != null) {
+		$("input[name='taxon'][value='" + dmptInput.taxon + "']").prop("checked", true);
+		$("#taxon").removeClass("disabledDiv");
+	}
+	
+	if (dmptInput.sequenced != null) {
+		$("input[name='sequenced'][value='" + dmptInput.sequenced + "']").prop("checked", true);
+		$("#sequenced").removeClass("disabledDiv");
+	}
+	
+	if (dmptInput.dataformats) {
+		var dataformats = dmptInput.dataformats;
+		for (var i in dataformats) {
+			console.log("Dataformat: " + dataformats[i]);
+			var found = false;
+			$("input[name='dataformat']").each(function() {
+				if ($(this).val() === dataformats[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				} 
+			});
+			if (!found) {
+				$("input[name='dataformat'][value='Other']").prop("checked", true);
+				$("#dataformatOther").val(dataformats[i]);
+				$("#dataformatOther").show();
+			}
+		}
+	}
+	
+	if (dmptInput.openlyDocumented != null) {
+		$("input[name='documentated'][value='" + dmptInput.openlyDocumented + "']").prop("checked", true);
+	}
+		
+	if (!isEmpty(dmptInput.dataVolume)) {
+		$("#volumeSlider").val(getSliderValueByDataVolume(dmptInput.dataVolume));
+		$("#volume").html(dmptInput.dataVolume);
+	}
+		
+	if (!isEmpty(dmptInput.dataSets)) {
+		$("#datasetSlider").val(getSliderValueByDataSet(dmptInput.dataSets));
+		$("#datasets").html(dmptInput.dataSets);
+	}
+	
+	if (!isEmpty(dmptInput.methodologies)) {
+		var projectAbstract = $("#abstract").val(dmptInput.methodologies);
+	}
 	
 	// 03 Metadata
 	
-// 	var metadata = [];
-// 	var metadataDesc = "";
-// 	$("input[name='metadata']:checked").each(function() {
-// 		dataformats.push($(this).siblings('span').text());
-//     });
-// 	if ($.inArray("Other", metadata) > -1) {
-// 		metadata.splice($.inArray("Other metadata schema or version", metadata), 1);
-// 		metadataDesc = $("metadataDesc").val();	
-// 	}
+	if (dmptInput.metadata) {
+		var metadata = dmptInput.metadata;
+		console.log("metadata: ", metadata);
+		for (var i in metadata) {
+			$("input[name='metadata']").each(function() {
+		      	if ($(this).siblings('span').text() === metadata[i].name) {
+		      		$(this).prop("checked", true);
+		      	}
+		    });
+			
+			if (metadata[i].name === "Other metadata schema or version") {
+				if (!isEmpty(dmptInput.metadataDescription)) {
+					$("#metadataDesc").val(dmptInput.metadataDescription);
+					$("#metadataDesc").show();
+				}
+			}
+		}
+	}
 
 	// 04 Ethics
 	
-// 	var requirements = [];
-// 	$("input[name='requirements']:checked").each(function() {
-// 		requirements.push($(this).siblings('span').text());
-//     });
-// 	if ($.inArray("Other", requirements) > -1) {
-// 		requirements.splice($.inArray("Other", requirements), 1);
-// 		requirements.push($("requirementOther").val());	
-// 	}
+	if (dmptInput.requirements) {
+		var requirements = dmptInput.requirements;
+		console.log("requirements: ", requirements);
+		for (var i in requirements) {
+			var found = false;
+			$("input[name='requirements']").each(function() {
+		      	if ($(this).siblings('span').text() === requirements[i].name) {
+		      		$(this).prop("checked", true);
+		      		found = true;
+		      	}
+		    });
+			if (!found) {
+				$("input[name='requirements'][value='Other']").prop("checked", true);
+				$("#requirementOther").val(requirements[i].name);
+				$("#requirementOther").show();
+			}
+		}
+	}
 	
-// 	var license = $("input[name='license']:checked").val();
-// 	var otherLicense = "";
-// 	if (license === "Other License") {
-// 		otherLicense = $("licenseOther").val()
-// 	}
+	if (dmptInput.license) {
+		var found = false;
+		$("#licenses option").each(function() {
+			if ($(this).val() === dmptInput.license.name) {
+				$("#licenses").val(dmptInput.license.name);
+				found = true;
+			}
+	    });
+		if (!found) {
+			$("#licenses").val("Other License");
+			$("#licenseOther").val(dmptInput.license.name);
+			$("#licenseOther").show();
+		}
+	}
 	 
-// 	var accessRestriction = $("input[name='restriction']:checked").val();
-// 	var accessDuration = "";
-// 	var accessReason = "";
-// 	if (accessRestriction) {
-// 		accessDuration = $("#accessDuration").val();
-// 		accessReason = $("#accessReason").val();
-// 	}
+	if (dmptInput.accessRestriction != null) {
+		if (dmptInput.accessRestriction === "true") {
+			$("input[name='restriction'][value='true']").prop("checked", true);
+			if (dmptInput.accessDuration) {
+			$("#accessDuration").val(dmptInput.accessDuration);
+			}
+			if (dmptInput.accessReason) {
+				$("#accessReason").val(dmptInput.accessReason);
+			}
+			$("#accessYes").show();
+	 	} else {
+			$("input[name='restriction'][value='false']").prop("checked", true);
+	 	}
+	}
 	
 	// 05 Preservation
 	
-	// var dataArchives = [];
+	if (dmptInput.dataArchives) {
+		var dataArchives = dmptInput.dataArchives;
+		for (var i in dataArchives) {
+			console.log("DataArchive: " + dataArchives[i]);
+			var found = false;
+			$("input[name='archives']").each(function() {
+				if ($(this).siblings('span').text() === dataArchives[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				} 
+			});
+			if (!found) {
+				$("input[name='archives'][value='Other']").prop("checked", true);
+				$("#archiveOther").val(dataArchives[i]);
+				$("#archiveOther").show();
+			}
+		}
+	}
 	
+
+	if (dmptInput.pid != null) {
+		$("input[name='pid'][value='" + dmptInput.pid + "']").prop("checked", true);
+	}
+		
 	// 06 GFBio Services
+	
+	if (dmptInput.gfbioServices) {
+		var gfbioServices = dmptInput.gfbioServices;
+		for (var i in gfbioServices) {
+			console.log("Service: " + gfbioServices[i]);
+			$("input[name='services']").each(function() {
+				if ($(this).siblings('span').text() === gfbioServices[i]) {
+					$(this).prop("checked", true);
+				} 
+			});
+		}
+	}
 }
 
 function getLicenseData() {
