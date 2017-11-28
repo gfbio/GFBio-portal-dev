@@ -11,7 +11,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.dto.GLegalRequirement;
 import org.gfbio.idmg.dto.GLicense;
@@ -21,7 +20,6 @@ import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
 import org.gfbio.service.DataManagementPlanLocalServiceUtil;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

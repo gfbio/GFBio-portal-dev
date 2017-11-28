@@ -91,7 +91,7 @@
 	        </div>
 	        <div class="col-md-3">
 	        	<label class="mod-cb">
-	        		<input class="radio_input" name="pid" type="radio" value="Don't know yet" />
+	        		<input class="radio_input" name="pid" type="radio" value="Dont know yet" />
         			<span>Don't know yet</span>
         		</label>
 	        </div>

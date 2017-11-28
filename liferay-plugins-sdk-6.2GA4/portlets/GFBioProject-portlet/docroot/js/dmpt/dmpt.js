@@ -571,7 +571,6 @@ function getInputAsJson() {
 	
 	console.log("Json:", dmptInput);
 	return JSON.stringify(dmptInput);
-	
 }
 
 function addInvestigator(investigator) {
