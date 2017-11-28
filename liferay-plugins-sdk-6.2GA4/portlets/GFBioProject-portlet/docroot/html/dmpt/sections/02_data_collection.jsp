@@ -146,13 +146,13 @@
 	    <div id="formatDocumentated">
 	        <div class="col-md-6">
 				<label class="mod-cb">
-					<input name="documentated" type="radio" value="true" />
+					<input name="documentated" type="radio" value="Openly documentated" />
 					<span>Openly documented</span>
 				</label>
 			</div>
 			<div class="col-md-6">
 				<label class="mod-cb">
-					<input name="documentated" type="radio" value="false" >
+					<input name="documentated" type="radio" value="Only legible with special software" >
 					<span>Only legible with special software</span>
 				</label>
 			</div>
@@ -192,7 +192,7 @@ The amount of data sets you will create is closely linked to your style of worki
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
 	    </h4>
-	    <div id="methodologies" class="col-md-12">
+	    <div class="col-md-12">
 	    <!-- required -->
 	        <textarea id="methodologies" rows="5" cols="100" placeholder="Standards, methodologies and tools"></textarea>
 	    </div>

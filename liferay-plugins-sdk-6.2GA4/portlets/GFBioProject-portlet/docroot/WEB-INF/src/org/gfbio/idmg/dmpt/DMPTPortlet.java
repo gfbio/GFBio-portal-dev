@@ -199,27 +199,35 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
-		String response = "";
+		long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
+		String response = "The Data Managemant Plan could not been saved.";
 		
 		if (userId > -1 && !projectName.isEmpty()) {
-		
-			DataManagementPlanImpl plan = new DataManagementPlanImpl();
-			plan.setDmpTInput(jsonInput);
-			plan.setUserID(userId);
-			plan.setName(projectName);
-			_log.info("Plan: " + plan);
+			DataManagementPlanImpl plan;
 			
 			try {
-				plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
-				response = "The data managemant plan was saved successfully.";
-				_log.info("DMP saved in database with id " + plan.getDmpID() + "!");
-			} catch (SystemException e) {
-				response = "The data managemant plan could not been saved.";
+				if (dmpId > 0) {
+					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.getDataManagementPlan(dmpId);
+				} else {
+					plan = new DataManagementPlanImpl();
+					plan.setUserID(userId);
+				}
+				plan.setDmpTInput(jsonInput);
+				plan.setName(projectName);
+				_log.info("Plan: " + plan);
+				
+				if (userId == plan.getUserID()) {
+					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
+					response = "The data managemant plan was saved successfully.";
+					_log.info("DMP saved in database with id " + plan.getDmpID() + "!");
+				} else {
+					_log.error("The userId of the dmp is different from the userId in the portletsession!");
+				}
+			} catch (SystemException | PortalException e) {
 				_log.error("Error while saving DMP in database!", e);
 			}
 		} else {
 			_log.error("DMP is not valid!");
-			response = "The Data Managemant Plan could not been saved.";
 		}
 		
 		resourceResponse.setContentType("text/html");
@@ -237,7 +245,7 @@ public class DMPTPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		
 		//Get id
-		Long dmpID = Long.parseLong(resourceRequest.getParameter("dmpID"));
+		Long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		List<DataManagementPlan> dmps = DataManagementPlanLocalServiceUtil.getdmpListByUserId(themeDisplay.getUserId());
@@ -245,13 +253,13 @@ public class DMPTPortlet extends MVCPortlet {
 		String dmptInput = "";
 		
 		for (DataManagementPlan d : dmps) {
-			if (d.getDmpID() == dmpID) {
+			if (d.getDmpID() == dmpId) {
 				dmptInput = d.getDmpTInput();
 			}
 		}
 		_log.info("DmptInput: " + dmptInput);
 		if (dmptInput.equals("")) {
-			_log.info("DMP not found for dmpID " + dmpID);
+			_log.info("DMP not found for dmpId " + dmpId);
 		}
 		
 		resourceResponse.setContentType("text/html");
@@ -271,16 +279,16 @@ public class DMPTPortlet extends MVCPortlet {
 		String response = "";
 		
 		//Get id
-		Long dmpID = Long.parseLong(resourceRequest.getParameter("dmpID"));
+		Long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		
 		// Delete Dmp by id
 		try {
-			DataManagementPlanLocalServiceUtil.deleteDataManagementPlan(dmpID);
+			DataManagementPlanLocalServiceUtil.deleteDataManagementPlan(dmpId);
 			response = "The data management plan was deleted successfully!";
-			_log.info("DMP with the id " + dmpID + "was deleted successfully!");
+			_log.info("DMP with the id " + dmpId + "was deleted successfully!");
 		} catch (PortalException | SystemException e) {
 			response = "The data management plan could not been deleted!";
-			_log.error("DMP with the id " + dmpID + " could not been deleted!", e);
+			_log.error("DMP with the id " + dmpId + " could not been deleted!", e);
 		}
 		
 		resourceResponse.setContentType("text/html");

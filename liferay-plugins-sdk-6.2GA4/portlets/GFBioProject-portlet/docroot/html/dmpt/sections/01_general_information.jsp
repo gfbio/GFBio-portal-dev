@@ -39,13 +39,10 @@
 		<div class="row">
 			<h4>What's the official name of your research project?</h4>
 	        <div class="col-md-12">
-			   <input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
+	        	<input id="dmpId" type="hidden" value="0"/>
+				<input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
 			</div>
 		</div>
-		<!-- Following div with download button must be removed after development -->
-		<!-- <div>
-			<input id="downloadDMPtest" type="button" value="Download" />
-		</div> -->
 		<div class="row">
 			<h4>Please select a category</h4>
 			<div class="col-md-12">
