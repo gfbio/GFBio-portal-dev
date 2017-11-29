@@ -76,10 +76,10 @@ This is the active development environment. Each type of code is differentiated 
  ############# Database #########################
  jdbc.default.driverClassName=org.postgresql.Driver
  jdbc.default.url=jdbc:postgresql://localhost:5432/lportal
- jdbc.default.username=gfbiodb
- jdbc.default.password=test
- jdbc.gfbio.username=gfbiodb
- jdbc.gfbio.password=test
+ jdbc.default.username=xxxxx
+ jdbc.default.password=xxxxx
+ jdbc.gfbio.username=xxxxx
+ jdbc.gfbio.password=xxxxx
  jdbc.gfbio.driverClassName=org.postgresql.Driver
  jdbc.gfbio.url=jdbc:postgresql://localhost:5432/gfbio?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
 ```
@@ -91,13 +91,13 @@ This is the active development environment. Each type of code is differentiated 
 * Start PGAdmin.
 * Go to server PostgreSQL 9.3 (localhost: 5432).
 * Create new login role with
-  * **name:** gfbiodb,
-  * **password:** test,
+  * **name:** xxxxx,
+  * **password:** xxxxx,
   * **Role privileges:** Can login, Inherits rights from parent roles, Superuser, Can create databases, Can modify catalog directly.
 * Add new database (use the SQL option in task menu):
 ```
  CREATE DATABASE gfbio
- WITH OWNER = gfbiodb
+ WITH OWNER = xxxxx
       ENCODING = 'UTF8'
       TABLESPACE = pg_default
       LC_COLLATE = 'German_Germany.1252'
@@ -125,7 +125,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 See also the list of [contributors](https://github.com/gfbio/GFBio-portal-dev/contributors) who participated in this project.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the LGPL2.1 License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## FAQs   
 This section describes known problems and frequent issues occuring during development.
