@@ -11,6 +11,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.dto.GLegalRequirement;
 import org.gfbio.idmg.dto.GLicense;
@@ -20,6 +21,7 @@ import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
 import org.gfbio.service.DataManagementPlanLocalServiceUtil;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -118,13 +120,22 @@ public class DMPTPortlet extends MVCPortlet {
 		String jsonInput = resourceRequest.getParameter("json");
 		_log.info("JSONString: " + jsonInput);
 
+		DMPTInput input = null;
 		String response = "";
 
 		try {
 			
+			Gson gson = new Gson();
+			input = gson.fromJson(jsonInput, DMPTInput.class);
+				
+			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			 			
 			// Set DMPTInput to PortletSession
 			PortletSession session = resourceRequest.getPortletSession();
-			session.setAttribute("dmptInput", jsonInput, PortletSession.PORTLET_SCOPE);
+		    session.setAttribute("dmptInput", input, PortletSession.APPLICATION_SCOPE);
+		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.APPLICATION_SCOPE);
+					    
+			response = "Parsing successful!";
 
 			response = "Parsing successful!";
 		} catch (JsonSyntaxException e) {

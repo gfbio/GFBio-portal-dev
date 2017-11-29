@@ -37,10 +37,6 @@ public class ContentUtil {
 			
 			categories = transformJsonArrayToGCategory(json);
 			categories = sortListAlphabetically(categories);
-			
-			for (GCategory c : categories) {
-				_log.info(c.toString());
-			}
 
 		} catch (NoSuchHeadException | SystemException ex) {
 			_log.error("Error while getting HeadId by HeadLocalServiceUtil");
@@ -104,7 +100,7 @@ public class ContentUtil {
 			list = sortListAlphabetically(list);
 
 			for(T e : list) {
-				_log.info(e.toString());
+				_log.debug(e.toString());
 			}
 			
 		} catch(NoSuchHeadException | SystemException ex) {
