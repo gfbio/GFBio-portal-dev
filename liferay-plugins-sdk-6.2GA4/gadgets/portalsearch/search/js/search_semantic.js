@@ -5,7 +5,7 @@ var cartDivTitle = 'Click to add/remove dataset to/from VAT (for registered user
 var cartDivDisabled = 'This dataset cannot be visualized.';
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
 var showRating = 0;
-var saveSearch = 0;
+var saveSearch = 1;
 var highlightLength = 2;
 var isSemanticSearch = true;
 
@@ -21,7 +21,7 @@ function listenToEnterPress() {
 		}
 	});
 }
-			// set the default enter event to semantic search
+
 function resetSearch(){
 	document.getElementById("visualBasket").value = "";
 	document.getElementById("basketID").value = 0; 
@@ -32,13 +32,16 @@ function resetSearch(){
 	insertParam("q", "");
 	insertParam("filter", "");
 	insertParam("year", "");
+	
 	if (gadgets.Hub.isConnected()){
 		gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
 	}
+	
 	showLatestTenDataset([],"");
 }
+
 function searchButtonClicked(isSemantic){
-			var value = document.getElementById("gfbioSearchInput").value;
+	var value = document.getElementById("gfbioSearchInput").value;
 	insertParam("q", value);
 	if (value == ''){
 		resetSearch();
@@ -50,34 +53,42 @@ function searchButtonClicked(isSemantic){
 		else {normalQuery(true);}
 	}
 }
+
 function isValueNotEmpty(value){
 	return (!value.isArray && value!='' & value !='[]') || (value.isArray && value.length >0);
 }
+
 function insertParam(key, value) {
 	var urlString = document.referrer;
 	var valueNotEmpty = isValueNotEmpty(value);
 	if (parent.history.state != null){ 
 		//if any parameter has been popped to the state
-		//console.log(':::insertParam');
+		//console.log(':::insertParam parent.history.state.path');	
 		//console.log(parent.history.state.path);
 		urlString = parent.history.state.path;
 	}
 	var url = urlString.split('?');
 	var urlDomain = url[0];
-		//onsole.log(url);
+	//console.log(url);
 	var newUrl = urlDomain;
+
 	value = encodeURIComponent(value);
+
 	var isNewParam = true;
 		if (url.length >1){
-			// if url already has parameters
+		// if url already has parameters
+		//console.log(':::insertParam append Parameter');	
 		var urlParam = url[1];
 		var paramsArray = urlParam.split('&');
 		var paramsString = '';
+		// check the current parameters, replace when the key is matched
 		for (i=0; i< paramsArray.length; i++){
+			// replace the inserted value that matched with the key
 			var par = paramsArray[i].split('=');
-
-                if (par[0] == key) {
-                    par[1] = value;
+			// find if the parameter is already added to the url
+			if (par[0] == key) {
+				//console.log(':::insertParam replace parameter');	
+				par[1] = value;
 				isNewParam = false;
 			}
 			if (par[0] != key || valueNotEmpty){
@@ -515,7 +526,6 @@ function submitQueryToServer(keyword, filter, yearRange) {
 		// set value for pagination
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
 		var iDisplayLength = getValueByAttribute(aoData, "name", "iDisplayLength");
-
 		// Construct query message in JSON format
 		var filteredQuery = getFilteredQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
@@ -1061,6 +1071,7 @@ function setSelectedRowStyle() {
 function onRowClick() {
 	$('#tableId tbody').off('click');
 	$('#tableId tbody').on('click', '#cart', function (e) {
+		if (!$(this).hasClass('cart_disabled')){
 		var cell = $(this).parent();
 		var row = cell.parent();
 		var icol = row.children().index(cell);
@@ -1112,6 +1123,7 @@ function onRowClick() {
 		}
 		//update visualisation
 		updateMap();
+		}
 	});
 }
 
@@ -1377,6 +1389,7 @@ function showCartIcon(nRow, aData) {
 		// show the cart's div
 		//console.log(elmDiv);
 		elmDiv.removeClass('invisible');
+
 		elmDiv.attr('title', '');
 	}
 	else{
