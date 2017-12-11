@@ -4,24 +4,33 @@
 	
 	//
 	function ajaxActionRequest_choosedpmaDataProvider(archivingURL, method, data, divId, as) {
-			$.ajax({
+		console.log("Send1 ");
+		$.ajax({
 			"type" : "POST",
-			"url": archivingURL.concat("/GFBioArchiving"),
+			"url": archivingURL.concat("/GFBioDPM"),
 			"data" : {
 				"<portlet:namespace />data" : JSON.stringify(data),
 				"<portlet:namespace />responseTarget" : method
 			},
-			async: as,
-			success : function (data){
+			async: false,
+ 			success :  function (data){
+				console.log("Response");
 				buildDataProvider(data, divId) ;
-			}
+			},
+			error : function(jqXHR, exception){
+				console.log(jqXHR);
+			} 
 		});
 	}
 	
 	function buildDataProvider(data, divId){
-		
+		console.log("build information in" +divId);
+		console.log(data);
 		var div =   $("#".concat(divId));
 		div.empty();
+
+	 	
+		console.log(data);
 		
 		if (data.label !=0){
 			console.log(data);
@@ -138,7 +147,7 @@
 					}
 				}
 			);	
-		}
+		} 
 	}
 
 </script>

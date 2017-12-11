@@ -90,10 +90,7 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
 
-	public JSONObject transferResearchObjectInformationToDb(JSONObject requestJson){
-		JSONObject responseJson = ResearchObjectLocalServiceUtil.transferResearchObjectInformationToDb(requestJson);
-		return responseJson;
-	}
+
 	
 	
 	//

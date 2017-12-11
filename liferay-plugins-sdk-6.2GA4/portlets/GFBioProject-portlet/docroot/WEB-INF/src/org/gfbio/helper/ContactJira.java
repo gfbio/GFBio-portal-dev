@@ -383,17 +383,13 @@ public class ContactJira {
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    
-    @SuppressWarnings({ "unchecked", "resource", "deprecation" })
-	public static void startSubmission (ResourceRequest request, ResourceResponse response){
-   	
-    	String responseString = "";    	
-        JSONObject parseJson = getDataJsonAsObject (request);
-/*        try {_log.info("result: "+requestDB());}
-        catch (UnsupportedEncodingException e1) {e1.printStackTrace();}*/
-        
+    @SuppressWarnings({ "unchecked", "deprecation" })
+	public static JSONObject startSubmission (JSONObject requestJson){
+    	
+    	JSONObject responseJson = new JSONObject();
+    	
         try {
-       
+            
         	HttpClient httpclient = new DefaultHttpClient();
         	HttpPost post = new HttpPost("https://helpdesk.gfbio.org/rest/api/2/issue/");
             post.addHeader("Content-Type","application/json");
@@ -401,12 +397,14 @@ public class ContactJira {
             post.addHeader("setDoInput","true");
             post.addHeader("setDoOutput","true");
             
-            String userpass= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauserpass");
+            String userpass= Helper.getServerInformation((String) ((JSONObject) requestJson).get("path"),"jirauserpass");
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
             if (basicAuth != null) 
                 post.addHeader("Authorization", basicAuth);
 
-            String jiraRequestString = getJSON_Body((JSONObject) parseJson);
+            String jiraRequestString = getJSON_Body((JSONObject) requestJson);
+            
+			System.out.println(" jira"+jiraRequestString);
             
             HttpEntity entity = new ByteArrayEntity(jiraRequestString.getBytes(StandardCharsets.UTF_8));
             post.setEntity(entity);
@@ -449,7 +447,8 @@ public class ContactJira {
 					}
 					jiraResponseJson.put("fileToJiraResponse", check);
 				}
-				responseString = responseString.concat(jiraResponseJson.toString());
+				responseJson = jiraResponseJson;
+				//responseString = responseString.concat(jiraResponseJson.toString());
 	        }
             httpclient.getConnectionManager().shutdown();
             
@@ -457,7 +456,23 @@ public class ContactJira {
         	e.printStackTrace();
         	_log.info(e);
         }
-                    
+        
+        return responseJson;
+    
+    }
+    
+    
+    //
+    public static void startSubmission (ResourceRequest request, ResourceResponse response){
+   	
+    	String responseString = "";    	
+        JSONObject parseJson = getDataJsonAsObject (request);
+/*        try {_log.info("result: "+requestDB());}
+        catch (UnsupportedEncodingException e1) {e1.printStackTrace();}*/
+        
+		JSONObject jiraResponseJson = startSubmission (parseJson);
+		responseString = responseString.concat(jiraResponseJson.toString());
+        
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		try {response.getWriter().write(responseString);}

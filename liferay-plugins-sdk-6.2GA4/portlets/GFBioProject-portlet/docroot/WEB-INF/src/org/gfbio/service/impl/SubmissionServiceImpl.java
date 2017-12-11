@@ -14,6 +14,7 @@
 
 package org.gfbio.service.impl;
 
+import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.base.SubmissionServiceBaseImpl;
 import org.json.simple.JSONArray;
@@ -94,6 +95,19 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 		return SubmissionLocalServiceUtil.createSubmission (parseJson);
 	}
 	
+	
+	//
+	public JSONObject startSubmission (JSONObject requestJson){
+		return SubmissionLocalServiceUtil.startSubmission(requestJson);
+	}
+	
+	
+	
+	//
+	public JSONObject transferResearchObjectInformationToDb(JSONObject requestJson){
+		JSONObject responseJson = SubmissionLocalServiceUtil.transferSubmissionInformationToDb(requestJson);
+		return responseJson;
+	}
 	
 	//
 	public JSONArray updateSubmission (String requestJson){

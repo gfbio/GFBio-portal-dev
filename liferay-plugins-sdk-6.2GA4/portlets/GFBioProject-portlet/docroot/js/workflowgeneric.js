@@ -31,7 +31,7 @@ function buildCommonResearchObjectJson(projectJson){
 	var legalrequirements =[];
 	for (i =0; i<document.getElementsByName("legalrequirements").length;i++)
 		if (document.getElementsByName("legalrequirements")[i].checked)
-			legalrequirements.push(document.getElementsByName("legalrequirementids")[i].value);
+			legalrequirements.push(document.getElementsByName("legalrequirements")[i].value);
 		
 	
 	var category =[];
