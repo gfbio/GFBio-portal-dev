@@ -33,13 +33,12 @@ function handlePrincipalButton(event) {
     } else {
         $.each(inputs, function (index, value) {
             if ($(value).val().length < 3) {
-            	button.prop("disabled", true);
+                button.prop("disabled", true);
             } else {
-            	button.prop("disabled", false);
+                button.prop("disabled", false);
             }
         });
     }
-    
 }
 
 function removePrincipalInput(event) {
@@ -106,19 +105,6 @@ function checkboxRequirement(event) {
 	}
 }
 
-//function handleRequirement(event) {
-//	'use strict';
-//	
-//	var selection = $(event.target).val(),
-//		other = $("#requirementOther");
-//	if (selection === "other") {
-//		other.show("slow");
-//	} else {
-//		other.hide();
-//		other.val("");
-//	}
-//}
-
 function getPrincipal() {
     'use strict';
     
@@ -145,40 +131,43 @@ function handleFunding(event) {
     }
 }
 
-function handlePolicy(event) {
-    'use strict';
-    
-    var other = $("#policyOther"),
-        link = $("#policyLink");
-    if ($(event.target).is(':checked')) {
-        other.show("slow");
-        link.show("slow");
-    } else {
-        other.hide();
-        link.hide();
-        other.val("");
-        link.val("");
-    }
-}
-
-function policyNone(event) {
+function policies(event) {
 	'use strict';
 	
 	var other = $("#policyOther"),
-    link = $("#policyLink");
+        link = $("#policyLink"),
+        value = $(event.target).val();
 	
-	if ($(event.target).is(':checked')) {
-        other.hide();
-        link.hide();
-        other.val("");
-        link.val("");
-        
-        $("input[name='policies']:checked").each(function(e) {
-          	if (e.attr("id") != "pol-none") {
-          		e.prop("checked", false);
-          	}
-        });
-    }
+	if (value === "None") {
+		if ($(event.target).is(':checked')) {
+	        other.hide();
+	        link.hide();
+	        other.val("");
+	        link.val("");
+	        
+	        $("input[name='policies']:checked").each(function () {
+                if ($(this).attr("id") !== "pol-none") {
+                    $(this).prop("checked", false);
+                }
+            });
+	    }
+	} else {
+		if ($("#pol-none").is(":checked")) {
+			$("#pol-none").prop("checked", false);
+		}
+	}
+	
+	if (value === "Other") {
+		if ($(event.target).is(':checked')) {
+	        other.show("slow");
+	        link.show("slow");
+	    } else {
+	        other.hide();
+	        link.hide();
+	        other.val("");
+	        link.val("");
+	    }
+	}
 }
 
 function handleMetadataOther(event) {
@@ -196,8 +185,8 @@ function handleLicenses(event) {
 	'use strict';
 	
     var selection = $(event.target).val(),
-    	other = $("#licenseOther");
-    if (selection === "other") {
+        other = $("#licenseOther");
+    if (selection === "Other License") {
 		other.show("slow");
 	} else {
 	    other.hide();
@@ -214,7 +203,7 @@ function handleRestriction(event) {
 		why = $("#accessReason"),
 		div = $("#accessYes");
 	if (selection === "true") {
-		div.show();
+		div.show("slow");
 	} else {
 		div.hide();
 		howLong.val("");
@@ -234,40 +223,93 @@ function handleArchives(event) {
 	}
 }
 
+function getDataVolumeBySliderValue(number) {
+	'use strict';
+	
+	if (number === "0") {
+        return "Cannot estimate";
+    } else if (number === "10") {
+        return "&lt; 1GB";
+    } else if (number === "20") {
+        return "&lt; 10GB";
+    } else if (number === "30") {
+        return "&lt; 100GB";
+    } else if (number === "40") {
+        return "&gt; 100GB";
+    }
+}
+
 function showDataVolume(event) {
     'use strict';
     
-    var volume = $(event.target).val(), answer;
-    if (volume === "0") {
-        answer = "Cannot estimate";
-    } else if (volume === "10") {
-        answer = "&lt; 1GB";
-    } else if (volume === "20") {
-        answer = "&lt; 10GB";
-    } else if (volume === "30") {
-        answer = "&lt; 100GB";
-    } else if (volume === "40") {
-    	answer = "&gt; 100GB";
-    }
-    document.getElementById("volume").innerHTML = answer;
+    var volume = $(event.target).val(),
+        answer = getDataVolumeBySliderValue(volume);
+    $("#volume").html(answer);
 }
 
-function showNumberOfDatasets(event) {
+
+function getSliderValueByDataVolume(value) {
+	'use strict';
+	
+	if (value === "Cannot estimate") {
+        return "0";
+    } else if (value === "&lt; 1GB") {
+        return "10";
+    } else if (value === "&lt; 10GB") {
+        return "20";
+    } else if (value === "&lt; 100GB") {
+        return "30";
+    } else if (value === "&gt; 100GB") {
+        return "40";
+    }
+}
+
+function getDataSetBySliderValue(number) {
+	'use strict';
+	
+	if (number === "0") {
+        return "Cannot estimate";
+    } else if (number === "10") {
+        return "&lt; 10";
+    } else if (number === "20") {
+        return "&lt; 100";
+    } else if (number === "30") {
+        return "&lt; 1000";
+    } else if (number === "40") {
+        return "&gt; 1000";
+    }
+}
+
+function showNumberOfDataSets(event) {
     'use strict';
     
-    var number = $(event.target).val(), answer;
-    if (number === "0") {
-        answer = "Cannot estimate";
-    } else if (number === "10") {
-        answer = "&lt; 10";
-    } else if (number === "20") {
-        answer = "&lt; 100";
-    } else if (number === "30") {
-        answer = "&lt; 1000";
-    } else if (number === "40") {
-    	answer = "&gt; 1000";
+    var number = $(event.target).val(),
+        answer = getDataSetBySliderValue(number);
+    $("#datasets").html(answer);
+}
+
+function getSliderValueByDataSet(value) {
+	'use strict';
+	
+	if (value === "Cannot estimate") {
+        return "0";
+    } else if (value === "&lt; 10") {
+        return "10";
+    } else if (value === "&lt; 100") {
+        return "20";
+    } else if (value === "&lt; 1000") {
+        return "30";
+    } else if (value === "&gt; 1000") {
+        return "40";
     }
-    document.getElementById("datasets").innerHTML = answer;
+}
+
+function resetInput(j) {
+	'use strict';
+	
+	$('[name="' + j + '"]').each(function () {
+		this.checked = false;
+	});
 }
 
 function handlePhysical(event) {
@@ -290,10 +332,10 @@ function handleAlive(event) {
 	'use strict';
 	
 	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
-        $("#taxon").removeClass("disabledDiv");
+		$("#taxon").addClass("disabledDiv");
+        resetInput("taxon");
     } else {
-    	$("#taxon").addClass("disabledDiv");
-    	resetInput("taxon");
+        $("#taxon").removeClass("disabledDiv");
     }
 }
 
@@ -306,10 +348,511 @@ function hide(j) {
     });
 }
 
-function resetInput(j) {
+function isEmpty(str) {
 	'use strict';
 	
-	$('[name="' + j + '"]').each(function () {
-		this.checked = false;
-	});
+	return (!str || 0 === str.length);
+}
+
+function getInputAsJson() {
+	'use strict';
+	
+    // 01 General Information
+	var projectName = $("#name").val(),
+        category = $("#category").find(":selected").text(),
+        reproducible = $("input[name='nature']:checked").val(),
+        projectTypes = [],
+        projectAbstract = $("#abstract").val(),
+        investigators = [],
+        responsibleName = $("#responsibleName").val(),
+        phoneNumber = $("#phone").val(),
+        email = $("#email").val(),
+        funding = $("#funding").val(),
+        fundingLink = $("#fundingLink").val(),
+        policies = [],
+        policyLink = "",
+        // 02 Data Collection
+        physical = $("input[name='physical']:checked").val(),
+        alive = $("input[name='alive']:checked").val(),
+        taxon = $("input[name='taxon']:checked").val(),
+        sequenced = $("input[name='sequenced']:checked").val(),
+        dataformats = [],
+        documentated = $("input[name='documentated']:checked").val(),
+        dataVolume = getDataVolumeBySliderValue($("#volumeSlider").val()),
+        dataSet = getDataSetBySliderValue($("#datasetSlider").val()),
+        methodologies = $("#methodologies").val(),
+        // 03 Metadata
+        metadata = [],
+        metadataDesc = "",
+        // 04 Ethics
+        requirements = [],
+        license = $("#licenses").val(),
+        accessRestriction = $("input[name='restriction']:checked").val(),
+        accessDuration = "",
+        accessReason = "",
+        // 05 Preservation
+        dataArchives = [],
+        pid = $("input[name='pid']:checked").val(),
+        // 06 GFBio Services
+        services = [];
+    
+    // 01 General Information
+	if (category === "Select") {
+        category = "";
+    }
+    
+	$("input[name='types']:checked").each(function () {
+        projectTypes.push($(this).siblings('span').text());
+    });
+    
+	if ($.inArray("Other", projectTypes) > -1) {
+		projectTypes.splice($.inArray("Other", projectTypes), 1);
+		projectTypes.push($("#typesOther").val());
+	}
+	
+	$("input[name='investigator']").each(function () {
+		investigators.push($(this).val());
+    });
+	
+
+	if (funding === "other") {
+		funding = $("#fundingOther").val();
+	}
+	
+	$("input[name='policies']:checked").each(function () {
+        policies.push($(this).siblings('span').text());
+    });
+	
+	if ($.inArray("Other", policies) > -1) {
+		policies.splice($.inArray("Other", policies), 1);
+		policies.push($("#policyOther").val());
+		policyLink = $("#policyLink").val();
+	}
+	
+	// 02 Data Collection
+	$("input[name='dataformat']:checked").each(function () {
+		dataformats.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other", dataformats) > -1) {
+		dataformats.splice($.inArray("Other", dataformats), 1);
+		dataformats.push($("#dataformatOther").val());
+	}
+	
+	// 03 Metadata
+	$("input[name='metadata']:checked").each(function () {
+		metadata.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other metadata schema or version", metadata) > -1) {
+		metadataDesc = $("#metadataDesc").val();
+	}
+
+	// 04 Ethics
+	$("input[name='requirements']:checked").each(function () {
+		requirements.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other", requirements) > -1) {
+		requirements.splice($.inArray("Other", requirements), 1);
+		requirements.push($("#requirementOther").val());
+	}
+	
+	if (license === "Other License") {
+		license = $("#licenseOther").val();
+	}
+
+	if (accessRestriction) {
+		accessDuration = $("#accessDuration").val();
+		accessReason = $("#accessReason").val();
+	}
+	
+	// 05 Preservation
+	$("input[name='archives']:checked").each(function () {
+		dataArchives.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other", dataArchives) > -1) {
+		dataArchives.splice($.inArray("Other", dataArchives), 1);
+		dataArchives.push($("#archiveOther").val());
+	}
+	
+	// 06 GFBio Services
+	$("input[name='services']:checked").each(function () {
+		services.push($(this).siblings('span').text());
+    });
+	
+	// Create jsonObject
+	var dmptInput = {
+			// 01 General Information
+			"projectName" : projectName,
+			"category" : category,
+			"reproducible" : reproducible,
+			"projectTypes": [],
+			"projectAbstract" : projectAbstract,
+			"investigators" : [],
+			"responsibleName" : responsibleName,
+			"phoneNumber" : phoneNumber,
+			"email" : email,
+			"funding" : {
+				"name" : funding
+			},
+			"fundingLink" : fundingLink,
+			"policies" : [],
+			"policyLink" : policyLink,
+			// 02 Data Collection
+			"physical" : physical,
+			"alive" : alive,
+			"taxon" : taxon,
+			"sequenced" : sequenced,
+			"dataformats" : [],
+			"openlyDocumentated" : documentated,
+			"dataVolume" : dataVolume,
+			"dataSets" : dataSet,
+			"methodologies" : methodologies,
+			// 03 Metadata
+			"metadata" : [],
+			"metadataDescription" : metadataDesc,
+			// 04 Ethics
+			"requirements" : [],
+			"license" : {
+				"name" : license
+			},
+			"accessRestriction" : accessRestriction,
+			"accessDuration" : accessDuration,
+			"accessReason" : accessReason,
+			// 05 Preservation
+			"dataArchives" : [],
+			"pid" : pid,
+			// 06 GFbio Services
+			"gfbioServices" : []
+        };
+    
+	// Set Arrays
+	if (projectTypes) {
+		dmptInput.projectTypes = projectTypes;
+	}
+
+	if (investigators) {
+		dmptInput.investigators = investigators;
+	}
+		
+    if (policies) {
+        policies.map(function (value) {
+            dmptInput.policies.push({
+                "name" : value
+            });
+        });
+    }
+
+	if (dataformats) {
+		dmptInput.dataformats = dataformats;
+	}
+	
+	if (metadata) {
+		metadata.map(function (value) {
+			dmptInput.metadata.push({
+				"name" : value
+            });
+        });
+	}
+	
+	if (requirements) {
+		requirements.map(function (value) {
+			dmptInput.requirements.push({
+				"name" : value
+			});
+		});
+	}
+	
+	if (dataArchives) {
+		dmptInput.dataArchives = dataArchives;
+	}
+	
+	if (services) {
+		dmptInput.gfbioServices = services;
+	}
+	
+	console.log("Json:", dmptInput);
+	return JSON.stringify(dmptInput);
+}
+
+function addInvestigator(investigator) {
+    'use strict';
+
+	var newinput = $('<input/>', {
+        type: 'text',
+        name: 'investigator',
+        "class": 'inputtext',
+        placeholder: 'Principal Investigator'
+    });
+    
+    newinput.on("keyup focus", handlePrincipalButton);
+    newinput.on("focusout", removePrincipalInput);
+    newinput.val(investigator);
+    newinput.appendTo("#principal");
+}
+
+function initializeInputs(dmptInput, id) {
+	'use strict';
+	
+	// 01 General Information
+	$("#dmpId").val(id);
+	$("#name").val(dmptInput.projectName);
+	if (!isEmpty(dmptInput.category)) {
+		$("#category").val(dmptInput.category);
+	}
+	
+	if (!isEmpty(dmptInput.reproducible)) {
+		$("input[name='nature'][value='" + dmptInput.reproducible + "']").prop("checked", true);
+	}
+	
+    var i;
+    
+	if (dmptInput.projectTypes) {
+		var projectTypes = dmptInput.projectTypes;
+		for (i = 0; i < projectTypes.length; i++) {
+			var found = false;
+			$("input[name='types']").each(function () {
+				if ($(this).val() === projectTypes[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				}
+			});
+			if (!found) {
+				$("input[name='types'][value='Other']").prop("checked", true);
+				$("#typesOther").val(projectTypes[i]);
+				$("#typesOther").show();
+			}
+			
+		}
+	}
+	
+	if (!isEmpty(dmptInput.projectAbstract)) {
+		$("#abstract").val(dmptInput.projectAbstract);
+	}
+	
+	if (dmptInput.investigators) {
+		var investigators = dmptInput.investigators;
+		$("input[name='investigator']").val(investigators[0]);
+		if (investigators.length > 1) {
+			for (i = 1; i < investigators.length; i++) {
+				addInvestigator(investigators[i]);
+			}
+		}
+	}
+	
+	if (!isEmpty(dmptInput.responsibleName)) {
+		$("#responsibleName").val(dmptInput.responsibleName);
+	}
+	
+	if (!isEmpty(dmptInput.phoneNumber)) {
+		$("#phone").val(dmptInput.phoneNumber);
+	}
+	
+	if (!isEmpty(dmptInput.email)) {
+		$("#email").val(dmptInput.email);
+	}
+	
+	if (dmptInput.funding) {
+		var found = false;
+		$("#funding option").each(function () {
+			if ($(this).val() === dmptInput.funding.name) {
+				$("#funding").val(dmptInput.funding.name);
+				found = true;
+			}
+	    });
+		if (!found) {
+			$("#funding").val("other");
+			$("#fundingOther").val(dmptInput.funding.name);
+			$("#fundingOther").show();
+		}
+		
+		if (dmptInput.funding.name !== "None" && dmptInput.funding.name !== "select") {
+			if (!isEmpty(dmptInput.fundingLink)) {
+				$("#fundingLink").val(dmptInput.fundingLink);
+				$("#fundingLink").show();
+			}
+		}
+	}
+	
+	if (dmptInput.policies) {
+		var policies = dmptInput.policies;
+		for (i = 0; i < policies.length; i++) {
+			var found = false;
+			$("input[name='policies']").each(function () {
+                if ($(this).siblings('span').text() === policies[i].name) {
+                    $(this).prop("checked", true);
+                    found = true;
+                }
+            });
+			if (!found) {
+				$("input[name='policies'][value='Other']").prop("checked", true);
+				if (!isEmpty(dmptInput.policyLink)) {
+					$("#policyLink").val(dmptInput.policyLink);
+					$("#policyLink").show();
+				}
+				if (!isEmpty(dmptInput.policyOther)) {
+					$("#policyOther").val(policies[i].name);
+					$("#policyOther").show();
+				}
+			}
+		}
+	}
+	
+	// 02 Data Collection
+	var physical = dmptInput.physical,
+		alive = dmptInput.alive,
+		taxon = dmptInput.taxon,
+		sequenced = dmptInput.sequenced;
+	if (physical !== null) {
+		$("input[name='physical'][value='" + dmptInput.physical + "']").prop("checked", true);
+	}
+	if (alive === "true" || alive === "false") {
+		$("input[name='alive'][value='" + dmptInput.alive + "']").prop("checked", true);
+		$("#alive").removeClass("disabledDiv");
+	}
+	if (taxon === "true" || taxon === "false") {
+		$("input[name='taxon'][value='" + dmptInput.taxon + "']").prop("checked", true);
+		$("#taxon").removeClass("disabledDiv");
+	}
+	if (sequenced === "true" || sequenced === "false") {
+		$("input[name='sequenced'][value='" + dmptInput.sequenced + "']").prop("checked", true);
+		$("#sequenced").removeClass("disabledDiv");
+	}
+	
+	if (dmptInput.dataformats) {
+		var dataformats = dmptInput.dataformats;
+		for (i = 0; i < dataformats.length; i++) {
+			var found = false;
+			$("input[name='dataformat']").each(function () {
+				if ($(this).siblings('span').text() === dataformats[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				}
+			});
+			if (!found) {
+				$("input[name='dataformat'][value='Other']").prop("checked", true);
+				$("#dataformatOther").val(dataformats[i]);
+				$("#dataformatOther").show();
+			}
+		}
+	}
+	
+	if (!isEmpty(dmptInput.openlyDocumentated)) {
+		$("input[name='documentated'][value='" + dmptInput.openlyDocumentated + "']").prop("checked", true);
+	}
+		
+	if (!isEmpty(dmptInput.dataVolume)) {
+		$("#volumeSlider").val(getSliderValueByDataVolume(dmptInput.dataVolume));
+		$("#volume").html(dmptInput.dataVolume);
+	}
+		
+	if (!isEmpty(dmptInput.dataSets)) {
+		$("#datasetSlider").val(getSliderValueByDataSet(dmptInput.dataSets));
+		$("#datasets").html(dmptInput.dataSets);
+	}
+	
+	if (!isEmpty(dmptInput.methodologies)) {
+		$("#methodologies").val(dmptInput.methodologies);
+	}
+	
+	// 03 Metadata
+	if (dmptInput.metadata) {
+		var metadata = dmptInput.metadata;
+		for (i = 0; i < metadata.length; i++) {
+			$("input[name='metadata']").each(function () {
+                if ($(this).siblings('span').text() === metadata[i].name) {
+                    $(this).prop("checked", true);
+                }
+            });
+			if (metadata[i].name === "Other metadata schema or version") {
+				if (!isEmpty(dmptInput.metadataDescription)) {
+					$("#metadataDesc").val(dmptInput.metadataDescription);
+					$("#metadataDesc").show();
+				}
+			}
+		}
+	}
+
+	// 04 Ethics
+	if (dmptInput.requirements) {
+		var requirements = dmptInput.requirements;
+		for (i = 0; i < requirements.length; i++) {
+			var found = false;
+			$("input[name='requirements']").each(function () {
+                if ($(this).siblings('span').text() === requirements[i].name) {
+                    $(this).prop("checked", true);
+                    found = true;
+                }
+		    });
+			if (!found) {
+				$("input[name='requirements'][value='Other']").prop("checked", true);
+				$("#requirementOther").val(requirements[i].name);
+				$("#requirementOther").show();
+			}
+		}
+	}
+	
+	if (dmptInput.license) {
+		var found = false;
+		$("#licenses option").each(function () {
+			if ($(this).val() === dmptInput.license.name) {
+				$("#licenses").val(dmptInput.license.name);
+				found = true;
+			}
+	    });
+		if (!found) {
+			$("#licenses").val("Other License");
+			$("#licenseOther").val(dmptInput.license.name);
+			$("#licenseOther").show();
+		}
+	}
+	 
+	if (dmptInput.accessRestriction !== null) {
+		if (dmptInput.accessRestriction === "true") {
+			$("input[name='restriction'][value='true']").prop("checked", true);
+			if (dmptInput.accessDuration) {
+                $("#accessDuration").val(dmptInput.accessDuration);
+			}
+			if (dmptInput.accessReason) {
+				$("#accessReason").val(dmptInput.accessReason);
+			}
+			$("#accessYes").show();
+        } else {
+            $("input[name='restriction'][value='false']").prop("checked", true);
+        }
+	}
+	
+	// 05 Preservation
+	if (dmptInput.dataArchives) {
+		var dataArchives = dmptInput.dataArchives;
+		for (i = 0; i < dataArchives.length; i++) {
+			var found = false;
+			$("input[name='archives']").each(function () {
+				if ($(this).siblings('span').text() === dataArchives[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				}
+			});
+			if (!found) {
+				$("input[name='archives'][value='Other']").prop("checked", true);
+				$("#archiveOther").val(dataArchives[i]);
+				$("#archiveOther").show();
+			}
+		}
+	}
+	
+
+	if (dmptInput.pid !== null) {
+		$("input[name='pid'][value='" + dmptInput.pid + "']").prop("checked", true);
+	}
+		
+	// 06 GFBio Services
+	if (dmptInput.gfbioServices) {
+		var gfbioServices = dmptInput.gfbioServices;
+		for (i = 0; i < gfbioServices.length; i++) {
+			$("input[name='services']").each(function () {
+				if ($(this).siblings('span').text() === gfbioServices[i]) {
+					$(this).prop("checked", true);
+				}
+			});
+		}
+	}
 }

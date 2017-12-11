@@ -2,7 +2,6 @@ package org.gfbio.idmg.dmpt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -11,7 +10,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletResponse;
 
 import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GCategory;
@@ -22,10 +20,10 @@ import org.gfbio.idmg.util.ContentUtil;
 import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
 import org.gfbio.service.DataManagementPlanLocalServiceUtil;
-import org.gfbio.service.impl.DataManagementPlanLocalServiceImpl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -110,6 +108,8 @@ public class DMPTPortlet extends MVCPortlet {
 			saveDMP(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("loaddmp")) {
 			loadDMP(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("deletedmp")) {
+			deleteDMP(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -120,13 +120,22 @@ public class DMPTPortlet extends MVCPortlet {
 		String jsonInput = resourceRequest.getParameter("json");
 		_log.info("JSONString: " + jsonInput);
 
+		DMPTInput input = null;
 		String response = "";
 
 		try {
 			
+			Gson gson = new Gson();
+			input = gson.fromJson(jsonInput, DMPTInput.class);
+				
+			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			 			
 			// Set DMPTInput to PortletSession
 			PortletSession session = resourceRequest.getPortletSession();
-			session.setAttribute("dmptInput", jsonInput, PortletSession.PORTLET_SCOPE);
+		    session.setAttribute("dmptInput", input, PortletSession.APPLICATION_SCOPE);
+		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.APPLICATION_SCOPE);
+					    
+			response = "Parsing successful!";
 
 			response = "Parsing successful!";
 		} catch (JsonSyntaxException e) {
@@ -192,31 +201,42 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		PortletSession session = resourceRequest.getPortletSession();
 		String jsonInput = (String) session.getAttribute("dmptInput");
-		
-		Gson gson = new Gson();
-		DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
+		//Not neccessary to convert?
+		//Gson gson = new Gson();
+		//DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
+		//_log.info("Input: " + input.toString);
 		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
-		String response = "";
+		long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
+		String response = "The Data Managemant Plan could not been saved.";
 		
 		if (userId > -1 && !projectName.isEmpty()) {
-		
-			DataManagementPlanImpl plan = new DataManagementPlanImpl();
-			plan.setDmpTInput(gson.toJson(input));
-			plan.setUserID(userId);
-			plan.setName(projectName);
-			_log.info("Plan: " + plan);
+			DataManagementPlanImpl plan;
 			
 			try {
-				plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
-				response = "DMP saved in db with id " + plan.getDmpID() + ".";
-				_log.info("DMP saved in database!");
-			} catch (SystemException e) {
+				if (dmpId > 0) {
+					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.getDataManagementPlan(dmpId);
+				} else {
+					plan = new DataManagementPlanImpl();
+					plan.setUserID(userId);
+				}
+				plan.setDmpTInput(jsonInput);
+				plan.setName(projectName);
+				_log.info("Plan: " + plan);
+				
+				if (userId == plan.getUserID()) {
+					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
+					response = "The data managemant plan was saved successfully.";
+					_log.info("DMP saved in database with id " + plan.getDmpID() + "!");
+				} else {
+					_log.error("The userId of the dmp is different from the userId in the portletsession!");
+				}
+			} catch (SystemException | PortalException e) {
 				_log.error("Error while saving DMP in database!", e);
 			}
 		} else {
-			response = "DMP is not valid!";
+			_log.error("DMP is not valid!");
 		}
 		
 		resourceResponse.setContentType("text/html");
@@ -234,7 +254,7 @@ public class DMPTPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		
 		//Get id
-		Long dmpID = Long.parseLong(resourceRequest.getParameter("dmpID"));
+		Long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		List<DataManagementPlan> dmps = DataManagementPlanLocalServiceUtil.getdmpListByUserId(themeDisplay.getUserId());
@@ -242,13 +262,13 @@ public class DMPTPortlet extends MVCPortlet {
 		String dmptInput = "";
 		
 		for (DataManagementPlan d : dmps) {
-			if (d.getDmpID() == dmpID) {
+			if (d.getDmpID() == dmpId) {
 				dmptInput = d.getDmpTInput();
 			}
 		}
 		_log.info("DmptInput: " + dmptInput);
 		if (dmptInput.equals("")) {
-			_log.info("DMP not found for dmpID " + dmpID);
+			_log.info("DMP not found for dmpId " + dmpId);
 		}
 		
 		resourceResponse.setContentType("text/html");
@@ -259,6 +279,35 @@ public class DMPTPortlet extends MVCPortlet {
 		writer.flush();
 		writer.close();
 
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+	
+	private void deleteDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		
+		String response = "";
+		
+		//Get id
+		Long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
+		
+		// Delete Dmp by id
+		try {
+			DataManagementPlanLocalServiceUtil.deleteDataManagementPlan(dmpId);
+			response = "The data management plan was deleted successfully!";
+			_log.info("DMP with the id " + dmpId + "was deleted successfully!");
+		} catch (PortalException | SystemException e) {
+			response = "The data management plan could not been deleted!";
+			_log.error("DMP with the id " + dmpId + " could not been deleted!", e);
+		}
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+		
+		writer.println(response);
+		
+		writer.flush();
+		writer.close();
+		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 }

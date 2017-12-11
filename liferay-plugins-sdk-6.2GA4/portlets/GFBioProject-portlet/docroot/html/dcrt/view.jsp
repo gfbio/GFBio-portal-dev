@@ -1,10 +1,9 @@
 <%@ include file="/html/dcrt/init.jsp"%>
 
-<script src="<%=request.getContextPath()%>/js/dcrt/jquery-ui.min.js" type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/idmg/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"	type="text/javascript"></script>
 
-<link href="<%=request.getContextPath()%>/css/dcrt/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/idmg/jquery-ui.min.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dcrt/spinner.css" rel="stylesheet" type="text/css">
 

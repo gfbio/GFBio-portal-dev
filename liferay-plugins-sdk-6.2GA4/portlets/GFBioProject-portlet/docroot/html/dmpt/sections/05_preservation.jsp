@@ -58,23 +58,11 @@
                 </div>
                 <div>	
                     <label class="mod-cb">
-	                    <input id="archives-cb" name="archives" type="checkbox"/>
+	                    <input id="archives-cb" name="archives" type="checkbox" value="Other"/>
 	                    <span>Other</span>
                     </label>
                 </div>
             </div>
-        	
-            <!-- <select id="archives" name="sensitive" multiple="multiple" size="6">
-                <option value="gfbio" >GFBio Consortium</option>
-                <option value="dsmz" >DSMZ</option>
-                <option value="ena" >ENA</option>
-                <option value="mfn" >MfN</option>
-                <option value="pangaea" >PANGAEA</option>
-                <option value="smns" >SMNS</option>
-                <option value="snsb" >SNSB</option>
-                <option value="zfmk" >ZFMK</option>
-                <option value="other" >Other</option>
-            </select>  -->
             
             <div class="col-md-12">
              	<input id="archiveOther" name="archiveOther" type="text" class="inputtext_long" 
@@ -103,7 +91,7 @@
 	        </div>
 	        <div class="col-md-3">
 	        	<label class="mod-cb">
-	        		<input class="radio_input" name="pid" type="radio" value="Don't know yet" />
+	        		<input class="radio_input" name="pid" type="radio" value="Dont know yet" />
         			<span>Don't know yet</span>
         		</label>
 	        </div>

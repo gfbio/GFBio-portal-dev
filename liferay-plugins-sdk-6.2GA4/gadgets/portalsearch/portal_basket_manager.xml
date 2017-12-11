@@ -19,8 +19,9 @@
 				<title>GFBio Basket Manager</title>
 				<script src="//code.jquery.com/jquery-1.10.2.min.js"	type="text/javascript"></script>
 				<script src="//code.jquery.com/ui/1.10.2/jquery-ui.min.js"	type="text/javascript"></script>
+				<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 				<link rel="stylesheet"	href="//cdn.datatables.net/1.10.12/css/dataTables.jqueryui.min.css" />
-				<link rel="stylesheet"	href="//gfbio-db1.inf-bb.uni-jena.de/gfbioDev/search/css/basketmanager.css" />
+				<link rel="stylesheet"	href="//www-static.gfbio.org/gfbioDev/search/css/basketmanager.css" />
 				
 			</head>
 			<body style="margin: 0px;"> 
@@ -47,8 +48,11 @@
 						<option value="3000">3 years</option>
 					</select></label>
 					</p>
+					<p>
+						<div id="basketsList"></div>
+					</p>
 				</div>
-				 <div id="baskets">
+				 <div id="basketDetail">
 				</div>
 				 
 				<div id="deleteConfirmDialog" title="Delete Basket">
@@ -73,19 +77,35 @@
 						  },
 						  function(obj) {
 							var i = 0;
-							var userSelect = document.getElementById('userSelect');
+							var userSelect = $('#userSelect');
+							if (currentUID != 10161){
 							for(var key in obj){
+								console.log(obj[key]);
 								var option = document.createElement("option");
-								option.value = key;
-								option.text = obj[key];
-								userSelect.add(option);
+
+								userSelect.append(
+									$('<option>', {
+										value: key,
+										text: obj[key]
+									})
+								);
 								if (key == currentUID) {
 									console.log(key);
-									userSelect.value = key;
+									$('#userSelect option[value='+key+']').prop('selected', true);
 									getBaskets();
 								}
 								i++;
+							}}
+							
+							if (i==0){
+								userSelect.prop("disabled", true);
+								$('#periodSelect').prop("disabled", true);
+								$('#basketDetail').html('');
+								$('#deleteConfirmDialog').hide();
+							}else{
+								userSelect.prop("disabled", false);
 							}
+							/*
 							if (i==0){
 								// the current user has no right to see other users
 								var option = document.createElement("option");
@@ -97,117 +117,148 @@
 								getBaskets();
 							}else{
 								userSelect.disabled = false;
-							}
+							}*/
 						  }
 						);
 					}
 					
 					function getBaskets(){
-						var uID = document.getElementById('userSelect').value;
-						var period = document.getElementById('periodSelect').value;
+						var uID = $('#userSelect').val();
+						var period = $('#periodSelect').val();
 						// TODO: update the return value to JSON
 						parent.Liferay.Service(
 						'/GFBioProject-portlet.basket/get-baskets-by-user-and-period',
 						  {
 							userId: uID,
-							period: period
+							period: period,
+							isMinimal: true,
+							from:0,
+							count:0
 						  },
 						  function(obj) { // return obj is JSONArray
-							var basketsHTML = "";
-							for(var key in obj){
-								//console.log(obj[key]);
-								var basket = obj[key];
-								basketsHTML += writeBasketsHTML(basket);
-							}
-							var isAccordion = $("#baskets").hasClass("ui-accordion");
-							if (isAccordion) $( "#baskets" ).accordion("destroy");
-							document.getElementById('baskets').innerHTML = basketsHTML;
-							var icons = {
-							  header: "ui-icon-circle-arrow-e",
-							  activeHeader: "ui-icon-circle-arrow-s"
-							};
-							$( "#baskets" ).accordion({
-							    icons: icons,
-							    collapsible: true,
-								activate: function(event, ui) {
-									adjust();
-								},
-								create( event, ui ){
-									adjust();
-								}
-							});    
-							$( "#toggle" ).button().click(function() {
-							  if ( $( "#baskets" ).accordion( "option", "icons" ) ) {
-								$( "#baskets" ).accordion( "option", "icons", null );
-							  } else {
-								$( "#baskets" ).accordion( "option", "icons", icons );
-							  }
-							});
-							$('#baskets .action-button').hover(
-								function() {
-									$(this).addClass('ui-state-hover');
-								},
-								function() {
-									$(this).removeClass('ui-state-hover');
-								}
-							);
-							
-							$('#baskets .action-button a').click(function () {
-								var evt = $(this).attr("href");
-								if (evt.indexOf('delete')==0){
-									var bID = evt.substring(7);
-									document.getElementById('selectedBasketID').value = bID;
-									$( "#deleteConfirmDialog" ).dialog( "open" );
-								}
-								else if (evt.indexOf('save')==0){
-									var bID = evt.substring(5);
-									document.getElementById('selectedBasketID').value = bID;
-									var basketName = document.getElementById(bID+'.name').value;
-									var bJSON = document.getElementById(bID+'.basketContent').value;
-									var qJSON = document.getElementById(bID+'.queryJSON').value;
-									parent.Liferay.Service(
-									  '/GFBioProject-portlet.basket/update-basket',
-									  {
-										basketID: bID,
-										userID: uID,
-										name: basketName,
-										basketContent: JSON.stringify(JSON.parse(bJSON)),
-										queryJSON: JSON.stringify(JSON.parse(qJSON))
-									  },
-									  function(obj){
-										console.log(obj);
-										getBaskets();
-									  }
+							var basketsList = "";
+							if (obj != null){
+								var baskets = obj.results;
+								
+								basketsList += '<label for="basketSelect">Choose Basket:';
+								basketsList += '<select name="basketSelect" id="basketSelect" >';
+								basketsList += '</select></label>';
+								$('#basketsList').html(basketsList);
+								for(var key in baskets){
+									//console.log(obj[key]);
+									var basket = baskets[key];
+									$('#basketSelect').append(
+										$('<option>', {
+											value: basket.basketID,
+											text: basket.name+' : '+basket.basketID
+										})
 									);
 								}
-								else if (evt.indexOf('load')==0){
-									var bID = evt.substring(5);
-									var bJSON = document.getElementById(bID+'.basketContent').value;
-									var qJSON = document.getElementById(bID+'.queryJSON').value;
-									var jsonData = {};
-									jsonData.basketID = bID;
-									jsonData.basketContent = bJSON;
-									jsonData.query = qJSON;
-									if (gadgets.Hub.isConnected()){
-										gadgets.Hub.publish('gfbio.search.basketData', jsonData);
+								
+								getBasketDetail($('#basketSelect')[0].value);
+								
+								$('#basketSelect').change(function() {
+									getBasketDetail(this.value);
+								});
+								
+								$('#baskets .action-button').hover(
+									function() {
+										$(this).addClass('ui-state-hover');
+									},
+									function() {
+										$(this).removeClass('ui-state-hover');
 									}
-								}
-								return false;
-							});
+								);
+							}
 						  }
 						);
-						adjust();
 					}
 					
-					function writeBasketsHTML(basket){
+					function deleteBasket(bID){
+						$('#selectedBasketID').val(bID);
+						$( "#deleteConfirmDialog" ).dialog( "open" );
+					}
+					function saveBasket(bID,uID){
+						var basketName = $('#basketName').val();
+						var bJSON = $('#basketContent').val();
+						var qJSON = $('#queryJSON').val();
+						var keyword = $('#queryKeyword').val();
+						var qFilter = $('#queryFilter').val();
+						console.log('**************************************');
+						console.log(bID);
+						console.log(uID);
+						console.log(basketName);
+						console.log('**************************************');
+						parent.Liferay.Service(
+						  '/GFBioProject-portlet.basket/update-basket',
+						  {
+							basketID: bID,
+							userID: uID,
+							name: basketName,
+							basketContent: bJSON,
+							queryJSON: qJSON,
+							queryKeyword:keyword,
+							queryFilter:qFilter
+						  },
+						  function(obj){
+							getBaskets();
+						  }
+						);
+					}
+					function loadBasket(bID){
+						console.log('**************************************');
+						console.log(bID);
+						console.log('**************************************');
+						var bJSON = $('#basketContent').val();
+						var qJSON = $('#queryJSON').val();
+						var keyword = $('#queryKeyword').val();
+						var qFilter = $('#queryFilter').val();
+						var jsonData = {};
+						jsonData.basketID = bID;
+						jsonData.basketContent = bJSON;
+						jsonData.query = qJSON;
+						jsonData.queryKeyword = keyword;
+						jsonData.queryFilter = qFilter;
+						if (gadgets.Hub.isConnected()){
+							gadgets.Hub.publish('gfbio.search.basketData', jsonData);
+						}
+					}
+									
+					function getBasketDetail(basketID){
+							console.log(basketID);
+						parent.Liferay.Service(
+						  '/GFBioProject-portlet.basket/get-basket-by-id',
+						  {
+							basketId: basketID,
+							isMinimal: false
+						  },
+						  function(obj) {
+							if (obj != null){
+								console.log(obj);
+								var basketHTML = writeBasketHTML(obj);
+								$('#basketDetail').html(basketHTML);
+								adjust();
+							}
+						  }
+						);
+					}
+					
+					function writeBasketHTML(basket){
+						console.log('-------------------------------------');
+						console.log('writeBasketsHTML');
+						console.log(basket);
+						console.log('-------------------------------------');
 						// create header of row containing: name/id/delete/save/load buttons
-						var basketsHTML = "<h3>"+basket.name+" : "+basket.basketID+
-											"<p style='float: right;margin-top: 0px;margin-bottom: 0px;'><span class='action-button' title='Delete basket'><a href='delete:"+
-											basket.basketID+"' class='ui-icon 	ui-icon-closethick'>Delete</a></span>"+
-											"<span class='action-button' title='Save change'><a href='save:"+
-											basket.basketID+"' class='ui-icon 	ui-icon-disk'>Save</a></span>"+
-											"<span class='action-button' title='Load basket'><a href='load:"+
-											basket.basketID+"' class='ui-icon ui-icon-circle-check'>Load</a></span></p>"+"</h3>";
+						var basketID = basket.basketID;
+						var basketsHTML = "<h3>"+basket.name+" : "+basketID+
+											"<p style='float: right;margin-top: 0px;margin-bottom: 0px;'>"+
+											"<span class='action-button' title='Delete basket'>"+
+											"<a href='#' onClick='deleteBasket("+
+											basketID+");' class='ui-icon ui-icon-closethick'></a></span>"+
+											"<span class='action-button' title='Save change'><a href='#' onClick='saveBasket("+
+											basketID+","+basket.userID+");' class='ui-icon ui-icon-disk'></a></span>"+
+											"<span class='action-button' title='Load basket'><a href='#' onClick='loadBasket("+
+											basketID+");' class='ui-icon ui-icon-circle-check'></a></span></p>"+"</h3>";
 											
 						basketsHTML += "<div><table>";
 						
@@ -221,28 +272,38 @@
 						basketsHTML += "</td></tr>";
 						
 						basketsHTML += "<tr><td width='10%'>Name:</td><td>"+
-								"<input id='"+basket.basketID+".name' type='text' "+
+								"<input id='basketName' type='text' "+
 								"style='width:100%' value='"+basket.name+"'/>";
 						basketsHTML += "</td></tr>";
 						
-						console.log('writeBasketsHTML');
-						console.log(basket);
+						basketsHTML += "<tr><td width='10%'>Query text:</td><td>"+
+								"<input id='queryKeyword' type='text' "+
+								"style='width:100%' value='"+basket.queryKeyword+"'/>";
+						basketsHTML += "</td></tr>";
+						
 						var basketObj = basket.basketContent;
 						basketsHTML += "<tr><td width='10%'>JSON:</td><td></td></tr>"+
 										"<tr><td colspan='2'>"+
-										"<textarea id='"+basket.basketID+".basketContent' "+
-										"style='width:100%' rows='6'>"+
+										"<textarea id='basketContent' "+
+										"style='width:100%' rows='8'>"+
 										JSON.stringify(basketObj,null,4)+"</textarea>";
 						basketsHTML += "</td></tr>";
 						
 						var queryObj = basket.queryJSON;
 						basketsHTML += "<tr><td width='10%'>Query:</td><td></td></tr>"+
 										"<tr><td colspan='2'>"+
-										"<textarea id='"+basket.basketID+".queryJSON' "+
-										"style='width:100%' rows='6'>"+
+										"<textarea id='queryJSON' "+
+										"style='width:100%' rows='8'>"+
 										JSON.stringify(queryObj,null,4)+"</textarea>";
 						basketsHTML += "</td></tr>";
 						
+						var queryFilter = basket.queryFilter;
+						basketsHTML += "<tr><td width='10%'>Filter:</td><td></td></tr>"+
+										"<tr><td colspan='2'>"+
+										"<textarea id='queryFilter' "+
+										"style='width:100%' rows='8'>"+
+										JSON.stringify(queryFilter,null,4)+"</textarea>";
+						basketsHTML += "</td></tr>";
 						//basketsHTML += "<tr><td width='10%'>User ID:</td><td>"+basket.userID;
 						//basketsHTML += "</td></tr>";
 						
@@ -258,9 +319,11 @@
 						  modal: true,
 						  buttons: {
 							"Delete basket": function() {
-								var uID = parent.Liferay.ThemeDisplay.getUserId();
+								//var uID = parent.Liferay.ThemeDisplay.getUserId();
 								var bID = document.getElementById('selectedBasketID').value;
+								console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
 								console.log(bID);
+								console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
 								parent.Liferay.Service(
 								  '/GFBioProject-portlet.basket/remove-basket',
 								  {
@@ -282,7 +345,7 @@
 					
 					function adjust() {
 					   //console.log('auto adjust height');
-					   var height = $('#input').height()+$('#baskets').height()+50;
+					   var height = $('#input').height()+$('#basketDetail').height()+50;
 					   var width = $('#baskets').width();
 					   if (height < 350){ 
 							height = 350;

@@ -4,9 +4,9 @@
 <section>
 	<div id="dmppreview" style="display: none;">
 		<h2>Do you want to load an existing Data Management Plan?</h2>
-		<div class="col-sm-12" style="margin-top: 10px;">
-			<div class="col-sm-5">
-				<select id="dmps" name="dmps" style="width: 100% !important">
+		<div class="col-xs-12" style="margin-top: 10px;">
+			<div class="col-md-6 col-sm-5 col-xs-10" style="margin-top: 5px;">
+				<select id="dmps" name="dmps" style="width: 100% !important; height: 29px;">
 					<c:forEach var="dmp" items="${dmpsforuser}">
 						<option label="<c:out value="${dmp.name}" />"
 									value="<c:out value="${dmp.dmpID}"/>"><c:out
@@ -14,18 +14,22 @@
 					</c:forEach>
 				</select>
 			</div>
-			<div class="col-sm-1">
-	           	<input id="delete" style="width: 100% !important" type="button" value="Del"/>
+			<div class="col-md-1 col-sm-2 col-xs-2" style="margin-top: 5px;">
+	           	<input id="delete" style="width: 100% !important; min-height: 29px;" type="button" class="icon-landing-flex icon-bin" value="&#xee44"/>
 	        </div>
-			<div class="col-sm-6">
+			<div class="col-md-5 col-sm-5 col-xs-12" style="margin-top: 5px;">
 	           	<input id="load" style="width: 100% !important" type="button" value="Load Data Management Plan"/>
 	        </div>
         </div>
-        <div class="col-sm-12" style="margin-top: 20px;">
-	        <div class="col-sm-12">
+        <div class="col-xs-12" style="margin-top: 20px;">
+	        <div class="col-xs-12">
 	           	<input id="start" class="startdmp" type="button" value="New Data Management Plan"/>
 	        </div>
         </div>
+	</div>
+	
+	<div id="dialog-delete" style="display: none;">
+		<div id="delete-answer" style="text-align: center;"></div>
 	</div>
 	
 	<div id="generalinformation">
@@ -35,13 +39,10 @@
 		<div class="row">
 			<h4>What's the official name of your research project?</h4>
 	        <div class="col-md-12">
-			   <input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
+	        	<input id="dmpId" type="hidden" value="0"/>
+				<input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
 			</div>
 		</div>
-		<!-- Following div with download button must be removed after development -->
-		<!-- <div>
-			<input id="downloadDMPtest" type="button" value="Download" />
-		</div> -->
 		<div class="row">
 			<h4>Please select a category</h4>
 			<div class="col-md-12">
@@ -242,7 +243,7 @@
 	                </div>
 	                <div>
 	                  	<label class="mod-cb">
-		                  	<input id="pol-cb" name="policies" type="checkbox"/>
+		                  	<input id="pol-other" name="policies" type="checkbox" value="Other"/>
 		                  	<span>Other</span>
 	                  	</label>
 	                </div>
@@ -250,7 +251,7 @@
 	            <div class="col-md-12">
 	            	<div>	
 	                	<label class="mod-cb">
-			               	<input id="pol-none" name="policies" type="checkbox"/>
+			               	<input id="pol-none" name="policies" type="checkbox" value="None"/>
 			               	<span>None</span>
 	                	</label>
 	                </div>

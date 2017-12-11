@@ -19,7 +19,6 @@ public class DMPTInput implements Serializable {
 	private String email;
 	private GFunding funding;
 	private String fundingLink;
-	private String fundingOther;
 	private List<GPolicy> policies; //Kommt aus DB
 	private String policyLink;
 	private String policyOther;
@@ -27,7 +26,7 @@ public class DMPTInput implements Serializable {
 	// Data Collection
 	private Boolean physical;
 	private Boolean alive;
-	private Boolean taxonBased;
+	private Boolean taxon;
 	private Boolean sequenced;
 	private List<String> dataformats;
 	private boolean openlyDocumented;
@@ -59,8 +58,8 @@ public class DMPTInput implements Serializable {
 
 	public DMPTInput(String projectName, String category, String reproducible, List<String> projectTypes,
 			String projectAbstract, List<String> investigators, String responsibleName, String phoneNumber,
-			String email, GFunding funding, String fundingLink, String fundingOther, List<GPolicy> policies,
-			String policyLink, String policyOther, Boolean physical, Boolean alive, Boolean taxonBased,
+			String email, GFunding funding, String fundingLink, List<GPolicy> policies,
+			String policyLink, String policyOther, Boolean physical, Boolean alive, Boolean taxon,
 			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String dataSets,
 			String methodologies, List<GMetadata> metadata, String metadataDescription, GLegalRequirement requirement,
 			GLicense license, boolean accessRestriction, String accessDuration, String accessReason,
@@ -77,13 +76,12 @@ public class DMPTInput implements Serializable {
 		this.email = email;
 		this.funding = funding;
 		this.fundingLink = fundingLink;
-		this.fundingOther = fundingOther;
 		this.policies = policies;
 		this.policyLink = policyLink;
 		this.policyOther = policyOther;
 		this.physical = physical;
 		this.alive = alive;
-		this.taxonBased = taxonBased;
+		this.taxon = taxon;
 		this.sequenced = sequenced;
 		this.dataformats = dataformats;
 		this.openlyDocumented = openlyDocumented;
@@ -199,12 +197,12 @@ public class DMPTInput implements Serializable {
 		this.alive = alive;
 	}
 
-	public Boolean getTaxonBased() {
-		return taxonBased;
+	public Boolean getTaxon() {
+		return taxon;
 	}
 
-	public void setTaxonBased(Boolean taxonBased) {
-		this.taxonBased = taxonBased;
+	public void setTaxon(Boolean taxon) {
+		this.taxon = taxon;
 	}
 
 	public Boolean getSequenced() {
@@ -359,14 +357,6 @@ public class DMPTInput implements Serializable {
 		this.fundingLink = fundingLink;
 	}
 
-	public String getFundingOther() {
-		return fundingOther;
-	}
-
-	public void setFundingOther(String fundingOther) {
-		this.fundingOther = fundingOther;
-	}
-
 	public String getPolicyLink() {
 		return policyLink;
 	}
@@ -388,16 +378,15 @@ public class DMPTInput implements Serializable {
 		return "DMPTInput [projectName=" + projectName + ", category=" + category + ", reproducible=" + reproducible
 				+ ", projectTypes=" + projectTypes + ", projectAbstract=" + projectAbstract + ", investigators="
 				+ investigators + ", responsibleName=" + responsibleName + ", phoneNumber=" + phoneNumber + ", email="
-				+ email + ", funding=" + funding + ", fundingLink=" + fundingLink + ", fundingOther=" + fundingOther
-				+ ", policies=" + policies + ", policyLink=" + policyLink + ", policyOther=" + policyOther
-				+ ", physical=" + physical + ", alive=" + alive + ", taxonBased=" + taxonBased + ", sequenced="
-				+ sequenced + ", dataformats=" + dataformats + ", openlyDocumented=" + openlyDocumented
-				+ ", dataVolume=" + dataVolume + ", dataSets=" + dataSets + ", methodologies=" + methodologies
-				+ ", metadata=" + metadata + ", metadataDescription=" + metadataDescription + ", requirement="
-				+ requirement + ", license=" + license + ", accessRestriction=" + accessRestriction
-				+ ", accessDuration=" + accessDuration + ", accessReason=" + accessReason + ", dataArchives="
-				+ dataArchives + ", pid=" + pid + ", estimatingHelp=" + estimatingHelp + ", gfbioServices="
-				+ gfbioServices + "]";
+				+ email + ", funding=" + funding + ", fundingLink=" + fundingLink + ", policies=" + policies
+				+ ", policyLink=" + policyLink + ", policyOther=" + policyOther + ", physical=" + physical + ", alive="
+				+ alive + ", taxon=" + taxon + ", sequenced=" + sequenced + ", dataformats=" + dataformats
+				+ ", openlyDocumented=" + openlyDocumented + ", dataVolume=" + dataVolume + ", dataSets=" + dataSets
+				+ ", methodologies=" + methodologies + ", metadata=" + metadata + ", metadataDescription="
+				+ metadataDescription + ", requirement=" + requirement + ", license=" + license + ", accessRestriction="
+				+ accessRestriction + ", accessDuration=" + accessDuration + ", accessReason=" + accessReason
+				+ ", dataArchives=" + dataArchives + ", pid=" + pid + ", estimatingHelp=" + estimatingHelp
+				+ ", gfbioServices=" + gfbioServices + "]";
 	}
 
 }

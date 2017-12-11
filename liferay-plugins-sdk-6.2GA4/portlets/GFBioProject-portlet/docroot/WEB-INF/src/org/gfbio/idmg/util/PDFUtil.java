@@ -65,15 +65,18 @@ public class PDFUtil {
 	private static void setDocumentContent(PDDocument pdf, PDPage page, DMPTInput userInput, String themePath) throws IOException {
 
 		PDPageContentStream content = new PDPageContentStream(pdf, page);
+		_log.info(themePath + "/gfbiologo-transparent_122_60.png");
 		
 		// Get GFBio Logo and print it to pdf document
 		try {
 			URL url = new URL(themePath + "/gfbiologo-transparent_122_60.png");
 			BufferedImage awtImage = ImageIO.read(url);
-			PDImageXObject  pdImage = LosslessFactory.createFromImage(pdf, awtImage);
-			content.drawImage(pdImage, 450, 710, 122, 60);
+			if (awtImage != null) { 
+				PDImageXObject  pdImage = LosslessFactory.createFromImage(pdf, awtImage);
+				content.drawImage(pdImage, 450, 710, 122, 60);
+			}
 		} catch (IOException e) {
-			_log.error("GFBio Logo couldn't be found!");
+			_log.error("GFBio Logo couldn't be found!", e);
 		}
 		// Begin the Content stream
 		content.beginText();

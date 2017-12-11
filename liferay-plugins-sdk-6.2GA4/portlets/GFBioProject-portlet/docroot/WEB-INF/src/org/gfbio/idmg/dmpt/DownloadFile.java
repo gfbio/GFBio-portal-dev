@@ -17,6 +17,8 @@ import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GFunding;
 import org.gfbio.idmg.util.PDFUtil;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -31,9 +33,7 @@ public class DownloadFile extends HttpServlet {
 			throws IOException, ServletException {
 
 		String fName = request.getParameter("fileName"); // getting file name from request parameter
-		if (fName == null || fName.isEmpty()) {
-			fName = "data_management_plan.pdf";
-		}
+		_log.info("fileName from request dmp" + fName);
 
 		response.setContentType("application/pdf");
 		response.setHeader("Cache-Control", "max-age=3600, must-revalidate");
@@ -48,26 +48,6 @@ public class DownloadFile extends HttpServlet {
 		
 		if (input != null) {
 			_log.info(input.toString());
-		} else {
-			// Can be removed after development phase
-			input = new DMPTInput();
-			input.setProjectName("Test Project");
-			input.setCategory("Category2");
-			input.setReproducible("snapshot");
-			List<String> types = new ArrayList<>();
-			types.add("Field Work");
-			types.add("Observable");
-			input.setProjectTypes(types);
-			List<String> inv = new ArrayList<>();
-			inv.add("Paul");
-			inv.add("Johann");
-			input.setInvestigators(inv);
-			input.setProjectAbstract("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.");
-			input.setResponsibleName("Herbert Schwachkoviak");
-			input.setPhoneNumber("0800 666666");
-			input.setEmail("h.sch@web.de");
-			input.setFunding(new GFunding(1, "Fndingtst", "TestLabFund", "2340"));
-			
 		}
 		
 		if (themePath == null || themePath.isEmpty()) {
@@ -76,16 +56,13 @@ public class DownloadFile extends HttpServlet {
 		
 		try {
 			pdf = PDFUtil.createPDF(fName, input, themePath);
-			
 			byteStream = new ByteArrayOutputStream();
 			pdf.save(byteStream);
 			
 			output = new BufferedOutputStream(response.getOutputStream());
 			IOUtils.write(byteStream.toByteArray(), output);
 		} catch (Exception e) {
-			_log.error("Error while creating or streaming PDF document!");
-			e.printStackTrace();
-
+			_log.error("Error while creating or streaming PDF document!", e);
 		} finally {
 			if (output != null)	output.close();
 			if (byteStream != null) byteStream.close();
