@@ -57,13 +57,15 @@ public class DMPTPortlet extends MVCPortlet {
 		// renderRequest.setAttribute("fundings", fundings);
 		// renderRequest.setAttribute("policies", policies);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		// Portal URL
+		String portalURL = themeDisplay.getPortalURL();
+		
 		// Setting email and username if user is logged in
 		String username = "";
 		String email = "";
 		List<Phone> phones = null;
 		List<DataManagementPlan> dmps = null;
-		
-		ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		if (themeDisplay.isSignedIn()) {
 			username = themeDisplay.getUser().getFullName();
 			email = themeDisplay.getUser().getEmailAddress();
@@ -77,6 +79,8 @@ public class DMPTPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute("username", username);
 		renderRequest.setAttribute("email", email);
+		renderRequest.setAttribute("portalurl", portalURL);
+		
 		if (dmps != null && !dmps.isEmpty()) {
 			renderRequest.setAttribute("dmpsforuser", dmps);
 			renderRequest.setAttribute("hasDmps", "true");
@@ -92,7 +96,9 @@ public class DMPTPortlet extends MVCPortlet {
 		// Setting context path for downloading pdf 
 		String contextPath = renderResponse.encodeURL(renderRequest.getContextPath());
 		renderRequest.setAttribute("contextPath", contextPath);
-
+		
+		
+				
 		super.render(renderRequest, renderResponse);
 	}
 

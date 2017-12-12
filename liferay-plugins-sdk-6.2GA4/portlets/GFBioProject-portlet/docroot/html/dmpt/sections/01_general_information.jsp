@@ -37,6 +37,11 @@
 			<h2>1. General Project Information</h2>
 		</div>
 		<div class="row">
+			<div class="col-md-12">
+				<div id="save-message" class="portlet-msg-alert col-md-12" style="display: none;">
+					Only logged in users can save their inputs at the end of the wizard. Please <a href="${portalurl}/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to enable the feature.
+				</div>
+			</div>
 			<h4>What's the official name of your research project?</h4>
 	        <div class="col-md-12">
 	        	<input id="dmpId" type="hidden" value="0"/>
