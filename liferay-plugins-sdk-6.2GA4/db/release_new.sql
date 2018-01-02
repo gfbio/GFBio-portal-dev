@@ -52,3 +52,12 @@ ALTER TABLE gfbio_researchobject ADD publications text;
 ALTER TABLE gfbio_researchobject ADD datacollectiontime text;
 ALTER TABLE gfbio_researchobject ADD embargo timestamp with time zone;
 
+
+  ------------------------------------------------------------------------------------------------
+-----------------------------------       license        -- 02.01.2018 --------------------
+-------------------------------------------------------------------------------------------------- 
+
+UPDATE gfbio_content SET  cellcontent='Creative Commons Attribution-NonCommercial'				WHERE cellcontent = 'Creative Commons Attribution-NonComercial';
+UPDATE gfbio_content SET  cellcontent='Creative Commons Attribution-NonCommercial-NoDerivs'		WHERE cellcontent = 'Creative Commons Attribution-NonComercial-NoDerivs';
+UPDATE gfbio_content SET  cellcontent='Creative Commons Attribution-NonCommercial-ShareAlike'	WHERE cellcontent = 'Creative Commons Attribution-NonComercial-ShareAlike';
+
