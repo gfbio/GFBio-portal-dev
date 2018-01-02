@@ -173,9 +173,11 @@ $(document).ready(function () {
 		    $("#saveDMP").on("click", saveDMPforUser);
 		    
 		    if(!Liferay.ThemeDisplay.isSignedIn()) {
-			    	$("#saveDMP").prop("disabled", true);
-			    	$("#saveDMP").prop("title", "You need to be logged in");
-			    	$("#saveDMP").addClass("wizarddisabled");
+		    	$("#save-message").show();
+		    	
+		    	$("#saveDMP").prop("disabled", true);
+				$("#saveDMP").prop("title", "You need to be logged in");
+			   	$("#saveDMP").addClass("wizarddisabled");
 		    }
 		    
 		    //Tooltips
