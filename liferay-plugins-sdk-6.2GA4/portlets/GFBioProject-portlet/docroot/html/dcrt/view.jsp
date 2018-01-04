@@ -465,9 +465,8 @@ function submissionRequest(btnId) {
 			</div>
 			<div id="categorySelection" class="swHide">
 				<div id="categorydiv" style="margin-left: 20px;">
-					<h4>Please select a category</h4>
-
-					<select id="category" name="category">
+					Please select a category
+					<select id="category" name="category" style="display: block;">
 						<option selected="selected" label="Select" value="default">Select</option>
 						<c:forEach var="field" items="${researchfields}">
 							<option label="<c:out value="${field.name}" />"
@@ -479,9 +478,8 @@ function submissionRequest(btnId) {
 			</div>
 			<div id="materialSelection" class="swHide">
 				<div id="materialdiv" style="margin-left: 20px;">
-					<h4>Which kind of material would you deliver?</h4>
-
-					<select id="material" name="material">
+					Which kind of material would you deliver?
+					<select id="material" name="material" style="display: block;">
 						<option selected="selected" label="Select" value="default">Select</option>
 						<c:forEach var="material" items="${materials}">
 							<option label="<c:out value="${material.name}" />"
@@ -520,6 +518,7 @@ function submissionRequest(btnId) {
 						style="text-align: center; padding-top: 8px;">
 						<button type="button" value="GFBioContact" name="contactButton"
 							class="dcrtbutton default">Contact</button>
+						<div style="display: inline-block; width: 89px; height: 10px;"></div>
 					</div>
 				</div>
 			</div>
