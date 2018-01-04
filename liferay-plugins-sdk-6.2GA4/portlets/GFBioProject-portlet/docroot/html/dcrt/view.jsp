@@ -89,6 +89,11 @@ $( document ).ready(function() {
     $("div#defaultResult").on('click', 'button[name=contactButton]', function () {
     	openConfirmDialog($(this));
     });
+
+    $("div#defaultResult").on('click', 'button[name=submissionButton]', function () {
+    	var link = "https://www.gfbio.org/data/submit/generic";
+    	window.open(link, '_self'); //open in the same window
+    });
     
     $("div#result").on('click', "button[name=submissionButton]", function(){
 		submissionRequest($(this));
@@ -501,8 +506,9 @@ function submissionRequest(btnId) {
 				style="text-align: left" class="swHide">
 				<h4 style="margin-bottom: 20px;">
 					Do you need support in selecting a suitable data center or do you
-					have further questions concerning data management?<br />Please get
-					in contact with us:
+					have further questions concerning data management?
+					<br />
+					Please use our generic submission or get in contact with us:
 				</h4>
 				<div class="row dcrttable">
 					<div class="col-xs-3 col-sm-2 col-lg-2">
@@ -517,8 +523,11 @@ function submissionRequest(btnId) {
 					<div class="col-xs-12 col-sm-4 col-lg-3"
 						style="text-align: center; padding-top: 8px;">
 						<button type="button" value="GFBioContact" name="contactButton"
-							class="dcrtbutton default">Contact</button>
-						<div style="display: inline-block; width: 89px; height: 10px;"></div>
+							class="dcrtbutton contact">Contact</button>
+						<button type="button" value="GFBioSubmission" name="submissionButton"
+							class="dcrtbutton submission" style="margin-left: -1px;">Submission</button>
+							
+						<div style="display: inline-block; width: 63px; height: 10px;"></div>
 					</div>
 				</div>
 			</div>
