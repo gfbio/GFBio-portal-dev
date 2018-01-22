@@ -16,7 +16,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.apache.commons.codec.binary.Base64;
-import org.gfbio.helper.Helper;
 import org.gfbio.service.HeadLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
@@ -27,6 +26,7 @@ import org.json.simple.parser.ParseException;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 /**
  * Portlet implementation class WorkflowEnvironmental
@@ -197,7 +197,7 @@ public class WorkflowEnvironmental extends GenericPortlet {
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("Accept","application/json");
            
-            String userpass= Helper.getServerInformation((String) ((JSONObject) parseJson).get("path"),"jirauserpass");
+            String userpass= PropsUtil.get("jira.gfbio.submission.userpass");
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
             conn.addRequestProperty ("Authorization", basicAuth);
           
@@ -273,9 +273,7 @@ public class WorkflowEnvironmental extends GenericPortlet {
         JSONObject legalRequirements = new JSONObject();
         
         
-        //ticket basic informations
-        try {project.put("key", Helper.getServerInformation((String) requestJson.get("path"),"jiraprojectkey"));}
-        catch (IOException | PortletException e1) {e1.printStackTrace();}
+        project.put("key", PropsUtil.get("jira.gfbio.submission.projectkey"));
         fields.put("project", project);
         issuetype.put("name", "Data Submission");
         fields.put("issuetype", issuetype);	
@@ -339,8 +337,8 @@ public class WorkflowEnvironmental extends GenericPortlet {
 	      
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("submitterid"));
-        try {json.put("authorization", "Token "+Helper.getServerInformation((String) requestJson.get("path"),"brokeragenttoken"));}
-        catch (IOException | PortletException e) {e.printStackTrace();}
+        json.put("authorization", "Token "+PropsUtil.get("jira.gfbio.submission.brokeragenttoken"));
+
        
 	
         System.out.println("---------------------");

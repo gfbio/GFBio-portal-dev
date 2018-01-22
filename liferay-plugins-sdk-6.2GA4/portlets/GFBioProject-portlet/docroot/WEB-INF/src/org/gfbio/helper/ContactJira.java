@@ -7,11 +7,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
@@ -32,16 +29,19 @@ import org.gfbio.service.PrimaryDataLocalServiceUtil;
 import org.gfbio.service.PrimaryData_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.UserExtensionLocalServiceUtil;
-import org.gfbio.service.impl.ResearchObjectLocalServiceImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
+
+
+import com.liferay.portal.model.User;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 
 public class ContactJira {
 	
@@ -108,16 +108,13 @@ public class ContactJira {
         JSONArray legalRequirementsArray = new JSONArray();
 
         
-        //ticket basic informations
-        try {project.put("key", Helper.getServerInformation((String) requestJson.get("path"),"jiraprojectkey"));}
-        catch (IOException | PortletException e1) {e1.printStackTrace();}
+        project.put("key", PropsUtil.get("jira.gfbio.submission.projectkey"));
         fields.put("project", project);
         issuetype.put("name", "Data Submission");
         fields.put("issuetype", issuetype);	
         reporter.put("name", submitterJson.get("emailaddress"));
         fields.put("reporter", reporter);	
-        try {fields.put("customfield_10010", Helper.getServerInformation((String) requestJson.get("path"),"jiracustomfield10010"));}
-        catch (IOException | PortletException e1) {e1.printStackTrace();}
+        fields.put("customfield_10010", PropsUtil.get("jira.gfbio.submission.requesttyp"));
         if (researchObjectJson.containsKey("name")){
         	String name = Helper.getStringFromJson(researchObjectJson, "name");
         	if (name.length()>47)
@@ -359,8 +356,7 @@ public class ContactJira {
         json.put("archive", archive);
         json.put("fields", fields);
         json.put("submittingUser", (long) researchObjectJson.get("userid"));
-        try {json.put("authorization", "Token "+Helper.getServerInformation((String) requestJson.get("path"),"brokeragenttoken"));}
-        catch (IOException | PortletException e) {e.printStackTrace();}
+        json.put("authorization", "Token "+PropsUtil.get("jira.gfbio.submission.brokeragenttoken"));
        	
        
         String response = json.toJSONString();
@@ -379,6 +375,235 @@ public class ContactJira {
 	           
         return response;
     }
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+	//
+    @SuppressWarnings({ "unchecked", "unused" })
+    public static JSONObject jiraJsonToPortalJson(JSONObject requestJson){
+   	
+      	JSONParser parser = new JSONParser();
+		
+		//preparation data source
+		
+      	JSONObject fieldJson = Helper.getJsonObjectFromJson(requestJson, "fields");
+      	String temp = "";
+      	JSONObject tempJson = new JSONObject();
+      	
+      	
+      	tempJson = Helper.getJsonObjectFromJson(fieldJson, "reporter");
+      	
+      	String userMail = Helper.getStringFromJson(tempJson, "emailAddress");
+      	User user = UserExtensionLocalServiceUtil.getUserExtentionByEmailAddress(userMail);
+      	
+      	JSONObject responseJson = new JSONObject();
+		JSONObject extendeddataJsonResearchObject = new JSONObject();
+      	JSONObject projectJson = new JSONObject();
+      	JSONObject researchObjectJson = new JSONObject();
+      	JSONObject submissionJson = new JSONObject();
+  	 	
+    	
+    	//research Object
+    	researchObjectJson.put("userid", user.getUserId());
+    	researchObjectJson.put("researchobjecttype", "Dataset");
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10309", "researchobjectid", "java.lang.Long", researchObjectJson);
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10310", "researchobjectversion", "java.lang.Integer", researchObjectJson);
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10201", "name", "java.lang.String", researchObjectJson);
+     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10308", "label", "java.lang.String", researchObjectJson);
+       	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10208", "description", "java.lang.String", researchObjectJson);
+     	//researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10205", "authornames", "java.lang.String", researchObjectJson);
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10311", "datacollectiontime", "java.lang.String", researchObjectJson);
+     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10307", "publications", "java.lang.String", researchObjectJson);
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10200", "embargo", "java.lang.Date", researchObjectJson);
+    	if (Helper.getLongFromJson(researchObjectJson, "researchobjectid")==0){
+    		researchObjectJson.remove("researchobjectid");
+    		researchObjectJson.remove("researchobjectversion");
+    	}
+   	   	     	              	
+    	_log.info("project");
+     	
+    	//project
+        projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10314", "projectid", "java.lang.Long", projectJson);
+    	if (Helper.getLongFromJson(projectJson, "projectid")==0)
+    		projectJson.remove("projectid");
+    	
+        
+    	_log.info("submission");    	
+    	
+    	//submission
+    	submissionJson = Helper.addValueFromJson ( requestJson, "id",  "jiraid",  "java.lang.String", submissionJson);
+    	submissionJson = Helper.addValueFromJson ( requestJson, "key", "jirakey", "java.lang.String", submissionJson);
+    	submissionJson.put("status", "sent");
+    	submissionJson.put("userid", user.getUserId());
+    	if (fieldJson.containsKey("assignee")){
+    		//tempJson = Helper.getJsonObjectFromJson(fieldJson, "assignee");
+    		submissionJson = Helper.addValueFromJson ( Helper.getJsonObjectFromJson(fieldJson, "assignee"), "name", "archive", "java.lang.String UpperCase", submissionJson);
+    		//submissionJson.put("archive", "BGBM");
+    	}
+    	
+    	_log.info("all");
+    	
+    	// zusammenführerung
+    	if (!projectJson.isEmpty())
+    		responseJson.put("project", projectJson);
+    	if (!extendeddataJsonResearchObject.isEmpty())
+    		researchObjectJson.put("extendeddata",extendeddataJsonResearchObject);
+      	if (!researchObjectJson.isEmpty())
+      		responseJson.put("researchobject", researchObjectJson);
+      	if (!submissionJson.isEmpty())
+      		responseJson.put("submission", submissionJson);
+    	
+    	_log.info("ready");    
+        
+        //dataset informations
+        
+/*        long researchObjectId =Helper.getLongFromJson(researchObjectJson, "researchobjectid");
+        int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
+        _log.info("archive: |"+archive+"|");
+        fields.put("customfield_10303", (SubmissionLocalServiceUtil.getBrokerSubmissionIdByIds(researchObjectId, researchObjectVersion, archive.trim())).trim());
+*/
+        //this line ist for testing and stop the submission to JIRA
+        //fields.put("customfield_1", "stopper");
+        
+    	_log.info("*********************************");
+    	_log.info(responseJson);
+    	_log.info("*********************************");
+    	
+             
+
+	           
+        return responseJson;
+        
+        /*        //recommendation
+        if (projectJson.containsKey("dcrtrecommendation")){
+        	String dcrtRecommendation = Helper.getStringFromJson(projectJson, "dcrtrecommendation");
+        	if(!dcrtRecommendation.equals("null") && !dcrtRecommendation.equals("")){
+	        	JSONArray dcrtInformationArray = new JSONArray();
+	        	List<String> items = Arrays.asList(dcrtRecommendation.split(","));
+	        	for(int i=0; i < items.size();i++){
+	        		JSONObject dcrtInformationJson = new JSONObject();
+	        		dcrtInformationJson.put("value", (items.get(i)).trim());
+	            	dcrtInformationArray.add(dcrtInformationJson);
+	        	}
+	        	fields.put("customfield_10217", dcrtInformationArray);
+        	}
+        }
+        
+                //information / input
+        if (projectJson.containsKey("dcrtinput")){
+        	if (Helper.getJsonObjectFromJson(projectJson, "dcrtinput").size()>0)
+        		fields.put("customfield_10500", Helper.getStringFromJson(projectJson, "dcrtinput"));
+        }
+        *
+        */
+        
+        /*       //metadata shema description
+        if (researchObjectJson.containsKey("metadataid")){
+        	if (Helper.getLongFromJson(researchObjectJson, "metadataid")!=0){
+        	
+	        	String metadataId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "metadataid"));     	
+	            String metadataName = "";
+				JSONArray metadataValueArray = new JSONArray();
+				
+	            		
+	            JSONObject commandJson = new JSONObject();
+	            commandJson.put("tablename","gfbio_metadata");
+	            JSONArray allMetadataArray = new JSONArray();
+	            allMetadataArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
+	
+	       		int i =0;
+	       		while (i <allMetadataArray.size()){
+	       			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
+	        		if ((metadataId.equals((String) metadataInformations.get("id")))){
+	        			metadataName = (String)metadataInformations.get("label");
+	       				i = allMetadataArray.size();
+	        		}else{
+	        			if ((metadataId.equals((String) metadataInformations.get("label")))){
+	            			metadataName = (String)metadataInformations.get("label");
+	           				i = allMetadataArray.size();
+	        			}else{
+	        				i = i+1;
+	        			}
+	        		}
+	        	}
+	            metadata.put("value", JSONObject.escape(metadataName));
+	            metadataArray.add(metadata);
+	            fields.put("customfield_10229", metadataArray);	
+        	}
+        }
+        
+              
+        //Category/Keywords
+        if (researchObjectJson.containsKey("categoryids")){
+        	if (!(researchObjectJson.get("categoryids").equals(""))){
+        		JSONArray categoryArray = (JSONArray) researchObjectJson.get("categoryids");
+        		if (categoryArray.size()>0){
+	        		String categoryString = "";
+	        		
+	        		if (categoryArray.size()>0){
+	        			for (int i=0;i<categoryArray.size();i++)
+	        				categoryString = categoryString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", (String) categoryArray.get(i)), "name")).concat(", ");
+	        			categoryString = categoryString.substring(0, categoryString.length()-2);
+	        		}
+	                fields.put("customfield_10313", JSONObject.escape(categoryString)); 	
+        		}
+        	}
+        }
+        
+        //legal requirements
+         if (extendeddataJsonResearchObject.containsKey("legalrequirements")){
+        	if (!(extendeddataJsonResearchObject.get("legalrequirements").equals(""))){
+        		JSONArray legalRequirementArray = new JSONArray();
+        		JSONArray legalRequirementIdArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
+        		if (legalRequirementIdArray.size()>0){
+	        		//String legalRequirementString = "";
+	        		for (int i=0;i<legalRequirementIdArray.size();i++){
+        				//legalRequirementString = legalRequirementString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")).concat(", ");
+        				JSONObject legalRequirements = new JSONObject();
+ 	        			legalRequirements.put("value", JSONObject.escape(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")));
+ 	        		  	legalRequirementsArray.add(legalRequirements);
+	        		}
+	        		//legalRequirementString = legalRequirementString.substring(0, legalRequirementString.length()-2);
+	        		fields.put("customfield_10216", legalRequirementsArray);                 	
+        		}
+        	}
+        }
+         
+        
+        //license Question
+        if (researchObjectJson.containsKey("licenseid")){
+        	if (Helper.getLongFromJson(researchObjectJson, "licenseid")!=0){
+
+	        	String licenseName = "";
+	        	JSONArray licenseArray = new JSONArray();
+	         	String licenseId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "licenseid"));
+		                    		
+	        	JSONObject commandJson = new JSONObject();
+	        	commandJson.put("tablename","gfbio_license");
+	        	JSONArray allLicenseArray = new JSONArray();
+	        	allLicenseArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
+	
+	        	int i =0;
+	        	while (i <allLicenseArray.size()){
+	        		JSONObject licenseInformations =  (JSONObject) allLicenseArray.get(i);
+	        		if ((licenseId.equals((String) licenseInformations.get("id")))){
+	        			licenseName = (String)licenseInformations.get("label");
+	        			i = allLicenseArray.size();
+	        		}else
+	        			i = i+1;
+	        	}
+	        	license.put("value", JSONObject.escape(licenseName));
+	        	fields.put("customfield_10202", license);
+        	}
+        }
+        
+        */
+        
+        
+    }
 	
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -391,13 +616,13 @@ public class ContactJira {
         try {
             
         	HttpClient httpclient = new DefaultHttpClient();
-        	HttpPost post = new HttpPost("https://helpdesk.gfbio.org/rest/api/2/issue/");
+        	HttpPost post = new HttpPost(PropsUtil.get("jira.gfbio.submission.urlissue"));
             post.addHeader("Content-Type","application/json");
             post.addHeader("Accept","application/json");
             post.addHeader("setDoInput","true");
             post.addHeader("setDoOutput","true");
             
-            String userpass= Helper.getServerInformation((String) ((JSONObject) requestJson).get("path"),"jirauserpass");
+            String userpass= PropsUtil.get("jira.gfbio.submission.userpass");
             String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
             if (basicAuth != null) 
                 post.addHeader("Authorization", basicAuth);
@@ -489,7 +714,7 @@ public class ContactJira {
 
 		try{
 			
-			URL url = new URL("https://helpdesk.gfbio.org/rest/api/2/issue/"+issueKey+"/attachments");
+			URL url = new URL(PropsUtil.get("jira.gfbio.submission.urlissue")+issueKey+"/attachments");
 
 			String auth = new String(org.apache.commons.codec.binary.Base64.encodeBase64((userpass).getBytes()));
 

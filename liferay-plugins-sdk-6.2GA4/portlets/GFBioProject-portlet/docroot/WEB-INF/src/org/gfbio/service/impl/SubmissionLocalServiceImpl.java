@@ -14,6 +14,9 @@
 
 package org.gfbio.service.impl;
 
+
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,8 +27,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.commons.codec.binary.Base64;
 import org.gfbio.helper.ContactJira;
 import org.gfbio.helper.Helper;
+import org.gfbio.helper.RuntimeExec;
+import org.gfbio.helper.StreamWrapper;
+import org.gfbio.idmg.jiraclient.model.Project;
 import org.gfbio.model.Submission;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.gfbio.service.PrimaryDataLocalServiceUtil;
@@ -42,6 +49,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -951,6 +959,57 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	//
 	@SuppressWarnings({ "unchecked"})
 	public JSONObject transferSubmissionInformationToDb(JSONObject requestJson){
+		
+		// information to Portal
+		
+
+        JSONObject jiraJson = new JSONObject();
+        
+        try {
+        	Runtime rt = Runtime.getRuntime();
+            RuntimeExec rte = new RuntimeExec();
+            StreamWrapper error, output;
+            String userpass = PropsUtil.get("jira.gfbio.submission.userpass");
+
+        	        	
+        	String curl ="";
+        	curl = "curl -D- -u "+userpass+" -X GET -H \"Content-Type: application/json\" --url \" "+PropsUtil.get("jira.gfbio.submission.urlissue")+" \" " ;
+
+        	Process proc = rt.exec(curl);
+        	error  = rte.getStreamWrapper(proc.getErrorStream(), "ERROR");
+        	output = rte.getStreamWrapper(proc.getInputStream(), "OUTPUT");
+        	int exitVal = 0;
+            error.start();
+            output.start();
+            error.join(3000);
+            output.join(3000);
+            exitVal = proc.waitFor();
+
+            _log.info(output.getMessage());
+            
+            String[] SSubAOutput = (output.getMessage()).split("chunked");
+            String subSOutput = SSubAOutput[SSubAOutput.length-1];
+            JSONParser parser = new JSONParser();
+    		try {jiraJson = (JSONObject) parser.parse(subSOutput);}
+    		catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+    		
+    		_log.info(jiraJson);
+    		
+        } catch (IOException e) {e.printStackTrace();
+        } catch (InterruptedException e) {e.printStackTrace();}
+    
+		
+		// change information syntax
+		
+        
+        _log.info(jiraJson);
+        requestJson = ContactJira.jiraJsonToPortalJson(jiraJson);
+        _log.info(requestJson);
+		
+		
+		
+		// information to DB
+		
 		JSONObject responseJson = new JSONObject();
 		
 		_log.info("transfer request:" + requestJson);
@@ -1029,7 +1088,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 						responseJson.put("project", projectJson);
 				}
 				
-				//primarydata
+/*				//primarydata
 				if (requestJson.containsKey("primarydata")){
 					JSONObject primarydataJson = Helper.getJsonObjectFromJson(requestJson, "primarydata");
 					
@@ -1045,7 +1104,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 					}
 					responseJson.put("primarydata", primarydataJson);
 					
-				}
+				}*/
 				
 				//answer
 				JSONObject questionJson = new JSONObject ();
@@ -1060,6 +1119,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		else{
 			responseJson.put("Error", "ERROR: You have to sent the researchobjectinformation to use this service." );
 		}
+		
 		
 		return responseJson;
 	}
