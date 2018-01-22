@@ -89,6 +89,11 @@ $( document ).ready(function() {
     $("div#defaultResult").on('click', 'button[name=contactButton]', function () {
     	openConfirmDialog($(this));
     });
+
+    $("div#defaultResult").on('click', 'button[name=submissionButton]', function () {
+    	var link = "https://www.gfbio.org/data/submit/generic";
+    	window.open(link, '_self'); //open in the same window
+    });
     
     $("div#result").on('click', "button[name=submissionButton]", function(){
 		submissionRequest($(this));
@@ -465,9 +470,8 @@ function submissionRequest(btnId) {
 			</div>
 			<div id="categorySelection" class="swHide">
 				<div id="categorydiv" style="margin-left: 20px;">
-					<h4>Please select a category</h4>
-
-					<select id="category" name="category">
+					Please select a category
+					<select id="category" name="category" style="display: block;">
 						<option selected="selected" label="Select" value="default">Select</option>
 						<c:forEach var="field" items="${researchfields}">
 							<option label="<c:out value="${field.name}" />"
@@ -479,9 +483,8 @@ function submissionRequest(btnId) {
 			</div>
 			<div id="materialSelection" class="swHide">
 				<div id="materialdiv" style="margin-left: 20px;">
-					<h4>Which kind of material would you deliver?</h4>
-
-					<select id="material" name="material">
+					Which kind of material would you deliver?
+					<select id="material" name="material" style="display: block;">
 						<option selected="selected" label="Select" value="default">Select</option>
 						<c:forEach var="material" items="${materials}">
 							<option label="<c:out value="${material.name}" />"
@@ -503,8 +506,9 @@ function submissionRequest(btnId) {
 				style="text-align: left" class="swHide">
 				<h4 style="margin-bottom: 20px;">
 					Do you need support in selecting a suitable data center or do you
-					have further questions concerning data management?<br />Please get
-					in contact with us:
+					have further questions concerning data management?
+					<br />
+					Please use our generic submission or get in contact with us:
 				</h4>
 				<div class="row dcrttable">
 					<div class="col-xs-3 col-sm-2 col-lg-2">
@@ -519,7 +523,11 @@ function submissionRequest(btnId) {
 					<div class="col-xs-12 col-sm-4 col-lg-3"
 						style="text-align: center; padding-top: 8px;">
 						<button type="button" value="GFBioContact" name="contactButton"
-							class="dcrtbutton default">Contact</button>
+							class="dcrtbutton contact">Contact</button>
+						<button type="button" value="GFBioSubmission" name="submissionButton"
+							class="dcrtbutton submission" style="margin-left: -1px;">Submission</button>
+							
+						<div style="display: inline-block; width: 63px; height: 10px;"></div>
 					</div>
 				</div>
 			</div>

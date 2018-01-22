@@ -463,11 +463,12 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 	}
     
 	public boolean isValidEmailAddress(String email) {
-        String ePattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		return Validator.isEmailAddress(email);
+        /*String ePattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
         				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
+        return m.matches();*/
     }
     
 	protected boolean sendEmail(
