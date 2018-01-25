@@ -104,10 +104,10 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 	
 	
 	//
-/*	public JSONObject transferResearchObjectInformationToDb(JSONObject requestJson){
+	public JSONObject transferResearchObjectInformationToDb(JSONObject requestJson){
 		JSONObject responseJson = SubmissionLocalServiceUtil.transferSubmissionInformationToDb(requestJson);
 		return responseJson;
-	}*/
+	}
 	
 	//
 	public JSONArray updateSubmission (String requestJson){

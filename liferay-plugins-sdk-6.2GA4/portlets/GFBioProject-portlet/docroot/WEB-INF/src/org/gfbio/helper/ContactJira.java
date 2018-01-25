@@ -390,8 +390,10 @@ public class ContactJira {
 		//preparation data source
 		
       	JSONObject fieldJson = Helper.getJsonObjectFromJson(requestJson, "fields");
-      	String temp = "";
+      	String tempString;
+      	int tempIndexi;
       	JSONObject tempJson = new JSONObject();
+      	JSONArray tempJsonArray = new JSONArray();
       	
       	
       	tempJson = Helper.getJsonObjectFromJson(fieldJson, "reporter");
@@ -414,10 +416,61 @@ public class ContactJira {
     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10201", "name", "java.lang.String", researchObjectJson);
      	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10308", "label", "java.lang.String", researchObjectJson);
        	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10208", "description", "java.lang.String", researchObjectJson);
-     	//researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10205", "authornames", "java.lang.String", researchObjectJson);
+     	tempString = Helper.getStringFromJson(fieldJson, "customfield_10205");
+       	_log.info("Authornames |"+tempString+"|");
+       	tempIndexi =0;
+       	while (tempIndexi < tempString.length()){
+       		tempIndexi = tempString.indexOf("\n");
+       		_log.info("result |"+tempString.substring(0, tempIndexi-1)+"|");
+       		tempJsonArray.add(tempString.substring(0, tempIndexi-1));
+       		
+       		tempString = tempString.substring(tempIndexi+1, tempString.length());
+       		_log.info("|"+tempString+"|");
+       	}
+       	_log.info("size"+tempIndexi+ " vs. "+tempString.length());
+       	tempJsonArray.add(tempString.substring(0, tempString.length()));
+    	_log.info("authorList"+tempJsonArray);
+       	//researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10205", "authornames", "java.lang.String", researchObjectJson);
     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10311", "datacollectiontime", "java.lang.String", researchObjectJson);
      	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10307", "publications", "java.lang.String", researchObjectJson);
     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10200", "embargo", "java.lang.Date", researchObjectJson);
+    	
+    	
+    	 /*       //metadata shema description
+        if (researchObjectJson.containsKey("metadataid")){
+        	if (Helper.getLongFromJson(researchObjectJson, "metadataid")!=0){
+        	
+	        	String metadataId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "metadataid"));     	
+	            String metadataName = "";
+				JSONArray metadataValueArray = new JSONArray();
+				
+	            		
+	            JSONObject commandJson = new JSONObject();
+	            commandJson.put("tablename","gfbio_metadata");
+	            JSONArray allMetadataArray = new JSONArray();
+	            allMetadataArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
+	
+	       		int i =0;
+	       		while (i <allMetadataArray.size()){
+	       			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
+	        		if ((metadataId.equals((String) metadataInformations.get("id")))){
+	        			metadataName = (String)metadataInformations.get("label");
+	       				i = allMetadataArray.size();
+	        		}else{
+	        			if ((metadataId.equals((String) metadataInformations.get("label")))){
+	            			metadataName = (String)metadataInformations.get("label");
+	           				i = allMetadataArray.size();
+	        			}else{
+	        				i = i+1;
+	        			}
+	        		}
+	        	}
+	            metadata.put("value", JSONObject.escape(metadataName));
+	            metadataArray.add(metadata);
+	            fields.put("customfield_10229", metadataArray);	
+        	}
+        }*/
+    	
     	if (Helper.getLongFromJson(researchObjectJson, "researchobjectid")==0){
     		researchObjectJson.remove("researchobjectid");
     		researchObjectJson.remove("researchobjectversion");
@@ -500,41 +553,8 @@ public class ContactJira {
         *
         */
         
-        /*       //metadata shema description
-        if (researchObjectJson.containsKey("metadataid")){
-        	if (Helper.getLongFromJson(researchObjectJson, "metadataid")!=0){
-        	
-	        	String metadataId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "metadataid"));     	
-	            String metadataName = "";
-				JSONArray metadataValueArray = new JSONArray();
-				
-	            		
-	            JSONObject commandJson = new JSONObject();
-	            commandJson.put("tablename","gfbio_metadata");
-	            JSONArray allMetadataArray = new JSONArray();
-	            allMetadataArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
-	
-	       		int i =0;
-	       		while (i <allMetadataArray.size()){
-	       			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
-	        		if ((metadataId.equals((String) metadataInformations.get("id")))){
-	        			metadataName = (String)metadataInformations.get("label");
-	       				i = allMetadataArray.size();
-	        		}else{
-	        			if ((metadataId.equals((String) metadataInformations.get("label")))){
-	            			metadataName = (String)metadataInformations.get("label");
-	           				i = allMetadataArray.size();
-	        			}else{
-	        				i = i+1;
-	        			}
-	        		}
-	        	}
-	            metadata.put("value", JSONObject.escape(metadataName));
-	            metadataArray.add(metadata);
-	            fields.put("customfield_10229", metadataArray);	
-        	}
-        }
-        
+       
+        /*
               
         //Category/Keywords
         if (researchObjectJson.containsKey("categoryids")){

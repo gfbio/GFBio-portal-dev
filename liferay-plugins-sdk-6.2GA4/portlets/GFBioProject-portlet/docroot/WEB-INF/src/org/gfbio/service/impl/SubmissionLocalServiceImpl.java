@@ -971,10 +971,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
             StreamWrapper error, output;
             String userpass = PropsUtil.get("jira.gfbio.submission.userpass");
 
-        	        	
+        	_log.info(userpass); 
+        	String jiraKey = "SAND-1272";
         	String curl ="";
-        	curl = "curl -D- -u "+userpass+" -X GET -H \"Content-Type: application/json\" --url \" "+PropsUtil.get("jira.gfbio.submission.urlissue")+" \" " ;
-
+        	curl = "curl -D- -u "+userpass+" -X GET -H \"Content-Type: application/json\" --url \""+PropsUtil.get("jira.gfbio.submission.urlissue")+jiraKey+"\"" ;
+        	_log.info(curl); 
         	Process proc = rt.exec(curl);
         	error  = rte.getStreamWrapper(proc.getErrorStream(), "ERROR");
         	output = rte.getStreamWrapper(proc.getInputStream(), "OUTPUT");
@@ -1006,12 +1007,12 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
         requestJson = ContactJira.jiraJsonToPortalJson(jiraJson);
         _log.info(requestJson);
 		
-		
+	
 		
 		// information to DB
 		
 		JSONObject responseJson = new JSONObject();
-		
+		/*			
 		_log.info("transfer request:" + requestJson);
 		
 		if (requestJson.containsKey("researchobject")){
@@ -1088,7 +1089,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 						responseJson.put("project", projectJson);
 				}
 				
-/*				//primarydata
+				//primarydata
 				if (requestJson.containsKey("primarydata")){
 					JSONObject primarydataJson = Helper.getJsonObjectFromJson(requestJson, "primarydata");
 					
@@ -1104,7 +1105,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 					}
 					responseJson.put("primarydata", primarydataJson);
 					
-				}*/
+				}
 				
 				//answer
 				JSONObject questionJson = new JSONObject ();
@@ -1120,7 +1121,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			responseJson.put("Error", "ERROR: You have to sent the researchobjectinformation to use this service." );
 		}
 		
-		
+		*/
 		return responseJson;
 	}
 	
