@@ -233,14 +233,14 @@
 
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
-				"<p   class='field-description'			 	id='gwf_ro_upload_d'>If you use a seperate file upload platform or host, then you can choose the external upload option, to take GFBio the URL to this source.</p>"+
-				"<br>"+
+				//"<p   class='field-description'			 	id='gwf_ro_upload_d'></p>"+
+				//"<br>"+
 				"<div 													class='control-group'>"+
-						"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' 	onclick='primaryRadioButtonCheck()' checked='checked'> Direct upload</input></span>"+
+						"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' 	onclick='primaryRadioButtonCheck()' checked='checked'> Upload from your file system</input></span>"+
 						"<span style='width:2%; display:inline-block'></span>"+
-						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external' onclick='primaryRadioButtonCheck()'> External upload</input></span> "+
+						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external' onclick='primaryRadioButtonCheck()'>Link online ressource</input></span> "+
 				"</div>"+
-				"<div id='gwf_ro_upload'  placeholder='Choose File'></div>"+
+				"<div id='gwf_ro_upload'  placeholder='Choose Files'></div>"+
 		
 				"<h3>3. Submission options</h3><hr>"+
 								
@@ -489,23 +489,6 @@
 		var divDcrt = $("#".concat(targetDcrtDiv));
 		divDcrt.empty();
 		setToDefaultArchive(targetDcrtDiv);
-		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
-			
- 			divDcrt.append(
-				"<div 		class='control-group'>"+
-					"<fieldset> "+
-						"<span style='width:48%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_special' name='gwf_ro_dcrt_radio' value='"+document.getElementById("gwf_dcrtassignee").innerHTML+"' checked='checked'> to the curator of "+document.getElementById("gwf_dcrtassignee").innerHTML+"</input></span>"+
-						"<span style='width:2%; display:inline-block'></span>"+
-						"<span style='width:50%; display:inline-block' class='field-description'><input type='radio' id='gwf_ro_dcrt_default' name='gwf_ro_dcrt_radio' value='none'> to the whole GFBio curator team</input></span> "+
-					"</fieldset>"+
-				"</div>"
-			); 
-			
-			
-			
-		}else{
-			setToDefaultArchive(targetDcrtDiv);
-		}
 	}
 	
 		function primaryRadioButtonCheck(){
@@ -525,8 +508,8 @@
 					"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
 				);
 			}else{
-				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_name", 	"Name", 	""				,"If the file bundle has one name, provide this name. ", limitSmall, fieldCheckList[8],"");
-				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL/URI", 	""				,"Provide the source URL of your dataset. Please use only http, https, ftp and sftp as protocol", 			 limitSmall, fieldCheckList[8],"");
+				//addInputfieldTo(uploaddiv, "gwf_ro_externalupload_name", 	"Name", 	""				,"Please name your data set or your data package (short, descriptive title). ", limitSmall, fieldCheckList[8],"");
+				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL", 	""				,"Provide the URL of your dataset. Please use only http, https, ftp and sftp.", 			 limitSmall, fieldCheckList[8],"");
 				document.getElementById("gwf_ro_externalupload_path").placeholder = "http://"; //placeholder="First name
 				console.log(document.getElementById("gwf_ro_externalupload_path"));
 			} 
@@ -539,11 +522,14 @@
 	function setToDefaultArchive(targetDiv){
 		var divDcrt = $("#".concat(targetDiv));
 		divDcrt.empty();
-		divDcrt.append(
-				"<div 		class='control-group'>"+
-					"<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the GFBio curator team. A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>"+
-				"</div>"
-			);
+		divDcrt.append(	"<div 		class='control-group'>");
+		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
+			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the curator of "+document.getElementById("gwf_dcrtassignee").innerHTML+". A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>");
+		}else{
+			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the GFBio curator team. A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>");
+		}
+		divDcrt.append(	"</div><br><br><br>");
+
 	}
 	
 	
