@@ -162,7 +162,9 @@ AUI().ready(
 
 AUI().ready(
 		function(){
-			
+			// Set preloader
+				$(".loader-box").fadeOut();
+				$(".preloader").delay(400).fadeOut("slow");
 			// Dropdown Menu Fade
 		    $(".aui .dropdown").hover(
 		        function () {
