@@ -2,7 +2,7 @@
 ##<nav class="$nav_css_class" id="header-menue" role="navigation">
 
 	<ul id="nav-left" class="nav navbar-nav" aria-label="#language ("site-pages")" role="menubar">
-	    <li><a href="/">Home</a></li>
+	    <li class="homeMenu" ><a href="/">Home</a></li>
 		#foreach ($nav_item in $nav_items)
 			#set ($nav_item_attr_has_popup="")
 			#set ($nav_item_attr_selected="")

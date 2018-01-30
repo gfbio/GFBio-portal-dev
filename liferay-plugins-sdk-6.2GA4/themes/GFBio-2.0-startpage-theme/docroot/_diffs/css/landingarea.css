@@ -452,7 +452,7 @@ h1.navbar-brand {
 
 #big-logo-with-claim {
     background: url('../images/gf_bio_logo_claim_370x208.png') no-repeat center center;
-    padding: 208px 370px 0 0 !important;
+    padding: 208px 370px 0 0;
 }
 
 #claim-top-wrapper {
@@ -1016,6 +1016,16 @@ ul.external li a:hover {
 /*============================================================
 	Mobile (Portrait) Design for a width of 320px
 ==============================================================*/
+
+/* Fix graphical display issues on mobile device: https://project.gfbio.org/issues/1294 */
+@media (min-width: 280px) and (max-width: 370px) {
+	#big-logo-with-claim {
+	    background: url('../images/gf_bio_logo_claim_370x208.png') no-repeat center center;
+	    background-size: 100%;
+	    padding: 208px 0px 0 0;
+	}
+
+}
 
 @media only screen and (max-width: 767px) {
 

@@ -583,7 +583,9 @@ $dockbarVerticalWidth: 240px;
 		  #nav{
 		  	margin: 0px;
 		  }
-/* 			display: none; */
+		  .homeMenu{
+ 			display: block; 
+ 		  }
 
 /* 			&.open { */
 /* 				display: block; */
