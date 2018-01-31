@@ -238,7 +238,7 @@
 				"<div 													class='control-group'>"+
 						"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' 	onclick='primaryRadioButtonCheck()' checked='checked'> Upload from your file system</input></span>"+
 						"<span style='width:2%; display:inline-block'></span>"+
-						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external' onclick='primaryRadioButtonCheck()'>Link online ressource</input></span> "+
+						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external' onclick='primaryRadioButtonCheck()'> Link online ressource</input></span> "+
 				"</div>"+
 				"<div id='gwf_ro_upload'  placeholder='Choose Files'></div>"+
 		
@@ -526,7 +526,7 @@
 		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
 			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the curator of "+document.getElementById("gwf_dcrtassignee").innerHTML+". A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>");
 		}else{
-			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the GFBio curator team. A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>");
+			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of the submission you will send your information to the GFBio curator team. A contact person will get in touch with you as soon as possible. This curator will support you through the rest of the submission process.</p>");
 		}
 		divDcrt.append(	"</div><br><br><br>");
 

@@ -83,7 +83,7 @@ function buildResearchObjectJsonForCreate(projectJson){
 	if (document.getElementById("gwf_ro_upload_direct").checked != true)
 		if (document.getElementById("gwf_ro_externalupload_path").value != ""){
 			var primaryDataJson = {
-				"name": document.getElementById("gwf_ro_externalupload_name").value,
+				"name": document.getElementById("gwf_ro_externalupload_path").value,
 				"path": document.getElementById("gwf_ro_externalupload_path").value
 			};
 			researchObjectJson["primarydata"] = primaryDataJson;
