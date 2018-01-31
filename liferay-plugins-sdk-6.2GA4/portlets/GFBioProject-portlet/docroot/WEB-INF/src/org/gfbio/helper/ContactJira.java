@@ -385,6 +385,7 @@ public class ContactJira {
     @SuppressWarnings({ "unchecked", "unused" })
     public static JSONObject jiraJsonToPortalJson(JSONObject requestJson){
    	
+    	
       	JSONParser parser = new JSONParser();
 		
 		//preparation data source
@@ -411,65 +412,42 @@ public class ContactJira {
     	//research Object
     	researchObjectJson.put("userid", user.getUserId());
     	researchObjectJson.put("researchobjecttype", "Dataset");
-    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10309", "researchobjectid", "java.lang.Long", researchObjectJson);
-    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10310", "researchobjectversion", "java.lang.Integer", researchObjectJson);
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10200", "embargo", "java.lang.Date", researchObjectJson);
     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10201", "name", "java.lang.String", researchObjectJson);
-     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10308", "label", "java.lang.String", researchObjectJson);
-       	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10208", "description", "java.lang.String", researchObjectJson);
-     	tempString = Helper.getStringFromJson(fieldJson, "customfield_10205");
-       	_log.info("Authornames |"+tempString+"|");
+      	researchObjectJson = Helper.addValueFromJson ( Helper.getJsonObjectFromJson(fieldJson, "customfield_10202"), "value", "licenselabel",  "java.lang.String", researchObjectJson);
+       	tempString = Helper.getStringFromJson(fieldJson, "customfield_10205");
        	tempIndexi =0;
+       	tempJsonArray.clear();
        	while (tempIndexi < tempString.length()){
        		tempIndexi = tempString.indexOf("\n");
-       		_log.info("result |"+tempString.substring(0, tempIndexi-1)+"|");
        		tempJsonArray.add(tempString.substring(0, tempIndexi-1));
-       		
        		tempString = tempString.substring(tempIndexi+1, tempString.length());
-       		_log.info("|"+tempString+"|");
        	}
-       	_log.info("size"+tempIndexi+ " vs. "+tempString.length());
        	tempJsonArray.add(tempString.substring(0, tempString.length()));
-    	_log.info("authorList"+tempJsonArray);
-       	//researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10205", "authornames", "java.lang.String", researchObjectJson);
+       	researchObjectJson.put("authornames", tempJsonArray);
+        researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10208", "description", "java.lang.String", researchObjectJson);
+    	JSONArray legalRequirementIdArray = new JSONArray();
+    	tempJsonArray = Helper.getJsonArrayFromJson(fieldJson, "customfield_10216");
+    	for (int i =0; i < tempJsonArray.size();i++)
+    		legalRequirementIdArray.add(Helper.getStringFromJson(Helper.getJsonObjectFromJsonArray(tempJsonArray, i), "value"));
+    	researchObjectJson.put("legalrequirementnames", legalRequirementIdArray);
+       	researchObjectJson = Helper.addValueFromJson ( Helper.getJsonObjectFromJsonArray(Helper.getJsonArrayFromJson(fieldJson, "customfield_10229"), 0), "value", "metadatalabel", "java.lang.String",researchObjectJson );
+       	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10307", "publications", "java.lang.String", researchObjectJson);
+     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10308", "label", "java.lang.String", researchObjectJson);
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10309", "researchobjectid", "java.lang.Long", researchObjectJson);
+    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10310", "researchobjectversion", "java.lang.Integer", researchObjectJson);
     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10311", "datacollectiontime", "java.lang.String", researchObjectJson);
-     	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10307", "publications", "java.lang.String", researchObjectJson);
-    	researchObjectJson = Helper.addValueFromJson ( fieldJson, "customfield_10200", "embargo", "java.lang.Date", researchObjectJson);
-    	
-    	
-    	 /*       //metadata shema description
-        if (researchObjectJson.containsKey("metadataid")){
-        	if (Helper.getLongFromJson(researchObjectJson, "metadataid")!=0){
-        	
-	        	String metadataId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "metadataid"));     	
-	            String metadataName = "";
-				JSONArray metadataValueArray = new JSONArray();
-				
-	            		
-	            JSONObject commandJson = new JSONObject();
-	            commandJson.put("tablename","gfbio_metadata");
-	            JSONArray allMetadataArray = new JSONArray();
-	            allMetadataArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
-	
-	       		int i =0;
-	       		while (i <allMetadataArray.size()){
-	       			JSONObject metadataInformations =  (JSONObject) allMetadataArray.get(i);
-	        		if ((metadataId.equals((String) metadataInformations.get("id")))){
-	        			metadataName = (String)metadataInformations.get("label");
-	       				i = allMetadataArray.size();
-	        		}else{
-	        			if ((metadataId.equals((String) metadataInformations.get("label")))){
-	            			metadataName = (String)metadataInformations.get("label");
-	           				i = allMetadataArray.size();
-	        			}else{
-	        				i = i+1;
-	        			}
-	        		}
-	        	}
-	            metadata.put("value", JSONObject.escape(metadataName));
-	            metadataArray.add(metadata);
-	            fields.put("customfield_10229", metadataArray);	
-        	}
-        }*/
+       	tempString = Helper.getStringFromJson(fieldJson, "customfield_10313");
+       	tempIndexi =0;
+       	tempJsonArray.clear();
+       	while (tempIndexi < tempString.length()){
+       		tempIndexi = tempString.indexOf(",");
+       		tempJsonArray.add((tempString.substring(0, tempIndexi-1)).trim());
+       		tempString = tempString.substring(tempIndexi+1, tempString.length());
+       	}
+       	tempJsonArray.add((tempString.substring(0, tempString.length())).trim());
+       	researchObjectJson.put("categorynames", tempJsonArray);
+    	    	
     	
     	if (Helper.getLongFromJson(researchObjectJson, "researchobjectid")==0){
     		researchObjectJson.remove("researchobjectid");
@@ -479,10 +457,18 @@ public class ContactJira {
     	_log.info("project");
      	
     	//project
+        projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10204", "pi", "java.lang.String", projectJson);
+        projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10206", "name", "java.lang.String", projectJson);
+        projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10222", "datacontact", "java.lang.String", projectJson);
+        projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10300", "label", "java.lang.String", projectJson);
+        projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10301", "description", "java.lang.String", projectJson);
+        _log.info(fieldJson);
+        _log.info(((fieldJson.get("customfield_10302").getClass())));
+        _log.info(Helper.getStringFromJson(fieldJson, "customfield_10302"));
+        projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10302", "projectidnumeric", "java.lang.Long", projectJson);
         projectJson = Helper.addValueFromJson ( fieldJson, "customfield_10314", "projectid", "java.lang.Long", projectJson);
     	if (Helper.getLongFromJson(projectJson, "projectid")==0)
     		projectJson.remove("projectid");
-    	
         
     	_log.info("submission");    	
     	
@@ -491,10 +477,17 @@ public class ContactJira {
     	submissionJson = Helper.addValueFromJson ( requestJson, "key", "jirakey", "java.lang.String", submissionJson);
     	submissionJson.put("status", "sent");
     	submissionJson.put("userid", user.getUserId());
-    	if (fieldJson.containsKey("assignee")){
-    		//tempJson = Helper.getJsonObjectFromJson(fieldJson, "assignee");
+    	if (fieldJson.containsKey("assignee"))
     		submissionJson = Helper.addValueFromJson ( Helper.getJsonObjectFromJson(fieldJson, "assignee"), "name", "archive", "java.lang.String UpperCase", submissionJson);
-    		//submissionJson.put("archive", "BGBM");
+    	submissionJson = Helper.addValueFromJson ( fieldJson, "customfield_10200", "publicafter", "java.lang.Date", submissionJson);
+    	submissionJson = Helper.addValueFromJson ( fieldJson, "customfield_10217", "recommendeddatacenter", "java.lang.String", submissionJson);
+    	submissionJson = Helper.addValueFromJson ( fieldJson, "customfield_10218", "archivepid", "java.lang.String", submissionJson);    	submissionJson = Helper.addValueFromJson ( fieldJson, "customfield_10303", "brokersubmissionid", "java.lang.Long", submissionJson);
+    	submissionJson = Helper.addValueFromJson ( fieldJson, "customfield_10309", "researchobjectid", "java.lang.Long", submissionJson);
+    	submissionJson = Helper.addValueFromJson ( fieldJson, "customfield_10310", "researchobjectversion", "java.lang.Integer", submissionJson);
+    	submissionJson = Helper.addValueFromJson ( fieldJson, "customfield_10500", "dcrtinput ", "java.lang.String", submissionJson);
+    	if (Helper.getLongFromJson(submissionJson, "researchobjectid")==0){
+    		submissionJson.remove("researchobjectid");
+    		submissionJson.remove("researchobjectversion");
     	}
     	
     	_log.info("all");
@@ -530,97 +523,12 @@ public class ContactJira {
 	           
         return responseJson;
         
-        /*        //recommendation
-        if (projectJson.containsKey("dcrtrecommendation")){
-        	String dcrtRecommendation = Helper.getStringFromJson(projectJson, "dcrtrecommendation");
-        	if(!dcrtRecommendation.equals("null") && !dcrtRecommendation.equals("")){
-	        	JSONArray dcrtInformationArray = new JSONArray();
-	        	List<String> items = Arrays.asList(dcrtRecommendation.split(","));
-	        	for(int i=0; i < items.size();i++){
-	        		JSONObject dcrtInformationJson = new JSONObject();
-	        		dcrtInformationJson.put("value", (items.get(i)).trim());
-	            	dcrtInformationArray.add(dcrtInformationJson);
-	        	}
-	        	fields.put("customfield_10217", dcrtInformationArray);
-        	}
-        }
-        
-                //information / input
-        if (projectJson.containsKey("dcrtinput")){
-        	if (Helper.getJsonObjectFromJson(projectJson, "dcrtinput").size()>0)
-        		fields.put("customfield_10500", Helper.getStringFromJson(projectJson, "dcrtinput"));
-        }
-        *
-        */
         
        
-        /*
-              
-        //Category/Keywords
-        if (researchObjectJson.containsKey("categoryids")){
-        	if (!(researchObjectJson.get("categoryids").equals(""))){
-        		JSONArray categoryArray = (JSONArray) researchObjectJson.get("categoryids");
-        		if (categoryArray.size()>0){
-	        		String categoryString = "";
-	        		
-	        		if (categoryArray.size()>0){
-	        			for (int i=0;i<categoryArray.size();i++)
-	        				categoryString = categoryString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", (String) categoryArray.get(i)), "name")).concat(", ");
-	        			categoryString = categoryString.substring(0, categoryString.length()-2);
-	        		}
-	                fields.put("customfield_10313", JSONObject.escape(categoryString)); 	
-        		}
-        	}
-        }
-        
-        //legal requirements
-         if (extendeddataJsonResearchObject.containsKey("legalrequirements")){
-        	if (!(extendeddataJsonResearchObject.get("legalrequirements").equals(""))){
-        		JSONArray legalRequirementArray = new JSONArray();
-        		JSONArray legalRequirementIdArray = (JSONArray) extendeddataJsonResearchObject.get("legalrequirements");
-        		if (legalRequirementIdArray.size()>0){
-	        		//String legalRequirementString = "";
-	        		for (int i=0;i<legalRequirementIdArray.size();i++){
-        				//legalRequirementString = legalRequirementString.concat(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")).concat(", ");
-        				JSONObject legalRequirements = new JSONObject();
- 	        			legalRequirements.put("value", JSONObject.escape(ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_legalrequirement", "id", (String) legalRequirementIdArray.get(i)), "name")));
- 	        		  	legalRequirementsArray.add(legalRequirements);
-	        		}
-	        		//legalRequirementString = legalRequirementString.substring(0, legalRequirementString.length()-2);
-	        		fields.put("customfield_10216", legalRequirementsArray);                 	
-        		}
-        	}
-        }
-         
-        
-        //license Question
-        if (researchObjectJson.containsKey("licenseid")){
-        	if (Helper.getLongFromJson(researchObjectJson, "licenseid")!=0){
 
-	        	String licenseName = "";
-	        	JSONArray licenseArray = new JSONArray();
-	         	String licenseId = JSONObject.escape(Helper.getStringFromJson(researchObjectJson, "licenseid"));
-		                    		
-	        	JSONObject commandJson = new JSONObject();
-	        	commandJson.put("tablename","gfbio_license");
-	        	JSONArray allLicenseArray = new JSONArray();
-	        	allLicenseArray = HeadLocalServiceUtil.getTableAsJSONArrayByName(commandJson);
-	
-	        	int i =0;
-	        	while (i <allLicenseArray.size()){
-	        		JSONObject licenseInformations =  (JSONObject) allLicenseArray.get(i);
-	        		if ((licenseId.equals((String) licenseInformations.get("id")))){
-	        			licenseName = (String)licenseInformations.get("label");
-	        			i = allLicenseArray.size();
-	        		}else
-	        			i = i+1;
-	        	}
-	        	license.put("value", JSONObject.escape(licenseName));
-	        	fields.put("customfield_10202", license);
-        	}
-        }
         
-        */
+
+  
         
         
     }

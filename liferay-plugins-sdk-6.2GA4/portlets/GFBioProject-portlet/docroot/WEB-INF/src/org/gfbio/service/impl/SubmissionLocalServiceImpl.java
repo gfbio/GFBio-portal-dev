@@ -1012,9 +1012,9 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		// information to DB
 		
 		JSONObject responseJson = new JSONObject();
-		/*			
+					
 		_log.info("transfer request:" + requestJson);
-		
+		/*		
 		if (requestJson.containsKey("researchobject")){
 			
 			JSONObject researchObjectJson = null;
