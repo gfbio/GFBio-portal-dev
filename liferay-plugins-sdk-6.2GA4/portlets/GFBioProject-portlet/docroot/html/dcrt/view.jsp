@@ -91,7 +91,7 @@ $( document ).ready(function() {
     });
 
     $("div#defaultResult").on('click', 'button[name=submissionButton]', function () {
-    	var link = "https://www.gfbio.org/data/submit/generic";
+    	var link = themeDisplay.getPortalURL() + "/data/submit/generic";
     	window.open(link, '_self'); //open in the same window
     });
     
