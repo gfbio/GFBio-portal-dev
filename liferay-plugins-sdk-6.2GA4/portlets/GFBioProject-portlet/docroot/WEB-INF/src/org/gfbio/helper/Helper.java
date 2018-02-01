@@ -124,9 +124,6 @@ public class Helper {
 				else 
 					if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String"))
 						responseInt = Integer.valueOf((String) requestJson.get(key)).intValue();
-					else
-						if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.Double"))
-							responseInt = (int)(double)requestJson.get(key);
 		
 		
 		return responseInt;
@@ -251,9 +248,7 @@ public class Helper {
 				else
 					if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.String"))
 						responseLong = Long.valueOf((String) requestJson.get(key)).longValue();
-					else
-						if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.Double"))
-							responseLong = (long)(double)requestJson.get(key);
+		
 		return responseLong;
 	}
 	
@@ -274,9 +269,6 @@ public class Helper {
 					else
 						if ((((requestJson.get(key)).getClass()).toString()).equals("class java.lang.Long"))
 							responseString = (Long.toString((long)requestJson.get(key))).trim();
-						else
-							if (((requestJson.get(key).getClass()).toString()).equals("class java.lang.Double"))
-								responseString = (Double.toString(((double)requestJson.get(key)))).trim();
 
 		return responseString;
 	}
@@ -321,7 +313,6 @@ public class Helper {
     @SuppressWarnings("unchecked")
 	public static JSONObject addValueFromJson (JSONObject requestJson, String requestKey, String responseKey, String type, JSONObject responseJson){
 
-    	
     	if (requestJson.containsKey(requestKey))
     		if (!(Helper.getStringFromJson(requestJson, requestKey)).contains("null"))
     			if(type.equals("java.lang.Boolean"))
