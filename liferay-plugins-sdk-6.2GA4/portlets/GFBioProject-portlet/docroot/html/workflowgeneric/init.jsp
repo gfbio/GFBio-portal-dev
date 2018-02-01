@@ -761,6 +761,8 @@
 	//
 	function startSubmissionRegistry(data){
 
+		console.log(data);
+		
 		var url = document.getElementById('workflowgenericurl').value;
 		
 		
@@ -929,7 +931,7 @@
 			error :  function (obj){
 				console.log("sub error");
 				deleteSubmissionRegistryEntry(responseData);
-				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+				buildErrorMessage('gwf_lf_comentarField', "The SThe Submission information transfeubmission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 			},		
 		});	  
 	}
