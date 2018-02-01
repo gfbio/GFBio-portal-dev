@@ -30,8 +30,6 @@ import java.util.UUID;
 import org.apache.commons.codec.binary.Base64;
 import org.gfbio.helper.ContactJira;
 import org.gfbio.helper.Helper;
-import org.gfbio.helper.RuntimeExec;
-import org.gfbio.helper.StreamWrapper;
 import org.gfbio.idmg.jiraclient.model.Project;
 import org.gfbio.model.Submission;
 import org.gfbio.service.DataProviderLocalServiceUtil;
@@ -928,7 +926,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		return keyJson;
 	}
 	
-	public JSONObject startSubmission (JSONObject requestJson){
+/*	public JSONObject startSubmission (JSONObject requestJson){
 		JSONObject responseJson = new JSONObject();
 		
 		JSONObject checkJson = transferSubmissionInformationToDb(requestJson);
@@ -953,11 +951,11 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		
 		return responseJson;
-	}
+	}*/
 	
 	
 	//
-	@SuppressWarnings({ "unchecked"})
+/*	@SuppressWarnings({ "unchecked"})
 	public JSONObject transferSubmissionInformationToDb(JSONObject requestJson){
 		
 		// information to Portal
@@ -1088,7 +1086,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 						responseJson.put("project", projectJson);
 				}
 				
-/*				//primarydata
+				//primarydata
 				if (requestJson.containsKey("primarydata")){
 					JSONObject primarydataJson = Helper.getJsonObjectFromJson(requestJson, "primarydata");
 					
@@ -1104,7 +1102,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 					}
 					responseJson.put("primarydata", primarydataJson);
 					
-				}*/
+				}
 				
 				//answer
 				JSONObject questionJson = new JSONObject ();
@@ -1122,7 +1120,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 		
 		
 		return responseJson;
-	}
+	}*/
 	
 	
 	//
