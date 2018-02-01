@@ -111,12 +111,9 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 	registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
 	registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
 	if (document.getElementById("gwf_dcrtassignee").innerHTML!='null')
-		if(document.getElementById("gwf_ro_dcrt_default").checked ==true)
-			registryJson["archive"] = "GFBio collections";
-		else
-			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
-	else
 		registryJson["archive"] = "GFBio collections";
+	else
+			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
 	registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
 	return registryJson;
 }
