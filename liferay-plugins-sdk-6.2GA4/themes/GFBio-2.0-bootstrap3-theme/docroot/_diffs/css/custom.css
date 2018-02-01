@@ -1094,7 +1094,6 @@ Liferay fixes - content
 } 
 	
 
-
 /*=====================================================
  Responsive: Navbar
 =======================================================*/
@@ -1110,6 +1109,10 @@ $breakpoint_tablet: 979px;
 		#nav{
 			display: block;
 		}
+		.homeMenu{
+			display: none !important; 
+		}
+
 	}
 } 
 // TABLETS AND BELOW
@@ -1120,6 +1123,9 @@ $breakpoint_tablet: 979px;
 			display: block;
 			margin-top:60px;
 		}
+		.homeMenu{
+ 			display: block !important; 
+ 		}
 		.dropdown-toggle{ 
 		/*#965 Responsive layout: 
 		second tier menu is not working on mobile device*/
