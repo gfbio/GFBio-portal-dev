@@ -49,7 +49,8 @@ $( document ).ready(function() {
 	})
 
 	if(!Liferay.ThemeDisplay.isSignedIn()) {
-    	$("#defaultSubmission").attr("disabled", "true");
+    	document.getElementById("defaultSubmission").setAttribute("disabled", "true");
+    	//Add title attr
     }
 	
 	$("input[type='radio']").click(function () {
