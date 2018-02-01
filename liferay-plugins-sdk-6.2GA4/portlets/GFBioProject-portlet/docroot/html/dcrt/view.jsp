@@ -48,6 +48,10 @@ $( document ).ready(function() {
 		$("input[name=physical]").off(event);
 	})
 
+	if(!Liferay.ThemeDisplay.isSignedIn()) {
+    	$("#defaultSubmission").attr("disabled", "true");
+    }
+	
 	$("input[type='radio']").click(function () {
     
    	    $("#category").val("default");
@@ -524,7 +528,7 @@ function submissionRequest(btnId) {
 						style="text-align: center; padding-top: 8px;">
 						<button type="button" value="GFBioContact" name="contactButton"
 							class="dcrtbutton contact">Contact</button>
-						<button type="button" value="GFBioSubmission" name="submissionButton"
+						<button id="defaultSubmission" type="button" value="GFBioSubmission" name="submissionButton"
 							class="dcrtbutton submission" style="margin-left: -1px;">Submission</button>
 							
 						<div style="display: inline-block; width: 63px; height: 10px;"></div>
