@@ -328,7 +328,7 @@ textarea{
     background-color: transparent;
    
     color: #fff;
-
+	
 }
 
 .navigation-shadow {
@@ -1119,6 +1119,10 @@ $breakpoint_tablet: 979px;
 		 #navigation{ 
 			display: block;
 			margin-top:60px;
+			
+			.container{
+				height: 100%;
+			}
 		}
 		.dropdown-toggle{ 
 		/*#965 Responsive layout: 
@@ -1153,7 +1157,8 @@ $breakpoint_tablet: 979px;
 		  } 
 		#nav.open{
 			display: block;
-			height: auto;
+			height: 100%;
+			overflow-y: scroll;
 		    transition: all .1s ease-in-out;
 		}
 		#nav{
