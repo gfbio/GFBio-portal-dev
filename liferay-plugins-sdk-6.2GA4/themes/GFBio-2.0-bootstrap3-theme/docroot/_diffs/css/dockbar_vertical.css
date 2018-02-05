@@ -385,12 +385,7 @@ $dockbarVerticalWidth: 240px;
 			}
 		}
 	}
-	  /* https://project.gfbio.org/issues/1288 */ 
-	  /* no GFBio logo in the phone view and therefore 
-	     no way to go back to the start page */
-  	.homeMenu{
-		display: none !important; 
-	}
+	
 }
 
 /* ---------- Classic Dockbar Responsive Styles ---------- */
@@ -589,12 +584,6 @@ $dockbarVerticalWidth: 240px;
 		  #nav{
 		  	margin: 0px;
 		  }
-		  /* https://project.gfbio.org/issues/1288 */ 
-		  /* no GFBio logo in the phone view and therefore 
-		     no way to go back to the start page */
-		  .homeMenu{
- 			display: block !important; 
- 		  }
 
 		}
 		

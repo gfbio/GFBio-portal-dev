@@ -1094,7 +1094,6 @@ Liferay fixes - content
 } 
 	
 
-
 /*=====================================================
  Responsive: Navbar
 =======================================================*/
@@ -1110,6 +1109,13 @@ $breakpoint_tablet: 979px;
 		#nav{
 			display: block;
 		}
+	  /* https://project.gfbio.org/issues/1288 */ 
+	  /* no GFBio logo in the phone view and therefore 
+	     no way to go back to the start page */
+		.homeMenu{
+			display: none !important; 
+		}
+
 	}
 } 
 // TABLETS AND BELOW
@@ -1124,6 +1130,12 @@ $breakpoint_tablet: 979px;
 				height: 100%;
 			}
 		}
+	  /* https://project.gfbio.org/issues/1288 */ 
+	  /* no GFBio logo in the phone view and therefore 
+	     no way to go back to the start page */
+		.homeMenu{
+ 			display: block !important; 
+ 		}
 		.dropdown-toggle{ 
 		/*#965 Responsive layout: 
 		second tier menu is not working on mobile device*/
