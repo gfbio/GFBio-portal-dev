@@ -47,10 +47,14 @@ AUI().ready(
 
 						// toggle navigation menu when dockbar icon is clicked
 						var navigationDiv = $('#nav');
-	                	if (navigationDiv.hasClass('open')){
-	                		navigationDiv.removeClass('open');
-	                		navigationDiv.addClass('hide');
-	                	}
+						var navigationHeader = $('#navigation');
+						var body = $('body');
+          	if (navigationDiv.hasClass('open')){
+          		navigationDiv.removeClass('open');
+          		navigationDiv.addClass('hide');
+							body.css("overflow-y","unset");
+							navigationHeader.css("height","unset");
+          	}
 					}
 				);
 			}
@@ -192,7 +196,12 @@ AUI().ready(
 		        		navigationDiv.removeClass('open');
 		        		navigationDiv.addClass('hide');
 						body.removeClass('lfr-has-dockbar-vertical');
-		        	}else{
+
+    				/*https://project.gfbio.org/issues/1288*/
+    				/*scrolling moves the page in the background*/
+    				body.css("overflow-y","unset");
+    				navigationHeader.css("height","unset");
+		      }else{
 		        		// expand the menu bar 
 		        		menuToggleBtn.addClass('open');
 		        		navigationDiv.addClass('open');
@@ -201,12 +210,15 @@ AUI().ready(
 						var portletDockbar = $('#_145_dockbar');
 						if (portletDockbar){
 							portletDockbar.removeClass('over');
-		        		}
-						body.removeClass('lfr-has-dockbar-vertical');
-		        	}
 		        }
-		        
-		    );
+				body.removeClass('lfr-has-dockbar-vertical');
+
+				/*https://project.gfbio.org/issues/1288*/
+				/*scrolling moves the page in the background*/
+				body.css("overflow-y","hidden");
+				navigationHeader.css("height","85%");
+		    }
+		  });
 
 		/*
 		 * #965 Responsive layout: second tier menu is not working on mobile
@@ -231,14 +243,29 @@ AUI().ready(
 		//ignore click event on first level menu when using a mobile layout
 		$('a.dropdown-toggle').on('click', function() {
 			if ($(document).width() <= 979){
-				return false;
+
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr !== typeof undefined && attr){
+					console.log('this menu has sub-menu.');
+					return false;
+				}else{
+					return true;
+
 				}
-			});
+
+			}
+		});
 		var timeout = 0;
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
 	    	// listen to double tap event when using a mobile layout
 			if ($(document).width() <= 979){
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
+				}else{
+					console.log('this menu has sub-menu.');
+				}
 			    var currentTime = new Date().getTime();
 			    var tapLength = currentTime - lastTap;
 			    clearTimeout(timeout);
@@ -262,11 +289,11 @@ AUI().ready(
 		});
     }
 		// clear all the extension class from mobile responsive layout
-		window.onresize = function(event) {
+		/*window.onresize = function(event) {
 		    var navigationDiv = $('#nav'); // get default navigation ul element
 		    navigationDiv.removeClass('hide');
 		    navigationDiv.removeClass('open');
-		};	
+		};	*/
 	}
 );
 //------------- End responsive menu class------------------//

@@ -32,44 +32,35 @@ AUI().ready(
 						// .fa .fa-user');
 
 						if (toggleDockbar) {
-							toggleDockbar
-									.on(
-											'click',
-											function() {
-												if (portletDockbar
-														.hasClass('over')) {
-													portletDockbar
-															.removeClass('over');
-													toggleDockbar
-															.removeClass('over');
-													body
-															.removeClass('lfr-has-dockbar-vertical');
-												} else {
-													portletDockbar
-															.addClass('over');
-													toggleDockbar
-															.addClass('over');
-													body
-															.addClass('lfr-has-dockbar-vertical');
-												}
+							toggleDockbar.on('click',function() {
+								if (portletDockbar.hasClass('over')) {
+									portletDockbar.removeClass('over');
+									toggleDockbar.removeClass('over');
+									body.removeClass('lfr-has-dockbar-vertical');
+								} else {
+									portletDockbar.addClass('over');
+									toggleDockbar.addClass('over');
+									body.addClass('lfr-has-dockbar-vertical');
+								}
 
-												// this code return error,
-												// consider to remove it
-												// toggleDockbarIcon.toggleClass('icon-remove');
-												// toggleDockbarIcon.toggleClass('fa
-												// fa-user');
+								// this code return error,
+								// consider to remove it
+								// toggleDockbarIcon.toggleClass('icon-remove');
+								// toggleDockbarIcon.toggleClass('fa
+								// fa-user');
 
-												// toggle navigation menu when
-												// dockbar icon is clicked
-												var navigationDiv = $('#nav');
-												if (navigationDiv
-														.hasClass('open')) {
-													navigationDiv
-															.removeClass('open');
-													navigationDiv
-															.addClass('hide');
-												}
-											});
+								// toggle navigation menu when
+								// dockbar icon is clicked
+								var navigationDiv = $('#nav');
+								var navigationHeader = $('#navigation');
+								var body = $('body');
+								if (navigationDiv.hasClass('open')) {
+									navigationDiv.removeClass('open');
+									navigationDiv.addClass('hide');
+									body.css("overflow-y","unset");
+									navigationHeader.css("height","unset");
+								}
+							});
 						}
 					}
 					;
@@ -77,27 +68,31 @@ AUI().ready(
 
 // ------------- Responsive menu class------------------//
 AUI().ready(function() {
-	var menuToggleBtn = $('#responsiveMenuToggle'); // get our
-	// toggle
-	// button
-	var navigationDiv = $('#nav'); // get default navigation
-	// div element
-	var body = $('.aui body');
+	// get our toggle button
+	var menuToggleBtn = $('#responsiveMenuToggle'); 
+	// get default navigation div element
+	var navigationDiv = $('#nav'); 
+	var navigationHeader = $('#navigation');
+	var body = $('body');
 	if (menuToggleBtn && navigationDiv) {
 		// do nothing when toggle button not present (user not
-		// signed in) or if
-		// navigation is not present
+		// signed in) or if navigation is not present
 		// otherwise assign simple function that'll toggle
-		// 'open' menu class on
-		// default navigation which will cause it to open, same
-		// for menu toggle
-		// button
+		// 'open' menu class on default navigation
+		// which will cause it to open, same
+		// for menu toggle button
 		menuToggleBtn.on('click', function(event) {
 			if (navigationDiv.hasClass('open')) {
+				// hide menu bar
 				menuToggleBtn.removeClass('open');
 				navigationDiv.removeClass('open');
 				navigationDiv.addClass('hide');
+				
 				body.removeClass('lfr-has-dockbar-vertical');
+				/*https://project.gfbio.org/issues/1288*/
+				/*scrolling moves the page in the background*/
+				body.css("overflow-y","unset");
+				navigationHeader.css("height","unset");
 			} else {
 				// expand the menu bar
 				menuToggleBtn.addClass('open');
@@ -108,11 +103,15 @@ AUI().ready(function() {
 				if (portletDockbar) {
 					portletDockbar.removeClass('over');
 				}
+				
 				body.removeClass('lfr-has-dockbar-vertical');
+				/*https://project.gfbio.org/issues/1288*/
+				/*scrolling moves the page in the background*/
+				body.css("overflow-y","hidden");
+				navigationHeader.css("height","85%");
 			}
-		}
-
-		);
+		});
+		
 		/*
 		 * #965 Responsive layout: second tier menu is not working on mobile
 		 * device
@@ -124,26 +123,38 @@ AUI().ready(function() {
 		});
 		$('.dropdown').on('tap', function() {
 			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
+				$(this).toggleClass("open");
 			}
 		});
 		$('.dropdown').on('click', function() {
 			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
+				$(this).toggleClass("open");
 			}
 		});
 		
 		//ignore click event on first level menu when using a mobile layout
 		$('a.dropdown-toggle').on('click', function() {
 			if ($(document).width() <= 979){
-				return false;
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr !== typeof undefined && attr){
+					console.log('this menu has sub-menu.');
+					return false;
+				}else{
+					return true;
 				}
-			});
+			}
+		});
 		var timeout = 0;
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
 	    	// listen to double tap event when using a mobile layout
 			if ($(document).width() <= 979){
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
+				}else{
+					console.log('this menu has sub-menu.');
+				}
 			    var currentTime = new Date().getTime();
 			    var tapLength = currentTime - lastTap;
 			    clearTimeout(timeout);
@@ -166,14 +177,18 @@ AUI().ready(function() {
 	        return false;
 		});
 	}
-	// clear all the extension class from mobile responsive
-	// layout
-	window.onresize = function(event) {
+	// clear all the extension class from 
+	// mobile responsive layout
+	/*window.onresize = function(event) {
 		var navigationDiv = $('#nav'); // get default
 		// navigation ul element
 		navigationDiv.removeClass('hide');
 		navigationDiv.removeClass('open');
-	};
+		var navigationHeader = $('#navigation');
+		var body = $('body');
+		body.css("overflow-y","unset");
+		navigationHeader.css("height","unset");
+	};*/
 	
     // show citation on printable page
     if (document.getElementById("printOnly") != null){

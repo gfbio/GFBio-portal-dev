@@ -123,26 +123,36 @@ AUI().ready(function() {
 		});
 		$('.dropdown').on('tap', function() {
 			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
+				$(this).toggleClass("open");
 			}
 		});
 		$('.dropdown').on('click', function() {
 			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
+				$(this).toggleClass("open");
 			}
 		});
 		
 		//ignore click event on first level menu when using a mobile layout
 		$('a.dropdown-toggle').on('click', function() {
 			if ($(document).width() <= 979){
-				return false;
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr !== typeof undefined && attr){
+					console.log('this menu has sub-menu.');
+					return false;
+				}else{
+					return true;
 				}
-			});
+			}
+		});
 		var timeout = 0;
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
 	    	// listen to double tap event when using a mobile layout
 			if ($(document).width() <= 979){
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
+				}
 			    var currentTime = new Date().getTime();
 			    var tapLength = currentTime - lastTap;
 			    clearTimeout(timeout);
@@ -193,11 +203,11 @@ AUI().ready(function() {
         }
         url = url.split("/-/")[0];
 
+        var pageTitle = $(document).find("title").text();
         var printFooter = "<div class='by-nc'></div>"
         	+"<p>Recommended citation:</br>German Federation for Biological Data ("+y
-        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet." //TODO: add  „[page name]“ before full stop.
+        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet:"+pageTitle+"." 
         	+" Retrieved "+date+" from "+url+".</p>";
-
         document.getElementById("printOnly").innerHTML=printFooter;
     }
 }
