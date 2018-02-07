@@ -197,42 +197,58 @@ AUI().ready(function(){
 
 				/*https://project.gfbio.org/issues/1288*/
 				/*scrolling moves the page in the background*/
-				body.css("overflow-y","hidden");
-				navigationHeader.css("height","85%");
-		    }
-		  });
-
+				var mq = window.matchMedia('@media phone');
+				if(mq.matches) {
+					console.log("Vertical Menu");
+					body.css("overflow-y","hidden");
+					navigationHeader.css("height","85vh");
+				} else {
+					console.log("Horizontal Menu");
+				}
+			}
+		});
+		
 		/*
 		 * #965 Responsive layout: second tier menu is not working on mobile
 		 * device
 		 */
-		$('.dropdown').on('mouseenter mouseleave', function() {
-				$(this).toggleClass("open");
+		$('.dropdown-toggle').on('mouseenter', function() {
+			var thisIsOpen = $(this).parent().hasClass('open');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass('open');
+			if (!thisIsOpen){
+				$(this).parent().addClass("open");
+			}else{
+				$(this).parent().removeClass("open");
+			}
 		});
 		$('.dropdown').on('tap', function() {
-			// close all opened dropdown
+			console.log('dropdown tapped.');
+			/*// close all opened dropdown
 			var thisIsOpen = $(this).hasClass('open');
 			var openDropdown = $('.dropdown.open');
 			openDropdown.removeClass('open');
-			
-			console.log('dropdown tapped.');
+//			
 			var attr = $(this).find('.dropdown-toggle').attr('aria-haspopup');
 			if (typeof attr !== typeof undefined && attr){
 				if (!thisIsOpen){
-					$(this).parent().addClass("open");
+					$(this).addClass("open");
 				}else{
-					$(this).parent().removeClass("open");
+					$(this).removeClass("open");
 				}
 				return false;
 			}else{
 				return true;
-			}
+			}*/
 		});
-
+		$('.dropdown').on('touchstart', function() {
+				console.log('dropdown touchstart.');
+		});
+		
 		//ignore click event on first level menu when using a mobile layout
-		$('a.dropdown-toggle').on('click', function() {
-			var thisIsOpen = $(this).hasClass('open');
-			console.log('dropdown-toggle clicked.');
+/*		$('a.dropdown-toggle').on('click', function() {
+			var thisIsOpen = $(this).parent().hasClass('open');
+//			console.log('dropdown-toggle clicked.');
 			var openDropdown = $('.dropdown.open');
 			openDropdown.removeClass("open");
 
@@ -270,7 +286,15 @@ AUI().ready(function(){
 			        return true; 
 			    }else{
 			    	// this is one time tap
-					  //$(this).parent().toggleClass("open");
+					//$(this).parent().toggleClass("open");
+					var thisIsOpen = $(this).parent().hasClass('open');
+					var openDropdown = $('.dropdown.open');
+					openDropdown.removeClass('open');
+					if (!thisIsOpen){
+						$(this).parent().addClass("open");
+					}else{
+						$(this).parent().removeClass("open");
+					}
 			    	timeout = setTimeout(function() {
 			            // set timeout after the first tap
 			            clearTimeout(timeout);
@@ -280,6 +304,7 @@ AUI().ready(function(){
 			    lastTap = currentTime; 
 	        return false;
 		});
+	}
     }
 		// clear all the extension class from
     // mobile responsive layout
