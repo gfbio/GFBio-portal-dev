@@ -20,14 +20,11 @@ AUI().ready(
 
 					if (portletDockbar) {
 						var body = A.one('.aui body');
-						body
-								.append('<div class="icon-toggle-dockbar vertical-dockbar-close"><i class="fa fa-user"></i></div>');
-						body
-								.append('<div class="layer-mobile visible-phone vertical-dockbar-close"></div>');
+						body.append('<div class="icon-toggle-dockbar vertical-dockbar-close"><i class="fa fa-user"></i></div>');
+						body.append('<div class="layer-mobile visible-phone vertical-dockbar-close"></div>');
 
 						var toggleDockbar = A.one('.icon-toggle-dockbar');
-						var toggleDockbarClose = A
-								.one('.vertical-dockbar-close');
+						var toggleDockbarClose = A.one('.vertical-dockbar-close');
 						// var toggleDockbarIcon = A.one('.icon-toggle-dockbar
 						// .fa .fa-user');
 
@@ -62,8 +59,7 @@ AUI().ready(
 								}
 							});
 						}
-					}
-					;
+					};
 				});
 
 // ------------- Responsive menu class------------------//
@@ -107,8 +103,14 @@ AUI().ready(function() {
 				body.removeClass('lfr-has-dockbar-vertical');
 				/*https://project.gfbio.org/issues/1288*/
 				/*scrolling moves the page in the background*/
-				body.css("overflow-y","hidden");
-				navigationHeader.css("height","85%");
+				var mq = window.matchMedia('@media phone');
+				if(mq.matches) {
+					console.log("Vertical Menu");
+					body.css("overflow-y","hidden");
+					navigationHeader.css("height","85vh");
+				} else {
+					console.log("Horizontal Menu");
+				}
 			}
 		});
 		
@@ -116,39 +118,64 @@ AUI().ready(function() {
 		 * #965 Responsive layout: second tier menu is not working on mobile
 		 * device
 		 */
-		$('.dropdown').on('mouseenter mouseleave', function() {
-			if ($(document).width() > 979){
-				$(this).toggleClass("open");
+		$('.dropdown-toggle').on('mouseenter', function() {
+			var thisIsOpen = $(this).parent().hasClass('open');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass('open');
+			if (!thisIsOpen){
+				$(this).parent().addClass("open");
+			}else{
+				$(this).parent().removeClass("open");
 			}
 		});
 		$('.dropdown').on('tap', function() {
-			if ($(document).width() <= 979){
-				$(this).toggleClass("open");
-			}
+			console.log('dropdown tapped.');
+			/*// close all opened dropdown
+			var thisIsOpen = $(this).hasClass('open');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass('open');
+//			
+			var attr = $(this).find('.dropdown-toggle').attr('aria-haspopup');
+			if (typeof attr !== typeof undefined && attr){
+				if (!thisIsOpen){
+					$(this).addClass("open");
+				}else{
+					$(this).removeClass("open");
+				}
+//				$(this).toggleClass("open");
+				return false;
+			}else{
+				return true;
+			}*/
 		});
-		$('.dropdown').on('click', function() {
-			if ($(document).width() <= 979){
-				$(this).toggleClass("open");
-			}
+		$('.dropdown').on('touchstart', function() {
+				console.log('dropdown touchstart.');
 		});
 		
 		//ignore click event on first level menu when using a mobile layout
-		$('a.dropdown-toggle').on('click', function() {
-			if ($(document).width() <= 979){
+/*		$('a.dropdown-toggle').on('click', function() {
+			var thisIsOpen = $(this).parent().hasClass('open');
+//			console.log('dropdown-toggle clicked.');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass("open");
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr !== typeof undefined && attr){
-					console.log('this menu has sub-menu.');
+					if (!thisIsOpen){
+						$(this).parent().addClass("open");
+					}else{
+						$(this).parent().removeClass("open");
+					}
+//					$(this).parent().toggleClass("open");
 					return false;
 				}else{
 					return true;
 				}
-			}
-		});
+		});*/
 		var timeout = 0;
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
+			console.log('dropdown-toggle touchstart.');
 	    	// listen to double tap event when using a mobile layout
-			if ($(document).width() <= 979){
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr == typeof undefined || !attr){
 					return true;
@@ -156,14 +183,21 @@ AUI().ready(function() {
 			    var currentTime = new Date().getTime();
 			    var tapLength = currentTime - lastTap;
 			    clearTimeout(timeout);
-		    	
 			    if (tapLength < 500 && tapLength > 0) {
 			    	// this is two times tap 
 			        window.location = this.href;
 			        return true; 
 			    }else{
 			    	// this is one time tap
-					$(this).parent().toggleClass("open");
+					//$(this).parent().toggleClass("open");
+					var thisIsOpen = $(this).parent().hasClass('open');
+					var openDropdown = $('.dropdown.open');
+					openDropdown.removeClass('open');
+					if (!thisIsOpen){
+						$(this).parent().addClass("open");
+					}else{
+						$(this).parent().removeClass("open");
+					}
 			    	timeout = setTimeout(function() {
 			            // set timeout after the first tap
 			            clearTimeout(timeout);
@@ -171,15 +205,14 @@ AUI().ready(function() {
 			        }, 500);
 			    }
 			    lastTap = currentTime; 
-			}
 	        return false;
 		});
 	}
 	// clear all the extension class from 
 	// mobile responsive layout
 	/*window.onresize = function(event) {
-		var navigationDiv = $('#nav'); // get default
-		// navigation ul element
+		var navigationDiv = $('#nav'); 
+		// get default navigation ul element
 		navigationDiv.removeClass('hide');
 		navigationDiv.removeClass('open');
 		var navigationHeader = $('#navigation');
@@ -204,9 +237,10 @@ AUI().ready(function() {
         url = url.split("/-/")[0];
 
         var pageTitle = $(document).find("title").text();
+        pageTitle = pageTitle.substring(0, pageTitle.indexOf(' - GFBio'));
         var printFooter = "<div class='by-nc'></div>"
         	+"<p>Recommended citation:</br>German Federation for Biological Data ("+y
-        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet:"+pageTitle+"." 
+        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet: "+pageTitle+"." 
         	+" Retrieved "+date+" from "+url+".</p>";
         document.getElementById("printOnly").innerHTML=printFooter;
     }

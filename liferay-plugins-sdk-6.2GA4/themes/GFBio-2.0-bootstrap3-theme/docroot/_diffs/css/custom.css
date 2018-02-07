@@ -1099,7 +1099,7 @@ Liferay fixes - content
 =======================================================*/
 @import "mixins";
 $breakpoint_phone: 768px;
-$breakpoint_tablet: 979px;
+$breakpoint_tablet: 1200px;
 
 @include respond-to(screens) {
 	.aui{
@@ -1118,14 +1118,133 @@ $breakpoint_tablet: 979px;
 
 	}
 } 
-// TABLETS AND BELOW
+// TABLETS 
 // -----------------
-@include respond-to(phone, tablet) {
+@include respond-to(tablet) {
 	.aui {
 		 #navigation{ 
 			display: block;
 			margin-top:60px;
+			/*https://project.gfbio.org/issues/1288
+			  x on sign-in page overlay the menu*/
+			z-index:2000;
+		}
+	  /* https://project.gfbio.org/issues/1288 */ 
+	  /* no GFBio logo in the phone view and therefore 
+	     no way to go back to the start page */
+		.homeMenu{
+ 			display: block !important; 
+ 		}
+		.dropdown-toggle{ 
+		/*#965 Responsive layout: 
+		second tier menu is not working on mobile device*/
+			display:inline-block !important;
+			width:100%;
+		}
+		.icon-toggle-dockbar{
+			margin-top: 20px!important;
+			float:left;
+		}
+		.icon-toggle-menu {
+		    display: block; 
+			width: 40px;
+			height: 40px;
+			margin: 4px;
+			padding: 6px;
+			position: fixed;
+			top: 5px;
+			right: 20px;
+			float: right;
+			margin-top: 20px;
+		    border-radius: 4px;
+		    color: #666;
+		    cursor: pointer;
+		    font-size: 25px;
+		    text-align: center;
+		    z-index: 9999;
+		    background: #fff;
+		    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+		    transition: all .1s ease-in-out;
+		  } 
+		#nav.open{
+			display: block;
+			height: 100%;
+			overflow-y: unset;
+		    transition: all .1s ease-in-out;
+		  	margin-left: 0em;
+		}
+		#nav{
+			display: none; 
+		  	background:#fff;	
+		  	opacity: 0.92;
+		}
+		.navbar-inverse .navbar-collapse {
+			border: none;
+		} 
+		.navbar-fixed-top .navbar-collapse{
+			height: auto;
+			max-height: none !important;
+		}
+		.navbar-brand{
+			display: none;
+
+		}
+	
+		#sign-in-link{
+			display: block;
+			position: fixed;
+			top: 0px;
+			right: 0px;
+			margin-right: 80px;
+		}
+		.icon-toggle-dockbar{
+			top: 5px !important;
+		}
+		body{
 			
+			
+			h1{
+			
+			font-size: 30px;
+			font-weight:300;
+			
+			}
+			
+			h2{
+				font-size: 24px;
+				font-weight:300;
+			}
+			
+			h3 {
+				font-size: 20px;
+				font-weight:300;
+			}
+			
+			h4 {
+				font-size: 16px;
+				font-weight:400;
+			} 
+		
+		}
+		.span8, .span4{
+           width: 100%;
+       }
+       
+      
+		
+		 
+	}
+}
+// Phone
+// -----------------
+@include respond-to(phone) {
+	.aui {
+		 #navigation{ 
+			display: block;
+			margin-top:60px;
+			/*https://project.gfbio.org/issues/1288
+			  x on sign-in page overlay the menu*/
+			z-index:2000;
 			.container{
 				height: 100%;
 			}
@@ -1140,7 +1259,7 @@ $breakpoint_tablet: 979px;
 		/*#965 Responsive layout: 
 		second tier menu is not working on mobile device*/
 			display:inline-block !important;
-			width:auto;
+			width:100%;
 		}
 		.icon-toggle-dockbar{
 			margin-top: 20px!important;
@@ -1233,7 +1352,6 @@ $breakpoint_tablet: 979px;
 		 
 	}
 }
-
 /*****************************************************
 Liferay specific classes
 *****************************************************/

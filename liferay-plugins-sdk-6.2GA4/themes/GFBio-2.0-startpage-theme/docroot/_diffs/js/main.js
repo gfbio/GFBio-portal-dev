@@ -28,9 +28,7 @@ AUI().ready(
 //			var toggleDockbarIcon = A.one('.icon-toggle-dockbar .fa .fa-user');
 
 			if (toggleDockbar) {
-				toggleDockbar.on(
-					'click',
-					function() {
+				toggleDockbar.on('click',function() {
 						if (portletDockbar.hasClass('over')){
 							portletDockbar.removeClass('over');
 							toggleDockbar.removeClass('over');	
@@ -49,28 +47,18 @@ AUI().ready(
 						var navigationDiv = $('#nav');
 						var navigationHeader = $('#navigation');
 						var body = $('body');
-          	if (navigationDiv.hasClass('open')){
-          		navigationDiv.removeClass('open');
-          		navigationDiv.addClass('hide');
-							body.css("overflow-y","unset");
-							navigationHeader.css("height","unset");
-          	}
-					}
-				);
+			          	if (navigationDiv.hasClass('open')){
+			          		navigationDiv.removeClass('open');
+			          		navigationDiv.addClass('hide');
+										body.css("overflow-y","unset");
+										navigationHeader.css("height","unset");
+			          	}
+					});
 			}
 		};
-		
-	}
-	
-	
+	});
 
-
-);
-
-AUI().ready(
-
-
-	    function() {
+AUI().ready(function() {
 	    	var wow = new WOW({
 			    offset: 75,          // distance to the element when triggering the animation (default is 0)
 			    mobile: false,       // trigger animations on mobile devices (default is true)
@@ -81,9 +69,7 @@ AUI().ready(
 	    }
 	);
 
-AUI().ready(
-		
-		function(){
+AUI().ready(function(){
 			/* TODO: put this back in if slider */
 			$("#works, #testimonial").owlCarousel({
 			    navigation: true,
@@ -98,10 +84,7 @@ AUI().ready(
 );
 	
 
-AUI().ready(
-		
-		function(){
-			
+AUI().ready(function(){
 			 /* ========================================================================= */
 		    /*	Featured Project Lightbox
 		     /* ========================================================================= */
@@ -181,16 +164,15 @@ AUI().ready(
 });
 
 //------------- Responsive menu class------------------//
-AUI().ready(
-	function(){
+AUI().ready(function(){
 		var menuToggleBtn = $('#responsiveMenuToggle'); // get our toggle button
 		var navigationDiv = $('#nav'); // get default navigation div element
-		var body = $('.aui body');
+		var navigationHeader = $('#navigation');
+		var body = $('body');
 		if (menuToggleBtn && navigationDiv) { 
 		// do nothing when toggle button not present (user not signed in) or if navigation is not present
 		// otherwise assign simple function that'll toggle 'open' menu class on default navigation which will cause it to open, same for menu toggle button
-			menuToggleBtn.on('click',
-		        function (event) {
+			menuToggleBtn.on('click', function (event) {
 		        	if (navigationDiv.hasClass('open')){
 		        		menuToggleBtn.removeClass('open');
 		        		navigationDiv.removeClass('open');
@@ -225,46 +207,58 @@ AUI().ready(
 		 * device
 		 */
 		$('.dropdown').on('mouseenter mouseleave', function() {
-			if ($(document).width() > 979){
 				$(this).toggleClass("open");
-			}
 		});
 		$('.dropdown').on('tap', function() {
-			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
-			}
-		});
-		$('.dropdown').on('click', function() {
-			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
+			// close all opened dropdown
+			var thisIsOpen = $(this).hasClass('open');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass('open');
+			
+			console.log('dropdown tapped.');
+			var attr = $(this).find('.dropdown-toggle').attr('aria-haspopup');
+			if (typeof attr !== typeof undefined && attr){
+				if (!thisIsOpen){
+					$(this).parent().addClass("open");
+				}else{
+					$(this).parent().removeClass("open");
+				}
+				return false;
+			}else{
+				return true;
 			}
 		});
 
 		//ignore click event on first level menu when using a mobile layout
 		$('a.dropdown-toggle').on('click', function() {
-			if ($(document).width() <= 979){
+			var thisIsOpen = $(this).hasClass('open');
+			console.log('dropdown-toggle clicked.');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass("open");
+
 
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr !== typeof undefined && attr){
-					console.log('this menu has sub-menu.');
+					if (!thisIsOpen){
+						$(this).parent().addClass("open");
+					}else{
+						$(this).parent().removeClass("open");
+					}
 					return false;
 				}else{
 					return true;
 
 				}
 
-			}
 		});
 		var timeout = 0;
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
+			console.log('dropdown-toggle touchstart.');
 	    	// listen to double tap event when using a mobile layout
-			if ($(document).width() <= 979){
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr == typeof undefined || !attr){
 					return true;
-				}else{
-					console.log('this menu has sub-menu.');
 				}
 			    var currentTime = new Date().getTime();
 			    var tapLength = currentTime - lastTap;
@@ -276,7 +270,7 @@ AUI().ready(
 			        return true; 
 			    }else{
 			    	// this is one time tap
-					$(this).parent().toggleClass("open");
+					  //$(this).parent().toggleClass("open");
 			    	timeout = setTimeout(function() {
 			            // set timeout after the first tap
 			            clearTimeout(timeout);
@@ -284,13 +278,14 @@ AUI().ready(
 			        }, 500);
 			    }
 			    lastTap = currentTime; 
-			}
 	        return false;
 		});
     }
-		// clear all the extension class from mobile responsive layout
+		// clear all the extension class from
+    // mobile responsive layout
 		/*window.onresize = function(event) {
-		    var navigationDiv = $('#nav'); // get default navigation ul element
+		    var navigationDiv = $('#nav'); 
+        // get default navigation ul element
 		    navigationDiv.removeClass('hide');
 		    navigationDiv.removeClass('open');
 		};	*/
