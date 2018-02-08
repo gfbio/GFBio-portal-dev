@@ -1124,7 +1124,7 @@ $breakpoint_tablet: 1200px;
 	.aui {
 		 #navigation{ 
 			display: block;
-			margin-top:60px;
+			margin-top:0px !important;
 			/*https://project.gfbio.org/issues/1288
 			  x on sign-in page overlay the menu*/
 			z-index:2000;
@@ -1177,6 +1177,9 @@ $breakpoint_tablet: 1200px;
 			display: none; 
 		  	background:#fff;	
 		  	opacity: 0.92;
+		}
+		#nav-left {
+		    padding-right: 50px;
 		}
 		.navbar-inverse .navbar-collapse {
 			border: none;

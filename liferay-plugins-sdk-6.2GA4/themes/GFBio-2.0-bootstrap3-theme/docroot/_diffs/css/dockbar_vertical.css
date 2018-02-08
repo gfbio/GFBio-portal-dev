@@ -388,6 +388,8 @@ $dockbarVerticalWidth: 240px;
 	
 }
 
+$breakpoint_phone: 768px;
+$breakpoint_tablet: 1200px;
 /* ---------- Classic Dockbar Responsive Styles ---------- */
 
 @include respond-to(phone, tablet) {

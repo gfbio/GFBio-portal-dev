@@ -197,8 +197,7 @@ AUI().ready(function(){
 
 				/*https://project.gfbio.org/issues/1288*/
 				/*scrolling moves the page in the background*/
-				var mq = window.matchMedia('@media phone');
-				if(mq.matches) {
+				if($(document).width()<768) {
 					console.log("Vertical Menu");
 					body.css("overflow-y","hidden");
 					navigationHeader.css("height","85vh");
@@ -224,49 +223,26 @@ AUI().ready(function(){
 		});
 		$('.dropdown').on('tap', function() {
 			console.log('dropdown tapped.');
-			/*// close all opened dropdown
-			var thisIsOpen = $(this).hasClass('open');
-			var openDropdown = $('.dropdown.open');
-			openDropdown.removeClass('open');
-//			
-			var attr = $(this).find('.dropdown-toggle').attr('aria-haspopup');
-			if (typeof attr !== typeof undefined && attr){
-				if (!thisIsOpen){
-					$(this).addClass("open");
-				}else{
-					$(this).removeClass("open");
-				}
-				return false;
-			}else{
-				return true;
-			}*/
 		});
 		$('.dropdown').on('touchstart', function() {
 				console.log('dropdown touchstart.');
 		});
-		
-		//ignore click event on first level menu when using a mobile layout
-/*		$('a.dropdown-toggle').on('click', function() {
-			var thisIsOpen = $(this).parent().hasClass('open');
-//			console.log('dropdown-toggle clicked.');
-			var openDropdown = $('.dropdown.open');
-			openDropdown.removeClass("open");
 
-
+		//ignore click event when using a touch device
+		$('a.dropdown-toggle').on('click', function(event) {
+			console.log('dropdown-toggle clicked.');
+			var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+			if (supportsTouch){
+				// if this item has no children, propagate to the link
 				var attr = $(this).attr('aria-haspopup');
-				if (typeof attr !== typeof undefined && attr){
-					if (!thisIsOpen){
-						$(this).parent().addClass("open");
-					}else{
-						$(this).parent().removeClass("open");
-					}
-					return false;
-				}else{
+				if (typeof attr == typeof undefined || !attr){
 					return true;
-
 				}
-
+				event.preventDefault();
+				event.stopPropagation();
+			}
 		});
+		
 		var timeout = 0;
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
@@ -314,7 +290,6 @@ AUI().ready(function(){
 		    navigationDiv.removeClass('hide');
 		    navigationDiv.removeClass('open');
 		};	*/
-	}
 );
 //------------- End responsive menu class------------------//
 

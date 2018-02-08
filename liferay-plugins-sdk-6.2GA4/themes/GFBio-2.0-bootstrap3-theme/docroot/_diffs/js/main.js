@@ -103,8 +103,8 @@ AUI().ready(function() {
 				body.removeClass('lfr-has-dockbar-vertical');
 				/*https://project.gfbio.org/issues/1288*/
 				/*scrolling moves the page in the background*/
-				var mq = window.matchMedia('@media phone');
-				if(mq.matches) {
+				console.log($(document).width());
+				if($(document).width()<768) {
 					console.log("Vertical Menu");
 					body.css("overflow-y","hidden");
 					navigationHeader.css("height","85vh");
@@ -130,81 +130,60 @@ AUI().ready(function() {
 		});
 		$('.dropdown').on('tap', function() {
 			console.log('dropdown tapped.');
-			/*// close all opened dropdown
-			var thisIsOpen = $(this).hasClass('open');
-			var openDropdown = $('.dropdown.open');
-			openDropdown.removeClass('open');
-//			
-			var attr = $(this).find('.dropdown-toggle').attr('aria-haspopup');
-			if (typeof attr !== typeof undefined && attr){
-				if (!thisIsOpen){
-					$(this).addClass("open");
-				}else{
-					$(this).removeClass("open");
-				}
-//				$(this).toggleClass("open");
-				return false;
-			}else{
-				return true;
-			}*/
 		});
 		$('.dropdown').on('touchstart', function() {
-				console.log('dropdown touchstart.');
+			console.log('dropdown touchstart.');
 		});
 		
-		//ignore click event on first level menu when using a mobile layout
-/*		$('a.dropdown-toggle').on('click', function() {
-			var thisIsOpen = $(this).parent().hasClass('open');
-//			console.log('dropdown-toggle clicked.');
-			var openDropdown = $('.dropdown.open');
-			openDropdown.removeClass("open");
-				var attr = $(this).attr('aria-haspopup');
-				if (typeof attr !== typeof undefined && attr){
-					if (!thisIsOpen){
-						$(this).parent().addClass("open");
-					}else{
-						$(this).parent().removeClass("open");
-					}
-//					$(this).parent().toggleClass("open");
-					return false;
-				}else{
-					return true;
-				}
-		});*/
-		var timeout = 0;
-		var lastTap = 0;
-		$('a.dropdown-toggle').on('touchstart', function() {
-			console.log('dropdown-toggle touchstart.');
-	    	// listen to double tap event when using a mobile layout
+		//ignore click event when using a touch device
+		$('a.dropdown-toggle').on('click', function(event) {
+			console.log('dropdown-toggle clicked.');
+			var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+			if (supportsTouch){
+				// if this item has no children, propagate to the link
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr == typeof undefined || !attr){
 					return true;
 				}
-			    var currentTime = new Date().getTime();
-			    var tapLength = currentTime - lastTap;
-			    clearTimeout(timeout);
-			    if (tapLength < 500 && tapLength > 0) {
-			    	// this is two times tap 
-			        window.location = this.href;
-			        return true; 
-			    }else{
-			    	// this is one time tap
-					//$(this).parent().toggleClass("open");
-					var thisIsOpen = $(this).parent().hasClass('open');
-					var openDropdown = $('.dropdown.open');
-					openDropdown.removeClass('open');
-					if (!thisIsOpen){
-						$(this).parent().addClass("open");
-					}else{
-						$(this).parent().removeClass("open");
-					}
-			    	timeout = setTimeout(function() {
-			            // set timeout after the first tap
-			            clearTimeout(timeout);
-				        return false;
-			        }, 500);
-			    }
-			    lastTap = currentTime; 
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		});
+		
+		var timeout = 0;
+		var lastTap = 0;
+		$('a.dropdown-toggle').on('touchstart', function(event) {
+			console.log('dropdown-toggle touchstart.');
+	    	// listen to double tap event when using a mobile layout
+			var attr = $(this).attr('aria-haspopup');
+			if (typeof attr == typeof undefined || !attr){
+				return true;
+			}
+		    var currentTime = new Date().getTime();
+		    var tapLength = currentTime - lastTap;
+		    clearTimeout(timeout);
+		    if (tapLength < 500 && tapLength > 0) {
+		    	// this is two times tap 
+		        window.location = this.href;
+		        return true; 
+		    }else{
+		    	// this is one time tap
+				//$(this).parent().toggleClass("open");
+				var thisIsOpen = $(this).parent().hasClass('open');
+				var openDropdown = $('.dropdown.open');
+				openDropdown.removeClass('open');
+				if (!thisIsOpen){
+					$(this).parent().addClass("open");
+				}else{
+					$(this).parent().removeClass("open");
+				}
+		    	timeout = setTimeout(function() {
+		            // set timeout after the first tap
+		            clearTimeout(timeout);
+			        return false;
+		        }, 500);
+		    }
+		    lastTap = currentTime; 
 	        return false;
 		});
 	}
