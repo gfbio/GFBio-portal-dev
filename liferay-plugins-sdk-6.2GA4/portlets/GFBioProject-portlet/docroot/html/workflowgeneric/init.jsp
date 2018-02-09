@@ -18,7 +18,7 @@
 	
 /////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
-
+/* 
  	//Message from Hide Managment
 	AUI().ready(function(A){
 		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
@@ -81,7 +81,7 @@
 		};
 		Liferay.fire('gadget:gfbio.archiving.showhide', showHide);
 	} 
-	
+	 */
 	
 	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 
@@ -238,7 +238,7 @@
 				"<div 													class='control-group'>"+
 						"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' 	onclick='primaryRadioButtonCheck()' checked='checked'> Upload from your file system</input></span>"+
 						"<span style='width:2%; display:inline-block'></span>"+
-						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external' onclick='primaryRadioButtonCheck()'>Link online ressource</input></span> "+
+						"<span style='width:50%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_external' 	name='gwf_ro_upload_radio' value='external' onclick='primaryRadioButtonCheck()'> Link online ressource</input></span> "+
 				"</div>"+
 				"<div id='gwf_ro_upload'  placeholder='Choose Files'></div>"+
 		
@@ -367,9 +367,9 @@
 					var json = obj[i];
 					if (json.preferredbygfbio =='true')
 						if (json.label == 'other')
-							choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+							choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.label+"'>"+json.name+"</option>");
 						else
-							choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.id+"'>"+json.label+" "+json.version+"</option>");
+							choMeta.append("<option id='gwf_ro_metadata"+json.id+"' value='"+json.label+" "+json.version+"'>"+json.label+" "+json.version+"</option>");
 				}
  			}
  		}); 
@@ -394,11 +394,11 @@
 					var json = obj[i];
 					if (json.preferredbygfbio =='true')
 						if (json.label == "other")
-							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.name+"</option>");
+							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.label+"'>"+json.name+"</option>");
 						else if (json.label == "CC BY")
-							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"' selected=true>"+json.label+": "+json.name+" "+json.version+"</option>");
+							divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.label+" "+json.version+"' selected=true>"+json.label+": "+json.name+" "+json.version+"</option>");
 							else	
-								divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.id+"'>"+json.label+": "+json.name+" "+json.version+"</option>");
+								divLi.append("<option id='gwf_ro_licenses"+json.id+"' value='"+json.label+" "+json.version+"'>"+json.label+": "+json.name+" "+json.version+"</option>");
 				}
  			}
  		});
@@ -423,16 +423,16 @@
 						var j = i+1;
 						divLR.append(
 							"<div 		class='control-group'>"+
-								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].name+"'> "+obj[i].name+"</span>"+
 								"<span style='width:2%;  display:inline-block'></span>"+
-								"<span style='width:50%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[j].id+"' name='legalrequirements' value='"+obj[j].id+"'> "+obj[j].name+"</span>"+
+								"<span style='width:50%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[j].id+"' name='legalrequirements' value='"+obj[j].name+"'> "+obj[j].name+"</span>"+
 							"</div>"		
 						);
 						i = i+1;
 					}else{
 						divLR.append(
 							"<div 		class='control-group'>"+
-								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_legalrequirements"+obj[i].id+"' name='legalrequirements' value='"+obj[i].name+"'> "+obj[i].name+"</span>"+
 							"</div>"
 						);
 					}
@@ -465,16 +465,16 @@
 						var j = i+1;
 						divKey.append(
 							"<div 		class='control-group'>"+
-								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].name+"'> "+obj[i].name+"</span>"+
 								"<span style='width:2%; display:inline-block'></span>"+
-								"<span style='width:50%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[j].id+"' name='categories' value='"+obj[j].id+"'> "+obj[j].name+"</span>"+
+								"<span style='width:50%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[j].id+"' name='categories' value='"+obj[j].name+"'> "+obj[j].name+"</span>"+
 							"</div>"		
 						);
 						i = i+1;
 					}else{
 						divKey.append(
 							"<div 		class='control-group'>"+
-								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].id+"'> "+obj[i].name+"</span>"+
+								"<span style='width:48%; display:inline-block' class='field-description'><input type='checkbox' id='gwf_ro_categories"+obj[i].id+"' name='categories' value='"+obj[i].name+"'> "+obj[i].name+"</span>"+
 							"</div>"
 						);
 					}
@@ -526,7 +526,7 @@
 		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
 			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the curator of "+document.getElementById("gwf_dcrtassignee").innerHTML+". A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>");
 		}else{
-			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of submission you will send your information to the GFBio curator team. A contact person will get in touch with you as soon as possible. This curator will suport you through the rest of submission process.</p>");
+			divDcrt.append("<p class='field-description' id='gwf_ro_dcrt_d'>With the start of the submission you will send your information to the GFBio curator team. A contact person will get in touch with you as soon as possible. This curator will support you through the rest of the submission process.</p>");
 		}
 		divDcrt.append(	"</div><br><br><br>");
 
@@ -555,19 +555,19 @@
 	}
 	
 	
-	//default fill function of generic submission workflow
+/* 	//default fill function of generic submission workflow
 	function fillProjectInformations(data, div){
 		if (Number(data.projectid)!=0)
 			document.getElementById("gwf_project_id").innerHTML= data.projectid;
-	}
+	} */
 	
 	
 	//
-	function fillResearchObjectInformations(data, div){
+/*	function fillResearchObjectInformations(data, div){
 		
 		var url = document.getElementById('workflowgenericurl').value;
 		if (Number(data.researchobjectid)!=0){
-			var ajaxData = [{"researchobjectid":Number(data.researchobjectid), "kindofresponse":"extended"}];
+ 			var ajaxData = [{"researchobjectid":Number(data.researchobjectid), "kindofresponse":"extended"}];
 	 		$.ajax({
 				"type" : "POST",
 				"url": url.concat('/WorkflowGenericPortlet'),
@@ -679,10 +679,10 @@
 					console.log(obj);
 				}
 				
-	 		});
+	 		}); 
 		}
 	}
-	
+	*/
 
 	//
 	function goToNormal(block){
@@ -715,51 +715,23 @@
 	}
 	
 	
-	//
+/* 	//
 	function createGwfResearchObject(projectJson){
 		
-		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
-		var url = document.getElementById('workflowgenericurl').value;
-
+		console.log("createGwfResearchObject ");
+		console.log(projectJson);
 		
-		$.ajax({
-			"type" : "POST",
-			"url": url.concat('/WorkflowGenericPortlet'),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(researchObjectJson),
-				"<portlet:namespace />responseTarget" : "createresearchobject"
-			},
-			async: false,
-			success :  function (obj){
 
-				if (obj.researchobjectid >0){
-					document.getElementById("gwf_ro_id").innerHTML= obj.researchobjectid;
-					document.getElementById("gwf_ro_version").innerHTML= obj.researchobjectversion;
-					
-					if (document.getElementById("gwf_ro_name").value =="")
-						document.getElementById("gwf_ro_name").value = document.getElementById("gwf_ro_label").value;
-					if (document.getElementById("gwf_ro_label").value=="")
-						document.getElementById("gwf_ro_label").value = document.getElementById("gwf_ro_name").value;
-					
-					if (projectJson.projectid!=0)
-						researchObjectJson["projectid"]=Number(projectJson.projectid);
-					researchObjectJson["researchobjectid"]=Number(obj.researchobjectid);
-					researchObjectJson["researchobjectversion"]=Number(obj.researchobjectversion);
-					
 
-				}
-			},
-			error :  function (obj){
-				console.log("error");
-			}
-			
-		});
+		console.log("createGwfResearchObject ");
+		console.log(researchObjectJson);
+		
 		return researchObjectJson;
-	}
+	} */
 	
 	
 	//
-	function startSubmissionRegistry(data){
+/* 	function startSubmissionRegistry(data){
 
 		console.log(data);
 		
@@ -784,7 +756,7 @@
 					
 			}		
 		});	
-	}
+	} */
 	
 	
 
@@ -858,14 +830,7 @@
 	
 	//
 	function showUpload(){
-		/*
-						"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
-				"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
-				    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
-				    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
-				"</div>"+
-				"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
-		*/
+
 		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
 		
 			document.getElementById("gwf_ro_id").innerHTML= 0;
@@ -893,7 +858,7 @@
 	
 	
 	//
-	function startSubmission(data){
+/* 	function startSubmission(data){
 			
 		var url = document.getElementById('workflowgenericurl').value;
 		data["path"]= document.getElementById("gwf_user_path").innerHTML;
@@ -931,14 +896,14 @@
 			error :  function (obj){
 				console.log("sub error");
 				deleteSubmissionRegistryEntry(responseData);
-				buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+				buildErrorMessage('gwf_lf_comentarField', "The SThe Submission information transfeubmission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 			},		
 		});	  
 	}
-	
+	 */
 	
 	//
-	function deleteSubmissionRegistryEntry(data){
+/* 	function deleteSubmissionRegistryEntry(data){
 			
 		var url = document.getElementById('workflowgenericurl').value;
 		
@@ -955,7 +920,7 @@
 			}
 	
 		});	 
-	}
+	} */
 	
 	
 	function resetDCRTInput(){
@@ -981,7 +946,7 @@
 	}
 	
 	
-	function getBrokerSubmissionId(data){
+/* 	function getBrokerSubmissionId(data){
 		
 		var brokerSubmissionId ="";
 		var url = document.getElementById('workflowgenericurl').value;
@@ -999,10 +964,13 @@
 			}
 		});	 
 		return brokerSubmissionId;
-	}
+	} */
 	
 	//
-/* 	function sentToBroker(data){
+ 	function sentToBroker(data){
+		
+		console.log("sentToBroker");
+		console.log(data);
 			
 		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
 		
@@ -1016,11 +984,29 @@
 			success :  function (obj){
 				console.log("broker jo");
 				console.log(obj);
+				
+				document.getElementById("generic").style.cursor="default";
+				var brokerSubmissionId = "test";//getBrokerSubmissionId(responseData);
+				
+				sentShowHideInformation(false);
+				var div =   $("#generic");
+				div.empty();
+				div.append(
+					"<div class='portlet-success'>"+
+						"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
+						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
+						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
+					"</div>"+
+					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+				);
 			},
 			error :  function (obj){
+				console.log("sub error");
 				console.log("broker nope");
-			},		
+				//deleteSubmissionRegistryEntry(responseData);
+				buildErrorMessage('gwf_lf_comentarField', "The The Submission information transfer is failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+			}
 		});	 
-	} */
+	} 
 
 </script>

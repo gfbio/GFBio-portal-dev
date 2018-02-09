@@ -11,6 +11,7 @@ function buildCommonResearchObjectJson(projectJson){
 
 	//authornames
 	var authornames = (document.getElementById("gwf_ro_author").value).trim();
+	console.log("|"+authornames+"|");
 	
 	if (authornames.charAt(authornames.length-1)==',')
 		authornames = authornames.substring(0, authornames.length-1);
@@ -40,19 +41,19 @@ function buildCommonResearchObjectJson(projectJson){
 			category.push(document.getElementsByName("categories")[i].value);
 
 	
-	var extendetdata = {
+/*	var extendetdata = {
 		"publications":document.getElementById("gwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
 		"embargo":document.getElementById("gwf_ro_embargo").value,
 		"legalrequirements":legalrequirements
-	}
+	}*/
 
 	var researchObjectJson = {
 		"authornames": authornames,
 		"name":roName,
 		"label":roLabel,
 		"description":document.getElementById("gwf_ro_description").value,
-		"extendeddata": extendetdata,
+		//"extendeddata": extendetdata,
 		"categoryids":category,
 		"publications":document.getElementById("gwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
@@ -75,9 +76,9 @@ function buildResearchObjectJsonForCreate(projectJson){
 	researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	
 	if (document.getElementById("gwf_ro_metadatalabel").value != 'none')
-		researchObjectJson["metadataid"]= Number(document.getElementById("gwf_ro_metadatalabel").value);
+		researchObjectJson["metadata"]= document.getElementById("gwf_ro_metadatalabel").value;
 	
-	researchObjectJson["licenseid"] = Number(document.getElementById("gwf_ro_licenselabel").value);
+	researchObjectJson["license"] = document.getElementById("gwf_ro_licenselabel").value;
 	researchObjectJson["researchobjecttype"]= document.getElementById("gwf_ro_researchobjecttype").innerHTML;
 
 	if (document.getElementById("gwf_ro_upload_direct").checked != true)
@@ -93,7 +94,7 @@ function buildResearchObjectJsonForCreate(projectJson){
 }
 
 
-//
+/*//
 function buildResearchObjectJsonForUpdate(projectJson){
 
 	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
@@ -102,14 +103,14 @@ function buildResearchObjectJsonForUpdate(projectJson){
 	if (document.getElementById("gwf_ro_metadatalabel").value != 'none')
 		researchObjectJson["metadataid"]= Number(document.getElementById("gwf_ro_metadatalabel").value);
 	return researchObjectJson;
-}
+}*/
 
 
 //
 function buildSubmissionJsonForRegistry(researchObjectJson){
 	var registryJson = {};
-	registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
-	registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
+	//registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
+	//registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
 	console.log(document.getElementById("gwf_dcrtassignee").innerHTML);
 	console.log("|"+document.getElementById("gwf_dcrtassignee").innerHTML+"|");
 	if (document.getElementById("gwf_dcrtassignee").innerHTML=='null')
@@ -376,13 +377,13 @@ function saveAllInput(){
 		}
 		
 		
-		if (projectJson.researchobjects.researchobjectid >0){
+/*		if (projectJson.researchobjects.researchobjectid >0){
 			console.log('Information were stored');
 			buildWaitringMessage('gwf_lf_comentarField');
 			//sentWorkflowUpdate(true, projectJson.projectid, "", projectJson.researchobjects);
 		}else{
 			buildErrorMessage('gwf_lf_comentarField', "Failed to store the information.");
-		}
+		}*/
 		
 	}
 	return projectJson;
@@ -400,16 +401,17 @@ function saveProjectInput(){
 
 //
 function saveResearchObjectInput(projectJson){
+
+	console.log("saveResearchObjectInput");
+	console.log(projectJson);
+
+	if (checkMinimalResearchObjectInput()){
+		var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
+		projectJson["researchobjects"]= researchObjectJson;
+	}
 	
-	if (document.getElementById("gwf_ro_id").innerHTML==0){
-		if (checkMinimalResearchObjectInput())
-			researchObjectJson = createGwfResearchObject(projectJson);
-	}else
-		if (checkMinimalResearchObjectInput())
-			researchObjectJson = updateGwfResearchObject(projectJson);
-	
-	
-	projectJson["researchobjects"]= researchObjectJson;
+	console.log("saveResearchObjectInput");
+	console.log(projectJson);
 	
 	return projectJson;
 }
@@ -426,30 +428,33 @@ function submitInput(url){
 				//create research object /project
 				var mrrJson = saveAllInput();
 				
+				console.log("mrrJson");
+				console.log(mrrJson);
+				
 				//create primary data
 				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
-						if(document.getElementById("gwf_ro_upload_direct").checked==true)
-							fileUplaod();
+					//if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
+						//if(document.getElementById("gwf_ro_upload_direct").checked==true)
+							//fileUplaod();
 						
 				
 					//create submission registry
 					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 						console.log("start sub reg");
-						startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
+						registryJson = buildSubmissionJsonForRegistry(mrrJson.researchobjects);
 						
 						//sent to JIRA
 						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 
 							var data ={};
-							data["mrr"]= mrrJson;
-							startSubmission(data);
-							
-							resetDCRTInput();
+							//data["mrr"]= mrrJson;
+							//startSubmission(data);
 							
 							//sent to Broker
-							//data["submissionregistry"]= registryJson;
-							//sentToBroker(data);
+							mrrJson["submission"]= registryJson;
+							sentToBroker(mrrJson);
+							
+							resetDCRTInput();
 						}
 					}
 				}
@@ -460,7 +465,7 @@ function submitInput(url){
 }
 
 
-//
+/*//
 function updateGwfResearchObject(projectJson){
 	
 	var researchObjectJson = buildResearchObjectJsonForUpdate(projectJson);
@@ -484,4 +489,4 @@ function updateGwfResearchObject(projectJson){
 		}
 	);
 	return researchObjectJson;
-}
+}*/
