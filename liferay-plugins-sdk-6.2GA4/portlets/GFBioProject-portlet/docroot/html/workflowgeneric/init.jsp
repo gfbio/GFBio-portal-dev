@@ -761,6 +761,8 @@
 	//
 	function startSubmissionRegistry(data){
 
+		console.log(data);
+		
 		var url = document.getElementById('workflowgenericurl').value;
 		
 		

@@ -83,7 +83,7 @@ function buildResearchObjectJsonForCreate(projectJson){
 	if (document.getElementById("gwf_ro_upload_direct").checked != true)
 		if (document.getElementById("gwf_ro_externalupload_path").value != ""){
 			var primaryDataJson = {
-				"name": document.getElementById("gwf_ro_externalupload_name").value,
+				"name": document.getElementById("gwf_ro_externalupload_path").value,
 				"path": document.getElementById("gwf_ro_externalupload_path").value
 			};
 			researchObjectJson["primarydata"] = primaryDataJson;
@@ -110,13 +110,12 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 	var registryJson = {};
 	registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
 	registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
-	if (document.getElementById("gwf_dcrtassignee").innerHTML!='null')
-		if(document.getElementById("gwf_ro_dcrt_default").checked ==true)
-			registryJson["archive"] = "GFBio collections";
-		else
-			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
-	else
+	console.log(document.getElementById("gwf_dcrtassignee").innerHTML);
+	console.log("|"+document.getElementById("gwf_dcrtassignee").innerHTML+"|");
+	if (document.getElementById("gwf_dcrtassignee").innerHTML=='null')
 		registryJson["archive"] = "GFBio collections";
+	else
+			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
 	registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
 	return registryJson;
 }
@@ -370,10 +369,8 @@ function saveAllInput(){
 		
 		
 		if (document.getElementById("gwf_dcrtassignee").innerHTML!=null){
-			var checkList = document.getElementsByName('gwf_ro_dcrt_radio');
-			for (i=0; i <checkList.length; i++)
-				if (checkList[i].checked==true)
-					projectJson["dcrtassignee"]=checkList[i].value;
+
+			projectJson["dcrtassignee"]= document.getElementById("gwf_dcrtassignee").innerHTML;
 			projectJson["dcrtinput"]=document.getElementById("gwf_dcrtinput").innerHTML;
 			projectJson["dcrtrecommendation"]=document.getElementById("gwf_dcrtrecommendation").innerHTML;
 		}
@@ -382,7 +379,7 @@ function saveAllInput(){
 		if (projectJson.researchobjects.researchobjectid >0){
 			console.log('Information were stored');
 			buildWaitringMessage('gwf_lf_comentarField');
-			sentWorkflowUpdate(true, projectJson.projectid, "", projectJson.researchobjects);
+			//sentWorkflowUpdate(true, projectJson.projectid, "", projectJson.researchobjects);
 		}else{
 			buildErrorMessage('gwf_lf_comentarField', "Failed to store the information.");
 		}
@@ -438,6 +435,7 @@ function submitInput(url){
 				
 					//create submission registry
 					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+						console.log("start sub reg");
 						startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
 						
 						//sent to JIRA

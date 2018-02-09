@@ -41,7 +41,7 @@ WHERE
     WHERE
       headid =  (select getHeadIdByName('gfbio_license')) and
       cellcontent = 'CC BY-SA'
-  )
+  );
 
   
   ------------------------------------------------------------------------------------------------
