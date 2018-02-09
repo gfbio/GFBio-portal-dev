@@ -142,15 +142,19 @@ public class ContactJira {
         
         //assignee
           
-        
-        if (projectJson.containsKey("dcrtassignee")){
-	        if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals("none"))){
-	        	JSONObject assignee = new JSONObject();
-	        	assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
-	            fields.put("assignee", assignee);	
-	            archive = Helper.getStringFromJson(projectJson, "dcrtassignee");
-        	}
-        }  
+        _log.info((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase());
+        if (projectJson.containsKey("dcrtassignee"))
+	        if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals("none")))
+	        	if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals("null")))
+	        		if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals(null)))
+	        			if (!((Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase().equals(""))){
+	        		
+	        				JSONObject assignee = new JSONObject();
+	        				assignee.put("name", (Helper.getStringFromJson(projectJson, "dcrtassignee")).toLowerCase()) ;
+	        				fields.put("assignee", assignee);	
+	        				archive = Helper.getStringFromJson(projectJson, "dcrtassignee");
+	        			}
+
     
         
         //recommendation

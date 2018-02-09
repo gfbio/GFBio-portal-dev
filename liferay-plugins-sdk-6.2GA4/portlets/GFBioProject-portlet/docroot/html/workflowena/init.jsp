@@ -8,7 +8,7 @@
 
 <%@ page import="com.liferay.portal.NoSuchModelException" %>
 <%@ page import="com.liferay.portal.kernel.exception.SystemException" %>
-<%@ page import="com.liferay.portal.kernel.util.PropsUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.PropsUtil"%>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 

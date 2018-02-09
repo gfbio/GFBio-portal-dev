@@ -385,8 +385,11 @@ $dockbarVerticalWidth: 240px;
 			}
 		}
 	}
+	
 }
 
+$breakpoint_phone: 768px;
+$breakpoint_tablet: 1200px;
 /* ---------- Classic Dockbar Responsive Styles ---------- */
 
 @include respond-to(phone, tablet) {
@@ -583,26 +586,6 @@ $dockbarVerticalWidth: 240px;
 		  #nav{
 		  	margin: 0px;
 		  }
-/* 			display: none; */
-
-/* 			&.open { */
-/* 				display: block; */
-
-/* 				.navbar-inner { */
-/* 					padding: 10px; */
-
-/* 					@include border-radius(3px); */
-
-/* 					.nav-collapse { */
-/* 						height: auto; */
-/* 						overflow: visible; */
-/* 					} */
-/* 				} */
-/* 			} */
-
-/* 			.nav { */
-/* 				margin: 0; */
-/* 			} */
 
 		}
 		

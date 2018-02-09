@@ -45,7 +45,7 @@ $theme.include($body_top_include)
 <!-- preloader -->
 	<div id="preloader">
 		<div class="loader-box">
-			<div class="battery">&nbsp;</div>
+			
 		</div>
 	</div>
 <!-- end preloader -->

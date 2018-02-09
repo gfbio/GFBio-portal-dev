@@ -28,9 +28,7 @@ AUI().ready(
 //			var toggleDockbarIcon = A.one('.icon-toggle-dockbar .fa .fa-user');
 
 			if (toggleDockbar) {
-				toggleDockbar.on(
-					'click',
-					function() {
+				toggleDockbar.on('click',function() {
 						if (portletDockbar.hasClass('over')){
 							portletDockbar.removeClass('over');
 							toggleDockbar.removeClass('over');	
@@ -47,26 +45,20 @@ AUI().ready(
 
 						// toggle navigation menu when dockbar icon is clicked
 						var navigationDiv = $('#nav');
-	                	if (navigationDiv.hasClass('open')){
-	                		navigationDiv.removeClass('open');
-	                		navigationDiv.addClass('hide');
-	                	}
-					}
-				);
+						var navigationHeader = $('#navigation');
+						var body = $('body');
+			          	if (navigationDiv.hasClass('open')){
+			          		navigationDiv.removeClass('open');
+			          		navigationDiv.addClass('hide');
+										body.css("overflow-y","unset");
+										navigationHeader.css("height","unset");
+			          	}
+					});
 			}
 		};
-		
-	}
-	
-	
+	});
 
-
-);
-
-AUI().ready(
-
-
-	    function() {
+AUI().ready(function() {
 	    	var wow = new WOW({
 			    offset: 75,          // distance to the element when triggering the animation (default is 0)
 			    mobile: false,       // trigger animations on mobile devices (default is true)
@@ -77,9 +69,7 @@ AUI().ready(
 	    }
 	);
 
-AUI().ready(
-		
-		function(){
+AUI().ready(function(){
 			/* TODO: put this back in if slider */
 			$("#works, #testimonial").owlCarousel({
 			    navigation: true,
@@ -94,10 +84,7 @@ AUI().ready(
 );
 	
 
-AUI().ready(
-		
-		function(){
-			
+AUI().ready(function(){
 			 /* ========================================================================= */
 		    /*	Featured Project Lightbox
 		     /* ========================================================================= */
@@ -162,7 +149,9 @@ AUI().ready(
 
 AUI().ready(
 		function(){
-			
+			// Set preloader
+				$(".loader-box").fadeOut();
+				$(".preloader").delay(400).fadeOut("slow");
 			// Dropdown Menu Fade
 		    $(".aui .dropdown").hover(
 		        function () {
@@ -175,22 +164,26 @@ AUI().ready(
 });
 
 //------------- Responsive menu class------------------//
-AUI().ready(
-	function(){
+AUI().ready(function(){
 		var menuToggleBtn = $('#responsiveMenuToggle'); // get our toggle button
 		var navigationDiv = $('#nav'); // get default navigation div element
-		var body = $('.aui body');
+		var navigationHeader = $('#navigation');
+		var body = $('body');
 		if (menuToggleBtn && navigationDiv) { 
 		// do nothing when toggle button not present (user not signed in) or if navigation is not present
 		// otherwise assign simple function that'll toggle 'open' menu class on default navigation which will cause it to open, same for menu toggle button
-			menuToggleBtn.on('click',
-		        function (event) {
+			menuToggleBtn.on('click', function (event) {
 		        	if (navigationDiv.hasClass('open')){
 		        		menuToggleBtn.removeClass('open');
 		        		navigationDiv.removeClass('open');
 		        		navigationDiv.addClass('hide');
 						body.removeClass('lfr-has-dockbar-vertical');
-		        	}else{
+
+    				/*https://project.gfbio.org/issues/1288*/
+    				/*scrolling moves the page in the background*/
+    				body.css("overflow-y","unset");
+    				navigationHeader.css("height","unset");
+		      }else{
 		        		// expand the menu bar 
 		        		menuToggleBtn.addClass('open');
 		        		navigationDiv.addClass('open');
@@ -199,44 +192,66 @@ AUI().ready(
 						var portletDockbar = $('#_145_dockbar');
 						if (portletDockbar){
 							portletDockbar.removeClass('over');
-		        		}
-						body.removeClass('lfr-has-dockbar-vertical');
-		        	}
 		        }
-		        
-		    );
+				body.removeClass('lfr-has-dockbar-vertical');
 
+				/*https://project.gfbio.org/issues/1288*/
+				/*scrolling moves the page in the background*/
+				if($(document).width()<768) {
+					console.log("Vertical Menu");
+					body.css("overflow-y","hidden");
+					navigationHeader.css("height","85vh");
+				} else {
+					console.log("Horizontal Menu");
+				}
+			}
+		});
+		
 		/*
 		 * #965 Responsive layout: second tier menu is not working on mobile
 		 * device
 		 */
-		$('.dropdown').on('mouseenter mouseleave', function() {
-			if ($(document).width() > 979){
-				$(this).toggleClass("open");
+		$('.dropdown-toggle').on('mouseenter', function() {
+			var thisIsOpen = $(this).parent().hasClass('open');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass('open');
+			if (!thisIsOpen){
+				$(this).parent().addClass("open");
+			}else{
+				$(this).parent().removeClass("open");
 			}
 		});
 		$('.dropdown').on('tap', function() {
-			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
-			}
+			console.log('dropdown tapped.');
 		});
-		$('.dropdown').on('click', function() {
-			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
-			}
+		$('.dropdown').on('touchstart', function() {
+				console.log('dropdown touchstart.');
 		});
 
-		//ignore click event on first level menu when using a mobile layout
-		$('a.dropdown-toggle').on('click', function() {
-			if ($(document).width() <= 979){
-				return false;
+		//ignore click event when using a touch device
+		$('a.dropdown-toggle').on('click', function(event) {
+			console.log('dropdown-toggle clicked.');
+			var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+			if (supportsTouch){
+				// if this item has no children, propagate to the link
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
 				}
-			});
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		});
+		
 		var timeout = 0;
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
+			console.log('dropdown-toggle touchstart.');
 	    	// listen to double tap event when using a mobile layout
-			if ($(document).width() <= 979){
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
+				}
 			    var currentTime = new Date().getTime();
 			    var tapLength = currentTime - lastTap;
 			    clearTimeout(timeout);
@@ -247,7 +262,15 @@ AUI().ready(
 			        return true; 
 			    }else{
 			    	// this is one time tap
-					$(this).parent().toggleClass("open");
+					//$(this).parent().toggleClass("open");
+					var thisIsOpen = $(this).parent().hasClass('open');
+					var openDropdown = $('.dropdown.open');
+					openDropdown.removeClass('open');
+					if (!thisIsOpen){
+						$(this).parent().addClass("open");
+					}else{
+						$(this).parent().removeClass("open");
+					}
 			    	timeout = setTimeout(function() {
 			            // set timeout after the first tap
 			            clearTimeout(timeout);
@@ -255,17 +278,18 @@ AUI().ready(
 			        }, 500);
 			    }
 			    lastTap = currentTime; 
-			}
 	        return false;
 		});
+	}
     }
-		// clear all the extension class from mobile responsive layout
-		window.onresize = function(event) {
-		    var navigationDiv = $('#nav'); // get default navigation ul element
+		// clear all the extension class from
+    // mobile responsive layout
+		/*window.onresize = function(event) {
+		    var navigationDiv = $('#nav'); 
+        // get default navigation ul element
 		    navigationDiv.removeClass('hide');
 		    navigationDiv.removeClass('open');
-		};	
-	}
+		};	*/
 );
 //------------- End responsive menu class------------------//
 
