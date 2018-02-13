@@ -211,7 +211,9 @@ AUI().ready(function(){
 		 * #965 Responsive layout: second tier menu is not working on mobile
 		 * device
 		 */
-		$('.dropdown-toggle').on('mouseenter', function() {
+		/*$('.dropdown-toggle').on('mouseenter', function() {
+			var isMenuItem = ($(this).attr('role')=='menuitem');
+			if (isMenuItem){
 			var thisIsOpen = $(this).parent().hasClass('open');
 			var openDropdown = $('.dropdown.open');
 			openDropdown.removeClass('open');
@@ -219,20 +221,21 @@ AUI().ready(function(){
 				$(this).parent().addClass("open");
 			}else{
 				$(this).parent().removeClass("open");
-			}
-		});
+			}}
+		});*/
 		$('.dropdown').on('tap', function() {
 			console.log('dropdown tapped.');
 		});
 		$('.dropdown').on('touchstart', function() {
-				console.log('dropdown touchstart.');
+			console.log('dropdown touchstart.');
 		});
 
 		//ignore click event when using a touch device
 		$('a.dropdown-toggle').on('click', function(event) {
 			console.log('dropdown-toggle clicked.');
 			var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-			if (supportsTouch){
+			var isMenuItem = ($(this).attr('role')=='menuitem');
+			if (supportsTouch && isMenuItem){
 				// if this item has no children, propagate to the link
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr == typeof undefined || !attr){
@@ -247,6 +250,8 @@ AUI().ready(function(){
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function() {
 			console.log('dropdown-toggle touchstart.');
+			var isMenuItem = ($(this).attr('role')=='menuitem');
+			if (isMenuItem){
 	    	// listen to double tap event when using a mobile layout
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr == typeof undefined || !attr){
@@ -278,7 +283,9 @@ AUI().ready(function(){
 			        }, 500);
 			    }
 			    lastTap = currentTime; 
-	        return false;
+		        return false;
+			}
+			return true;
 		});
 	}
     }

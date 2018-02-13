@@ -20,84 +20,75 @@ AUI().ready(
 
 					if (portletDockbar) {
 						var body = A.one('.aui body');
-						body
-								.append('<div class="icon-toggle-dockbar vertical-dockbar-close"><i class="fa fa-user"></i></div>');
-						body
-								.append('<div class="layer-mobile visible-phone vertical-dockbar-close"></div>');
+						body.append('<div class="icon-toggle-dockbar vertical-dockbar-close"><i class="fa fa-user"></i></div>');
+						body.append('<div class="layer-mobile visible-phone vertical-dockbar-close"></div>');
 
 						var toggleDockbar = A.one('.icon-toggle-dockbar');
-						var toggleDockbarClose = A
-								.one('.vertical-dockbar-close');
+						var toggleDockbarClose = A.one('.vertical-dockbar-close');
 						// var toggleDockbarIcon = A.one('.icon-toggle-dockbar
 						// .fa .fa-user');
 
 						if (toggleDockbar) {
-							toggleDockbar
-									.on(
-											'click',
-											function() {
-												if (portletDockbar
-														.hasClass('over')) {
-													portletDockbar
-															.removeClass('over');
-													toggleDockbar
-															.removeClass('over');
-													body
-															.removeClass('lfr-has-dockbar-vertical');
-												} else {
-													portletDockbar
-															.addClass('over');
-													toggleDockbar
-															.addClass('over');
-													body
-															.addClass('lfr-has-dockbar-vertical');
-												}
+							toggleDockbar.on('click',function() {
+								if (portletDockbar.hasClass('over')) {
+									portletDockbar.removeClass('over');
+									toggleDockbar.removeClass('over');
+									body.removeClass('lfr-has-dockbar-vertical');
+								} else {
+									portletDockbar.addClass('over');
+									toggleDockbar.addClass('over');
+									body.addClass('lfr-has-dockbar-vertical');
+								}
 
-												// this code return error,
-												// consider to remove it
-												// toggleDockbarIcon.toggleClass('icon-remove');
-												// toggleDockbarIcon.toggleClass('fa
-												// fa-user');
+								// this code return error,
+								// consider to remove it
+								// toggleDockbarIcon.toggleClass('icon-remove');
+								// toggleDockbarIcon.toggleClass('fa
+								// fa-user');
 
-												// toggle navigation menu when
-												// dockbar icon is clicked
-												var navigationDiv = $('#nav');
-												if (navigationDiv
-														.hasClass('open')) {
-													navigationDiv
-															.removeClass('open');
-													navigationDiv
-															.addClass('hide');
-												}
-											});
+								// toggle navigation menu when
+								// dockbar icon is clicked
+								var navigationDiv = $('#nav');
+								var navigationHeader = $('#navigation');
+								var body = $('body');
+								if (navigationDiv.hasClass('open')) {
+									navigationDiv.removeClass('open');
+									navigationDiv.addClass('hide');
+									body.css("overflow-y","unset");
+									navigationHeader.css("height","unset");
+								}
+							});
 						}
-					}
-					;
+					};
 				});
 
 // ------------- Responsive menu class------------------//
 AUI().ready(function() {
-	var menuToggleBtn = $('#responsiveMenuToggle'); // get our
-	// toggle
-	// button
-	var navigationDiv = $('#nav'); // get default navigation
-	// div element
-	var body = $('.aui body');
+	// get our toggle button
+	var menuToggleBtn = $('#responsiveMenuToggle'); 
+	// get default navigation div element
+	var navigationDiv = $('#nav'); 
+	var navigationHeader = $('#navigation');
+	var body = $('body');
 	if (menuToggleBtn && navigationDiv) {
 		// do nothing when toggle button not present (user not
-		// signed in) or if
-		// navigation is not present
+		// signed in) or if navigation is not present
 		// otherwise assign simple function that'll toggle
-		// 'open' menu class on
-		// default navigation which will cause it to open, same
-		// for menu toggle
-		// button
+		// 'open' menu class on default navigation
+		// which will cause it to open, same
+		// for menu toggle button
 		menuToggleBtn.on('click', function(event) {
 			if (navigationDiv.hasClass('open')) {
+				// hide menu bar
 				menuToggleBtn.removeClass('open');
 				navigationDiv.removeClass('open');
 				navigationDiv.addClass('hide');
+				
 				body.removeClass('lfr-has-dockbar-vertical');
+				/*https://project.gfbio.org/issues/1288*/
+				/*scrolling moves the page in the background*/
+				body.css("overflow-y","unset");
+				navigationHeader.css("height","unset");
 			} else {
 				// expand the menu bar
 				menuToggleBtn.addClass('open');
@@ -108,53 +99,87 @@ AUI().ready(function() {
 				if (portletDockbar) {
 					portletDockbar.removeClass('over');
 				}
+				
 				body.removeClass('lfr-has-dockbar-vertical');
+				/*https://project.gfbio.org/issues/1288*/
+				/*scrolling moves the page in the background*/
+				console.log($(document).width());
+				if($(document).width()<768) {
+					console.log("Vertical Menu");
+					body.css("overflow-y","hidden");
+					navigationHeader.css("height","85vh");
+				} else {
+					console.log("Horizontal Menu");
+				}
 			}
-		}
-
-		);
+		});
+		
 		/*
 		 * #965 Responsive layout: second tier menu is not working on mobile
 		 * device
 		 */
-		$('.dropdown').on('mouseenter mouseleave', function() {
-			if ($(document).width() > 979){
-				$(this).toggleClass("open");
+		/*$('.dropdown-toggle').on('mouseenter', function() {
+			var thisIsOpen = $(this).parent().hasClass('open');
+			var openDropdown = $('.dropdown.open');
+			openDropdown.removeClass('open');
+			if (!thisIsOpen){
+				$(this).parent().addClass("open");
+			}else{
+				$(this).parent().removeClass("open");
 			}
-		});
+		});*/
 		$('.dropdown').on('tap', function() {
-			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
-			}
+			console.log('dropdown tapped.');
 		});
-		$('.dropdown').on('click', function() {
-			if ($(document).width() <= 979){
-			$(this).toggleClass("open");
+		$('.dropdown').on('touchstart', function() {
+			console.log('dropdown touchstart.');
+		});
+		
+		//ignore click event when using a touch device
+		$('a.dropdown-toggle').on('click', function(event) {
+			console.log('dropdown-toggle clicked.');
+			var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+			var isMenuItem = ($(this).attr('role')=='menuitem');
+			if (supportsTouch && isMenuItem){
+				// if this item has no children, propagate to the link
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
+				}
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		});
 		
-		//ignore click event on first level menu when using a mobile layout
-		$('a.dropdown-toggle').on('click', function() {
-			if ($(document).width() <= 979){
-				return false;
-				}
-			});
 		var timeout = 0;
 		var lastTap = 0;
-		$('a.dropdown-toggle').on('touchstart', function() {
-	    	// listen to double tap event when using a mobile layout
-			if ($(document).width() <= 979){
+		$('a.dropdown-toggle').on('touchstart', function(event) {
+			console.log('dropdown-toggle touchstart.');
+			var isMenuItem = ($(this).attr('role')=='menuitem');
+			if (isMenuItem){
+		    	// listen to double tap event when using a mobile layout
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
+				}
 			    var currentTime = new Date().getTime();
 			    var tapLength = currentTime - lastTap;
 			    clearTimeout(timeout);
-		    	
 			    if (tapLength < 500 && tapLength > 0) {
 			    	// this is two times tap 
 			        window.location = this.href;
 			        return true; 
 			    }else{
 			    	// this is one time tap
-					$(this).parent().toggleClass("open");
+					//$(this).parent().toggleClass("open");
+					var thisIsOpen = $(this).parent().hasClass('open');
+					var openDropdown = $('.dropdown.open');
+					openDropdown.removeClass('open');
+					if (!thisIsOpen){
+						$(this).parent().addClass("open");
+					}else{
+						$(this).parent().removeClass("open");
+					}
 			    	timeout = setTimeout(function() {
 			            // set timeout after the first tap
 			            clearTimeout(timeout);
@@ -162,18 +187,23 @@ AUI().ready(function() {
 			        }, 500);
 			    }
 			    lastTap = currentTime; 
+		        return false;
 			}
-	        return false;
+			return true;
 		});
 	}
-	// clear all the extension class from mobile responsive
-	// layout
-	window.onresize = function(event) {
-		var navigationDiv = $('#nav'); // get default
-		// navigation ul element
+	// clear all the extension class from 
+	// mobile responsive layout
+	/*window.onresize = function(event) {
+		var navigationDiv = $('#nav'); 
+		// get default navigation ul element
 		navigationDiv.removeClass('hide');
 		navigationDiv.removeClass('open');
-	};
+		var navigationHeader = $('#navigation');
+		var body = $('body');
+		body.css("overflow-y","unset");
+		navigationHeader.css("height","unset");
+	};*/
 	
     // show citation on printable page
     if (document.getElementById("printOnly") != null){
@@ -190,11 +220,12 @@ AUI().ready(function() {
         }
         url = url.split("/-/")[0];
 
+        var pageTitle = $(document).find("title").text();
+        pageTitle = pageTitle.substring(0, pageTitle.indexOf(' - GFBio'));
         var printFooter = "<div class='by-nc'></div>"
         	+"<p>Recommended citation:</br>German Federation for Biological Data ("+y
-        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet." //TODO: add  „[page name]“ before full stop.
+        	+"). GFBio Training Materials: Data Life Cycle Fact-Sheet: "+pageTitle+"." 
         	+" Retrieved "+date+" from "+url+".</p>";
-
         document.getElementById("printOnly").innerHTML=printFooter;
     }
 }
