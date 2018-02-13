@@ -118,7 +118,7 @@ AUI().ready(function() {
 		 * #965 Responsive layout: second tier menu is not working on mobile
 		 * device
 		 */
-		$('.dropdown-toggle').on('mouseenter', function() {
+		/*$('.dropdown-toggle').on('mouseenter', function() {
 			var thisIsOpen = $(this).parent().hasClass('open');
 			var openDropdown = $('.dropdown.open');
 			openDropdown.removeClass('open');
@@ -127,7 +127,7 @@ AUI().ready(function() {
 			}else{
 				$(this).parent().removeClass("open");
 			}
-		});
+		});*/
 		$('.dropdown').on('tap', function() {
 			console.log('dropdown tapped.');
 		});
@@ -139,7 +139,8 @@ AUI().ready(function() {
 		$('a.dropdown-toggle').on('click', function(event) {
 			console.log('dropdown-toggle clicked.');
 			var supportsTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-			if (supportsTouch){
+			var isMenuItem = ($(this).attr('role')=='menuitem');
+			if (supportsTouch && isMenuItem){
 				// if this item has no children, propagate to the link
 				var attr = $(this).attr('aria-haspopup');
 				if (typeof attr == typeof undefined || !attr){
@@ -154,37 +155,41 @@ AUI().ready(function() {
 		var lastTap = 0;
 		$('a.dropdown-toggle').on('touchstart', function(event) {
 			console.log('dropdown-toggle touchstart.');
-	    	// listen to double tap event when using a mobile layout
-			var attr = $(this).attr('aria-haspopup');
-			if (typeof attr == typeof undefined || !attr){
-				return true;
-			}
-		    var currentTime = new Date().getTime();
-		    var tapLength = currentTime - lastTap;
-		    clearTimeout(timeout);
-		    if (tapLength < 500 && tapLength > 0) {
-		    	// this is two times tap 
-		        window.location = this.href;
-		        return true; 
-		    }else{
-		    	// this is one time tap
-				//$(this).parent().toggleClass("open");
-				var thisIsOpen = $(this).parent().hasClass('open');
-				var openDropdown = $('.dropdown.open');
-				openDropdown.removeClass('open');
-				if (!thisIsOpen){
-					$(this).parent().addClass("open");
-				}else{
-					$(this).parent().removeClass("open");
+			var isMenuItem = ($(this).attr('role')=='menuitem');
+			if (isMenuItem){
+		    	// listen to double tap event when using a mobile layout
+				var attr = $(this).attr('aria-haspopup');
+				if (typeof attr == typeof undefined || !attr){
+					return true;
 				}
-		    	timeout = setTimeout(function() {
-		            // set timeout after the first tap
-		            clearTimeout(timeout);
-			        return false;
-		        }, 500);
-		    }
-		    lastTap = currentTime; 
-	        return false;
+			    var currentTime = new Date().getTime();
+			    var tapLength = currentTime - lastTap;
+			    clearTimeout(timeout);
+			    if (tapLength < 500 && tapLength > 0) {
+			    	// this is two times tap 
+			        window.location = this.href;
+			        return true; 
+			    }else{
+			    	// this is one time tap
+					//$(this).parent().toggleClass("open");
+					var thisIsOpen = $(this).parent().hasClass('open');
+					var openDropdown = $('.dropdown.open');
+					openDropdown.removeClass('open');
+					if (!thisIsOpen){
+						$(this).parent().addClass("open");
+					}else{
+						$(this).parent().removeClass("open");
+					}
+			    	timeout = setTimeout(function() {
+			            // set timeout after the first tap
+			            clearTimeout(timeout);
+				        return false;
+			        }, 500);
+			    }
+			    lastTap = currentTime; 
+		        return false;
+			}
+			return true;
 		});
 	}
 	// clear all the extension class from 
