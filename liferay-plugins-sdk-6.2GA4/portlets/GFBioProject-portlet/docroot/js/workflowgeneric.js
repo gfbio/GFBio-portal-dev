@@ -44,7 +44,7 @@ function buildCommonResearchObjectJson(projectJson){
 		"publications":document.getElementById("gwf_ro_publications").value,
 		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
 		"embargo":document.getElementById("gwf_ro_embargo").value,
-		"legalrequirements":legalrequirements,
+		"legalrequirements":legalrequirements
 	}
 
 	var researchObjectJson = {
@@ -54,6 +54,10 @@ function buildCommonResearchObjectJson(projectJson){
 		"description":document.getElementById("gwf_ro_description").value,
 		"extendeddata": extendetdata,
 		"categoryids":category,
+		"publications":document.getElementById("gwf_ro_publications").value,
+		"datacollectiontime":document.getElementById("gwf_ro_dct").value,
+		"embargo":document.getElementById("gwf_ro_embargo").value,
+		"legalrequirementids":legalrequirements
 	};
 
 	if (projectJson.projectid!=0)
@@ -67,13 +71,24 @@ function buildCommonResearchObjectJson(projectJson){
 
 //
 function buildResearchObjectJsonForCreate(projectJson){
-	var researchObjectJson = buildCommonResearchObjectJson(projectJson);
+	var researchObjectJson = {};
+	researchObjectJson = buildCommonResearchObjectJson(projectJson);
 	
 	if (document.getElementById("gwf_ro_metadatalabel").value != 'none')
 		researchObjectJson["metadataid"]= Number(document.getElementById("gwf_ro_metadatalabel").value);
 	
 	researchObjectJson["licenseid"] = Number(document.getElementById("gwf_ro_licenselabel").value);
 	researchObjectJson["researchobjecttype"]= document.getElementById("gwf_ro_researchobjecttype").innerHTML;
+
+	if (document.getElementById("gwf_ro_upload_direct").checked != true)
+		if (document.getElementById("gwf_ro_externalupload_path").value != ""){
+			var primaryDataJson = {
+				"name": document.getElementById("gwf_ro_externalupload_path").value,
+				"path": document.getElementById("gwf_ro_externalupload_path").value
+			};
+			researchObjectJson["primarydata"] = primaryDataJson;
+		}
+
 	return researchObjectJson;
 }
 
@@ -95,18 +110,13 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 	var registryJson = {};
 	registryJson["researchobjectid"]= researchObjectJson.researchobjectid;
 	registryJson["researchobjectversion"]= researchObjectJson.researchobjectversion;
-	if (document.getElementById("gwf_dcrtassignee").innerHTML!='null')
-		if(document.getElementById("gwf_ro_dcrt_default").checked ==true){
-			console.log("check true");
-			registryJson["archive"] = "GFBio collections";
-		}else{
-			console.log("check nope");
-			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
-		}
-	else
+	console.log(document.getElementById("gwf_dcrtassignee").innerHTML);
+	console.log("|"+document.getElementById("gwf_dcrtassignee").innerHTML+"|");
+	if (document.getElementById("gwf_dcrtassignee").innerHTML=='null')
 		registryJson["archive"] = "GFBio collections";
+	else
+			registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
 	registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
-	console.log(registryJson);
 	return registryJson;
 }
 
@@ -114,6 +124,11 @@ function buildSubmissionJsonForRegistry(researchObjectJson){
 //
 function checkEmbargoDate(date){
 	return /^2\d{3}-[01]\d-[0123]\d$/.test(date);
+}
+
+//
+function checkExternalLinkUrl(url){
+	return /^((https:\/\/|http:\/\/|ftp:\/\/|fstp:\/\/).*|)$/.test(url);
 }
 
 
@@ -131,6 +146,7 @@ function checkInput(){
 }
 
 
+
 //
 function checkMinimalInput(){
 	var check = true;
@@ -144,8 +160,6 @@ function checkInputLength(){
 	check = true;
 	failList = [];
 	failListLength =0;
-	
-	console.log(check);
 	
 	if ((document.getElementById("gwf_ro_name").value).length > 200){
 		check = false;
@@ -184,8 +198,6 @@ function checkInputLength(){
 		document.getElementById("gwf_ro_label_d").className="field-description";
 		document.getElementById("gwf_ro_label").className="field lfr-input-text-container";
 	}
-
-	console.log(check);
 	
 	if (!check)
 		buildErrorMessage('gwf_lf_comentarField',"Please reduce the length of"+failList +" under 200 characters." );
@@ -283,19 +295,23 @@ function checkMinimalResearchObjectInput(){
 			check = subcheck;
 	}
 	
-	/*
-	 * 	if (document.getElementById("gwf_ro_name").value==""){
-		check = false;
-		document.getElementById("gwf_ro_name_l").className="labelFalse";
-		document.getElementById("gwf_ro_name_d").className="labelFalse";
-		document.getElementById("gwf_ro_name").className="inputTextContainerFalse";
-	}else{
-		document.getElementById("gwf_ro_name_l").className="control-label";
-		document.getElementById("gwf_ro_name_d").className="field-description";
-		document.getElementById("gwf_ro_name").className="field lfr-input-text-container";
+	//external link
+	if (document.getElementById("gwf_ro_upload_direct").checked != true){
+		var subcheck = checkExternalLinkUrl(document.getElementById("gwf_ro_externalupload_path").value);
+		if (!subcheck){
+			document.getElementById("gwf_ro_externalupload_path_l").className="labelFalse";
+			document.getElementById("gwf_ro_externalupload_path_d").className="labelFalse";
+			document.getElementById("gwf_ro_externalupload_path").style='border-color:darkred !important';
+		}else{
+			document.getElementById("gwf_ro_externalupload_path_l").className="control-label";
+			document.getElementById("gwf_ro_externalupload_path_d").className="field-description";
+			document.getElementById("gwf_ro_externalupload_path").style='';
+		}
+		
+		if(!subcheck)
+			check = subcheck;
 	}
-	 */
-	
+		
 	if (!check)
 		buildErrorMessage('gwf_lf_comentarField', "Please correct or fill the marked fields.")
 	else
@@ -307,7 +323,20 @@ function checkMinimalResearchObjectInput(){
 
 //
 function resetInput(){
-	resetDCRTInput();
+	
+	if (confirm("If you confirm the reset, then all fields are cleared.") == true) {
+		resetDCRTInput();
+		
+		restartInput();
+		
+	} 
+}
+
+
+//
+function restartInput(){
+	
+	
 	
 	sentShowHideInformation(true);
 	var div =   $("#generic");
@@ -315,8 +344,9 @@ function resetInput(){
 	var data = {"userid":Number(themeDisplay.getUserId())};
 	buildGenericForm(data, div);
 	fillDefaultInformations(data, div);
-		
+			
 	sentResetRequest();
+
 }
 
 
@@ -339,10 +369,8 @@ function saveAllInput(){
 		
 		
 		if (document.getElementById("gwf_dcrtassignee").innerHTML!=null){
-			var checkList = document.getElementsByName('gwf_ro_dcrt_radio');
-			for (i=0; i <checkList.length; i++)
-				if (checkList[i].checked==true)
-					projectJson["dcrtassignee"]=checkList[i].value;
+
+			projectJson["dcrtassignee"]= document.getElementById("gwf_dcrtassignee").innerHTML;
 			projectJson["dcrtinput"]=document.getElementById("gwf_dcrtinput").innerHTML;
 			projectJson["dcrtrecommendation"]=document.getElementById("gwf_dcrtrecommendation").innerHTML;
 		}
@@ -351,13 +379,12 @@ function saveAllInput(){
 		if (projectJson.researchobjects.researchobjectid >0){
 			console.log('Information were stored');
 			buildWaitringMessage('gwf_lf_comentarField');
-			sentWorkflowUpdate(true, projectJson.projectid, "", projectJson.researchobjects);
+			//sentWorkflowUpdate(true, projectJson.projectid, "", projectJson.researchobjects);
 		}else{
 			buildErrorMessage('gwf_lf_comentarField', "Failed to store the information.");
 		}
 		
 	}
-	console.log(projectJson);
 	return projectJson;
 }
 
@@ -392,25 +419,28 @@ function saveResearchObjectInput(projectJson){
 function submitInput(url){
 	
 	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-		
+
 		if (checkInput()){
-			
 			if (checkInputLength()){
-			
+
 				//create research object /project
 				var mrrJson = saveAllInput();
 				
 				//create primary data
 				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
 					if (Number(document.getElementById("gwf_ro_id").innerHTML)!=0)
-						fileUplaod();
+						if(document.getElementById("gwf_ro_upload_direct").checked==true)
+							fileUplaod();
+						
 				
 					//create submission registry
 					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+						console.log("start sub reg");
 						startSubmissionRegistry(buildSubmissionJsonForRegistry(mrrJson.researchobjects));
 						
 						//sent to JIRA
 						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+
 							var data ={};
 							data["mrr"]= mrrJson;
 							startSubmission(data);

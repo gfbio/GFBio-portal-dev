@@ -92,41 +92,20 @@ section {
     z-index: 9999;
 }
 
-/*Battery*/
+/*Loading gif*/
 .loader-box {
-    background-color: rgba(0, 0, 0, 0.02);
-    border-radius: 1px;
-    height: 100px;
-    left: 50%;
-    margin-left: -64px;
-    margin-top: -50px;
-    position: absolute;
-    top: 50%;
-    width: 128px;
-}
-
-.battery {
-    width: 60px;
-    height: 25px;
-    top: 35%;
-    border: 1px #2E2E2E solid;
-    border-radius: 2px;
-    position: relative;
-    -webkit-animation: charge 5s linear infinite;
-    -moz-animation: charge 5s linear infinite;
-    animation: charge 5s linear infinite;
-    margin: 0 auto;
-}
-
-.battery:after {
-    background-color: #2E2E2E;
-    border-radius: 0 1px 1px 0;
-    content: "";
-    height: 10px;
-    position: absolute;
-    right: -5px;
-    top: 7px;
-    width: 3px;
+	background-image: url("../images/gfbio_loading.gif");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: rgba(0, 0, 0, 0.02);
+	height: 98px;
+	width: 98px;
+	margin-top: -30px;
+	margin-left: -30px;
+	left: 50%;
+	top: 50%;
+	position: absolute; 
 }
 
 
@@ -473,7 +452,7 @@ h1.navbar-brand {
 
 #big-logo-with-claim {
     background: url('../images/gf_bio_logo_claim_370x208.png') no-repeat center center;
-    padding: 208px 370px 0 0 !important;
+    padding: 208px 370px 0 0;
 }
 
 #claim-top-wrapper {
@@ -1037,6 +1016,16 @@ ul.external li a:hover {
 /*============================================================
 	Mobile (Portrait) Design for a width of 320px
 ==============================================================*/
+
+/* Fix graphical display issues on mobile device: https://project.gfbio.org/issues/1294 */
+@media (min-width: 280px) and (max-width: 370px) {
+	#big-logo-with-claim {
+	    background: url('../images/gf_bio_logo_claim_370x208.png') no-repeat center center;
+	    background-size: 100%;
+	    padding: 208px 0px 0 0;
+	}
+
+}
 
 @media only screen and (max-width: 767px) {
 

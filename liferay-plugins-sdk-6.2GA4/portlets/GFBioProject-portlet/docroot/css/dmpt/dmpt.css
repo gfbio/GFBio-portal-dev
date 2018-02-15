@@ -163,6 +163,48 @@ h4 {
 
 
 
+.startdmp {
+	background: #2c59a0;
+    color: #fff !important;
+    padding: 0.5em 2.7em;
+    width: 100% !important;
+    border-radius: 5px !important;
+    border: none !important;
+}
+
+.ui-dialog.answer-dialog {
+	box-shadow:0px 0px 3px #888;
+    max-width: 100%;
+}
+
+.ui-dialog.answer-dialog .ui-widget-header {
+	border-radius: 3px;
+	background: #2c59a0;
+}
+
+.ui-dialog.answer-dialog .ui-dialog-titlebar-close {
+	right: .5em !important;
+	margin: -10px 0 0 0 !important;
+}
+
+.custom-dialog div.ui-dialog-buttonpane {
+	margin-top: 0;
+	padding: 0;
+}
+
+.custom-dialog div.ui-dialog-buttonset {
+	float: none !important;
+	text-align: center;
+}
+
+.custom-dialog button {
+	text-align: center;
+   	border-radius: 5px;
+   	margin: 0 .4em .5em 0 !important;
+   	padding: .1em .75em;
+    color: #818181 !important;
+}
+
 /* do not group these rules */
 *::-webkit-input-placeholder {
     opacity: 0.7;

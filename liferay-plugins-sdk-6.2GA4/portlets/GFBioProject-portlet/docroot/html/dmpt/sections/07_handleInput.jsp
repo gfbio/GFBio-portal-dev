@@ -16,3 +16,7 @@
 		
 	</div>
 </div>
+
+<div id="dialog-save" style="display: none;">
+	<div id="save-answer" style="text-align: center;"></div>
+</div>

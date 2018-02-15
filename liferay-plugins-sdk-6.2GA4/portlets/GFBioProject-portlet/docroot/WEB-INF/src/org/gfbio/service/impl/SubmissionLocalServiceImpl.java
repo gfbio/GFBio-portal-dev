@@ -14,6 +14,9 @@
 
 package org.gfbio.service.impl;
 
+
+
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,10 +27,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.apache.commons.codec.binary.Base64;
+import org.gfbio.helper.ContactJira;
 import org.gfbio.helper.Helper;
+import org.gfbio.idmg.jiraclient.model.Project;
 import org.gfbio.model.Submission;
 import org.gfbio.service.DataProviderLocalServiceUtil;
+import org.gfbio.service.PrimaryDataLocalServiceUtil;
+import org.gfbio.service.ProjectLocalServiceUtil;
+import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
+import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.base.SubmissionLocalServiceBaseImpl;
 import org.gfbio.service.persistence.SubmissionFinderUtil;
 
@@ -37,6 +47,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -910,6 +921,202 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 			
 		return keyJson;
 	}
+	
+/*	public JSONObject startSubmission (JSONObject requestJson){
+		JSONObject responseJson = new JSONObject();
+		
+		JSONObject checkJson = transferSubmissionInformationToDb(requestJson);
+		if (!checkJson.containsKey("Error")){
+			responseJson = checkJson;
+			
+			JSONObject submissionJson = new JSONObject();
+			JSONObject mrrJson = new JSONObject();
+			mrrJson = (JSONObject) ((JSONObject) checkJson.get("all")).get("researchobject");
+			mrrJson.put("userid", (long) ((JSONArray) ((JSONObject) mrrJson.get("userids")).get("direct")).get(0));
+			submissionJson.put("mrr", (mrrJson));
+			submissionJson.put("path","C:\\Users\\froemm\\GFBio\\GFBio-portal-dev\\liferay-portal-6.2-ce-ga4\\tomcat-7.0.42\\temp\\11-GFBioProject-portlet\\");
+			System.out.println("check"+checkJson);
+			System.out.println("submi"+submissionJson);
+			
+			JSONObject jiraResponseJson = ContactJira.startSubmission(submissionJson);
+			
+			System.out.println(" jira"+jiraResponseJson);
+		}
+		
+		//System.out.println(checkJson);
+		
+		
+		return responseJson;
+	}*/
+	
+	
+	//
+/*	@SuppressWarnings({ "unchecked"})
+	public JSONObject transferSubmissionInformationToDb(JSONObject requestJson){
+		
+		// information to Portal
+		
+
+        JSONObject jiraJson = new JSONObject();
+        
+        try {
+        	Runtime rt = Runtime.getRuntime();
+            RuntimeExec rte = new RuntimeExec();
+            StreamWrapper error, output;
+            String userpass = PropsUtil.get("jira.gfbio.submission.userpass");
+
+        	        	
+        	String curl ="";
+        	curl = "curl -D- -u "+userpass+" -X GET -H \"Content-Type: application/json\" --url \" "+PropsUtil.get("jira.gfbio.submission.urlissue")+" \" " ;
+
+        	Process proc = rt.exec(curl);
+        	error  = rte.getStreamWrapper(proc.getErrorStream(), "ERROR");
+        	output = rte.getStreamWrapper(proc.getInputStream(), "OUTPUT");
+        	int exitVal = 0;
+            error.start();
+            output.start();
+            error.join(3000);
+            output.join(3000);
+            exitVal = proc.waitFor();
+
+            _log.info(output.getMessage());
+            
+            String[] SSubAOutput = (output.getMessage()).split("chunked");
+            String subSOutput = SSubAOutput[SSubAOutput.length-1];
+            JSONParser parser = new JSONParser();
+    		try {jiraJson = (JSONObject) parser.parse(subSOutput);}
+    		catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+    		
+    		_log.info(jiraJson);
+    		
+        } catch (IOException e) {e.printStackTrace();
+        } catch (InterruptedException e) {e.printStackTrace();}
+    
+		
+		// change information syntax
+		
+        
+        _log.info(jiraJson);
+        requestJson = ContactJira.jiraJsonToPortalJson(jiraJson);
+        _log.info(requestJson);
+		
+		
+		
+		// information to DB
+		
+		JSONObject responseJson = new JSONObject();
+		
+		_log.info("transfer request:" + requestJson);
+		
+		if (requestJson.containsKey("researchobject")){
+			
+			JSONObject researchObjectJson = null;
+			
+			researchObjectJson = Helper.getJsonObjectFromJson(requestJson, "researchobject");
+			
+			_log.info("transfer researchObjectJson:" + researchObjectJson);
+			
+			if (researchObjectJson.containsKey("researchobjectid")){
+				_log.info("update RO");
+				researchObjectJson = ResearchObjectLocalServiceUtil.updateResearchObjectByJson(researchObjectJson);
+			}else{
+				_log.info("create RO");
+				researchObjectJson = ResearchObjectLocalServiceUtil.createResearchObjectByJson(researchObjectJson);
+			}
+			_log.info("after change: "+researchObjectJson);
+			responseJson.put("researchobject", researchObjectJson);
+			
+			_log.info("transfer responseJson:" + responseJson);
+						
+			if (researchObjectJson.containsKey("researchobjectid")){
+				
+				long researchObjectId = Helper.getLongFromJson(researchObjectJson, "researchobjectid");
+				int researchObjectVersion = Helper.getIntFromJson(researchObjectJson, "researchobjectversion");
+
+				//submission
+				if (requestJson.containsKey("submission")){
+					
+					JSONObject submissionJson = Helper.getJsonObjectFromJson(requestJson, "submission");
+					
+					_log.info(submissionJson);
+					
+					if (submissionJson.containsKey("archive")){
+						
+						submissionJson.put("researchobjectid", researchObjectId);
+						submissionJson.put("researchobjectversion", researchObjectVersion);
+						submissionJson.put("dbrocheck", true);
+						
+						_log.info(submissionJson);
+
+						if (SubmissionLocalServiceUtil.checkOfIds(researchObjectId, researchObjectVersion, (Helper.getStringFromJson(submissionJson, "archive")).trim())){
+							_log.info("update Sub");
+							submissionJson = SubmissionLocalServiceUtil.updateSubmission(submissionJson);
+						}else{
+							_log.info("create Sub");
+							submissionJson = SubmissionLocalServiceUtil.createSubmission(submissionJson);
+						}
+						
+						responseJson.put("submission", submissionJson);
+					}
+				}
+				
+				//project
+				if (requestJson.containsKey("project")){
+					
+					JSONObject projectJson = Helper.getJsonObjectFromJson(requestJson, "project");
+					
+					_log.info(projectJson);
+									
+
+					if (projectJson.containsKey("projectid")){
+						_log.info("update Pro");
+						projectJson = ProjectLocalServiceUtil.updateProjectByJson(projectJson);
+					}else{
+						_log.info("create Pro");
+						projectJson = ProjectLocalServiceUtil.createProjectByJson(projectJson);
+					}
+					
+					Boolean check = Project_ResearchObjectLocalServiceUtil.updateProjectResearchObject(Helper.getLongFromJson(projectJson, "projectid"), researchObjectId, researchObjectVersion);
+					
+					if (check)
+						responseJson.put("project", projectJson);
+				}
+				
+				//primarydata
+				if (requestJson.containsKey("primarydata")){
+					JSONObject primarydataJson = Helper.getJsonObjectFromJson(requestJson, "primarydata");
+					
+					primarydataJson.put("researchobjectid", researchObjectId);
+					primarydataJson.put("researchobjectversion", researchObjectVersion);
+					
+					if (primarydataJson.containsKey("primarydataid")){
+						_log.info("update Pri");
+						primarydataJson = PrimaryDataLocalServiceUtil.updatePrimaryData(primarydataJson);
+					}else{
+						_log.info("create Pri");
+						primarydataJson = PrimaryDataLocalServiceUtil.createPrimaryData(primarydataJson);
+					}
+					responseJson.put("primarydata", primarydataJson);
+					
+				}
+				
+				//answer
+				JSONObject questionJson = new JSONObject ();
+				questionJson.put("kindofresponse","extraextended");
+				questionJson.put("researchobjectid",researchObjectId);
+				JSONObject answerJson = ResearchObjectLocalServiceUtil.getResearchObjectAsJsonById(questionJson);
+				responseJson.put("all", answerJson);
+				
+				
+			}
+		}
+		else{
+			responseJson.put("Error", "ERROR: You have to sent the researchobjectinformation to use this service." );
+		}
+		
+		
+		return responseJson;
+	}*/
 	
 	
 	//

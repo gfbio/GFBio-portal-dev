@@ -136,8 +136,8 @@ function resetFacet(topic, data, subscriberData) {
 	var urlYear = getQueryVariable('year');
 	var keyword = getQueryVariable('q');
 	if ((keyword == '')||((urlFilter =='')&& (urlYear ==''))){
-	resetFacetTray();
-}
+		resetFacetTray();
+	}
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

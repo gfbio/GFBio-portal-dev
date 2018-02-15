@@ -156,7 +156,7 @@ public class DCRTPortlet extends MVCPortlet {
 		
 		String title = "";
 		if (!isSignedIn) {
-			title = "You have to be logged in";
+			title = "You need to be logged in";
 		}
 
 		for (DataProvider dp : providers) {
@@ -241,7 +241,7 @@ public class DCRTPortlet extends MVCPortlet {
 
 		List<Customfield_10217> dataCenters = new ArrayList<>();
 		if (dataCenter.equals("GFBio")) {
-			user = "";
+			user = "gfbio-outreach ";
 			// Get List of all possible Data Centers if GFBio default contact is used
 			String[] dcs = resourceRequest.getParameterValues("dataCenterList[]");
 			for (int i = 0; i < dcs.length; i++) {

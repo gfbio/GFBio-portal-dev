@@ -29,7 +29,7 @@
    
 
 		<div id="ui-molecular-data-submission"
-		     userid="<%=PortalUtil.getUserId(request) %>" token="<%=Helper.getServerInformation(getServletContext().getRealPath("/"),"brokeragenttoken") %>"
+		     userid="<%=PortalUtil.getUserId(request) %>" token="<%=PropsUtil.get("jira.gfbio.submission.brokeragenttoken") %>"
 		     style="margin-top: 100px;">
 		</div> 
    

@@ -137,7 +137,7 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 	//
 	@SuppressWarnings("unchecked")
 	public JSONObject constructDataProviderAsJson (DataProvider dataProvider){
-
+	
 		JSONObject json = new JSONObject();
 		json.put("dataproviderid", dataProvider.getDataProviderID());
 		json.put("name", (dataProvider.getName()).trim());
@@ -155,7 +155,7 @@ public class DataProviderLocalServiceImpl	extends DataProviderLocalServiceBaseIm
 		json.put("deadobjects", dataProvider.getDeadobjects());
 		json.put("sequencedata", dataProvider.getSequencedata());
 		json.put("lastmodifieddate", dataProvider.getLastModifiedDate());
-		
+	
 		return json;
 	}
 	

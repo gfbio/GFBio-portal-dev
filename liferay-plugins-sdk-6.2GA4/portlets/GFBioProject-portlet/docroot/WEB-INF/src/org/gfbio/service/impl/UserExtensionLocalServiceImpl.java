@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.gfbio.helper.Helper;
 import org.gfbio.service.base.UserExtensionLocalServiceBaseImpl;
 import org.json.simple.JSONObject;
 
@@ -93,15 +94,8 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 
 		if (requestJson.containsKey("emailaddress")){
 
-			User user = null;
-			try {
-				List <User> userList = null;
-				userList = userPersistence.findByEmailAddress(((String) requestJson.get("emailaddress")).trim());
-				if (userList.size()>0 )
-					user =	userList.get(0);
-			} 
-			catch (SystemException e) {e.printStackTrace();}
-						
+			User user = getUserExtentionByEmailAddress(Helper.getStringFromJson(requestJson, "emailaddress"));
+			
 			if (user != null)
 				try {responseJson =constructUserExtentionJsonById(user);}
 				catch (NoSuchUserException | SystemException e) {e.printStackTrace();}
@@ -119,6 +113,22 @@ public class UserExtensionLocalServiceImpl	extends UserExtensionLocalServiceBase
 	
 	
 	//----------------------------------- Get Functions --------------------------------------------------//
+	
+	
+	//
+	public User getUserExtentionByEmailAddress(String emailAddress){
+
+			User user = null;
+			try {
+				List <User> userList = null;
+				userList = userPersistence.findByEmailAddress(emailAddress.trim());
+				if (userList.size()>0 )
+					user =	userList.get(0);
+			} 
+			catch (SystemException e) {e.printStackTrace();}
+
+		return user;
+	}
 	
 	
 		

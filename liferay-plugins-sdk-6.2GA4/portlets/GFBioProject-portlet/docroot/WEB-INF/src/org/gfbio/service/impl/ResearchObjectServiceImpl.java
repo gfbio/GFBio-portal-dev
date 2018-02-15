@@ -15,6 +15,7 @@
 package org.gfbio.service.impl;
 
 
+import org.gfbio.helper.Helper;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
 import org.gfbio.service.base.ResearchObjectServiceBaseImpl;
 import org.json.simple.JSONArray;
@@ -44,6 +45,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  */
 public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 
+	
+	private static Log _log = LogFactoryUtil.getLog(ResearchObjectLocalServiceImpl.class);
 	
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 
@@ -86,7 +89,9 @@ public class ResearchObjectServiceImpl extends ResearchObjectServiceBaseImpl {
 		
 	///////////////////////////////////// Update Functions ///////////////////////////////////////////////////
 	
-	private static Log _log = LogFactoryUtil.getLog(ResearchObjectLocalServiceImpl.class);
+
+
+	
 	
 	//
 	@SuppressWarnings("unchecked")

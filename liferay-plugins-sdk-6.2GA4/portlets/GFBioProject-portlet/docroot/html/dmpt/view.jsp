@@ -1,41 +1,31 @@
 <%@ include file="/html/dmpt/init.jsp"%>
 
 <script src="<%=request.getContextPath()%>/js/dmpt/jquery.steps.min.js"	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/idmg/jquery.validate.min.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/dmpt/dmpt.js"	type="text/javascript"></script>
 
+<link href="<%=request.getContextPath()%>/css/idmg/jquery-ui.min.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/jquery-steps.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
 <portlet:resourceURL var="ajaxUrlWizard" id="wizard" />
+<portlet:resourceURL var="ajaxUrlLicense" id="license" />
+<portlet:resourceURL var="ajaxUrlSave" id="savedmp" />
+<portlet:resourceURL var="ajaxUrlLoad" id="loaddmp" />
+<portlet:resourceURL var="ajaxUrlDelete" id="deletedmp" />
 
 <script type="text/javascript">   
 
 var userEmail = '${email}';
 var userName = '${username}';
 var contextPath = '${contextPath}';
+var userHasDmps = '${hasDmps}';
+var dmps = '${dmpsforuser}';
 
-$(document).ready(function(){
+$(document).ready(function () {
 	
-    $(document).tooltip({
-    	tooltipClass: "jqueryTooltip",
-    	position: {
-            my: "left center", // the "anchor point" in the tooltip element
-            at: "right+5 center", // the position of that anchor point relative to selected element
-        },
-        content: function() {
-            return $(this).attr('title');
-        },
-        show: { 
-        	effect: "fade"
-        },
-        hide: {
-            effect: "fade",
-            delay: 600
-        }
-   	});   
-    
-    $.validator.addMethod("notEqual", function(value, element, param) {
+      
+    $.validator.addMethod("notEqual", function (value, element, param) {
         return this.optional(element) || value != param;
     }, "Please specify a non-default value");
     
@@ -58,7 +48,7 @@ $(document).ready(function(){
              	email: true
            	},
            	phoneNumber : {
-           		required: true,
+           		//required: true,
            		//number: true
            	},
 		}
@@ -68,7 +58,7 @@ $(document).ready(function(){
 		headerTag : "h2",
 		bodyTag : "section",
 		transitionEffect : "fade",
-		onStepChanging : function(event, currentIndex, newIndex) {
+		onStepChanging : function (event, currentIndex, newIndex) {
 			// Allways allow previous action even if the current form is not valid!
 	        if (currentIndex > newIndex)
 	        {
@@ -84,19 +74,31 @@ $(document).ready(function(){
 			form.validate().settings.ignore = ":disabled,:hidden";
 			return form.valid();
 		},
-		onFinishing : function(event, currentIndex) {
+		onFinishing : function (event, currentIndex) {
 			form.validate().settings.ignore = ":disabled";
 			return form.valid();
 		},
-		onFinished : function(event, currentIndex) {
+		onFinished : function (event, currentIndex) {
 			$("div.steps").hide();
 			$("div.actions").hide();
 			$("div[name='title']").hide();
 			$("#gfbioServicesStep").hide();
 			$("#handleInput").show();
-			sendInput();
+			getInput();
 		},
-		onInit : function() {
+		onInit : function () {
+			//If the user has dmps to load a preview '#dmppreview' will be shown
+			if (userHasDmps === "true") {
+				hideGeneralInformation();
+				$("#dmppreview").show();
+			}
+			
+			$("#delete").on("click", deleteDmp);
+			
+			$("#load").on("click", loadDmp);
+			
+			$("#start").on("click", showGeneralInformation);
+			
 		    //01 General Information
 			$("#firstPrincInput").on("keyup focus", handlePrincipalButton);
 		    
@@ -109,7 +111,7 @@ $(document).ready(function(){
 		    $("#fundingOther").hide();
 		    $("#fundingLink").hide();
 		
-		    $("#policies").on("change", handlePolicy);
+		    $("input[name='policies']").on("click", policies);
 		    $("#policyOther").hide();
 		    $("#policyLink").hide();
 		
@@ -118,18 +120,16 @@ $(document).ready(function(){
 		    $("#taxon").addClass("disabledDiv");
 		    $("#sequenced").addClass("disabledDiv");
 		    
-		    $("input[value='true'][name='physical']").on("click", handlePhysical);
-		    $("input[value='false'][name='physical']").on("click", handlePhysical);
+		    $("input[name='physical']").on("click", handlePhysical);
 		
-		    $("input[value='true'][name='alive']").on("click", handleAlive);
-		    $("input[value='false'][name='alive']").on("click", handleAlive);
+		    $("input[name='alive']").on("click", handleAlive);
 		    
 		    //02 Data Collection
 		    $("#dataformat-cb").on("click", checkboxDataformat);
 		    $("#dataformatOther").hide();
 		    
 		    $("#volumeSlider").on("input change", showDataVolume);
-		    $("#datasetSlider").on("input change", showNumberOfDatasets);
+		    $("#datasetSlider").on("input change", showNumberOfDataSets);
 		    
 		    //03 Documentation and Metadata
 		    $("#metadata-other").on("click", handleMetadataOther);
@@ -139,221 +139,231 @@ $(document).ready(function(){
 		    $("#legal-other").on("click", checkboxRequirement);
 		    $("#requirementOther").hide();
 		
-		    $("#license-other").on("click", handleLicenses);
+		    $("#licenses").on("change", function (event) {
+		    	handleLicenses(event);
+		    	getLicenseData();
+		    });
 		    $("#licenseOther").hide();
 		    $("#licensceUrl").hide();
+		    $("#licensceDescription").hide();
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
 		    
 		    //05 Preservation and Sharing
-		    $("#archives").on("change", handleArchives);
+		    $("#archives-cb").on("click", handleArchives);
 		    $("#archiveOther").hide();
 		    
 		    //07 Handling inputs at the end of the wizard
 		    $("#handleInput").hide();
 		    
-		    $("#downloadDMP").click(function() {
+		    $("#downloadDMP").click(function () {
 				var fileName = $("#name").val() + ".pdf";
 				fileName = fileName.replace(/\s/g, "_");
-				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+				window.open(contextPath + '/DownloadFile?fileName=' + fileName, '_blank');
 			});
-		    $("#downloadDMPtest").click(function() {
-				var fileName = $("#name").val();
-				fileName = fileName.replace(/\s/g, "_");
-				window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
-			});
+		    
+		    //$("#downloadDMPtest").click(function () {
+			//	var fileName = $("#name").val();
+			//	fileName = fileName.replace(/\s/g, "_");
+			//	window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
+			//});
+		    
+		    //Saving DMP
+		    $("#saveDMP").on("click", saveDMPforUser);
+		    
+		    if(!Liferay.ThemeDisplay.isSignedIn()) {
+		    	$("#save-message").show();
+		    	
+		    	$("#saveDMP").prop("disabled", true);
+				$("#saveDMP").prop("title", "You need to be logged in");
+			   	$("#saveDMP").addClass("wizarddisabled");
+		    }
+		    
+		    //Tooltips
+		    $("a[name=title]").tooltip({
+		    	tooltipClass: "jqueryTooltip",
+		    	position: {
+		            my: "left center", // the "anchor point" in the tooltip element
+		            at: "right+5 center" // the position of that anchor point relative to selected element
+		        },
+		        content: function () {
+		            return $(this).attr('title');
+		        },
+		        show: { 
+		        	effect: "fade"
+		        },
+		        hide: {
+		            effect: "fade"
+		        }
+		    }); 
+
+		    $("span[title]").tooltip({
+		    	tooltipClass: "jqueryTooltip",
+		    	position: {
+		    		my: "center top",
+		            at: "center bottom+5"
+		        },
+		        content: function () {
+		            return $(this).attr('title');
+		        },
+		        show: { 
+		        	effect: "fade"
+		        },
+		        hide: {
+		            effect: "fade"
+		        }
+		    });
 		}
   	})
 });
 
-function getInputAsJson() {
+function getInput() {
 	
-	// 01 General Information
-	var projectName = $("#name").val();
-	var category = $("#category").find(":selected").text();
-	console.log("Category: " + category);
-	if (category === "Select") category = "";
-	var reproducible = $("input[name='nature']:checked").val();
-	
-	var projectTypes = [];
-	$("input[name='types']:checked").each(function() {
-      	projectTypes.push($(this).siblings('span').text());
-    });
-	if ($.inArray("Other", projectTypes) > -1) {
-		projectTypes.splice($.inArray("Other", projectTypes), 1);
-		projectTypes.push($("#typesOther").val());
-	}
-	
-	var projectAbstract = $("#abstract").val();
-	
-	var investigators = [];
-	$("input[name='investigator']").each(function() {
-		investigators.push($(this).val());
-    });
-	
-	var responsibleName = $("#responsibleName").val();
-	var phoneNumber = $("#phone").val();
-	var email = $("#email").val();
-	
-	var funding = $("#funding").val();
-	var fundingLink = "";
-	if (funding === "other") {
-		funding = $("#fundingOther").val();
-		fundingLink = $("#fundingLink").val();
-	}
-	
-	var policies = $("#policies").text();
-	var policyLink = "";
-	if ($.inArray("Other", policies) > -1) {
-		policies.splice($.inArray("Other", policies), 1);
-		policies.push($("#policyOther").val());
-		policyLink = $("#policyLink").val();
-	}
-	
-	// 02 Data Collection
-	
-	var physical = $("input[name='physical']:checked").val();
-	var alive = $("input[name='alive']:checked").val();
-	var taxon = $("input[name='taxon']:checked").val();
-	var sequenced = $("input[name='sequenced']:checked").val();
-	
-	var dataformats = [];
-	$("input[name='dataformat']:checked").each(function() {
-		dataformats.push($(this).siblings('span').text());
-    });
-	if ($.inArray("Other", dataformats) > -1) {
-		dataformats.splice($.inArray("Other", dataformats), 1);
-		dataformats.push($("#dataformatOther").val());
-	}
-	
-	var documentated = $("input[name='documentated']:checked").val();
-	
-	var dataVolume = $("#volumeSlider").val();
-	var dataSet = $("#datasetSlider").val();
-
-	var methodologies = $("#methodologies").val();
-	
-	// 03 Metadata
-	
-	var metadata = [];
-	var metadataDesc = "";
-	$("input[name='metadata']:checked").each(function() {
-		dataformats.push($(this).siblings('span').text());
-    });
-	if ($.inArray("Other", metadata) > -1) {
-		metadata.splice($.inArray("Other metadata schema or version", metadata), 1);
-		metadataDesc = $("metadataDesc").val();	
-	}
-
-	// 04 Ethics
-	
-	var requirements = [];
-	$("input[name='requirements']:checked").each(function() {
-		requirements.push($(this).siblings('span').text());
-    });
-	if ($.inArray("Other", requirements) > -1) {
-		requirements.splice($.inArray("Other", requirements), 1);
-		requirements.push($("requirementOther").val());	
-	}
-	
-	var license = $("input[name='license']:checked").val();
-	var otherLicense = "";
-	if (license === "Other License") {
-		otherLicense = $("licenseOther").val()
-	}
-	 
-	var accessRestriction = $("input[name='restriction']:checked").val();
-	var accessDuration = "";
-	var accessReason = "";
-	if (restriction) {
-		accessDuration = $("#accessDuration").val();
-		accessReason = $("#accessReason").val();
-	}
-	
-	// 05 Preservation
-	
-	var dataArchives = [];
-	
-	
-	//Create jsonObject
-	
-	var dmptInput = {
-			"projectName" : projectName,
-			"category" : category,
-			"reproducible" : reproducible,
-			"projectTypes": [],
-			"projectAbstract" : projectAbstract,
-			"investigators" : [],
-			"responsibleName" : responsibleName,
-			"phoneNumber" : phoneNumber,
-			"email" : email,
-			"funding" : {
-				"name" : funding
-			},
-			"policies" : [],
-			"physical" : physical,
-			"alive" : alive,
-			"taxon" : taxon,
-			"sequenced" : sequenced,
-			"dataformats" : [],
-			"openlyDocumentated" : documentated,
-			"dataVolume" : dataVolume,
-			"dataSets" : dataSet,
-			"methodologies" : methodologies,
-			"metadata" : [],
-			"metadataDescription" : metadataDesc
-				
-	};
-	
-	if (projectTypes != null) {
-		dmptInput.projectTypes = projectTypes;
-	}
-
-	if (investigators != null) {
-		dmptInput.investigators = investigators;
-	}
-	
-	console.log(policies);
-	
- 	if (policies != null) {
-// 		policies.map(function(item) {        
-// 	  		dmptInput.policies.push({ 
-// 	    		"value" : item,
-// 	    	});
-// 		});
- 	}
-
-	if (dataformats != null) {
-		dmptInput.dataformats = dataformats;
-	}
-	
-	if (metadata != null) {
-		
-	}
-	
-	console.log(dmptInput);
-	console.log("JSon");
-	
-	return JSON.stringify(dmptInput);
-	
-}
-
-function sendInput() {
-	
-	jsonInput = getInputAsJson();
+	var jsonInput = getInputAsJson();
 	console.log("Send: " + jsonInput);
 	
-	var response = '';
     $.ajax({
 	   		"method": "POST",
 	   		"url": '<%=ajaxUrlWizard%>',
 	   		"data": {
 	   			json: jsonInput
 	   		},
-	   		success: function(text) {
+	   		success: function (text) {
 	          	console.log(text);
 	      	}
+    });
+}
+
+function saveDMPforUser() {
+	
+	var projectName = $("#name").val(),
+		dmpId = $("#dmpId").val();
+	
+	$.ajax({
+	   		"method": "POST",
+	   		"url": '<%=ajaxUrlSave%>',
+	   		"data": {
+	   			name: projectName,
+	   			dmpId: dmpId
+	   		},
+	   		success: function (response) {
+	          	console.log("Save Answer: " + response);
+	          	
+	          	if (response.includes("success")) {
+		          	$("#saveDMP").prop("disabled", true);
+		          	$("#saveDMP").addClass("wizarddisabled");
+		          	$("#saveDMP").val("Saved");
+	          	}
+	          	openSavedDialog(response);
+	      	}
+ 	});
+}
+
+function openSavedDialog(response) {
+	$("#save-answer").html("<p>" + response + "</p>");
+	
+	$("#dialog-save").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "answer-dialog custom-dialog",
+	    buttons: {
+	      Ok: function () {
+	        $( this ).dialog( "close" );
+	      }
+	    }
+    });
+}
+
+function deleteDmp() {
+	var dmpId = $("#dmps").val();
+	console.log("ID: " + dmpId);
+	
+	$.ajax({
+   		"method": "POST",
+   		"url": '<%=ajaxUrlDelete%>',
+   		"data": {
+   			dmpId: dmpId
+   		},
+   		success: function (response) {
+   			openDeletedDialog(response);
+   			
+   			if (response.includes("success")) {
+   				$("#dmps option[value='" + dmpId + "']").remove();
+   			}
+      	}
+	});
+	
+}
+
+function openDeletedDialog(response) {
+	$("#delete-answer").html("<p>" + response + "</p>");
+	
+	$("#dialog-delete").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "answer-dialog custom-dialog",
+	    buttons: {
+	      Ok: function () {
+	        $( this ).dialog( "close" );
+	      }
+	    }
+    });
+}
+
+
+function loadDmp() {
+	var dmpId = $("#dmps").val();
+	console.log("Load dmp with Id: " + dmpId);
+	
+	$.ajax({
+   		"method": "POST",
+   		"url": '<%=ajaxUrlLoad%>',
+   		"data": {
+   			dmpId: dmpId
+   		},
+   		success: function (response) {
+   			console.log("JSON: " + response);
+          	var selectedDmp = JSON.parse(response);
+   			console.log("Selected: ", selectedDmp);
+			console.log("Name: " + selectedDmp.projectName);
+   			initializeInputs(selectedDmp, dmpId);
+   			showGeneralInformation();
+      	}
+	});
+}
+
+function getLicenseData() {
+	
+	var license = $("#licenses").val();
+	console.log("License: " + license);
+	
+    $.ajax({
+	   		"method": "POST",
+	   		"url": '<%=ajaxUrlLicense%>',
+	   		"data": {
+	   			license: license
+	   		},
+	   		success: function (text) {
+	          	console.log(text);
+	          	
+          		var results = text.split(',');
+          		console.log(results[0]);
+          		if (results[0] !== "url") {
+          			console.log(results[0]);
+          			$("#licensceUrl").href = results[0];
+          			$("#licensceUrl").innerHTML = results[0];
+          			$("#licensceUrl").show("slow");
+          		} else {
+          			$("#licensceUrl").hide();
+          		}
+          		if (results[1] !== "desc") {
+          			$("#licenseDescription").innerHTML = results[1];
+          			$("#licenseDescription").show("slow");
+          		} else {
+          			$("#licenseDescription").hide();
+          		}
+	        }
     });
 }
 

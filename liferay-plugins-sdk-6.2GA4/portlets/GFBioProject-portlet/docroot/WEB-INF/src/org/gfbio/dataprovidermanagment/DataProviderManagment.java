@@ -10,6 +10,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.gfbio.helper.Helper;
 import org.gfbio.service.DataProviderLocalServiceUtil;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -74,25 +75,33 @@ public class DataProviderManagment extends GenericPortlet {
   	//
   	@SuppressWarnings("unchecked")
   	public void chooseDataProvider(ResourceRequest request, ResourceResponse response) throws IOException, PortletException {
-
+  		
   		JSONObject responseJson = new JSONObject();
   		String dataJson = request.getParameter("data");
   		JSONParser parser = new JSONParser();
   		JSONObject parseJson = new JSONObject();
-  		try {
-  			parseJson = (JSONObject) parser.parse(dataJson);
-  		} catch (ParseException e) {e.printStackTrace();}
+  		try {parseJson = (JSONObject) parser.parse(dataJson);}
+  		catch (ParseException e) {e.printStackTrace();}
   		
   		if (parseJson.containsKey("label")) {
+  			
   			if (!(((String) parseJson.get("label")).equals("none")))
 				responseJson = DataProviderLocalServiceUtil.getDataProviderByLabel(((String) parseJson.get("label")).trim());
   			else
   				responseJson.put("label", "0");
-
-  			response.setContentType("application/json");
-  	        response.setCharacterEncoding("UTF-8");
-  	        response.getWriter().write(responseJson.toString());
+  			
+  			if (responseJson.containsKey("lastmodifieddate")){
+  				responseJson.put("lastmodifieddate", Helper.getStringFromJson(responseJson, "lastmodifieddate"));
+  			}
+  				
+  			System.out.println(responseJson);
+  			  	        
   		}
+  		
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");	        
+		response.getWriter().write(responseJson.toString());
+
   	}
 
 }
