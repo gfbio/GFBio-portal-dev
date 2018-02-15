@@ -54,27 +54,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="org.gfbio.model.impl.DataManagementPlanModelImpl">
-		<attributes>
-			<id name="dmpID">
-				<column name="DMPID" />
-			</id>
-			<basic name="name" />
-			<basic name="userID">
-				<column name="USERID" />
-			</basic>
-			<basic name="dmpTInput">
-				<column name="DMPTINPUT" />
-			</basic>
-			<basic name="lastModifiedDate">
-				<column name="LASTMODIFIEDDATE" />
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.DataProviderModelImpl">
 		<attributes>
 			<id name="dataProviderID" />
@@ -288,13 +267,6 @@
 			<basic name="researchObjectType">
 				<column name="RESEARCHOBJECTTYPE" />
 			</basic>
-			<basic name="publications" />
-			<basic name="dataCollectionTime">
-				<column name="DATACOLLECTIONTIME" />
-			</basic>
-			<basic name="embargo">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
 			<basic name="lastModifiedDate">
 				<column name="LASTMODIFIEDDATE" />
 				<temporal>TIMESTAMP</temporal>
@@ -403,10 +375,6 @@
 	</entity>
 	<entity class="org.gfbio.model.impl.ContentImpl" name="Content">
 		<table name="gfbio_Content" />
-		<attributes />
-	</entity>
-	<entity class="org.gfbio.model.impl.DataManagementPlanImpl" name="DataManagementPlan">
-		<table name="gfbio_DataManagementPlan" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.DataProviderImpl" name="DataProvider">

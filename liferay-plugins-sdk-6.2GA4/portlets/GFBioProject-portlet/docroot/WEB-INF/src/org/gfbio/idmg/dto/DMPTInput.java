@@ -39,6 +39,7 @@ public class DMPTInput implements Serializable {
 	private String metadataDescription;
 	
 	// Ethics
+	
 	private GLegalRequirement requirement; //Kommt aus DB 
 	private GLicense license;
 	private boolean accessRestriction;

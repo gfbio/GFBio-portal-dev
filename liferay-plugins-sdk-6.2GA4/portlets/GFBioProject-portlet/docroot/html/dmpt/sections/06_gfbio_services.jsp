@@ -5,7 +5,7 @@
 	<div name="title" class="hidden-md hidden-lg">
 		<h2>6. GFBio Services</h2>
 	</div>
-    <div id="gfbioServicesStep" class="row">
+    <div class="row">
         <h4>What GFBio services are you interested in?</h4>
         <div id="gfbioServices" >
         	<div class="col-md-8 col-lg-6">
