@@ -39,6 +39,8 @@ import org.json.simple.parser.ParseException;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * The implementation of the content local service.
@@ -56,6 +58,7 @@ import com.liferay.portal.kernel.exception.SystemException;
  */
 public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 
+	private static Log _log = LogFactoryUtil.getLog(ContentLocalServiceImpl.class);
 	
 	///////////////////////////////////// Delete Functions ///////////////////////////////////////////////////
 	
@@ -385,6 +388,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	
 	//get the rowId of HCC table row by table id (headId), name of the column (columnName) and a specific Content of a cell - but its only unique with knowledge about the HCC table 
 	public long getRowIdByCellContent(String tableName, String columnName, String cellContent){
+
 		long rowId =0;
 		long headId =0;
 		try {headId = HeadLocalServiceUtil.getHeadIdByTableName(tableName);}
@@ -741,7 +745,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			
 			Content content = null;
 			try {content = getContent(contentId);}
-			catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+			catch (PortalException | SystemException e) {_log.info("No Content exists with the primary key "+contentId);}
 			
 			if (content != null){
 				long tsContentId =0;
@@ -780,7 +784,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 					
 					Content content = null;
 					try {content = getContent(contentId);}
-					catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+					catch (PortalException | SystemException e) {_log.info("No Content exists with the primary key "+contentId);}
 
 					if (content != null){
 
@@ -821,7 +825,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			
 			Content content = null;
 			try {content = getContent(contentId);}
-			catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+			catch (PortalException | SystemException e) {_log.info("No Content exists with the primary key "+contentId);}
 			
 			if (content != null){
 				long tsContentId =0;
@@ -854,7 +858,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		
 		Content content = null;
 		try {content = getContent(contentId);}
-		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+		catch (PortalException | SystemException e) {_log.info("No Content exists with the primary key "+contentId);}
 
 		if (content == null){
 			contentId  = constructNewId();
@@ -877,7 +881,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 
 		Content content = null;
 		try {content = getContent(contentId);}
-		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+		catch (PortalException | SystemException e) {_log.info("No Content exists with the primary key "+contentId);}
 		
 		// if it true, then must be build a new content with a new primary key else update the content
 		if (content == null){
@@ -946,7 +950,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 	//update or build a new the content
 	@SuppressWarnings("unchecked")
 	public JSONObject updateContent (long headId, long columnId, long contentId, long rowId, String cellContent, long tsContentId){
-		
+		_log.info(headId+"|"+columnId+"|"+ contentId+"|"+rowId+"|"+ cellContent+"|"+tsContentId);
 		JSONObject responseJson = new JSONObject();
 		Content content = null;
 		long timeStampeContentId=0;
@@ -1028,7 +1032,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 		Content content = null;
 
 		try {content = getContent(contentId);}
-		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+		catch (PortalException | SystemException e) {_log.info("No Content exists with the primary key "+contentId);}
 
 		// if it true, then must be build a new content with a new primary key else update the content
 		if (content != null){
@@ -1052,7 +1056,7 @@ public class ContentLocalServiceImpl extends ContentLocalServiceBaseImpl {
 			rowId = ContentLocalServiceUtil.constructNewId();
 
 		try {content = getContent(contentId);}
-		catch (PortalException | SystemException e) {System.out.println("No Content exists with the primary key "+contentId);}
+		catch (PortalException | SystemException e) {_log.info("No Content exists with the primary key "+contentId);}
 
 		if (content != null){
 			content.setRowID(rowId);

@@ -5,6 +5,7 @@
 	<import class="org.gfbio.model.Basket" />
 	<import class="org.gfbio.model.Column" />
 	<import class="org.gfbio.model.Content" />
+	<import class="org.gfbio.model.DataManagementPlan" />
 	<import class="org.gfbio.model.DataProvider" />
 	<import class="org.gfbio.model.DataProvider_PersistentIdentifier" />
 	<import class="org.gfbio.model.Funding_InstitutionProject" />
@@ -48,6 +49,15 @@
 		<property name="columnID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="rowID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="cellContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
+	</class>
+	<class name="org.gfbio.model.impl.DataManagementPlanImpl" table="gfbio_DataManagementPlan">
+		<id name="dmpID" column="dmpid" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" column="userid" />
+		<property name="dmpTInput" type="com.liferay.portal.dao.orm.hibernate.StringType" column="dmptinput" />
 		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.DataProviderImpl" table="gfbio_DataProvider">
@@ -165,6 +175,9 @@
 		<property name="metadataID" type="com.liferay.portal.dao.orm.hibernate.LongType" column="metadataid" />
 		<property name="licenseID" type="com.liferay.portal.dao.orm.hibernate.LongType" column="licenseid" />
 		<property name="researchObjectType" type="com.liferay.portal.dao.orm.hibernate.StringType" column="researchobjecttype" />
+		<property name="publications" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dataCollectionTime" type="com.liferay.portal.dao.orm.hibernate.StringType" column="datacollectiontime" />
+		<property name="embargo" type="org.hibernate.type.TimestampType" />
 		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.ResearchObject_UserImpl" table="gfbio_ResearchObject_User">

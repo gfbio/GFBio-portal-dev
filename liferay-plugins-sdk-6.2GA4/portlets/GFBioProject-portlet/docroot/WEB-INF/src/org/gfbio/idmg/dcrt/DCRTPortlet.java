@@ -99,7 +99,6 @@ public class DCRTPortlet extends MVCPortlet {
 		PrintWriter writer = resourceResponse.getWriter();
 
 		List<DataProvider> recommendedProviders = DataProviderUtil.setRecommendedProviders(physical, taxon, alive, sequenced);
-		_log.info("============RECOMMENDED=DATAPROVIDERS============ ");
 		if (recommendedProviders.isEmpty()) {
 			writer.println(
 					"For your selection none of our Data Center is appropriate. Please get in contact with us to find an individual solution.");
