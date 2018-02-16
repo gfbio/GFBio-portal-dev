@@ -96,10 +96,10 @@ public class SubmissionServiceImpl extends SubmissionServiceBaseImpl {
 	}
 	
 	
-	//
+/*	//
 	public JSONObject startSubmission (JSONObject requestJson){
 		return SubmissionLocalServiceUtil.startSubmission(requestJson);
-	}
+	}*/
 	
 	
 	
