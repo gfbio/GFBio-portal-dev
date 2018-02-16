@@ -16,6 +16,7 @@ $command create_researchobject.sql
 
 $command create_basket.sql
 $command create_column.sql
+$command create_datamanagmentplan.sql
 $command create_primarydata_researchobject.sql
 $command create_project_researchobject.sql
 $command create_project_user.sql

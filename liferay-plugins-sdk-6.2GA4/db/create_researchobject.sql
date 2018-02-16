@@ -1,8 +1,7 @@
 ------------------------------------- Research Object -------------------------------------   
 
---DROP TABLE IF EXISTS
---    gfbio_researchobject CASCADE;
-
+-- Table: gfbio_researchobject
+-- DROP TABLE gfbio_researchobject;
 
 CREATE TABLE gfbio_researchobject
 (
@@ -17,6 +16,9 @@ CREATE TABLE gfbio_researchobject
   licenseid bigint,
   researchobjecttype text,
   lastmodifieddate timestamp with time zone NOT NULL DEFAULT now(),
+  publications text,
+  datacollectiontime text,
+  embargo timestamp with time zone,
   CONSTRAINT gfbio_researchobject_pkey PRIMARY KEY (researchobjectid, researchobjectversion)
 )
 WITH (

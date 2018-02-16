@@ -11,6 +11,7 @@ set PGPASSWORD=test
 
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_basket.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_column.sql
+"%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_datamanagmentplan.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_primarydata_researchobject.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_project_researchobject.sql
 "%PSQL_HOME%\psql.exe" -h localhost -U postgres -d gfbio -f  create_project_user.sql
