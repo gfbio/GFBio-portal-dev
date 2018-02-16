@@ -18,7 +18,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import org.gfbio.NoSuchResearchObjectException;
 import org.gfbio.NoSuchResearchObject_UserException;
 import org.gfbio.helper.Helper;
 import org.gfbio.model.ResearchObject;
@@ -35,6 +34,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * The implementation of the research object_ user local service.
@@ -51,6 +52,8 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @see org.gfbio.service.ResearchObject_UserLocalServiceUtil
  */
 public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLocalServiceBaseImpl {
+	
+	private static Log _log = LogFactoryUtil.getLog(ResearchObject_UserLocalServiceImpl.class);
 	
 	//////////////////////////////////// Delete Functions //////////////////////////////////////////////////
 	
@@ -306,7 +309,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
 		try {relationship = researchObject_UserPersistence.findByPrimaryKey(pk);} 
-		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
+		catch (NoSuchResearchObject_UserException | SystemException e) {_log.info("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
 		if (relationship == null) 
 			relationship = researchObject_UserPersistence.create(pk);
@@ -330,7 +333,7 @@ public class ResearchObject_UserLocalServiceImpl	extends ResearchObject_UserLoca
 		ResearchObject_UserPK pk = new ResearchObject_UserPK(researchObjectId, researchObjectVersion, userId);
 
 		try {relationship = researchObject_UserPersistence.findByPrimaryKey(pk);}
-		catch (NoSuchResearchObject_UserException | SystemException e) {System.out.println("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
+		catch (NoSuchResearchObject_UserException | SystemException e) {_log.info("Entry in ResearchObject does not exist with 'researchobjectid' "+researchObjectId+ " and 'userid' " + userId + " and will be create now");}
 
 		if (relationship == null) 
 			relationship = researchObject_UserPersistence.create(pk);

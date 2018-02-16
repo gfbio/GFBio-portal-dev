@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+    
+   <sql id="org.gfbio.service.persistence.DataManagementPlanFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(dmpid)  AS dmpid
+			FROM
+				public.gfbio_datamanagementplan
+		]]>
+    </sql>
+    
+    
+ 
+</custom-sql>
