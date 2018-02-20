@@ -659,10 +659,12 @@ h3.landing-area {
     border-bottom: 2px solid rgba(129, 178, 72, 0.8);
     content: "";
     display: block;
-    left: 45%;
+    /*left: 50%;*/
     bottom: 0;
     position: absolute;
     width: 115px;
+    margin: auto;
+	top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .sec-title.white h2:after {
@@ -1050,9 +1052,9 @@ ul.external li a:hover {
         font-size: 25px;
     }
 
-    .sec-title h2:after {
+    /*.sec-title h2:after {
         left: 30%;
-    }
+    }*/
 
     /* slider */
     .caption-content h2 {
@@ -1161,9 +1163,9 @@ ul.external li a:hover {
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 	
-    .sec-title h2:after {
-        left: 38%;
-    }
+     /*.sec-title h2:after {
+       left: 38%;
+    }*/
 
     /* home slider */
     .caption-content h2 {
