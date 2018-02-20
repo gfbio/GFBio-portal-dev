@@ -958,6 +958,15 @@ div.ui-widget-content{
 	border:none;
 	color: #818181;
 }
+
+div.ui-widget-content[aria-describedby="dialogFacet"] {
+	background: white;
+	border: solid 10px #808080;
+}
+div.ui-widget-content[aria-describedby="dialogBasket"] {
+  	background: white;
+	border: solid 10px #808080;
+}
 	
 /*=========================================================
 Liferay fixes - Dockbar
