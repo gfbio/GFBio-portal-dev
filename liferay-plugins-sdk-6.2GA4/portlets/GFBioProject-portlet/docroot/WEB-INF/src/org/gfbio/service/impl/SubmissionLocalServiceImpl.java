@@ -1235,8 +1235,7 @@ public class SubmissionLocalServiceImpl extends SubmissionLocalServiceBaseImpl {
 	
 	//
 	private String createBrokerSubmissionId(){	
-		//(new PublicIdentifier("submission")).getIdentifier();
-		return (new UUID(System.currentTimeMillis(),System.currentTimeMillis())).toString();
+		return (UUID.randomUUID()).toString();
 	}
 	
 	
