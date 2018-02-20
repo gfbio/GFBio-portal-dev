@@ -2,18 +2,6 @@
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
-
-	<portlet>
-		<portlet-name>archiving</portlet-name>
-		<icon>/icon.png</icon>
-		<!-- <private-request-attributes>false</private-request-attributes> -->
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>archiving-portlet</css-class-wrapper>
-		
-	</portlet>
 	<portlet>
 		<portlet-name>data-provider-managment</portlet-name>
 		<icon>/icon.png</icon>
@@ -58,18 +46,6 @@
 	</portlet>
 
 	<portlet>
-		<portlet-name>project-profile</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>
-			project-profile-portlet
-		</css-class-wrapper>
-	</portlet>
-
-	<portlet>
 		<portlet-name>table-builder</portlet-name>
 		<icon>/icon.png</icon>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -77,38 +53,6 @@
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>table-builder-portlet</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>submission-manager</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>
-			submission-manager-portlet
-		</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>back-to-su-ma</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>back-to-su-ma-portlet</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>workflowcollections</portlet-name>
-		<icon>/icon.png</icon>
-        <header-portlet-css>/css/main.css</header-portlet-css>
-        <header-portlet-javascript>/js/main.js</header-portlet-javascript>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>
-			workflowcollections-portlet
-		</css-class-wrapper>
 	</portlet>
 	
 	<portlet>
@@ -118,17 +62,6 @@
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>workflowena-portlet</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>workflow-environmental</portlet-name>
-		<icon>/icon.png</icon>
-		<header-portlet-css>/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>
-			/js/main.js
-		</footer-portlet-javascript>
-		<css-class-wrapper>
-			workflow-environmental-portlet
-		</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>workflow-generic</portlet-name>

@@ -2,69 +2,6 @@
 
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
 	<portlet>
-		<portlet-name>archiving</portlet-name>
-		<display-name>GFBio Archiving</display-name>
-		<portlet-class>org.gfbio.submissionworkflow.ArchivingPortlet</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/archiving/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Archiving</title>
-			<short-title>Archiving</short-title>
-			<keywords />
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-
-	<portlet>
-		<portlet-name>back-to-su-ma</portlet-name>
-		<display-name>GFBio Back To Su Ma</display-name>
-		<portlet-class>org.gfbio.backtosuma.BackToSuMa</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/backtosuma/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Back To Su Ma</title>
-			<short-title>Back To Su Ma</short-title>
-			<keywords></keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>data-provider-managment</portlet-name>
 		<display-name>
 			Gfbio TableBuilder Data Provider Managment
@@ -197,70 +134,6 @@
 	</portlet>
 	
 	<portlet>
-		<portlet-name>project-profile</portlet-name>
-		<display-name>GFBio Project Profile</display-name>
-		<portlet-class>org.gfbio.projectprofile.ProjectProfile</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/projectprofile/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>ProjectProfile</title>
-			<short-title>Project Profile</short-title>
-			<keywords/>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-
-	<portlet>
-		<portlet-name>submission-manager</portlet-name>
-		<display-name>GFBio Submission Manager</display-name>
-		<portlet-class>org.gfbio.submissionmanager.SubmissionManager</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/submissionmanager/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Submission Manager</title>
-			<short-title>Submission Manager</short-title>
-			<keywords></keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	
-	<portlet>
 		<portlet-name>table-builder</portlet-name>
 		<display-name>GFBio Table Builder</display-name>
 		<portlet-class>org.gfbio.tablebuilder.TableBuilder</portlet-class>
@@ -277,39 +150,6 @@
 			<title>Table Builder</title>
 			<short-title>Table Builder</short-title>
 			<keywords/>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>workflowcollections</portlet-name>
-		<display-name>Submission Workflow of Collections</display-name>
-		<portlet-class>
-			org.gfbio.submissionworkflow.WorkflowCollectionsPortlet
-		</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/workflowcollections/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Workflow of Collections</title>
-			<short-title>Workflowcollections</short-title>
-			<keywords></keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>
@@ -342,39 +182,6 @@
 		<portlet-info>
 			<title>Workflow ENA</title>
 			<short-title>Workflowena</short-title>
-			<keywords></keywords>
-		</portlet-info>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>workflow-environmental</portlet-name>
-		<display-name>Workflow Environmental</display-name>
-		<portlet-class>
-			org.gfbio.submissionworkflow.WorkflowEnvironmental
-		</portlet-class>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/workflowenvironmental/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-			<portlet-mode>view</portlet-mode>
-		</supports>
-		<portlet-info>
-			<title>Workflow Environmental</title>
-			<short-title>Workflow Environmental</short-title>
 			<keywords></keywords>
 		</portlet-info>
 		<security-role-ref>
