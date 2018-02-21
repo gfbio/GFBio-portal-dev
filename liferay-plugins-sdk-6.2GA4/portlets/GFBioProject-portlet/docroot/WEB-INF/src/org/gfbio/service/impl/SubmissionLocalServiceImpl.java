@@ -27,19 +27,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.commons.codec.binary.Base64;
 import org.gfbio.helper.ContactJira;
 import org.gfbio.helper.Helper;
 import org.gfbio.helper.RuntimeExec;
 import org.gfbio.helper.StreamWrapper;
-import org.gfbio.idmg.jiraclient.model.Project;
 import org.gfbio.model.Submission;
 import org.gfbio.service.DataProviderLocalServiceUtil;
-import org.gfbio.service.PrimaryDataLocalServiceUtil;
-import org.gfbio.service.ProjectLocalServiceUtil;
-import org.gfbio.service.Project_ResearchObjectLocalServiceUtil;
 import org.gfbio.service.ResearchObjectLocalServiceUtil;
-import org.gfbio.service.SubmissionLocalServiceUtil;
 import org.gfbio.service.base.SubmissionLocalServiceBaseImpl;
 import org.gfbio.service.persistence.SubmissionFinderUtil;
 

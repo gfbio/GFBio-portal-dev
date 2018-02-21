@@ -16,76 +16,9 @@
 		document.getElementById(displayto).innerHTML = len;
 	}
 	
-/////////////////////////////////////////   portlet portlet communication  //////////////////////////////////////////////
 
-/* 
- 	//Message from Hide Managment
-	AUI().ready(function(A){
-		Liferay.on('gadget:gfbio.archiving.submit', function(data) {
-			
-			var div =   $("#generic");
 
-			if (data.projectid==0){
-				if (data.researchobjectid==0){
-					fillDefaultInformations(data, div);
-				}else{
-					if (document.getElementById("gwf_ro_id").innerHTML!= 0){
-						fillDefaultResearchObjectInformations(data, div);
-					}
-					fillResearchObjectInformations(data, div);
-				}
-			}else{
-				if (data.researchobjectid==0){
-					if (document.getElementById("gwf_project_id").innerHTML!= 0)
-						fillDefaultInformations(data, div);
-					fillProjectInformations(data, div);
-					fillDefaultResearchObjectInformations(data, div);
-				}else{
-					if (document.getElementById("gwf_ro_id").innerHTML!= 0)
-						fillDefaultResearchObjectInformations(data, div);
-					fillResearchObjectInformations(data, div);
-				}
-			}
-		});
-	});	
-	
-	
-	//fire to update information to generally worflow portlet
-	function sentWorkflowUpdate(project, projectId, projectName, researchObject) {
-		
-		var toUpdate = {
-			"updateproject" : project,
-			"projectid" : projectId,
-			"projectName" : projectName,
-			"updateresearchobject"   : researchObject,
-		};
-		Liferay.fire('gadget:gfbio.archiving.update', toUpdate);
-	} 
-	
-	
-	//fire to update information to generally worflow portlet
-	function sentResetRequest() {
-		
-		var toUpdate = {
-			"reset" : true,
-		};
-		Liferay.fire('gadget:gfbio.archiving.reset', toUpdate);
-	} 
-	
-	
-	//fire to update information to generally worflow portlet
-	function sentShowHideInformation(show) {
-		
-		var showHide = {
-			"show" : show,
-		};
-		Liferay.fire('gadget:gfbio.archiving.showhide', showHide);
-	} 
-	 */
-	
-	/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
-
-	
+/////////////////////////////////////////   build funtions  //////////////////////////////////////////////
 
 	
 	//build default generic workflow without project or researchobject data
@@ -233,8 +166,6 @@
 
 				"<h3>2. Dataset Upload</h3><hr>"+
 				
-				//"<p   class='field-description'			 	id='gwf_ro_upload_d'></p>"+
-				//"<br>"+
 				"<div 													class='control-group'>"+
 						"<span style='width:48%; display:inline-block' 	class='field-description'><input type='radio' id='gwf_ro_upload_direct' 	name='gwf_ro_upload_radio' value='direct' 	onclick='primaryRadioButtonCheck()' checked='checked'> Upload from your file system</input></span>"+
 						"<span style='width:2%; display:inline-block'></span>"+
@@ -555,7 +486,227 @@
 	}
 	
 	
-/* 	//default fill function of generic submission workflow
+
+
+	//
+	function goToNormal(block){
+		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
+			document.getElementById(block+"_l").className="control-label";
+			document.getElementById(block+"_d").className="field-description";
+			var testfield = $("#".concat("gwf_lf_comentarField"));
+			if (block == fieldCheckList[0] || block == fieldCheckList[4] || block == fieldCheckList[5] || block == fieldCheckList[6] || block == fieldCheckList[7]|| block == fieldCheckList[8]){
+				document.getElementById(block).className = 'field lfr-input-text-container';
+				document.getElementById(block).style = 'width: 100%';
+			}else
+				if (block == fieldCheckList[1]|| block == fieldCheckList[2])
+					document.getElementById(block).style = 'width: 100%';
+				else
+					if (block == fieldCheckList[3])
+						document.getElementById(block+"label").style = 'width: 100%';
+			check = true
+			for (i =0;i<fieldCheckList.length;i++){
+				if(document.getElementById(fieldCheckList[i]+"_l").className == 'labelFalse'){
+					check = false;
+				}
+			}
+			if(check){
+				var commentarField = $("#".concat("gwf_lf_comentarField"));
+				commentarField.empty();
+				commentarField.append("<div id='gwf_lf_comentar'></div>");
+			}
+				
+		}
+	}
+	
+	
+
+	
+
+	
+	
+	////////////////////////////////////////////////////////////////// upload 
+	
+	
+	//
+	function fileUplaod(){
+
+		if (document.getElementById("gwf_ro_upload_direct").checked){
+			var url = document.getElementById('workflowgenericurl').value;
+			var formData = new FormData();
+		    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML) +'}'], "uploadInformation.txt");
+	
+			formData.append('file', uploadInformation);
+						var fileSelect = document.getElementById('gwf_b_upload');
+			
+			var files = fileSelect.files;
+			var check = true; 
+			
+			for (var i = 0; i < files.length; i++){
+			  	if (files[i].size> 20971520){
+			  		document.getElementById("gwf_ro_upload"+files[i].name).className="labelFalse";
+			  		check = false;
+			  	}
+			}
+			if (check==true){
+			
+				for (var i = 0; i < files.length; i++)
+				  	formData.append('file', files[i]);
+		
+		 		$.ajax({
+		 			"url": url.concat('/WorkflowCollectionsPortlet'),
+		 			"type" : "POST",
+					processData: false,
+					contentType: false,
+					"data" : formData,
+					async: false,
+					success :  function (){
+						buildWaitringMessage('gwf_lf_comentarField');
+					} 
+				});
+			}else{
+				document.getElementById("gwf_ro_upload_d").className="labelFalse";
+				buildErrorMessage('gwf_lf_comentarField', 'One or more files are larger as 20 MB.');
+			}
+		}else{
+			if (document.getElementById("gwf_ro_externalupload").value.length !=0){
+				
+				var data ="";
+				
+				$.ajax({
+					"type" : "POST",
+					"url": url.concat('/WorkflowCollectionsPortlet'),
+					"data" : {
+						"<portlet:namespace />data" : JSON.stringify(data),
+						"<portlet:namespace />responseTarget" : "createExternalUpload"
+					},
+					async: false,
+					success :  function (obj){
+						buildWaitringMessage('gwf_lf_comentarField');
+					}		
+				});	
+				
+			}
+		}
+	}
+	
+	
+	//
+	function showUpload(){
+
+		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
+		
+			document.getElementById("gwf_ro_id").innerHTML= 0;
+			document.getElementById("gwf_ro_version").innerHTML= 1;
+			document.getElementById("gwf_ro_upload_d").className='field-description';
+			var commentarField = $("#".concat("gwf_lf_comentarField"));
+			commentarField.empty();
+			commentarField.append("<div id='gwf_lf_comentar'></div>");
+		}
+		
+		var nameList = "";
+	    var bttn = $("#".concat('gwf_b_upload'));
+	    var fileList = bttn[0].files;
+	    if (fileList.length>0){
+	    	nameList = nameList + '<ul>';
+		    for (i =0; i < fileList.length;i++)
+		    	nameList = nameList +"<li><span id='gwf_ro_upload"+fileList[i].name+"'>"+fileList[i].name+ "</span></li>";
+		    nameList = nameList + '</ul>';
+		}
+	    document.getElementById("gwf_b_upload_inputarea").innerHTML = nameList;
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////////////// submission
+	
+	
+	
+	
+	function resetDCRTInput(){
+
+		var url = document.getElementById('workflowgenericurl').value;
+
+		$.ajax({
+			"type" : "POST",
+			"url": url.concat('/WorkflowGenericPortlet'),
+			"data" : {
+				"<portlet:namespace />responseTarget" : "resetportletsession"
+			},
+			async: false,
+			success :  function (obj){
+				document.getElementById("gwf_dcrtassignee").innerHTML = "null";
+				document.getElementById("gwf_dcrtinput").innerHTML = "";
+				document.getElementById("gwf_dcrtrecommendation").innerHTML = "";
+			},
+			error :  function (obj){
+				console.log("error");
+			}
+		});
+	}
+	
+	
+	//
+ 	function sentToBroker(data){
+		
+		console.log("sentToBroker");
+		console.log(data);
+			
+		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
+		
+ 		$.ajax({
+			"type" : "POST",
+			"url": url,
+			"data" : {
+				"<portlet:namespace />data" : JSON.stringify(data)
+			},
+			async: false,
+			success :  function (obj){
+				console.log("broker jo");
+				console.log(obj);
+				
+				document.getElementById("generic").style.cursor="default";
+				var brokerSubmissionId = "test";//getBrokerSubmissionId(responseData);
+				
+				sentShowHideInformation(false);
+				var div =   $("#generic");
+				div.empty();
+				div.append(
+					"<div class='portlet-success'>"+
+						"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
+						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
+						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
+					"</div>"+
+					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+				);
+			},
+			error :  function (obj){
+				console.log("sub error");
+				console.log("broker nope");
+				//deleteSubmissionRegistryEntry(responseData);
+				buildErrorMessage('gwf_lf_comentarField', "The The Submission information transfer is failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+			}
+		});	 
+	} 
+	
+	
+ 	/* 	//
+	function createGwfResearchObject(projectJson){
+		
+		console.log("createGwfResearchObject ");
+		console.log(projectJson);
+		
+
+
+		console.log("createGwfResearchObject ");
+		console.log(researchObjectJson);
+		
+		return researchObjectJson;
+	} 
+ 	
+ 	
+
+ 	
+ 	
+ 	//default fill function of generic submission workflow
 	function fillProjectInformations(data, div){
 		if (Number(data.projectid)!=0)
 			document.getElementById("gwf_project_id").innerHTML= data.projectid;
@@ -682,56 +833,30 @@
 	 		}); 
 		}
 	}
-	*/
-
-	//
-	function goToNormal(block){
-		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
-			document.getElementById(block+"_l").className="control-label";
-			document.getElementById(block+"_d").className="field-description";
-			var testfield = $("#".concat("gwf_lf_comentarField"));
-			if (block == fieldCheckList[0] || block == fieldCheckList[4] || block == fieldCheckList[5] || block == fieldCheckList[6] || block == fieldCheckList[7]|| block == fieldCheckList[8]){
-				document.getElementById(block).className = 'field lfr-input-text-container';
-				document.getElementById(block).style = 'width: 100%';
-			}else
-				if (block == fieldCheckList[1]|| block == fieldCheckList[2])
-					document.getElementById(block).style = 'width: 100%';
-				else
-					if (block == fieldCheckList[3])
-						document.getElementById(block+"label").style = 'width: 100%';
-			check = true
-			for (i =0;i<fieldCheckList.length;i++){
-				if(document.getElementById(fieldCheckList[i]+"_l").className == 'labelFalse'){
-					check = false;
+	
+	
+	function getBrokerSubmissionId(data){
+			
+			var brokerSubmissionId ="";
+			var url = document.getElementById('workflowgenericurl').value;
+			
+			$.ajax({
+				"type" : "POST",
+				"url": url.concat('/WorkflowGenericPortlet'),
+				"data" : {
+					"<portlet:namespace />data" : JSON.stringify(data),
+					"<portlet:namespace />responseTarget" : "getbrokersubmissionid"
+				},
+				async: false,
+				success :  function (obj){
+					brokerSubmissionId = obj.brokersubmissionid;
 				}
-			}
-			if(check){
-				var commentarField = $("#".concat("gwf_lf_comentarField"));
-				commentarField.empty();
-				commentarField.append("<div id='gwf_lf_comentar'></div>");
-			}
-				
-		}
-	}
+			});	 
+			return brokerSubmissionId;
+		} 
 	
 	
-/* 	//
-	function createGwfResearchObject(projectJson){
-		
-		console.log("createGwfResearchObject ");
-		console.log(projectJson);
-		
-
-
-		console.log("createGwfResearchObject ");
-		console.log(researchObjectJson);
-		
-		return researchObjectJson;
-	} */
-	
-	
-	//
-/* 	function startSubmissionRegistry(data){
+ 	function startSubmissionRegistry(data){
 
 		console.log(data);
 		
@@ -756,257 +881,73 @@
 					
 			}		
 		});	
-	} */
-	
-	
-
-	
-	
-	////////////////////////////////////////////////////////////////// upload 
-	
-	
-	//
-	function fileUplaod(){
-
-		if (document.getElementById("gwf_ro_upload_direct").checked){
-			var url = document.getElementById('workflowgenericurl').value;
-			var formData = new FormData();
-		    var uploadInformation = new File(['{"researchobjectid":'+Number(document.getElementById('gwf_ro_id').innerHTML)+',"researchobjectversion":'+Number(document.getElementById('gwf_ro_version').innerHTML)+',"userid":'+Number(document.getElementById('gwf_user_id').innerHTML) +'}'], "uploadInformation.txt");
-	
-			formData.append('file', uploadInformation);
-						var fileSelect = document.getElementById('gwf_b_upload');
-			
-			var files = fileSelect.files;
-			var check = true; 
-			
-			for (var i = 0; i < files.length; i++){
-			  	if (files[i].size> 20971520){
-			  		document.getElementById("gwf_ro_upload"+files[i].name).className="labelFalse";
-			  		check = false;
-			  	}
-			}
-			if (check==true){
-			
-				for (var i = 0; i < files.length; i++)
-				  	formData.append('file', files[i]);
-		
-		 		$.ajax({
-		 			"url": url.concat('/WorkflowCollectionsPortlet'),
-		 			"type" : "POST",
-					processData: false,
-					contentType: false,
-					"data" : formData,
-					async: false,
-					success :  function (){
-						buildWaitringMessage('gwf_lf_comentarField');
-					} 
-				});
-			}else{
-				document.getElementById("gwf_ro_upload_d").className="labelFalse";
-				buildErrorMessage('gwf_lf_comentarField', 'One or more files are larger as 20 MB.');
-			}
-		}else{
-			if (document.getElementById("gwf_ro_externalupload").value.length !=0){
-				
-				var data ="";
-				
-				$.ajax({
-					"type" : "POST",
-					"url": url.concat('/WorkflowCollectionsPortlet'),
-					"data" : {
-						"<portlet:namespace />data" : JSON.stringify(data),
-						"<portlet:namespace />responseTarget" : "createExternalUpload"
-					},
-					async: false,
-					success :  function (obj){
-						buildWaitringMessage('gwf_lf_comentarField');
-					}		
-				});	
-				
-			}
-		}
-	}
-	
-	
-	//
-	function showUpload(){
-
-		if(document.getElementById("gwf_lf_comentar").className == 'portlet-msg-error'){
-		
-			document.getElementById("gwf_ro_id").innerHTML= 0;
-			document.getElementById("gwf_ro_version").innerHTML= 1;
-			document.getElementById("gwf_ro_upload_d").className='field-description';
-			var commentarField = $("#".concat("gwf_lf_comentarField"));
-			commentarField.empty();
-			commentarField.append("<div id='gwf_lf_comentar'></div>");
-		}
-		
-		var nameList = "";
-	    var bttn = $("#".concat('gwf_b_upload'));
-	    var fileList = bttn[0].files;
-	    if (fileList.length>0){
-	    	nameList = nameList + '<ul>';
-		    for (i =0; i < fileList.length;i++)
-		    	nameList = nameList +"<li><span id='gwf_ro_upload"+fileList[i].name+"'>"+fileList[i].name+ "</span></li>";
-		    nameList = nameList + '</ul>';
-		}
-	    document.getElementById("gwf_b_upload_inputarea").innerHTML = nameList;
-	}
-	
-	
-	//////////////////////////////////////////////////////////////////////////// submission
-	
-	
-	//
-/* 	function startSubmission(data){
-			
-		var url = document.getElementById('workflowgenericurl').value;
-		data["path"]= document.getElementById("gwf_user_path").innerHTML;
-		
-		var responseData ={};
-		responseData["researchobjectid"]= data.mrr.researchobjects.researchobjectid;
-		responseData["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
-		responseData["archive"]= "GFBio collections";
-		
-  		$.ajax({
-			"type" : "POST",
-			"url": url.concat('/WorkflowGenericPortlet'),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : "startsubmission"
-			},
-			async: false,
-			success :  function (obj){
-				
-				document.getElementById("generic").style.cursor="default";
-				var brokerSubmissionId = getBrokerSubmissionId(responseData);
-				
-				sentShowHideInformation(false);
-				var div =   $("#generic");
-				div.empty();
-				div.append(
-					"<div class='portlet-success'>"+
-						"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
-						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
-						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
-					"</div>"+
-					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
-				);
-			},
-			error :  function (obj){
-				console.log("sub error");
-				deleteSubmissionRegistryEntry(responseData);
-				buildErrorMessage('gwf_lf_comentarField', "The SThe Submission information transfeubmission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
-			},		
-		});	  
-	}
-	 */
-	
-	//
-/* 	function deleteSubmissionRegistryEntry(data){
-			
-		var url = document.getElementById('workflowgenericurl').value;
-		
- 		$.ajax({
-			"type" : "POST",
-			"url": url.concat('/WorkflowGenericPortlet'),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : "delsubreg"
-			},
-			async: false,
-			success :  function (obj){
-				console.log("del  subreg");
-			}
-	
-		});	 
-	} */
-	
-	
-	function resetDCRTInput(){
-
-		var url = document.getElementById('workflowgenericurl').value;
-
-		$.ajax({
-			"type" : "POST",
-			"url": url.concat('/WorkflowGenericPortlet'),
-			"data" : {
-				"<portlet:namespace />responseTarget" : "resetportletsession"
-			},
-			async: false,
-			success :  function (obj){
-				document.getElementById("gwf_dcrtassignee").innerHTML = "null";
-				document.getElementById("gwf_dcrtinput").innerHTML = "";
-				document.getElementById("gwf_dcrtrecommendation").innerHTML = "";
-			},
-			error :  function (obj){
-				console.log("error");
-			}
-		});
-	}
-	
-	
-/* 	function getBrokerSubmissionId(data){
-		
-		var brokerSubmissionId ="";
-		var url = document.getElementById('workflowgenericurl').value;
-		
-		$.ajax({
-			"type" : "POST",
-			"url": url.concat('/WorkflowGenericPortlet'),
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data),
-				"<portlet:namespace />responseTarget" : "getbrokersubmissionid"
-			},
-			async: false,
-			success :  function (obj){
-				brokerSubmissionId = obj.brokersubmissionid;
-			}
-		});	 
-		return brokerSubmissionId;
-	} */
-	
-	//
- 	function sentToBroker(data){
-		
-		console.log("sentToBroker");
-		console.log(data);
-			
-		var url = "https://c103-171.cloud.gwdg.de/api/submissions/generic";
-		
- 		$.ajax({
-			"type" : "POST",
-			"url": url,
-			"data" : {
-				"<portlet:namespace />data" : JSON.stringify(data)
-			},
-			async: false,
-			success :  function (obj){
-				console.log("broker jo");
-				console.log(obj);
-				
-				document.getElementById("generic").style.cursor="default";
-				var brokerSubmissionId = "test";//getBrokerSubmissionId(responseData);
-				
-				sentShowHideInformation(false);
-				var div =   $("#generic");
-				div.empty();
-				div.append(
-					"<div class='portlet-success'>"+
-						"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
-						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
-						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
-					"</div>"+
-					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
-				);
-			},
-			error :  function (obj){
-				console.log("sub error");
-				console.log("broker nope");
-				//deleteSubmissionRegistryEntry(responseData);
-				buildErrorMessage('gwf_lf_comentarField', "The The Submission information transfer is failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
-			}
-		});	 
 	} 
+ 	
+	//
+ 	 	function startSubmission(data){
+ 				
+ 			var url = document.getElementById('workflowgenericurl').value;
+ 			data["path"]= document.getElementById("gwf_user_path").innerHTML;
+ 			
+ 			var responseData ={};
+ 			responseData["researchobjectid"]= data.mrr.researchobjects.researchobjectid;
+ 			responseData["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
+ 			responseData["archive"]= "GFBio collections";
+ 			
+ 	  		$.ajax({
+ 				"type" : "POST",
+ 				"url": url.concat('/WorkflowGenericPortlet'),
+ 				"data" : {
+ 					"<portlet:namespace />data" : JSON.stringify(data),
+ 					"<portlet:namespace />responseTarget" : "startsubmission"
+ 				},
+ 				async: false,
+ 				success :  function (obj){
+ 					
+ 					document.getElementById("generic").style.cursor="default";
+ 					var brokerSubmissionId = getBrokerSubmissionId(responseData);
+ 					
+ 					sentShowHideInformation(false);
+ 					var div =   $("#generic");
+ 					div.empty();
+ 					div.append(
+ 						"<div class='portlet-success'>"+
+ 							"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
+ 							"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
+ 							"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
+ 						"</div>"+
+ 						"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+ 					);
+ 				},
+ 				error :  function (obj){
+ 					console.log("sub error");
+ 					deleteSubmissionRegistryEntry(responseData);
+ 					buildErrorMessage('gwf_lf_comentarField', "The SThe Submission information transfeubmission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+ 				},		
+ 			});	  
+ 		}
+ 		
+	
+	function deleteSubmissionRegistryEntry(data){
+ 				
+ 			var url = document.getElementById('workflowgenericurl').value;
+ 			
+ 	 		$.ajax({
+ 				"type" : "POST",
+ 				"url": url.concat('/WorkflowGenericPortlet'),
+ 				"data" : {
+ 					"<portlet:namespace />data" : JSON.stringify(data),
+ 					"<portlet:namespace />responseTarget" : "delsubreg"
+ 				},
+ 				async: false,
+ 				success :  function (obj){
+ 					console.log("del  subreg");
+ 				}
+ 		
+ 			});	 
+ 		} 
+
+	
+	*/
 
 </script>
