@@ -42,10 +42,6 @@ input[type=search] {
     vertical-align: bottom;
 }
 
-.ui-state-default .ui-icon , .ui-icon, .ui-widget-content .ui-icon{
-	background-image: url("../images/ui-icons_888888_256x240.png") !important;
-}
-
 #gfbioSearchInput{
 	width: 65%;
 }
@@ -174,34 +170,14 @@ div.dataTables_paginate{
 	margin: 0px 0px 0px 5px;
 }
 
-.cart_unselected{
-	height: 36px;
-	width: 36px;
-	background: url('../images/cart_add.png') no-repeat center center;
-	cursor: pointer;
-	margin-left: -5px;
-}
-.cart_selected{
-	height: 36px;
-	width: 36px;
-	background: url('../images/cart_rem.png') no-repeat center center;
-	cursor: pointer;
-	margin-left: -5px;
-}
-.cart_disabled{
-	height: 36px;
-	width: 36px;
-	background: url('../images/cart_disabled.png') no-repeat center center;
-	cursor: pointer;
-	margin-left: -5px;
-	cursor: default;
-}
 td.color-control {
 	vertical-align: middle;
 	text-align: center;
 	display: block;
-	position: absolute;
-	margin-left:-6px;
+	/*position: absolute;
+	margin-left:-6px;*/
+	padding-left: 3px;
+	padding-right: 3px;
 }
 .invisible{
 	display:none !important;
@@ -211,7 +187,8 @@ table.dataTable table.html-1 tr{
 	background-color:transparent;
 }
 .sp-replacer{
-	width:20px !important;
+	width:20px;
+	height:15px;
 }
 .tagit, .tagit-new{
 	background:transparent;
@@ -331,3 +308,30 @@ table.dataTable thead th{
 		.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 		.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 		.warning { background: #FFFFAA; border: 1px solid #FFAD33; }*/
+.vatIcon{
+	display: block;
+	height: 30px;
+	background: url('../images/vat.png') no-repeat center center;
+	background-size: contain;
+	border:0;
+}
+.downloadIcon{
+	display: block;
+	height: 30px;
+	background: url('../images/download.png') no-repeat center center;
+	background-size: contain;
+	border:0;
+}
+.basketIcon{
+	display: block;
+	height: 40px;
+	background: url('../images/vatbasket.png') no-repeat center center;
+	background-size: contain;
+	border:0;
+}
+.basketCheck{
+	transform: scale(1.3);
+}
+#divCheck{
+	padding:5px;
+}

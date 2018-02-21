@@ -1,9 +1,13 @@
-var searchAPI = '//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search';
+var searchAPI = "//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search";
 var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
-var cartDiv = "<div id='cart' class='cart_unselected invisible' title="+cartDivTitle+"/>";
-var cartDivTitle = 'Click to add/remove dataset to/from VAT (for registered user).';
+var cartAddTitle = "Click to add dataset to VAT basket.";
+var cartRemTitle = "Click to remove dataset from VAT basket.";
+//var cartDiv = "<div id='cart' class='cart_unselected invisible' title="+cartAddTitle+"/>";
+var cartCheckbox = "<input type='checkbox' class='basketCheck'></input>";
 var cartDivDisabled = 'This dataset cannot be visualized.';
 var ratingDiv = "<div id='ratingDiv' title='Please provide us your feedback of this result (5:Highly relevant - 1:Irrelevant)'><select class='ratebar'><option value='5'>5</option><option value='4'>4</option><option value='3'>3</option><option value='2'>2</option><option value='1'>1</option></select></div>";
+var VATpage = '/data/visualizeandanalyze';
+var linkVAT = '<a href="javascript:showBasketDialog();" class="basketIcon invisible" title="Download or see your basket in VAT."></a>';
 var showRating = 0;
 var saveSearch = 1;
 var highlightLength = 2;
@@ -17,18 +21,18 @@ function listenToEnterPress() {
 	$("#gfbioSearchInput").keyup(function (event) {
 		if (event.keyCode == 13) {
 			$('#gfbioSearchInput').autocomplete('close');
-      searchButtonClicked(true);
+      			searchButtonClicked(true);
 		}
 	});
 }
 
 function resetSearch(){
-	document.getElementById("visualBasket").value = "";
-	document.getElementById("basketID").value = 0; 
-	document.getElementById("queryJSON").value = "";
-	document.getElementById("queryKeyword").value = "";
-	document.getElementById("queryFilter").value = "[]";
-	document.getElementById("gfbioSearchInput").value = "";
+	$("#visualBasket").val("");
+	$("#basketID").val(0); 
+	$("#queryJSON").val("");
+	$("#queryKeyword").val("");
+	$("#queryFilter").val("[]");
+	$("#gfbioSearchInput").val("");
 	insertParam("q", "");
 	insertParam("filter", "");
 	insertParam("year", "");
@@ -41,7 +45,7 @@ function resetSearch(){
 }
 
 function searchButtonClicked(isSemantic){
-	var value = document.getElementById("gfbioSearchInput").value;
+	var value = $("#gfbioSearchInput").val();
 	insertParam("q", value);
 	if (value == ''){
 		resetSearch();
@@ -165,7 +169,7 @@ function setAutoComplete() {
 
 /*
  * Description: Read URL and extract variable
- * Input: variable name, e.g. "q_"
+ * Input: variable name, e.g. "q"
  * Return: keyword attaced to the variable
  */
 function getQueryVariable(variable) {
@@ -226,7 +230,11 @@ function showLatestTenDataset(filter, yearRange) {
 					"class": "color-control",
 					"sortable": false,
 					"data": null,
-					"defaultContent": "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating) ? ratingDiv : '')
+					"defaultContent": "<div id='divCheck' class='invisible'>"
+					+ cartCheckbox
+					+ "<input type='text' class='full-spectrum'/>" +"</div>"
+					+ linkVAT
+					+ ((showRating) ? ratingDiv : '')
 				}
 			],
 			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
@@ -306,7 +314,8 @@ function getFilteredLatestDataset(filter, yearRange) {
 		};
 
 		// Store query string for sending to VAT
-		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
+		var strCompletQuery = JSON.stringify(completeQuery);
+		$("#queryJSON").val(strCompletQuery);
 		// Send request via AJAX
 		$.ajax(sSource, {
 			contentType: 'application/json; charset=UTF-8',
@@ -321,7 +330,7 @@ function getFilteredLatestDataset(filter, yearRange) {
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', facet);
 					}
-				} else {
+				} else {// clear facet
 					if (gadgets.Hub.isConnected()){
 						gadgets.Hub.publish('gfbio.search.facet', '');
 					}
@@ -349,33 +358,34 @@ function getFilteredLatestDataset(filter, yearRange) {
  */
 function normalQuery(clearBasket) {
 	isSemanticSearch = false;
-	document.getElementById('semanticTermsDisplay').innerHTML = "";
+	$('semanticTermsDisplay').html("");
 	// clear result table
 	$('#tableId').DataTable().clear();
 	// clear visualBasket if the clearBasket flag is true
 	if (clearBasket){
-		document.getElementById("visualBasket").value = "";
-		document.getElementById("basketID").value = 0; 
+		$("#visualBasket").val("");
+		$("#basketID").val(0); 
 		//create a new basket for every query
-		document.getElementById("queryJSON").value = "";
-		document.getElementById("queryKeyword").value = "";
-		document.getElementById("queryFilter").value = "[]";
+		$("#queryJSON").val("");
+		$("#queryKeyword").val("");
+		$("#queryFilter").val("[]");
 	}
 	var filter = [];
 	var yearFilter = '';
 	// read search keywords
-	var keyword = document.getElementById("gfbioSearchInput").value;
-					
-		var urlFilter = getQueryVariable('filter');
-		var urlYear = getQueryVariable('year');
-		if (urlFilter !=''){
-			console.log(':filter:'+urlFilter);
-			filter = JSON.parse(urlFilter);
-		}
-		if (urlYear !=''){
-			console.log(':year:'+urlYear);
-			yearFilter = urlYear;
-		}
+	var keyword = $("#gfbioSearchInput").val();
+	//console.log('newQuery');
+	//console.log(keyword);
+	var urlFilter = getQueryVariable('filter');
+	var urlYear = getQueryVariable('year');
+	if (urlFilter !=''){
+		//console.log(':filter:'+urlFilter);
+		filter = JSON.parse(urlFilter);
+	}
+	if (urlYear !=''){
+		//console.log(':year:'+urlYear);
+		yearFilter = urlYear;
+	}
 	//setCookie("gfbioSearchInput", keyword);
 	// reset facet gadget
 	if (gadgets.Hub.isConnected()){
@@ -391,9 +401,10 @@ function normalQuery(clearBasket) {
 	if (saveSearch && keyword != "" && clearBasket) {
 		//console.log('New query is made.');
 		//clear semantic terms
-		document.getElementById("semanticTerms").value="";
+		$("semanticTerms").val("");
 		saveSearchHistory(keyword, filter);
-		document.getElementById("filters").value = filter;
+		var strFilters = JSON.stringify(filter);
+		$("#filters").val(strFilters);
 	}
 
 	// send content of visual basket to the mini-map gadget
@@ -443,7 +454,11 @@ function getSearchResult(keyword, filter, yearRange) {
 					"class": "color-control",
 					"sortable": false,
 					"data": null,
-					"defaultContent": "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating) ? ratingDiv : '')
+					"defaultContent": "<div id='divCheck' class='invisible'>"
+					+ cartCheckbox
+					+ "<input type='text' class='full-spectrum'/>" +"</div>"
+					+ linkVAT
+					+ ((showRating) ? ratingDiv : '')
 				}
 			],
 			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',
@@ -493,8 +508,8 @@ function saveSearchHistory(keyword, filter) {
 }
 function saveSearchFeedback(datasetDetail, datasetRank, rating) {
 	//TODO: overwrite the record, if the same keyword, filter, rank are added
-	var keyword = document.getElementById("gfbioSearchInput").value;
-	var filter = document.getElementById("filters").value;
+	var keyword = $("#gfbioSearchInput").val();
+	var filter = $("#filters").val();
 	var recordid = 0; //For a new record
 	var uid = parent.Liferay.ThemeDisplay.getUserId();
 	//console.log('saveSearchFeedback');
@@ -532,7 +547,8 @@ function submitQueryToServer(keyword, filter, yearRange) {
 		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
 
 		// Store query string for sending to VAT
-		document.getElementById("queryJSON").value = JSON.stringify(completeQuery);
+		var strCompleteQuery = JSON.stringify(completeQuery);
+		$("#queryJSON").val(strCompleteQuery);
 
 		// Send request via AJAX
 		$.ajax(sSource, {
@@ -598,7 +614,6 @@ function createQueryFieldArray() {
 	jArr.push("metadatalink");
 	jArr.push("html-1");
 	jArr.push("xml");
-	/*jArr.push("license");*/
 	return jArr;
 }
 
@@ -626,7 +641,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		};
 	}
 	// save Keyword to invisible field for basket
-	document.getElementById("queryKeyword").value = keyword;
+	$("#queryKeyword").val(keyword);
 	var filterObj;
 	if (yearRange.trim() == "") {
 		if (isValueNotEmpty(filterArray)) {
@@ -655,7 +670,8 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 		filterObj.push(yearFilter);
 	}
 	// save filterObj to invisible field for basket
-	document.getElementById("queryFilter").value = JSON.stringify(filterObj);
+	var strFilter = JSON.stringify(filterObj);
+	$("#queryFilter").val(strFilter);
 	return {
 		"bool": {
 			"must": queryObj,
@@ -839,8 +855,8 @@ function parseReturnedJSONfromSearch(datasrc) {
 		//console.log(inner);
 	}
 	
-	var semDiv = document.getElementById('semanticTermsDisplay');
-	semDiv.innerHTML = "Extended terms: "+extendedTerms.join(", ");
+	var semDiv = $('semanticTermsDisplay');
+	semDiv.html("Extended terms: "+extendedTerms.join(", "));
 	return res;
 }
 
@@ -850,8 +866,8 @@ function parseReturnedJSONfromSearch(datasrc) {
  */
 function writeResultTable() {
 	var displaytext = "<table style='border: 0; cellpadding: 0; cellspacing: 0;' id='tableId' class='display'>";
-	var div = document.getElementById('search_result_table');
-	div.innerHTML = displaytext;
+	var div = $('#search_result_table');
+	div.html(displaytext);
 }
 /////////////////////////////// End main search functions ////////////////////////////////////
 
@@ -864,15 +880,15 @@ function writeResultTable() {
  * Effect: The search box is automatically filled with the basket's keyword and submitted for search
  */
 function loadBasket(topic, data, subscriberData) {
-	document.getElementById("basketID").value = data.basketID;
-	document.getElementById("visualBasket").value = data.basketContent
+	$("#basketID").val(data.basketID);
+	$("#visualBasket").val(data.basketContent);
 	var query = JSON.parse(data.query);
 	//TODO:fix this layer
 	var queryStr = query.query.function_score.query.filtered.query.simple_query_string.query;
 	//console.log(queryStr);
-	var searchbox = document.getElementById("gfbioSearchInput");
-	searchbox.value = queryStr;
-	normalQuery(false);
+	var searchbox = $("#gfbioSearchInput");
+	searchbox.val(queryStr);
+	newQuery(false);
 }
 
 /*
@@ -881,20 +897,20 @@ function loadBasket(topic, data, subscriberData) {
  *         Otherwise, create a new basket from the selected dataset(s).
  */
 function addBasket() {
-	var val = document.getElementById("visualBasket").value;
+	var val = $("#visualBasket").val();
 	if (val == "") {
 		//console.log('No basket selected.');
 	} else {
 		// read the current portal user id for authentication in service invokation
 		var uid = parent.Liferay.ThemeDisplay.getUserId();
-		var basketid = document.getElementById("basketID").value;
+		var basketid = $("#basketID").val();
 		//console.log("addBasket:"+basketid);
-		var query = document.getElementById("queryJSON").value;
+		var query = $("#queryJSON").val();
 		
-		//console.log("addBasket queryJSON:");
-		//console.log(query);
-		var keyword = document.getElementById("queryKeyword").value;
-		var filter = document.getElementById("queryFilter").value;
+		/*console.log("addBasket queryJSON:");
+		console.log(query);*/
+		var keyword = $("#queryKeyword").val();
+		var filter = $("#queryFilter").val();
 		/*console.log("addBasket queryKeyword:");
 		console.log(keyword);
 		console.log("addBasket queryFilter:");
@@ -912,7 +928,7 @@ function addBasket() {
 			function (obj) {
 			// set the return id as the current basket id
 			if (!isNaN(obj)) {
-				document.getElementById("basketID").value = obj;
+				$("#basketID").val(obj);
 			}
 		});
 	}
@@ -945,8 +961,8 @@ function extractHilightedSearch(highlight){
 function getSelectedResult() {
 	var jsonData = {};
 	var selected = [];
-	var basket = document.getElementById("visualBasket");
-	var basketStr = basket.value;
+	var basket = $("#visualBasket");
+	var basketStr = basket.val();
 	// if nothing selected, return empty array []
 	if (basketStr == "") {
 		jsonData.selected = selected;
@@ -958,6 +974,94 @@ function getSelectedResult() {
 	return jsonData;
 }
 //////////////////////////////// End Basket functions /////////////////////////////////////
+///////////////////////////////////////  Basket Dialog  /////////////////////////////////////
+function addBasketDialogToPage() {
+	// The dialog must be a children of the page, not the gadget.
+	var iFrame = window.parent.document.getElementById(window.frameElement.id)
+	var newDivInParent = window.parent.document.createElement('div');
+	newDivInParent.setAttribute("id", "dialogBasket");
+	newDivInParent.setAttribute("title", "Basket");
+	newDivInParent.setAttribute("class", "robotofont");
+	// Write a dialog placeholder on the page
+	iFrame.parentNode.appendChild(newDivInParent);
+	// set behaviour of dialog box
+	dialog = window.parent.$('#dialogBasket').dialog({
+			autoOpen : false,
+			modal : true,
+			height : 350,
+			width : 500,
+			buttons : [
+				{
+					text: "Download Datasets",
+					click : function () {
+						console.log('download');
+						filesToDownload();
+						dialog.dialog("close");
+					}
+				},
+				{
+					text: "View in VAT",
+					click : function(){
+						console.log('go to VAT');
+						linkToVAT();
+						dialog.dialog("close");
+					}
+				}
+				/*{
+					text: "Cancel",
+					icons: { primary: "ui-icon-closethick" },
+					click: function(){
+						console.log('close dialog');
+						dialog.dialog("close");
+					}
+				}*/
+			],
+			close : function () {
+				/* Do nothing */
+			}
+		});
+}
+function filesToDownload(){
+	// TODO: read remote files and write to one zip file
+	// then let users download a zip file instead.
+	var basket = $("#visualBasket");
+	console.log('filesToDownload');
+	var jsonBasket = JSON.parse(basket.val());
+	var selectedBasket = jsonBasket.selected;
+	console.log('-------------------------');
+	$.each(selectedBasket, function (index, result) {
+		console.log(result['datalink']);
+		var linkURL = result['datalink'];
+		// TODO: disable the download button when 
+		// datalink is not available
+		if (linkURL.trim()!=""){
+			var win = window.open(linkURL, '_blank');
+			win.focus();
+		}
+		console.log('-------------------------');
+	});
+}
+function showBasketDialog() {
+	var basket = $("#visualBasket");
+	console.log('showBasketDialog');
+	var jsonBasket = JSON.parse(basket.val());
+	console.log(jsonBasket);
+	var selectedBasket = jsonBasket.selected;
+	console.log(selectedBasket);
+	console.log($("#basketID").val());
+	console.log($("#gfbioSearchInput").val());
+	var displayHTML = "<h3>Basket ID: "+$("#basketID").val()+"</h3>";
+	console.log('-------------------------');
+	$.each(selectedBasket, function (index, result) {
+		console.log(result['metadatalink']);
+		displayHTML += "<p>Item:"+(index+1)+"</br>"+result['metadatalink']+"</p>";
+		console.log('-------------------------');
+	});
+	var dialogDiv = window.parent.$("#dialogBasket");
+	$(dialogDiv).html(displayHTML);
+	window.parent.$('#dialogBasket').dialog("open");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////// Facet filter functions ////////////////////////////////////
 /*
@@ -968,7 +1072,8 @@ function applyFacetFilter(topic, data, subscriberData) {
 	var facetFilters = data.filtered;
 	var filterArray = [];
 	var yearRange = "";
-	//console.log(':Search: receive facet filter - '+JSON.stringify(facetFilters));
+	//console.log(':Search: receive facet filter ');
+	//console.log(facetFilters);
 	for (var i = 0; i < facetFilters.length; i++) {
 		var facetFilter = facetFilters[i];
 		if ((facetFilter.facetCat == "citation_yearFacet") && (facetFilter.facetTerm.indexOf(" - ") > 0)) {
@@ -999,12 +1104,12 @@ function filterQuery(filter, yearRange) {
 	// keep only filtered items
 	// clear result table
 	$('#tableId').DataTable().clear();
-	var keyword = document.getElementById("gfbioSearchInput").value;
+	var keyword = $("#gfbioSearchInput").val();
 	// resubmit a query with filter to pansimple and rewrite the result table
 	if (keyword != "") {
 		if (isSemanticSearch){
 			var jArr = [];
-			var semanticTerms = document.getElementById("semanticTerms").value;
+			var semanticTerms = $("semanticTerms").val();
 			var semArr = semanticTerms.split("|");
 			$.each(semArr, function (index, semTerm) {
 				jArr.push(semTerm);
@@ -1025,7 +1130,7 @@ function filterQuery(filter, yearRange) {
 		var filterObj = filter;
 		filterObj.push(yearRange);
 		saveSearchHistory(keyword, filterObj);
-		document.getElementById("filters").value = filterObj;
+		$("#filters").val(filterObj);
 	}
 }
 /////////////////////////////// End Facet filter functions /////////////////////////////////
@@ -1037,8 +1142,8 @@ function filterQuery(filter, yearRange) {
  */
 function setSelectedRowStyle() {
 	// read basket value
-	var basket = document.getElementById("visualBasket");
-	var basketStr = basket.value;
+	var basket = $("#visualBasket");
+	var basketStr = basket.val();
 	var jsonData = {};
 	if (basketStr != "") {
 		jsonData = JSON.parse(basketStr);
@@ -1055,8 +1160,16 @@ function setSelectedRowStyle() {
 					// if yes, toggle class to selected.
 					var row = tb.rows().nodes()[ind2];
 					row.className += ' selected';
-					row.childNodes[1].childNodes[2].className = 'cart_selected';
-					$(row.childNodes[1].childNodes[1]).removeClass("invisible");
+					var basketCell = row.childNodes[1];
+					//var cartDiv = $(basketCell).find('#cart')[0];
+					var divCheck = $(basketCell).find('#divCheck')[0];
+					$(divCheck).attr('title', cartRemTitle);
+					// show color palette
+					$($(basketCell).find('.sp-replacer')[0]).removeClass("invisible");
+					var isUserSignedIn = parent.Liferay.ThemeDisplay.isSignedIn();
+					// show VAT link only if this user is logged in
+					var vatLink = $(basketCell).find('.basketIcon')[0];
+					if (isUserSignedIn){$(vatLink).removeClass('invisible');}
 				}
 			});
 		});
@@ -1070,59 +1183,64 @@ function setSelectedRowStyle() {
  */
 function onRowClick() {
 	$('#tableId tbody').off('click');
-	$('#tableId tbody').on('click', '#cart', function (e) {
-		if (!$(this).hasClass('cart_disabled')){
-		var cell = $(this).parent();
-		var row = cell.parent();
-		var icol = row.children().index(cell);
-		var irow = row.parent().children().index(row);
-		// class of the table row
-		row.toggleClass('selected');
+	$('#tableId tbody').on('click', '.basketCheck', function (e) {
+		if (!$(this).attr('disabled')){
+			var div = $(this).parent();
+			var cell = $(div).parent();
+			var row = $(cell).parent();
+			var icol = $(row).children().index(cell);
+			var irow = $(row).parent().children().index(row);
+			// class of the table row
+			row.toggleClass('selected');
 
-		// get Element visual basket for updating
-		var basket = document.getElementById("visualBasket");
-		var basketStr = basket.value;
-		var jsonData = {};
-		var selected = [];
-		// toggle basket
-		if (row.hasClass('selected')) {
-			// show the icon that this item has been selected
-			$(this).attr('class', 'cart_selected');
-			$($(".sp-replacer")[irow]).removeClass("invisible");
-			// add to basket
-			if (basketStr == "") {
-				jsonData.selected = selected;
-			} else {
-				jsonData = JSON.parse(basketStr);
-			}
+			// get Element visual basket for updating
+			var basket = $("#visualBasket");
+			var basketStr = basket.val();
+			var jsonData = {};
+			var selected = [];
+			var vatLink = $(cell).find('.basketIcon')[0];
+			var isUserSignedIn = parent.Liferay.ThemeDisplay.isSignedIn();// toggle basket
+			if (row.hasClass('selected')) {
+				$(this).attr('title', cartRemTitle);
+				$($(".sp-replacer")[irow]).removeClass("invisible");
+				// show VAT link only if this user is logged in
+				if (isUserSignedIn){$(vatLink).removeClass('invisible');}
+				// add to basket
+				if (basketStr == "") {
+					jsonData.selected = selected;
+				} else {
+					jsonData = JSON.parse(basketStr);
+				}
 
-			var nRow = row[0];
-			var tRows = $('#tableId').DataTable().rows();
-			var resultArray = getDataFromSelectedRow(nRow, tRows);
-			jsonData.selected.push(resultArray);
-			// store basket in string format
-			basket.value = JSON.stringify(jsonData);
-		} else {
-			// show the icon that this item is unselected,
-			// and ready to be added into a cart/basket
-			$(this).attr('class', 'cart_unselected');
-			$($(".sp-replacer")[irow]).addClass("invisible");
-			// remove from basket
-			if (basketStr != "") {
-				jsonData = JSON.parse(basketStr);
-				// get row index to find metadatalink as id
 				var nRow = row[0];
 				var tRows = $('#tableId').DataTable().rows();
 				var resultArray = getDataFromSelectedRow(nRow, tRows);
-				// metadataLink is supposed to be unique for each dataset,
-				// so I use it as an id for each row.
-				jsonData.selected = JSONfindAndRemove(jsonData.selected,
-						'metadatalink', resultArray.metadatalink);
-				basket.value = JSON.stringify(jsonData);
+				jsonData.selected.push(resultArray);
+				// store basket in string format
+				var strJSONData = JSON.stringify(jsonData);
+				basket.val(strJSONData);
+			} else {
+				$(this).attr('title', cartAddTitle);
+				$($(".sp-replacer")[irow]).addClass("invisible");
+				// hide VAT link
+				$(vatLink).addClass('invisible');
+				// remove from basket
+				if (basketStr != "") {
+					jsonData = JSON.parse(basketStr);
+					// get row index to find metadatalink as id
+					var nRow = row[0];
+					var tRows = $('#tableId').DataTable().rows();
+					var resultArray = getDataFromSelectedRow(nRow, tRows);
+					// metadataLink is supposed to be unique for each dataset,
+					// so I use it as an id for each row.
+					jsonData.selected = JSONfindAndRemove(jsonData.selected,
+							'metadatalink', resultArray.metadatalink);
+					var strJSONData = JSON.stringify(jsonData);
+					basket.val(strJSONData);
+				}
 			}
-		}
-		//update visualisation
-		updateMap();
+			//update visualisation
+			updateMap();
 		}
 	});
 }
@@ -1159,7 +1277,8 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"parameter": value.parameter,
 		"xml": value.xml,
 		"vatVisualizable": value.vatVisualizable,
-		/* pangeae doesn't return license field, only provide facets			"license":value.license*/
+		/* pangeae doesn't return license field
+		"license":value.license*/
 	};
 	return result;
 }
@@ -1218,11 +1337,11 @@ function hilightResult(orgHTML,termsToHighlight) {
 function updateMap() {
 	var jsonData = getSelectedResult();
 	// Add query message in JSON format
-	jsonData.queryStr = document.getElementById("queryJSON").value;
+	jsonData.queryStr = $("#queryJSON").val();
 	// add queryKeyword and queryFilter to jsonData
 	// store in database (for use later)
-	jsonData.queryKeyword = document.getElementById("queryKeyword").value;
-	jsonData.queryFilter = document.getElementById("queryFilter").value;
+	jsonData.queryKeyword = $("#queryKeyword").val();
+	jsonData.queryFilter = $("#queryFilter").val();
 	addBasket();
 	// then send info to VAT
 	if (gadgets.Hub.isConnected()) {
@@ -1281,8 +1400,16 @@ function addColorPicker() {
 			if (tdClass !== undefined) {
 				if (tdClass.indexOf("color-control") >= 0) {
 					//console.log(color);
-					var input = elm[j].childNodes[0];
-					input.value = color;
+					var input = $(elm[j]).find('.full-spectrum')[0];
+					var divCheck = $(elm[j]).find('#divCheck')[0];
+					$(input).val(color);
+					var basketCheck = $(divCheck).find('.basketCheck')[0];
+					if ($(basketCheck).attr('disabled')){
+						$(divCheck).css('background-color','rgb(204, 204, 204)');
+					}
+					else{
+						$(divCheck).css('background-color',color);
+					}
 					break;
 				}
 			}
@@ -1346,26 +1473,31 @@ function addColorPicker() {
 				"rgb(32, 18, 77)"]// violent violet
 		],
 		change: function (color) {
+			//console.log('spectrum changed');
 			// read basket value
-			var basket = document.getElementById("visualBasket");
-			var basketStr = basket.value;
+			var basket = $("#visualBasket");
+			var basketStr = basket.val();
 			if (basketStr != "") {
 				var jsonData = {};
 				jsonData = JSON.parse(basketStr);
 				// get metadata link of the current row
-				var col = this.parentElement;
-				var row = col.parentElement;
+				var checkDiv = $(this).parent();
+				var cell = $(checkDiv).parent();
+				var row = $(cell).parent();
 				var tb = $('#tableId').DataTable();
-				var metadatalink = tb.rows().data()[row.rowIndex - 1].metadataLink;
+				var rowInd = $(row).index();
+				var metadatalink = tb.rows().data()[rowInd].metadatalink;
 				// loop compare with the link in basket
 				$.each(jsonData.selected, function (index, result) {
 					var selectedLink = result['metadatalink'];
 					if (selectedLink == metadatalink) {
 						// if found the link, update row detail
 						jsonData.selected[index].color = color.toHexString();
+						checkDiv.css('background-color',color.toHexString());
 					}
 				});
-				basket.value = JSON.stringify(jsonData);
+				var strJSONData = JSON.stringify(jsonData);
+				basket.val(strJSONData);
 				updateMap();
 			}
 		}
@@ -1383,20 +1515,31 @@ function showCartIcon(nRow, aData) {
   // read the current row number and get a div for the cart
 		var elmRow = $(nRow);
 		var elmTD = $(elmRow[0].lastElementChild);
-		var elmDiv = $($(elmTD[0]).find('#cart')[0]);
+	var divCheck = $($(elmTD[0]).find('#divCheck')[0]);
+	//console.log('showCartIcon: '+isUserSignedIn);
 	// show the cart icon only if the visualizable flag is true
+	// show the basket checkbox div		
+	$(divCheck).removeClass('invisible');
 	if (aData.vatVisualizable) {
-		// show the cart's div
-		//console.log(elmDiv);
-		elmDiv.removeClass('invisible');
 
-		elmDiv.attr('title', '');
+		$(divCheck).attr('title', cartAddTitle);
 	}
 	else{
-		elmDiv.removeClass('invisible');
-		elmDiv.addClass('cart_disabled');
-		elmDiv.attr('title', cartDivDisabled);
+		$(divCheck).attr('title', cartDivDisabled);
+		$(divCheck).css('background-color','rgb(128,128,128)');
+		var basketCheck = $(divCheck).find('.basketCheck')[0];
+		$(basketCheck).attr("disabled", true);
 	}
+}
+function linkToVAT(){
+	var basketID = $('#basketID').val();
+	var linkURL = VATpage;
+	//console.log('linkToVAT:'+basketID);
+	if (basketID!=0){
+		linkURL += '?gfbioBasketId='+basketID;
+	}
+	var win = window.open(linkURL, '_blank');
+	win.focus();
 }
 //////////////////////////// End Search result UI functions //////////////////////////////
 
@@ -1922,7 +2065,11 @@ function getSemanticSearchResult(keywordArr, filter, yearRange) {
 					"class": "color-control",
 					"sortable": false,
 					"data": null,
-					"defaultContent": "<input type='text' class='full-spectrum'/>" + cartDiv + ((showRating) ? ratingDiv : '')
+					"defaultContent": "<div id='divCheck' class='invisible'>"
+					+ cartCheckbox
+					+ "<input type='text' class='full-spectrum'/>" +"</div>"
+					+ linkVAT
+					+ ((showRating) ? ratingDiv : '')
 				}
 			],
 			"sDom": '<"top"l<"divline"ip>>rt<"bottom"<"divline"ip>><"clear">',

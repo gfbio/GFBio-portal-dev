@@ -84,8 +84,8 @@
 					if (urlFilter != '') urlFilterArr = JSON.parse(urlFilter);
 					var urlYear = getQueryVariable('year');
 					if (q != '') {
-						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = q.replace(/\+/g," ");
+						var searchbox = $("#gfbioSearchInput");
+						searchbox.val(q.replace(/\+/g," "));
 						// call semanticQuery by default
 						semanticQuery(true);
 					}
@@ -98,10 +98,11 @@
 					} 
 					//disable cookie feature
 					/*else{
-						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = getCookie("gfbioSearchInput");
+						var searchbox = $("#gfbioSearchInput");
+						searchbox.val(getCookie("gfbioSearchInput"));
 						semanticQuery(true);
 					}*/
+					addBasketDialogToPage();
 				});
 				parent.window.onpopstate = function (e) {
 					//TODO: this reloading page takes time, consider to call our ajax function instead
@@ -111,7 +112,7 @@
 				};
 				$(document).ajaxComplete(function( event, xhr, settings ) {
 					adjustGadgetHeight();
-					document.getElementById('gfbioSearchInput').focus();
+					$('#gfbioSearchInput').focus();
 				});
 			</script>
 		</html>

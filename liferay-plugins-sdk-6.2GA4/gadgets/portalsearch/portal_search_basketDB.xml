@@ -45,9 +45,7 @@
 						type="button" value="" class="acButton"
 						onclick="javascript:searchButtonClicked();" />
 						</span>
-					<a href="javascript:linkToVAT();" title="See your basket in VAT." >
-					  <img src="search/images/vat.png" style="height:20px;border:0">
-					</a>
+
 					</label> 
 					<div style="height:10px"></div>
 					<div id="search_result_table"></div>
@@ -80,8 +78,8 @@
 					var urlYear = getQueryVariable('year');
 					
 					if (q != '') {
-						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = q.replace(/\+/g," ");
+						var searchbox = $("#gfbioSearchInput");
+						searchbox.val(q.replace(/\+/g," "));
 						newQuery(true);
 					}
 					// Check if there's any input cookie stored
@@ -93,10 +91,11 @@
 					} 
 					//disable cookie feature
 					/*else{
-						var searchbox = document.getElementById("gfbioSearchInput");
-						searchbox.value = getCookie("gfbioSearchInput");
+						var searchbox = $("#gfbioSearchInput");
+						searchbox.val(getCookie("gfbioSearchInput"));
 						newQuery(true);
 					}*/
+					addBasketDialogToPage();
 				});
 				parent.window.onpopstate = function (e) {
 					//TODO: this reloading page takes time, consider to call our ajax function instead
@@ -106,7 +105,7 @@
 				};
 				$(document).ajaxComplete(function( event, xhr, settings ) {
 					adjustGadgetHeight();
-					document.getElementById('gfbioSearchInput').focus();
+					$('#gfbioSearchInput').focus();
 				});
 				
 			</script>
