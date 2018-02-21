@@ -40,7 +40,15 @@ function resetSearch(){
 	
 	showLatestTenDataset([],"");
 }
-
+function resetFilter(){
+	$("#visualBasket").val("");
+	$("#basketID").val(0); 
+	$("#queryJSON").val("");
+	$("#queryKeyword").val("");
+	$("#queryFilter").val("[]");
+	insertParam("filter", "");
+	insertParam("year", "");
+}
 function searchButtonClicked(){
 	var value = $("#gfbioSearchInput").val();
 	insertParam("q", value);
@@ -50,6 +58,7 @@ function searchButtonClicked(){
 		if (gadgets.Hub.isConnected()){
 			gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
 		}
+		resetFilter();
 		newQuery(true);
 	}
 }

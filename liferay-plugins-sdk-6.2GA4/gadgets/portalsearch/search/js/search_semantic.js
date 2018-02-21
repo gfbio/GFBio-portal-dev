@@ -43,8 +43,16 @@ function resetSearch(){
 	
 	showLatestTenDataset([],"");
 }
-
-function searchButtonClicked(isSemantic){
+function resetFilter(){
+	$("#visualBasket").val("");
+	$("#basketID").val(0); 
+	$("#queryJSON").val("");
+	$("#queryKeyword").val("");
+	$("#queryFilter").val("[]");
+	insertParam("filter", "");
+	insertParam("year", "");
+}
+function searchButtonClicked(){
 	var value = $("#gfbioSearchInput").val();
 	insertParam("q", value);
 	if (value == ''){
@@ -53,6 +61,7 @@ function searchButtonClicked(isSemantic){
 		if (gadgets.Hub.isConnected()){
 			gadgets.Hub.publish('gfbio.search.facetreset', 'reset');
 		}
+		resetFilter();
     if (isSemantic) {semanticQuery(true);}
 		else {normalQuery(true);}
 	}
@@ -1513,8 +1522,8 @@ function addColorPicker() {
  */
 function showCartIcon(nRow, aData) {
   // read the current row number and get a div for the cart
-		var elmRow = $(nRow);
-		var elmTD = $(elmRow[0].lastElementChild);
+	var elmRow = $(nRow);
+	var elmTD = $(elmRow[0].lastElementChild);
 	var divCheck = $($(elmTD[0]).find('#divCheck')[0]);
 	//console.log('showCartIcon: '+isUserSignedIn);
 	// show the cart icon only if the visualizable flag is true
@@ -1760,7 +1769,7 @@ function getMultiValueField(jObj, id){
 	}
 	else{
 		if (jObj[id] != null)
-			return jObj[id];
+      return jObj[id];
 		else return "";
 		// return the object as it is
 	}

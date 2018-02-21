@@ -256,58 +256,59 @@ table.dataTable thead th{
 	margin-left: -7px;
 }
 
-		/* Begin tooltip*/
-		.tooltip {
-			color: #000000; 
-			outline: none;
-			cursor: help; 
-			text-decoration: none;
-			position: relative;
-		}
-		.tooltip span {
-			position: absolute;
-			display: none;
-		}
-		.tooltip:hover span {
-			border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
-			box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
-			font-family: 'Lato', sans-serif;
-			position: absolute; 
-			left: 1em; right:unset;
-			top: 1em; z-index: 99;
-			width: 400px;
-			display: block;
-		}
-		@media (min-width: 795px) {		
-			.tooltip:hover span {
-				position: absolute; 
-				right: 1em; left:unset;
-				top: 1em; z-index: 99;
-				width: 400px;
-				display: block;
-			}
-		}
-		/*.tooltip:hover img {
-			border: 0; margin: -10px 0 0 -55px;
-			float: left; position: absolute;
-		}*/
-		.tooltip:hover em {
-			font-family: 'Lato', sans-serif; font-size: 16px; font-weight: bold;
-			display: block; padding: 0.2em 0 0.6em 0;
-		}
-		.tooltip:hover p {
-			font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 400;
-			display: block; 
-		}
-		/* End tooltip*/
-		.classic { padding: 0.8em 1em; }
-		.classic {background: #9FDAEE; border: 1px solid #2BB0D7; }
-		/*.custom { padding: 0.5em 0.8em 0.8em 2em; }
-		* html a:hover { background: transparent; }*/
-		/*.critical { background: #FFCCAA; border: 1px solid #FF3334;	}
-		.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}
-		.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
-		.warning { background: #FFFFAA; border: 1px solid #FFAD33; }*/
+/* Begin tooltip*/
+.tooltip {
+	color: #000000; 
+	outline: none;
+	cursor: help; 
+	text-decoration: none;
+	position: relative;
+}
+.tooltip span {
+	position: absolute;
+	display: none;
+}
+.tooltip:hover span {
+	border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+	font-family: 'Lato', sans-serif;
+	position: absolute; 
+	left: 1em; right:unset;
+	top: 1em; z-index: 99;
+	width: 400px;
+	display: block;
+}
+@media (min-width: 795px) {		
+	.tooltip:hover span {
+		position: absolute; 
+		right: 1em; left:unset;
+		top: 1em; z-index: 99;
+		width: 400px;
+		display: block;
+	}
+}
+/*.tooltip:hover img {
+	border: 0; margin: -10px 0 0 -55px;
+	float: left; position: absolute;
+}*/
+.tooltip:hover em {
+	font-family: 'Lato', sans-serif; font-size: 16px; font-weight: bold;
+	display: block; padding: 0.2em 0 0.6em 0;
+}
+.tooltip:hover p {
+	font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 400;
+	display: block; 
+}
+/* End tooltip*/
+.classic { padding: 0.8em 1em; }
+.classic {background: #9FDAEE; border: 1px solid #2BB0D7; }
+/*.custom { padding: 0.5em 0.8em 0.8em 2em; }
+* html a:hover { background: transparent; }*/
+/*.critical { background: #FFCCAA; border: 1px solid #FF3334;	}
+.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}
+.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
+.warning { background: #FFFFAA; border: 1px solid #FFAD33; }*/
+
 .vatIcon{
 	display: block;
 	height: 30px;
