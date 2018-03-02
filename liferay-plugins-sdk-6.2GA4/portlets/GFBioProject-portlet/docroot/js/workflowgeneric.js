@@ -359,6 +359,181 @@ function setComentarFieldEmpty(field){
 }
 
 
+
+//
+function submitInput(url){
+	
+	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+
+		if (checkInput() && checkInputLength() && checkMinimalInput()){
+					
+			var mrrJson = {};
+			var projectJson = {};
+			var researchObjectJson = {};
+
+			// project information
+			if (document.getElementById("gwf_project_id").innerHTML != 0){
+				projectJson["projectid"]= document.getElementById("gwf_project_id").innerHTML;
+				mrrJson["project"] = projectJson;
+			}
+			
+			
+			// research object information
+			
+
+			if (checkMinimalResearchObjectInput()){
+						
+				//authornames
+				var authornames = (document.getElementById("gwf_ro_author").value).trim();
+				if (authornames.charAt(authornames.length-1)==',')
+					authornames = authornames.substring(0, authornames.length-1);
+				authornames = ('["'.concat(authornames).concat('"]')).replace(/\n/g,'","');
+				var authorNamesArray = JSON.parse(authornames);
+				for (i =0; i < authorNamesArray.length;i++){
+					var name = authorNamesArray[i];
+					while (name.charAt(name.length-1)==',')
+						name = name.substring(0, name.length-1);
+					authorNamesArray[i] = name;
+				}
+				authornames = JSON.stringify(authorNamesArray);
+				researchObjectJson["authornames"] = authornames;	
+						
+						
+				//Categories/ResearchFields
+				var category =[];
+				for (i =0; i<document.getElementsByName("categories").length;i++)
+					if (document.getElementsByName("categories")[i].checked)
+				category.push(document.getElementsByName("categories")[i].value);
+				researchObjectJson["category"] = category;
+						
+				
+				//data collection time
+				researchObjectJson["datacollectiontime"] = document.getElementById("gwf_ro_dct").value;
+				
+				
+				//description
+				researchObjectJson["description"] = document.getElementById("gwf_ro_description").value;
+					
+				
+				//embargo
+				researchObjectJson["embargo"] = document.getElementById("gwf_ro_embargo").value;
+				
+				
+				//file upload
+				if (document.getElementById("gwf_ro_upload_direct").checked != true)
+					if (document.getElementById("gwf_ro_externalupload_path").value != ""){
+						var primaryDataJson = {
+							"name": document.getElementById("gwf_ro_externalupload_path").value,
+							"path": document.getElementById("gwf_ro_externalupload_path").value
+						};
+						researchObjectJson["primarydata"] = primaryDataJson;
+					}
+				
+						
+				//legalrequirements
+				var legalrequirements =[];
+				for (i =0; i<document.getElementsByName("legalrequirements").length;i++)
+					if (document.getElementsByName("legalrequirements")[i].checked)
+				legalrequirements.push(document.getElementsByName("legalrequirements")[i].value);
+				researchObjectJson["legalrequirement"] = legalrequirements;		
+				
+
+				//license
+				researchObjectJson["license"] = document.getElementById("gwf_ro_licenselabel").value;
+						
+					
+				//metadata
+				if (document.getElementById("gwf_ro_metadatalabel").value != 'none')
+					researchObjectJson["metadata"]= document.getElementById("gwf_ro_metadatalabel").value;
+				
+				
+				//name & label
+				var roName = document.getElementById("gwf_ro_name").value;
+				var roLabel = document.getElementById("gwf_ro_label").value;
+				if (roName =="")	roName = roLabel;
+				if (roLabel=="")	roLabel = roName;
+				researchObjectJson["name"] = roName;
+				researchObjectJson["label"] = roLabel;
+
+				
+				//publications
+				researchObjectJson["publications"] = document.getElementById("gwf_ro_publications").value;
+
+
+				//project id
+				if (projectJson.projectid!=0){
+					console.log("|"+projectJson.projectid+"|");
+					researchObjectJson["projectid"]= projectJson.projectid;
+				}
+				
+				
+				//research object type
+				researchObjectJson["researchobjecttype"]= document.getElementById("gwf_ro_researchobjecttype").innerHTML;
+				
+				
+				//user id				
+				researchObjectJson["userid"]=Number(document.getElementById("gwf_user_id").innerHTML);
+
+
+				projectJson["researchobject"]= researchObjectJson;
+			}
+						
+					
+					
+					projectJson["submittermail"]=document.getElementById("gwf_user_mail").innerHTML;
+					
+					
+					if (document.getElementById("gwf_dcrtassignee").innerHTML!=null){
+
+						projectJson["dcrtassignee"]= document.getElementById("gwf_dcrtassignee").innerHTML;
+						projectJson["dcrtinput"]=document.getElementById("gwf_dcrtinput").innerHTML;
+						projectJson["dcrtrecommendation"]=document.getElementById("gwf_dcrtrecommendation").innerHTML;
+					}
+				}
+				
+
+				
+				//create primary data
+				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+				
+					//create submission registry
+					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+						console.log("start sub reg");
+						var registryJson = {};
+						//registryJson = buildSubmissionJsonForRegistry(mrrJson.researchobjects);
+						
+						//
+						if (document.getElementById("gwf_dcrtassignee").innerHTML=='null')
+							registryJson["archive"] = "GFBio collections";
+						else
+								registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
+						registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
+					
+						
+						
+						//sent to JIRA
+						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
+
+							//sent to Broker
+							projectJson["submission"]= registryJson;
+							
+							console.log(projectJson);
+							console.log(mrrJson);
+							
+							//sentToBroker(mrrJson);
+							
+							resetDCRTInput();
+						}
+					}
+				
+		}
+	}else
+		console.log("submit no");
+}
+
+
+
+
 /*//
 function saveAllInput(){
 
@@ -415,159 +590,6 @@ function saveAllInput(){
 	
 	return projectJson;
 }*/
-
-
-//
-function submitInput(url){
-	
-	if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-
-		if (checkInput() && checkInputLength() && checkMinimalInput()){
-					
-			var mrrJson = {};
-			var projectJson = {};
-
-			// project information
-			if (document.getElementById("gwf_project_id").innerHTML != 0){
-				projectJson["projectid"]= document.getElementById("gwf_project_id").innerHTML;
-				mrrJson["project"] = projectJson;
-			}
-			
-			
-			// 
-			
-
-					if (checkMinimalResearchObjectInput()){
-						//var researchObjectJson = buildResearchObjectJsonForCreate(projectJson);
-						
-						
-						var researchObjectJson = {};
-						//researchObjectJson = buildCommonResearchObjectJson(projectJson);
-						
-						//name & label
-						var roName = document.getElementById("gwf_ro_name").value;
-						var roLabel = document.getElementById("gwf_ro_label").value;
-						if (roName =="")	roName = roLabel;
-						if (roLabel=="")	roLabel = roName;
-
-						//authornames
-						var authornames = (document.getElementById("gwf_ro_author").value).trim();
-						if (authornames.charAt(authornames.length-1)==',')
-							authornames = authornames.substring(0, authornames.length-1);
-						authornames = ('["'.concat(authornames).concat('"]')).replace(/\n/g,'","');
-						var authorNamesArray = JSON.parse(authornames);
-						for (i =0; i < authorNamesArray.length;i++){
-							var name = authorNamesArray[i];
-							while (name.charAt(name.length-1)==',')
-								name = name.substring(0, name.length-1);
-							authorNamesArray[i] = name;
-						}
-						authornames = JSON.stringify(authorNamesArray);
-
-						//legalrequirements
-						var legalrequirements =[];
-						for (i =0; i<document.getElementsByName("legalrequirements").length;i++)
-								if (document.getElementsByName("legalrequirements")[i].checked)
-									legalrequirements.push(document.getElementsByName("legalrequirements")[i].value);
-								
-							
-						//Categories/ResearchFields
-						var category =[];
-						for (i =0; i<document.getElementsByName("categories").length;i++)
-							if (document.getElementsByName("categories")[i].checked)
-								category.push(document.getElementsByName("categories")[i].value);
-
-							
-						var researchObjectJson = {
-							"authornames": authornames,
-							"name":roName,
-							"label":roLabel,
-							"description":document.getElementById("gwf_ro_description").value,
-							"categoryids":category,
-							"publications":document.getElementById("gwf_ro_publications").value,
-							"datacollectiontime":document.getElementById("gwf_ro_dct").value,
-							"embargo":document.getElementById("gwf_ro_embargo").value,
-							"legalrequirementids":legalrequirements
-						};
-
-						if (projectJson.projectid!=0)
-							researchObjectJson["projectid"]= projectJson.projectid;
-								
-						researchObjectJson["userid"]=Number(document.getElementById("gwf_user_id").innerHTML);
-
-							
-						if (document.getElementById("gwf_ro_metadatalabel").value != 'none')
-							researchObjectJson["metadata"]= document.getElementById("gwf_ro_metadatalabel").value;
-							
-						researchObjectJson["license"] = document.getElementById("gwf_ro_licenselabel").value;
-						researchObjectJson["researchobjecttype"]= document.getElementById("gwf_ro_researchobjecttype").innerHTML;
-
-						if (document.getElementById("gwf_ro_upload_direct").checked != true)
-							if (document.getElementById("gwf_ro_externalupload_path").value != ""){
-								var primaryDataJson = {
-									"name": document.getElementById("gwf_ro_externalupload_path").value,
-									"path": document.getElementById("gwf_ro_externalupload_path").value
-								};
-								researchObjectJson["primarydata"] = primaryDataJson;
-							}
-					
-						
-						projectJson["researchobjects"]= researchObjectJson;
-					}
-						
-					
-					
-					projectJson["submittermail"]=document.getElementById("gwf_user_mail").innerHTML;
-					
-					
-					if (document.getElementById("gwf_dcrtassignee").innerHTML!=null){
-
-						projectJson["dcrtassignee"]= document.getElementById("gwf_dcrtassignee").innerHTML;
-						projectJson["dcrtinput"]=document.getElementById("gwf_dcrtinput").innerHTML;
-						projectJson["dcrtrecommendation"]=document.getElementById("gwf_dcrtrecommendation").innerHTML;
-					}
-				}
-				
-
-				
-				//create primary data
-				if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-				
-					//create submission registry
-					if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-						console.log("start sub reg");
-						var registryJson = {};
-						//registryJson = buildSubmissionJsonForRegistry(mrrJson.researchobjects);
-						
-						//
-						if (document.getElementById("gwf_dcrtassignee").innerHTML=='null')
-							registryJson["archive"] = "GFBio collections";
-						else
-								registryJson["archive"] = document.getElementById("gwf_dcrtassignee").innerHTML;
-						registryJson["userid"]=  Number(document.getElementById("gwf_user_id").innerHTML);
-					
-						
-						
-						//sent to JIRA
-						if(document.getElementById("gwf_lf_comentar").className != 'portlet-msg-error'){
-
-							//sent to Broker
-							projectJson["submission"]= registryJson;
-							
-							console.log(projectJson);
-							console.log(mrrJson);
-							
-							//sentToBroker(mrrJson);
-							
-							resetDCRTInput();
-						}
-					}
-				
-		}
-	}else
-		console.log("submit no");
-}
-
 
 /*
  * 
