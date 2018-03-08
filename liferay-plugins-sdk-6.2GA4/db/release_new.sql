@@ -9,27 +9,6 @@
 -------------------------------------       metadata        -- 06.03.2018 ----------------------
 ------------------------------------------------------------------------------------------------
 
-
--- Grundsätlicher Änderungs-Code:
--- UPDATE	gfbio_content 
--- SET  	cellcontent='Access to Biological Collections Data'	
--- WHERE	
--- 			headid =(select getHeadIdByName('gfbio_metadata')) AND	  
--- 			columnid = (select getcolumnidbynames('gfbio_metadata', 'name')) AND	  			
--- 			rowid IN (
--- 				SELECT rowid 
--- 				FROM gfbio_content	
--- 				WHERE	  
--- 					headid = (select getHeadIdByName('gfbio_metadata')) AND		  
--- 					columnid = (select getcolumnidbynames('gfbio_metadata', 'label')) AND 		  
--- 					cellcontent  = 'ABCD'	  
--- 			); 
-
-
--- Änderung einer Zelle in der Datenbank
--- UPDATE gfbio_content SET  cellcontent='Access to Biological Collections Data', lastmodifieddate = now()	WHERE	headid =(select getHeadIdByName('gfbio_metadata')) AND	  columnid = (select getcolumnidbynames('gfbio_metadata', 'name')) and	  			rowid in (select rowid from gfbio_content	where	  headid = (select getHeadIdByName('gfbio_metadata')) and		  columnid = (select getcolumnidbynames('gfbio_metadata', 'label')) and 		  cellcontent  = 'ABCD'	  ); 
--- UPDATE gfbio_content SET  cellcontent=now()									, lastmodifieddate = now()	WHERE	headid =(select getHeadIdByName('gfbio_metadata')) AND	  columnid = (select getcolumnidbynames('gfbio_metadata', 'lastmodifieddate')) and	rowid in (select rowid from gfbio_content	where	  headid = (select getHeadIdByName('gfbio_metadata')) and		  columnid = (select getcolumnidbynames('gfbio_metadata', 'label')) and 		  cellcontent  = 'ABCD'	  );
-
 CREATE OR REPLACE FUNCTION updatecellcontentbyrowidentifier(hename text, rowidentifiercolumnname text, targetcolumnname text, rowidentifierrowidentifier text, newccont text)
   RETURNS void AS
 $BODY$
@@ -42,6 +21,9 @@ $BODY$
 ALTER FUNCTION updatecellcontentbyrowidentifier(text, text, text, text, text)
   OWNER TO postgres;
   
+select updatecellcontentbyrowidentifier('gfbio_metadata', 'name', 'label', 'Darwin Core',		'DwC');
+select updatecellcontentbyrowidentifier('gfbio_metadata', 'name', 'label', 'Dublin Core',		'DC');
+
 
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'name', 'ABCD',		'Access to Biological Collections Data');
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'name', 'INSPIRE',	'Infrastructure for Spatial Information in the European Community');
@@ -54,7 +36,7 @@ select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'description'
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'description', 'ESE',		'Europeana Semantic Elements (ESE) is a format, which provides a basic set of elements for describing objects in the cultural heritage domain in a way that is usable for Europeana.');
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'description', 'INSPIRE',	'Aim of the INSPIRE Directive is to create a European Union spatial data infrastructure that will help to make spatial or geographical information more accessible and interoperable for a wide range of purposes of EU environmental policies and policies or activities which may have an impact on the environment. On 15 May 2007 the INPIRE Directive came into force and will be implemented in various stages, with full implementation required by 2021.');
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'description', 'ISO 19115',	'ISO 19115-1:2014 Geographic information (Metadata) is a standard of the ISO (the International Organization for Standardization) and defines the schema required for describing geographic information and services by means of metadata. It provides information about the identification, the extent, the quality, the spatial and temporal aspects, the content, the spatial reference, the portrayal, distribution, and other properties of digital geographic data and services.');
-select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'version', 'EDM',		'');
+select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'version', 'DwC',		'2013-10-25');
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'version', 'EDM',		'5.2.3');
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'version', 'EML',		'2.1.1');
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'version', 'ESE',		'3.4.1');
