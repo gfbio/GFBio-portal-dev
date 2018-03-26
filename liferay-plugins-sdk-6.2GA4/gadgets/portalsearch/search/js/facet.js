@@ -146,7 +146,7 @@ function addFacetDialogToPage() {
 	// The dialog must be a children of the page, not the gadget.
 	var iFrame = window.parent.document.getElementById(window.frameElement.id)
 
-		var newDivInParent = window.parent.document.createElement('div');
+	var newDivInParent = window.parent.document.createElement('div');
 	newDivInParent.setAttribute("id", "dialogFacet");
 	newDivInParent.setAttribute("title", "More Facet Terms");
 	newDivInParent.setAttribute("class", "robotofont");
