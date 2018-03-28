@@ -279,6 +279,8 @@
 	
 	//
 	function datePickler(){
+
+		
 		$( "#gwf_ro_embargo" ).datepicker({
 			dateFormat: "yy-mm-dd",
 			changeMonth: true,
@@ -286,12 +288,29 @@
 
 		});
 		
-		
-		var style = document.getElementById("ui-datepicker-div").style;
+ 		var style = document.getElementById("ui-datepicker-div").style;
 		style["background-color"] = "white";
-		style["border"] = "1px solid #c5dbec";
+		style["border"] = "1px solid #c5dbec"; 
+		
+		var next = document.getElementsByClassName("ui-icon ui-icon-circle-triangle-e")[0];
+		//next.empty();
+		next.innerHTML ='';
+		next.classList.remove ('ui-icon');
+		next.classList.remove ('ui-icon-circle-triangle-e');
+		next.classList.add ('fa');
+		next.classList.add ('fa-chevron-circle-right');
+		
+		var prev = document.getElementsByClassName("ui-icon ui-icon-circle-triangle-w")[0];
+		//prev.empty();
+		prev.innerHTML ='';
+		prev.classList.remove ('ui-icon');
+		prev.classList.remove ('ui-icon-circle-triangle-w');
+		prev.classList.add ('fa');
+		prev.classList.add ('fa-chevron-circle-left');
 
 	}	
+	
+
 	
 	//default fill function of generic submission workflow
 	function fillDefaultInformations(data, div){
