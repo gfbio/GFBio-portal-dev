@@ -50,6 +50,10 @@ select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'url', 'ISO 1
 
 
 
+------------------------------------------------------------------------------------------------
+-------------------------------------       metadata        -- 28.03.2018 ----------------------
+------------------------------------------------------------------------------------------------
 
 
-
+select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'label', 'ISO 19115', 	'ISO 19115-1');
+select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'version', 'MIxS',		'4.0');
