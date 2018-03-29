@@ -519,15 +519,14 @@
 			if (document.getElementById("gwf_ro_upload_direct").checked){
 				var uploaddiv = $("#".concat(uploadDivTarget));
 				uploaddiv.append(
-					"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.</p>"+
+						"<p   class='field-description'			 	id='gwf_ro_upload_d'>Choose your files for upload. You can select more than one file with an upload. If the file size exceeds 20 MB, please upload only representative data. Later, a data curator will assist you in uploading the entire data set.<br/><span style='font-weight:bold'>For one upload, please select all your files.</span></p>"+
 					"<div  class='fileUpload btn btn-primary'  style='width:25%'>"+
 					    "<span><i class='fa fa-file-text-o' 	aria-hidden='true'>&nbsp; &nbsp;  </i>Choose file</span>"+
 					    "<input id='gwf_b_upload' type='file' class='upload' onchange='showUpload()' multiple/>"+
 					"</div>"+
-					"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
+					"<div id='gwf_ro_upload' placeholder='Choose Files' /></div>"
 				);
 			}else{
-				//addInputfieldTo(uploaddiv, "gwf_ro_externalupload_name", 	"Name", 	""				,"Please name your data set or your data package (short, descriptive title). ", limitSmall, fieldCheckList[8],"");
 				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL", 	""				,"Provide the URL of your dataset. Please use only http, https, ftp and sftp.", 			 limitSmall, fieldCheckList[8],"");
 				document.getElementById("gwf_ro_externalupload_path").placeholder = "http://"; //placeholder="First name
 				console.log(document.getElementById("gwf_ro_externalupload_path"));
