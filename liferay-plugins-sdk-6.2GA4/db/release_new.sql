@@ -73,3 +73,27 @@ INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, last
 INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_metadata')), getColumnIdByNames('gfbio_metadata','url'), getrowIdByContentId(getContentIdByNames('gfbio_metadata', 'label', 'ISO 19115-1')), 'https://www.iso.org/standard/53798.html', now());
 
 select updatecellcontentbyrowidentifier('gfbio_metadata', 'label', 'name', 'other',		'Other metadata or documentation');
+
+
+------------------------------------------------------------------------------------------------
+---------------------------------       legal requirements        -- 24.04.2018 ----------------
+------------------------------------------------------------------------------------------------
+
+INSERT INTO gfbio_column (columnid, headid, column_name, lastmodifieddate)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_legalrequirement')),'url', now());
+
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','url'), getrowIdByContentId(getContentIdByNames('gfbio_legalrequirement', 'id', '974')), 'https://gfbio.biowikifarm.net/wiki/Legal_aspects_of_gathering_and_using_biological_material_for_genetic_research', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','url'), getrowIdByContentId(getContentIdByNames('gfbio_legalrequirement', 'id', '981')), 'http://www.iucnredlist.org/', now());
+INSERT INTO gfbio_content (contentid, headid, columnid, rowid, cellcontent, lastmodifieddate)VALUES(getNewContentId(),(select getHeadIdByName('gfbio_legalrequirement')), getColumnIdByNames('gfbio_legalrequirement','url'), getrowIdByContentId(getContentIdByNames('gfbio_legalrequirement', 'id', '988')), 'https://en.wikipedia.org/wiki/Personally_identifiable_information', now());
+
+
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'description', '974', 	'The Nagoya Protocol (NP) is an international agreement that aims at sharing the benefits resulting from the utilization of genetic resources in a fair and equitable way.');
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'description', '981',		'The Red List is widely recognized as the most comprehensive, objective global approach for evaluating the conservation status of plant and animal species and now plays an increasingly prominent role in guiding conservation activities of governments, NGOs and scientific institutions (http://www.iucnredlist.org).');
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'description', '988',		'Sensitive personal information can be used to identify a single person (e.g. name, passport information, credit card number).');
+
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'name', '974',		'Nagoya Protocol');
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'name', '981',		'IUCN Red List of Threatened Species');
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'name', '988',		'Sensitive Personal Information');
+
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'label', '988',		'Sensitive Personal Information');
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'label', '981',		'Red List');
+select updatecellcontentbyrowidentifier('gfbio_legalrequirement', 'id', 'label', '974',		'Nagoya Protocol');
