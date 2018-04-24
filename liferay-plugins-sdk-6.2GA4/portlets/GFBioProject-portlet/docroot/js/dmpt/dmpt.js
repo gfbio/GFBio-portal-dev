@@ -1,5 +1,11 @@
 /*global $*/
 
+function isEmpty(str) {
+	'use strict';
+	
+	return (!str || 0 === str.length);
+}
+
 function hideGeneralInformation() {
 	'use strict';
 	
@@ -167,6 +173,27 @@ function policies(event) {
 	        other.val("");
 	        link.val("");
 	    }
+	}
+}
+
+function showMetadataInformation(event) {
+	'use strict';
+	
+	var selection = $(event.target).val(),
+	metainformation = $("#metainformation-" + selection), 
+	metaurl = $("#metaurl-" + selection), 
+	metadesc = $("#metadesc-" + selection),
+	show = false;
+	if ($(event.target).is(':checked')) {
+		console.log("Text")
+		if (!isEmpty(metaurl.text()) || !isEmpty(metadesc.text())) {
+			show = true;
+		}
+		if (show) {
+			metainformation.show("slow");
+		}
+	} else {
+		metainformation.hide();
 	}
 }
 
@@ -346,12 +373,6 @@ function hide(j) {
 	$('[name="' + j + '"]').each(function () {
         this.checked = false;
     });
-}
-
-function isEmpty(str) {
-	'use strict';
-	
-	return (!str || 0 === str.length);
 }
 
 function getInputAsJson() {
@@ -760,6 +781,7 @@ function initializeInputs(dmptInput, id) {
 			$("input[name='metadata']").each(function () {
                 if ($(this).siblings('span').text() === metadata[i].name) {
                     $(this).prop("checked", true);
+                    //TODO: Show metadata information
                 }
             });
 			if (metadata[i].name === "Other metadata schema or version") {

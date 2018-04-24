@@ -132,8 +132,10 @@ $(document).ready(function () {
 		    $("#datasetSlider").on("input change", showNumberOfDataSets);
 		    
 		    //03 Documentation and Metadata
-		    $("#metadata-other").on("click", handleMetadataOther);
+		    $("input[name='metadata']").on("click", showMetadataInformation);
+		    $("#metadata-227").on("click", handleMetadataOther);
 		    $("#metadataDesc").hide();
+		    $("div[name='metainformation']").hide();
 		    
 		    //04 Ethics and Legal Compliance
 		    $("#legal-other").on("click", checkboxRequirement);
