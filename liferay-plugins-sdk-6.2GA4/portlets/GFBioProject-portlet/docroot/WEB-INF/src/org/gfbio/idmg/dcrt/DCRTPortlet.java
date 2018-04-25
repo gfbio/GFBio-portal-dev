@@ -204,7 +204,7 @@ public class DCRTPortlet extends MVCPortlet {
 		// Get Category
 		String categoryId = resourceRequest.getParameter("category");
 		// Get Category name from db
-		String category = ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", categoryId), "name");
+		String category = ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", categoryId), "label");
 
 		// Get Dialog Inputs
 		String name = resourceRequest.getParameter("contactName");
