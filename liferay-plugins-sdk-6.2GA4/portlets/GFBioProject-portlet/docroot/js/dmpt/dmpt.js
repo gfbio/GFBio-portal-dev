@@ -185,28 +185,33 @@ function showMetadataInformation(event) {
 	metadesc = $("#metadesc-" + selection),
 	show = false;
 	if ($(event.target).is(':checked')) {
-		console.log("Text")
 		if (!isEmpty(metaurl.text()) || !isEmpty(metadesc.text())) {
 			show = true;
+		} else if (isEmpty(metaurl.text()) && isEmpty(metadesc.text())) {
+			$("#metadataDesc").show("slow");
 		}
 		if (show) {
 			metainformation.show("slow");
 		}
 	} else {
 		metainformation.hide();
+		if (isEmpty(metaurl.text()) && isEmpty(metadesc.text())) {
+			$("#metadataDesc").hide();
+	        $("#metadataDesc").val("");
+		}
 	}
 }
 
-function handleMetadataOther(event) {
-	'use strict';
-    
-    if ($(event.target).is(':checked')) {
-        $("#metadataDesc").show("slow");
-    } else {
-        $("#metadataDesc").hide();
-        $("#metadataDesc").val("");
-    }
-}
+//function handleMetadataOther(event) {
+//	'use strict';
+//    
+//    if ($(event.target).is(':checked')) {
+//        $("#metadataDesc").show("slow");
+//    } else {
+//        $("#metadataDesc").hide();
+//        $("#metadataDesc").val("");
+//    }
+//}
 
 function handleLicenses(event) {
 	'use strict';

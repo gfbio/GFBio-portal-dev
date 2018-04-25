@@ -133,7 +133,6 @@ $(document).ready(function () {
 		    
 		    //03 Documentation and Metadata
 		    $("input[name='metadata']").on("click", showMetadataInformation);
-		    $("#metadata-227").on("click", handleMetadataOther);
 		    $("#metadataDesc").hide();
 		    $("div[name='metainformation']").hide();
 		    

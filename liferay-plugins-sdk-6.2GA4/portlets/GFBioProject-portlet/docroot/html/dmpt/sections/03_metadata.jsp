@@ -21,9 +21,8 @@ If you don't know which metadata standard to choose, please select 'other' and d
 							<span>
 								<c:out value="${meta.name}" />
 								<c:if test="${not empty meta.version}">
-    								<c:out value=", "/>
+    								<c:out value=", ${meta.version}"/>
 								</c:if>
-								<c:out value="${meta.version}" />
 							</span>
 						</label>
 						<div id="metainformation-${meta.id}" name="metainformation" class="meta-information">

@@ -42,11 +42,6 @@ public class DMPTPortlet extends MVCPortlet {
 		// Setting Lists for dropdowns
 		List<GCategory> researchfields = ContentUtil.getCategoryListByType("research field");
 		List<GMetadata> metadata = ContentUtil.getListByTableName(GMetadata.class, "gfbio_metadata");
-		for (GMetadata m : metadata) {
-			_log.info("Metadata:");
-			_log.info(m.toString());
-		}
-		
 		List<GLicense> licenses = ContentUtil.getListByTableName(GLicense.class, "gfbio_license");
 		List<GLegalRequirement> requirements = ContentUtil.getListByTableName(GLegalRequirement.class,
 				"gfbio_legalrequirement");
