@@ -20,6 +20,8 @@ input[type=email]
     border: 1px solid lightgrey;
 }
 
+/* Buttons */
+
 input[type=button] {
 	border: 1px solid lightgrey;
 	border-radius: 5px;
@@ -38,6 +40,8 @@ input[type=checkbox]
 input[name=services] {
 	margin-bottom: 20px;
 }
+
+/* Dropdowns */
 
 select {
 	border: 1px solid lightgrey;
@@ -220,6 +224,12 @@ h4 {
 *:-ms-input-placeholder {
     /* IE 10+ */
     opacity: 0.7;
+}
+
+/* Tooltip Pointer */
+
+a[name=title] {
+	cursor: pointer;
 }
 
 /* Metadata */

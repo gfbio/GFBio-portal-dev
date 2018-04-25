@@ -196,8 +196,17 @@ $(document).ready(function () {
 		        },
 		        hide: {
 		            effect: "fade"
+		        },
+		        disabled: true,
+		        close: function( event, ui ) { 
+		            $(this).tooltip('disable'); 
+		            /* instead of $(this) you could also use $(event.target) */
 		        }
 		    }); 
+		    
+		    $('a[name=title]').on('click', function () {
+		        $(this).tooltip('enable').tooltip('open');
+		   });
 
 		    $("span[title]").tooltip({
 		    	tooltipClass: "jqueryTooltip",

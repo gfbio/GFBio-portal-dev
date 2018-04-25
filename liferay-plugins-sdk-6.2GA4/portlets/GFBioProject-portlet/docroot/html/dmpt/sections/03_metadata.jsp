@@ -7,7 +7,7 @@
 	</div>
 	<div class="row">
 		<h4>Which metadata schema does your data support (if any)?
-			<a name="title" href="#" title="In order to be able to read and interpret as well as archive and find your data in future, metadata are needed. 
+			<a name="title" title="In order to be able to read and interpret as well as archive and find your data in future, metadata are needed. 
 If you don't know which metadata standard to choose, please select 'other' and describe your type of documentation which will accompany the data.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>

@@ -76,7 +76,7 @@
     </div>
 	<div class="row">
       	<h4>What type of data format will you create?
-      		<a name="title" href="#" title="You can combine several options.">
+      		<a name="title" title="You can combine several options.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
       	</h4>
@@ -138,7 +138,7 @@
     </div>
 	<div class="row">
 	  	<h4>Will your data format be openly documented?
-	  		<a name="title" href="#" title="According to DFG, we recommend the use of openly documented formats. 
+	  		<a name="title" title="According to DFG, we recommend the use of openly documented formats. 
 &#34;the use of open or openly documented formats is recommended; if data are only legible with special software, the software has to be documented or included in the database (if permitted under copyright)&#34; - DFG: Guidelines on the Handling of Reserach Data in Biodiversity Reserach.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
@@ -160,7 +160,7 @@
 	</div>
 	<div class="row">
 	    <h4>Please estimate the data volume you will create.
-	    	<a name="title" href="#" title="Please estimate roughly your expected data volume.
+	    	<a name="title" title="Please estimate roughly your expected data volume.
 Think about the data you plan to collect. Will there be any areal photos or video files? Multimedia files produce much more volume than e.g. spreadsheets do.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
@@ -174,7 +174,7 @@ Think about the data you plan to collect. Will there be any areal photos or vide
 	</div>
 	<div class="row">
 	    <h4>Please estimate the number of data sets (files) you will create.
-	    	<a name="title" href="#" title="Do you plan to create a lot of single data sets or will there likely be only few?
+	    	<a name="title" title="Do you plan to create a lot of single data sets or will there likely be only few?
 The amount of data sets you will create is closely linked to your style of working and managing data. For example, you could use a single spreadsheet for each planned vegetation mapping or you could as well put hunderts of vegetation mappings in a single spreadsheet. Just give a brief impression of how many data sets might result from your work.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
