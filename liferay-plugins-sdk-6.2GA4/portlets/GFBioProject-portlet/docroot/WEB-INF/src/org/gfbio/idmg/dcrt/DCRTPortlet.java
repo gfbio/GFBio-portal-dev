@@ -30,6 +30,7 @@ import org.gfbio.idmg.jiraclient.model.Reporter;
 import org.gfbio.idmg.util.ContentUtil;
 import org.gfbio.idmg.util.DataProviderUtil;
 import org.gfbio.model.DataProvider;
+import org.gfbio.service.ContentLocalServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -201,16 +202,14 @@ public class DCRTPortlet extends MVCPortlet {
 		String sequenced = resourceRequest.getParameter("sequenced");
 
 		// Get Category
-		String category = resourceRequest.getParameter("category");
+		String categoryId = resourceRequest.getParameter("category");
+		// Get Category name from db
+		String category = ContentLocalServiceUtil.getCellContentByRowIdAndColumnName(ContentLocalServiceUtil.getRowIdByCellContent("gfbio_category", "id", categoryId), "name");
 
 		// Get Dialog Inputs
 		String name = resourceRequest.getParameter("contactName");
 		String email = resourceRequest.getParameter("contactEmail");
 		String message = resourceRequest.getParameter("message");
-
-		_log.info("DataCenter: " + dataCenter + "Physical: " + physical + ", Taxon: " + taxon + ", Alive: " + alive
-				+ ", Sequenced: " + sequenced);
-		_log.info("Category: " + category + "Name: " + name + ", Email: " + email + ", Message: " + message);
 
 		message = "Name: " + name + "E-Mail: " + email + "Message: " + message;
 
