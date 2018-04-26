@@ -25,7 +25,7 @@ If you don't know which metadata standard to choose, please select 'other' and d
 								</c:if>
 							</span>
 						</label>
-						<div id="metainformation-${meta.id}" name="metainformation" class="meta-information">
+						<div id="metainformation-${meta.id}" name="metainformation" class="meta-information" style="display: none;">
 							<a id="metaurl-${meta.id}" href="${meta.url}" target="_blank" ><c:out value="${meta.url}"/></a>
 							<p id="metadesc-${meta.id}"><c:out value="${meta.description}"/></p>
 						</div>

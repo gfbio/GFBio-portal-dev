@@ -134,19 +134,14 @@ $(document).ready(function () {
 		    //03 Documentation and Metadata
 		    $("input[name='metadata']").on("click", showMetadataInformation);
 		    $("#metadataDesc").hide();
-		    $("div[name='metainformation']").hide();
 		    
 		    //04 Ethics and Legal Compliance
 		    $("#legal-other").on("click", checkboxRequirement);
 		    $("#requirementOther").hide();
 		
-		    $("#licenses").on("change", function (event) {
-		    	handleLicenses(event);
-		    	getLicenseData();
-		    });
+		    $("#licenses").on("change", handleLicenses);
 		    $("#licenseOther").hide();
-		    $("#licensceUrl").hide();
-		    $("#licensceDescription").hide();
+		    $("span[name='show-license-meta']").on("click", showlicensemetadata)
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
@@ -341,40 +336,6 @@ function loadDmp() {
    			showGeneralInformation();
       	}
 	});
-}
-
-function getLicenseData() {
-	
-	var license = $("#licenses").val();
-	console.log("License: " + license);
-	
-    $.ajax({
-	   		"method": "POST",
-	   		"url": '<%=ajaxUrlLicense%>',
-	   		"data": {
-	   			license: license
-	   		},
-	   		success: function (text) {
-	          	console.log(text);
-	          	
-          		var results = text.split(',');
-          		console.log(results[0]);
-          		if (results[0] !== "url") {
-          			console.log(results[0]);
-          			$("#licensceUrl").href = results[0];
-          			$("#licensceUrl").innerHTML = results[0];
-          			$("#licensceUrl").show("slow");
-          		} else {
-          			$("#licensceUrl").hide();
-          		}
-          		if (results[1] !== "desc") {
-          			$("#licenseDescription").innerHTML = results[1];
-          			$("#licenseDescription").show("slow");
-          		} else {
-          			$("#licenseDescription").hide();
-          		}
-	        }
-    });
 }
 
 </script>

@@ -202,29 +202,46 @@ function showMetadataInformation(event) {
 	}
 }
 
-//function handleMetadataOther(event) {
-//	'use strict';
-//    
-//    if ($(event.target).is(':checked')) {
-//        $("#metadataDesc").show("slow");
-//    } else {
-//        $("#metadataDesc").hide();
-//        $("#metadataDesc").val("");
-//    }
-//}
-
 function handleLicenses(event) {
 	'use strict';
 	
-    var selection = $(event.target).val(),
+    var licenseId = $(event.target).val(),
+	    licensemd = $("#licensemd-" + licenseId), 
+		licenseurl = $("#licenseurl-" + licenseId), 
+		licensedesc = $("#licensedesc-" + licenseId),
+    	license = $("#licenses option:selected").text(),
         other = $("#licenseOther");
-    if (selection === "Other License") {
+    
+    $("div[name=license-metadata]").hide();
+   	if (~license.indexOf("Other")) {
 		other.show("slow");
 	} else {
 	    other.hide();
 	    other.val("");
+	    
+	    if (!isEmpty(licenseurl.text()) || !isEmpty(licensedesc.text())) {
+	    	licensemd.show("slow");
+		}
 	}
 	
+}
+
+function showlicensemetadata(event) {
+	'use strict';
+	
+	var licenseId = $(event.target).attr('id'),
+	licenseurl = $("#licenseurl-" + licenseId), 
+	licensedesc = $("#licensedesc-" + licenseId);
+		
+	$(event.target).toggleClass('rotate');
+    $(event.target).toggleClass('rotate2');
+    
+    if (!isEmpty(licenseurl.text())) {
+    	licenseurl.toggle();
+    }
+    if (!isEmpty(licensedesc.text())) {
+    	licensedesc.toggle();
+    }
 }
 
 function handleRestriction(event) {

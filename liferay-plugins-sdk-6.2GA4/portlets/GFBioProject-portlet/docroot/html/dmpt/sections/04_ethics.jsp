@@ -57,7 +57,7 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 		       	<select id="licenses" name="licenses" >
 		       	<option selected="selected" label="Select" value="default">Select</option>
 		           <c:forEach var="license" items="${licenses}">
-						<option value="${license.name}">
+						<option value="${license.id}">
 							<c:out value="${license.name}" />
 						</option>
 					</c:forEach>
@@ -70,10 +70,17 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 		       </div> 
 		    </div>  
 	       	
-	       <!-- extended data -->
-	       <div class="col-md-12">
-	       		<a id="licensceUrl" href=""></a>
-	       		<span id="licenseDescription"></span>
+	       <!-- meta data -->
+	       <div class="col-md-12" >
+		       <c:forEach var="lic" items="${licenses}">
+			       	<div id="licensemd-${lic.id}" name="license-metadata" class="meta-information" style="display: none;">
+			       		<div class="showmore" >
+			       			<span id="${lic.id}" name="show-license-meta" class="icon-landing flex icon-circle-right rotate"></span>
+			       		</div>
+						<a id="licenseurl-${lic.id}" style="display: none;" href="${lic.url}" target="_blank" ><c:out value="${lic.url}" /></a>
+						<p id="licensedesc-${lic.id}" style="display: none;"><c:out value="${lic.description}" /></p>
+					</div>			
+		       </c:forEach>
 	       </div>
 	   	</div>
     </div>

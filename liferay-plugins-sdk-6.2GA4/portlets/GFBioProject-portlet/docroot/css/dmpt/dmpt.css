@@ -232,6 +232,28 @@ a[name=title] {
 	cursor: pointer;
 }
 
+/* Show meta information */
+
+.showmore {
+	margin: 0 auto;
+  	display: flex;
+  	justify-content: left;
+	align-items: left;
+}
+
+.showmore span {
+	display: block;
+}
+
+.rotate {
+    transform: rotate(0deg);
+    transition: .3s;
+}
+.rotate2 {
+    transform: rotate(90deg);
+    transition: .3s;
+}
+
 /* Metadata */
 
 .meta-information {
