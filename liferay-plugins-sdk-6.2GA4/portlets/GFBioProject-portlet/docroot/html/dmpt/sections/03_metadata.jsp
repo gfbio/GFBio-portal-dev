@@ -25,9 +25,12 @@ If you don't know which metadata standard to choose, please select 'other' and d
 								</c:if>
 							</span>
 						</label>
-						<div id="metainformation-${meta.id}" name="metainformation" class="meta-information" style="display: none;">
-							<a id="metaurl-${meta.id}" href="${meta.url}" target="_blank" ><c:out value="${meta.url}"/></a>
-							<p id="metadesc-${meta.id}"><c:out value="${meta.description}"/></p>
+						<div id="metainformation-${meta.id}" class="meta-information" style="display: none;">
+							<div class="showmore" >
+				       			<span id="${meta.id}" name="show-meta-info" class="icon-landing flex icon-circle-right rotate"></span>
+				       		</div>
+							<a id="metaurl-${meta.id}" style="display: none;" href="${meta.url}" target="_blank" ><c:out value="${meta.url}"/></a>
+							<p id="metadesc-${meta.id}" style="display: none;"><c:out value="${meta.description}"/></p>
 						</div>
 					</div>
 				</c:forEach>

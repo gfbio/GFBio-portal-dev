@@ -134,6 +134,7 @@ $(document).ready(function () {
 		    //03 Documentation and Metadata
 		    $("input[name='metadata']").on("click", showMetadataInformation);
 		    $("#metadataDesc").hide();
+		    $("span[name='show-meta-info']").on("click", toggleMetaInfos)
 		    
 		    //04 Ethics and Legal Compliance
 		    $("#legal-other").on("click", checkboxRequirement);
@@ -141,7 +142,7 @@ $(document).ready(function () {
 		
 		    $("#licenses").on("change", handleLicenses);
 		    $("#licenseOther").hide();
-		    $("span[name='show-license-meta']").on("click", showlicensemetadata)
+		    $("span[name='show-license-info']").on("click", toggleLicenseInfos)
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();

@@ -202,6 +202,24 @@ function showMetadataInformation(event) {
 	}
 }
 
+function toggleMetaInfos(event) {
+	'use strict';
+	
+	var selection = $(event.target).attr('id'),
+	metaurl = $("#metaurl-" + selection), 
+	metadesc = $("#metadesc-" + selection);
+		
+	$(event.target).toggleClass('rotate');
+    $(event.target).toggleClass('rotate2');
+    
+    if (!isEmpty(metaurl.text())) {
+    	metaurl.toggle();
+    }
+    if (!isEmpty(metadesc.text())) {
+    	metadesc.toggle();
+    }
+}
+
 function handleLicenses(event) {
 	'use strict';
 	
@@ -212,7 +230,7 @@ function handleLicenses(event) {
     	license = $("#licenses option:selected").text(),
         other = $("#licenseOther");
     
-    $("div[name=license-metadata]").hide();
+    $("div[name=license-infos]").hide();
    	if (~license.indexOf("Other")) {
 		other.show("slow");
 	} else {
@@ -226,7 +244,7 @@ function handleLicenses(event) {
 	
 }
 
-function showlicensemetadata(event) {
+function toggleLicenseInfos(event) {
 	'use strict';
 	
 	var licenseId = $(event.target).attr('id'),
