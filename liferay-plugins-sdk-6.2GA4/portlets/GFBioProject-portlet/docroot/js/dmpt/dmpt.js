@@ -244,23 +244,23 @@ function handleLicenses(event) {
 	
 }
 
-function toggleLicenseInfos(event) {
-	'use strict';
-	
-	var licenseId = $(event.target).attr('id'),
-	licenseurl = $("#licenseurl-" + licenseId), 
-	licensedesc = $("#licensedesc-" + licenseId);
-		
-	$(event.target).toggleClass('rotate');
-    $(event.target).toggleClass('rotate2');
-    
-    if (!isEmpty(licenseurl.text())) {
-    	licenseurl.toggle();
-    }
-    if (!isEmpty(licensedesc.text())) {
-    	licensedesc.toggle();
-    }
-}
+//function toggleLicenseInfos(event) {
+//	'use strict';
+//	
+//	var licenseId = $(event.target).attr('id'),
+//	licenseurl = $("#licenseurl-" + licenseId), 
+//	licensedesc = $("#licensedesc-" + licenseId);
+//		
+//	$(event.target).toggleClass('rotate');
+//    $(event.target).toggleClass('rotate2');
+//    
+//    if (!isEmpty(licenseurl.text())) {
+//    	licenseurl.toggle();
+//    }
+//    if (!isEmpty(licensedesc.text())) {
+//    	licensedesc.toggle();
+//    }
+//}
 
 function handleRestriction(event) {
 	'use strict';

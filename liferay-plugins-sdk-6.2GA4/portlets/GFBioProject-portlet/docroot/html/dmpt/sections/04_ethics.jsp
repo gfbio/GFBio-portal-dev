@@ -74,10 +74,7 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 	       <div class="col-md-12" >
 		       <c:forEach var="lic" items="${licenses}">
 			       	<div id="licensemd-${lic.id}" name="license-infos" class="meta-information" style="display: none;">
-			       		<div class="showmore" >
-			       			<span id="${lic.id}" name="show-license-info" class="icon-landing flex icon-circle-right rotate"></span>
-			       		</div>
-						<a id="licenseurl-${lic.id}" style="display: none;" href="${lic.url}" target="_blank" ><c:out value="${lic.url}" /></a>
+						<a id="licenseurl-${lic.id}" href="${lic.url}" target="_blank" ><c:out value="${lic.url}" /></a>
 						<p id="licensedesc-${lic.id}" style="display: none;"><c:out value="${lic.description}" /></p>
 					</div>			
 		       </c:forEach>

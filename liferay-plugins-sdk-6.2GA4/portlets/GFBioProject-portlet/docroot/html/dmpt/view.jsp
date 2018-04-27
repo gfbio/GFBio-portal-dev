@@ -142,7 +142,7 @@ $(document).ready(function () {
 		
 		    $("#licenses").on("change", handleLicenses);
 		    $("#licenseOther").hide();
-		    $("span[name='show-license-info']").on("click", toggleLicenseInfos)
+		    //$("span[name='show-license-info']").on("click", toggleLicenseInfos)
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
