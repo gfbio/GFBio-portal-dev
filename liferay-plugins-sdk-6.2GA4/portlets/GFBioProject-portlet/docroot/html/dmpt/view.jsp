@@ -335,7 +335,10 @@ function loadDmp() {
 			console.log("Name: " + selectedDmp.projectName);
    			initializeInputs(selectedDmp, dmpId);
    			showGeneralInformation();
-      	}
+      	},
+      	error: function (response) {
+			console.log("Error: " + response);
+		}
 	});
 }
 

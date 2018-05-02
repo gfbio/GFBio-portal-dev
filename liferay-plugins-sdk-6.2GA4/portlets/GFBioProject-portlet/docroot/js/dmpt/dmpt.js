@@ -182,16 +182,12 @@ function showMetadataInformation(event) {
 	var selection = $(event.target).val(),
 	metainformation = $("#metainformation-" + selection), 
 	metaurl = $("#metaurl-" + selection), 
-	metadesc = $("#metadesc-" + selection),
-	show = false;
+	metadesc = $("#metadesc-" + selection);
 	if ($(event.target).is(':checked')) {
 		if (!isEmpty(metaurl.text()) || !isEmpty(metadesc.text())) {
-			show = true;
+			metainformation.show("slow");
 		} else if (isEmpty(metaurl.text()) && isEmpty(metadesc.text())) {
 			$("#metadataDesc").show("slow");
-		}
-		if (show) {
-			metainformation.show("slow");
 		}
 	} else {
 		metainformation.hide();
@@ -231,7 +227,7 @@ function handleLicenses(event) {
         other = $("#licenseOther");
     
     $("div[name=license-infos]").hide();
-   	if (~license.indexOf("Other")) {
+   	if (license.includes("Other")) {
 		other.show("slow");
 	} else {
 	    other.hide();
@@ -415,6 +411,7 @@ function hide(j) {
     });
 }
 
+// Method for saving all inputs as json in db
 function getInputAsJson() {
 	'use strict';
 	
@@ -501,7 +498,9 @@ function getInputAsJson() {
 	
 	// 03 Metadata
 	$("input[name='metadata']:checked").each(function () {
-		metadata.push($(this).siblings('span').text());
+		// Save only the name of the selected metadata
+		var substring = $(this).siblings('span').text().split(", ")
+		metadata.push(substring[0]);
     });
 	if ($.inArray("Other metadata schema or version", metadata) > -1) {
 		metadataDesc = $("#metadataDesc").val();
@@ -650,6 +649,8 @@ function addInvestigator(investigator) {
     newinput.appendTo("#principal");
 }
 
+
+// Method for loading Json data and initialize the wizard
 function initializeInputs(dmptInput, id) {
 	'use strict';
 	
@@ -819,15 +820,16 @@ function initializeInputs(dmptInput, id) {
 		var metadata = dmptInput.metadata;
 		for (i = 0; i < metadata.length; i++) {
 			$("input[name='metadata']").each(function () {
-                if ($(this).siblings('span').text() === metadata[i].name) {
+				var substring = $(this).siblings('span').text().split(", ");
+                if (substring[0] === metadata[i].name) {
                     $(this).prop("checked", true);
-                    //TODO: Show metadata information
+                    // Show metadata additional information div
+                    $("input[name='" + metadata[i].name + "']").parent().show();
                 }
             });
-			if (metadata[i].name === "Other metadata schema or version") {
+			if (metadata[i].name.includes("Other")) {
 				if (!isEmpty(dmptInput.metadataDescription)) {
 					$("#metadataDesc").val(dmptInput.metadataDescription);
-					$("#metadataDesc").show();
 				}
 			}
 		}

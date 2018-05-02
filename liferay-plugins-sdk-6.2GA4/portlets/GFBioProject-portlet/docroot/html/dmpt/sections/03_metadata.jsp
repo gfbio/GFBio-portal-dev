@@ -18,14 +18,11 @@ If you don't know which metadata standard to choose, please select 'other' and d
 					<div>
 						<label class="mod-cb">
 							<input id="metadata-${meta.id}" name="metadata" type="checkbox" value="${meta.id}" />
-							<span>
-								<c:out value="${meta.name}" />
-								<c:if test="${not empty meta.version}">
-    								<c:out value=", ${meta.version}"/>
-								</c:if>
+							<span><c:out value="${meta.name}" /><c:if test="${not empty meta.version}"><c:out value=", ${meta.version}"/></c:if>
 							</span>
 						</label>
 						<div id="metainformation-${meta.id}" class="meta-information" style="display: none;">
+							<input type="hidden" name="${meta.name}"/>
 							<div class="showmore" >
 				       			<span id="${meta.id}" name="show-meta-info" class="icon-landing flex icon-circle-right rotate"></span>
 				       		</div>
