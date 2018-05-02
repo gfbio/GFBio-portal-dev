@@ -257,7 +257,7 @@ a[name=title] {
 /* Metadata */
 
 .meta-information {
-	margin: 0 3px 10px 3px;
+	margin: 0 0 10px 0;
 	padding: 4px 5px 5px 3px;
 	border: 1px solid lightgrey;
     border-radius: 5px;

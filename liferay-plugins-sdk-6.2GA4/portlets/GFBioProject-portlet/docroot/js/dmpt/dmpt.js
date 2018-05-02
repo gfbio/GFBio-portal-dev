@@ -226,7 +226,7 @@ function handleLicenses(event) {
     	license = $("#licenses option:selected").text(),
         other = $("#licenseOther");
     
-    $("div[name=license-infos]").hide();
+    $("div[id*='licensemd']").hide();
    	if (license.includes("Other")) {
 		other.show("slow");
 	} else {
@@ -444,7 +444,7 @@ function getInputAsJson() {
         metadataDesc = "",
         // 04 Ethics
         requirements = [],
-        license = $("#licenses").val(),
+        license = $("#licenses option:selected").text(),
         accessRestriction = $("input[name='restriction']:checked").val(),
         accessDuration = "",
         accessReason = "",
@@ -857,13 +857,16 @@ function initializeInputs(dmptInput, id) {
 	if (dmptInput.license) {
 		var found = false;
 		$("#licenses option").each(function () {
-			if ($(this).val() === dmptInput.license.name) {
-				$("#licenses").val(dmptInput.license.name);
+			if ($(this).text() === dmptInput.license.name) {
+				$("#licenses").val($('#licenses option').filter(function () { return $(this).html() == dmptInput.license.name; }).val());
+				console.info("Id: " + $("#licenses").find("option[text='" + dmptInput.license.name + "']").val());
 				found = true;
+				// Show additional information - url
+				$("input[name='" + dmptInput.license.name + "']").parent().show();
 			}
 	    });
 		if (!found) {
-			$("#licenses").val("Other License");
+			$("#licenses").val($('#licenses option').filter(function () { return $(this).html() == "Other License"; }).val());
 			$("#licenseOther").val(dmptInput.license.name);
 			$("#licenseOther").show();
 		}
