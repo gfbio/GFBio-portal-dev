@@ -11,7 +11,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.dto.GLegalRequirement;
 import org.gfbio.idmg.dto.GLicense;
@@ -21,7 +20,6 @@ import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
 import org.gfbio.service.DataManagementPlanLocalServiceUtil;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -126,23 +124,23 @@ public class DMPTPortlet extends MVCPortlet {
 		String jsonInput = resourceRequest.getParameter("json");
 		_log.info("JSONString: " + jsonInput);
 
-		DMPTInput input = null;
+		//DMPTInput input = null;
 		String response = "";
 
 		try {
 			
-			Gson gson = new Gson();
-			input = gson.fromJson(jsonInput, DMPTInput.class);
+			//Gson gson = new Gson();
+			//input = gson.fromJson(jsonInput, DMPTInput.class);
+			//_log.info("Input: " + input);
 				
 			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			 			
 			// Set DMPTInput to PortletSession
 			PortletSession session = resourceRequest.getPortletSession();
-		    session.setAttribute("dmptInput", input, PortletSession.APPLICATION_SCOPE);
-		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.APPLICATION_SCOPE);
-					    
-			response = "Parsing successful!";
-
+		    session.setAttribute("dmptInput", jsonInput, PortletSession.PORTLET_SCOPE);
+		    // ThemePath needed in DownloadUtil
+		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.PORTLET_SCOPE);
+		    
 			response = "Parsing successful!";
 		} catch (JsonSyntaxException e) {
 			_log.error("Error while parsing jsonString to POJO", e);
@@ -210,7 +208,7 @@ public class DMPTPortlet extends MVCPortlet {
 		//Not neccessary to convert?
 		//Gson gson = new Gson();
 		//DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
-		//_log.info("Input: " + input.toString);
+		_log.info("Input: " + jsonInput);
 		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
@@ -275,6 +273,7 @@ public class DMPTPortlet extends MVCPortlet {
 		_log.info("DmptInput: " + dmptInput);
 		if (dmptInput.equals("")) {
 			_log.info("DMP not found for dmpId " + dmpId);
+			throw new IOException("Empty data, DMP could not been restored.");
 		}
 		
 		resourceResponse.setContentType("text/html");

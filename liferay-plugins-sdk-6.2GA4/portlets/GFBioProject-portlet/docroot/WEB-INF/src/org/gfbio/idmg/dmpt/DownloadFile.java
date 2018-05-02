@@ -3,8 +3,6 @@ package org.gfbio.idmg.dmpt;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,11 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.gfbio.idmg.dto.DMPTInput;
-import org.gfbio.idmg.dto.GFunding;
 import org.gfbio.idmg.util.PDFUtil;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -43,8 +39,12 @@ public class DownloadFile extends HttpServlet {
 		ByteArrayOutputStream byteStream = null;
 		PDDocument pdf = null;
 		
-		DMPTInput input = (DMPTInput) request.getSession(true).getAttribute("dmptInput");
+		String json = (String) request.getSession(true).getAttribute("dmptInput");
 		String themePath = (String) request.getSession(true).getAttribute("themePath");
+		
+		DMPTInput input;
+		Gson gson = new Gson();
+		input = gson.fromJson(json, DMPTInput.class);
 		
 		if (input != null) {
 			_log.info(input.toString());
