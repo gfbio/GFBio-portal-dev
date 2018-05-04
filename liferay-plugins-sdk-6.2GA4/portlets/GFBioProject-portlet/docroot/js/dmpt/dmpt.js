@@ -294,11 +294,15 @@ function getDataVolumeBySliderValue(number) {
     } else if (number === "10") {
         return "&lt; 1GB";
     } else if (number === "20") {
-        return "&lt; 10GB";
+    	return "&lt; 10GB";
     } else if (number === "30") {
-        return "&lt; 100GB";
+        return "&lt; 1TB";
     } else if (number === "40") {
-        return "&gt; 100GB";
+        return "&lt; 5TB";
+    } else if (number === "50") {
+    	return "&lt; 10TB";
+    } else if (number === "60") {
+        return "&gt; 10TB";
     }
 }
 
@@ -320,10 +324,14 @@ function getSliderValueByDataVolume(value) {
         return "10";
     } else if (value === "&lt; 10GB") {
         return "20";
-    } else if (value === "&lt; 100GB") {
+    } else if (value === "&lt; 1TB") {
         return "30";
-    } else if (value === "&gt; 100GB") {
-        return "40";
+    } else if (value === "&lt; 5TB") {
+    	return "40";
+    } else if (value === "&lt; 10TB") {
+    	return "50";
+    } else if (value === "&gt; 10TB") {
+        return "60";
     }
 }
 

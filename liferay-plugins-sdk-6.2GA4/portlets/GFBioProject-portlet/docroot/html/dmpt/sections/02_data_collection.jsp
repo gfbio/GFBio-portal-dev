@@ -167,7 +167,7 @@ Think about the data you plan to collect. Will there be any areal photos or vide
 		</h4>
 		<div>
 		    <div id="dataVolume" class="col-sm-8 col-lg-6" style="text-align: center">
-		        <input id="volumeSlider" type="range" min="0" max="40" value="0" step="10"/>
+		        <input id="volumeSlider" type="range" min="0" max="60" value="0" step="10"/>
 		        <span id="volume" >Cannot estimate</span>
 		    </div>
 	    </div>
