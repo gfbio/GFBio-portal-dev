@@ -47,6 +47,7 @@ public class DMPTInput implements Serializable {
 	private String accessReason;
 	
 	// Preservation and Sharing
+	private String backup;
 	private List<String> dataArchives; //Vielleicht aus DB?
 	private String pid;
 	private boolean estimatingHelp;
@@ -62,7 +63,7 @@ public class DMPTInput implements Serializable {
 			String policyLink, String policyOther, Boolean physical, Boolean alive, Boolean taxon,
 			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String dataSets,
 			String methodologies, List<GMetadata> metadata, String metadataDescription, GLegalRequirement requirement,
-			GLicense license, boolean accessRestriction, String accessDuration, String accessReason,
+			GLicense license, boolean accessRestriction, String accessDuration, String accessReason, String backup,
 			List<String> dataArchives, String pid, boolean estimatingHelp, List<String> gfbioServices) {
 		super();
 		this.projectName = projectName;
@@ -95,6 +96,7 @@ public class DMPTInput implements Serializable {
 		this.accessRestriction = accessRestriction;
 		this.accessDuration = accessDuration;
 		this.accessReason = accessReason;
+		this.backup = backup;
 		this.dataArchives = dataArchives;
 		this.pid = pid;
 		this.estimatingHelp = estimatingHelp;
@@ -373,6 +375,14 @@ public class DMPTInput implements Serializable {
 		this.policyOther = policyOther;
 	}
 
+	public String getBackup() {
+		return backup;
+	}
+
+	public void setBackup(String backup) {
+		this.backup = backup;
+	}
+
 	@Override
 	public String toString() {
 		return "DMPTInput [projectName=" + projectName + ", category=" + category + ", reproducible=" + reproducible
@@ -385,8 +395,8 @@ public class DMPTInput implements Serializable {
 				+ ", methodologies=" + methodologies + ", metadata=" + metadata + ", metadataDescription="
 				+ metadataDescription + ", requirement=" + requirement + ", license=" + license + ", accessRestriction="
 				+ accessRestriction + ", accessDuration=" + accessDuration + ", accessReason=" + accessReason
-				+ ", dataArchives=" + dataArchives + ", pid=" + pid + ", estimatingHelp=" + estimatingHelp
-				+ ", gfbioServices=" + gfbioServices + "]";
+				+ ", backup=" + backup + ", dataArchives=" + dataArchives + ", pid=" + pid + ", estimatingHelp="
+				+ estimatingHelp + ", gfbioServices=" + gfbioServices + "]";
 	}
 
 }

@@ -449,6 +449,7 @@ function getInputAsJson() {
         accessDuration = "",
         accessReason = "",
         // 05 Preservation
+        backup = $("#backup").val(),
         dataArchives = [],
         pid = $("input[name='pid']:checked").val(),
         // 06 GFBio Services
@@ -578,6 +579,7 @@ function getInputAsJson() {
 			"accessDuration" : accessDuration,
 			"accessReason" : accessReason,
 			// 05 Preservation
+			"backup" : backup,
 			"dataArchives" : [],
 			"pid" : pid,
 			// 06 GFbio Services
@@ -888,6 +890,10 @@ function initializeInputs(dmptInput, id) {
 	}
 	
 	// 05 Preservation
+	if (!isEmpty(dmptInput.backup)) {
+		$("#backup").val(dmptInput.backup);
+	}
+	
 	if (dmptInput.dataArchives) {
 		var dataArchives = dmptInput.dataArchives;
 		for (i = 0; i < dataArchives.length; i++) {

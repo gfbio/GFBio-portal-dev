@@ -5,6 +5,16 @@
 		<h2>5. Preservation and Sharing</h2>
 	</div>
 	<div class="row">
+		<h4>How is your data backed up during project runtime? Who is responsible for data backup?
+			<a name="title" title="With which technologies and in which locations are your data stored? Are there regular backups and at what intervals? Who is responsible for data backup and which service providers (e.g. local IT support) are involved?">
+				<span class="icon-landing-flex icon-information4 info-blue" ></span>
+			</a>
+		</h4>
+		<div class ="col-md-12">
+			<textarea id="backup" rows="5" cols="100" placeholder="Please explain as detailed as possible."></textarea>
+		</div>
+	</div>
+	<div class="row">
         <h4>Where will your data be archived?</h4>
         <div id="dataArchives">
         	<div class="col-xs-12 col-sm-6">
