@@ -63,23 +63,32 @@
 		</div>
 	  	<div class="row">
 	      	<h4>Is your research data reproducible?
-	      		<a name="title" title="A onetime observation might be a measurement or a count at a certain point in time or at a certain location, whereas a repetable experiment might be a DNA sequencing which exactly reproduces data.">
+	      		<a name="title" title="Imagine your research data gets lost. Would you (or someone else) be able to reproduce your data? What effort or resources would be necessary?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>
 	      	</h4>
 	      	<div id="nature">
-	      		<div class="col-xs-12 col-sm-6">
+	      		<div class="col-xs-12 col-sm-4">
 	            	<label class="mod-cb">
 	            		<input name="nature" type="radio" value="Onetime observation" />
 	            		<span>Onetime observation</span>
 	            	</label>
 	     		</div>
-	      		<div class="col-xs-12 col-sm-6">
+	      		<div class="col-xs-12 col-sm-4">
 			        <label class="mod-cb">
 				        <input name="nature" type="radio" value="Reapeatable experiments" />
 				        <span>Repeatable experiments</span>
 			        </label>
 	          	</div>
+	          	<div class="col-xs-12 col-sm-4">
+			        <label class="mod-cb">
+				        <input name="nature" type="radio" value="Time Series" />
+				        <span>Time Series</span>
+			        </label>
+	          	</div>
+	          	<div class="col-sm-12" style="margin-top: 10px;">
+	      			<textarea id="reproducibleText" rows="3" cols="100" placeholder="Add additional information (e.g. data reproduction might cause high costs or a lot of effort)."></textarea> 
+	    		</div>
 	     	</div>
 		</div>
 	    <div class="row">

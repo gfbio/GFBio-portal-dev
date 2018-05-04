@@ -11,6 +11,7 @@ public class DMPTInput implements Serializable {
 	private String projectName;
 	private String category;
 	private String reproducible;
+	private String reproducibleText;
 	private List<String> projectTypes;
 	private String projectAbstract;
 	private List<String> investigators;
@@ -57,7 +58,7 @@ public class DMPTInput implements Serializable {
 	
 	public DMPTInput() {}
 
-	public DMPTInput(String projectName, String category, String reproducible, List<String> projectTypes,
+	public DMPTInput(String projectName, String category, String reproducible, String reproducibleText, List<String> projectTypes,
 			String projectAbstract, List<String> investigators, String responsibleName, String phoneNumber,
 			String email, GFunding funding, String fundingLink, List<GPolicy> policies,
 			String policyLink, String policyOther, Boolean physical, Boolean alive, Boolean taxon,
@@ -69,6 +70,7 @@ public class DMPTInput implements Serializable {
 		this.projectName = projectName;
 		this.category = category;
 		this.reproducible = reproducible;
+		this.reproducibleText = reproducibleText;
 		this.projectTypes = projectTypes;
 		this.projectAbstract = projectAbstract;
 		this.investigators = investigators;
@@ -383,20 +385,28 @@ public class DMPTInput implements Serializable {
 		this.backup = backup;
 	}
 
+	public String getReproducibleText() {
+		return reproducibleText;
+	}
+
+	public void setReproducibleText(String reproducibleText) {
+		this.reproducibleText = reproducibleText;
+	}
+
 	@Override
 	public String toString() {
 		return "DMPTInput [projectName=" + projectName + ", category=" + category + ", reproducible=" + reproducible
-				+ ", projectTypes=" + projectTypes + ", projectAbstract=" + projectAbstract + ", investigators="
-				+ investigators + ", responsibleName=" + responsibleName + ", phoneNumber=" + phoneNumber + ", email="
-				+ email + ", funding=" + funding + ", fundingLink=" + fundingLink + ", policies=" + policies
-				+ ", policyLink=" + policyLink + ", policyOther=" + policyOther + ", physical=" + physical + ", alive="
-				+ alive + ", taxon=" + taxon + ", sequenced=" + sequenced + ", dataformats=" + dataformats
-				+ ", openlyDocumented=" + openlyDocumented + ", dataVolume=" + dataVolume + ", dataSets=" + dataSets
-				+ ", methodologies=" + methodologies + ", metadata=" + metadata + ", metadataDescription="
-				+ metadataDescription + ", requirement=" + requirement + ", license=" + license + ", accessRestriction="
-				+ accessRestriction + ", accessDuration=" + accessDuration + ", accessReason=" + accessReason
-				+ ", backup=" + backup + ", dataArchives=" + dataArchives + ", pid=" + pid + ", estimatingHelp="
-				+ estimatingHelp + ", gfbioServices=" + gfbioServices + "]";
+				+ ", reproducibleText=" + reproducibleText + ", projectTypes=" + projectTypes + ", projectAbstract="
+				+ projectAbstract + ", investigators=" + investigators + ", responsibleName=" + responsibleName
+				+ ", phoneNumber=" + phoneNumber + ", email=" + email + ", funding=" + funding + ", fundingLink="
+				+ fundingLink + ", policies=" + policies + ", policyLink=" + policyLink + ", policyOther=" + policyOther
+				+ ", physical=" + physical + ", alive=" + alive + ", taxon=" + taxon + ", sequenced=" + sequenced
+				+ ", dataformats=" + dataformats + ", openlyDocumented=" + openlyDocumented + ", dataVolume="
+				+ dataVolume + ", dataSets=" + dataSets + ", methodologies=" + methodologies + ", metadata=" + metadata
+				+ ", metadataDescription=" + metadataDescription + ", requirement=" + requirement + ", license="
+				+ license + ", accessRestriction=" + accessRestriction + ", accessDuration=" + accessDuration
+				+ ", accessReason=" + accessReason + ", backup=" + backup + ", dataArchives=" + dataArchives + ", pid="
+				+ pid + ", estimatingHelp=" + estimatingHelp + ", gfbioServices=" + gfbioServices + "]";
 	}
 
 }

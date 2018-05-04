@@ -427,6 +427,7 @@ function getInputAsJson() {
 	var projectName = $("#name").val(),
         category = $("#category").find(":selected").text(),
         reproducible = $("input[name='nature']:checked").val(),
+        reproducibleText = $("#reproducibleText").val(),
         projectTypes = [],
         projectAbstract = $("#abstract").val(),
         investigators = [],
@@ -553,6 +554,7 @@ function getInputAsJson() {
 			"projectName" : projectName,
 			"category" : category,
 			"reproducible" : reproducible,
+			"reproducibleText" : reproducibleText,
 			"projectTypes": [],
 			"projectAbstract" : projectAbstract,
 			"investigators" : [],
@@ -675,6 +677,11 @@ function initializeInputs(dmptInput, id) {
 		$("input[name='nature'][value='" + dmptInput.reproducible + "']").prop("checked", true);
 	}
 	
+	if (!isEmpty(dmptInput.reproducibleText)) {
+		$("#reproducibleText").val(dmptInput.reproducibleText);
+	}
+	
+	//Variable for for-loops
     var i;
     
 	if (dmptInput.projectTypes) {
