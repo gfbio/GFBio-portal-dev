@@ -42,7 +42,7 @@
 					Only logged in users can save their inputs at the end of the wizard. Please <a href="${portalurl}/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to enable the feature.
 				</div>
 			</div>
-			<h4>What's the official name of your research project?</h4>
+			<h4>What's the official name of your research project? *</h4>
 	        <div class="col-md-12">
 	        	<input id="dmpId" type="hidden" value="0"/>
 				<input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
@@ -180,7 +180,7 @@
 	    	</div>
 		</div>
 		<div class="row">
-	    	<h4>Who is the point of contact for the project data?
+	    	<h4>Who is the point of contact for the project data? *
 	    		<a name="title" title="Who should be contacted in case of any question concerning data management? This might be technical issues as well as questions concerning data policies, legal requirements or data volumes and formats.  
 	Most commonly this is: you - the one preparing the DMP.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -284,6 +284,9 @@
 		         	<input id="policyLink" type="text" class="inputtext_long" placeholder="Link Research Data Policy or Guideline"/>
 		        </div> 
 		    </div>   
+		</div>
+		<div class="row">
+			<p>* mandatory</p>
 		</div>
 	</div>
 </section>
