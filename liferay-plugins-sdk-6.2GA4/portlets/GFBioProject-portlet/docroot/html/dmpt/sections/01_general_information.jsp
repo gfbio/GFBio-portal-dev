@@ -190,7 +190,7 @@
 	    	</div>
 		</div>
 		<div class="row">
-	    	<h4>Who is/are the principal investigator/s?</h4>
+	    	<h4>Who are the principal investigators?</h4>
 	    	<div class="col-md-12" style="margin-bottom: 10px;">
 	    		<input id="sameContact" type="checkbox" />
 				<span>Same as point of contact for project data.</span>
