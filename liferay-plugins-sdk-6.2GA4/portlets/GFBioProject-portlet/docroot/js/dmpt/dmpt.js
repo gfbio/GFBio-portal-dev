@@ -457,6 +457,9 @@ function getInputAsJson() {
         email = $("#email").val(),
         funding = $("#funding").val(),
         fundingLink = $("#fundingLink").val(),
+        coordinatedProgramme = $("#coordinatedProgramme").val(),
+        researchUnit = $("#researchUnit").prop("checked"),
+        researchProposal = $("#researchProposal").val(),
         policies = [],
         policyLink = "",
         // 02 Data Collection
@@ -586,6 +589,10 @@ function getInputAsJson() {
 				"name" : funding
 			},
 			"fundingLink" : fundingLink,
+			
+			"coordinatedProgramme" : coordinatedProgramme,
+	        "researchUnit" : researchUnit,
+	        "researchProposal" : researchProposal,
 			"policies" : [],
 			"policyLink" : policyLink,
 			// 02 Data Collection
@@ -750,8 +757,8 @@ function initializeWizard(dmptInput, id) {
 		$("#phone").val(dmptInput.phoneNumber);
 	}
 	
-	if (!isEmpty(dmptInput.email)) {
-		$("#email").val(dmptInput.email);
+	if (!isEmpty(dmptInput.researchUnit)) {
+		$("#researchUnit").val(dmptInput.researchUnit);
 	}
 	
 	if (dmptInput.funding) {
@@ -774,6 +781,20 @@ function initializeWizard(dmptInput, id) {
 				$("#fundingLink").show();
 			}
 		}
+	}
+	
+	if (!isEmpty(dmptInput.coordinatedProgramme)) {
+		$("#coordinatedProgramme").val(dmptInput.coordinatedProgramme);
+	}
+	
+	var researchUnit = dmptInput.researchUnit;
+	console.info("RU: " + researchUnit)
+	if (researchUnit) {
+		$("#researchUnit").prop("checked", true);
+	}
+	
+	if (!isEmpty(dmptInput.researchProposal)) {
+		$("#researchProposal").val(dmptInput.researchProposal);
 	}
 	
 	if (dmptInput.policies) {

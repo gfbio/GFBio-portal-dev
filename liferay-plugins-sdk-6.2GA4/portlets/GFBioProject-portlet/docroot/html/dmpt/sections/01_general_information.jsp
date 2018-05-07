@@ -228,6 +228,32 @@
 	    	</div>
 		</div>
 		<div class="row">
+			<h4>If you are part of a coordinated programme (Koordinierte Programme, Verbundprojekte), is there any specific coordination, guideline or policy for data management?</h4>
+			<div class="col-md-12">
+	      		<textarea id="coordinatedProgramme" rows="3" cols="100" placeholder="Please describe the data management coordination of your programme. Who takes care of it? Is there a data management plan, guideline or policy on which all project members agree? If there are any documents available, please refer to them (by upload, link, DOI or full citation)."></textarea> 
+	    	</div>
+		</div>
+		<div class="row">
+			<h4>Are you part of a research unit (Forschergruppe)?
+	    		<a href="http://www.dfg.de/en/research_funding/programmes/coordinated_programmes/research_units/index.html" target="_blank">
+					<span class="icon-landing-flex icon-information4 info-blue" ></span>
+				</a>
+	    	</h4>
+	    	<div class="col-md-12">
+				<input id="researchUnit" type="checkbox" />
+				<span>I am part of a research unit (Forschergruppe).</span>
+			</div>
+		</div>
+		<div class="row">
+			<h4>Please estimate the total volume of your research proposal?</h4>
+			<div class="col-md-12">
+				<div class="input-icon">
+			    	<i>&#8364;</i>
+			      	<input id="researchProposal" type="number" placeholder="0">
+			    </div>
+			</div>
+		</div>
+		<div class="row">
 	    	<h4>Which policies or guideliness for research data management will you follow?
 	    		<a name="title" title="Does your institution or your funder have certain data management policies or guidelines?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>

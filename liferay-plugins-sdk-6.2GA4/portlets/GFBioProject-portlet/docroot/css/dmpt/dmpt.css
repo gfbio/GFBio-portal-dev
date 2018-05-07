@@ -13,6 +13,7 @@ input[type=radio] {
 
 input[type=text], 
 input[type=tel], 
+input[type=number], 
 input[type=email] 
 {
     width: 100%;
@@ -232,7 +233,7 @@ a[name=title] {
 	cursor: pointer;
 }
 
-/* Show meta information */
+/* Show additional information */
 
 .showmore {
 	margin: 0 auto;
@@ -254,11 +255,35 @@ a[name=title] {
     transition: .3s;
 }
 
-/* Metadata */
+/* Meta information */
 
 .meta-information {
 	margin: 0 0 10px 0;
 	padding: 4px 5px 5px 3px;
 	border: 1px solid lightgrey;
     border-radius: 5px;
+}
+
+/* Show currency symbol in input field */
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon > i {
+  position: absolute;
+  display: block;
+  right: 0;
+  transform: translate(0, -50%);
+  top: 50%;
+  pointer-events: none;
+  width: 25px;
+  text-align: center;
+	font-style: normal;
+}
+
+.input-icon > input {
+  padding-left: 0;
+  padding-right: 25px;
+  text-align: right;
 }
