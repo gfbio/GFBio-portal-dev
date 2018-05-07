@@ -82,7 +82,7 @@ $(document).ready(function () {
 			$("div.steps").hide();
 			$("div.actions").hide();
 			$("div[name='title']").hide();
-			$("#gfbioServicesStep").hide();
+			$("#lastTab").hide();
 			$("#handleInput").show();
 			getInput();
 		},
@@ -374,8 +374,6 @@ function loadDmp() {
 				<jsp:include page="sections/04_ethics.jsp" />
 				
  				<jsp:include page="sections/05_preservation.jsp" />
-				
- 				<jsp:include page="sections/06_gfbio_services.jsp" />
 			</div>
 		</form>
 	</div>

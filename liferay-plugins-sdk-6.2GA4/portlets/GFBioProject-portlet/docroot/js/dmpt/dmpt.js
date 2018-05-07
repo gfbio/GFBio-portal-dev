@@ -495,9 +495,7 @@ function getInputAsJson() {
         // 05 Preservation
         backup = $("#backup").val(),
         dataArchives = [],
-        pid = $("input[name='pid']:checked").val(),
-        // 06 GFBio Services
-        services = [];
+        pid = $("input[name='pid']:checked").val();
     
     // 01 General Information
 	if (category === "Select") {
@@ -578,11 +576,6 @@ function getInputAsJson() {
 		dataArchives.push($("#archiveOther").val());
 	}
 	
-	// 06 GFBio Services
-	$("input[name='services']:checked").each(function () {
-		services.push($(this).siblings('span').text());
-    });
-	
 	// Create jsonObject
 	var dmptInput = {
 			// 01 General Information
@@ -629,9 +622,7 @@ function getInputAsJson() {
 			// 05 Preservation
 			"backup" : backup,
 			"dataArchives" : [],
-			"pid" : pid,
-			// 06 GFbio Services
-			"gfbioServices" : []
+			"pid" : pid
         };
     
 	// Set Arrays
@@ -673,10 +664,6 @@ function getInputAsJson() {
 	
 	if (dataArchives) {
 		dmptInput.dataArchives = dataArchives;
-	}
-	
-	if (services) {
-		dmptInput.gfbioServices = services;
 	}
 	
 	console.log("Json:", dmptInput);
@@ -983,15 +970,4 @@ function initializeWizard(dmptInput, id) {
 		$("input[name='pid'][value='" + dmptInput.pid + "']").prop("checked", true);
 	}
 		
-	// 06 GFBio Services
-	if (dmptInput.gfbioServices) {
-		var gfbioServices = dmptInput.gfbioServices;
-		for (i = 0; i < gfbioServices.length; i++) {
-			$("input[name='services']").each(function () {
-				if ($(this).siblings('span').text() === gfbioServices[i]) {
-					$(this).prop("checked", true);
-				}
-			});
-		}
-	}
 }

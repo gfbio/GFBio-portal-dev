@@ -59,9 +59,6 @@ public class DMPTInput implements Serializable {
 	private String pid;
 	private boolean estimatingHelp;
 	
-	// GFBio Services
-	private List<String> gfbioServices;
-	
 	public DMPTInput() {}
 
 }
