@@ -137,26 +137,14 @@
           </div>
     </div>
 	<div class="row">
-	  	<h4>Will your data format be openly documented?
-	  		<a name="title" title="According to DFG, we recommend the use of openly documented formats. 
-&#34;the use of open or openly documented formats is recommended; if data are only legible with special software, the software has to be documented or included in the database (if permitted under copyright)&#34; - DFG: Guidelines on the Handling of Reserach Data in Biodiversity Reserach.">
+	  	<h4>What data formats will you create?
+	  		<a name="title" title="Please name all considered data formats. According to the DFG Guidelines on the Handling of Research Data in Biodiversity Research, we recommend the use of &#34;open or openly documented formats&#34;.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
 	  	</h4>
-	    <div id="formatDocumentated">
-	        <div class="col-md-6">
-				<label class="mod-cb">
-					<input name="documentated" type="radio" value="Openly documentated" />
-					<span>Openly documented</span>
-				</label>
-			</div>
-			<div class="col-md-6">
-				<label class="mod-cb">
-					<input name="documentated" type="radio" value="Only legible with special software" >
-					<span>Only legible with special software</span>
-				</label>
-			</div>
-	    </div>
+	  	<div id="formatDocumentated" class="col-md-12">
+      		<textarea id="createFormats" rows="5" cols="100" placeholder="List all data formats you are planning to produce and give additional information if necessary (such as &#34;only legible with software xy&#34;). There are loads of data formats and some disciplines even have their own ones."></textarea> 
+    	</div>
 	</div>
 	<div class="row">
 	    <h4>Please estimate the data volume you will create.

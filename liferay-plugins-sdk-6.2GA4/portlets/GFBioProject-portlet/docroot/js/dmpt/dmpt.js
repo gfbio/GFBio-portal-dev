@@ -444,7 +444,7 @@ function getInputAsJson() {
         taxon = $("input[name='taxon']:checked").val(),
         sequenced = $("input[name='sequenced']:checked").val(),
         dataformats = [],
-        documentated = $("input[name='documentated']:checked").val(),
+        createFormats = $("#createFormats").val(),
         dataVolume = getDataVolumeBySliderValue($("#volumeSlider").val()),
         dataSet = getDataSetBySliderValue($("#datasetSlider").val()),
         methodologies = $("#methodologies").val(),
@@ -573,7 +573,7 @@ function getInputAsJson() {
 			"taxon" : taxon,
 			"sequenced" : sequenced,
 			"dataformats" : [],
-			"openlyDocumentated" : documentated,
+			"createFormats" : createFormats,
 			"dataVolume" : dataVolume,
 			"dataSets" : dataSet,
 			"methodologies" : methodologies,
@@ -814,8 +814,8 @@ function initializeInputs(dmptInput, id) {
 		}
 	}
 	
-	if (!isEmpty(dmptInput.openlyDocumentated)) {
-		$("input[name='documentated'][value='" + dmptInput.openlyDocumentated + "']").prop("checked", true);
+	if (!isEmpty(dmptInput.createFormats)) {
+		$("#createFormats").val(dmptInput.createFormats);
 	}
 		
 	if (!isEmpty(dmptInput.dataVolume)) {

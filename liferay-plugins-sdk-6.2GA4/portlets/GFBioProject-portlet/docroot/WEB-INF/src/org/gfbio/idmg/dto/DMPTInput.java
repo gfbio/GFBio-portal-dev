@@ -30,7 +30,7 @@ public class DMPTInput implements Serializable {
 	private Boolean taxon;
 	private Boolean sequenced;
 	private List<String> dataformats;
-	private boolean openlyDocumented;
+	private String createFormats;
 	private String dataVolume;
 	private String dataSets;
 	private String methodologies;
@@ -62,7 +62,7 @@ public class DMPTInput implements Serializable {
 			String projectAbstract, List<String> investigators, String responsibleName, String phoneNumber,
 			String email, GFunding funding, String fundingLink, List<GPolicy> policies,
 			String policyLink, String policyOther, Boolean physical, Boolean alive, Boolean taxon,
-			Boolean sequenced, List<String> dataformats, boolean openlyDocumented, String dataVolume, String dataSets,
+			Boolean sequenced, List<String> dataformats, String createFormats, String dataVolume, String dataSets,
 			String methodologies, List<GMetadata> metadata, String metadataDescription, GLegalRequirement requirement,
 			GLicense license, boolean accessRestriction, String accessDuration, String accessReason, String backup,
 			List<String> dataArchives, String pid, boolean estimatingHelp, List<String> gfbioServices) {
@@ -87,7 +87,7 @@ public class DMPTInput implements Serializable {
 		this.taxon = taxon;
 		this.sequenced = sequenced;
 		this.dataformats = dataformats;
-		this.openlyDocumented = openlyDocumented;
+		this.createFormats = createFormats;
 		this.dataVolume = dataVolume;
 		this.dataSets = dataSets;
 		this.methodologies = methodologies;
@@ -225,12 +225,12 @@ public class DMPTInput implements Serializable {
 		this.dataformats = dataformats;
 	}
 
-	public boolean isOpenlyDocumented() {
-		return openlyDocumented;
+	public String isCreateFormats() {
+		return createFormats;
 	}
 
-	public void setOpenlyDocumented(boolean openlyDocumented) {
-		this.openlyDocumented = openlyDocumented;
+	public void setCreateFormats(String createFormats) {
+		this.createFormats = createFormats;
 	}
 
 	public String getDataVolume() {
@@ -401,7 +401,7 @@ public class DMPTInput implements Serializable {
 				+ ", phoneNumber=" + phoneNumber + ", email=" + email + ", funding=" + funding + ", fundingLink="
 				+ fundingLink + ", policies=" + policies + ", policyLink=" + policyLink + ", policyOther=" + policyOther
 				+ ", physical=" + physical + ", alive=" + alive + ", taxon=" + taxon + ", sequenced=" + sequenced
-				+ ", dataformats=" + dataformats + ", openlyDocumented=" + openlyDocumented + ", dataVolume="
+				+ ", dataformats=" + dataformats + ", createFormats=" + createFormats + ", dataVolume="
 				+ dataVolume + ", dataSets=" + dataSets + ", methodologies=" + methodologies + ", metadata=" + metadata
 				+ ", metadataDescription=" + metadataDescription + ", requirement=" + requirement + ", license="
 				+ license + ", accessRestriction=" + accessRestriction + ", accessDuration=" + accessDuration
