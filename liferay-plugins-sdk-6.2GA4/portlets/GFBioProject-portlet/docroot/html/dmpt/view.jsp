@@ -93,7 +93,7 @@ $(document).ready(function () {
 				$("#dmppreview").show();
 			}
 			
-			$("#delete").on("click", deleteDmp);
+			$("#delete").on("click", openConfirmDeleteDialog);
 			
 			$("#load").on("click", loadDmp);
 			
@@ -283,7 +283,6 @@ function openSavedDialog(response) {
 
 function deleteDmp() {
 	var dmpId = $("#dmps").val();
-	console.log("ID: " + dmpId);
 	
 	$.ajax({
    		"method": "POST",
@@ -299,7 +298,24 @@ function deleteDmp() {
    			}
       	}
 	});
+}
+
+function openConfirmDeleteDialog() {
+	$("#delete-answer").html("<p>Do you want to delete the data management plan?</p>");
 	
+	$("#dialog-delete").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "answer-dialog custom-dialog",
+	    buttons: {
+	      Yes: function () {
+	    	deleteDmp();
+	      },
+	      Cancel: function () {
+	    	$( this ).dialog( "close" );  
+	      }
+	    }
+    });
 }
 
 function openDeletedDialog(response) {
