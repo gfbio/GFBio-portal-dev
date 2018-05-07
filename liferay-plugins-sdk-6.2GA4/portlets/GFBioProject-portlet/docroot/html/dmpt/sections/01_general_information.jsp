@@ -279,7 +279,7 @@
 		            <option value="none" >None</option>
 		        </select> -->
 		        
-		        <div>
+		        <div class="col-md-12">
 		         	<input id="policyOther" name="policyOther" type="text" class="inputtext_long" placeholder="Other Research Data Policy and Guideline"/>
 		         	<input id="policyLink" type="text" class="inputtext_long" placeholder="Link Research Data Policy or Guideline"/>
 		        </div> 
