@@ -25,7 +25,7 @@ public class DMPTInput implements Serializable {
 	private String fundingLink;
 	private String coordinatedProgramme;
 	private boolean reasearchUnit;
-	private Long researchProposal;
+	private String researchProposal;
 	private List<GPolicy> policies; //Kommt aus DB
 	private String policyLink;
 	private String policyOther;

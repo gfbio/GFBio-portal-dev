@@ -252,7 +252,7 @@
 			<div class="col-md-12">
 				<div class="input-icon">
 			    	<i>&#8364;</i>
-			      	<input id="researchProposal" type="number" placeholder="0">
+			      	<input id="researchProposal" type="text" pattern="\d*" placeholder="0">
 			    </div>
 			</div>
 		</div>
