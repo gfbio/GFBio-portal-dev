@@ -99,15 +99,36 @@ function checkboxDataformat(event) {
     }
 }
 
-function checkboxRequirement(event) {
+function requirements() {
 	'use strict';
 	
-	var other = $("#requirementOther");
-	if ($(event.target).is(':checked')) {
-		other.show("slow");
+	var other = $("#requirementOther"),
+        id = $(event.target).attr("id");
+	
+	if (id === "legal-none") {
+		if ($(event.target).is(':checked')) {
+	        other.hide();
+	        other.val("");
+	        
+	        $("input[name='requirements']:checked").each(function () {
+                if ($(this).attr("id") !== "legal-none") {
+                    $(this).prop("checked", false);
+                }
+            });
+	    }
 	} else {
-		other.hide();
-		other.val("");
+		if ($("#legal-none").is(":checked")) {
+			$("#legal-none").prop("checked", false);
+		}
+	}
+	
+	if (id === "legal-other") {
+		if ($(event.target).is(':checked')) {
+	        other.show("slow");
+	    } else {
+	        other.hide();
+	        other.val("");
+	    }
 	}
 }
 

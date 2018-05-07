@@ -137,7 +137,7 @@ $(document).ready(function () {
 		    $("span[name='show-meta-info']").on("click", toggleMetaInfos)
 		    
 		    //04 Ethics and Legal Compliance
-		    $("#legal-other").on("click", checkboxRequirement);
+		    $("input[name='requirements']").on("click", requirements);
 		    $("#requirementOther").hide();
 		
 		    $("#licenses").on("change", handleLicenses);
