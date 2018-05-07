@@ -345,11 +345,11 @@ function loadDmp() {
    			dmpId: dmpId
    		},
    		success: function (response) {
-   			console.log("JSON: " + response);
+   			//console.log("JSON: " + response);
           	var selectedDmp = JSON.parse(response);
-   			console.log("Selected: ", selectedDmp);
+   			//console.log("Selected: ", selectedDmp);
 			console.log("Name: " + selectedDmp.projectName);
-   			initializeInputs(selectedDmp, dmpId);
+   			initializeWizard(selectedDmp, dmpId);
    			showGeneralInformation();
       	},
       	error: function (response) {

@@ -684,9 +684,13 @@ function addInvestigator(investigator) {
 
 
 // Method for loading Json data and initialize the wizard
-function initializeInputs(dmptInput, id) {
+function initializeWizard(dmptInput, id) {
 	'use strict';
-	
+	// Enable all tabs
+	$("li.disabled").each(function () {
+		$(this).removeClass("disabled").addClass("done");
+	})
+		
 	// 01 General Information
 	$("#dmpId").val(id);
 	$("#name").val(dmptInput.projectName);
