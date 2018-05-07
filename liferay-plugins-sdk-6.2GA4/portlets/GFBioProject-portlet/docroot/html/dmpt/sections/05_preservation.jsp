@@ -15,13 +15,17 @@
 		</div>
 	</div>
 	<div class="row">
-        <h4>Where will your data be archived?</h4>
+        <h4>Where will your data be archived?
+        	<a name="title" title="If you are not sure which data center fits best for your data, choose &#34;GFBio Data Centers&#34; and our curation experts will find the best solution for storing your data within GFBio.">
+				<span class="icon-landing-flex icon-information4 info-blue" ></span>
+			</a>
+        </h4>
         <div id="dataArchives">
         	<div class="col-xs-12 col-sm-6">
             	<div>
                 	<label class="mod-cb">
 		               	<input name="archives" type="checkbox"/>
-		               	<span>GFBio Consortium</span>
+		               	<span>GFBio Data Centers</span>
                 	</label>
                 </div>
                 <div>
