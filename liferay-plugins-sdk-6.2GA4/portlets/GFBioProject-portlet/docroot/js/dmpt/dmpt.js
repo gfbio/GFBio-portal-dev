@@ -99,14 +99,14 @@ function checkboxTypes(event) {
     }
 }
 
-function checkboxDataformat(event) {
+function checkboxDatatype(event) {
     'use strict';
     
     if ($(event.target).is(':checked')) {
-        $("#dataformatOther").show("slow");
+        $("#datatypeOther").show("slow");
     } else {
-        $("#dataformatOther").hide();
-        $("#dataformatOther").val("");
+        $("#datatypeOther").hide();
+        $("#datatypeOther").val("");
     }
 }
 
@@ -478,7 +478,7 @@ function getInputAsJson() {
         alive = $("input[name='alive']:checked").val(),
         taxon = $("input[name='taxon']:checked").val(),
         sequenced = $("input[name='sequenced']:checked").val(),
-        dataformats = [],
+        datatypes = [],
         createFormats = $("#createFormats").val(),
         dataVolume = getDataVolumeBySliderValue($("#volumeSlider").val()),
         dataSet = getDataSetBySliderValue($("#datasetSlider").val()),
@@ -533,12 +533,12 @@ function getInputAsJson() {
 	}
 	
 	// 02 Data Collection
-	$("input[name='dataformat']:checked").each(function () {
-		dataformats.push($(this).siblings('span').text());
+	$("input[name='datatype']:checked").each(function () {
+		datatypes.push($(this).siblings('span').text());
     });
-	if ($.inArray("Other", dataformats) > -1) {
-		dataformats.splice($.inArray("Other", dataformats), 1);
-		dataformats.push($("#dataformatOther").val());
+	if ($.inArray("Other", datatypes) > -1) {
+		datatypes.splice($.inArray("Other", datatypes), 1);
+		datatypes.push($("#datatypeOther").val());
 	}
 	
 	// 03 Metadata
@@ -610,7 +610,7 @@ function getInputAsJson() {
 			"alive" : alive,
 			"taxon" : taxon,
 			"sequenced" : sequenced,
-			"dataformats" : [],
+			"datatypes" : [],
 			"createFormats" : createFormats,
 			"dataVolume" : dataVolume,
 			"dataSets" : dataSet,
@@ -651,8 +651,8 @@ function getInputAsJson() {
         });
     }
 
-	if (dataformats) {
-		dmptInput.dataformats = dataformats;
+	if (datatypes) {
+		dmptInput.datatypes = datatypes;
 	}
 	
 	if (metadata) {
@@ -847,20 +847,20 @@ function initializeWizard(dmptInput, id) {
 		$("#sequenced").removeClass("disabledDiv");
 	}
 	
-	if (dmptInput.dataformats) {
-		var dataformats = dmptInput.dataformats;
-		for (i = 0; i < dataformats.length; i++) {
+	if (dmptInput.datatypes) {
+		var datatypes = dmptInput.datatypes;
+		for (i = 0; i < datatypes.length; i++) {
 			var found = false;
-			$("input[name='dataformat']").each(function () {
-				if ($(this).siblings('span').text() === dataformats[i]) {
+			$("input[name='datatype']").each(function () {
+				if ($(this).siblings('span').text() === datatypes[i]) {
 					$(this).prop("checked", true);
 					found = true;
 				}
 			});
 			if (!found) {
-				$("input[name='dataformat'][value='Other']").prop("checked", true);
-				$("#dataformatOther").val(dataformats[i]);
-				$("#dataformatOther").show();
+				$("input[name='datatype'][value='Other']").prop("checked", true);
+				$("#datatypeOther").val(datatypes[i]);
+				$("#datatypeOther").show();
 			}
 		}
 	}

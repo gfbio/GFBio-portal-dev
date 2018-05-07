@@ -75,7 +75,7 @@
 		</div>
     </div>
 	<div class="row">
-      	<h4>What type of data format will you create?
+      	<h4>What type of data will you create?
       		<a name="title" title="You can combine several options.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
@@ -84,19 +84,19 @@
               	<div class="col-md-6">
 	                <div>
 	                    <label class="mod-cb">
-	                    	<input name="dataformat" type="checkbox"/>
+	                    	<input name="datatype" type="checkbox"/>
 	                    	<span>Text (notes, surveys, etc.)</span>
 	                    </label>
 	                </div>
 	                <div>
 	                    <label class="mod-cb">
-	                    	<input name="dataformat" type="checkbox"/>
+	                    	<input name="datatype" type="checkbox"/>
 	                    	<span>Models, code</span>
                     	</label>
 	                </div>
 	                <div>
 	                    <label class="mod-cb">
-	                    	<input name="dataformat" type="checkbox"/>
+	                    	<input name="datatype" type="checkbox"/>
 	                    	<span>GIS data</span>
                     	</label>
 	                </div>
@@ -104,19 +104,19 @@
 	            <div class="col-md-6">
 	                <div>
 	                    <label class="mod-cb">
-	                    	<input name="dataformat" type="checkbox"/>
+	                    	<input name="datatype" type="checkbox"/>
 	                    	<span>Numeric (spreadsheet, measurements, etc.)</span>
                     	</label>
 	                </div>
 	                <div>	
 	                    <label class="mod-cb">
-	                    	<input name="dataformat" type="checkbox"/>
+	                    	<input name="datatype" type="checkbox"/>
 	                    	<span>Multimedia (images, sounds, video, etc.)</span>
                     	</label>
 	                </div>
 	                <div>	
 	                    <label class="mod-cb">
-	                    	<input name="dataformat" type="checkbox"/>
+	                    	<input name="datatype" type="checkbox"/>
 	                    	<span>Moleculare Sequence Data</span>
                    		</label>
 	                </div>
@@ -124,14 +124,14 @@
 	            <div class="col-md-6">
 	            	<div>
 	                    <label class="mod-cb">
-	                    	<input id="dataformat-cb" name="dataformat" type="checkbox" value="Other"/>
+	                    	<input id="datatype-cb" name="datatype" type="checkbox" value="Other"/>
 	                    	<span>Other</span>
 	                    </label>
 	                </div>
 	            </div>
 	            <div class="col-md-12">
 	            	<div>	
-	                    <input id="dataformatOther" name="dataformatOther" class="df_input" type="text" placeholder="Other Format" />
+	                    <input id="datatypeOther" name="datatypeOther" class="df_input" type="text" placeholder="Other Type" />
 	                </div>
 	            </div>
           </div>

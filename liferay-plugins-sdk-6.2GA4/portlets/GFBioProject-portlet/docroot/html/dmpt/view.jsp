@@ -126,8 +126,8 @@ $(document).ready(function () {
 		    $("input[name='alive']").on("click", handleAlive);
 		    
 		    //02 Data Collection
-		    $("#dataformat-cb").on("click", checkboxDataformat);
-		    $("#dataformatOther").hide();
+		    $("#datatype-cb").on("click", checkboxDatatype);
+		    $("#datatypeOther").hide();
 		    
 		    $("#volumeSlider").on("input change", showDataVolume);
 		    $("#datasetSlider").on("input change", showNumberOfDataSets);
