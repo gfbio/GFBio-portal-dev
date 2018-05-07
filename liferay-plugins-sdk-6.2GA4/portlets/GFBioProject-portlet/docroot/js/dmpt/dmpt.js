@@ -26,6 +26,17 @@ function showGeneralInformation() {
 	$("#generalinformation").show();
 }
 
+function sameContact(event) {
+    'use strict';
+    
+    var name = $("#responsibleName").val();
+    if ($(event.target).prop("checked")) {
+    	$("#firstPrincInput").val(name);
+    } else {
+    	$("#firstPrincInput").val("");
+    }
+}
+
 function handlePrincipalButton(event) {
     'use strict';
     
@@ -451,10 +462,10 @@ function getInputAsJson() {
         reproducibleText = $("#reproducibleText").val(),
         projectTypes = [],
         projectAbstract = $("#abstract").val(),
-        investigators = [],
         responsibleName = $("#responsibleName").val(),
         phoneNumber = $("#phone").val(),
         email = $("#email").val(),
+        investigators = [],
         funding = $("#funding").val(),
         fundingLink = $("#fundingLink").val(),
         coordinatedProgramme = $("#coordinatedProgramme").val(),
@@ -581,15 +592,14 @@ function getInputAsJson() {
 			"reproducibleText" : reproducibleText,
 			"projectTypes": [],
 			"projectAbstract" : projectAbstract,
-			"investigators" : [],
 			"responsibleName" : responsibleName,
 			"phoneNumber" : phoneNumber,
 			"email" : email,
+			"investigators" : [],
 			"funding" : {
 				"name" : funding
 			},
 			"fundingLink" : fundingLink,
-			
 			"coordinatedProgramme" : coordinatedProgramme,
 	        "researchUnit" : researchUnit,
 	        "researchProposal" : researchProposal,
@@ -739,16 +749,6 @@ function initializeWizard(dmptInput, id) {
 		$("#abstract").val(dmptInput.projectAbstract);
 	}
 	
-	if (dmptInput.investigators) {
-		var investigators = dmptInput.investigators;
-		$("input[name='investigator']").val(investigators[0]);
-		if (investigators.length > 1) {
-			for (i = 1; i < investigators.length; i++) {
-				addInvestigator(investigators[i]);
-			}
-		}
-	}
-	
 	if (!isEmpty(dmptInput.responsibleName)) {
 		$("#responsibleName").val(dmptInput.responsibleName);
 	}
@@ -757,8 +757,14 @@ function initializeWizard(dmptInput, id) {
 		$("#phone").val(dmptInput.phoneNumber);
 	}
 	
-	if (!isEmpty(dmptInput.researchUnit)) {
-		$("#researchUnit").val(dmptInput.researchUnit);
+	if (dmptInput.investigators) {
+		var investigators = dmptInput.investigators;
+		$("input[name='investigator']").val(investigators[0]);
+		if (investigators.length > 1) {
+			for (i = 1; i < investigators.length; i++) {
+				addInvestigator(investigators[i]);
+			}
+		}
 	}
 	
 	if (dmptInput.funding) {
@@ -788,7 +794,6 @@ function initializeWizard(dmptInput, id) {
 	}
 	
 	var researchUnit = dmptInput.researchUnit;
-	console.info("RU: " + researchUnit)
 	if (researchUnit) {
 		$("#researchUnit").prop("checked", true);
 	}

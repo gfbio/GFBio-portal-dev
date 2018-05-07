@@ -105,6 +105,7 @@ $(document).ready(function () {
 		    $("#types-cb").on("click", checkboxTypes);
 		    $("#typesOther").hide();
 		    
+		    $("#sameContact").on("click", sameContact);		    
 		    $("#princButton").on("click", addInputField);
 		    
 		    $("#funding").on("change", handleFunding);

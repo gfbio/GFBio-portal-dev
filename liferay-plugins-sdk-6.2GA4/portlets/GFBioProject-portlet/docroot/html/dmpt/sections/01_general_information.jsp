@@ -167,19 +167,6 @@
 	    	</div>
 		</div>
 		<div class="row">
-	    	<h4>Who is/are the principal investigator/s?</h4>
-	    	<div class="col-md-12">
-	        	<div id="principal">
-	        	<!-- required -->
-	     		<input id="firstPrincInput" name="investigator" type="text"  
-	            	placeholder="Principal Investigator" />
-	 			</div>
-	 			<div style="margin-top: 5px;">
-	            	<input id="princButton" type="button" value="Add principal investigator" disabled="disabled" />
-	        	</div>    
-	    	</div>
-		</div>
-		<div class="row">
 	    	<h4>Who is the point of contact for the project data? *
 	    		<a name="title" title="Who should be contacted in case of any question concerning data management? This might be technical issues as well as questions concerning data policies, legal requirements or data volumes and formats.  
 	Most commonly this is: you - the one preparing the DMP.">
@@ -200,6 +187,22 @@
 			    <div class="col-md-12" >
 		     		<input id="email" name="email" type="email" placeholder="E-Mail" value="<c:out value="${email}" />" />
 		 		</div>
+	    	</div>
+		</div>
+		<div class="row">
+	    	<h4>Who is/are the principal investigator/s?</h4>
+	    	<div class="col-md-12" style="margin-bottom: 10px;">
+	    		<input id="sameContact" type="checkbox" />
+				<span>Same as point of contact for project data.</span>
+	    	</div>
+	    	<div class="col-md-12">
+	        	<div id="principal">
+	     			<input id="firstPrincInput" name="investigator" type="text"  
+	            	placeholder="Principal Investigator" />
+	 			</div>
+	 			<div style="margin-top: 5px;">
+	            	<input id="princButton" type="button" value="Add principal investigator" disabled="disabled" />
+	        	</div>    
 	    	</div>
 		</div>
 		<div class="row">
