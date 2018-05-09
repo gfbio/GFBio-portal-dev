@@ -162,7 +162,6 @@ function openConfirmDialog(btnId) {
 	
 	var btn = $(btnId);
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
-	console.log("DataCenter: " + dataCenter);
 	
 	var confirmDialog = $("#dialog-confirm").dialog({
 		autoOpen: false,
@@ -221,13 +220,13 @@ function clearForm() {
 
 function getDataCenterList() {
 	
-	var list = []
+	var list = [];
 	var data = $("span[name='dataCenter']");
-	console.info("Data: " + data);
+	//console.info("Data: " + data);
 	
 	$.each( data, function( index ) {
 		list.push($(this).attr("id"));
-		console.info("index: " + $(this).attr("id"));
+		//console.info("index: " + $(this).attr("id"));
 	})
 	
 	return list;

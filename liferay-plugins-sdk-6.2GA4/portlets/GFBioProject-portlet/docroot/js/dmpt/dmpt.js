@@ -451,6 +451,20 @@ function hide(j) {
     });
 }
 
+// Get services for sending request
+function getServices() {
+	'use strict';
+	
+	var list = [];
+	var services = $("input[name='gfbio_services']:checked");
+	
+	$.each( services, function( index ) {
+		list.push($(this).val());
+	})
+	
+	return list;
+}
+
 // Method for saving all inputs as json in db
 function getInputAsJson() {
 	'use strict';

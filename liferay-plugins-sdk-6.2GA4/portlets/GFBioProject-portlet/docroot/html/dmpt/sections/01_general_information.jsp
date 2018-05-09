@@ -28,8 +28,8 @@
         </div>
 	</div>
 	
-	<div id="dialog-delete" style="display: none;">
-		<div id="delete-answer" style="text-align: center;"></div>
+	<div id="dialog-delete-load" style="display: none;">
+		<div id="delete-load-answer" style="text-align: center;"></div>
 	</div>
 	
 	<div id="generalinformation">

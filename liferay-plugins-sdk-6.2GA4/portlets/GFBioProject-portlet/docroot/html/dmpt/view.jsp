@@ -13,6 +13,7 @@
 <portlet:resourceURL var="ajaxUrlSave" id="savedmp" />
 <portlet:resourceURL var="ajaxUrlLoad" id="loaddmp" />
 <portlet:resourceURL var="ajaxUrlDelete" id="deletedmp" />
+<portlet:resourceURL var="ajaxUrlSend" id="senddmp" />
 
 <script type="text/javascript">   
 
@@ -178,6 +179,9 @@ $(document).ready(function () {
 			   	$("#saveDMP").addClass("wizarddisabled");
 		    }
 		    
+		    //Send DMP Request
+		    $("#sendDMP").on("click", openSendRequestDialog);
+		    
 		    //Tooltips
 		    $("a[name=title]").tooltip({
 		    	tooltipClass: "jqueryTooltip",
@@ -273,7 +277,7 @@ function openSavedDialog(response) {
 	$("#dialog-save").dialog({
 	    modal: true,
 	    resizable: false,
-	    dialogClass: "answer-dialog custom-dialog",
+	    dialogClass: "custom-dialog",
 	    buttons: {
 	      Ok: function () {
 	        $( this ).dialog( "close" );
@@ -292,22 +296,22 @@ function deleteDmp() {
    			dmpId: dmpId
    		},
    		success: function (response) {
-   			openDeletedDialog(response);
-   			
-   			if (response.includes("success")) {
-   				$("#dmps option[value='" + dmpId + "']").remove();
-   			}
+   			openDeleteLoadDialog(response);
+   			$("#dmps option[value='" + dmpId + "']").remove();
+      	},
+      	error: function (error) {
+      		openDeleteLoadDialog(error.responseText);
       	}
 	});
 }
 
 function openConfirmDeleteDialog() {
-	$("#delete-answer").html("<p>Do you want to delete the data management plan?</p>");
+	$("#delete-load-answer").html("<p>Do you want to delete the data management plan?</p>");
 	
-	$("#dialog-delete").dialog({
+	$("#dialog-delete-load").dialog({
 	    modal: true,
 	    resizable: false,
-	    dialogClass: "answer-dialog custom-dialog",
+	    dialogClass: "custom-dialog",
 	    buttons: {
 	      Yes: function () {
 	    	deleteDmp();
@@ -319,13 +323,13 @@ function openConfirmDeleteDialog() {
     });
 }
 
-function openDeletedDialog(response) {
-	$("#delete-answer").html("<p>" + response + "</p>");
+function openDeleteLoadDialog(response) {
+	$("#delete-load-answer").html("<p>" + response + "</p>");
 	
-	$("#dialog-delete").dialog({
+	$("#dialog-delete-load").dialog({
 	    modal: true,
 	    resizable: false,
-	    dialogClass: "answer-dialog custom-dialog",
+	    dialogClass: "custom-dialog",
 	    buttons: {
 	      Ok: function () {
 	        $( this ).dialog( "close" );
@@ -333,7 +337,6 @@ function openDeletedDialog(response) {
 	    }
     });
 }
-
 
 function loadDmp() {
 	var dmpId = $("#dmps").val();
@@ -353,9 +356,43 @@ function loadDmp() {
    			initializeWizard(selectedDmp, dmpId);
    			showGeneralInformation();
       	},
-      	error: function (response) {
-			console.log("Error: " + response);
+      	error: function (error) {
+			openDeleteLoadDialog(error.responseText);
 		}
+	});
+}
+
+function openSendRequestDialog() {
+	$("#dialog-request").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "request-dialog custom-dialog",
+	    buttons: {
+	      "Send DMP Support Request": function () {
+	    	sendRequest();
+	        //Do something
+	      },
+	      Cancel: function () {
+		   	$( this ).dialog( "close" );  
+		  }
+	    }
+    });
+}
+
+function sendRequest() {
+	var services = new Array;
+	services = getServices();
+	console.info("Services: " + services);
+	
+	$.ajax({
+   		"method": "POST",
+   		"url": '<%=ajaxUrlSend%>',
+   		"data": {
+   			services: services
+   		},
+   		success: function (response) {
+			console.log("Response: " + response);
+      	},
 	});
 }
 

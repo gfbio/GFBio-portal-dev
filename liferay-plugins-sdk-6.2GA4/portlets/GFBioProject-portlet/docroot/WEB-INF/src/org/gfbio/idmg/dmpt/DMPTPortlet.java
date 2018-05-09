@@ -15,6 +15,7 @@ import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.dto.GLegalRequirement;
 import org.gfbio.idmg.dto.GLicense;
 import org.gfbio.idmg.dto.GMetadata;
+import org.gfbio.idmg.jiraclient.model.Customfield_10217;
 import org.gfbio.idmg.util.ContentUtil;
 import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
@@ -114,6 +115,8 @@ public class DMPTPortlet extends MVCPortlet {
 			loadDMP(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("deletedmp")) {
 			deleteDMP(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("senddmp")) {
+			sendDMP(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -264,6 +267,7 @@ public class DMPTPortlet extends MVCPortlet {
 		List<DataManagementPlan> dmps = DataManagementPlanLocalServiceUtil.getdmpListByUserId(themeDisplay.getUserId());
 		
 		String dmptInput = "";
+		String response = "";
 		
 		for (DataManagementPlan d : dmps) {
 			if (d.getDmpID() == dmpId) {
@@ -272,14 +276,16 @@ public class DMPTPortlet extends MVCPortlet {
 		}
 		_log.info("DmptInput: " + dmptInput);
 		if (dmptInput.equals("")) {
-			_log.info("DMP not found for dmpId " + dmpId);
-			throw new IOException("Empty data, DMP could not been restored.");
+			response = "DMP could not been restored!";
+			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
+		} else {
+			response = dmptInput;
 		}
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
-		writer.println(dmptInput);
+		writer.println(response);
 
 		writer.flush();
 		writer.close();
@@ -302,8 +308,31 @@ public class DMPTPortlet extends MVCPortlet {
 			_log.info("DMP with the id " + dmpId + "was deleted successfully!");
 		} catch (PortalException | SystemException e) {
 			response = "The data management plan could not been deleted!";
+			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
 			_log.error("DMP with the id " + dmpId + " could not been deleted!", e);
 		}
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+		
+		writer.println(response);
+		
+		writer.flush();
+		writer.close();
+		
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+	
+	private void sendDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		_log.info("Send DMP Request");
+		
+		String[] services = resourceRequest.getParameterValues("services[]");
+		for (int i = 0; i < services.length; i++) {
+			_log.info("Service: " + services[i]);
+		}
+		
+		String response = "Request sended!";
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();

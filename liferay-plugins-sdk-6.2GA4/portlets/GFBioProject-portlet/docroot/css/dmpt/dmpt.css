@@ -177,17 +177,22 @@ h4 {
     border: none !important;
 }
 
-.ui-dialog.answer-dialog {
+.ui-dialog.custiom-dialog {
 	box-shadow:0px 0px 3px #888;
     max-width: 100%;
 }
 
-.ui-dialog.answer-dialog .ui-widget-header {
+.ui-dialog.request-dialog {
+    width: 800px !important;
+    max-width: 100%;
+}
+
+.ui-dialog.custom-dialog .ui-widget-header {
 	border-radius: 3px;
 	background: #2c59a0;
 }
 
-.ui-dialog.answer-dialog .ui-dialog-titlebar-close {
+.ui-dialog.custom-dialog .ui-dialog-titlebar-close {
 	right: .5em !important;
 	margin: -10px 0 0 0 !important;
 }
