@@ -110,3 +110,11 @@ select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'url', 'CC BY-
 select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'url', 'CC BY-NC-SA',		'https://creativecommons.org/licenses/by-nc-sa/4.0/');
 select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'url', 'CC BY-SA',		'https://creativecommons.org/licenses/by-sa/4.0/');
 select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'url', 'CC BY-ND',		'https://creativecommons.org/licenses/by-nd/4.0/');
+
+
+------------------------------------------------------------------------------------------------
+-----------------------------------------      category           -- 09.05.2018 ----------------
+------------------------------------------------------------------------------------------------
+
+select updatecellcontentbyrowidentifier('gfbio_category', 'label', 'name', 'Ecology',		'Ecology & Environment');
+select updatecellcontentbyrowidentifier('gfbio_category', 'label', 'label', 'Ecology',		'Ecology & Environment');
