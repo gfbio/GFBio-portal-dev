@@ -274,8 +274,9 @@ public class DMPTPortlet extends MVCPortlet {
 				dmptInput = d.getDmpTInput();
 			}
 		}
-		_log.info("DmptInput: " + dmptInput);
+		
 		if (dmptInput.equals("")) {
+			_log.error("DmptInput is empty!");
 			response = "DMP could not been restored!";
 			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
 		} else {
@@ -305,7 +306,7 @@ public class DMPTPortlet extends MVCPortlet {
 		try {
 			DataManagementPlanLocalServiceUtil.deleteDataManagementPlan(dmpId);
 			response = "The data management plan was deleted successfully!";
-			_log.info("DMP with the id " + dmpId + "was deleted successfully!");
+			_log.info("DMP with the id " + dmpId + " was deleted successfully!");
 		} catch (PortalException | SystemException e) {
 			response = "The data management plan could not been deleted!";
 			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");

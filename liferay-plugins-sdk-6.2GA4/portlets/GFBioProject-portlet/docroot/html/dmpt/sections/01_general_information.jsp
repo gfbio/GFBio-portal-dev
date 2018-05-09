@@ -70,20 +70,20 @@
 	      	<div id="nature">
 	      		<div class="col-xs-12 col-sm-4">
 	            	<label class="mod-cb">
-	            		<input name="nature" type="radio" value="Onetime observation" />
-	            		<span>Onetime observation</span>
+	            		<input name="reproducible" type="checkbox" value="Onetime observation" />
+	            		<span title="A one-time observation might for example be a gray seal count in the German wadden sea in June 2006 or a DNA analysis without sample storage.">Onetime observation</span>
 	            	</label>
 	     		</div>
 	      		<div class="col-xs-12 col-sm-4">
 			        <label class="mod-cb">
-				        <input name="nature" type="radio" value="Reapeatable experiments" />
-				        <span>Repeatable experiments</span>
+				        <input name="reproducible" type="checkbox" value="Reapeatable experiments" />
+				        <span title="A repeatable experiment might for example be a DNA analysis with the deposit of sample material or a documented statistical analysis of slug counts in Sweden in the years 1956 to 1996 (assumed computer code and primary data are available).">Repeatable experiments</span>
 			        </label>
 	          	</div>
 	          	<div class="col-xs-12 col-sm-4">
 			        <label class="mod-cb">
-				        <input name="nature" type="radio" value="Time Series" />
-				        <span>Time Series</span>
+				        <input name="reproducible" type="checkbox" value="Time Series" />
+				        <span title="A time series (observation) is a series of one-time observations and might for example be the periodic raw counts of slugs in Sweden during the years 1956-1996 or	daily measurements of precipitation and air temperature.">Time Series</span>
 			        </label>
 	          	</div>
 	          	<div class="col-sm-12" style="margin-top: 10px;">

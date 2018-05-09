@@ -472,7 +472,7 @@ function getInputAsJson() {
     // 01 General Information
 	var projectName = $("#name").val(),
         category = $("#category").find(":selected").text(),
-        reproducible = $("input[name='nature']:checked").val(),
+        reproducible = [],
         reproducibleText = $("#reproducibleText").val(),
         projectTypes = [],
         projectAbstract = $("#abstract").val(),
@@ -515,6 +515,10 @@ function getInputAsJson() {
 	if (category === "Select") {
         category = "";
     }
+	
+	$("input[name='reproducible']:checked").each(function () {
+		reproducible.push($(this).val());
+    });
     
 	$("input[name='types']:checked").each(function () {
         projectTypes.push($(this).siblings('span').text());
@@ -595,7 +599,7 @@ function getInputAsJson() {
 			// 01 General Information
 			"projectName" : projectName,
 			"category" : category,
-			"reproducible" : reproducible,
+			"reproducible" : [],
 			"reproducibleText" : reproducibleText,
 			"projectTypes": [],
 			"projectAbstract" : projectAbstract,
@@ -640,6 +644,10 @@ function getInputAsJson() {
         };
     
 	// Set Arrays
+	if (reproducible) {
+		dmptInput.reproducible = reproducible;
+	}
+	
 	if (projectTypes) {
 		dmptInput.projectTypes = projectTypes;
 	}
@@ -717,7 +725,14 @@ function initializeWizard(dmptInput, id) {
 	}
 	
 	if (!isEmpty(dmptInput.reproducible)) {
-		$("input[name='nature'][value='" + dmptInput.reproducible + "']").prop("checked", true);
+		var reproducible = dmptInput.reproducible;
+		for (i = 0; i < reproducible.length; i++) {
+			$("input[name='reproducible']").each(function () {
+				if ($(this).val() === reproducible[i]) {
+					$(this).prop("checked", true);
+				}
+			});
+		}
 	}
 	
 	if (!isEmpty(dmptInput.reproducibleText)) {

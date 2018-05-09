@@ -56,7 +56,7 @@ import com.liferay.portal.model.User;
 public class DataManagementPlanLocalServiceImpl extends DataManagementPlanLocalServiceBaseImpl {
 
 
-    private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+    private static Log _log = LogFactoryUtil.getLog(DataManagementPlanLocalServiceImpl.class);
     
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	

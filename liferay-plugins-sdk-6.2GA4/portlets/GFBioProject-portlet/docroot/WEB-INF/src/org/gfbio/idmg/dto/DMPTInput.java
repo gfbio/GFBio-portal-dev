@@ -13,7 +13,7 @@ public class DMPTInput implements Serializable {
 	// General Information
 	private String projectName;
 	private String category;
-	private String reproducible;
+	private List<String> reproducible;
 	private String reproducibleText;
 	private List<String> projectTypes;
 	private String projectAbstract;
