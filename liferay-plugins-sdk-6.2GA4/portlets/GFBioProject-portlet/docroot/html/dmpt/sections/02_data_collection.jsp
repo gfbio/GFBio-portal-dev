@@ -177,12 +177,12 @@ The amount of data sets you will create is closely linked to your style of worki
 	<div class="row">
 	    <h4>What standards, methodologies or tools will you use to collect, manage and process your data?
 	    	<a href="https://gfbio.biowikifarm.net/wiki/Technical_Documentations" target="_blank">
-				<span class="icon-landing-flex icon-information4 info-blue" ></span>
+				<span class="icon-landing-flex icon-link info-blue" ></span>
 			</a>
 	    </h4>
 	    <div class="col-md-12">
 	    <!-- required -->
-	        <textarea id="methodologies" rows="5" cols="100" placeholder="There are many different ways of collecting, managing and processing research data. Try to document as detailed as possible and describe your workflows for data handling. Do you plan to use specific tools like Diversity Workbench or BExIS? Name common standards for data collection or methodologies you refer to."></textarea>
+	        <textarea id="methodologies" rows="5" cols="100" placeholder="There are many different ways of collecting, managing and processing research data. Try to document as detailed as possible and describe your workflows for data handling. Do you plan to use specific tools like Diversity Workbench or BExIS? Name common standards for data collection or methodologies you refer to. By clicking the link above you can find more information about tools and management systems in our wiki."></textarea>
 	    </div>
 	</div>
 </section>
