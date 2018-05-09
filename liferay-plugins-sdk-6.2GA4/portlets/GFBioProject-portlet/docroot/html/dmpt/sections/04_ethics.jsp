@@ -57,7 +57,10 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 		       	<select id="licenses" name="licenses" >
 		       	<option selected="selected" label="Select" value="default">Select</option>
 		           <c:forEach var="license" items="${licenses}">
-						<option value="${license.id}"><c:out value="${license.name}" /></option>
+						<option value="${license.id}">
+							<c:if test="${empty license.version}"><c:out value="${license.name}"/></c:if>
+							<c:if test="${not empty license.version}"><c:out value="${license.label}: ${license.name}-${license.version}" /></c:if>
+						</option>
 					</c:forEach>
 					<option value="none" >Not applicable</option>
 		       	</select>
@@ -72,7 +75,7 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 	       <div class="col-md-12" >
 		       <c:forEach var="lic" items="${licenses}">
 			       	<div id="licensemd-${lic.id}" class="meta-information" style="display: none;">
-			       		<input type="hidden" name="${lic.name}" />
+			       		<input type="hidden" name="$${lic.label}: ${lic.name}-${lic.version}" />
 						<a id="licenseurl-${lic.id}" href="${lic.url}" target="_blank" ><c:out value="${lic.url}" /></a>
 						<p id="licensedesc-${lic.id}" style="display: none;"><c:out value="${lic.description}" /></p>
 					</div>			

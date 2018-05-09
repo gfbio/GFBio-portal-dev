@@ -332,6 +332,17 @@ public class DMPTPortlet extends MVCPortlet {
 			_log.info("Service: " + services[i]);
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		String response = "Request sended!";
 		
 		resourceResponse.setContentType("text/html");

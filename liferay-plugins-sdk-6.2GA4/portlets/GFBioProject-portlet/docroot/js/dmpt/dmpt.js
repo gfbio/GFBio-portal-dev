@@ -502,7 +502,7 @@ function getInputAsJson() {
         metadataDesc = "",
         // 04 Ethics
         requirements = [],
-        license = $("#licenses option:selected").text(),
+        license = $("#licenses option:selected").text().trim(),
         accessRestriction = $("input[name='restriction']:checked").val(),
         accessDuration = "",
         accessReason = "",
@@ -924,14 +924,14 @@ function initializeWizard(dmptInput, id) {
 	}
 	
 	if (dmptInput.license) {
-		var found = false;
+		var found = false, 
+			license = dmptInput.license.name;
 		$("#licenses option").each(function () {
-			if ($(this).text() === dmptInput.license.name) {
-				$("#licenses").val($('#licenses option').filter(function () { return $(this).html() == dmptInput.license.name; }).val());
-				console.info("Id: " + $("#licenses").find("option[text='" + dmptInput.license.name + "']").val());
+			if ($(this).text().trim() === license) {
+				$("#licenses").val($('#licenses option').filter(function () { return $(this).html().trim() == license; }).val());
 				found = true;
 				// Show additional information - url
-				$("input[name='" + dmptInput.license.name + "']").parent().show();
+				$("input[name*='" + license + "']").parent().show();
 			}
 	    });
 		if (!found) {
