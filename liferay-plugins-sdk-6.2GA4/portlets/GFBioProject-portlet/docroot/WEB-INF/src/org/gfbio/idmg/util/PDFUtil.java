@@ -118,7 +118,12 @@ public class PDFUtil {
 		
 		String characteristics = "";
 		if (!isNullOrEmpty(userInput.getReproducible())) {
-			characteristics = characteristics.concat(userInput.getReproducible());
+			if (!characteristics.isEmpty()) {
+				characteristics = characteristics.concat(", ");
+			}
+			for (String s : userInput.getReproducible()) {
+				characteristics = characteristics.concat(s + ", ");
+			}
 		}
 		if (!isNullOrEmpty(userInput.getProjectTypes())) {
 			if (!characteristics.isEmpty()) {

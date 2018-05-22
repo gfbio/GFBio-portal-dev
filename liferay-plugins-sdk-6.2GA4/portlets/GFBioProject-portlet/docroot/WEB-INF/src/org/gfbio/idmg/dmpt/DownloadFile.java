@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import javax.portlet.PortletSession;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +40,10 @@ public class DownloadFile extends HttpServlet {
 		ByteArrayOutputStream byteStream = null;
 		PDDocument pdf = null;
 		
-		String json = (String) request.getSession(true).getAttribute("dmptInput");
+		String json = (String) request.getSession().getAttribute("dmptInput");
+		_log.info("JSON from Session: " + json);
 		String themePath = (String) request.getSession(true).getAttribute("themePath");
+		_log.info("Theme path: " + themePath);
 		
 		DMPTInput input;
 		Gson gson = new Gson();

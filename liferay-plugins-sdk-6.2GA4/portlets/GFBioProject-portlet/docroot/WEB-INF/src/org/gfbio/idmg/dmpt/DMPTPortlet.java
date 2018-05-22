@@ -140,9 +140,9 @@ public class DMPTPortlet extends MVCPortlet {
 			 			
 			// Set DMPTInput to PortletSession
 			PortletSession session = resourceRequest.getPortletSession();
-		    session.setAttribute("dmptInput", jsonInput, PortletSession.PORTLET_SCOPE);
+		    session.setAttribute("dmptInput", jsonInput, PortletSession.APPLICATION_SCOPE);
 		    // ThemePath needed in DownloadUtil
-		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.PORTLET_SCOPE);
+		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.APPLICATION_SCOPE);
 		    
 			response = "Parsing successful!";
 		} catch (JsonSyntaxException e) {
@@ -207,7 +207,7 @@ public class DMPTPortlet extends MVCPortlet {
 		}
 		
 		PortletSession session = resourceRequest.getPortletSession();
-		String jsonInput = (String) session.getAttribute("dmptInput");
+		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
 		//Not neccessary to convert?
 		//Gson gson = new Gson();
 		//DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
