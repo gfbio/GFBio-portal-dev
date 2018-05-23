@@ -30,10 +30,9 @@ public class DownloadFile extends HttpServlet {
 			throws IOException, ServletException {
 
 		String fName = request.getParameter("fileName"); // getting file name from request parameter
-		_log.info("fileName from request dmp" + fName);
+		_log.info("fileName from requested dmp: " + fName);
 
 		response.setContentType("application/pdf");
-		response.setHeader("Cache-Control", "max-age=3600, must-revalidate");
 		response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fName + "\"");
 
 		BufferedOutputStream output = null;
@@ -41,9 +40,7 @@ public class DownloadFile extends HttpServlet {
 		PDDocument pdf = null;
 		
 		String json = (String) request.getSession().getAttribute("dmptInput");
-		_log.info("JSON from Session: " + json);
 		String themePath = (String) request.getSession(true).getAttribute("themePath");
-		_log.info("Theme path: " + themePath);
 		
 		DMPTInput input;
 		Gson gson = new Gson();
