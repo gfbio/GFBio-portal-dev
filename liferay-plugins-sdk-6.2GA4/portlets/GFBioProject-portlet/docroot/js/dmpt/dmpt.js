@@ -154,7 +154,7 @@ function handleFunding(event) {
     'use strict';
     
     var selection = $(event.target).val();
-    if (selection !== "none" && selection !== "select") {
+    if (selection !== "none" && selection !== "Select") {
         $("#fundingLink").show("slow");
     } else {
         $("#fundingLink").hide();
@@ -535,6 +535,8 @@ function getInputAsJson() {
 
 	if (funding === "other") {
 		funding = $("#fundingOther").val();
+	} else if (funding === "Select") {
+		funding = "";
 	}
 	
 	$("input[name='policies']:checked").each(function () {
@@ -577,6 +579,8 @@ function getInputAsJson() {
 	
 	if (license === "Other License") {
 		license = $("#licenseOther").val();
+	} else if (license === "Select") {
+		license = "";
 	}
 
 	if (accessRestriction) {
@@ -783,20 +787,22 @@ function initializeWizard(dmptInput, id) {
 	}
 	
 	if (dmptInput.funding) {
-		var found = false;
+		var found = false,
+			funding = dmptInput.funding.name;
+		if (funding === "") funding = "Select";
 		$("#funding option").each(function () {
-			if ($(this).val() === dmptInput.funding.name) {
-				$("#funding").val(dmptInput.funding.name);
+			if ($(this).val() === funding) {
+				$("#funding").val(funding);
 				found = true;
 			}
 	    });
 		if (!found) {
 			$("#funding").val("other");
-			$("#fundingOther").val(dmptInput.funding.name);
+			$("#fundingOther").val(funding);
 			$("#fundingOther").show();
 		}
 		
-		if (dmptInput.funding.name !== "None" && dmptInput.funding.name !== "select") {
+		if (funding !== "None" && funding !== "Select") {
 			if (!isEmpty(dmptInput.fundingLink)) {
 				$("#fundingLink").val(dmptInput.fundingLink);
 				$("#fundingLink").show();
@@ -940,6 +946,7 @@ function initializeWizard(dmptInput, id) {
 	if (dmptInput.license) {
 		var found = false, 
 			license = dmptInput.license.name;
+		if (license === "") license = "Select";
 		$("#licenses option").each(function () {
 			if ($(this).text().trim() === license) {
 				$("#licenses").val($('#licenses option').filter(function () { return $(this).html().trim() == license; }).val());

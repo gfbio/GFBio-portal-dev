@@ -94,17 +94,6 @@ public class PDFUtil {
 		// 1 - General Information
 		printHeading("General Project Information");
 		
-//		_log.info("Y: " + yCoordinate);
-//		content.endText(); // End of text mode
-//
-//		float startX = page.getCropBox().getLowerLeftX() + 50;
-//		float endX = page.getCropBox().getUpperRightX() - 50;
-//		content.moveTo(startX, yCoordinate);
-//		content.lineTo(endX, yCoordinate);
-//		content.stroke();
-//
-//		content.beginText();
-		
 		printTitle("Project Name: ");
 		printLine(userInput.getProjectName());
 		
@@ -144,7 +133,7 @@ public class PDFUtil {
 		printTitle(title);
 		printMultiLineAnswer(userInput.getCoordinatedProgramme(), title, width);
 
-		printTitle("Part of a Research Rnit? ");
+		printTitle("Part of a Research Unit? ");
 		printSingleLineAnswer(yesOrNo(new Boolean(userInput.isResearchUnit())));
 		
 		printTitle("Volume of Research Proposal: ");
@@ -220,7 +209,7 @@ public class PDFUtil {
 		printTitle("Access Restriction");
 		printSingleLineAnswer(yesOrNo(userInput.getAccessRestriction()));
 
-		if (userInput.getAccessRestriction().booleanValue()) {
+		if (userInput.getAccessRestriction() != null && userInput.getAccessRestriction().booleanValue()) {
 			printSingleLineAnswer("How long: " + userInput.getAccessDuration());
 			printSingleLineAnswer("Reason: " + userInput.getAccessReason());
 		}
@@ -292,8 +281,6 @@ public class PDFUtil {
 	}
 	
 	private void printGFBioLogo() {
-		_log.info(themePath + "/gfbiologo-transparent_122_60.png");
-		
 		// Get GFBio Logo and print it to pdf document
 		try {
 			URL url = new URL(themePath + "/gfbiologo-transparent_122_60.png");
@@ -321,13 +308,12 @@ public class PDFUtil {
 		//Check First whether yCoordinate is too low after the heading
 		yCoordinate -= 2*leading;
 		if (yCoordinateTooLow(yCoordinate)) {
-			page = createNewPage();
+			page = createNextPage();
 		}
 		content.setFont(boldFont, 12);
 		content.setNonStrokingColor(51, 90, 163);
 		content.newLine();
 		content.showText(heading);
-		content.newLine();
 		content.newLine();
 	}
 	

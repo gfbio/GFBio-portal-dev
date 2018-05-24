@@ -215,7 +215,7 @@
 	    	
 	    	<div id="fundings" class="col-md-12">
 	        	<select id="funding" name="funding" >
-		            <option selected="selected" label="Select" value="" >Select</option>
+		            <option selected="selected" label="Select" value="Select" >Select</option>
 		          	<option value="individual" >DFG Individual Grants Programmes</option>
 		        	<option value="coordinated" >DFG Coordinated Programmes</option>
 		            <option value="excellence" >DFG Excellence Strategy</option>
