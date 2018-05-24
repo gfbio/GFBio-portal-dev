@@ -972,7 +972,7 @@ function initializeWizard(dmptInput, id) {
 				$("#accessReason").val(dmptInput.accessReason);
 			}
 			$("#accessYes").show();
-        } else {
+        } else if (dmptInput.accessRestriction === "false") {
             $("input[name='restriction'][value='false']").prop("checked", true);
         }
 	}
