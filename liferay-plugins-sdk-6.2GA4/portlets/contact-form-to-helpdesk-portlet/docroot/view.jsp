@@ -67,18 +67,18 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 		
 		
 		<liferay-ui:error key="emailFromNameRequired" message="please-enter-a-from-name" />	
-		<aui:input cssClass="lfr-input-text-container" label="name-from" name="fromName" value="<%= fromName %>" placeholder="Your Name..."/>
+		<aui:input cssClass="lfr-input-text-container" label="name-from" name="fromName" value="<%= fromName %>" placeholder="Your Name..." required="true"/>
 		
 	
 		
 		<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
 		<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />		
-		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..."/>
+		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..." required="true"/>
 		
 	
 		
 		<liferay-ui:error key="emailSubjectRequired" message="please-enter-a-subject" />
-		<aui:input cssClass="lfr-input-text-container" label="subject-from" name="fromSubject" value="<%= fromSubject %>" placeholder="Your Subject..."/>
+		<aui:input cssClass="lfr-input-text-container" label="subject-from" name="fromSubject" value="<%= fromSubject %>" placeholder="Your Subject..." required="true"/>
 		 	
 		
 
@@ -118,22 +118,16 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 					<p class="lfr-webform" id="<portlet:namespace /><%= fieldName %>"><%= HtmlUtil.escape(fieldOptions) %></p>
 				</c:when>
 				<c:when test='<%= fieldType.equals("text") %>'>
-					 	<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>">
-				        <aui:validator name='<%= fieldOptional ? "optional" : "required" %>' />
-				        <!--<aui:validator name="alpha" errorMessage="This field is required"/>-->
-				        </aui:input>
+					 	<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>"/>
+				         
 			    </c:when>
 				<c:when test='<%= fieldType.equals("textarea") %>'>
-					<aui:input cssClass='<%= "lfr-textarea-container" + (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" placeholder="Your Message..."  wrap="soft">
-				    <aui:validator name='<%= fieldOptional ? "optional" : "required" %>' />
-				    <!--<aui:validator name="alpha" errorMessage="This field is required"/>-->
-				    </aui:input>
+					<aui:input cssClass='<%= "lfr-textarea-container" + (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" placeholder="Your Message..."  wrap="soft"/>
+				   
 				</c:when>
 				<c:when test='<%= fieldType.equals("checkbox") %>'>
-					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>">
-				        <aui:validator name='<%= fieldOptional ? "optional" : "required" %>' />
-				        <!--<aui:validator name="alpha" errorMessage="This field is required"/>-->
-				    </aui:input>
+					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>" required="<%=!fieldOptional %>"/>
+				     
 				</c:when>
 				<c:when test='<%= fieldType.equals("radio") %>'>
 					<aui:field-wrapper cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>">
