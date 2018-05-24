@@ -274,7 +274,8 @@
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
 			
-			
+			<aui:input type="checkbox" id="dataPolicy" label="I-agree-to-the-data-policy-of-gfbio." name="dataPolicy" required="true"/>
+	
 	</aui:fieldset>
 
 	<aui:button-row>
