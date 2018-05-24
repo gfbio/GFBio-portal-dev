@@ -162,12 +162,6 @@ $(document).ready(function () {
 				window.open(contextPath + '/DownloadFile?fileName=' + fileName, '_blank');
 			});
 		    
-		    //$("#downloadDMPtest").click(function () {
-			//	var fileName = $("#name").val();
-			//	fileName = fileName.replace(/\s/g, "_");
-			//	window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
-			//});
-		    
 		    //Saving DMP
 		    $("#saveDMP").on("click", saveDMPforUser);
 		    

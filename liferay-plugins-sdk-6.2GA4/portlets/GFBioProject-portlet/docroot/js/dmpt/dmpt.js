@@ -532,7 +532,6 @@ function getInputAsJson() {
 	$("input[name='investigator']").each(function () {
 		investigators.push($(this).val());
     });
-	
 
 	if (funding === "other") {
 		funding = $("#fundingOther").val();

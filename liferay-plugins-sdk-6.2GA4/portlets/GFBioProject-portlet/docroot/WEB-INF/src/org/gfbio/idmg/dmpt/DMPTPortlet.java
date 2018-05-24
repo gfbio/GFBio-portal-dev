@@ -141,6 +141,7 @@ public class DMPTPortlet extends MVCPortlet {
 			// Set DMPTInput to PortletSession
 			PortletSession session = resourceRequest.getPortletSession();
 		    session.setAttribute("dmptInput", jsonInput, PortletSession.APPLICATION_SCOPE);
+		    _log.info("From Session:" + (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE));
 		    // ThemePath needed in DownloadUtil
 		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.APPLICATION_SCOPE);
 		    

@@ -87,7 +87,7 @@
 			        </label>
 	          	</div>
 	          	<div class="col-sm-12" style="margin-top: 10px;">
-	      			<textarea id="reproducibleText" rows="3" cols="100" placeholder="Add additional information (e.g. data reproduction might cause high costs or a lot of effort)."></textarea> 
+	      			<textarea id="reproducibleText" maxlength="1000" rows="3" cols="100" placeholder="Add additional information (e.g. data reproduction might cause high costs or a lot of effort)."></textarea> 
 	    		</div>
 	     	</div>
 		</div>
@@ -163,7 +163,7 @@
 		<div class="row">
 	    	<h4>Provide your project abstract or describe your work and the data involved.</h4>
 	        <div id="projectAbstract" class="col-md-12">
-	      		<textarea id="abstract" rows="5" cols="100" placeholder="Project Abstract"></textarea> 
+	      		<textarea maxlength="2000" id="abstract" rows="5" cols="100" placeholder="Project Abstract"></textarea> 
 	    	</div>
 		</div>
 		<div class="row">
@@ -215,7 +215,7 @@
 	    	
 	    	<div id="fundings" class="col-md-12">
 	        	<select id="funding" name="funding" >
-		            <option selected="selected" label="Select" value="select" >Select</option>
+		            <option selected="selected" label="Select" value="" >Select</option>
 		          	<option value="individual" >DFG Individual Grants Programmes</option>
 		        	<option value="coordinated" >DFG Coordinated Programmes</option>
 		            <option value="excellence" >DFG Excellence Strategy</option>
@@ -233,7 +233,7 @@
 		<div class="row">
 			<h4>If you are part of a coordinated programme (Koordinierte Programme, Verbundprojekte), is there any specific coordination, guideline or policy for data management?</h4>
 			<div class="col-md-12">
-	      		<textarea id="coordinatedProgramme" rows="3" cols="100" placeholder="Please describe the data management coordination of your programme. Who takes care of it? Is there a data management plan, guideline or policy on which all project members agree? If there are any documents available, please refer to them (by upload, link, DOI or full citation)."></textarea> 
+	      		<textarea id="coordinatedProgramme" maxlength="1000" rows="3" cols="100" placeholder="Please describe the data management coordination of your programme. Who takes care of it? Is there a data management plan, guideline or policy on which all project members agree? If there are any documents available, please refer to them (by upload, link, DOI or full citation)."></textarea> 
 	    	</div>
 		</div>
 		<div class="row">

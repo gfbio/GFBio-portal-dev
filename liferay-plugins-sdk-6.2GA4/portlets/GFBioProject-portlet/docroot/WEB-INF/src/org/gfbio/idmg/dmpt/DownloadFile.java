@@ -55,7 +55,8 @@ public class DownloadFile extends HttpServlet {
 		}
 		
 		try {
-			pdf = PDFUtil.createPDF(fName, input, themePath);
+			PDFUtil putil = new PDFUtil(input, themePath);
+			pdf = putil.createPDF();
 			byteStream = new ByteArrayOutputStream();
 			pdf.save(byteStream);
 			

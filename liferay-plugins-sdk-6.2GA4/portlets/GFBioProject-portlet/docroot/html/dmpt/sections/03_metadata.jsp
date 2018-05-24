@@ -33,7 +33,7 @@ If you don't know which metadata standard to choose, please select 'other' and d
 				</c:forEach>
 			</div>
 			<div class="col-md-12">
-				<textarea id="metadataDesc" rows="3" cols="100" placeholder="Describe your type of documentation which will accompany the data."></textarea>
+				<textarea id="metadataDesc" maxlength="1000" rows="3" cols="100" placeholder="Describe your type of documentation which will accompany the data."></textarea>
 			</div>
 		</div>
 	</div>

@@ -12,7 +12,7 @@
 				</a>
 			</h4>
 			<div class ="col-md-12">
-				<textarea id="backup" rows="5" cols="100" placeholder="Please explain as detailed as possible."></textarea>
+				<textarea id="backup" maxlength="1000" rows="5" cols="100" placeholder="Please explain as detailed as possible."></textarea>
 			</div>
 		</div>
 		<div class="row">
