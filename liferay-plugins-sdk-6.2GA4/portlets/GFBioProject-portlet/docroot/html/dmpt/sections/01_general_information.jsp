@@ -257,7 +257,7 @@
 			</div>
 		</div>
 		<div class="row">
-	    	<h4>Which policies or guideliness for research data management will you follow?
+	    	<h4>Which policies or guidelines for research data management will you follow?
 	    		<a name="title" title="Does your institution or your funder have certain data management policies or guidelines?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>

@@ -142,14 +142,9 @@ public class PDFUtil {
 		title = "Relevant Policies and Guidelines: ";
 		printTitle(title);
 		printMultiLineAnswer(userInput.getAllPolicies(), title, width);
-		String otherPolicy = "";
-		if (!isNullOrEmpty(userInput.getPolicyOther())) {
-			otherPolicy = userInput.getPolicyOther();
-		}
 		if (!isNullOrEmpty(userInput.getPolicyLink())) {
-			otherPolicy = otherPolicy.concat(", " + userInput.getPolicyLink());
+			printSingleLineAnswer(userInput.getPolicyLink(), false);
 		}
-		printSingleLineAnswer(otherPolicy, false);
 		
 		// 2 - Data Collection
 		printHeading("Data Collection");
@@ -339,7 +334,7 @@ public class PDFUtil {
 			toggleTextColorAndType(content, false);
 			String printString = createCommaSeperatedString(answers);
 			printString = printString.replaceAll(", $", "");
-			 printMultiLineAnswer(printString, title, width);
+			printMultiLineAnswer(printString, title, width);
 		} else {
 			printLine("-/-");
 		}

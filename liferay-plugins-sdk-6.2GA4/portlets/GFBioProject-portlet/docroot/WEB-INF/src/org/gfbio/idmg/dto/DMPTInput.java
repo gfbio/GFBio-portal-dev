@@ -29,7 +29,6 @@ public class DMPTInput implements Serializable {
 	private String researchProposal;
 	private List<GPolicy> policies; //Kommt aus DB
 	private String policyLink;
-	private String policyOther;
 	
 	// Data Collection
 	private Boolean physical;
@@ -66,9 +65,6 @@ public class DMPTInput implements Serializable {
 		List<String> list = new ArrayList<>();
 		for (GPolicy p : policies) {
 			list.add(p.getName());
-		}
-		if (policyOther != null && policyOther != "") {
-			list.add(policyOther);
 		}
 		return list;
 	}

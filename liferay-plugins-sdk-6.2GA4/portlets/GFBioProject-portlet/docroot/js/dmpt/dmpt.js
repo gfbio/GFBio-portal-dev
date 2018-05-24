@@ -545,7 +545,9 @@ function getInputAsJson() {
 	
 	if ($.inArray("Other", policies) > -1) {
 		policies.splice($.inArray("Other", policies), 1);
-		policies.push($("#policyOther").val());
+		if ($("#policyOther").val() !== "") {
+			policies.push($("#policyOther").val());
+		}
 		policyLink = $("#policyLink").val();
 	}
 	
@@ -825,6 +827,7 @@ function initializeWizard(dmptInput, id) {
 	
 	if (dmptInput.policies) {
 		var policies = dmptInput.policies;
+		console.log("Policies " + dmptInput.policies);
 		for (i = 0; i < policies.length; i++) {
 			var found = false;
 			$("input[name='policies']").each(function () {
@@ -835,14 +838,12 @@ function initializeWizard(dmptInput, id) {
             });
 			if (!found) {
 				$("input[name='policies'][value='Other']").prop("checked", true);
+				$("#policyLink").show();
 				if (!isEmpty(dmptInput.policyLink)) {
 					$("#policyLink").val(dmptInput.policyLink);
-					$("#policyLink").show();
 				}
-				if (!isEmpty(dmptInput.policyOther)) {
-					$("#policyOther").val(policies[i].name);
-					$("#policyOther").show();
-				}
+				$("#policyOther").show();
+				$("#policyOther").val(policies[i].name);
 			}
 		}
 	}
