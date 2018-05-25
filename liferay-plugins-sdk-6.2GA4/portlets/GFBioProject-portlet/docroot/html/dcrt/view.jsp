@@ -4,8 +4,8 @@
 <script src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"	type="text/javascript"></script>
 
 <link href="<%=request.getContextPath()%>/css/idmg/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/idmg/spinner.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/dcrt/spinner.css" rel="stylesheet" type="text/css">
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
