@@ -5,6 +5,7 @@
 <script src="<%=request.getContextPath()%>/js/dmpt/dmpt.js"	type="text/javascript"></script>
 
 <link href="<%=request.getContextPath()%>/css/idmg/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/idmg/spinner.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/jquery-steps.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
@@ -21,7 +22,6 @@ var userEmail = '${email}';
 var userName = '${username}';
 var contextPath = '${contextPath}';
 var userHasDmps = '${hasDmps}';
-var dmps = '${dmpsforuser}';
 
 $(document).ready(function () {
 	
@@ -361,8 +361,11 @@ function openSendRequestDialog() {
 	    modal: true,
 	    resizable: false,
 	    dialogClass: "request-dialog custom-dialog",
+	    title: "Data Management Plan Request",
 	    buttons: {
 	      "Send DMP Support Request": function () {
+	    	$("#send-request").hide();  
+	    	$('#dialogLoader').show();
 	    	sendRequest();
 	        //Do something
 	      },
@@ -374,15 +377,18 @@ function openSendRequestDialog() {
 }
 
 function sendRequest() {
-	var services = new Array;
+	var services = new Array,
+		information;
 	services = getServices();
+	information = $("#additinal-text").val();
 	console.info("Services: " + services);
 	
 	$.ajax({
    		"method": "POST",
    		"url": '<%=ajaxUrlSend%>',
    		"data": {
-   			services: services
+   			services: services,
+   			infos: information
    		},
    		success: function (response) {
 			console.log("Response: " + response);

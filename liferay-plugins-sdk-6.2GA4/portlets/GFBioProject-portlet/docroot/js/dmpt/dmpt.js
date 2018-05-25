@@ -492,7 +492,7 @@ function getInputAsJson() {
         phoneNumber = $("#phone").val(),
         email = $("#email").val(),
         investigators = [],
-        funding = $("#funding").val(),
+        funding = $("#funding option:selected").text(),
         fundingLink = $("#fundingLink").val(),
         coordinatedProgramme = $("#coordinatedProgramme").val(),
         researchUnit = $("#researchUnit").prop("checked"),
@@ -719,7 +719,7 @@ function getInputAsJson() {
 		dmptInput.dataArchives = dataArchives;
 	}
 	
-	//console.log("Json:", dmptInput);
+	console.log("Json:", dmptInput);
 	return JSON.stringify(dmptInput);
 }
 
@@ -820,7 +820,7 @@ function initializeWizard(dmptInput, id) {
 		if (funding === "") funding = "Select";
 		$("#funding option").each(function () {
 			if ($(this).val() === funding) {
-				$("#funding").val(funding);
+				$(this).prop("selected", true);
 				found = true;
 			}
 	    });

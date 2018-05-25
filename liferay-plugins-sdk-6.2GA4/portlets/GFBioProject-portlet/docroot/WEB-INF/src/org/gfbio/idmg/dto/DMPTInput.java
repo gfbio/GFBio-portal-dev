@@ -73,7 +73,7 @@ public class DMPTInput implements Serializable {
 	public List<String> getAllMetadata() {
 		List<String> list = new ArrayList<>();
 		for (GMetadata m : metadata) {
-			list.add(m.getName() + " (" + m.getVersion() + ")");
+			list.add(m.getName());
 		}
 		return list;
 	}
