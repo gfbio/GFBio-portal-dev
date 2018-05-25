@@ -306,6 +306,18 @@ function handleRestriction(event) {
 	}
 }
 
+function handleSubmission(event) {
+	'use strict';
+	
+	var other = $("#submitOther");
+	if ($(event.target).is(':checked')) {
+		other.show("slow");
+	} else {
+		other.hide();
+		other.val("");
+	}
+}
+
 function handleArchives(event) {
 	'use strict';
 	
@@ -507,6 +519,7 @@ function getInputAsJson() {
         accessDuration = "",
         accessReason = "",
         // 05 Preservation
+        dataSubmissions = [],
         backup = $("#backup").val(),
         dataArchives = [],
         pid = $("input[name='pid']:checked").val();
@@ -591,6 +604,14 @@ function getInputAsJson() {
 	}
 	
 	// 05 Preservation
+	$("input[name='dataSubmission']:checked").each(function () {
+		dataSubmissions.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other submission plan", dataSubmissions) > -1) {
+		dataSubmissions.splice($.inArray("Other submission plan", dataSubmissions), 1);
+		dataSubmissions.push($("#submitOther").val());
+	}
+	
 	$("input[name='archives']:checked").each(function () {
 		dataArchives.push($(this).siblings('span').text());
     });
@@ -643,6 +664,7 @@ function getInputAsJson() {
 			"accessDuration" : accessDuration,
 			"accessReason" : accessReason,
 			// 05 Preservation
+			"dataSubmissions" : [],
 			"backup" : backup,
 			"dataArchives" : [],
 			"pid" : pid
@@ -689,11 +711,15 @@ function getInputAsJson() {
 		});
 	}
 	
+	if (dataSubmissions) {
+		dmptInput.dataSubmissions = dataSubmissions;
+	}
+	
 	if (dataArchives) {
 		dmptInput.dataArchives = dataArchives;
 	}
 	
-	console.log("Json:", dmptInput);
+	//console.log("Json:", dmptInput);
 	return JSON.stringify(dmptInput);
 }
 
@@ -827,7 +853,6 @@ function initializeWizard(dmptInput, id) {
 	
 	if (dmptInput.policies) {
 		var policies = dmptInput.policies;
-		console.log("Policies " + dmptInput.policies);
 		for (i = 0; i < policies.length; i++) {
 			var found = false;
 			$("input[name='policies']").each(function () {
@@ -979,6 +1004,24 @@ function initializeWizard(dmptInput, id) {
 	}
 	
 	// 05 Preservation
+	if (dmptInput.dataSubmissions) {
+		var dataSubmissions = dmptInput.dataSubmissions;
+		for (i = 0; i < dataSubmissions.length; i++) {
+			var found = false;
+			$("input[name='dataSubmission']").each(function () {
+				if ($(this).siblings('span').text() === dataSubmissions[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				}
+			});
+			if (!found) {
+				$("input[name='dataSubmission'][value='Other submission plan']").prop("checked", true);
+				$("#submitOther").val(dataSubmissions[i]);
+				$("#submitOther").show();
+			}
+		}
+	}
+	
 	if (!isEmpty(dmptInput.backup)) {
 		$("#backup").val(dmptInput.backup);
 	}

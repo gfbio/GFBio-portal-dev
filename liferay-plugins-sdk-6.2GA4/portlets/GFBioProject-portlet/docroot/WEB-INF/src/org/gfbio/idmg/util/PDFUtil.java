@@ -212,6 +212,10 @@ public class PDFUtil {
 		// 5 - Preservation and Sharing
 		printHeading("Preservation and Sharing");
 		
+		title = "Data Submission to GFBio: ";
+		printTitle(title);
+		printMultiLineAnswer(userInput.getDataSubmissions(), title, width);
+		
 		title = "Data Backup: ";
 		printTitle(title);
 		printMultiLineAnswer(userInput.getBackup(), title, width);

@@ -42,7 +42,7 @@
 					Only logged in users can save their inputs at the end of the wizard. Please <a href="${portalurl}/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to enable the feature.
 				</div>
 			</div>
-			<h4>What's the official name of your research project? *</h4>
+			<h4>What is the official name of your research project? *</h4>
 	        <div class="col-md-12">
 	        	<input id="dmpId" type="hidden" value="0"/>
 				<input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
@@ -70,7 +70,7 @@
 	      	<div id="nature">
 	      		<div class="col-xs-12 col-sm-4">
 	            	<label class="mod-cb">
-	            		<input name="reproducible" type="checkbox" value="Onetime observation" />
+	            		<input name="reproducible" type="checkbox" value="One-time observation" />
 	            		<span title="A one-time observation might for example be a gray seal count in the German wadden sea in June 2006 or a DNA analysis without sample storage.">Onetime observation</span>
 	            	</label>
 	     		</div>
@@ -82,7 +82,7 @@
 	          	</div>
 	          	<div class="col-xs-12 col-sm-4">
 			        <label class="mod-cb">
-				        <input name="reproducible" type="checkbox" value="Time Series" />
+				        <input name="reproducible" type="checkbox" value="Time series" />
 				        <span title="A time series (observation) is a series of one-time observations and might for example be the periodic raw counts of slugs in Sweden during the years 1956-1996 or	daily measurements of precipitation and air temperature.">Time Series</span>
 			        </label>
 	          	</div>
@@ -155,7 +155,7 @@
 	                </div>
 	            </div>
 	            <div class="col-md-12">
-	            		<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
+            		<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
 	            </div>
 	        </div>
 	        
@@ -237,14 +237,14 @@
 	    	</div>
 		</div>
 		<div class="row">
-			<h4>Are you part of a research unit (Forschergruppe)?
+			<h4>Are you a member of a research unit (Forschergruppe)?
 	    		<a href="http://www.dfg.de/en/research_funding/programmes/coordinated_programmes/research_units/index.html" target="_blank">
-					<span class="icon-landing-flex icon-information4 info-blue" ></span>
+					<span class="icon-landing-flex icon-link info-blue" ></span>
 				</a>
 	    	</h4>
 	    	<div class="col-md-12">
 				<input id="researchUnit" type="checkbox" />
-				<span>I am part of a research unit (Forschergruppe).</span>
+				<span>I am a member of a research unit (Forschergruppe).</span>
 			</div>
 		</div>
 		<div class="row">

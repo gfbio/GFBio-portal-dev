@@ -150,6 +150,9 @@ $(document).ready(function () {
 		    $("#accessYes").hide();
 		    
 		    //05 Preservation and Sharing
+		    $("#submit-cb").on("click", handleSubmission);
+		    $("#submitOther").hide();
+		    
 		    $("#archives-cb").on("click", handleArchives);
 		    $("#archiveOther").hide();
 		    
@@ -226,7 +229,7 @@ $(document).ready(function () {
 function getInput() {
 	
 	var jsonInput = getInputAsJson();
-	console.log("Send: " + jsonInput);
+	//console.log("Send: " + jsonInput);
 	
     $.ajax({
 	   		"method": "POST",
@@ -235,7 +238,7 @@ function getInput() {
 	   			json: jsonInput
 	   		},
 	   		success: function (text) {
-	          	console.log(text);
+	          	console.log(text); //TODO
 	      	}
     });
 }
@@ -253,7 +256,7 @@ function saveDMPforUser() {
 	   			dmpId: dmpId
 	   		},
 	   		success: function (response) {
-	          	console.log("Save Answer: " + response);
+	          	console.log("Saving Response: " + response); //TODO
 	          	
 	          	if (response.includes("success")) {
 		          	$("#saveDMP").prop("disabled", true);
@@ -334,7 +337,6 @@ function openDeleteLoadDialog(response) {
 
 function loadDmp() {
 	var dmpId = $("#dmps").val();
-	console.log("Load dmp with Id: " + dmpId);
 	
 	$.ajax({
    		"method": "POST",
@@ -343,10 +345,8 @@ function loadDmp() {
    			dmpId: dmpId
    		},
    		success: function (response) {
-   			//console.log("JSON: " + response);
           	var selectedDmp = JSON.parse(response);
-   			//console.log("Selected: ", selectedDmp);
-			console.log("Name: " + selectedDmp.projectName);
+			console.log("Loaded: " + selectedDmp.projectName);
    			initializeWizard(selectedDmp, dmpId);
    			showGeneralInformation();
       	},

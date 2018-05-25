@@ -54,6 +54,7 @@ public class DMPTInput implements Serializable {
 	private String accessReason;
 	
 	// Preservation and Sharing
+	private List<String> dataSubmissions;
 	private String backup;
 	private List<String> dataArchives; //Vielleicht aus DB?
 	private String pid;
