@@ -166,7 +166,7 @@ $(document).ready(function () {
 			});
 		    
 		    //Saving DMP
-		    $("#saveDMP").on("click", saveDMPforUser);
+		    $("#saveDMP").on("click", saveDMP);
 		    
 		    if(!Liferay.ThemeDisplay.isSignedIn()) {
 		    	$("#save-message").show();
@@ -243,6 +243,10 @@ function getInput() {
     });
 }
 
+function saveDMP() {
+	openSavedDialog(saveDMPforUser());
+}
+
 function saveDMPforUser() {
 	
 	var projectName = $("#name").val(),
@@ -263,9 +267,10 @@ function saveDMPforUser() {
 		          	$("#saveDMP").addClass("wizarddisabled");
 		          	$("#saveDMP").val("Saved");
 	          	}
-	          	openSavedDialog(response);
+	          	
 	      	}
  	});
+	return respone;
 }
 
 function openSavedDialog(response) {
@@ -366,8 +371,8 @@ function openSendRequestDialog() {
 	      "Send DMP Support Request": function () {
 	    	$("#send-request").hide();  
 	    	$('#dialogLoader').show();
-	    	sendRequest();
-	        //Do something
+	    	$('#dialog-request').dialog('option', 'buttons', {} )
+			sendRequest();
 	      },
 	      Cancel: function () {
 		   	$( this ).dialog( "close" );  
@@ -390,10 +395,34 @@ function sendRequest() {
    			services: services,
    			infos: information
    		},
-   		success: function (response) {
-			console.log("Response: " + response);
-      	},
+   		success : function(text) {
+			answer("#successAnswer", text);
+		},
+		error : function(text) {
+			answer("#errorAnswer", text);
+		}
 	});
+	// Saving the dmp automatically after the request
+	saveDMPforUser();
+}
+
+function answer(element, response) {
+	//console.info(response);
+	sleep(2000).then(function() {
+		$("#dialogLoader").hide();
+		$(element).show();
+		$('#dialog-request').dialog('option', 'buttons', {
+	    	'Ok': function() {
+	        	$(this).dialog('close');
+	    	}
+		});
+	});
+}
+
+function sleep (time) {
+  	return new Promise(function(resolve) { 
+  		return setTimeout(resolve, time);
+  	});
 }
 
 </script>

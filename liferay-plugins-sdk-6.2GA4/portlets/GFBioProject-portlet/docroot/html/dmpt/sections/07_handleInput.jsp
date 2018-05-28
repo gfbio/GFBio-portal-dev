@@ -30,6 +30,7 @@
 <div id="dialog-request" style="display: none;">
 	<div id="send-request" class="row" >
 		<form id="dialogForm">
+			<h5>Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.</h5>
 			<div class="col-md-12">
 				<textarea id="additinal-text" maxlength="1000" rows="5" cols="100"
 					placeholder="Would you like to send any additional information or do you have any questions?"></textarea>
@@ -41,54 +42,55 @@
 			<div class="col-md-12">
 				<div>
 					<input name="gfbio_services" type="checkbox" value="Data Collection and Assurance" /> 
-					<span>Data Collection and Assurance</span> 
+					<label>Data Collection and Assurance</label> 
 					<a target="_blank" href="/about/services#service-datacollection">
 						<span class="icon-landing-flex icon-link info-grey"></span>
 					</a>
 				</div>
 				<div>
 					<input name="gfbio_services" type="checkbox" value="Data Curation" />
-					<span>Data Curation</span>
+					<label>Data Curation</label>
 					<a target="_blank" href="/about/services#service-datacuration">
 						<span class="icon-landing-flex icon-link info-grey"></span>
 					</a>
 				</div>
 				<div>
 					<input name="gfbio_services" type="checkbox" value="Data Archiving" />
-					<span>Data Archiving</span>
+					<label>Data Archiving</label>
 					<a target="_blank" href="/about/services#service-dataarchiving">
 						<span class="icon-landing-flex icon-link info-grey"></span>
 					</a>
 				</div>
 				<div>
 					<input name="gfbio_services" type="checkbox" value="Data Visualization and Analysis" />
-					<span>Data Visualization and Analysis</span>
+					<label>Data Visualization and Analysis</label>
 					<a target="_blank" href="/about/services#service-dataintegration">
 						<span class="icon-landing-flex icon-link info-grey"></span>
 					</a>
 				</div>
 				<div>
 					<input name="gfbio_services" type="checkbox" value="Data Publication" />
-					<span>Data Publication</span>
+					<label>Data Publication</label>
 					<a target="_blank" href="/about/services#service-datapublication">
 						<span class="icon-landing-flex icon-link info-grey"></span>
 					</a>
 				</div>
 				<div>
 					<input name="gfbio_services" type="checkbox" value="Terminology Service" />
-					<span>Terminology Service</span>
+					<label>Terminology Service</label>
 					<a target="_blank" href="/about/services#service-terminologyservice">
 						<span class="icon-landing-flex icon-link info-grey"></span>
 					</a>
 				</div>
 				<div>
 					<input name="gfbio_services" type="checkbox" value="Data Management Training" />
-					<span>Data Management Training</span>
+					<label>Data Management Training</label>
 					<a target="_blank" href="/about/services#service-datamanagementtraining">
 						<span class="icon-landing-flex icon-link info-grey"></span>
 					</a>
 				</div>
 			</div>
+			
 		</form>
 	</div>
 	<jsp:include page="../../idmg/loading_spinner.jsp" />

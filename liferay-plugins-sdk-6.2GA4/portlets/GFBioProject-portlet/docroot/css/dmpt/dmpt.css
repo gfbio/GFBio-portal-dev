@@ -192,6 +192,7 @@ h4 {
 }
 
 .ui-dialog.custom-dialog .ui-widget-header {
+	color: white;
 	border-radius: 3px;
 	background: #2c59a0;
 }
@@ -295,4 +296,25 @@ a[name=title] {
   padding-left: 0;
   padding-right: 25px;
   text-align: right;
+}
+
+/* Dialog answer */
+
+.answer-wrapper {
+  width: auto;
+  height: 80px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  text-align: center;
+}
+
+.answer-wrapper img {
+	height: 45px;
+}
+
+.answer-wrapper p {
+	margin: 5px 0 5px !important;
 }

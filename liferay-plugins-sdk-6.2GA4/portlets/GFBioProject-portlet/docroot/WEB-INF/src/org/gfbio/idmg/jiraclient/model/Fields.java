@@ -28,22 +28,22 @@ public class Fields {
 	// DMPT Fields
 	// Project Name
 	public String customfield_10206;
-	// Project Description
+	// Project Abstract
 	public String customfield_10301;
-	// Principal Investigator
-	public String customfield_10207;
+	// Principal Investigators
+	public String customfield_10204; 
 	// Funding
-	public Customfield_10223 customfield_10223;
+	// public Customfield_10223 customfield_10223; not up to date
 	// Project Type
-	public Customfield_10220 customfield_10220;
+	// public Customfield_10220 customfield_10220; not up to date
 	// Project Work Types
-	public List<Customfield_10221> customfield_10221;
+	// public List<Customfield_10221> customfield_10221; not up to date
 	// Project Data Contact
-	public String customfield_10222;
+	// public String customfield_10222; not up to date
 	// Data License
-	public Customfield_10202 customfield_10202;
+	// public Customfield_10202 customfield_10202; not up to date
 	// Physical Objects
-	public Customfield_10214 customfield_10214;
+	// public Customfield_10214 customfield_10214; not up to date
 	
 	
 	public Fields(Project project, String summary, IssueType issuetype, Reporter reporter, String description,
@@ -62,8 +62,7 @@ public class Fields {
 	
 	public Fields(Project project, String summary, IssueType issuetype, Reporter reporter, String description,
 			Assignee assignee, String customfield_10010, String customfield_10206, String customfield_10301, 
-			String customfield_10207, Customfield_10223 customfield_10223, Customfield_10220 customfield_10220, List<Customfield_10221> customfield_10221,
-			String customfield_10222, Customfield_10202 customfield_10202, Customfield_10214 customfield_10214) {
+			String customfield_10204) {
 		this.project = project;
 		this.summary = summary;
 		this.issuetype = issuetype;
@@ -73,12 +72,12 @@ public class Fields {
 		this.customfield_10010 = customfield_10010;
 		this.customfield_10206 = customfield_10206;
 		this.customfield_10301 = customfield_10301;
-		this.customfield_10207 = customfield_10207;
-		this.customfield_10223 = customfield_10223;
-		this.customfield_10220 = customfield_10220;
-		this.customfield_10221 = customfield_10221;
-		this.customfield_10222 = customfield_10222;
-		this.customfield_10202 = customfield_10202;
-		this.customfield_10214 = customfield_10214;
+		this.customfield_10204 = customfield_10204;
+		//this.customfield_10223 = customfield_10223;
+		//this.customfield_10220 = customfield_10220;
+		//this.customfield_10221 = customfield_10221;
+		//this.customfield_10222 = customfield_10222;
+		//this.customfield_10202 = customfield_10202;
+		//this.customfield_10214 = customfield_10214;
 	}
 }

@@ -3,6 +3,7 @@ package org.gfbio.idmg.dmpt;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -248,7 +249,7 @@ public class DMPTPortlet extends MVCPortlet {
 				
 				if (userId == plan.getUserID()) {
 					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
-					response = "The data managemant plan was saved successfully.";
+					response = "The data managemant plan has been saved successfully.";
 					_log.info("DMP saved in database with id " + plan.getDmpID() + "!");
 				} else {
 					_log.error("The userId of the dmp is different from the userId in the portletsession!");
@@ -344,7 +345,7 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		// Get Request Parameter
 		String[] services = resourceRequest.getParameterValues("services[]");
-		String message = (String) resourceRequest.getAttribute("infos");
+		String message = (String) resourceRequest.getParameter("infos");
 		for (int i = 0; i < services.length; i++) {
 			_log.info("Service: " + services[i]);
 		}
@@ -359,26 +360,27 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		// Set Customfields
 		String projectName = input.getProjectName();
-		String description = "";
+		String projectAbstract = input.getProjectAbstract();
+		String description = message.concat(" - " + createCommaSeperatedString(Arrays.asList(services)));
 		String principalInvestigator = createCommaSeperatedString(input.getInvestigators());
-		String funding = input.getFunding().getName();
+//		String funding = input.getFunding().getName();
+//		
+//		String projectType = createCommaSeperatedString(input.getReproducible());
+//		List<Customfield_10221> projectWorkTypes = new ArrayList<>();
+//		for (String type : input.getProjectTypes()) {
+//			projectWorkTypes.add(new Customfield_10221(type));
+//		}
 		
-		String projectType = createCommaSeperatedString(input.getReproducible());
-		List<Customfield_10221> projectWorkTypes = new ArrayList<>();
-		for (String type : input.getProjectTypes()) {
-			projectWorkTypes.add(new Customfield_10221(type));
-		}
+//		String projectDataContact = input.getResponsibleName();
+//		String dataLicense = input.getLicense().getName();
 		
-		String projectDataContact = input.getResponsibleName();
-		String dataLicense = input.getLicense().getName();
-		
-		String physicalObjects = "";
-		if (input.getPhysical() != null) {
-			physicalObjects = input.getPhysical().toString();
-		}
+//		String physicalObjects = "";
+//		if (input.getPhysical() != null) {
+//			physicalObjects = input.getPhysical().toString();
+//		}
 		
 		// Create Issue
-		//PropsUtil reads the property from portal-ext.properties
+		// PropsUtil reads the property from portal-ext.properties
 		Project project = new Project(PropsUtil.get("jira.gfbio.dmpt.projectkey"));
 		IssueType issuetype = new IssueType("DMP");
 		Reporter reporter = new Reporter("testuser1");
@@ -401,9 +403,8 @@ public class DMPTPortlet extends MVCPortlet {
 		// Set assignee for the ticket
 		Assignee assignee = new Assignee(user);
 
-		Fields fields = new Fields(project, summary, issuetype, reporter, message, assignee, customfield_10010,
-				projectName, description, principalInvestigator, new Customfield_10223(funding), new Customfield_10220(projectType), projectWorkTypes, 
-				projectDataContact, new Customfield_10202(dataLicense), new Customfield_10214(physicalObjects));
+		Fields fields = new Fields(project, summary, issuetype, reporter, description, assignee, customfield_10010,
+				projectName, projectAbstract, principalInvestigator);
 		Issue issue = new Issue(fields);
 
 		// JIRA Request
@@ -411,7 +412,7 @@ public class DMPTPortlet extends MVCPortlet {
 		JIRAApi jiraApi = new JIRAApi(communicator);
 
 		String response = jiraApi.createDataCenterTicket(issue);
-		_log.info(response);
+		_log.info("Response: " + response);
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
