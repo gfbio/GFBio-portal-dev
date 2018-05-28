@@ -16,7 +16,7 @@ INSERT INTO gfbio_head (headid, table_name, table_type, description, lastmodifie
 
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_dataprovider_persistentidentifier')),'gfbio_dataprovider');
 INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_dataprovider_persistentidentifier')),'gfbio_persistentidentifier');
-INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_externalperson')),'lastmodifieddate');
+INSERT INTO gfbio_column (columnid, headid, column_name)VALUES(getNewColumnId(),(select getHeadIdByName('gfbio_dataprovider_persistentidentifier')),'lastmodifieddate');
 
 
 

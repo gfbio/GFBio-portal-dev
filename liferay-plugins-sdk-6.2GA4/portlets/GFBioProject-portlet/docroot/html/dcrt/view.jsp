@@ -4,8 +4,8 @@
 <script src="<%=request.getContextPath()%>/js/dcrt/dcrt.js"	type="text/javascript"></script>
 
 <link href="<%=request.getContextPath()%>/css/idmg/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/idmg/spinner.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dcrt/dcrt.css" rel="stylesheet" type="text/css">
-<link href="<%=request.getContextPath()%>/css/dcrt/spinner.css" rel="stylesheet" type="text/css">
 
 <portlet:resourceURL var="ajaxUrlRadio" id="radio" />
 <portlet:resourceURL var="ajaxUrlCategory" id="category" />
@@ -162,7 +162,6 @@ function openConfirmDialog(btnId) {
 	
 	var btn = $(btnId);
 	var dataCenter = btn.parent().parent().find("span[name='dataCenter']").attr("id");
-	console.log("DataCenter: " + dataCenter);
 	
 	var confirmDialog = $("#dialog-confirm").dialog({
 		autoOpen: false,
@@ -221,13 +220,13 @@ function clearForm() {
 
 function getDataCenterList() {
 	
-	var list = []
+	var list = [];
 	var data = $("span[name='dataCenter']");
-	console.info("Data: " + data);
+	//console.info("Data: " + data);
 	
 	$.each( data, function( index ) {
 		list.push($(this).attr("id"));
-		console.info("index: " + $(this).attr("id"));
+		//console.info("index: " + $(this).attr("id"));
 	})
 	
 	return list;
@@ -341,57 +340,7 @@ function submissionRequest(btnId) {
 				placeholder="Your Message"></textarea>
 		</fieldset>
 	</form>
-	<div id="dialogLoader" style="display: none">
-		<div class="answer-wrapper">
-			<svg viewBox="0 0 120 120" version="1.1"
-				xmlns="http://www.w3.org/2000/svg"
-				xmlns:xlink="http://www.w3.org/1999/xlink">
-      
-			      <symbol id="s--circle">
-			        <circle r="10" cx="20" cy="20"></circle>
-			      </symbol>
-			      
-			      <g class="g-circles g-circles--v1">
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>  
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			        <g class="g--circle">
-			          <use xlink:href="#s--circle" class="u--circle" />
-			        </g>
-			      </g>
-			  </svg>
-		</div>
-	</div>
+	<jsp:include page="../idmg/loading_spinner.jsp" />
 	<div id="successAnswer" style="display: none;">
 		<div class="answer-wrapper">
 			<img alt="Icon Check"

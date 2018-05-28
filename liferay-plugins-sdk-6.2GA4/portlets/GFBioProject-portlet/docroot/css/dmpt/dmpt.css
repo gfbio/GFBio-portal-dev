@@ -7,18 +7,25 @@ div#persistentIdentifier > label {
 	display: block;
 }
 
+div#dataSubmit > div {
+    margin-bottom: 5px;
+}
+
 input[type=radio] {
 	display: inline !important;
 }
 
 input[type=text], 
 input[type=tel], 
+input[type=number], 
 input[type=email] 
 {
     width: 100%;
     margin-bottom: 5px;
     border: 1px solid lightgrey;
 }
+
+/* Buttons */
 
 input[type=button] {
 	border: 1px solid lightgrey;
@@ -38,6 +45,8 @@ input[type=checkbox]
 input[name=services] {
 	margin-bottom: 20px;
 }
+
+/* Dropdowns */
 
 select {
 	border: 1px solid lightgrey;
@@ -172,17 +181,22 @@ h4 {
     border: none !important;
 }
 
-.ui-dialog.answer-dialog {
+.ui-dialog.custiom-dialog {
 	box-shadow:0px 0px 3px #888;
     max-width: 100%;
 }
 
-.ui-dialog.answer-dialog .ui-widget-header {
+.ui-dialog.request-dialog {
+    width: 800px !important;
+    max-width: 100%;
+}
+
+.ui-dialog.custom-dialog .ui-widget-header {
 	border-radius: 3px;
 	background: #2c59a0;
 }
 
-.ui-dialog.answer-dialog .ui-dialog-titlebar-close {
+.ui-dialog.custom-dialog .ui-dialog-titlebar-close {
 	right: .5em !important;
 	margin: -10px 0 0 0 !important;
 }
@@ -220,4 +234,65 @@ h4 {
 *:-ms-input-placeholder {
     /* IE 10+ */
     opacity: 0.7;
+}
+
+/* Tooltip Pointer */
+
+a[name=title] {
+	cursor: pointer;
+}
+
+/* Show additional information */
+
+.showmore {
+	margin: 0 auto;
+  	display: flex;
+  	justify-content: left;
+	align-items: left;
+}
+
+.showmore span {
+	display: block;
+}
+
+.rotate {
+    transform: rotate(0deg);
+    transition: .3s;
+}
+.rotate2 {
+    transform: rotate(90deg);
+    transition: .3s;
+}
+
+/* Meta information */
+
+.meta-information {
+	margin: 0 0 10px 0;
+	padding: 4px 5px 5px 3px;
+	border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+/* Show currency symbol in input field */
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon > i {
+  position: absolute;
+  display: block;
+  right: 0;
+  transform: translate(0, -50%);
+  top: 50%;
+  pointer-events: none;
+  width: 25px;
+  text-align: center;
+	font-style: normal;
+}
+
+.input-icon > input {
+  padding-left: 0;
+  padding-right: 25px;
+  text-align: right;
 }

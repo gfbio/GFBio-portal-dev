@@ -5,6 +5,7 @@
 <script src="<%=request.getContextPath()%>/js/dmpt/dmpt.js"	type="text/javascript"></script>
 
 <link href="<%=request.getContextPath()%>/css/idmg/jquery-ui.min.css" rel="stylesheet" type="text/css">
+<link href="<%=request.getContextPath()%>/css/idmg/spinner.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/jquery-steps.css" rel="stylesheet" type="text/css">
 <link href="<%=request.getContextPath()%>/css/dmpt/dmpt.css" rel="stylesheet" type="text/css">
 
@@ -13,6 +14,7 @@
 <portlet:resourceURL var="ajaxUrlSave" id="savedmp" />
 <portlet:resourceURL var="ajaxUrlLoad" id="loaddmp" />
 <portlet:resourceURL var="ajaxUrlDelete" id="deletedmp" />
+<portlet:resourceURL var="ajaxUrlSend" id="senddmp" />
 
 <script type="text/javascript">   
 
@@ -20,7 +22,6 @@ var userEmail = '${email}';
 var userName = '${username}';
 var contextPath = '${contextPath}';
 var userHasDmps = '${hasDmps}';
-var dmps = '${dmpsforuser}';
 
 $(document).ready(function () {
 	
@@ -82,7 +83,7 @@ $(document).ready(function () {
 			$("div.steps").hide();
 			$("div.actions").hide();
 			$("div[name='title']").hide();
-			$("#gfbioServicesStep").hide();
+			$("#lastTab").hide();
 			$("#handleInput").show();
 			getInput();
 		},
@@ -93,7 +94,7 @@ $(document).ready(function () {
 				$("#dmppreview").show();
 			}
 			
-			$("#delete").on("click", deleteDmp);
+			$("#delete").on("click", openConfirmDeleteDialog);
 			
 			$("#load").on("click", loadDmp);
 			
@@ -105,6 +106,7 @@ $(document).ready(function () {
 		    $("#types-cb").on("click", checkboxTypes);
 		    $("#typesOther").hide();
 		    
+		    $("#sameContact").on("click", sameContact);		    
 		    $("#princButton").on("click", addInputField);
 		    
 		    $("#funding").on("change", handleFunding);
@@ -125,32 +127,32 @@ $(document).ready(function () {
 		    $("input[name='alive']").on("click", handleAlive);
 		    
 		    //02 Data Collection
-		    $("#dataformat-cb").on("click", checkboxDataformat);
-		    $("#dataformatOther").hide();
+		    $("#datatype-cb").on("click", checkboxDatatype);
+		    $("#datatypeOther").hide();
 		    
 		    $("#volumeSlider").on("input change", showDataVolume);
 		    $("#datasetSlider").on("input change", showNumberOfDataSets);
 		    
 		    //03 Documentation and Metadata
-		    $("#metadata-other").on("click", handleMetadataOther);
+		    $("input[name='metadata']").on("click", showMetadataInformation);
 		    $("#metadataDesc").hide();
+		    $("span[name='show-meta-info']").on("click", toggleMetaInfos)
 		    
 		    //04 Ethics and Legal Compliance
-		    $("#legal-other").on("click", checkboxRequirement);
+		    $("input[name='requirements']").on("click", requirements);
 		    $("#requirementOther").hide();
 		
-		    $("#licenses").on("change", function (event) {
-		    	handleLicenses(event);
-		    	getLicenseData();
-		    });
+		    $("#licenses").on("change", handleLicenses);
 		    $("#licenseOther").hide();
-		    $("#licensceUrl").hide();
-		    $("#licensceDescription").hide();
+		    //$("span[name='show-license-info']").on("click", toggleLicenseInfos)
 		    
 		    $("input[name='restriction']").on("change", handleRestriction);
 		    $("#accessYes").hide();
 		    
 		    //05 Preservation and Sharing
+		    $("#submit-cb").on("click", handleSubmission);
+		    $("#submitOther").hide();
+		    
 		    $("#archives-cb").on("click", handleArchives);
 		    $("#archiveOther").hide();
 		    
@@ -163,12 +165,6 @@ $(document).ready(function () {
 				window.open(contextPath + '/DownloadFile?fileName=' + fileName, '_blank');
 			});
 		    
-		    //$("#downloadDMPtest").click(function () {
-			//	var fileName = $("#name").val();
-			//	fileName = fileName.replace(/\s/g, "_");
-			//	window.location.href = contextPath + "/DownloadFile?fileName=" + fileName; 
-			//});
-		    
 		    //Saving DMP
 		    $("#saveDMP").on("click", saveDMPforUser);
 		    
@@ -179,6 +175,9 @@ $(document).ready(function () {
 				$("#saveDMP").prop("title", "You need to be logged in");
 			   	$("#saveDMP").addClass("wizarddisabled");
 		    }
+		    
+		    //Send DMP Request
+		    $("#sendDMP").on("click", openSendRequestDialog);
 		    
 		    //Tooltips
 		    $("a[name=title]").tooltip({
@@ -195,8 +194,17 @@ $(document).ready(function () {
 		        },
 		        hide: {
 		            effect: "fade"
+		        },
+		        disabled: true,
+		        close: function( event, ui ) { 
+		            $(this).tooltip('disable'); 
+		            /* instead of $(this) you could also use $(event.target) */
 		        }
 		    }); 
+		    
+		    $('a[name=title]').on('click', function () {
+		        $(this).tooltip('enable').tooltip('open');
+		   });
 
 		    $("span[title]").tooltip({
 		    	tooltipClass: "jqueryTooltip",
@@ -221,7 +229,7 @@ $(document).ready(function () {
 function getInput() {
 	
 	var jsonInput = getInputAsJson();
-	console.log("Send: " + jsonInput);
+	//console.log("Send: " + jsonInput);
 	
     $.ajax({
 	   		"method": "POST",
@@ -230,7 +238,7 @@ function getInput() {
 	   			json: jsonInput
 	   		},
 	   		success: function (text) {
-	          	console.log(text);
+	          	console.log(text); //TODO
 	      	}
     });
 }
@@ -248,7 +256,7 @@ function saveDMPforUser() {
 	   			dmpId: dmpId
 	   		},
 	   		success: function (response) {
-	          	console.log("Save Answer: " + response);
+	          	console.log("Saving Response: " + response); //TODO
 	          	
 	          	if (response.includes("success")) {
 		          	$("#saveDMP").prop("disabled", true);
@@ -266,7 +274,7 @@ function openSavedDialog(response) {
 	$("#dialog-save").dialog({
 	    modal: true,
 	    resizable: false,
-	    dialogClass: "answer-dialog custom-dialog",
+	    dialogClass: "custom-dialog",
 	    buttons: {
 	      Ok: function () {
 	        $( this ).dialog( "close" );
@@ -277,7 +285,6 @@ function openSavedDialog(response) {
 
 function deleteDmp() {
 	var dmpId = $("#dmps").val();
-	console.log("ID: " + dmpId);
 	
 	$.ajax({
    		"method": "POST",
@@ -286,23 +293,40 @@ function deleteDmp() {
    			dmpId: dmpId
    		},
    		success: function (response) {
-   			openDeletedDialog(response);
-   			
-   			if (response.includes("success")) {
-   				$("#dmps option[value='" + dmpId + "']").remove();
-   			}
+   			openDeleteLoadDialog(response);
+   			$("#dmps option[value='" + dmpId + "']").remove();
+      	},
+      	error: function (error) {
+      		openDeleteLoadDialog(error.responseText);
       	}
 	});
-	
 }
 
-function openDeletedDialog(response) {
-	$("#delete-answer").html("<p>" + response + "</p>");
+function openConfirmDeleteDialog() {
+	$("#delete-load-answer").html("<p>Do you want to delete the data management plan?</p>");
 	
-	$("#dialog-delete").dialog({
+	$("#dialog-delete-load").dialog({
 	    modal: true,
 	    resizable: false,
-	    dialogClass: "answer-dialog custom-dialog",
+	    dialogClass: "custom-dialog",
+	    buttons: {
+	      Yes: function () {
+	    	deleteDmp();
+	      },
+	      Cancel: function () {
+	    	$( this ).dialog( "close" );  
+	      }
+	    }
+    });
+}
+
+function openDeleteLoadDialog(response) {
+	$("#delete-load-answer").html("<p>" + response + "</p>");
+	
+	$("#dialog-delete-load").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "custom-dialog",
 	    buttons: {
 	      Ok: function () {
 	        $( this ).dialog( "close" );
@@ -311,10 +335,8 @@ function openDeletedDialog(response) {
     });
 }
 
-
 function loadDmp() {
 	var dmpId = $("#dmps").val();
-	console.log("Load dmp with Id: " + dmpId);
 	
 	$.ajax({
    		"method": "POST",
@@ -323,48 +345,55 @@ function loadDmp() {
    			dmpId: dmpId
    		},
    		success: function (response) {
-   			console.log("JSON: " + response);
           	var selectedDmp = JSON.parse(response);
-   			console.log("Selected: ", selectedDmp);
-			console.log("Name: " + selectedDmp.projectName);
-   			initializeInputs(selectedDmp, dmpId);
+			console.log("Loaded: " + selectedDmp.projectName);
+   			initializeWizard(selectedDmp, dmpId);
    			showGeneralInformation();
-      	}
+      	},
+      	error: function (error) {
+			openDeleteLoadDialog(error.responseText);
+		}
 	});
 }
 
-function getLicenseData() {
-	
-	var license = $("#licenses").val();
-	console.log("License: " + license);
-	
-    $.ajax({
-	   		"method": "POST",
-	   		"url": '<%=ajaxUrlLicense%>',
-	   		"data": {
-	   			license: license
-	   		},
-	   		success: function (text) {
-	          	console.log(text);
-	          	
-          		var results = text.split(',');
-          		console.log(results[0]);
-          		if (results[0] !== "url") {
-          			console.log(results[0]);
-          			$("#licensceUrl").href = results[0];
-          			$("#licensceUrl").innerHTML = results[0];
-          			$("#licensceUrl").show("slow");
-          		} else {
-          			$("#licensceUrl").hide();
-          		}
-          		if (results[1] !== "desc") {
-          			$("#licenseDescription").innerHTML = results[1];
-          			$("#licenseDescription").show("slow");
-          		} else {
-          			$("#licenseDescription").hide();
-          		}
-	        }
+function openSendRequestDialog() {
+	$("#dialog-request").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "request-dialog custom-dialog",
+	    title: "Data Management Plan Request",
+	    buttons: {
+	      "Send DMP Support Request": function () {
+	    	$("#send-request").hide();  
+	    	$('#dialogLoader').show();
+	    	sendRequest();
+	        //Do something
+	      },
+	      Cancel: function () {
+		   	$( this ).dialog( "close" );  
+		  }
+	    }
     });
+}
+
+function sendRequest() {
+	var services = new Array,
+		information;
+	services = getServices();
+	information = $("#additinal-text").val();
+	console.info("Services: " + services);
+	
+	$.ajax({
+   		"method": "POST",
+   		"url": '<%=ajaxUrlSend%>',
+   		"data": {
+   			services: services,
+   			infos: information
+   		},
+   		success: function (response) {
+			console.log("Response: " + response);
+      	},
+	});
 }
 
 </script>
@@ -382,8 +411,6 @@ function getLicenseData() {
 				<jsp:include page="sections/04_ethics.jsp" />
 				
  				<jsp:include page="sections/05_preservation.jsp" />
-				
- 				<jsp:include page="sections/06_gfbio_services.jsp" />
 			</div>
 		</form>
 	</div>

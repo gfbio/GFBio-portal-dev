@@ -14,6 +14,7 @@
  */
 --%>
 
+
 <%@ include file="/init.jsp" %>
 
 <%
@@ -67,16 +68,19 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 		
 		
 		<liferay-ui:error key="emailFromNameRequired" message="please-enter-a-from-name" />	
-		<aui:input cssClass="lfr-input-text-container" label="name-from" name="fromName" value="<%= fromName %>" placeholder="Your Name..."/>
+		<aui:input cssClass="lfr-input-text-container" label="name-from" name="fromName" value="<%= fromName %>" placeholder="Your Name..." required="true"/>
+		
+	
 		
 		<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
 		<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />		
-		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..."/>
+		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..." required="true"/>
+		
+	
 		
 		<liferay-ui:error key="emailSubjectRequired" message="please-enter-a-subject" />
-		<aui:input cssClass="lfr-input-text-container" label="subject-from" name="fromSubject" value="<%= fromSubject %>" placeholder="Your Subject..." />
-	 	
-	 
+		<aui:input cssClass="lfr-input-text-container" label="subject-from" name="fromSubject" value="<%= fromSubject %>" placeholder="Your Subject..." required="true"/>
+		 	
 		
 
 		<%
@@ -103,8 +107,8 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 					</div>
 				</c:if>
 			</c:if>
-
 			<c:if test="<%= !fieldOptional %>">
+			
 				<div class="hide" id="<portlet:namespace/>fieldOptionalError<%= fieldName %>">
 					<span class="alert alert-error"><liferay-ui:message key="this-field-is-mandatory" /></span>
 				</div>
@@ -116,16 +120,19 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 				</c:when>
 				<c:when test='<%= fieldType.equals("text") %>'>
 					 	<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>"/>
-				</c:when>
+				         
+			    </c:when>
 				<c:when test='<%= fieldType.equals("textarea") %>'>
-					<aui:input cssClass='<%= "lfr-textarea-container" + (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" placeholder="Your Message..."  wrap="soft" />
+					<aui:input cssClass='<%= "lfr-textarea-container" + (fieldOptional ? "optional" : StringPool.BLANK) %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="textarea" value="<%= HtmlUtil.escape(fieldValue) %>" placeholder="Your Message..."  wrap="soft"/>
+				   
 				</c:when>
 				<c:when test='<%= fieldType.equals("checkbox") %>'>
-					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>" />
+					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" type="checkbox" value="<%= GetterUtil.getBoolean(fieldValue) %>" required="<%=!fieldOptional %>"/>
+				     
 				</c:when>
 				<c:when test='<%= fieldType.equals("radio") %>'>
 					<aui:field-wrapper cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>">
-
+                      
 						<%
 						for (String fieldOptionValue : WebFormUtil.split(fieldOptions)) {
 						%>
@@ -135,7 +142,7 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 						<%
 						}
 						%>
-
+                        
 					</aui:field-wrapper>
 				</c:when>
 				<c:when test='<%= fieldType.equals("options") %>'>
@@ -208,16 +215,17 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 				%>
 
 					var key = "<%= fieldName %>";
-
 					keys[<%= i %>] = key;
 
 					fieldLabels[key] = "<%= HtmlUtil.escape(fieldLabel) %>";
 					fieldValidationErrorMessages[key] = "<%= fieldValidationErrorMessage %>";
 
 					function fieldValidationFunction<%= i %>(currentFieldValue, fieldsMap) {
+					
 						<c:choose>
 							<c:when test="<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED && Validator.isNotNull(fieldValidationScript) %>">
 								<%= fieldValidationScript %>
+								alert(fieldValidationScript);
 							</c:when>
 							<c:otherwise>
 								return true;

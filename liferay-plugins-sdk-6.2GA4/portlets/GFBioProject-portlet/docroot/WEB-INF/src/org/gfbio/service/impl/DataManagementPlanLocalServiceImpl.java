@@ -56,7 +56,7 @@ import com.liferay.portal.model.User;
 public class DataManagementPlanLocalServiceImpl extends DataManagementPlanLocalServiceBaseImpl {
 
 
-    private static Log _log = LogFactoryUtil.getLog(WorkflowGeneric.class);
+    private static Log _log = LogFactoryUtil.getLog(DataManagementPlanLocalServiceImpl.class);
     
 	///////////////////////////////////// Get Functions ///////////////////////////////////////////////////
 	
@@ -109,36 +109,44 @@ public class DataManagementPlanLocalServiceImpl extends DataManagementPlanLocalS
 	
 	
 	//
-	public DataManagementPlan updateDataManagementPlan (DataManagementPlan dmp){
-		
-		System.out.println("update dmp: " + dmp);
+	public DataManagementPlan updateDataManagementPlan (DataManagementPlan dmp) {
 		
 		DataManagementPlan newDmp = null;
 		
-		if (!dmp.getName().equals("")){
+		if (!dmp.getName().equals("")) {
 			
 			User user = null;
-			try {user = userPersistence.findByPrimaryKey(dmp.getUserID());}
-			catch (NoSuchUserException | SystemException e2) {_log.error("no User with userID "+dmp.getUserID()+ " exists.");}
+			try {
+				user = userPersistence.findByPrimaryKey(dmp.getUserID());
+			} catch (NoSuchUserException | SystemException e2) {
+				_log.error("no User with userID "+dmp.getUserID()+ " exists.");
+			}
 			
-			if (user != null){
+			if (user != null) {
 		
-				try {newDmp = dataManagementPlanPersistence.findByPrimaryKey(dmp.getDmpID());}
-				catch (SystemException | NoSuchDataManagementPlanException e1) {_log.error("no User with dmpID "+dmp.getDmpID()+ " exists.");}
+				try {
+					newDmp = dataManagementPlanPersistence.findByPrimaryKey(dmp.getDmpID());
+				} catch (SystemException | NoSuchDataManagementPlanException e1) {
+					_log.error("no User with dmpID "+dmp.getDmpID()+ " exists.");
+				}
 		
 				if (newDmp == null) {
 					newDmp = dataManagementPlanPersistence.create(constructNewId());
 					newDmp.setDmpTInput((dmp.getDmpTInput()).trim());
 					newDmp.setName((dmp.getName()).trim());
 					newDmp.setUserID(dmp.getUserID());
-				}else
+				} else {
 					newDmp = (DataManagementPlan) dmp.clone();
+				}
 				newDmp.setLastModifiedDate(new Timestamp(new Date().getTime()));
 				
 				System.out.println("super dmp: " + newDmp);
 				
-				try {super.updateDataManagementPlan(newDmp);}
-				catch (SystemException e) {e.printStackTrace();}
+				try {
+					super.updateDataManagementPlan(newDmp);
+				} catch (SystemException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return newDmp;

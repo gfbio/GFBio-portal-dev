@@ -6,11 +6,11 @@ import lombok.Data;
 /**
  * @author jthomae1
  *
- * Customfield for datacenters (DCRT)
+ * Customfield for physical objects (DMP)
  */
 @Data
 @AllArgsConstructor
-public class Customfield_10217 {
+public class Customfield_10214 {
 
 	public String value;
 

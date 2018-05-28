@@ -2,6 +2,7 @@ package org.gfbio.idmg.dmpt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -16,6 +17,19 @@ import org.gfbio.idmg.dto.GCategory;
 import org.gfbio.idmg.dto.GLegalRequirement;
 import org.gfbio.idmg.dto.GLicense;
 import org.gfbio.idmg.dto.GMetadata;
+import org.gfbio.idmg.jiraclient.JIRAApi;
+import org.gfbio.idmg.jiraclient.connection.Communicator;
+import org.gfbio.idmg.jiraclient.model.Assignee;
+import org.gfbio.idmg.jiraclient.model.Customfield_10202;
+import org.gfbio.idmg.jiraclient.model.Customfield_10214;
+import org.gfbio.idmg.jiraclient.model.Customfield_10220;
+import org.gfbio.idmg.jiraclient.model.Customfield_10221;
+import org.gfbio.idmg.jiraclient.model.Customfield_10223;
+import org.gfbio.idmg.jiraclient.model.Fields;
+import org.gfbio.idmg.jiraclient.model.Issue;
+import org.gfbio.idmg.jiraclient.model.IssueType;
+import org.gfbio.idmg.jiraclient.model.Project;
+import org.gfbio.idmg.jiraclient.model.Reporter;
 import org.gfbio.idmg.util.ContentUtil;
 import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
@@ -27,6 +41,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -76,7 +91,7 @@ public class DMPTPortlet extends MVCPortlet {
 				_log.error("Error while getting phonenumbers from themedisplay", e);
 			}
 		}
-
+		
 		renderRequest.setAttribute("username", username);
 		renderRequest.setAttribute("email", email);
 		renderRequest.setAttribute("portalurl", portalURL);
@@ -116,6 +131,8 @@ public class DMPTPortlet extends MVCPortlet {
 			loadDMP(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("deletedmp")) {
 			deleteDMP(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("senddmp")) {
+			sendDMP(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -126,23 +143,23 @@ public class DMPTPortlet extends MVCPortlet {
 		String jsonInput = resourceRequest.getParameter("json");
 		_log.info("JSONString: " + jsonInput);
 
-		DMPTInput input = null;
+		//DMPTInput input = null;
 		String response = "";
 
 		try {
 			
-			Gson gson = new Gson();
-			input = gson.fromJson(jsonInput, DMPTInput.class);
+			//Gson gson = new Gson();
+			//input = gson.fromJson(jsonInput, DMPTInput.class);
+			//_log.info("Input: " + input);
 				
 			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			 			
 			// Set DMPTInput to PortletSession
 			PortletSession session = resourceRequest.getPortletSession();
-		    session.setAttribute("dmptInput", input, PortletSession.APPLICATION_SCOPE);
+		    session.setAttribute("dmptInput", jsonInput, PortletSession.APPLICATION_SCOPE);
+		    // ThemePath needed in DownloadUtil
 		    session.setAttribute("themePath", themeDisplay.getPathThemeImages(), PortletSession.APPLICATION_SCOPE);
-					    
-			response = "Parsing successful!";
-
+		    
 			response = "Parsing successful!";
 		} catch (JsonSyntaxException e) {
 			_log.error("Error while parsing jsonString to POJO", e);
@@ -206,11 +223,9 @@ public class DMPTPortlet extends MVCPortlet {
 		}
 		
 		PortletSession session = resourceRequest.getPortletSession();
-		String jsonInput = (String) session.getAttribute("dmptInput");
-		//Not neccessary to convert?
-		//Gson gson = new Gson();
-		//DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
-		//_log.info("Input: " + input.toString);
+		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
+		
+		//_log.info("Input: " + jsonInput);
 		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
@@ -266,21 +281,26 @@ public class DMPTPortlet extends MVCPortlet {
 		List<DataManagementPlan> dmps = DataManagementPlanLocalServiceUtil.getdmpListByUserId(themeDisplay.getUserId());
 		
 		String dmptInput = "";
+		String response = "";
 		
 		for (DataManagementPlan d : dmps) {
 			if (d.getDmpID() == dmpId) {
 				dmptInput = d.getDmpTInput();
 			}
 		}
-		_log.info("DmptInput: " + dmptInput);
+		
 		if (dmptInput.equals("")) {
-			_log.info("DMP not found for dmpId " + dmpId);
+			_log.error("DmptInput is empty!");
+			response = "DMP could not been restored!";
+			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
+		} else {
+			response = dmptInput;
 		}
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 
-		writer.println(dmptInput);
+		writer.println(response);
 
 		writer.flush();
 		writer.close();
@@ -300,9 +320,10 @@ public class DMPTPortlet extends MVCPortlet {
 		try {
 			DataManagementPlanLocalServiceUtil.deleteDataManagementPlan(dmpId);
 			response = "The data management plan was deleted successfully!";
-			_log.info("DMP with the id " + dmpId + "was deleted successfully!");
+			_log.info("DMP with the id " + dmpId + " was deleted successfully!");
 		} catch (PortalException | SystemException e) {
 			response = "The data management plan could not been deleted!";
+			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
 			_log.error("DMP with the id " + dmpId + " could not been deleted!", e);
 		}
 		
@@ -315,5 +336,105 @@ public class DMPTPortlet extends MVCPortlet {
 		writer.close();
 		
 		super.serveResource(resourceRequest, resourceResponse);
+	}
+	
+	private void sendDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		_log.info("Send DMP Request");
+		
+		// Get Request Parameter
+		String[] services = resourceRequest.getParameterValues("services[]");
+		String message = (String) resourceRequest.getAttribute("infos");
+		for (int i = 0; i < services.length; i++) {
+			_log.info("Service: " + services[i]);
+		}
+		_log.info("Add. Text/Message: " + message);
+		
+		// Get DMPTInput from Session and Convert to DTO
+		PortletSession session = resourceRequest.getPortletSession();
+		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
+		
+		Gson gson = new Gson();
+		DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
+		
+		// Set Customfields
+		String projectName = input.getProjectName();
+		String description = "";
+		String principalInvestigator = createCommaSeperatedString(input.getInvestigators());
+		String funding = input.getFunding().getName();
+		
+		String projectType = createCommaSeperatedString(input.getReproducible());
+		List<Customfield_10221> projectWorkTypes = new ArrayList<>();
+		for (String type : input.getProjectTypes()) {
+			projectWorkTypes.add(new Customfield_10221(type));
+		}
+		
+		String projectDataContact = input.getResponsibleName();
+		String dataLicense = input.getLicense().getName();
+		
+		String physicalObjects = "";
+		if (input.getPhysical() != null) {
+			physicalObjects = input.getPhysical().toString();
+		}
+		
+		// Create Issue
+		//PropsUtil reads the property from portal-ext.properties
+		Project project = new Project(PropsUtil.get("jira.gfbio.dmpt.projectkey"));
+		IssueType issuetype = new IssueType("DMP");
+		Reporter reporter = new Reporter("testuser1");
+
+		_log.info("projectkey: " + PropsUtil.get("jira.gfbio.dmpt.projectkey"));
+		//PropsUtil reads the property from portal-ext.properties
+		String customfield_10010 = PropsUtil.get("jira.gfbio.dmpt.requesttype");
+
+		// If a user is signed in, the reporter will be set new with the email
+		// address of the user
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		if (themeDisplay.isSignedIn()) {
+			reporter = new Reporter(themeDisplay.getUser().getEmailAddress());
+		}
+
+		String summary = "DMP Request";
+
+		// User for assignee value
+		String user = "gfbio-ev";
+		// Set assignee for the ticket
+		Assignee assignee = new Assignee(user);
+
+		Fields fields = new Fields(project, summary, issuetype, reporter, message, assignee, customfield_10010,
+				projectName, description, principalInvestigator, new Customfield_10223(funding), new Customfield_10220(projectType), projectWorkTypes, 
+				projectDataContact, new Customfield_10202(dataLicense), new Customfield_10214(physicalObjects));
+		Issue issue = new Issue(fields);
+
+		// JIRA Request
+		Communicator communicator = new Communicator();
+		JIRAApi jiraApi = new JIRAApi(communicator);
+
+		String response = jiraApi.createDataCenterTicket(issue);
+		_log.info(response);
+		
+		resourceResponse.setContentType("text/html");
+		PrintWriter writer = resourceResponse.getWriter();
+		
+		writer.println(response);
+		
+		writer.flush();
+		writer.close();
+		
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+	
+	private String createCommaSeperatedString(List<String> list) {
+		String result = "";
+		if(!isNullOrEmpty(list)) {
+			for (String s : list) {
+				result = result.concat(s + ", ");
+			}
+		}
+		return result.replaceAll(", $",	"");
+	}
+	
+	private boolean isNullOrEmpty(final List<String> values) {
+		return values == null || values.isEmpty();
 	}
 }

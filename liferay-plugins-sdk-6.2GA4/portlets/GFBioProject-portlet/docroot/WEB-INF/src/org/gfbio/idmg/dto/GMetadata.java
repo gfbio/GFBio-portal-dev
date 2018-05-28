@@ -15,8 +15,9 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 	boolean preferredByGfbio;
 	String version;
 	String schema;
+	String url;
 	
-	public GMetadata(long id, String name, String label, String description, boolean preferredByGfbio, String version, String schema) {
+	public GMetadata(long id, String name, String label, String description, boolean preferredByGfbio, String version, String schema, String url) {
 		this.id = id;
 		this.name = name;
 		this.label = label;
@@ -24,6 +25,7 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 		this.preferredByGfbio = preferredByGfbio;
 		this.version = version;
 		this.schema = schema;
+		this.url = url;
 	}
 	
 	public GMetadata(JSONObject metadataJson) {
@@ -35,6 +37,7 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
             this.preferredByGfbio = Boolean.parseBoolean((String) metadataJson.get("preferredbygfbio"));
             this.version = (String) metadataJson.get("version");
             this.schema = (String) metadataJson.get("schema");
+            this.url = (String) metadataJson.get("url");
         }
 	}
 	
@@ -95,6 +98,14 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 	public void setSchema(String schema) {
 		this.schema = schema;
 	}
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	@Override
 	public int compareTo(GMetadata o) {
@@ -111,7 +122,8 @@ public class GMetadata implements Comparable<GMetadata>, Serializable {
 	@Override
 	public String toString() {
 		return "GMetadata [id=" + id + ", name=" + name + ", label=" + label + ", description=" + description
-				+ ", preferredByGfbio=" + preferredByGfbio + ", version=" + version + ", schema=" + schema + "]";
+				+ ", preferredByGfbio=" + preferredByGfbio + ", version=" + version + ", schema=" + schema + ", url="
+				+ url + "]";
 	}
 	
 }

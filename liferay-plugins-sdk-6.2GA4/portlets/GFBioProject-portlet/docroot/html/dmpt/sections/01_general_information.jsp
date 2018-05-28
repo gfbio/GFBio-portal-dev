@@ -28,8 +28,8 @@
         </div>
 	</div>
 	
-	<div id="dialog-delete" style="display: none;">
-		<div id="delete-answer" style="text-align: center;"></div>
+	<div id="dialog-delete-load" style="display: none;">
+		<div id="delete-load-answer" style="text-align: center;"></div>
 	</div>
 	
 	<div id="generalinformation">
@@ -42,14 +42,14 @@
 					Only logged in users can save their inputs at the end of the wizard. Please <a href="${portalurl}/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to enable the feature.
 				</div>
 			</div>
-			<h4>What's the official name of your research project?</h4>
+			<h4>What is the official name of your research project? *</h4>
 	        <div class="col-md-12">
 	        	<input id="dmpId" type="hidden" value="0"/>
 				<input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
 			</div>
 		</div>
 		<div class="row">
-			<h4>Please select a category</h4>
+			<h4>Please select a category:</h4>
 			<div class="col-md-12">
 				<select id="category" name="category">
 					<option selected="selected" label="Select" value="default">Select</option>
@@ -63,28 +63,37 @@
 		</div>
 	  	<div class="row">
 	      	<h4>Is your research data reproducible?
-	      		<a name="title" href="#" title="A onetime observation might be a measurement or a count at a certain point in time or at a certain location, whereas a repetable experiment might be a DNA sequencing which exactly reproduces data.">
+	      		<a name="title" title="Imagine your research data gets lost. Would you (or someone else) be able to reproduce your data? What effort or resources would be necessary?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>
 	      	</h4>
 	      	<div id="nature">
-	      		<div class="col-xs-12 col-sm-6">
+	      		<div class="col-xs-12 col-sm-4">
 	            	<label class="mod-cb">
-	            		<input name="nature" type="radio" value="Onetime observation" />
-	            		<span>Onetime observation</span>
+	            		<input name="reproducible" type="checkbox" value="One-time observation" />
+	            		<span title="A one-time observation might for example be a gray seal count in the German wadden sea in June 2006 or a DNA analysis without sample storage.">One-time observation</span>
 	            	</label>
 	     		</div>
-	      		<div class="col-xs-12 col-sm-6">
+	      		<div class="col-xs-12 col-sm-4">
 			        <label class="mod-cb">
-				        <input name="nature" type="radio" value="Reapeatable experiments" />
-				        <span>Repeatable experiments</span>
+				        <input name="reproducible" type="checkbox" value="Repeatable experiments" />
+				        <span title="A repeatable experiment might for example be a DNA analysis with the deposit of sample material or a documented statistical analysis of slug counts in Sweden in the years 1956 to 1996 (assumed computer code and primary data are available).">Repeatable experiments</span>
 			        </label>
 	          	</div>
+	          	<div class="col-xs-12 col-sm-4">
+			        <label class="mod-cb">
+				        <input name="reproducible" type="checkbox" value="Time series" />
+				        <span title="A time series (observation) is a series of one-time observations and might for example be the periodic raw counts of slugs in Sweden during the years 1956-1996 or	daily measurements of precipitation and air temperature.">Time series</span>
+			        </label>
+	          	</div>
+	          	<div class="col-sm-12" style="margin-top: 10px;">
+	      			<textarea id="reproducibleText" maxlength="1000" rows="3" cols="100" placeholder="Add additional information (e.g. data reproduction might cause high costs or a lot of effort)."></textarea> 
+	    		</div>
 	     	</div>
 		</div>
 	    <div class="row">
 	   		<h4>Please specify your project type.
-	   			<a name="title" href="#" title="You can combine several types.">
+	   			<a name="title" title="You can combine several types.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>
 	   		</h4>
@@ -146,7 +155,7 @@
 	                </div>
 	            </div>
 	            <div class="col-md-12">
-	            		<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
+            		<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
 	            </div>
 	        </div>
 	        
@@ -154,25 +163,12 @@
 		<div class="row">
 	    	<h4>Provide your project abstract or describe your work and the data involved.</h4>
 	        <div id="projectAbstract" class="col-md-12">
-	      		<textarea id="abstract" rows="5" cols="100" placeholder="Project Abstract"></textarea> 
+	      		<textarea maxlength="2000" id="abstract" rows="5" cols="100" placeholder="Project Abstract"></textarea> 
 	    	</div>
 		</div>
 		<div class="row">
-	    	<h4>Who is/are the principal investigator/s?</h4>
-	    	<div class="col-md-12">
-	        	<div id="principal">
-	        	<!-- required -->
-	     		<input id="firstPrincInput" name="investigator" type="text"  
-	            	placeholder="Principal Investigator" />
-	 			</div>
-	 			<div style="margin-top: 5px;">
-	            	<input id="princButton" type="button" value="Add principal investigator" disabled="disabled" />
-	        	</div>    
-	    	</div>
-		</div>
-		<div class="row">
-	    	<h4>Who is the point of contact for the project data?
-	    		<a name="title" href="#" title="Who should be contacted in case of any question concerning data management? This might be technical issues as well as questions concerning data policies, legal requirements or data volumes and formats.  
+	    	<h4>Who is the point of contact for the project data? *
+	    		<a name="title" title="Who should be contacted in case of any question concerning data management? This might be technical issues as well as questions concerning data policies, legal requirements or data volumes and formats.  
 	Most commonly this is: you - the one preparing the DMP.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>
@@ -194,8 +190,24 @@
 	    	</div>
 		</div>
 		<div class="row">
+	    	<h4>Who are the principal investigators?</h4>
+	    	<div class="col-md-12" style="margin-bottom: 10px;">
+	    		<input id="sameContact" type="checkbox" />
+				<span>Same as point of contact for project data.</span>
+	    	</div>
+	    	<div class="col-md-12">
+	        	<div id="principal">
+	     			<input id="firstPrincInput" name="investigator" type="text"  
+	            	placeholder="Principal Investigator" />
+	 			</div>
+	 			<div style="margin-top: 5px;">
+	            	<input id="princButton" type="button" value="Add principal investigator" disabled="disabled" />
+	        	</div>    
+	    	</div>
+		</div>
+		<div class="row">
 	    	<h4>For which funding are you applying?
-	    		<a name="title" href="#" title="Funding agencies or even funding programmes demand certain data management standards.
+	    		<a name="title" title="Funding agencies or even funding programmes demand certain data management standards.
 	We support you in meeting their requirements.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>
@@ -203,7 +215,7 @@
 	    	
 	    	<div id="fundings" class="col-md-12">
 	        	<select id="funding" name="funding" >
-		            <option selected="selected" label="Select" value="select" >Select</option>
+		            <option selected="selected" label="Select" value="Select" >Select</option>
 		          	<option value="individual" >DFG Individual Grants Programmes</option>
 		        	<option value="coordinated" >DFG Coordinated Programmes</option>
 		            <option value="excellence" >DFG Excellence Strategy</option>
@@ -219,8 +231,34 @@
 	    	</div>
 		</div>
 		<div class="row">
-	    	<h4>Which policies or guideliness for research data management will you follow?
-	    		<a name="title" href="#" title="Does your institution or your funder have certain data management policies or guidelines?">
+			<h4>If you are part of a coordinated programme (Koordinierte Programme, Verbundprojekte), is there any specific coordination, guideline or policy for data management?</h4>
+			<div class="col-md-12">
+	      		<textarea id="coordinatedProgramme" maxlength="1000" rows="3" cols="100" placeholder="Please describe the data management coordination of your programme. Who takes care of it? Is there a data management plan, guideline or policy on which all project members agree? If there are any documents available, please refer to them (by upload, link, DOI or full citation)."></textarea> 
+	    	</div>
+		</div>
+		<div class="row">
+			<h4>Are you a member of a research unit (Forschergruppe)?
+	    		<a href="http://www.dfg.de/en/research_funding/programmes/coordinated_programmes/research_units/index.html" target="_blank">
+					<span class="icon-landing-flex icon-link info-blue" ></span>
+				</a>
+	    	</h4>
+	    	<div class="col-md-12">
+				<input id="researchUnit" type="checkbox" />
+				<span>I am a member of a research unit (Forschergruppe).</span>
+			</div>
+		</div>
+		<div class="row">
+			<h4>Please estimate the total volume of your research proposal?</h4>
+			<div class="col-md-12">
+				<div class="input-icon">
+			    	<i>&#8364;</i>
+			      	<input id="researchProposal" type="text" pattern="\d*" placeholder="0">
+			    </div>
+			</div>
+		</div>
+		<div class="row">
+	    	<h4>Which policies or guidelines for research data management will you follow?
+	    		<a name="title" title="Does your institution or your funder have certain data management policies or guidelines?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>
 	    	</h4>
@@ -270,11 +308,14 @@
 		            <option value="none" >None</option>
 		        </select> -->
 		        
-		        <div>
+		        <div class="col-md-12">
 		         	<input id="policyOther" name="policyOther" type="text" class="inputtext_long" placeholder="Other Research Data Policy and Guideline"/>
 		         	<input id="policyLink" type="text" class="inputtext_long" placeholder="Link Research Data Policy or Guideline"/>
 		        </div> 
 		    </div>   
+		</div>
+		<div class="row">
+			<p>* mandatory</p>
 		</div>
 	</div>
 </section>

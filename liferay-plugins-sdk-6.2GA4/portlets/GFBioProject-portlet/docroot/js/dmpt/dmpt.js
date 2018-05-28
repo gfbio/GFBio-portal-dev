@@ -1,5 +1,11 @@
 /*global $*/
 
+function isEmpty(str) {
+	'use strict';
+	
+	return (!str || 0 === str.length);
+}
+
 function hideGeneralInformation() {
 	'use strict';
 	
@@ -18,6 +24,17 @@ function showGeneralInformation() {
 	$("div.actions").show();
 	$("div[name='title']").show();
 	$("#generalinformation").show();
+}
+
+function sameContact(event) {
+    'use strict';
+    
+    var name = $("#responsibleName").val();
+    if ($(event.target).prop("checked")) {
+    	$("#firstPrincInput").val(name);
+    } else {
+    	$("#firstPrincInput").val("");
+    }
 }
 
 function handlePrincipalButton(event) {
@@ -82,26 +99,47 @@ function checkboxTypes(event) {
     }
 }
 
-function checkboxDataformat(event) {
+function checkboxDatatype(event) {
     'use strict';
     
     if ($(event.target).is(':checked')) {
-        $("#dataformatOther").show("slow");
+        $("#datatypeOther").show("slow");
     } else {
-        $("#dataformatOther").hide();
-        $("#dataformatOther").val("");
+        $("#datatypeOther").hide();
+        $("#datatypeOther").val("");
     }
 }
 
-function checkboxRequirement(event) {
+function requirements() {
 	'use strict';
 	
-	var other = $("#requirementOther");
-	if ($(event.target).is(':checked')) {
-		other.show("slow");
+	var other = $("#requirementOther"),
+        id = $(event.target).attr("id");
+	
+	if (id === "legal-none") {
+		if ($(event.target).is(':checked')) {
+	        other.hide();
+	        other.val("");
+	        
+	        $("input[name='requirements']:checked").each(function () {
+                if ($(this).attr("id") !== "legal-none") {
+                    $(this).prop("checked", false);
+                }
+            });
+	    }
 	} else {
-		other.hide();
-		other.val("");
+		if ($("#legal-none").is(":checked")) {
+			$("#legal-none").prop("checked", false);
+		}
+	}
+	
+	if (id === "legal-other") {
+		if ($(event.target).is(':checked')) {
+	        other.show("slow");
+	    } else {
+	        other.hide();
+	        other.val("");
+	    }
 	}
 }
 
@@ -116,7 +154,7 @@ function handleFunding(event) {
     'use strict';
     
     var selection = $(event.target).val();
-    if (selection !== "none" && selection !== "select") {
+    if (selection !== "none" && selection !== "Select") {
         $("#fundingLink").show("slow");
     } else {
         $("#fundingLink").hide();
@@ -170,30 +208,87 @@ function policies(event) {
 	}
 }
 
-function handleMetadataOther(event) {
+function showMetadataInformation(event) {
 	'use strict';
+	
+	var selection = $(event.target).val(),
+	metainformation = $("#metainformation-" + selection), 
+	metaurl = $("#metaurl-" + selection), 
+	metadesc = $("#metadesc-" + selection);
+	if ($(event.target).is(':checked')) {
+		if (!isEmpty(metaurl.text()) || !isEmpty(metadesc.text())) {
+			metainformation.show("slow");
+		} else if (isEmpty(metaurl.text()) && isEmpty(metadesc.text())) {
+			$("#metadataDesc").show("slow");
+		}
+	} else {
+		metainformation.hide();
+		if (isEmpty(metaurl.text()) && isEmpty(metadesc.text())) {
+			$("#metadataDesc").hide();
+	        $("#metadataDesc").val("");
+		}
+	}
+}
+
+function toggleMetaInfos(event) {
+	'use strict';
+	
+	var selection = $(event.target).attr('id'),
+	metaurl = $("#metaurl-" + selection), 
+	metadesc = $("#metadesc-" + selection);
+		
+	$(event.target).toggleClass('rotate');
+    $(event.target).toggleClass('rotate2');
     
-    if ($(event.target).is(':checked')) {
-        $("#metadataDesc").show("slow");
-    } else {
-        $("#metadataDesc").hide();
-        $("#metadataDesc").val("");
+    if (!isEmpty(metaurl.text())) {
+    	metaurl.toggle();
+    }
+    if (!isEmpty(metadesc.text())) {
+    	metadesc.toggle();
     }
 }
 
 function handleLicenses(event) {
 	'use strict';
 	
-    var selection = $(event.target).val(),
+    var licenseId = $(event.target).val(),
+	    licensemd = $("#licensemd-" + licenseId), 
+		licenseurl = $("#licenseurl-" + licenseId), 
+		licensedesc = $("#licensedesc-" + licenseId),
+    	license = $("#licenses option:selected").text(),
         other = $("#licenseOther");
-    if (selection === "Other License") {
+    
+    $("div[id*='licensemd']").hide();
+   	if (license.includes("Other")) {
 		other.show("slow");
 	} else {
 	    other.hide();
 	    other.val("");
+	    
+	    if (!isEmpty(licenseurl.text()) || !isEmpty(licensedesc.text())) {
+	    	licensemd.show("slow");
+		}
 	}
 	
 }
+
+//function toggleLicenseInfos(event) {
+//	'use strict';
+//	
+//	var licenseId = $(event.target).attr('id'),
+//	licenseurl = $("#licenseurl-" + licenseId), 
+//	licensedesc = $("#licensedesc-" + licenseId);
+//		
+//	$(event.target).toggleClass('rotate');
+//    $(event.target).toggleClass('rotate2');
+//    
+//    if (!isEmpty(licenseurl.text())) {
+//    	licenseurl.toggle();
+//    }
+//    if (!isEmpty(licensedesc.text())) {
+//    	licensedesc.toggle();
+//    }
+//}
 
 function handleRestriction(event) {
 	'use strict';
@@ -208,6 +303,18 @@ function handleRestriction(event) {
 		div.hide();
 		howLong.val("");
 		why.val("");
+	}
+}
+
+function handleSubmission(event) {
+	'use strict';
+	
+	var other = $("#submitOther");
+	if ($(event.target).is(':checked')) {
+		other.show("slow");
+	} else {
+		other.hide();
+		other.val("");
 	}
 }
 
@@ -231,11 +338,15 @@ function getDataVolumeBySliderValue(number) {
     } else if (number === "10") {
         return "&lt; 1GB";
     } else if (number === "20") {
-        return "&lt; 10GB";
+    	return "&lt; 10GB";
     } else if (number === "30") {
-        return "&lt; 100GB";
+        return "&lt; 1TB";
     } else if (number === "40") {
-        return "&gt; 100GB";
+        return "&lt; 5TB";
+    } else if (number === "50") {
+    	return "&lt; 10TB";
+    } else if (number === "60") {
+        return "&gt; 10TB";
     }
 }
 
@@ -257,10 +368,14 @@ function getSliderValueByDataVolume(value) {
         return "10";
     } else if (value === "&lt; 10GB") {
         return "20";
-    } else if (value === "&lt; 100GB") {
+    } else if (value === "&lt; 1TB") {
         return "30";
-    } else if (value === "&gt; 100GB") {
-        return "40";
+    } else if (value === "&lt; 5TB") {
+    	return "40";
+    } else if (value === "&lt; 10TB") {
+    	return "50";
+    } else if (value === "&gt; 10TB") {
+        return "60";
     }
 }
 
@@ -348,27 +463,40 @@ function hide(j) {
     });
 }
 
-function isEmpty(str) {
+// Get services for sending request
+function getServices() {
 	'use strict';
 	
-	return (!str || 0 === str.length);
+	var list = [];
+	var services = $("input[name='gfbio_services']:checked");
+	
+	$.each( services, function( index ) {
+		list.push($(this).val());
+	})
+	
+	return list;
 }
 
+// Method for saving all inputs as json in db
 function getInputAsJson() {
 	'use strict';
 	
     // 01 General Information
 	var projectName = $("#name").val(),
         category = $("#category").find(":selected").text(),
-        reproducible = $("input[name='nature']:checked").val(),
+        reproducible = [],
+        reproducibleText = $("#reproducibleText").val(),
         projectTypes = [],
         projectAbstract = $("#abstract").val(),
-        investigators = [],
         responsibleName = $("#responsibleName").val(),
         phoneNumber = $("#phone").val(),
         email = $("#email").val(),
-        funding = $("#funding").val(),
+        investigators = [],
+        funding = $("#funding option:selected").text(),
         fundingLink = $("#fundingLink").val(),
+        coordinatedProgramme = $("#coordinatedProgramme").val(),
+        researchUnit = $("#researchUnit").prop("checked"),
+        researchProposal = $("#researchProposal").val(),
         policies = [],
         policyLink = "",
         // 02 Data Collection
@@ -376,8 +504,8 @@ function getInputAsJson() {
         alive = $("input[name='alive']:checked").val(),
         taxon = $("input[name='taxon']:checked").val(),
         sequenced = $("input[name='sequenced']:checked").val(),
-        dataformats = [],
-        documentated = $("input[name='documentated']:checked").val(),
+        datatypes = [],
+        createFormats = $("#createFormats").val(),
         dataVolume = getDataVolumeBySliderValue($("#volumeSlider").val()),
         dataSet = getDataSetBySliderValue($("#datasetSlider").val()),
         methodologies = $("#methodologies").val(),
@@ -386,20 +514,24 @@ function getInputAsJson() {
         metadataDesc = "",
         // 04 Ethics
         requirements = [],
-        license = $("#licenses").val(),
+        license = $("#licenses option:selected").text().trim(),
         accessRestriction = $("input[name='restriction']:checked").val(),
         accessDuration = "",
         accessReason = "",
         // 05 Preservation
+        dataSubmissions = [],
+        backup = $("#backup").val(),
         dataArchives = [],
-        pid = $("input[name='pid']:checked").val(),
-        // 06 GFBio Services
-        services = [];
+        pid = $("input[name='pid']:checked").val();
     
     // 01 General Information
 	if (category === "Select") {
         category = "";
     }
+	
+	$("input[name='reproducible']:checked").each(function () {
+		reproducible.push($(this).val());
+    });
     
 	$("input[name='types']:checked").each(function () {
         projectTypes.push($(this).siblings('span').text());
@@ -413,10 +545,11 @@ function getInputAsJson() {
 	$("input[name='investigator']").each(function () {
 		investigators.push($(this).val());
     });
-	
 
 	if (funding === "other") {
 		funding = $("#fundingOther").val();
+	} else if (funding === "Select") {
+		funding = "";
 	}
 	
 	$("input[name='policies']:checked").each(function () {
@@ -425,22 +558,26 @@ function getInputAsJson() {
 	
 	if ($.inArray("Other", policies) > -1) {
 		policies.splice($.inArray("Other", policies), 1);
-		policies.push($("#policyOther").val());
+		if ($("#policyOther").val() !== "") {
+			policies.push($("#policyOther").val());
+		}
 		policyLink = $("#policyLink").val();
 	}
 	
 	// 02 Data Collection
-	$("input[name='dataformat']:checked").each(function () {
-		dataformats.push($(this).siblings('span').text());
+	$("input[name='datatype']:checked").each(function () {
+		datatypes.push($(this).siblings('span').text());
     });
-	if ($.inArray("Other", dataformats) > -1) {
-		dataformats.splice($.inArray("Other", dataformats), 1);
-		dataformats.push($("#dataformatOther").val());
+	if ($.inArray("Other", datatypes) > -1) {
+		datatypes.splice($.inArray("Other", datatypes), 1);
+		datatypes.push($("#datatypeOther").val());
 	}
 	
 	// 03 Metadata
 	$("input[name='metadata']:checked").each(function () {
-		metadata.push($(this).siblings('span').text());
+		// Save only the name of the selected metadata
+		var substring = $(this).siblings('span').text().split(", ")
+		metadata.push(substring[0]);
     });
 	if ($.inArray("Other metadata schema or version", metadata) > -1) {
 		metadataDesc = $("#metadataDesc").val();
@@ -457,6 +594,8 @@ function getInputAsJson() {
 	
 	if (license === "Other License") {
 		license = $("#licenseOther").val();
+	} else if (license === "Select") {
+		license = "";
 	}
 
 	if (accessRestriction) {
@@ -465,6 +604,14 @@ function getInputAsJson() {
 	}
 	
 	// 05 Preservation
+	$("input[name='dataSubmission']:checked").each(function () {
+		dataSubmissions.push($(this).siblings('span').text());
+    });
+	if ($.inArray("Other submission plan", dataSubmissions) > -1) {
+		dataSubmissions.splice($.inArray("Other submission plan", dataSubmissions), 1);
+		dataSubmissions.push($("#submitOther").val());
+	}
+	
 	$("input[name='archives']:checked").each(function () {
 		dataArchives.push($(this).siblings('span').text());
     });
@@ -473,27 +620,26 @@ function getInputAsJson() {
 		dataArchives.push($("#archiveOther").val());
 	}
 	
-	// 06 GFBio Services
-	$("input[name='services']:checked").each(function () {
-		services.push($(this).siblings('span').text());
-    });
-	
 	// Create jsonObject
 	var dmptInput = {
 			// 01 General Information
 			"projectName" : projectName,
 			"category" : category,
-			"reproducible" : reproducible,
+			"reproducible" : [],
+			"reproducibleText" : reproducibleText,
 			"projectTypes": [],
 			"projectAbstract" : projectAbstract,
-			"investigators" : [],
 			"responsibleName" : responsibleName,
 			"phoneNumber" : phoneNumber,
 			"email" : email,
+			"investigators" : [],
 			"funding" : {
 				"name" : funding
 			},
 			"fundingLink" : fundingLink,
+			"coordinatedProgramme" : coordinatedProgramme,
+	        "researchUnit" : researchUnit,
+	        "researchProposal" : researchProposal,
 			"policies" : [],
 			"policyLink" : policyLink,
 			// 02 Data Collection
@@ -501,8 +647,8 @@ function getInputAsJson() {
 			"alive" : alive,
 			"taxon" : taxon,
 			"sequenced" : sequenced,
-			"dataformats" : [],
-			"openlyDocumentated" : documentated,
+			"datatypes" : [],
+			"createFormats" : createFormats,
 			"dataVolume" : dataVolume,
 			"dataSets" : dataSet,
 			"methodologies" : methodologies,
@@ -518,13 +664,17 @@ function getInputAsJson() {
 			"accessDuration" : accessDuration,
 			"accessReason" : accessReason,
 			// 05 Preservation
+			"dataSubmissions" : [],
+			"backup" : backup,
 			"dataArchives" : [],
-			"pid" : pid,
-			// 06 GFbio Services
-			"gfbioServices" : []
+			"pid" : pid
         };
     
 	// Set Arrays
+	if (reproducible) {
+		dmptInput.reproducible = reproducible;
+	}
+	
 	if (projectTypes) {
 		dmptInput.projectTypes = projectTypes;
 	}
@@ -541,8 +691,8 @@ function getInputAsJson() {
         });
     }
 
-	if (dataformats) {
-		dmptInput.dataformats = dataformats;
+	if (datatypes) {
+		dmptInput.datatypes = datatypes;
 	}
 	
 	if (metadata) {
@@ -561,12 +711,12 @@ function getInputAsJson() {
 		});
 	}
 	
-	if (dataArchives) {
-		dmptInput.dataArchives = dataArchives;
+	if (dataSubmissions) {
+		dmptInput.dataSubmissions = dataSubmissions;
 	}
 	
-	if (services) {
-		dmptInput.gfbioServices = services;
+	if (dataArchives) {
+		dmptInput.dataArchives = dataArchives;
 	}
 	
 	console.log("Json:", dmptInput);
@@ -589,9 +739,15 @@ function addInvestigator(investigator) {
     newinput.appendTo("#principal");
 }
 
-function initializeInputs(dmptInput, id) {
+
+// Method for loading Json data and initialize the wizard
+function initializeWizard(dmptInput, id) {
 	'use strict';
-	
+	// Enable all tabs
+	$("li.disabled").each(function () {
+		$(this).removeClass("disabled").addClass("done");
+	})
+		
 	// 01 General Information
 	$("#dmpId").val(id);
 	$("#name").val(dmptInput.projectName);
@@ -600,9 +756,21 @@ function initializeInputs(dmptInput, id) {
 	}
 	
 	if (!isEmpty(dmptInput.reproducible)) {
-		$("input[name='nature'][value='" + dmptInput.reproducible + "']").prop("checked", true);
+		var reproducible = dmptInput.reproducible;
+		for (i = 0; i < reproducible.length; i++) {
+			$("input[name='reproducible']").each(function () {
+				if ($(this).val() === reproducible[i]) {
+					$(this).prop("checked", true);
+				}
+			});
+		}
 	}
 	
+	if (!isEmpty(dmptInput.reproducibleText)) {
+		$("#reproducibleText").val(dmptInput.reproducibleText);
+	}
+	
+	//Variable for for-loops
     var i;
     
 	if (dmptInput.projectTypes) {
@@ -628,6 +796,14 @@ function initializeInputs(dmptInput, id) {
 		$("#abstract").val(dmptInput.projectAbstract);
 	}
 	
+	if (!isEmpty(dmptInput.responsibleName)) {
+		$("#responsibleName").val(dmptInput.responsibleName);
+	}
+	
+	if (!isEmpty(dmptInput.phoneNumber)) {
+		$("#phone").val(dmptInput.phoneNumber);
+	}
+	
 	if (dmptInput.investigators) {
 		var investigators = dmptInput.investigators;
 		$("input[name='investigator']").val(investigators[0]);
@@ -638,38 +814,41 @@ function initializeInputs(dmptInput, id) {
 		}
 	}
 	
-	if (!isEmpty(dmptInput.responsibleName)) {
-		$("#responsibleName").val(dmptInput.responsibleName);
-	}
-	
-	if (!isEmpty(dmptInput.phoneNumber)) {
-		$("#phone").val(dmptInput.phoneNumber);
-	}
-	
-	if (!isEmpty(dmptInput.email)) {
-		$("#email").val(dmptInput.email);
-	}
-	
 	if (dmptInput.funding) {
-		var found = false;
+		var found = false,
+			funding = dmptInput.funding.name;
+		if (funding === "") funding = "Select";
 		$("#funding option").each(function () {
-			if ($(this).val() === dmptInput.funding.name) {
-				$("#funding").val(dmptInput.funding.name);
+			if ($(this).val() === funding) {
+				$(this).prop("selected", true);
 				found = true;
 			}
 	    });
 		if (!found) {
 			$("#funding").val("other");
-			$("#fundingOther").val(dmptInput.funding.name);
+			$("#fundingOther").val(funding);
 			$("#fundingOther").show();
 		}
 		
-		if (dmptInput.funding.name !== "None" && dmptInput.funding.name !== "select") {
+		if (funding !== "None" && funding !== "Select") {
 			if (!isEmpty(dmptInput.fundingLink)) {
 				$("#fundingLink").val(dmptInput.fundingLink);
 				$("#fundingLink").show();
 			}
 		}
+	}
+	
+	if (!isEmpty(dmptInput.coordinatedProgramme)) {
+		$("#coordinatedProgramme").val(dmptInput.coordinatedProgramme);
+	}
+	
+	var researchUnit = dmptInput.researchUnit;
+	if (researchUnit) {
+		$("#researchUnit").prop("checked", true);
+	}
+	
+	if (!isEmpty(dmptInput.researchProposal)) {
+		$("#researchProposal").val(dmptInput.researchProposal);
 	}
 	
 	if (dmptInput.policies) {
@@ -684,14 +863,12 @@ function initializeInputs(dmptInput, id) {
             });
 			if (!found) {
 				$("input[name='policies'][value='Other']").prop("checked", true);
+				$("#policyLink").show();
 				if (!isEmpty(dmptInput.policyLink)) {
 					$("#policyLink").val(dmptInput.policyLink);
-					$("#policyLink").show();
 				}
-				if (!isEmpty(dmptInput.policyOther)) {
-					$("#policyOther").val(policies[i].name);
-					$("#policyOther").show();
-				}
+				$("#policyOther").show();
+				$("#policyOther").val(policies[i].name);
 			}
 		}
 	}
@@ -717,26 +894,26 @@ function initializeInputs(dmptInput, id) {
 		$("#sequenced").removeClass("disabledDiv");
 	}
 	
-	if (dmptInput.dataformats) {
-		var dataformats = dmptInput.dataformats;
-		for (i = 0; i < dataformats.length; i++) {
+	if (dmptInput.datatypes) {
+		var datatypes = dmptInput.datatypes;
+		for (i = 0; i < datatypes.length; i++) {
 			var found = false;
-			$("input[name='dataformat']").each(function () {
-				if ($(this).siblings('span').text() === dataformats[i]) {
+			$("input[name='datatype']").each(function () {
+				if ($(this).siblings('span').text() === datatypes[i]) {
 					$(this).prop("checked", true);
 					found = true;
 				}
 			});
 			if (!found) {
-				$("input[name='dataformat'][value='Other']").prop("checked", true);
-				$("#dataformatOther").val(dataformats[i]);
-				$("#dataformatOther").show();
+				$("input[name='datatype'][value='Other']").prop("checked", true);
+				$("#datatypeOther").val(datatypes[i]);
+				$("#datatypeOther").show();
 			}
 		}
 	}
 	
-	if (!isEmpty(dmptInput.openlyDocumentated)) {
-		$("input[name='documentated'][value='" + dmptInput.openlyDocumentated + "']").prop("checked", true);
+	if (!isEmpty(dmptInput.createFormats)) {
+		$("#createFormats").val(dmptInput.createFormats);
 	}
 		
 	if (!isEmpty(dmptInput.dataVolume)) {
@@ -758,14 +935,16 @@ function initializeInputs(dmptInput, id) {
 		var metadata = dmptInput.metadata;
 		for (i = 0; i < metadata.length; i++) {
 			$("input[name='metadata']").each(function () {
-                if ($(this).siblings('span').text() === metadata[i].name) {
+				var substring = $(this).siblings('span').text().split(", ");
+                if (substring[0] === metadata[i].name) {
                     $(this).prop("checked", true);
+                    // Show metadata additional information div
+                    $("input[name='" + metadata[i].name + "']").parent().show();
                 }
             });
-			if (metadata[i].name === "Other metadata schema or version") {
+			if (metadata[i].name.includes("Other")) {
 				if (!isEmpty(dmptInput.metadataDescription)) {
 					$("#metadataDesc").val(dmptInput.metadataDescription);
-					$("#metadataDesc").show();
 				}
 			}
 		}
@@ -791,15 +970,19 @@ function initializeInputs(dmptInput, id) {
 	}
 	
 	if (dmptInput.license) {
-		var found = false;
+		var found = false, 
+			license = dmptInput.license.name;
+		if (license === "") license = "Select";
 		$("#licenses option").each(function () {
-			if ($(this).val() === dmptInput.license.name) {
-				$("#licenses").val(dmptInput.license.name);
+			if ($(this).text().trim() === license) {
+				$("#licenses").val($('#licenses option').filter(function () { return $(this).html().trim() == license; }).val());
 				found = true;
+				// Show additional information - url
+				$("input[name*='" + license + "']").parent().show();
 			}
 	    });
 		if (!found) {
-			$("#licenses").val("Other License");
+			$("#licenses").val($('#licenses option').filter(function () { return $(this).html() == "Other License"; }).val());
 			$("#licenseOther").val(dmptInput.license.name);
 			$("#licenseOther").show();
 		}
@@ -815,12 +998,34 @@ function initializeInputs(dmptInput, id) {
 				$("#accessReason").val(dmptInput.accessReason);
 			}
 			$("#accessYes").show();
-        } else {
+        } else if (dmptInput.accessRestriction === "false") {
             $("input[name='restriction'][value='false']").prop("checked", true);
         }
 	}
 	
 	// 05 Preservation
+	if (dmptInput.dataSubmissions) {
+		var dataSubmissions = dmptInput.dataSubmissions;
+		for (i = 0; i < dataSubmissions.length; i++) {
+			var found = false;
+			$("input[name='dataSubmission']").each(function () {
+				if ($(this).siblings('span').text() === dataSubmissions[i]) {
+					$(this).prop("checked", true);
+					found = true;
+				}
+			});
+			if (!found) {
+				$("input[name='dataSubmission'][value='Other submission plan']").prop("checked", true);
+				$("#submitOther").val(dataSubmissions[i]);
+				$("#submitOther").show();
+			}
+		}
+	}
+	
+	if (!isEmpty(dmptInput.backup)) {
+		$("#backup").val(dmptInput.backup);
+	}
+	
 	if (dmptInput.dataArchives) {
 		var dataArchives = dmptInput.dataArchives;
 		for (i = 0; i < dataArchives.length; i++) {
@@ -844,15 +1049,4 @@ function initializeInputs(dmptInput, id) {
 		$("input[name='pid'][value='" + dmptInput.pid + "']").prop("checked", true);
 	}
 		
-	// 06 GFBio Services
-	if (dmptInput.gfbioServices) {
-		var gfbioServices = dmptInput.gfbioServices;
-		for (i = 0; i < gfbioServices.length; i++) {
-			$("input[name='services']").each(function () {
-				if ($(this).siblings('span').text() === gfbioServices[i]) {
-					$(this).prop("checked", true);
-				}
-			});
-		}
-	}
 }

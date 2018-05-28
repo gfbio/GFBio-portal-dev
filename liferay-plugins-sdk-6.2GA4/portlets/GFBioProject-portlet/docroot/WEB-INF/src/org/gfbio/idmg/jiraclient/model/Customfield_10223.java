@@ -5,12 +5,12 @@ import lombok.Data;
 
 /**
  * @author jthomae1
- *
- * Customfield for datacenters (DCRT)
+ * 
+ * Customfield for funding application (DMP)
  */
 @Data
 @AllArgsConstructor
-public class Customfield_10217 {
+public class Customfield_10223 {
 
 	public String value;
 
