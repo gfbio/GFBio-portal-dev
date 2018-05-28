@@ -1103,6 +1103,22 @@ Liferay fixes - content
 } 
 	
 
+/*===========================================/
+/*** GFBio Content Specific css classes ***/
+/*===========================================*/
+
+.aui #consortium_table{
+border-collapse:separate;
+border-bottom: 1px solid black;
+border-top: 1px solid black;
+border-spacing:25px 10px;
+}
+
+.aui #consortium_table_tr{
+vertical-align:top;
+}
+
+
 /*=====================================================
  Responsive: Navbar
 =======================================================*/
