@@ -538,7 +538,8 @@
 			uploaddiv.append("<span id='gwf_b_upload_inputarea'></span>");
 		}
 	
-	
+
+		
 	
 	
 	function setToDefaultArchive(targetDiv){
