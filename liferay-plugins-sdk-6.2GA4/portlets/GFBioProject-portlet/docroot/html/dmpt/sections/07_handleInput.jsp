@@ -28,9 +28,13 @@
 </div>
 
 <div id="dialog-request" style="display: none;">
-	<div id="send-request" class="row dmpt-row" >
+	<div id="send-request" class="row" style="margin-right: 15px; margin-left: 15px;" >
 		<form id="dialogForm">
-			<h5>Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.</h5>
+			<div class="col-md-12">
+				<div class="portlet-msg-alert col-md-12" >
+					Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.
+				</div>
+			</div>
 			<div class="col-md-12">
 				<textarea id="additinal-text" maxlength="1000" rows="5" cols="100"
 					placeholder="Would you like to send any additional information or do you have any questions?"></textarea>
