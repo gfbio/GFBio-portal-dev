@@ -537,11 +537,7 @@
 			} 
 			uploaddiv.append("<span id='gwf_b_upload_inputarea'></span>");
 		}
-	
 
-		
-	
-	
 	function setToDefaultArchive(targetDiv){
 		var divDcrt = $("#".concat(targetDiv));
 		divDcrt.empty();
