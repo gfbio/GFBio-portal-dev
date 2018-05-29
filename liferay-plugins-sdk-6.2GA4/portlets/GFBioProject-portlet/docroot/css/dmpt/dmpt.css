@@ -105,6 +105,12 @@ select[multiple=multiple] {
     margin-left: 15px;
 }
 
+.row.request-row {
+	margin-right: 15px; 
+	margin-left: 15px;
+	width: auto;
+}
+
 .info-blue {
 	font-size: 16px;
 	color: #335AA3;

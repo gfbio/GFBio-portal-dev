@@ -28,7 +28,7 @@
 </div>
 
 <div id="dialog-request" style="display: none;">
-	<div id="send-request" class="row" style="margin-right: 15px; margin-left: 15px;" >
+	<div id="send-request" class="row request-row" >
 		<form id="dialogForm">
 			<div class="col-md-12">
 				<div class="portlet-msg-alert col-md-12" >
