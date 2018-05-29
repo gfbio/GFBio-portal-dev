@@ -111,6 +111,19 @@
 		
 		
 	}
+
+.font_shadows_into_light {
+  font-family: 'Shadows Into Light';
+  font-weight: 400;
+}
+
+.indie_flower {
+  font-family: 'Indie Flower';
+}
+.caveat {
+  font-family: 'Caveat';
+  font-weight:400;
+}	
 	
 .html-editor a{
 			color: rgb(60, 172, 228); /*3CACE4*/
