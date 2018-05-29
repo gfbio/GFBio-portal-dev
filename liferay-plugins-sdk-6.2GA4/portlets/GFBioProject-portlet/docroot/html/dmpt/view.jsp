@@ -159,6 +159,7 @@ $(document).ready(function () {
 		    //07 Handling inputs at the end of the wizard
 		    $("#handleInput").hide();
 		    
+		    //Download PDF
 		    $("#downloadDMP").click(function () {
 				var fileName = $("#name").val() + ".pdf";
 				fileName = fileName.replace(/\s/g, "_");
@@ -178,6 +179,11 @@ $(document).ready(function () {
 		    
 		    //Send DMP Request
 		    $("#sendDMP").on("click", openSendRequestDialog);
+		    
+		    //Finish Wizard
+		    $("#finishDMP").click(function() {
+    			location.reload();
+			});
 		    
 		    //Tooltips
 		    $("a[name=title]").tooltip({

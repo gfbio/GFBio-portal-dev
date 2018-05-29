@@ -11,6 +11,23 @@ div#dataSubmit > div {
     margin-bottom: 5px;
 }
 
+div.ico-container {
+	padding: 15px;
+    justify-content: center;
+    text-align: center;
+    color: #2c59a0;
+}
+
+div.ico-container > i {
+	align-self: center;
+	font-size: 36px;	
+}
+
+div.ico-container > input {
+	min-width: 200px;	
+	margin: auto;
+}
+
 input[type=radio] {
 	display: inline !important;
 }
@@ -26,6 +43,14 @@ input[type=email]
 }
 
 /* Buttons */
+button:disabled {
+	color: lightgray;
+}
+
+i.ico-btn {
+	font-size:22px;
+	vertical-align: text-top;
+}
 
 input[type=button] {
 	border: 1px solid lightgrey;
