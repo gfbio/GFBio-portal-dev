@@ -3,6 +3,8 @@
 	var fieldCheckList = ['gwf_ro_name', 'gwf_ro_description', 'gwf_ro_author', 'gwf_ro_license','gwf_ro_dct', 'gwf_ro_label', 'gwf_ro_publications', 'gwf_ro_embargo', 'gwf_ro_externalupload_path'];
 	var limitExtrageSmall = 10;
 	var limitSmall = 200;
+	var limitSmall2 = 400;
+
 	var limitLarge = 2000;
 	var limitExtrageLarge = 15000;
 	var buttonwidth = '220px';
@@ -182,7 +184,8 @@
 			addInputfieldTo(div, "gwf_ro_name", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
 			addInputAreaTo (div, "gwf_ro_description", "Description"		  , "*", "Provide a summary of the work you did to produce the dataset (similar to an article abstract)."	 , limitExtrageLarge, fieldCheckList[1],"", 6);
 			addInputfieldTo(div, "gwf_ro_dct"  		 , "Data collection time" , "" , "Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).", limitLarge		, fieldCheckList[4],"");
-			addInputfieldTo(div, "gwf_ro_label"		 , "Dataset label"        , "" , "Provide labels for the dataset, describe it in keywords or use internal identifiers."              , limitSmall		, fieldCheckList[5],"");
+			addInputfieldTo(div, "gwf_ro_label"		 , "Dataset label"        , "" , "Please provide keywords for your dataset (one keyword per line //use semicolon to separate the words). If available add identifiers (e.g. your Gepris-No.).", limitSmall, fieldCheckList[5],"");
+			//addInputfieldTo(div, "gwf_ro_label"		 , "Dataset label"        , "" , "Provide labels for the dataset, describe it in keywords or use internal identifiers."              , limitSmall		, fieldCheckList[5],"");
 			div.append(
 				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
 				"<p 	class='field-description'			 	id='gwf_ro_categories_d'>Choose one or more categories, that are related with the dataset.</p>"+
@@ -527,7 +530,8 @@
 					"<div id='gwf_ro_upload' placeholder='Choose File' /></div>"
 				);
 			}else{
-				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL", 	""				,"Provide the URL of your dataset. Please use only http, https, ftp and sftp.", 			 limitSmall, fieldCheckList[8],"");
+				//addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL", 	""				,"Provide the URL of your dataset. Please use only http, https, ftp and sftp.", 			 limitSmall, fieldCheckList[8],"");
+				addInputfieldTo(uploaddiv, "gwf_ro_externalupload_path", 	"URL", 	""				,"Provide the URL of your dataset. Please use only http, https, ftp and sftp.", 			 limitSmall2, fieldCheckList[8],"");
 				document.getElementById("gwf_ro_externalupload_path").placeholder = "http://"; //placeholder="First name
 				console.log(document.getElementById("gwf_ro_externalupload_path"));
 			} 
