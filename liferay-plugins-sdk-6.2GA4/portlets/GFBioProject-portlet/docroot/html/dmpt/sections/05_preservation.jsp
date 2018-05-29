@@ -5,7 +5,7 @@
 		<h2>5. Preservation and Sharing</h2>
 	</div>
 	<div id="lastTab">
-		<div class="row">
+		<div class="row dmpt-row">
 	        <h4>When will your data be submitted to GFBio?
 	        	<a name="title" title="Submit the final and quality-assured version of your datasets. Metadata will be curated by our data centers and will subsequently be published via the GFBio portal. Research data will be published within the limit of their respective embargo and license.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -37,7 +37,7 @@
 	            </div>
 	        </div>
 	    </div>
-		<div class="row">
+		<div class="row dmpt-row">
 			<h4>How is your data backed up during project runtime? Who is responsible for data backup?
 				<a name="title" title="With which technologies and in which locations are your data stored? Are there regular backups and at what intervals? Who is responsible for data backup and which service providers (e.g. local IT support) are involved?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -47,7 +47,7 @@
 				<textarea id="backup" maxlength="1000" rows="5" cols="100" placeholder="Please explain as detailed as possible."></textarea>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 	        <h4>Where will your data be long-term archived?
 	        	<a name="title" title="If you are not sure which data center fits best for your data, choose &#34;GFBio Data Centers&#34; and our curation experts will find the best solution for storing your data within GFBio.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -117,7 +117,7 @@
 	            </div>
 	        </div>
 	    </div>
-		<div class="row">
+		<div class="row dmpt-row">
 	        <h4>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?
 	        	<a name="title" title="With a persistent identifiers (PID) - like DOI - you make your data citable and linkable to publications which is increasingly required by journals. GFBio recommends to add a PID to your data.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -144,7 +144,7 @@
 		        </div>
 	        </div>
 	    </div>
-		<!-- <div class="row">
+		<!-- <div class="row dmpt-row">
 		    <h4>Do you need help estimating the cost and effort for data management?</h4>
 		    <div id="needHelp" class="col-md-12">
 		    	<div class="ccol-md-3">

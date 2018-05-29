@@ -719,7 +719,7 @@ function getInputAsJson() {
 		dmptInput.dataArchives = dataArchives;
 	}
 	
-	console.log("Json:", dmptInput);
+	//console.log("Json:", dmptInput);
 	return JSON.stringify(dmptInput);
 }
 

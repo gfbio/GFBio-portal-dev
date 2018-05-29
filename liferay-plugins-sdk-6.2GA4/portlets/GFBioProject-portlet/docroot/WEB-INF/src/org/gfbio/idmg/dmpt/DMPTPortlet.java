@@ -2,7 +2,6 @@ package org.gfbio.idmg.dmpt;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,17 +20,14 @@ import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.idmg.jiraclient.JIRAApi;
 import org.gfbio.idmg.jiraclient.connection.Communicator;
 import org.gfbio.idmg.jiraclient.model.Assignee;
-import org.gfbio.idmg.jiraclient.model.Customfield_10202;
-import org.gfbio.idmg.jiraclient.model.Customfield_10214;
-import org.gfbio.idmg.jiraclient.model.Customfield_10220;
-import org.gfbio.idmg.jiraclient.model.Customfield_10221;
-import org.gfbio.idmg.jiraclient.model.Customfield_10223;
 import org.gfbio.idmg.jiraclient.model.Fields;
 import org.gfbio.idmg.jiraclient.model.Issue;
 import org.gfbio.idmg.jiraclient.model.IssueType;
+import org.gfbio.idmg.jiraclient.model.JiraResponse;
 import org.gfbio.idmg.jiraclient.model.Project;
 import org.gfbio.idmg.jiraclient.model.Reporter;
 import org.gfbio.idmg.util.ContentUtil;
+import org.gfbio.idmg.util.TXTUtil;
 import org.gfbio.model.DataManagementPlan;
 import org.gfbio.model.impl.DataManagementPlanImpl;
 import org.gfbio.service.DataManagementPlanLocalServiceUtil;
@@ -42,6 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Http.Response;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Phone;
@@ -341,15 +338,9 @@ public class DMPTPortlet extends MVCPortlet {
 	
 	private void sendDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
-		_log.info("Send DMP Request");
-		
 		// Get Request Parameter
 		String[] services = resourceRequest.getParameterValues("services[]");
 		String message = (String) resourceRequest.getParameter("infos");
-		for (int i = 0; i < services.length; i++) {
-			_log.info("Service: " + services[i]);
-		}
-		_log.info("Add. Text/Message: " + message);
 		
 		// Get DMPTInput from Session and Convert to DTO
 		PortletSession session = resourceRequest.getPortletSession();
@@ -358,10 +349,13 @@ public class DMPTPortlet extends MVCPortlet {
 		Gson gson = new Gson();
 		DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
 		
-		// Set Customfields
+		// Set fields
 		String projectName = input.getProjectName();
 		String projectAbstract = input.getProjectAbstract();
-		String description = message.concat(" - " + createCommaSeperatedString(Arrays.asList(services)));
+		String description = message;
+		if (services != null) {
+			description = description.concat(" - " + createCommaSeperatedString(Arrays.asList(services)));
+		}
 		String principalInvestigator = createCommaSeperatedString(input.getInvestigators());
 //		String funding = input.getFunding().getName();
 //		
@@ -381,11 +375,11 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		// Create Issue
 		// PropsUtil reads the property from portal-ext.properties
+		_log.info("projectkey: " + PropsUtil.get("jira.gfbio.dmpt.projectkey"));
 		Project project = new Project(PropsUtil.get("jira.gfbio.dmpt.projectkey"));
 		IssueType issuetype = new IssueType("DMP");
 		Reporter reporter = new Reporter("testuser1");
-
-		_log.info("projectkey: " + PropsUtil.get("jira.gfbio.dmpt.projectkey"));
+		
 		//PropsUtil reads the property from portal-ext.properties
 		String customfield_10010 = PropsUtil.get("jira.gfbio.dmpt.requesttype");
 
@@ -396,14 +390,10 @@ public class DMPTPortlet extends MVCPortlet {
 			reporter = new Reporter(themeDisplay.getUser().getEmailAddress());
 		}
 
-		String summary = "DMP Request";
+		// Set assignee for the ticket with user gfbio-ev
+		Assignee assignee = new Assignee("gfbio-ev");
 
-		// User for assignee value
-		String user = "gfbio-ev";
-		// Set assignee for the ticket
-		Assignee assignee = new Assignee(user);
-
-		Fields fields = new Fields(project, summary, issuetype, reporter, description, assignee, customfield_10010,
+		Fields fields = new Fields(project, "DMP Request", issuetype, reporter, description, assignee, customfield_10010,
 				projectName, projectAbstract, principalInvestigator);
 		Issue issue = new Issue(fields);
 
@@ -411,8 +401,23 @@ public class DMPTPortlet extends MVCPortlet {
 		Communicator communicator = new Communicator();
 		JIRAApi jiraApi = new JIRAApi(communicator);
 
-		String response = jiraApi.createDataCenterTicket(issue);
-		_log.info("Response: " + response);
+		String response = "";
+		JiraResponse ticket;
+		boolean added;
+		try {
+			 response = jiraApi.createDataCenterTicket(issue);
+			 ticket = gson.fromJson(response, JiraResponse.class);
+			 _log.info("Issue ID: " + ticket.getId());
+			 added = jiraApi.addAttachments(ticket.getId(), TXTUtil.getTXTAttachmentFromDMP(input));
+			 if (added) {
+				 _log.info("Attachments added for issue " + ticket.getId());
+			 } else {
+				 _log.error("Attachment for issue " + ticket.getId() + " could not been uploaded");
+			 }
+		} catch (IOException e) {
+			_log.info("Response" + response);
+			_log.error(e.getStackTrace());
+		}
 		
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();

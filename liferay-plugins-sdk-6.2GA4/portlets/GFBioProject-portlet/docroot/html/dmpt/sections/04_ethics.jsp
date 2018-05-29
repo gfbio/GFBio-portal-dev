@@ -5,7 +5,7 @@
 	<div name="title" class="hidden-md hidden-lg">
 		<h2>4. Ethics and Legal Compliance</h2>
 	</div>
-	<div class="row">
+	<div class="row dmpt-row">
 	    <h4>Which legal requirements will your research data meet? 
 	    	<a name="title" title="Will your data meet any ethical issues or legal requirements such as personally identifiable information? 
 Data dealing with abundance of Red List Species needs to be handled according to the legal requirements and may not be easily published .
@@ -44,7 +44,7 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 	   	</div>
     </div>
     
-	<div class="row">
+	<div class="row dmpt-row">
     	<h4>How will your data be licensed for reuse?
     		<a name="title" title="The overall goal of GFBio is to provide a sustainable, service oriented, national data infrastructure facilitating data sharing. 
 Thus, we support  the idea of  open access to data. Attaching a  corresponding license to your data is  an  important part of data management. 
@@ -83,7 +83,7 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 	       </div>
 	   	</div>
     </div>
-	<div class="row">
+	<div class="row dmpt-row">
         <h4>Do you need access restriction for your data?</h4>
         <div>
 	        <div class="col-xs-6 col-md-3">

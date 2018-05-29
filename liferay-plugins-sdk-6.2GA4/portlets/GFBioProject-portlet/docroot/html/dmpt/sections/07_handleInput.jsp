@@ -28,7 +28,7 @@
 </div>
 
 <div id="dialog-request" style="display: none;">
-	<div id="send-request" class="row" >
+	<div id="send-request" class="row dmpt-row" >
 		<form id="dialogForm">
 			<h5>Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.</h5>
 			<div class="col-md-12">

@@ -36,7 +36,7 @@
 		<div name="title" title="Test" class="hidden-md hidden-lg">
 			<h2>1. General Project Information</h2>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 			<div class="col-md-12">
 				<div id="save-message" class="portlet-msg-alert col-md-12" style="display: none;">
 					Only logged in users can save their inputs at the end of the wizard. Please <a href="${portalurl}/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to enable the feature.
@@ -48,7 +48,7 @@
 				<input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
 			</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 			<h4>Please select a category:</h4>
 			<div class="col-md-12">
 				<select id="category" name="category">
@@ -61,7 +61,7 @@
 				</select>
 			</div>
 		</div>
-	  	<div class="row">
+	  	<div class="row dmpt-row">
 	      	<h4>Is your research data reproducible?
 	      		<a name="title" title="Imagine your research data gets lost. Would you (or someone else) be able to reproduce your data? What effort or resources would be necessary?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -91,7 +91,7 @@
 	    		</div>
 	     	</div>
 		</div>
-	    <div class="row">
+	    <div class="row dmpt-row">
 	   		<h4>Please specify your project type.
 	   			<a name="title" title="You can combine several types.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -160,13 +160,13 @@
 	        </div>
 	        
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 	    	<h4>Provide your project abstract or describe your work and the data involved.</h4>
 	        <div id="projectAbstract" class="col-md-12">
 	      		<textarea maxlength="2000" id="abstract" rows="5" cols="100" placeholder="Project Abstract"></textarea> 
 	    	</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 	    	<h4>Who is the point of contact for the project data? *
 	    		<a name="title" title="Who should be contacted in case of any question concerning data management? This might be technical issues as well as questions concerning data policies, legal requirements or data volumes and formats.  
 	Most commonly this is: you - the one preparing the DMP.">
@@ -189,7 +189,7 @@
 		 		</div>
 	    	</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 	    	<h4>Who are the principal investigators?</h4>
 	    	<div class="col-md-12" style="margin-bottom: 10px;">
 	    		<input id="sameContact" type="checkbox" />
@@ -205,7 +205,7 @@
 	        	</div>    
 	    	</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 	    	<h4>For which funding are you applying?
 	    		<a name="title" title="Funding agencies or even funding programmes demand certain data management standards.
 	We support you in meeting their requirements.">
@@ -230,13 +230,13 @@
 	        	</div>
 	    	</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 			<h4>If you are part of a coordinated programme (Koordinierte Programme, Verbundprojekte), is there any specific coordination, guideline or policy for data management?</h4>
 			<div class="col-md-12">
 	      		<textarea id="coordinatedProgramme" maxlength="1000" rows="3" cols="100" placeholder="Please describe the data management coordination of your programme. Who takes care of it? Is there a data management plan, guideline or policy on which all project members agree? If there are any documents available, please refer to them (by upload, link, DOI or full citation)."></textarea> 
 	    	</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 			<h4>Are you a member of a research unit (Forschergruppe)?
 	    		<a href="http://www.dfg.de/en/research_funding/programmes/coordinated_programmes/research_units/index.html" target="_blank">
 					<span class="icon-landing-flex icon-link info-blue" ></span>
@@ -247,7 +247,7 @@
 				<span>I am a member of a research unit (Forschergruppe).</span>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 			<h4>Please estimate the total volume of your research proposal?</h4>
 			<div class="col-md-12">
 				<div class="input-icon">
@@ -256,7 +256,7 @@
 			    </div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 	    	<h4>Which policies or guidelines for research data management will you follow?
 	    		<a name="title" title="Does your institution or your funder have certain data management policies or guidelines?">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -314,7 +314,7 @@
 		        </div> 
 		    </div>   
 		</div>
-		<div class="row">
+		<div class="row dmpt-row">
 			<p>* mandatory</p>
 		</div>
 	</div>

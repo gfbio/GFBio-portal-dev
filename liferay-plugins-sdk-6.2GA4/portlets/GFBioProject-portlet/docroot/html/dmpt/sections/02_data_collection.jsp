@@ -4,7 +4,7 @@
 	<div name="title" class="hidden-md hidden-lg">
 		<h2>2. Data Collection</h2>
 	</div>
-    <div id="physical" class="row">
+    <div id="physical" class="row dmpt-row">
        	<h4>Do you want to submit physical objects along with your data?</h4> 
        	<div>
 			<div class="col-xs-6 col-md-3">
@@ -21,7 +21,7 @@
           	</div>
 		</div>
     </div>
-    <div id="alive" class="row">
+    <div id="alive" class="row dmpt-row">
        	<h4>Is your object dead or alive?</h4> 
        	<div>
 			<div class="col-xs-6 col-md-3">
@@ -39,7 +39,7 @@
 		</div>
 		
     </div>
-    <div id="taxon" class="row">
+    <div id="taxon" class="row dmpt-row">
        	<h4>Is your object taxon-based?</h4> 
        	<div>
 			<div class="col-xs-6 col-md-3">
@@ -57,7 +57,7 @@
 		</div>
 		
     </div>
-    <div id="sequenced" class="row">
+    <div id="sequenced" class="row dmpt-row">
        	<h4>Do you have mainly sequence data?</h4> 
        	<div>
 			<div class="col-xs-6 col-md-3">
@@ -74,7 +74,7 @@
 			</div>
 		</div>
     </div>
-	<div class="row">
+	<div class="row dmpt-row">
       	<h4>What type of data will you create?
       		<a name="title" title="You can combine several options.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -136,7 +136,7 @@
 	            </div>
           </div>
     </div>
-	<div class="row">
+	<div class="row dmpt-row">
 	  	<h4>What data formats will you create?
 	  		<a name="title" title="Please name all considered data formats. According to the DFG Guidelines on the Handling of Research Data in Biodiversity Research, we recommend the use of &#34;open or openly documented formats&#34;.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
@@ -146,7 +146,7 @@
       		<textarea id="createFormats" maxlength="1000" rows="5" cols="100" placeholder="List all data formats you are planning to produce and give additional information if necessary (such as &#34;only legible with software xy&#34;). There are loads of data formats and some disciplines even have their own ones."></textarea> 
     	</div>
 	</div>
-	<div class="row">
+	<div class="row dmpt-row">
 	    <h4>Please estimate the data volume you will create.
 	    	<a name="title" title="Please estimate roughly your expected data volume.
 Think about the data you plan to collect. Will there be any areal photos or video files? Multimedia files produce much more volume than e.g. spreadsheets do.">
@@ -160,7 +160,7 @@ Think about the data you plan to collect. Will there be any areal photos or vide
 		    </div>
 	    </div>
 	</div>
-	<div class="row">
+	<div class="row dmpt-row">
 	    <h4>Please estimate the number of data sets (files) you will create.
 	    	<a name="title" title="Do you plan to create a lot of single data sets or will there likely be only few?
 The amount of data sets you will create is closely linked to your style of working and managing data. For example, you could use a single spreadsheet for each planned vegetation mapping or you could as well put hunderts of vegetation mappings in a single spreadsheet. Just give a brief impression of how many data sets might result from your work.">
@@ -174,7 +174,7 @@ The amount of data sets you will create is closely linked to your style of worki
 		    </div>
 	    </div>
 	</div>
-	<div class="row">
+	<div class="row dmpt-row">
 	    <h4>What standards, methodologies or tools will you use to collect, manage and process your data?
 	    	<a href="https://gfbio.biowikifarm.net/wiki/Technical_Documentations" target="_blank">
 				<span class="icon-landing-flex icon-link info-blue" ></span>

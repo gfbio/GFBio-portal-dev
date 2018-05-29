@@ -1,6 +1,5 @@
 package org.gfbio.idmg.jiraclient;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.codec.binary.Base64;
@@ -10,12 +9,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.gfbio.idmg.jiraclient.connection.Communicator;
 import org.gfbio.idmg.jiraclient.connection.HTTPConnectionFactory;
 import org.gfbio.idmg.jiraclient.connection.HTTPResponse;
+import org.gfbio.idmg.jiraclient.model.AttachmentInput;
 import org.gfbio.idmg.jiraclient.model.Issue;
 
 import com.google.gson.Gson;
@@ -29,8 +29,10 @@ public class JIRAApi {
 	private final Communicator client;
 	private final Gson gson;
 
-    public final static String CREATE_TICKET_ENDPOINT = "/rest/api/2/issue/";
-    public final static String LOGIN = "Gfbio-outreach:gfbio_2016";
+	private static final String BASE_URL = "https://helpdesk.gfbio.org";
+    private static final String CREATE_TICKET_ENDPOINT = "/rest/api/2/issue/";
+    private static final String LOGIN = "Gfbio-outreach:gfbio_2016";
+    private static final String FILE_BODY_TYPE = "file";
 
     /**
      * Provide a client instance with matching configuration
@@ -42,32 +44,38 @@ public class JIRAApi {
         this.gson = new Gson();
     }
     
+    /*
+     * Createing jira issue
+     */
     public String createDataCenterTicket(Issue issue) throws IOException {
     	
     	byte[] encodedBytes = Base64.encodeBase64(LOGIN.getBytes());
     	String json = gson.toJson(issue);
     	_log.info(json);
     	HTTPResponse response = client.putJson(CREATE_TICKET_ENDPOINT, HTTPConnectionFactory.RequestMethod.POST, new String(encodedBytes), json);
-    	_log.info("Response: " + response.getResponse());
     	return response.getResponse();
     }
     
-    public boolean addAttachmentToIssue(String issueKey, String path) throws IOException {
+    /*
+     * Adding attachments to a jira issue
+     */
+    public boolean addAttachments(long issueKey, AttachmentInput... attachments) {
     	
     	String auth = new String(Base64.encodeBase64(LOGIN.getBytes()));
     	
     	//HTTPResponse response = client.attachFile(CREATE_TICKET_ENDPOINT + issueKey + "/attachments", HTTPConnectionFactory.RequestMethod.POST, new String(encodedBytes), path);
     	
     	CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost httppost = new HttpPost(CREATE_TICKET_ENDPOINT + issueKey + "/attachments");
+        HttpPost httppost = new HttpPost(BASE_URL + CREATE_TICKET_ENDPOINT + issueKey + "/attachments");
         httppost.setHeader("X-Atlassian-Token", "nocheck");
         httppost.setHeader("Authorization", "Basic "+auth);
         
         MultipartEntityBuilder builder = MultipartEntityBuilder.create(); 
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-        FileBody fileBody = new FileBody(new File(path));
-        builder.addPart("file", fileBody);
+        for (AttachmentInput attachmentInput : attachments) {
+			builder.addPart(FILE_BODY_TYPE, new InputStreamBody(attachmentInput.getInputStream(), attachmentInput.getFilename()));
+		}
 
         HttpEntity entity = builder.build();
         httppost.setEntity(entity);
@@ -75,8 +83,10 @@ public class JIRAApi {
         try {
             response = httpClient.execute(httppost);
         } catch (ClientProtocolException e) {
+        	_log.error(e);
             return false;
         } catch (IOException e) {
+        	_log.error(e);
             return false;
         }
         HttpEntity result = response.getEntity();
@@ -84,7 +94,8 @@ public class JIRAApi {
         if(response.getStatusLine().getStatusCode() == 200) {
         	return true;
         } else {
-        	_log.error("Attachment for issue " + issueKey + " could not been uploaded");
+        	_log.error("Response: " + response.toString());
+        	_log.error("Result: " + result);
         	return false;
         }
     }

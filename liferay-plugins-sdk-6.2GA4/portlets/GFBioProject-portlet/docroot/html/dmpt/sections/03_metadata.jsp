@@ -5,7 +5,7 @@
 	<div name="title" class="hidden-md hidden-lg">
 		<h2>3. Documentation and Metadata</h2>
 	</div>
-	<div class="row">
+	<div class="row dmpt-row">
 		<h4>Which metadata schema does your data support (if any)?
 			<a name="title" title="In order to be able to read and interpret as well as archive and find your data in future, metadata are needed. 
 If you don't know which metadata standard to choose, please select 'other' and describe your type of documentation which will accompany the data.">

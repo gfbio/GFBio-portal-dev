@@ -99,15 +99,10 @@ select[multiple=multiple] {
     border: 1px solid lightgrey;
 }
 
-.aui .row, 
-.aui .row-fluid {
-    margin-left: 0px !important;
-    margin-right: 0px !important;
-}
-
-.row {
-	padding-left: 20px !important;
-    padding-bottom: 10px !important;
+.row.dmpt-row {
+	padding-left: 20px;
+    padding-bottom: 10px;
+    margin-left: 15px;
 }
 
 .info-blue {

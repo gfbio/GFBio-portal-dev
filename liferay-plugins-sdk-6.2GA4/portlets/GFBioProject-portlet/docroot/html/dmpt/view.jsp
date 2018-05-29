@@ -238,13 +238,14 @@ function getInput() {
 	   			json: jsonInput
 	   		},
 	   		success: function (text) {
-	          	console.log(text); //TODO
+	          	//console.log(text); //TODO
 	      	}
     });
 }
 
 function saveDMP() {
-	openSavedDialog(saveDMPforUser());
+	saveDMPforUser();
+	openSavedDialog();
 }
 
 function saveDMPforUser() {
@@ -260,7 +261,7 @@ function saveDMPforUser() {
 	   			dmpId: dmpId
 	   		},
 	   		success: function (response) {
-	          	console.log("Saving Response: " + response); //TODO
+	          	//console.log("Saving Response: " + response); //TODO
 	          	
 	          	if (response.includes("success")) {
 		          	$("#saveDMP").prop("disabled", true);
@@ -268,14 +269,12 @@ function saveDMPforUser() {
 		          	$("#saveDMP").val("Saved");
 	          	}
 	          	
+	          	$("#save-answer").html("<p>" + response + "</p>");
 	      	}
  	});
-	return respone;
 }
 
-function openSavedDialog(response) {
-	$("#save-answer").html("<p>" + response + "</p>");
-	
+function openSavedDialog() {
 	$("#dialog-save").dialog({
 	    modal: true,
 	    resizable: false,
@@ -351,7 +350,7 @@ function loadDmp() {
    		},
    		success: function (response) {
           	var selectedDmp = JSON.parse(response);
-			console.log("Loaded: " + selectedDmp.projectName);
+			//console.log("Loaded: " + selectedDmp.projectName);
    			initializeWizard(selectedDmp, dmpId);
    			showGeneralInformation();
       	},
@@ -386,7 +385,7 @@ function sendRequest() {
 		information;
 	services = getServices();
 	information = $("#additinal-text").val();
-	console.info("Services: " + services);
+	//console.info("Services: " + services);
 	
 	$.ajax({
    		"method": "POST",
@@ -414,6 +413,8 @@ function answer(element, response) {
 		$('#dialog-request').dialog('option', 'buttons', {
 	    	'Ok': function() {
 	        	$(this).dialog('close');
+	        	$(element).hide();
+	        	$("#send-request").show();
 	    	}
 		});
 	});
