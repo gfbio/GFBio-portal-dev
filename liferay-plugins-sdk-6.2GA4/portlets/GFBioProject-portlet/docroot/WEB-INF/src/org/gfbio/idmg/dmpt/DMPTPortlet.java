@@ -404,21 +404,17 @@ public class DMPTPortlet extends MVCPortlet {
 		String response = "";
 		JiraResponse ticket;
 		boolean added;
-		try {
-			 response = jiraApi.createDataCenterTicket(issue);
-			 ticket = gson.fromJson(response, JiraResponse.class);
-			 _log.info("Issue ID: " + ticket.getId());
-			 added = jiraApi.addAttachments(ticket.getId(), TXTUtil.getTXTAttachmentFromDMP(input));
-			 if (added) {
-				 _log.info("Attachments added for issue " + ticket.getId());
-			 } else {
-				 _log.error("Attachment for issue " + ticket.getId() + " could not been uploaded");
-			 }
-		} catch (IOException e) {
-			_log.info("Response" + response);
-			_log.error(e.getStackTrace());
-		}
 		
+		response = jiraApi.createDataCenterTicket(issue);
+		ticket = gson.fromJson(response, JiraResponse.class);
+		_log.info("Issue ID: " + ticket.getId());
+		added = jiraApi.addAttachments(ticket.getId(), TXTUtil.getTXTAttachmentFromDMP(input));
+		if (added) {
+			_log.info("Attachments added for issue " + ticket.getId());
+		} else {
+			_log.error("Attachment for issue " + ticket.getId() + " could not been uploaded");
+		}
+
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
