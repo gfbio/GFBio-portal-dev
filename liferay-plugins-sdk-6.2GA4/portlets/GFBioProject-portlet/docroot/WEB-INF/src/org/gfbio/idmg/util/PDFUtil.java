@@ -297,7 +297,7 @@ public class PDFUtil {
 	
 	private void toggleTextColorAndType(PDPageContentStream content, boolean oblique) throws IOException {
 		if (!oblique) {
-			content.setNonStrokingColor(Color.LIGHT_GRAY);
+			content.setNonStrokingColor(Color.GRAY);
 			content.setFont(PDType1Font.HELVETICA_OBLIQUE, 11);
 		} else {
 			content.setNonStrokingColor(51, 90, 163);
@@ -382,7 +382,7 @@ public class PDFUtil {
 		content.beginText();
 		// Print Footer
 		content.newLineAtOffset(70, 25);
-		content.setNonStrokingColor(Color.LIGHT_GRAY);
+		content.setNonStrokingColor(Color.GRAY);
 		content.setFont(PDType1Font.HELVETICA, 8);
 		
 		String footer = "This data management plan was computer-produced by GFBio DMP-Tool. For revision and support please contact info@gfbio.org.";
@@ -405,7 +405,7 @@ public class PDFUtil {
 	
 	private void printLines(String text, String title, float width) throws IOException {
 		PDFont pdfFont = PDType1Font.HELVETICA_OBLIQUE;
-		Color color = Color.LIGHT_GRAY;
+		Color color = Color.GRAY;
 	    float fontSize = 11;
 	    printLines(text, title, width, fontSize, color, pdfFont);
 	}

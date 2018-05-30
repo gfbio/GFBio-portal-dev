@@ -8,11 +8,19 @@ import java.net.HttpURLConnection;
 
 import org.gfbio.idmg.jiraclient.connection.HTTPConnectionFactory.RequestMethod;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 public class Communicator {
+	
+	private static Log _log = LogFactoryUtil.getLog(Communicator.class);
 	
 	private final String REQUESTPROTOCOL;
     private final String REQUESTHOST;
     private final int TIMEOUT;
+    
+    private BufferedReader br;
+    StringBuilder sb;
     
     /**
      * Provide host URL and timeout in milliseconds to wait for response
@@ -49,6 +57,8 @@ public class Communicator {
         if (content != null) {
             HTTPConnectionFactory.setHTTPConnectionContent(httpConnection, content);
         }
+        
+        try {
         httpConnection.connect();
         
         if (content != null) {
@@ -63,6 +73,17 @@ public class Communicator {
         httpConnection.disconnect();
         
         return response;
+        } catch (IOException ex) {
+        	br = new BufferedReader(new InputStreamReader((httpConnection.getErrorStream())));
+        	sb = new StringBuilder();
+        	String output;
+        	while ((output = br.readLine()) != null) {
+        		sb.append(output);
+        	}
+        	_log.error(sb.toString());
+        	_log.error("Jira request failed: ", ex);
+        	throw new IOException(ex);
+        }
     }
     
     private String getResponse(HttpURLConnection httpConnection) throws IOException {
