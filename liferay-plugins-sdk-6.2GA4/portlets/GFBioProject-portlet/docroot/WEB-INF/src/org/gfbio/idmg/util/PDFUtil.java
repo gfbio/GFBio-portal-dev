@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -170,10 +171,11 @@ public class PDFUtil {
 		printMultiLineAnswer(userInput.getCreateFormats(), title, width);
 		
 		printTitle("Estimated Data Volume: ");
-		printSingleLineAnswer(userInput.getDataVolume());
+		
+		printSingleLineAnswer(StringEscapeUtils.unescapeHtml3(userInput.getDataVolume()));
 		
 		printTitle("Number of Data Sets: ");
-		printSingleLineAnswer(userInput.getDataSets());
+		printSingleLineAnswer(StringEscapeUtils.unescapeHtml3(userInput.getDataSets()));
 		
 		title = "Standards, Methodologies and Tools: ";
 		printTitle(title);

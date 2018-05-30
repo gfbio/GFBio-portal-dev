@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.gfbio.idmg.dto.DMPTInput;
 import org.gfbio.idmg.jiraclient.model.AttachmentInput;
 
@@ -97,11 +98,11 @@ public class TXTUtil {
 		result.append("\n");
 		
 		result.append("Please estimate the data volume you will create.\n");
-		appendString(input.getDataVolume(), result);
+		appendString(StringEscapeUtils.unescapeHtml3(input.getDataVolume()), result);
 		result.append("\n");
 		
 		result.append("Please estimate the number of data sets (files) you will create.\n");
-		appendString(input.getDataSets(), result);
+		appendString(StringEscapeUtils.unescapeHtml3(input.getDataSets()), result);
 		result.append("\n");
 		
 		result.append("What standards, methodologies or tools will you use to collect, manage and process your data?\n");
