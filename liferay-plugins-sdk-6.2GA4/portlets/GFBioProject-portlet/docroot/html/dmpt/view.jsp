@@ -22,6 +22,7 @@ var userEmail = '${email}';
 var userName = '${username}';
 var contextPath = '${contextPath}';
 var userHasDmps = '${hasDmps}';
+var saved = false;
 
 $(document).ready(function () {
 	
@@ -252,6 +253,7 @@ function getInput() {
 function saveDMP() {
 	saveDMPforUser();
 	openSavedDialog();
+	saved = true;
 }
 
 function saveDMPforUser() {
@@ -408,7 +410,9 @@ function sendRequest() {
 		}
 	});
 	// Saving the dmp automatically after the request
-	saveDMPforUser();
+	if (!saved) {
+		saveDMPforUser();
+	}
 }
 
 function answer(element, response) {

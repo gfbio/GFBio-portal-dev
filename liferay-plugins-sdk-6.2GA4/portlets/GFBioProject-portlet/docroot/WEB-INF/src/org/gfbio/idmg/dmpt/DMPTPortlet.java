@@ -138,7 +138,7 @@ public class DMPTPortlet extends MVCPortlet {
 
 		// Get DMPTInput
 		String jsonInput = resourceRequest.getParameter("json");
-		_log.info("JSONString: " + jsonInput);
+		//_log.info("JSONString: " + jsonInput);
 
 		//DMPTInput input = null;
 		String response = "";
@@ -222,8 +222,6 @@ public class DMPTPortlet extends MVCPortlet {
 		PortletSession session = resourceRequest.getPortletSession();
 		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
 		
-		//_log.info("Input: " + jsonInput);
-		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
 		long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
@@ -241,7 +239,6 @@ public class DMPTPortlet extends MVCPortlet {
 				}
 				plan.setDmpTInput(jsonInput);
 				plan.setName(projectName);
-				_log.info("Plan: " + plan);
 				
 				if (userId == plan.getUserID()) {
 					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);

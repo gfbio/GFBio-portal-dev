@@ -203,7 +203,7 @@ public class PDFUtil {
 		printTitle("License: ");
 		printSingleLineAnswer(userInput.getLicense().getName());
 		
-		printTitle("Access Restriction");
+		printTitle("Access Restriction: ");
 		printSingleLineAnswer(yesOrNo(userInput.getAccessRestriction()));
 
 		if (userInput.getAccessRestriction() != null && userInput.getAccessRestriction().booleanValue()) {
@@ -235,7 +235,7 @@ public class PDFUtil {
 		String recommends = "GFBio provides individual data management support and recommends contacting us for your personal data management strategy and DMP support. "
 				+ "We give advice regarding storage, security, quality assurance and backup and help you optimizing the findability, accessibility, interoperability and re-usability of your research data. "
 				+ "We highly recommend using common standards for data and metadata formats. You can find an overview of GFBio services on www.gfbio.org.";
-		printLines(recommends, "", width, 11, Color.BLACK, PDType1Font.HELVETICA);
+		printLines(recommends, "", width, 11, Color.GRAY, PDType1Font.HELVETICA);
 		
 		// Ending the content stream
 		content.endText();
