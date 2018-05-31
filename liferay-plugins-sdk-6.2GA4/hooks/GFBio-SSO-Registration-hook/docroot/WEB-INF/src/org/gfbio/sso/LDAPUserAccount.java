@@ -131,7 +131,7 @@ public class LDAPUserAccount {
 
 		byte byteData[] = md.digest();
 		String result = "{SHA}" + Base64.getEncoder().encodeToString(byteData);
-		log.info("userpassword in LDAP:" + result);
+		//log.info("userpassword in LDAP:" + result);
 		return result;
 	}
 
