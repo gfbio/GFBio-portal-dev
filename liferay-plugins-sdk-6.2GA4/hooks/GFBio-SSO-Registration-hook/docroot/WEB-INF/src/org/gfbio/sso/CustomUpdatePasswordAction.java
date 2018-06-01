@@ -59,7 +59,6 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			// when an admin user add another user, password is invisible to the
 			// new user
 			log.info(":: added a user by admin.");
-			// WTF! log.info(user.getPasswordUnencrypted());
 			password1 = user.getPasswordUnencrypted();
 			// send a password reset link
 			ServiceContext scNewUser = serviceContext;
@@ -97,7 +96,6 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 		if (password1.length() > 0) { // from setting new password
 			log.info(":: change password");
 			try {
-				//WTF! log.info(":: " + password1);
 				LDAPUserAccount.LDAPaddUser(user, password1);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -119,7 +117,6 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 			if (password1.length() > 0) { // from setting new password
 				log.info(":: change password");
 				try {
-					//WTF! log.info(":: " + password1);
 					LDAPUserAccount.LDAPaddUser(user, password1);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -161,7 +158,6 @@ public class CustomUpdatePasswordAction extends UserLocalServiceWrapper {
 					if (newPassword1.length() > 0) { // from setting new
 														// password
 						log.info(":: change password");
-						// WTF! log.info(":: " + newPassword1);
 						// update LDAP user without connecting to JIRA
 						try {
 							LDAPUserAccount.LDAPaddUser(user, newPassword1);

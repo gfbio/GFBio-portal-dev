@@ -108,7 +108,6 @@ public class LDAPUserAccount {
 				ctx.modifyAttributes(fullCN, DirContext.REPLACE_ATTRIBUTE, attrs);
 				return true;
 			}
-			//log.info("check point x");
 			ctx.createSubcontext(fullCN, attrs);
 			log.info("AddUser: added entry x " + fullCN + ".");
 //			UserLocalServiceUtil.updatePasswordManually(user.getUserId(), password, false, false, new java.util.Date());
@@ -131,7 +130,6 @@ public class LDAPUserAccount {
 
 		byte byteData[] = md.digest();
 		String result = "{SHA}" + Base64.getEncoder().encodeToString(byteData);
-		//log.info("userpassword in LDAP:" + result);
 		return result;
 	}
 
