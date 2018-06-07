@@ -118,3 +118,17 @@ select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'url', 'CC BY-
 
 select updatecellcontentbyrowidentifier('gfbio_category', 'label', 'name', 'Ecology',		'Ecology & Environment');
 select updatecellcontentbyrowidentifier('gfbio_category', 'label', 'label', 'Ecology',		'Ecology & Environment');
+
+
+------------------------------------------------------------------------------------------------
+-----------------------------------------      licenses           -- 07.05.2018 ----------------
+------------------------------------------------------------------------------------------------
+
+select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'description', 'other',		'The used license is not in the selection list.');
+
+select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'version', 'CC BY',		'4.0');
+select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'version', 'CC BY-NC',		'4.0');
+select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'version', 'CC BY-NC-ND',		'4.0');
+select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'version', 'CC BY-NC-SA',		'4.0');
+select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'version', 'CC BY-SA',		'4.0');
+select updatecellcontentbyrowidentifier('gfbio_license', 'label', 'version', 'CC BY-ND',		'4.0');
