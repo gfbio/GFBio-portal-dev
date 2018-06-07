@@ -579,7 +579,7 @@ function getInputAsJson() {
 		var substring = $(this).siblings('span').text().split(", ")
 		metadata.push(substring[0]);
     });
-	if ($.inArray("Other metadata schema or version", metadata) > -1) {
+	if (metadata.includes("Other metadata or documentation")) {
 		metadataDesc = $("#metadataDesc").val();
 	}
 
@@ -945,6 +945,7 @@ function initializeWizard(dmptInput, id) {
 			if (metadata[i].name.includes("Other")) {
 				if (!isEmpty(dmptInput.metadataDescription)) {
 					$("#metadataDesc").val(dmptInput.metadataDescription);
+					$("#metadataDesc").show();
 				}
 			}
 		}

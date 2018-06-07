@@ -18,17 +18,18 @@ If you don't know which metadata standard to choose, please select 'other' and d
 					<div>
 						<label class="mod-cb">
 							<input id="metadata-${meta.id}" name="metadata" type="checkbox" value="${meta.id}" />
-							<span><c:out value="${meta.name}" /><c:if test="${not empty meta.version}"><c:out value=", ${meta.version}"/></c:if>
-							</span>
+							<span><c:out value="${meta.name}" /><c:if test="${not empty meta.version}"><c:out value=", ${meta.version}"/></c:if></span>
 						</label>
-						<div id="metainformation-${meta.id}" class="meta-information" style="display: none;">
-							<input type="hidden" name="${meta.name}"/>
-							<div class="showmore" >
-				       			<span id="${meta.id}" name="show-meta-info" class="icon-landing flex icon-circle-right rotate"></span>
-				       		</div>
-							<a id="metaurl-${meta.id}" style="display: none;" href="${meta.url}" target="_blank" ><c:out value="${meta.url}"/></a>
-							<p id="metadesc-${meta.id}" style="display: none;"><c:out value="${meta.description}"/></p>
-						</div>
+						<c:if test="${not empty meta.description}">
+							<div id="metainformation-${meta.id}" class="meta-information" style="display: none;">
+								<input type="hidden" name="${meta.name}"/>
+								<div class="showmore" >
+					       			<span id="${meta.id}" name="show-meta-info" class="icon-landing flex icon-circle-right rotate"></span>
+					       		</div>
+								<a id="metaurl-${meta.id}" style="display: none;" href="${meta.url}" target="_blank" ><c:out value="${meta.url}"/></a>
+								<p id="metadesc-${meta.id}" style="display: none;"><c:out value="${meta.description}"/></p>
+							</div>
+						</c:if>
 					</div>
 				</c:forEach>
 			</div>
