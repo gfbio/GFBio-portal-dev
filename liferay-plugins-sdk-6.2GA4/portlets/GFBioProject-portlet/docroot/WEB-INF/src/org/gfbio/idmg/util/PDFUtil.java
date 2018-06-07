@@ -407,6 +407,7 @@ public class PDFUtil {
 		PDFont pdfFont = PDType1Font.HELVETICA_OBLIQUE;
 		Color color = Color.GRAY;
 	    float fontSize = 11;
+	    text = text.replace("\n", " ").replace("\r", "");
 	    printLines(text, title, width, fontSize, color, pdfFont);
 	}
 	
