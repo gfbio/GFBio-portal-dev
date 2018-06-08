@@ -45,6 +45,7 @@
 
 <%
 	String redirect = ParamUtil.getString(request, "redirect");
+    String portalURL = themeDisplay.getPortalURL();
 	
 	String openId = ParamUtil.getString(request, "openId");
 	boolean male = ParamUtil.getBoolean(request, "male", true);
@@ -274,9 +275,13 @@
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
 			
-			<aui:input type="checkbox" id="dataPolicy" label="I agree that GFBio can use my personal data for internal usage" name="dataPolicy" required="true"/>
+			<aui:input type="checkbox" id="f_privacypolicy" label="Privacy Policy" name="privacypolicy" required="true"/>
+			   Yes, I have read GFBio's <a href="<%= portalURL%>/about/privacy-policy" target="_blank" style="color: rgb(60, 172, 228);text-decoration: underline;text-decoration-style: dotted;">privacy policy</a> and I agree with processing my personal information.
+			 
+		
 	
 	</aui:fieldset>
+	
 
 	<aui:button-row>
 			<aui:button type="submit"  style="width:100%"
