@@ -387,7 +387,7 @@ public class DMPTPortlet extends MVCPortlet {
 		}
 
 		// Set assignee for the ticket with user gfbio-ev
-		Assignee assignee = new Assignee("gfbio-ev");
+		Assignee assignee = new Assignee("");
 
 		Fields fields = new Fields(project, "DMP Request", issuetype, reporter, description, assignee, customfield_10010,
 				projectName, projectAbstract, principalInvestigator);

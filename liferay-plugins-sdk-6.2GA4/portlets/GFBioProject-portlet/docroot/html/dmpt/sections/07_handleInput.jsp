@@ -37,11 +37,6 @@
 	<div id="send-request" class="row request-row" >
 		<form id="dialogForm">
 			<div class="col-md-12">
-				<div class="portlet-msg-alert col-md-12" >
-					Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.
-				</div>
-			</div>
-			<div class="col-md-12">
 				<textarea id="additinal-text" maxlength="1000" rows="5" cols="100"
 					placeholder="Would you like to send any additional information or do you have any questions?"></textarea>
 			</div>
@@ -100,7 +95,11 @@
 					</a>
 				</div>
 			</div>
-			
+			<div class="col-md-12">
+				<div class="portlet-msg-alert col-md-12" >
+					Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.
+				</div>
+			</div>
 		</form>
 	</div>
 	<jsp:include page="../../idmg/loading_spinner.jsp" />
