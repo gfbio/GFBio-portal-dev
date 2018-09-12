@@ -922,6 +922,13 @@
 		responseData["researchobjectversion"]= data.mrr.researchobjects.researchobjectversion;
 		responseData["archive"]= "GFBio collections";
 		
+		//
+		if (document.getElementById("gwf_dcrtassignee").innerHTML!='null'){
+			responseData["archive"]= document.getElementById("gwf_dcrtassignee").innerHTML;
+			console.log(responseData["archive"]);
+		}
+		//
+		
   		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
@@ -1004,7 +1011,10 @@
 		
 		var brokerSubmissionId ="";
 		var url = document.getElementById('workflowgenericurl').value;
-		
+		//
+		console.log("input data for getting broker Sub");
+		console.log(data);
+		//
 		$.ajax({
 			"type" : "POST",
 			"url": url.concat('/WorkflowGenericPortlet'),
@@ -1015,6 +1025,10 @@
 			async: false,
 			success :  function (obj){
 				brokerSubmissionId = obj.brokersubmissionid;
+				//
+				console.log("This is brokerSubmissionId");
+				console.log(brokerSubmissionId);
+				//
 			}
 		});	 
 		return brokerSubmissionId;
