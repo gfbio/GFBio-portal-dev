@@ -67,7 +67,9 @@ This is the active development environment. Each type of code is differentiated 
   * Choose by Server runtime environment: Liferay v.6.2 (Tomcat) GA4 or go to Add. Choose the correctTomcat directory ([repository folder name]\[server bundle folder name]\tomcat-7.0.42) and select jre7 as runtime JRE
   * !!! eclipse-mars IDE and higher requires Java 8 as Server runtime environment !!!
 
-
+#### Lombok in eclipse
+Please follow the instructions of the following article.In this article,you don’t need step 1, because we aren’t using maven.
+Start with step 2: https://howtodoinjava.com/automation/lombok-eclipse-installation-examples/
   
 ### Database integration
 * GFBio use two databases. The liferay database for user management and the gfbio portal database for gfbio specific applications
