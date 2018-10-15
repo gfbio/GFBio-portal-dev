@@ -8,6 +8,7 @@
 	var limitLarge = 2000;
 	var limitExtrageLarge = 15000;
 	var buttonwidth = '220px';
+	var sampleButtonWidth = '460px';
 
 	
 /////////////////////////////////////////   helper  //////////////////////////////////////////////
@@ -163,7 +164,29 @@
 						"<div class='field lfr-input-text-container' id='gwf_user_mail' ></div>"+
 					"</div>"+ 
 				"</div>"+
-
+				//
+				// templates
+				
+				//
+				
+				"<div>"+
+				"Have a look at the GFBio example templates. You can also submit data in combination with the deposit of biological and environmental samples."+
+				"</div>"+
+				"<br>"+
+				"<div>"+
+				"<span style='width:25%; display:inline-block' id='gwf_b_templatewith' onclick=\"window.open('https://gfbio.biowikifarm.net/wiki/Data_submission_forms_for_the_deposit_of_biological_and_environmental_samples');\">		<span style='width:"+sampleButtonWidth+"' class='btn btn-primary'>Download templates for occurrence data <b>with</b> deposit of samples</span></span>"+
+				"</div>"+
+				"<br>"+
+				
+				
+				"<div>"+
+				"<span style='width:25%; display:inline-block' id='gwf_b_templatewith' onclick=\"window.open('https://gfbio.biowikifarm.net/wiki/Data_submission_forms_for_occurrence_data');\">		<span style='width:"+sampleButtonWidth+"' class='btn btn-primary'>Download templates for occurrence data <b>without</b> deposit of samples</span></span>"+
+				"</div>"+
+				"<br>"+
+				
+				////////////////
+				
+				
 				"<h3>1. Dataset information</h3><hr>"+
 									
 				"<div class='swHide'>"+
@@ -184,7 +207,7 @@
 			addInputfieldTo(div, "gwf_ro_name", "Title", "*", "Provide a short, descriptive title for your dataset.", limitSmall, fieldCheckList[0],"");
 			addInputAreaTo (div, "gwf_ro_description", "Description"		  , "*", "Provide a summary of the work you did to produce the dataset (similar to an article abstract)."	 , limitExtrageLarge, fieldCheckList[1],"", 6);
 			addInputfieldTo(div, "gwf_ro_dct"  		 , "Data collection time" , "" , "Provide the time period, in which the data were collected or processed (yyyy-mm-dd to yyyy-mm-dd).", limitLarge		, fieldCheckList[4],"");
-			addInputfieldTo(div, "gwf_ro_label"		 , "Dataset label"        , "" , "Please provide keywords for your dataset (one keyword per line //use semicolon to separate the words). If available add identifiers (e.g. your Gepris-No.).", limitSmall, fieldCheckList[5],"");
+			addInputfieldTo(div, "gwf_ro_label"		 , "Dataset label"        , "" , "Please provide keywords for your dataset (use semicolon to separate the words). If available add identifiers (e.g. your Gepris-No.).", limitSmall, fieldCheckList[5],"");
 			//addInputfieldTo(div, "gwf_ro_label"		 , "Dataset label"        , "" , "Provide labels for the dataset, describe it in keywords or use internal identifiers."              , limitSmall		, fieldCheckList[5],"");
 			div.append(
 				"<label class='control-label' 					id='gwf_ro_categories_l'> Categories  </label>"+
@@ -938,7 +961,35 @@
 			},
 			async: false,
 			success :  function (obj){
+				console.log('this is object returned');
+				console.log(obj);
 				
+				if(obj &&  obj.key )
+				{
+
+					document.getElementById("generic").style.cursor="default";
+					var brokerSubmissionId = getBrokerSubmissionId(responseData);
+					
+					sentShowHideInformation(false);
+					var div =   $("#generic");
+					div.empty();
+					div.append(
+						"<div class='portlet-success'>"+
+							"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
+							"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
+							"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
+						"</div>"+
+						"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
+					);
+				}
+				else
+				{
+					
+					console.log("sub error");
+					deleteSubmissionRegistryEntry(responseData);
+					buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
+				}	
+				/*
 				document.getElementById("generic").style.cursor="default";
 				var brokerSubmissionId = getBrokerSubmissionId(responseData);
 				
@@ -953,6 +1004,7 @@
 					"</div>"+
 					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
 				);
+				*/
 			},
 			error :  function (obj){
 				console.log("sub error");
