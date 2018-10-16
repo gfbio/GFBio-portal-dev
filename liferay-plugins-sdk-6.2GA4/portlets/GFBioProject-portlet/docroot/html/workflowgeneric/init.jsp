@@ -989,22 +989,7 @@
 					deleteSubmissionRegistryEntry(responseData);
 					buildErrorMessage('gwf_lf_comentarField', "The Submission information transfer failed. Please contact our technical support via our <a href='/contact' style='color:darkred; font-weight: bold'> contact form</a>.");
 				}	
-				/*
-				document.getElementById("generic").style.cursor="default";
-				var brokerSubmissionId = getBrokerSubmissionId(responseData);
-				
-				sentShowHideInformation(false);
-				var div =   $("#generic");
-				div.empty();
-				div.append(
-					"<div class='portlet-success'>"+
-						"The submission information has been sent to the data curators of collections. One of them will contact you shortly. <br> <br>"+
-						"Your submission ID is: "+brokerSubmissionId+"<br><br>"+
-						"Via our Help Center, you can follow the submission process under <a href='https://helpdesk.gfbio.org/servicedesk/customer/portal/2/"+obj.key+"' style='color:darkblue; font-weight:bold'><i aria-hidden='true' class='fa fa-external-link' style='font-size:12px;'>&nbsp;</i>"+obj.key+"</a>"+
-					"</div>"+
-					"<span class='widthM' id='gwf_b_reset' onclick='restartInput()'>		<span class='btn btn-primary'>Start new Submission</span></span>"
-				);
-				*/
+			
 			},
 			error :  function (obj){
 				console.log("sub error");
