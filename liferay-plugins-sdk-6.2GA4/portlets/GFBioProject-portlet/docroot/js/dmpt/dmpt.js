@@ -830,8 +830,8 @@ function initializeWizard(dmptInput, id) {
 		if (funding !== "None" && funding !== "Select") {
 			if (!isEmpty(dmptInput.fundingLink)) {
 				$("#fundingLink").val(dmptInput.fundingLink);
-				$("#fundingLink").show();
 			}
+			$("#fundingLink").show();
 		}
 	}
 	
