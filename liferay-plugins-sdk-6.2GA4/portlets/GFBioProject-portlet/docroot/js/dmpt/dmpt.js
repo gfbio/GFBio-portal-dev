@@ -432,10 +432,7 @@ function handlePhysical(event) {
 	
 	if ($(event.target).is(':checked') && $(event.target).val() === "true") {
         $("#alive").removeClass("disabledDiv");
-        $("#sequenced").addClass("disabledDiv");
-        resetInput("sequenced");
     } else {
-        $("#sequenced").removeClass("disabledDiv");
         $("#alive").addClass("disabledDiv");
         resetInput("alive");
         $("#taxon").addClass("disabledDiv");
@@ -819,7 +816,7 @@ function initializeWizard(dmptInput, id) {
 			funding = dmptInput.funding.name;
 		if (funding === "") funding = "Select";
 		$("#funding option").each(function () {
-			if ($(this).val() === funding) {
+			if ($(this).text() === funding) {
 				$(this).prop("selected", true);
 				found = true;
 			}
@@ -891,7 +888,6 @@ function initializeWizard(dmptInput, id) {
 	}
 	if (sequenced === "true" || sequenced === "false") {
 		$("input[name='sequenced'][value='" + dmptInput.sequenced + "']").prop("checked", true);
-		$("#sequenced").removeClass("disabledDiv");
 	}
 	
 	if (dmptInput.datatypes) {

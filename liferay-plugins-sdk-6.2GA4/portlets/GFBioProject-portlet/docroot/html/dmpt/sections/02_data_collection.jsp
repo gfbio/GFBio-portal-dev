@@ -117,7 +117,7 @@
 	                <div>	
 	                    <label class="mod-cb">
 	                    	<input name="datatype" type="checkbox"/>
-	                    	<span>Moleculare Sequence Data</span>
+	                    	<span>Molecular Sequence Data</span>
                    		</label>
 	                </div>
 	            </div>

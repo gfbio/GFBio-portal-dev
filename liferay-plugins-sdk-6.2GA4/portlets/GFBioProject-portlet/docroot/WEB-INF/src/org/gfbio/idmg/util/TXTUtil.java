@@ -137,6 +137,10 @@ public class TXTUtil {
 		result.append("\n");
 
 		// 5 Preservation and Sharing
+		result.append("When will your data be submitted to GFBio?\n");
+		appendStringList(input.getDataSubmissions(), result);
+		result.append("\n");
+		
 		result.append("How is your data backed up during project runtime? Who is responsible for data backup?\n");
 		appendString(input.getBackup(), result);
 		result.append("\n");

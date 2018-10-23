@@ -237,7 +237,7 @@
 	    	</div>
 		</div>
 		<div class="row dmpt-row">
-			<h4>Are you a member of a research unit (Forschergruppe)?
+			<h4>Are you a member of a research unit (Forschungsgruppe)?
 	    		<a href="http://www.dfg.de/en/research_funding/programmes/coordinated_programmes/research_units/index.html" target="_blank">
 					<span class="icon-landing-flex icon-link info-blue" ></span>
 				</a>

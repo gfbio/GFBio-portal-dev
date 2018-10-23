@@ -121,7 +121,6 @@ $(document).ready(function () {
 		    //02 Data Collection DCRT
 		    $("#alive").addClass("disabledDiv");
 		    $("#taxon").addClass("disabledDiv");
-		    $("#sequenced").addClass("disabledDiv");
 		    
 		    $("input[name='physical']").on("click", handlePhysical);
 		
