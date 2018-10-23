@@ -37,6 +37,8 @@ import org.json.simple.parser.ParseException;
 
 
 
+
+
 import com.liferay.portal.model.User;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -637,12 +639,29 @@ public class ContactJira {
             
             HttpEntity entity = new ByteArrayEntity(jiraRequestString.getBytes(StandardCharsets.UTF_8));
             post.setEntity(entity);
-            HttpResponse resp = httpclient.execute(post);
+            
+            HttpResponse resp=null;
+            
+             resp = httpclient.execute(post);
              
+            //
+            //added
+            //
+             /*
+            if(resp.getStatusLine().getStatusCode() != 201) 
+            {
+            	_log.error("Response: " + resp.toString());
+            	
+
+            }
+            */
+
             if (!((resp.getStatusLine().toString()).contains("HTTP/1.1 201"))) {
-            	_log.info("Failed : HTTPS error code : "+resp.getStatusLine());
-            	throw new RuntimeException("Failed : HTTPS error code : " + resp.getStatusLine());
-	        }else{
+            	_log.info("Failed : HTTPS error code : "+resp.getStatusLine()+ resp.toString());
+            	throw new RuntimeException("Failed : HTTPS error code : " + resp.getStatusLine().toString()+ resp.toString());
+            	
+	        }
+        else{
  	        
 	        	String result = EntityUtils.toString(resp.getEntity());
 	        	_log.info("Output from Server .... \n");
@@ -683,7 +702,7 @@ public class ContactJira {
             
         }catch (Exception e) {
         	e.printStackTrace();
-        	_log.info(e);
+        	_log.error(e);
         }
         
         return responseJson;
