@@ -116,10 +116,7 @@ $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
 
-
-
 <script>
-
 
 (function($) {
     $(document).ready(function() {
