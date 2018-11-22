@@ -23,10 +23,15 @@
   
 
 <%if (PortalUtil.getUser(request)==null){ %>
-	<div class="portlet-msg-alert">
+
+<!--<div class="portlet-msg-alert">
 		Only logged in users get access to the different submission workflows. Please <a href="<%=PortalUtil.getPortalURL(request) %>/sign-in?saveLastPath=0"><span style="color:#006400; font-weight:bold">sign in</span></a> to continue the process. 
 	</div>
-
+	-->
+		<!--<script> window.location.href="<%=PortalUtil.getPortalURL(request) %>/<%=PropsUtil.get("submission.NotLoggedIn.page.url") %>" </script>--> 
+	
+			<script> window.location.href="<%=PortalUtil.getPortalURL(request) %>/notloginuser" </script>
+	
 
 <%} else{%>
 
