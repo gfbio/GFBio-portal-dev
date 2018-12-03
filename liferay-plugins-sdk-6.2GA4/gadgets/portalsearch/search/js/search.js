@@ -67,7 +67,7 @@ function isValueNotEmpty(value){
 	return (!value.isArray && value!='' & value !='[]') || (value.isArray && value.length >0);
 }
 
-function insertParam(key, value) {		
+function insertParam(key, value) {
 	var urlString = document.referrer;
 	var valueNotEmpty = isValueNotEmpty(value);
 	if (parent.history.state != null){ 
@@ -525,7 +525,6 @@ function saveSearchFeedback(datasetDetail, datasetRank, rating) {
  * Output: JSONObject result : Data to display on the search result table
  */
 function submitQueryToServer(keyword, filter, yearRange) {
-	//console.log(':: submitQueryToServer');
 	return function (sSource, aoData, fnCallback) {
 		// set value for pagination
 		var iDisplayStart = getValueByAttribute(aoData, "name", "iDisplayStart");
@@ -534,7 +533,7 @@ function submitQueryToServer(keyword, filter, yearRange) {
 		var filteredQuery = getFilteredQuery(keyword, filter, yearRange);
 		var boostedQuery = applyBoost(filteredQuery);
 		var completeQuery = getCompleteQuery(boostedQuery, iDisplayStart, iDisplayLength);
-
+		
 		// Store query string for sending to VAT
 		var strCompleteQuery = JSON.stringify(completeQuery);
 		$("#queryJSON").val(strCompleteQuery);
@@ -615,6 +614,7 @@ function createQueryFieldArray() {
  */
 function getFilteredQuery(keyword, filterArray, yearRange) {
 	var queryObj;
+	console.log(':: filterArray '+ JSON.stringify(filterArray));
 	if (keyword != "") {
 		queryObj = {
 			"simple_query_string": {
@@ -633,7 +633,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	var filterObj;
 	if (yearRange.trim() == "") {
 		if (isValueNotEmpty(filterArray)) {
-			filterObj = filterArray;
+			filterObj = filterArray.filter(Boolean);
 		} else {
 			return {
 				"bool": {
@@ -872,6 +872,7 @@ function addBasket() {
 		console.log(query);*/
 		var keyword = $("#queryKeyword").val();
 		var filter = $("#queryFilter").val();
+		
 		/*console.log("addBasket queryKeyword:");
 		console.log(keyword);
 		console.log("addBasket queryFilter:");
@@ -909,7 +910,7 @@ function getSelectedResult() {
 		jsonData.selected = selected;
 	} else {
 		// convert basketStr to JSON object
-		jsonData = JSON.parse(basketStr);
+		jsonData = JSON.parse(basketStr);			
 	}
 
 	return jsonData;
@@ -962,26 +963,76 @@ function addBasketDialogToPage() {
 			}
 		});
 }
-function filesToDownload(){
-	// TODO: read remote files and write to one zip file
-	// then let users download a zip file instead.
-	var basket = $("#visualBasket");
-	console.log('filesToDownload');
-	var jsonBasket = JSON.parse(basket.val());
-	var selectedBasket = jsonBasket.selected;
-	console.log('-------------------------');
-	$.each(selectedBasket, function (index, result) {
-		console.log(result['datalink']);
-		var linkURL = result['datalink'];
-		// TODO: disable the download button when 
-		// datalink is not available
-		if (linkURL.trim()!=""){
-			var win = window.open(linkURL, '_blank');
-			win.focus();
+
+$(function() { 	
+	$("#checkAll").change(function () {
+		if($("#checkAll").is(':checked'))
+		{
+			//#divCheck > input.basketCheck
+			$("input.basketCheck:not(:checked)").each(function(){
+				$(this).click();
+			});
+		}else{
+			$("input.basketCheck:checked").each(function(){
+				$(this).click();
+			});
 		}
-		console.log('-------------------------');
 	});
-}
+
+    $("#button_download").click(function(){
+		$(this).button('loading').delay(1000).queue(function() {
+			var basket = $("#visualBasket");
+			var jsonBasket = JSON.parse(basket.val());
+			var selectedBasket = jsonBasket.selected;
+			
+			var zip = new JSZip();
+			
+			$.each(selectedBasket, function (index, result) {	
+				var linkURL = result['datalink'];
+				
+				console.log(result['xml']);
+				
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', 'https://cors-anywhere.herokuapp.com/' + linkURL, false);
+				xhr.overrideMimeType('text\/plain; charset=x-user-defined');
+				xhr.send(null);
+				
+				var headers = xhr.getAllResponseHeaders();
+				
+				if (xhr.readyState === 4) {
+				
+					var filestream = xhr.responseText;
+					var out;
+					out = '';
+					for (i = 0; i < filestream.length; i++) {
+						out+=String.fromCharCode(filestream.charCodeAt(i) & 0xff);
+					}
+					var out64 = window.btoa(out);
+				
+					var filename = /(?:^|\s)filename=(.*?)(?:\s|$)/.exec(headers);
+				
+					if(filename == null){
+						zip.file(decodeURIComponent(linkURL.substring(linkURL.lastIndexOf('/')+1)), out64, {base64:true});
+					}
+					else
+					{
+						zip.file(filename[1], out64, {base64:true});			
+					}
+				}
+			});
+			
+			zip.generateAsync({type:"blob"}).then(function (blob) { // 1) generate the zip file
+				saveAs(blob, "gfbio_basket_" + Date.now() + ".zip");                          // 2) trigger the download
+			}, function (err) {
+				$("#blob").text(err);
+			});
+			
+			$(this).button('reset');
+			$(this).dequeue();
+        });        
+    });
+});
+
 function showBasketDialog() {
 	var basket = $("#visualBasket");
 	console.log('showBasketDialog');
@@ -1014,25 +1065,26 @@ function applyFacetFilter(topic, data, subscriberData) {
 	var filterArray = [];
 	var yearRange = "";
 	//console.log(':Search: receive facet filter ');
-	//console.log(facetFilters);
+	console.log('filter length:: '+facetFilters.length);
 	for (var i = 0; i < facetFilters.length; i++) {
 		var facetFilter = facetFilters[i];
 		if ((facetFilter.facetCat == "citation_yearFacet") && (facetFilter.facetTerm.indexOf(" - ") > 0)) {
 			yearRange = facetFilter.facetTerm;
 		} else {
 			var filterStr = "{\"term\":{\"{0}\":\"{1}\"}}".format(facetFilter.facetCat, facetFilter.facetTerm);
-			//console.log(':Search: filterStr - '+filterStr);
+			console.log(':Search: filterStr - '+filterStr);
 			var filterTerm = JSON.parse(filterStr);
 			filterArray.push(filterTerm);
 		}
 	}
-	
-		//console.log('applyFacetFilter:: '+JSON.stringify(filterArray));
-		insertParam("filter", JSON.stringify(filterArray));
-
-		//console.log('applyFacetFilter:: '+yearRange);
-		insertParam("year", yearRange);
 		
+	console.log('applyFacetFilter:: '+JSON.stringify(filterArray));
+	insertParam("filter", JSON.stringify(filterArray));
+
+	//console.log('applyFacetFilter:: '+yearRange);
+	insertParam("year", yearRange);
+	
+	console.log('filter:: '+JSON.stringify(filterArray));
 	filterQuery(filterArray, yearRange);
 };
 
@@ -1044,6 +1096,7 @@ function applyFacetFilter(topic, data, subscriberData) {
 function filterQuery(filter, yearRange) {
 	// keep only filtered items
 	// clear result table
+	console.log('new filter:: '+JSON.stringify(filter));
 	$('#tableId').DataTable().clear();
 	var keyword = $("#gfbioSearchInput").val();
 	// resubmit a query with filter to pansimple and rewrite the result table
@@ -1079,8 +1132,8 @@ function setSelectedRowStyle() {
 		$.each(jsonData.selected, function (index, result) {
 			var selectedLink = result['metadatalink'];
 			var tb = $('#tableId').DataTable();
-			var displayedResult = tb.rows().data();
 
+			var displayedResult = tb.rows().data();
 			$.each(displayedResult, function (ind2, res2) {
 				var displayedLink = res2.metadatalink;
 				if (selectedLink == displayedLink) {
@@ -1095,8 +1148,8 @@ function setSelectedRowStyle() {
 					$($(basketCell).find('.sp-replacer')[0]).removeClass("invisible");
 					var isUserSignedIn = parent.Liferay.ThemeDisplay.isSignedIn();
 					// show VAT link only if this user is logged in
-					var vatLink = $(basketCell).find('.basketIcon')[0];
-					if (isUserSignedIn){$(vatLink).removeClass('invisible');}
+					//var vatLink = $(basketCell).find('.basketIcon')[0];
+					//if (isUserSignedIn){$(vatLink).removeClass('invisible');}
 				}
 			});
 		});
@@ -1111,6 +1164,17 @@ function setSelectedRowStyle() {
 function onRowClick() {
 	$('#tableId tbody').off('click');
 	$('#tableId tbody').on('click', '.basketCheck', function (e) {
+	
+		var isUserSignedIn = parent.Liferay.ThemeDisplay.isSignedIn();
+		if(isUserSignedIn)
+		{
+			$('#button_download').prop('disabled', $('.basketCheck').filter(':checked').length < 1);
+			$('#button_vat').prop('disabled', $('.basketCheck').filter(':checked').length < 1);
+		}else{
+			$('#button_download').hide();
+			$('#button_vat').hide();
+		}
+
 		if (!$(this).attr('disabled')){
 			var div = $(this).parent();
 			var cell = $(div).parent();
@@ -1125,13 +1189,13 @@ function onRowClick() {
 			var basketStr = basket.val();
 			var jsonData = {};
 			var selected = [];
-			var vatLink = $(cell).find('.basketIcon')[0];
+			//var vatLink = $(cell).find('.basketIcon')[0];
 			var isUserSignedIn = parent.Liferay.ThemeDisplay.isSignedIn();// toggle basket
 			if (row.hasClass('selected')) {
 				$(this).attr('title', cartRemTitle);
 				$($(".sp-replacer")[irow]).removeClass("invisible");
 				// show VAT link only if this user is logged in
-				if (isUserSignedIn){$(vatLink).removeClass('invisible');}
+				//if (isUserSignedIn){$(vatLink).removeClass('invisible');}
 				// add to basket
 				if (basketStr == "") {
 					jsonData.selected = selected;
@@ -1150,7 +1214,7 @@ function onRowClick() {
 				$(this).attr('title', cartAddTitle);
 				$($(".sp-replacer")[irow]).addClass("invisible");
 				// hide VAT link
-				$(vatLink).addClass('invisible');
+				//$(vatLink).addClass('invisible');
 				// remove from basket
 				if (basketStr != "") {
 					jsonData = JSON.parse(basketStr);
@@ -1431,15 +1495,16 @@ function showCartIcon(nRow, aData) {
 	// show the cart icon only if the visualizable flag is true
 	// show the basket checkbox div		
 	$(divCheck).removeClass('invisible');
-	if (aData.vatVisualizable) {
-		$(divCheck).attr('title', cartAddTitle);
-	}
-	else{
-		$(divCheck).attr('title', cartDivDisabled);
-		$(divCheck).css('background-color','rgb(128,128,128)');
-		var basketCheck = $(divCheck).find('.basketCheck')[0];
-		$(basketCheck).attr("disabled", true);
-	}
+	$(divCheck).attr('title', cartAddTitle);
+	// if (aData.vatVisualizable) {
+		// $(divCheck).attr('title', cartAddTitle);
+	// }
+	// else{
+		// $(divCheck).attr('title', cartDivDisabled);
+		// $(divCheck).css('background-color','rgb(128,128,128)');
+		// var basketCheck = $(divCheck).find('.basketCheck')[0];
+		// $(basketCheck).attr("disabled", true);
+	// }
 }
 
 function linkToVAT(){
@@ -1671,7 +1736,7 @@ function getMultiValueField(jObj, id){
 	}
 	else{
 		if (jObj[id] != null)
-		return jObj[id];
+		  return jObj[id];
 		else return "";
 		// return the object as it is
 	}

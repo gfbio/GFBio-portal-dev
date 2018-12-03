@@ -1,5 +1,7 @@
 var searchAPI = "//ws.pangaea.de/es/dataportal-gfbio/pansimple/_search";
-var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
+// change terminlogy service from productive to development, because of new version
+//var TSAPI = "//terminologies.gfbio.org/api/terminologies/";
+var TSAPI = "//dev-gfbio.bgbm.org/api/terminologies/";
 var cartAddTitle = "Click to add dataset to VAT basket.";
 var cartRemTitle = "Click to remove dataset from VAT basket.";
 //var cartDiv = "<div id='cart' class='cart_unselected invisible' title="+cartAddTitle+"/>";
@@ -52,7 +54,7 @@ function resetFilter(){
 	insertParam("filter", "");
 	insertParam("year", "");
 }
-function searchButtonClicked(){
+function searchButtonClicked(isSemantic){
 	var value = $("#gfbioSearchInput").val();
 	insertParam("q", value);
 	if (value == ''){
@@ -681,6 +683,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	// save filterObj to invisible field for basket
 	var strFilter = JSON.stringify(filterObj);
 	$("#queryFilter").val(strFilter);
+
 	return {
 		"bool": {
 			"must": queryObj,
