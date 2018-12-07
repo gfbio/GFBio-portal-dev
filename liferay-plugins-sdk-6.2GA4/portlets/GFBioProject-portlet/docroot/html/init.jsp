@@ -20,6 +20,12 @@
 <%@ page import="javax.portlet.PortletPreferences" %>
 <%@ page import="javax.portlet.RenderResponse" %>
 
+<%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
+<%@ page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %>
+<%@ page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %>
+<%@ page import="com.liferay.portal.theme.ThemeDisplay" %>
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="org.gfbio.model.Head" %>
 <%@ page import="org.gfbio.model.Content" %>

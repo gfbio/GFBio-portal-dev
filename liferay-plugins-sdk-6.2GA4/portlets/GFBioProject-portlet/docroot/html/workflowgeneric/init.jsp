@@ -187,7 +187,7 @@
 				////////////////
 				
 				
-				"<h3>1. Dataset information</h3><hr>"+
+				"<h3>1. Dataset Information</h3><hr>"+
 									
 				"<div class='swHide'>"+
 					"<div 		class='control-group'>"+
@@ -268,7 +268,7 @@
 				"</div>"+
 				"<div id='gwf_ro_upload'  placeholder='Choose Files'></div>"+
 		
-				"<h3>3. Submission options</h3><hr>"+
+				"<h3>3. Submission Options</h3><hr>"+
 								
 				"<div>"+
 					"<div id='gwf_dcrtdatacenter'></div>"+

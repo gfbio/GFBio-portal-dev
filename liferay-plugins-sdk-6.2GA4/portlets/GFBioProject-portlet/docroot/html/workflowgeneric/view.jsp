@@ -9,6 +9,8 @@
 <jsp:useBean class="java.lang.String" id="keyWords" scope="request" />
 
 <portlet:defineObjects />
+<%ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY); %> 
+
 <portlet:resourceURL escapeXml="false" id="workflowgenericURL" var="workflowgenericURL" />
 <meta charset="UTF-8">
 
@@ -30,8 +32,24 @@
 	-->
 		<!--<script> window.location.href="<%=PortalUtil.getPortalURL(request) %>/<%=PropsUtil.get("submission.NotLoggedIn.page.url") %>" </script>--> 
 	
-			<script> window.location.href="<%=PortalUtil.getPortalURL(request) %>/notloginuser" </script>
+			<!--<script> window.location.href="<%=PortalUtil.getPortalURL(request) %>/notloginuser" </script>-->
+<% 
+String footerContent = "";
+String pageName = com.liferay.portal.kernel.util.PropsUtil.get("login.required.webcontent");
+
+try{ 
+	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), pageName);
+	String articleId = journalArticle.getArticleId();
+	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay.getScopeGroupId(),articleId, "","",themeDisplay);
+ 	footerContent = articleDisplay.getContent();
+} catch (Exception e){
+	footerContent = "Sorry, there is no web content with this "+ pageName;
 	
+
+}
+
+%>
+<%=footerContent%>
 
 <%} else{%>
 
