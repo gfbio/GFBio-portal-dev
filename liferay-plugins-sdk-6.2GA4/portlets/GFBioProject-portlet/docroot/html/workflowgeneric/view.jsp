@@ -9,7 +9,6 @@
 <jsp:useBean class="java.lang.String" id="keyWords" scope="request" />
 
 <portlet:defineObjects />
-<%ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY); %> 
 
 <portlet:resourceURL escapeXml="false" id="workflowgenericURL" var="workflowgenericURL" />
 <meta charset="UTF-8">
