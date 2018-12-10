@@ -633,6 +633,7 @@ function getFilteredQuery(keyword, filterArray, yearRange) {
 	var filterObj;
 	if (yearRange.trim() == "") {
 		if (isValueNotEmpty(filterArray)) {
+			// remove empty items from the array!
 			filterObj = filterArray.filter(Boolean);
 		} else {
 			return {
