@@ -3,13 +3,12 @@
 
 <input name="csrfmiddlewaretoken" type="hidden" value="HSujo2ODIdggzYB7imfBM4Nh17ZcEp2C" />
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" 	prefix="portlet" %>
 <%!RenderResponse renderResponse; %>
 
 <jsp:useBean class="java.lang.String" id="keyWords" scope="request" />
 
 <portlet:defineObjects />
-
+ <% ThemeDisplay themeDisplay1 = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY); %> 
 <portlet:resourceURL escapeXml="false" id="workflowgenericURL" var="workflowgenericURL" />
 <meta charset="UTF-8">
 
@@ -37,9 +36,9 @@ String footerContent = "";
 String pageName = com.liferay.portal.kernel.util.PropsUtil.get("login.required.webcontent");
 
 try{ 
-	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay.getScopeGroupId(), pageName);
+	JournalArticle journalArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(themeDisplay1.getScopeGroupId(), pageName);
 	String articleId = journalArticle.getArticleId();
-	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay.getScopeGroupId(),articleId, "","",themeDisplay);
+	JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(themeDisplay1.getScopeGroupId(),articleId, "","",themeDisplay1);
  	footerContent = articleDisplay.getContent();
 } catch (Exception e){
 	footerContent = "Sorry, there is no web content with this "+ pageName;

@@ -11,6 +11,14 @@
 <%@ page import="com.liferay.portal.kernel.util.PropsUtil"%>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 
+<%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
+<%@ page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %>
+<%@ page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.journal.model.JournalArticleDisplay" %>
+<%@ page import="com.liferay.portal.theme.ThemeDisplay" %>
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+
 <%@ page import="java.io.File" %>
 
 <%@ page import="org.gfbio.submissionworkflow.WorkflowENAPortlet" %>
