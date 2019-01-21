@@ -45,7 +45,7 @@
 			<h4>What is the official name of your research project? *</h4>
 	        <div class="col-md-12">
 	        	<input id="dmpId" type="hidden" value="0"/>
-				<input id="name" name="projectName" type="text" placeholder="Project Name"/> <!-- required -->
+				<input id="name" name="projectName" type="text" placeholder="Project Name" class="before_error"/> <!-- required -->
 			</div>
 		</div>
 		<div class="row dmpt-row">
@@ -87,7 +87,7 @@
 			        </label>
 	          	</div>
 	          	<div class="col-sm-12" style="margin-top: 10px;">
-	      			<textarea id="reproducibleText" maxlength="1000" rows="3" cols="100" placeholder="Add additional information (e.g. data reproduction might cause high costs or a lot of effort)."></textarea> 
+	      			<textarea id="reproducibleText" name="reproducibleText" class="before_error" maxlength="1000" rows="3" cols="100" placeholder="Add additional information (e.g. data reproduction might cause high costs or a lot of effort)."></textarea> 
 	    		</div>
 	     	</div>
 		</div>
@@ -155,15 +155,15 @@
 	                </div>
 	            </div>
 	            <div class="col-md-12">
-            		<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" />
+            		<input id="typesOther" name="typesOther" type="text" placeholder="Other project type" class="before_error" />
 	            </div>
 	        </div>
 	        
 		</div>
 		<div class="row dmpt-row">
 	    	<h4>Provide your project abstract or describe your work and the data involved.</h4>
-	        <div id="projectAbstract" class="col-md-12">
-	      		<textarea maxlength="2000" id="abstract" rows="5" cols="100" placeholder="Project Abstract"></textarea> 
+	        <div id="projectInformation" class="col-md-12">
+	      		<textarea maxlength="2000" id="abstract" name="projectAbstract" rows="5" cols="100" class="before_error" placeholder="Project Abstract"></textarea> 
 	    	</div>
 		</div>
 		<div class="row dmpt-row">
@@ -175,8 +175,8 @@
 	    	</h4>
 	    	
 	    	<div id="responsible" style="overflow: auto;">
-		 	<div class="col-md-6">
-		    		<input id="responsibleName" name="responsibleName" type="text" placeholder="Name" 
+		 		<div class="col-md-6">
+		    		<input id="responsibleName" name="responsibleName" type="text" placeholder="Name" class="parent_error"
 		    		value="<c:out value="${username}" />" onfocus="getPrincipal()" />
 		    	</div>
 		    	
@@ -197,7 +197,7 @@
 	    	</div>
 	    	<div class="col-md-12">
 	        	<div id="principal">
-	     			<input id="firstPrincInput" name="investigator" type="text"  
+	     			<input id="firstPrincInput" name="investigator" type="text" class="parent_error" 
 	            	placeholder="Principal Investigator" />
 	 			</div>
 	 			<div style="margin-top: 5px;">
@@ -225,15 +225,15 @@
 		            <option value="none" >None</option>
 	        	</select>
 	        	<div style="margin-top: 5px;">
-	        		<input id="fundingLink" type="text" placeholder="Link your funding call or programme"/>
-	        		<input id="fundingOther" name="fundingOther" type="text" placeholder="Please name the funding you apply for"/>
+	        		<input id="fundingLink" name="fundingLink" type="text" class="before_error" placeholder="Link your funding call or programme"/>
+	        		<input id="fundingOther" name="fundingOther" type="text" class="before_error" placeholder="Please name the funding you apply for"/>
 	        	</div>
 	    	</div>
 		</div>
 		<div class="row dmpt-row">
 			<h4>If you are part of a coordinated programme (Koordinierte Programme, Verbundprojekte), is there any specific coordination, guideline or policy for data management?</h4>
 			<div class="col-md-12">
-	      		<textarea id="coordinatedProgramme" maxlength="1000" rows="3" cols="100" placeholder="Please describe the data management coordination of your programme. Who takes care of it? Is there a data management plan, guideline or policy on which all project members agree? If there are any documents available, please refer to them (by upload, link, DOI or full citation)."></textarea> 
+	      		<textarea id="coordinatedProgramme" name="programme" maxlength="1000" rows="3" cols="100" class="before_error" placeholder="Please describe the data management coordination of your programme. Who takes care of it? Is there a data management plan, guideline or policy on which all project members agree? If there are any documents available, please refer to them (by upload, link, DOI or full citation)."></textarea> 
 	    	</div>
 		</div>
 		<div class="row dmpt-row">
@@ -309,8 +309,8 @@
 		        </select> -->
 		        
 		        <div class="col-md-12">
-		         	<input id="policyOther" name="policyOther" type="text" class="inputtext_long" placeholder="Other Research Data Policy and Guideline"/>
-		         	<input id="policyLink" type="text" class="inputtext_long" placeholder="Link Research Data Policy or Guideline"/>
+		         	<input id="policyOther" name="policyOther" type="text" class="inputtext_long before_error" placeholder="Other Research Data Policy and Guideline"/>
+		         	<input id="policyLink" name="policyLink" type="text" class="inputtext_long before_error" placeholder="Link Research Data Policy or Guideline"/>
 		        </div> 
 		    </div>   
 		</div>

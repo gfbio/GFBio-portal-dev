@@ -35,7 +35,7 @@ input[type=radio] {
 input[type=text], 
 input[type=tel], 
 input[type=number], 
-input[type=email] 
+input[type=email]
 {
     width: 100%;
     margin-bottom: 5px;
@@ -69,6 +69,12 @@ input[type=checkbox]
 
 input[name=services] {
 	margin-bottom: 20px;
+}
+
+textarea.error {
+	background: rgb(251, 227, 228);
+    border: 1px solid #fbc2c4;
+    color: #8a1f11;
 }
 
 /* Dropdowns */

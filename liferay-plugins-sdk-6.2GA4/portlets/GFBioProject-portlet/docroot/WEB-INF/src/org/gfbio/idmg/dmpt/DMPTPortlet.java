@@ -47,7 +47,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 public class DMPTPortlet extends MVCPortlet {
 
 	private static Log _log = LogFactoryUtil.getLog(DMPTPortlet.class);
-
+	
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws PortletException, IOException {
 
@@ -109,8 +109,6 @@ public class DMPTPortlet extends MVCPortlet {
 		String contextPath = renderResponse.encodeURL(renderRequest.getContextPath());
 		renderRequest.setAttribute("contextPath", contextPath);
 		
-		
-				
 		super.render(renderRequest, renderResponse);
 	}
 

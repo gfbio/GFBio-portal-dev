@@ -38,7 +38,7 @@ If you feel uncertain about legal requirements, choose 'uncertain' and we suppor
 					</label>
 				</div>
 				<div class="col-md-12">
-					<input id="requirementOther" name="requirementOther" type="text" class="inputtext_long" placeholder="Other legal requirement"/>
+					<input id="requirementOther" name="requirementOther" class="before_error" type="text" class="inputtext_long" placeholder="Other legal requirement"/>
 	       		</div>
 			</div>
 	   	</div>
@@ -66,8 +66,7 @@ Open access does not mean everyone can use your data at his leisure. Data can be
 		       	</select>
 		       	
 		       	<div style="margin-top: 5px;">
-					<input id="licenseOther" type="text" class="inputtext_long" 
-		        	placeholder="Other license"/>
+					<input id="licenseOther" name="licenseOther" type="text" class="inputtext_long before_error" placeholder="Other license"/>
 		       </div> 
 		    </div>  
 	       	
@@ -101,9 +100,9 @@ Open access does not mean everyone can use your data at his leisure. Data can be
         </div>
         <div id="accessYes" class="col-md-12">
         	<label>For how long do you need exclusive use of the data?</label>
-        	<input id="accessDuration" name="accessDuration" type="text" class="inputtext_long" />
+        	<input id="accessDuration" name="accessDuration" type="text" class="inputtext_long before_error" />
         	<label>Why do you need exclusive use of the data?</label>
-        	<input id="accessReason" name="accessReason" type="text" class="inputtext_long" />
+        	<input id="accessReason" name="accessReason" type="text" class="inputtext_long before_error" />
        	</div>
     </div>
 </section>

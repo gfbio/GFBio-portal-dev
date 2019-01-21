@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
@@ -115,7 +116,7 @@ public class PDFUtil {
 		
 		title = "Project Abstract: ";
 		printTitle(title);
-		printMultiLineAnswer(userInput.getProjectAbstract(), title, width);
+		printMultiLineAnswer((userInput.getProjectAbstract()), title, width);
 		
 		
 		printTitle("Project Data Contact: ");
@@ -418,6 +419,7 @@ public class PDFUtil {
 	    float titleSize = fontSize * pdfFont.getStringWidth(title) / 1000;
 	    width = width - titleSize;
 	    boolean increasedWidth = false;
+	    
 	    
 	    while (text.length() > 0)
 	    {

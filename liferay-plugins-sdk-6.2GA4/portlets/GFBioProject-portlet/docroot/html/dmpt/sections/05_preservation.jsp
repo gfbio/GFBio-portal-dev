@@ -33,7 +33,7 @@
                    	<span>Other submission plan</span>
                 </div>
 	            <div>
-       				<input id="submitOther" name="typesOther" type="text" placeholder="Other submission plan" />
+       				<input id="submitOther" name="submitOther" class="before_error" type="text" placeholder="Other submission plan" />
 	            </div>
 	        </div>
 	    </div>
@@ -44,7 +44,7 @@
 				</a>
 			</h4>
 			<div class ="col-md-12">
-				<textarea id="backup" maxlength="1000" rows="5" cols="100" placeholder="Please explain as detailed as possible."></textarea>
+				<textarea id="backup" name="backup" class="before_error" maxlength="1000" rows="5" cols="100" placeholder="Please explain as detailed as possible."></textarea>
 			</div>
 		</div>
 		<div class="row dmpt-row">
@@ -112,7 +112,7 @@
 	            </div>
 	            
 	            <div class="col-md-12">
-	             	<input id="archiveOther" name="archiveOther" type="text" class="inputtext_long" 
+	             	<input id="archiveOther" name="archiveOther" class="before_error" type="text" class="inputtext_long" 
 	             	placeholder="Other archive"/>
 	            </div>
 	        </div>
@@ -163,5 +163,5 @@
 		</div> -->
 	</div>
 	
-	<jsp:include page="07_handleInput.jsp" />
+	<jsp:include page="06_finish_wizard.jsp" />
 </section>

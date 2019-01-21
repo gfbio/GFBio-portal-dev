@@ -6,6 +6,20 @@ function isEmpty(str) {
 	return (!str || 0 === str.length);
 }
 
+function clearValidAndHideInputElement(element) {
+		element.val("");
+		element.valid();
+		element.hide();
+}
+
+function simpleToggle(element, checked) {
+	if (checked) {
+        element.show("slow");
+    } else {
+        clearValidAndHideInputElement(element);
+    }
+}
+
 function hideGeneralInformation() {
 	'use strict';
 	
@@ -90,57 +104,12 @@ function addInputField(event) {
 
 function checkboxTypes(event) {
     'use strict';
-    
-    if ($(event.target).is(':checked')) {
-        $("#typesOther").show("slow");
-    } else {
-        $("#typesOther").hide();
-        $("#typesOther").val("");
-    }
+    simpleToggle($("#typesOther"), $(event.target).is(':checked'));
 }
 
 function checkboxDatatype(event) {
     'use strict';
-    
-    if ($(event.target).is(':checked')) {
-        $("#datatypeOther").show("slow");
-    } else {
-        $("#datatypeOther").hide();
-        $("#datatypeOther").val("");
-    }
-}
-
-function requirements() {
-	'use strict';
-	
-	var other = $("#requirementOther"),
-        id = $(event.target).attr("id");
-	
-	if (id === "legal-none") {
-		if ($(event.target).is(':checked')) {
-	        other.hide();
-	        other.val("");
-	        
-	        $("input[name='requirements']:checked").each(function () {
-                if ($(this).attr("id") !== "legal-none") {
-                    $(this).prop("checked", false);
-                }
-            });
-	    }
-	} else {
-		if ($("#legal-none").is(":checked")) {
-			$("#legal-none").prop("checked", false);
-		}
-	}
-	
-	if (id === "legal-other") {
-		if ($(event.target).is(':checked')) {
-	        other.show("slow");
-	    } else {
-	        other.hide();
-	        other.val("");
-	    }
-	}
+    simpleToggle($("#datatypeOther"), $(event.target).is(':checked'));
 }
 
 function getPrincipal() {
@@ -153,19 +122,19 @@ function getPrincipal() {
 function handleFunding(event) {
     'use strict';
     
-    var selection = $(event.target).val();
+    var selection = $(event.target).val(),
+		link = $("#fundingLink"),
+		other = $("#fundingOther");
     if (selection !== "none" && selection !== "Select") {
-        $("#fundingLink").show("slow");
+        link.show("slow");
     } else {
-        $("#fundingLink").hide();
-        $("#fundingLink").val("");
-        $("#fundingOther").val("");
+    	clearValidAndHideInputElement(link);
+        other.val("");
     }
     if (selection === "other") {
-        $("#fundingOther").show("slow");
+        other.show("slow");
     } else {
-        $("#fundingOther").hide();
-        $("#fundingOther").val("");
+    	clearValidAndHideInputElement(other);
     }
 }
 
@@ -178,10 +147,8 @@ function policies(event) {
 	
 	if (value === "None") {
 		if ($(event.target).is(':checked')) {
-	        other.hide();
-	        link.hide();
-	        other.val("");
-	        link.val("");
+			clearValidAndHideInputElement(other);
+			clearValidAndHideInputElement(link);
 	        
 	        $("input[name='policies']:checked").each(function () {
                 if ($(this).attr("id") !== "pol-none") {
@@ -200,10 +167,8 @@ function policies(event) {
 	        other.show("slow");
 	        link.show("slow");
 	    } else {
-	        other.hide();
-	        link.hide();
-	        other.val("");
-	        link.val("");
+	    	clearValidAndHideInputElement(other);
+			clearValidAndHideInputElement(link);
 	    }
 	}
 }
@@ -214,18 +179,18 @@ function showMetadataInformation(event) {
 	var selection = $(event.target).val(),
 	metainformation = $("#metainformation-" + selection), 
 	metaurl = $("#metaurl-" + selection), 
-	metadesc = $("#metadesc-" + selection);
+	metadesc = $("#metadesc-" + selection),
+	descriptioninput = $("#metadataDesc");
 	if ($(event.target).is(':checked')) {
 		if (!isEmpty(metaurl.text()) || !isEmpty(metadesc.text())) {
 			metainformation.show("slow");
 		} else if (isEmpty(metaurl.text()) && isEmpty(metadesc.text())) {
-			$("#metadataDesc").show("slow");
+			descriptioninput.show("slow");
 		}
 	} else {
 		metainformation.hide();
 		if (isEmpty(metaurl.text()) && isEmpty(metadesc.text())) {
-			$("#metadataDesc").hide();
-	        $("#metadataDesc").val("");
+			clearValidAndHideInputElement(descriptioninput);
 		}
 	}
 }
@@ -248,6 +213,33 @@ function toggleMetaInfos(event) {
     }
 }
 
+function requirements() {
+	'use strict';
+	
+	var other = $("#requirementOther"),
+        id = $(event.target).attr("id");
+	
+	if (id === "legal-none") {
+		if ($(event.target).is(':checked')) {
+			clearValidAndHideInputElement(other);
+	        
+	        $("input[name='requirements']:checked").each(function () {
+                if ($(this).attr("id") !== "legal-none") {
+                    $(this).prop("checked", false);
+                }
+            });
+	    }
+	} else {
+		if ($("#legal-none").is(":checked")) {
+			$("#legal-none").prop("checked", false);
+		}
+	}
+	
+	if (id === "legal-other") {
+		simpleToggle(other, $(event.target).is(':checked'));
+	}
+}
+
 function handleLicenses(event) {
 	'use strict';
 	
@@ -262,8 +254,7 @@ function handleLicenses(event) {
    	if (license.includes("Other")) {
 		other.show("slow");
 	} else {
-	    other.hide();
-	    other.val("");
+		clearValidAndHideInputElement(other);
 	    
 	    if (!isEmpty(licenseurl.text()) || !isEmpty(licensedesc.text())) {
 	    	licensemd.show("slow");
@@ -271,24 +262,6 @@ function handleLicenses(event) {
 	}
 	
 }
-
-//function toggleLicenseInfos(event) {
-//	'use strict';
-//	
-//	var licenseId = $(event.target).attr('id'),
-//	licenseurl = $("#licenseurl-" + licenseId), 
-//	licensedesc = $("#licensedesc-" + licenseId);
-//		
-//	$(event.target).toggleClass('rotate');
-//    $(event.target).toggleClass('rotate2');
-//    
-//    if (!isEmpty(licenseurl.text())) {
-//    	licenseurl.toggle();
-//    }
-//    if (!isEmpty(licensedesc.text())) {
-//    	licensedesc.toggle();
-//    }
-//}
 
 function handleRestriction(event) {
 	'use strict';
@@ -300,34 +273,22 @@ function handleRestriction(event) {
 	if (selection === "true") {
 		div.show("slow");
 	} else {
-		div.hide();
 		howLong.val("");
 		why.val("");
+		howLong.valid();
+		why.valid();
+		div.hide();
 	}
 }
 
 function handleSubmission(event) {
 	'use strict';
-	
-	var other = $("#submitOther");
-	if ($(event.target).is(':checked')) {
-		other.show("slow");
-	} else {
-		other.hide();
-		other.val("");
-	}
+	simpleToggle($("#submitOther"), $(event.target).is(':checked'));
 }
 
 function handleArchives(event) {
 	'use strict';
-	
-	var other = $("#archiveOther");
-	if ($(event.target).is(':checked')) {
-		other.show("slow");
-	} else {
-		other.hide();
-		other.val("");
-	}
+	simpleToggle($("#archiveOther"), $(event.target).is(':checked'));
 }
 
 function getDataVolumeBySliderValue(number) {
@@ -1040,7 +1001,6 @@ function initializeWizard(dmptInput, id) {
 			}
 		}
 	}
-	
 
 	if (dmptInput.pid !== null) {
 		$("input[name='pid'][value='" + dmptInput.pid + "']").prop("checked", true);

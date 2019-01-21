@@ -131,7 +131,7 @@
 	            </div>
 	            <div class="col-md-12">
 	            	<div>	
-	                    <input id="datatypeOther" name="datatypeOther" class="df_input" type="text" placeholder="Other Type" />
+	                    <input id="datatypeOther" name="datatypeOther" class="df_input before_error" type="text" placeholder="Other Type" />
 	                </div>
 	            </div>
           </div>
@@ -143,7 +143,7 @@
 			</a>
 	  	</h4>
 	  	<div id="formatDocumentated" class="col-md-12">
-      		<textarea id="createFormats" maxlength="1000" rows="5" cols="100" placeholder="List all data formats you are planning to produce and give additional information if necessary (such as &#34;only legible with software xy&#34;). There are loads of data formats and some disciplines even have their own ones."></textarea> 
+      		<textarea id="createFormats" name="createFormats" class="before_error" maxlength="1000" rows="5" cols="100" placeholder="List all data formats you are planning to produce and give additional information if necessary (such as &#34;only legible with software xy&#34;). There are loads of data formats and some disciplines even have their own ones."></textarea> 
     	</div>
 	</div>
 	<div class="row dmpt-row">
@@ -181,8 +181,7 @@ The amount of data sets you will create is closely linked to your style of worki
 			</a>
 	    </h4>
 	    <div class="col-md-12">
-	    <!-- required -->
-	        <textarea id="methodologies" maxlength="1000" rows="5" cols="100" placeholder="There are many different ways of collecting, managing and processing research data. Try to document as detailed as possible and describe your workflows for data handling. Do you plan to use specific tools like Diversity Workbench or BExIS? Name common standards for data collection or methodologies you refer to. By clicking the link above you can find more information about tools and management systems in our wiki."></textarea>
+	        <textarea id="methodologies" name="methodologies" class="before_error" maxlength="1000" rows="5" cols="100" placeholder="There are many different ways of collecting, managing and processing research data. Try to document as detailed as possible and describe your workflows for data handling. Do you plan to use specific tools like Diversity Workbench or BExIS? Name common standards for data collection or methodologies you refer to. By clicking the link above you can find more information about tools and management systems in our wiki."></textarea>
 	    </div>
 	</div>
 </section>

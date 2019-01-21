@@ -26,23 +26,60 @@ var saved = false;
 
 $(document).ready(function () {
 	
-      
-    $.validator.addMethod("notEqual", function (value, element, param) {
-        return this.optional(element) || value != param;
-    }, "Please specify a non-default value");
+	// Short regex for small input fields e.g. project name
+    $.validator.addMethod('regexshort', function (value, element, parameter) {
+    	return !/[^A-Za-z0-9 ß´`^\']/.test(value);
+    }, 'Following special characters are allowed: ß\'´`^');
+	
+	// Regex for textareas/larger inputs e.g. projact abstract
+    $.validator.addMethod('regexlong', function (value, element, parameter) {
+    	return !/[^A-Za-z0-9 .,;:-_!§$%&/()=?ß´`^+*#\'\"\t\n]/.test(value);
+    }, 'Following special characters are allowed: .,;:\"-_\'!§$%&/()=?ß´`^+*#');
     
+ 	// Regex for urls
+    $.validator.addMethod('regexurl', function (value, element, parameter) {
+    	var expression = /^$|^[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+    	var regex = new RegExp(expression);
+    	return value.match(regex);
+    }, 'Invalid URL');
+	
     var form = $("#dmpt-wizard");
 	form.validate({
 		errorPlacement : function errorPlacement(error, element) {
-            error.hide();
+			
+			if (error.html() == "This field is required.") {
+				// Hide required Errors
+				error.hide();
+			} else if (element.hasClass("before_error")) {
+				// Place error before element
+				error.insertBefore(element);
+			} else if (element.hasClass("parent_error")) {
+				// Place error to begin of the parent div
+				error.prependTo(element.parent("div"));
+			} else {
+				// Default
+				error.hide();
+			}
 		},
 		rules : {
+			//01 General Information
 			projectName : {
 				required: true,
+				regexshort: true,
          		minlength: 3
+           	},
+           	reproducibleText : {
+           		regexlong: true
+           	},
+           	typesOther : {
+           		regexshort: true
+           	},
+           	projectAbstract : {
+           		regexlong: true
            	},
            	responsibleName: {
            		required: true,
+           		regexshort: true,
            		minlength: 3
            	},
            	email : {
@@ -53,6 +90,67 @@ $(document).ready(function () {
            		//required: true,
            		//number: true
            	},
+           	investigator : {
+           		regexshort: true
+           	},
+           	fundingLink: {
+           		regexurl: true
+           	},
+           	fundingOther: {
+           		regexshort: true
+           	},
+           	programme: {
+           		regexlong: true
+           	},
+           	policyOther: {
+           		regexshort: true
+           	},
+           	policyLink: {
+           		regexurl: true
+           	},
+          	//02 Data Collection
+           	datatypeOther: {
+           		regexshort: true
+           	},
+           	createFormats: {
+           		regexlong: true
+           	},
+           	methodologies: {
+           		regexlong: true
+           	},
+          	//03 Documentation and Metadata
+           	metadataDesc: {
+           		regexlong: true
+           	},
+          	//04 Ethics and Legal Compliance
+           	requirementOther: {
+           		regexshort: true
+           	},
+           	licenseOther: {
+           		// urls should be possible
+           		regexlong: true
+           	},
+           	accessDuration: {
+           		regexshort: true
+           	},
+           	accessReason: {
+           		regexshort: true
+           	},
+          	//05 Preservation and Sharing
+           	submitOther: {
+           		regexshort: true
+           	},
+           	backup: {
+           		regexlong: true
+           	},
+           	archiveOther: {
+           		regexshort: true
+           	},
+           	// Request Dialog
+           	additionalText: {
+           		regexlong: true
+           	}
+           	
 		}
 	});
 	
@@ -156,7 +254,7 @@ $(document).ready(function () {
 		    $("#archives-cb").on("click", handleArchives);
 		    $("#archiveOther").hide();
 		    
-		    //07 Handling inputs at the end of the wizard
+		    //06 Handling inputs at the end of the wizard
 		    $("#handleInput").hide();
 		    
 		    //Download PDF
@@ -171,6 +269,7 @@ $(document).ready(function () {
 		    
 		    if(!Liferay.ThemeDisplay.isSignedIn()) {
 		    	$("#save-message").show();
+		    	$("#autosaveMessage").hide();
 		    	
 		    	$("#saveDMP").prop("disabled", true);
 				$("#saveDMP").prop("title", "You need to be logged in");
@@ -391,7 +490,7 @@ function sendRequest() {
 	var services = new Array,
 		information;
 	services = getServices();
-	information = $("#additinal-text").val();
+	information = $("#additinalText").val();
 	//console.info("Services: " + services);
 	
 	$.ajax({
@@ -412,6 +511,15 @@ function sendRequest() {
 	if (!saved) {
 		saveDMPforUser();
 	}
+}
+
+function uploadAttachement() {
+	var formData = new FormData();
+	formData.append("file1", document.getElementById("file").files[0]);
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "uploadServlet");
+	xhr.send(formData);
 }
 
 function answer(element, response) {
@@ -448,8 +556,13 @@ function sleep (time) {
  				<jsp:include page="sections/03_metadata.jsp" />
 			
 				<jsp:include page="sections/04_ethics.jsp" />
-				
+				<!-- Note: 06_finish_wizard is at the end of section 05_preservation -->
  				<jsp:include page="sections/05_preservation.jsp" />
+			</div>
+		</form>
+		<form id="request-form" action="/Upload" method="POST" enctype="multipart/form-data">
+			<div>
+				<jsp:include page="request_dialog.jsp" />
 			</div>
 		</form>
 	</div>
