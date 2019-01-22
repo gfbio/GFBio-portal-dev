@@ -231,9 +231,11 @@ public class DMPTPortlet extends MVCPortlet {
 			try {
 				if (dmpId > 0) {
 					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.getDataManagementPlan(dmpId);
+					_log.info("Update DMP for user " + userId + " with dmpId " + dmpId);
 				} else {
 					plan = new DataManagementPlanImpl();
 					plan.setUserID(userId);
+					_log.info("Create DMP for user " + userId);
 				}
 				plan.setDmpTInput(jsonInput);
 				plan.setName(projectName);
@@ -268,6 +270,7 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		//Get id
 		Long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
+		_log.info("Trying to load dmp with id: " + dmpId);
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		List<DataManagementPlan> dmps = DataManagementPlanLocalServiceUtil.getdmpListByUserId(themeDisplay.getUserId());
@@ -283,7 +286,7 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		if (dmptInput.equals("")) {
 			_log.error("DmptInput is empty!");
-			response = "DMP could not been restored!";
+			response = "DMP could not be restored!";
 			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
 		} else {
 			response = dmptInput;
