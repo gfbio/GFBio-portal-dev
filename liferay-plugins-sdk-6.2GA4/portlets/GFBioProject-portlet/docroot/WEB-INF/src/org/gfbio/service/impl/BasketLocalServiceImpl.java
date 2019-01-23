@@ -475,7 +475,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 					jMiniItem.put("dcIdentifier",
 							jSelectedItem.getString("dcIdentifier"));
 					jMiniItem.put("vatVisualizable",
-							jSelectedItem.getString("vatVisualizable"));
+							jSelectedItem.getBoolean("vatVisualizable"));
 					jaMiniItems.put(jMiniItem);
 				}
 				jMiniBasket.put("selected", jaMiniItems);
