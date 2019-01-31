@@ -1131,6 +1131,13 @@ border-spacing:25px 10px;
 vertical-align:top;
 }
 
+.aui .img-responsive-plan {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+}
 
 /*=====================================================
  Responsive: Navbar
