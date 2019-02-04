@@ -354,21 +354,6 @@ public class DMPTPortlet extends MVCPortlet {
 			description = description.concat(" - " + createCommaSeperatedString(Arrays.asList(services)));
 		}
 		String principalInvestigator = createCommaSeperatedString(input.getInvestigators());
-//		String funding = input.getFunding().getName();
-//		
-//		String projectType = createCommaSeperatedString(input.getReproducible());
-//		List<Customfield_10221> projectWorkTypes = new ArrayList<>();
-//		for (String type : input.getProjectTypes()) {
-//			projectWorkTypes.add(new Customfield_10221(type));
-//		}
-		
-//		String projectDataContact = input.getResponsibleName();
-//		String dataLicense = input.getLicense().getName();
-		
-//		String physicalObjects = "";
-//		if (input.getPhysical() != null) {
-//			physicalObjects = input.getPhysical().toString();
-//		}
 		
 		// Create Issue
 		// PropsUtil reads the property from portal-ext.properties
@@ -398,13 +383,16 @@ public class DMPTPortlet extends MVCPortlet {
 		Communicator communicator = new Communicator();
 		JIRAApi jiraApi = new JIRAApi(communicator);
 
-		String response = "";
-		JiraResponse ticket;
+		String response = jiraApi.createDataCenterTicket(issue);
+		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
 		boolean added;
-		
-		response = jiraApi.createDataCenterTicket(issue);
-		ticket = gson.fromJson(response, JiraResponse.class);
-		_log.info("Issue ID: " + ticket.getId());
+		long ticketId = ticket.getId();
+		_log.info("Issue ID: " + ticketId);
+
+		// Set ticketid for the success dialog
+		session.setAttribute("ticketid", ticketId, PortletSession.APPLICATION_SCOPE);
+				
+		_log.info("Response: " + response);
 		added = jiraApi.addAttachments(ticket.getId(), TXTUtil.getTXTAttachmentFromDMP(input));
 		if (added) {
 			_log.info("Attachments added for issue " + ticket.getId());

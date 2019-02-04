@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <div id="dialog-request" style="display: none;">
 	<div id="send-request" class="row request-row" >
 		<form id="dialogForm">
@@ -82,14 +84,18 @@
 		<div class="answer-wrapper">
 			<img alt="Icon Check"
 				src="/GFBioProject-portlet/images/circle-check.png">
-			<p>Your request has been successfully sent.</p>
+			<p>Thank you for your support request!</p>
+			<p>A confirmation e-mail has been sent to you.</p>
+			<p>We are happy to help you with your request and will get back to you as soon as possible.</p>
+			<p>Please include your request reference number in the subject line of any future correspondence.</p>
 		</div>
 	</div>
 	<div id="errorAnswer" style="display: none;">
 		<div class="answer-wrapper">
 			<img alt="Icon Check"
 				src="/GFBioProject-portlet/images/circle-close.png">
-			<p>Your request could not been sent. Please try again and contact us if the problem persists!</p>
+			<p>Your request could not been sent. <c:out value="${email}"/></p>
+			<p>Please contact us by <a href="mailto:info@gfbio.org">e-mail</a> or use our <a href='<c:out value="${portalurl}" />/contact' target='_blank'>contact</a> form to get in touch with us.</p>
 		</div>
 	</div>
 </div>

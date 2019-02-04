@@ -22,6 +22,7 @@ var userEmail = '${email}';
 var userName = '${username}';
 var contextPath = '${contextPath}';
 var userHasDmps = '${hasDmps}';
+var portalUrl = '${portalurl}';
 var saved = false;
 
 $(document).ready(function () {
