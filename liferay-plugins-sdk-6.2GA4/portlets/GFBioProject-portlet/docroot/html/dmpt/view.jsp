@@ -502,10 +502,10 @@ function sendRequest() {
    			infos: information
    		},
    		success : function(text) {
-			answer("#successAnswer", text);
+			answer("#successAnswer", text, true);
 		},
 		error : function(text) {
-			answer("#errorAnswer", text);
+			answer("#errorAnswer", text, false);
 		}
 	});
 	// Saving the dmp automatically after the request
@@ -514,10 +514,15 @@ function sendRequest() {
 	}
 }
 
-function answer(element, response) {
+function answer(element, response, success) {
 	//console.info(response);
 	sleep(2000).then(function() {
 		$("#dialogLoader").hide();
+		var ticket = JSON.parse(response);
+		if (success) {
+			$("#emailresponse").html("A confirmation e-mail has been sent to " + ticket.email + ".");
+			$("#ticketid").html("Please include your request reference number " + ticket.id + " in the subject line of any future correspondence.");
+		}
 		$(element).show();
 		$('#dialog-request').dialog('option', 'buttons', {
 	    	'Ok': function() {

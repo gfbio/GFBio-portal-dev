@@ -85,9 +85,9 @@
 			<img alt="Icon Check"
 				src="/GFBioProject-portlet/images/circle-check.png">
 			<p>Thank you for your support request!</p>
-			<p>A confirmation e-mail has been sent to you.</p>
+			<p id="emailresponse"></p>
 			<p>We are happy to help you with your request and will get back to you as soon as possible.</p>
-			<p>Please include your request reference number in the subject line of any future correspondence.</p>
+			<p id="ticketid"></p>
 		</div>
 	</div>
 	<div id="errorAnswer" style="display: none;">

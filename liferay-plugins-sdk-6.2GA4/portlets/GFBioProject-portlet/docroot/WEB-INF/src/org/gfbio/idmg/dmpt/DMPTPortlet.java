@@ -385,15 +385,9 @@ public class DMPTPortlet extends MVCPortlet {
 
 		String response = jiraApi.createDataCenterTicket(issue);
 		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
-		boolean added;
+		ticket.setEmail(input.getEmail());
 		long ticketId = ticket.getId();
-		_log.info("Issue ID: " + ticketId);
-
-		// Set ticketid for the success dialog
-		session.setAttribute("ticketid", ticketId, PortletSession.APPLICATION_SCOPE);
-				
-		_log.info("Response: " + response);
-		added = jiraApi.addAttachments(ticket.getId(), TXTUtil.getTXTAttachmentFromDMP(input));
+		boolean added = jiraApi.addAttachments(ticketId, TXTUtil.getTXTAttachmentFromDMP(input));
 		if (added) {
 			_log.info("Attachments added for issue " + ticket.getId());
 		} else {
@@ -403,7 +397,7 @@ public class DMPTPortlet extends MVCPortlet {
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println(response);
+		writer.println(gson.toJson(ticket));
 		
 		writer.flush();
 		writer.close();
