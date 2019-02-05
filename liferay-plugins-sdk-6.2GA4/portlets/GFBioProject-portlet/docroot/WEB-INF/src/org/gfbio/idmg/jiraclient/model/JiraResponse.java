@@ -10,4 +10,5 @@ public class JiraResponse {
 	private long id;
 	private String key;
 	private String self;
+	private String email;
 }

@@ -21,6 +21,7 @@ import org.gfbio.idmg.jiraclient.model.Issue;
 import com.google.gson.Gson;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 public class JIRAApi {
 
@@ -29,9 +30,10 @@ public class JIRAApi {
 	private final Communicator client;
 	private final Gson gson;
 
-	private static final String BASE_URL = "https://helpdesk.gfbio.org";
+	private final String BASE_URL;
+	private final String LOGIN;
+	
     private static final String CREATE_TICKET_ENDPOINT = "/rest/api/2/issue/";
-    private static final String LOGIN = "Gfbio-outreach:gfbio_2016";
     private static final String FILE_BODY_TYPE = "file";
 
     /**
@@ -41,6 +43,10 @@ public class JIRAApi {
      */
     public JIRAApi(Communicator client) {
         this.client = client;
+        
+        this.BASE_URL = PropsUtil.get("jira.gfbio.url");
+        this.LOGIN = PropsUtil.get("jira.gfbio.login");
+        
         this.gson = new Gson();
     }
     
