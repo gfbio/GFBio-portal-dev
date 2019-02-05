@@ -789,6 +789,7 @@ function parseReturnedJSONfromSearch(datasrc) {
 		if (fields["xml"]) {
 			// this field contains raw data, is used for basket
 			var xml = fields["xml"];
+			inner.xml2 = xml;
 			// creates object instantce of XMLtoJSON
 			var xml2json = new XMLtoJSON();
 			var json = xml2json.fromStr(xml);
@@ -989,37 +990,47 @@ $(function() {
 			var zip = new JSZip();
 			
 			$.each(selectedBasket, function (index, result) {	
-				var linkURL = result['datalink'];
+				var linkages = result['xml']['dataset']['linkage'];
+				var metadatalink = result['metadatalink'];
+			
+				//zip.file(result['xml']['dataset']['dc:identifier'].substring(result['xml']['dataset']['dc:identifier'].lastIndexOf(':')+1) + "_metadata.xml", result['xml2']);
 				
-				console.log(result['xml']);
-				
-				var xhr = new XMLHttpRequest();
-				xhr.open('GET', 'https://cors-anywhere.herokuapp.com/' + linkURL, false);
-				xhr.overrideMimeType('text\/plain; charset=x-user-defined');
-				xhr.send(null);
-				
-				var headers = xhr.getAllResponseHeaders();
-				
-				if (xhr.readyState === 4) {
-				
-					var filestream = xhr.responseText;
-					var out;
-					out = '';
-					for (i = 0; i < filestream.length; i++) {
-						out+=String.fromCharCode(filestream.charCodeAt(i) & 0xff);
-					}
-					var out64 = window.btoa(out);
-				
-					var filename = /(?:^|\s)filename=(.*?)(?:\s|$)/.exec(headers);
-				
-					if(filename == null){
-						zip.file(decodeURIComponent(linkURL.substring(linkURL.lastIndexOf('/')+1)), out64, {base64:true});
-					}
-					else
+				for ( var i = 0; i < linkages.length; i++) {				
+					var linkURL = linkages[i];
+									
+					if (linkURL === metadatalink)
 					{
-						zip.file(filename[1], out64, {base64:true});			
+						continue;
 					}
-				}
+					
+					var xhr = new XMLHttpRequest();
+					xhr.open('GET', 'https://cors-anywhere.herokuapp.com/' + linkURL, false);
+					xhr.overrideMimeType('text\/plain; charset=x-user-defined');
+					xhr.send(null);
+					
+					var headers = xhr.getAllResponseHeaders();
+					
+					if (xhr.readyState === 4) {
+					
+						var filestream = xhr.responseText;
+						var out;
+						out = '';
+						for (i = 0; i < filestream.length; i++) {
+							out+=String.fromCharCode(filestream.charCodeAt(i) & 0xff);
+						}
+						var out64 = window.btoa(out);
+					
+						var filename = /(?:^|\s)filename=(.*?)(?:\s|$)/.exec(headers);
+					
+						if(filename == null){
+							zip.file(decodeURIComponent(linkURL.substring(linkURL.lastIndexOf('/')+1)), out64, {base64:true});
+						}
+						else
+						{
+							zip.file(filename[1], out64, {base64:true});			
+						}
+					}
+			    }
 			});
 			
 			zip.generateAsync({type:"blob"}).then(function (blob) { // 1) generate the zip file
@@ -1268,6 +1279,7 @@ function getDataFromSelectedRow(nRow, tRows) {
 		"dcIdentifier": value.dcIdentifier,
 		"parameter": value.parameter,
 		"xml": value.xml,
+		"xml2": value.xml2,
 		"vatVisualizable": value.vatVisualizable,
 		/* pangeae doesn't return license field
 		"license":value.license*/
