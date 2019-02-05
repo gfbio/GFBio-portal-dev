@@ -32,7 +32,7 @@
 			</div>
 			<div class="col-xs-6 col-md-3">
 				<label class="mod-cb">
-					<input name="alive" type="radio" value="false" />
+					<input name="dead" type="radio" value="false" />
 					<span>Dead</span>
 				</label>
 			</div>

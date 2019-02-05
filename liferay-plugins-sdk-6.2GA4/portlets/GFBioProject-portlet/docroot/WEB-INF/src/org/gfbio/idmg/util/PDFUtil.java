@@ -29,6 +29,11 @@ public class PDFUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(PDFUtil.class);
 	
+	private static final String WITH_DELIMITER = "(?<=%1$s)";
+    private static final String DELIMITER_WHITESPACE = "\\s+";
+    private static final String DELIMITER_SLASH = "/";
+    private static final String DELIMITER_DASH = "-";
+	
 	private PDDocument document;
 	private PDPage page;
 	private PDPageContentStream content;
@@ -96,13 +101,14 @@ public class PDFUtil {
 		// 1 - General Information
 		printHeading("General Project Information");
 		
-		printTitle("Project Name: ");
-		printLine(userInput.getProjectName());
+		String title = "Project Name: ";
+		printTitle(title);
+		printLines(userInput.getProjectName(), title, width);
 		
 		printTitle("Research Field: ");
 		printSingleLineAnswer(userInput.getCategory());
 		
-		String title = "Project Characteristics: ";
+		title = "Project Characteristics: ";
 		printTitle(title);
 		
 		String characteristics = createCommaSeperatedString(userInput.getReproducible()) + createCommaSeperatedString(userInput.getProjectTypes());
@@ -129,7 +135,7 @@ public class PDFUtil {
 		
 		printTitle("Funding Application: ");
 		printSingleLineAnswer(userInput.getFunding().getName());
-		printSingleLineAnswer(userInput.getFundingLink());
+		printLines(userInput.getFundingLink(), "", width);
 		
 		title = "Coordinated Programme: ";
 		printTitle(title);
@@ -145,7 +151,7 @@ public class PDFUtil {
 		printTitle(title);
 		printMultiLineAnswer(userInput.getAllPolicies(), title, width);
 		if (!isNullOrEmpty(userInput.getPolicyLink())) {
-			printSingleLineAnswer(userInput.getPolicyLink(), false);
+			printLines(userInput.getPolicyLink(), "", width);
 		}
 		
 		// 2 - Data Collection
@@ -155,7 +161,7 @@ public class PDFUtil {
 		printSingleLineAnswer(yesOrNo(userInput.getPhysical()));
 		
 		printTitle("Dead or Alive: ");
-		printSingleLineAnswer(yesOrNo(userInput.getAlive()));
+		printSingleLineAnswer(deadOrAlive(userInput.getAlive()));
 		
 		printTitle("Taxon-Based: ");
 		printSingleLineAnswer(yesOrNo(userInput.getTaxon()));
@@ -172,7 +178,6 @@ public class PDFUtil {
 		printMultiLineAnswer(userInput.getCreateFormats(), title, width);
 		
 		printTitle("Estimated Data Volume: ");
-		
 		printSingleLineAnswer(StringEscapeUtils.unescapeHtml3(userInput.getDataVolume()));
 		
 		printTitle("Number of Data Sets: ");
@@ -202,14 +207,14 @@ public class PDFUtil {
 		printMultiLineAnswer(userInput.getAllRequirements(), title, width);
 		
 		printTitle("License: ");
-		printSingleLineAnswer(userInput.getLicense().getName());
+		printLines(userInput.getLicense().getName(), "", width);
 		
 		printTitle("Access Restriction: ");
 		printSingleLineAnswer(yesOrNo(userInput.getAccessRestriction()));
 
 		if (userInput.getAccessRestriction() != null && userInput.getAccessRestriction().booleanValue()) {
-			printSingleLineAnswer("How long: " + userInput.getAccessDuration());
-			printSingleLineAnswer("Reason: " + userInput.getAccessReason());
+			printLines("How long: " + userInput.getAccessDuration(), "", width);
+			printLines("Reason: " + userInput.getAccessReason(), "", width);
 		}
 		
 		// 5 - Preservation and Sharing
@@ -413,49 +418,13 @@ public class PDFUtil {
 	}
 	
 	private void printLines(String text, String title, float width, float fontSize, Color color, PDFont pdfFont) throws IOException {
+	    
+	    float titleSize = getWidth(title, pdfFont, fontSize);
+	    float maxWidth = width - titleSize;
+	    
 	    List<String> lines = new ArrayList<String>();
-	    int lastSpace = -1;
-	    
-	    float titleSize = fontSize * pdfFont.getStringWidth(title) / 1000;
-	    width = width - titleSize;
-	    boolean increasedWidth = false;
-	    
-	    
-	    while (text.length() > 0)
-	    {
-	        int spaceIndex = text.indexOf(' ', lastSpace + 1);
-	        if (spaceIndex < 0)
-	            spaceIndex = text.length();
-	        String subString = text.substring(0, spaceIndex);
-	        float size = fontSize * pdfFont.getStringWidth(subString) / 1000;
-	        //System.out.printf("'%s' - %f of %f\n", subString, size, width);
-	        if (size > width)
-	        {
-	            if (lastSpace < 0)
-	                lastSpace = spaceIndex;
-	            subString = text.substring(0, lastSpace);
-	            lines.add(subString);
-	            text = text.substring(lastSpace).trim();
-	            //System.out.printf("'%s' is line\n", subString);
-	            lastSpace = -1;
-	        }
-	        else if (spaceIndex == text.length())
-	        {
-	            lines.add(text);
-	            //System.out.printf("'%s' is line\n", text);
-	            text = "";
-	        }
-	        else
-	        {
-	            lastSpace = spaceIndex;
-	        }
-	        
-	        if (titleSize > 0 && lines.size() == 1 && !increasedWidth) {
-	        	width = width + titleSize;
-	        	increasedWidth = true;
-	        }
-	    }
-	    
+	    lines.add(splitByDelimiter(DELIMITER_WHITESPACE, text, lines, pdfFont, fontSize, titleSize, maxWidth, false));
+	    	    
 	    content.setNonStrokingColor(color);
 		content.setFont(pdfFont, fontSize);
 
@@ -471,12 +440,82 @@ public class PDFUtil {
 		}
 	}
 	
+	private String splitByDelimiter(String delimiter, String content, List<String> lines, PDFont pdfFont, float fontSize, float titleSize, float maxWidth, boolean increasedWidth) throws IOException {
+        // split by given delimiter while keeping it
+        String[] parts = content.split(String.format(WITH_DELIMITER, delimiter));
+
+        String line = "";
+        for (String part : parts) {
+            // if current line plus next part length is larger than given max length,
+            // put current line to list and proceed with part
+            // else: add part to current line
+            if (getWidth(line, pdfFont, fontSize) + getWidth(part, pdfFont, fontSize) > maxWidth) {
+                lines.add(line);
+                line = part;
+                
+                if (titleSize > 0 && lines.size() == 1 && !increasedWidth) {
+    	        	maxWidth = maxWidth + titleSize;
+    	        	increasedWidth = true;
+    	        }
+            } else {
+                line = line.concat(part);
+            }
+
+            // if current line length is larger than max length, call method recursivly
+            // while splitting with differen delimiters
+            if (getWidth(line, pdfFont, fontSize) > maxWidth) {
+                switch (delimiter) {
+                    case DELIMITER_WHITESPACE:
+                        line = splitByDelimiter(DELIMITER_DASH, line, lines, pdfFont, fontSize, titleSize, maxWidth, increasedWidth);
+                        break;
+                    case DELIMITER_DASH:
+                        line = splitByDelimiter(DELIMITER_SLASH, line, lines, pdfFont, fontSize, titleSize, maxWidth, increasedWidth);
+                        break;
+                    default:
+                        // if delimiters do not help, just fall back and split by
+                        // maximum amount of chars
+                        line = splitByChar(line, lines, pdfFont, fontSize, maxWidth);
+                        break;
+                }
+            }
+        }
+
+        return line;
+    }
+
+    private String splitByChar(String content, List<String> lines, PDFont pdfFont, float fontSize, float maxWidth) throws IOException {
+        int index;
+        for (index = 0; index < content.length(); index ++) {
+            if (getWidth(content.substring(0, index), pdfFont, fontSize) > maxWidth) {
+                lines.add(content.substring(0, index-1));
+                return content.substring(index, content.length());
+            }
+            
+        }
+        return content.substring(index, content.length());
+    }
+    
+    private float getWidth(String s, PDFont pdfFont, float fontSize) throws IOException {
+        return fontSize * pdfFont.getStringWidth(s) / 1000;
+    }
+	
 	private String yesOrNo(Boolean b) {
 		if (b != null) {
 			if (b.booleanValue()) {
 				return "Yes";
 			} else {
 				return "No";
+			}
+		} 
+		return null;
+	}
+	
+	private String deadOrAlive(Boolean b) {
+		if (b != null) {
+			if (b.booleanValue()) {
+				return "Alive";
+			} else {
+				return "Dead";
 			}
 		} 
 		return null;

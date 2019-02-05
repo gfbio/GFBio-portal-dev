@@ -22,19 +22,20 @@ var userEmail = '${email}';
 var userName = '${username}';
 var contextPath = '${contextPath}';
 var userHasDmps = '${hasDmps}';
+var portalUrl = '${portalurl}';
 var saved = false;
 
 $(document).ready(function () {
 	
 	// Short regex for small input fields e.g. project name
     $.validator.addMethod('regexshort', function (value, element, parameter) {
-    	return !/[^A-Za-z0-9 ß´`^\']/.test(value);
-    }, 'Following special characters are allowed: ß\'´`^');
+    	return !/[^A-Za-z0-9 äöüß´`^\']/.test(value);
+    }, 'Following special characters are allowed: äöüß\'´`^');
 	
 	// Regex for textareas/larger inputs e.g. projact abstract
     $.validator.addMethod('regexlong', function (value, element, parameter) {
-    	return !/[^A-Za-z0-9 .,;:-_!§$%&/()=?ß´`^+*#\'\"\t\n]/.test(value);
-    }, 'Following special characters are allowed: .,;:\"-_\'!§$%&/()=?ß´`^+*#');
+    	return !/[^A-Za-z0-9 .,;:\-_!§$%&/()=?äöüß´`^+*#\'\"\t\n]/.test(value);
+    }, 'Following special characters are allowed: .,;:\"-_\'!§$%&/()=?äöüß´`^+*#');
     
  	// Regex for urls
     $.validator.addMethod('regexurl', function (value, element, parameter) {
@@ -501,10 +502,10 @@ function sendRequest() {
    			infos: information
    		},
    		success : function(text) {
-			answer("#successAnswer", text);
+			answer("#successAnswer", text, true);
 		},
 		error : function(text) {
-			answer("#errorAnswer", text);
+			answer("#errorAnswer", text, false);
 		}
 	});
 	// Saving the dmp automatically after the request
@@ -513,19 +514,15 @@ function sendRequest() {
 	}
 }
 
-function uploadAttachement() {
-	var formData = new FormData();
-	formData.append("file1", document.getElementById("file").files[0]);
-
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "uploadServlet");
-	xhr.send(formData);
-}
-
-function answer(element, response) {
+function answer(element, response, success) {
 	//console.info(response);
 	sleep(2000).then(function() {
 		$("#dialogLoader").hide();
+		var ticket = JSON.parse(response);
+		if (success) {
+			$("#emailresponse").html("A confirmation e-mail has been sent to " + ticket.email + ".");
+			$("#ticketid").html("Please include your request reference number " + ticket.id + " in the subject line of any future correspondence.");
+		}
 		$(element).show();
 		$('#dialog-request').dialog('option', 'buttons', {
 	    	'Ok': function() {
@@ -556,12 +553,11 @@ function sleep (time) {
  				<jsp:include page="sections/03_metadata.jsp" />
 			
 				<jsp:include page="sections/04_ethics.jsp" />
-				<!-- Note: 06_finish_wizard is at the end of section 05_preservation -->
+				
+				<!-- Note: 06_finish_wizard.jsp is included at the end of section 05_preservation -->
  				<jsp:include page="sections/05_preservation.jsp" />
-			</div>
-		</form>
-		<form id="request-form" action="/Upload" method="POST" enctype="multipart/form-data">
-			<div>
+ 				
+				<!-- Send Request Dialog -->
 				<jsp:include page="request_dialog.jsp" />
 			</div>
 		</form>
