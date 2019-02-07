@@ -48,6 +48,8 @@ public class DMPTPortlet extends MVCPortlet {
 
 	private static Log _log = LogFactoryUtil.getLog(DMPTPortlet.class);
 	
+	private long dmpId;
+	
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws PortletException, IOException {
 
@@ -222,7 +224,7 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
-		long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
+		dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		String response = "The Data Managemant Plan could not been saved.";
 		
 		if (userId > -1 && !projectName.isEmpty()) {
@@ -251,7 +253,7 @@ public class DMPTPortlet extends MVCPortlet {
 				_log.error("Error while saving DMP in database!", e);
 			}
 		} else {
-			_log.error("DMP is not valid!");
+			_log.error("DMP is not valid or user is not signed in!");
 		}
 		
 		resourceResponse.setContentType("text/html");
@@ -269,7 +271,7 @@ public class DMPTPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		
 		//Get id
-		Long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
+		dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		_log.info("Trying to load dmp with id: " + dmpId);
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -309,7 +311,7 @@ public class DMPTPortlet extends MVCPortlet {
 		String response = "";
 		
 		//Get id
-		Long dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
+		dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		
 		// Delete Dmp by id
 		try {
@@ -361,8 +363,7 @@ public class DMPTPortlet extends MVCPortlet {
 		Project project = new Project(PropsUtil.get("jira.gfbio.dmpt.projectkey"));
 		IssueType issuetype = new IssueType("DMP");
 		Reporter reporter = new Reporter("testuser1");
-		
-		//PropsUtil reads the property from portal-ext.properties
+		// Get Requesttype
 		String customfield_10010 = PropsUtil.get("jira.gfbio.dmpt.requesttype");
 
 		// If a user is signed in, the reporter will be set new with the email
@@ -385,7 +386,7 @@ public class DMPTPortlet extends MVCPortlet {
 
 		String response = jiraApi.createDataCenterTicket(issue);
 		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
-		ticket.setEmail(input.getEmail());
+		ticket.setEmail(themeDisplay.getUser().getEmailAddress());
 		long ticketId = ticket.getId();
 		boolean added = jiraApi.addAttachments(ticketId, TXTUtil.getTXTAttachmentFromDMP(input));
 		if (added) {
@@ -404,6 +405,8 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
+	
+	//Save method
 	
 	private String createCommaSeperatedString(List<String> list) {
 		String result = "";

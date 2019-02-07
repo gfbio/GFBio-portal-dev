@@ -67,7 +67,8 @@ $(document).ready(function () {
 			projectName : {
 				required: true,
 				regexshort: true,
-         		minlength: 3
+         		minlength: 3,
+         		maxlength: 255
            	},
            	reproducibleText : {
            		regexlong: true
@@ -518,8 +519,8 @@ function answer(element, response, success) {
 	//console.info(response);
 	sleep(2000).then(function() {
 		$("#dialogLoader").hide();
-		var ticket = JSON.parse(response);
 		if (success) {
+			var ticket = JSON.parse(response);
 			$("#emailresponse").html("A confirmation e-mail has been sent to " + ticket.email + ".");
 			$("#ticketid").html("Please include your request reference number " + ticket.id + " in the subject line of any future correspondence.");
 		}
