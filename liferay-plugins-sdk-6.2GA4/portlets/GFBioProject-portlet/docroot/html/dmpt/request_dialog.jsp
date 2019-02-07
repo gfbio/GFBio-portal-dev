@@ -94,7 +94,7 @@
 		<div class="answer-wrapper">
 			<img alt="Icon Check"
 				src="/GFBioProject-portlet/images/circle-close.png">
-			<p>Your request could not been sent.</p>
+			<p>Your request could not be sent.</p>
 			<p>Please contact us by <a href="mailto:info@gfbio.org">e-mail</a> or use our <a href='<c:out value="${portalurl}" />/contact' target='_blank'>contact</a> form to get in touch with us.</p>
 		</div>
 	</div>
