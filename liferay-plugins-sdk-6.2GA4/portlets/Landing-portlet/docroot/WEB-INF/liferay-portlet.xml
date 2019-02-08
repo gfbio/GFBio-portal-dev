@@ -7,7 +7,7 @@
 		<icon>/icon.png</icon>
 		<!-- <friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
     <friendly-url-mapping>landing</friendly-url-mapping>
-    <friendly-url-routes>org/gfbio/landing-friendly-url-routes.xml</friendly-url-routes>	-->	
+    <friendly-url-routes>org/gfbio/landing-friendly-url-routes.xml</friendly-url-routes>-->
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>Landing-portlet</css-class-wrapper>

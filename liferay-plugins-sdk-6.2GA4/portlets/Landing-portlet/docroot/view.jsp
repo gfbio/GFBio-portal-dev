@@ -25,7 +25,9 @@ String searchTerm = portletPreferences.getValue("searchTerm", StringPool.BLANK);
 	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="search" />
 </portlet:actionURL>
 
-
+<portlet:actionURL var="facetEnvURL">
+	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="facetEnvironment" />
+</portlet:actionURL>
 
 <section id="home-slider" style="height:100%"><!--<div class="col-xs-12 text-center abcen1 landing-flex">-->
 <div class="container">
@@ -33,8 +35,8 @@ String searchTerm = portletPreferences.getValue("searchTerm", StringPool.BLANK);
 
 <div class="col-sm-4">
 
-<img alt="" height="169" src="/documents/20182/20858/GFBio+logo+with+claim/69b48729-d393-4120-b589-c7eb6c15b845?t=1549451896429" width="300" />
-<!-- <img alt="" height="169" src="../images/GFBio_logo_claim.png" width="300" />-->
+<img alt="" height="169" src="${gfbio_logo}" width="300" />
+
 
 <h1 class="landing-h1" id="claim-header">FAIR - Research - Data </span></h1>
 <span class="landing-h1-sub center-block">Biodiversity, Ecology &amp; Environmental Studies </span>
@@ -55,8 +57,9 @@ Search & Visualization
 <aui:form action="<%= searchURL %>" method="post" name="fm">
 <div id="landing-input">
 <aui:input label="" name="searchTerm" value="<%= searchTerm %>" placeholder="Search for organisms, data parameters or locations..."/>
-</div>	
-<aui:button class="btn btn-primary icon-landing-flex"  icon="icon-search4" iconAlign="left" type="submit" value="search"/>
+</div>
+<aui:button class="btn btn-primary icon-landing-flex" type="submit" value="search"/>
+ <!-- icon="icon-search4" iconAlign="left"--> 
 </aui:form>
 </div>
 </div>
@@ -64,12 +67,14 @@ Search & Visualization
 <div class="row">
 <div class="col-sm-4">
     <figure class="landing-figure">
-<img alt="Environmental Data" class="landing-img" src="/documents/20182/0/jena_experiment_bg.jpeg/79b010f2-4086-48a2-b645-766f1f4cc94f?t=1470986601922" />
+<img alt="Environmental Data" class="landing-img" src="${env_img}" />
 <figcaption class="landing-figcaption">
 
+<aui:form action="<%= facetEnvURL %>" method="post" name="fm">
 <h3>Environmental Data</h3>
-<a href="#" class="btn btn-primary"><span icon="icon-search4">&nbsp;</span>Search</a>
+<aui:button class="btn btn-primary icon-landing-flex" type="submit" value="search"/>
 <!-- filter=[{"term"%3A{"dataCenterFacet"%3A"PANGAEA%3A Data Publisher for Earth %26 Environmental Science"}}] -->
+</aui:form>
 </figcaption>	
 </figure>
 </div>
