@@ -351,9 +351,9 @@ public class DMPTPortlet extends MVCPortlet {
 		// Set fields
 		String projectName = input.getProjectName();
 		String projectAbstract = input.getProjectAbstract();
-		String description = message;
-		if (services != null) {
-			description = description.concat(" - " + createCommaSeperatedString(Arrays.asList(services)));
+		String description = "";
+		if (services != null && message != null) {
+			description = message.concat(" - " + createCommaSeperatedString(Arrays.asList(services)));
 		}
 		String principalInvestigator = createCommaSeperatedString(input.getInvestigators());
 		

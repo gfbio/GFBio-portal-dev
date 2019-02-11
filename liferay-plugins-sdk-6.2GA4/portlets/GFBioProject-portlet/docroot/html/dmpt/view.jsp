@@ -492,8 +492,7 @@ function sendRequest() {
 	var services = new Array,
 		information;
 	services = getServices();
-	information = $("#additinalText").val();
-	//console.info("Services: " + services);
+	information = $("#additionalText").val();
 	
 	$.ajax({
    		"method": "POST",
