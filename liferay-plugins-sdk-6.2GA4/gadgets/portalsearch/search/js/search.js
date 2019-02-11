@@ -990,16 +990,26 @@ $(function() {
 			var zip = new JSZip();
 			
 			$.each(selectedBasket, function (index, result) {	
-				var linkages = result['xml']['dataset']['linkage'];
-				var metadatalink = result['metadatalink'];
-			
-				//zip.file(result['xml']['dataset']['dc:identifier'].substring(result['xml']['dataset']['dc:identifier'].lastIndexOf(':')+1) + "_metadata.xml", result['xml2']);
+				var linkages = [];
+				
+				if(typeof result['xml']['dataset']['linkage'] === "string")
+				{
+					linkages = [result['xml']['dataset']['linkage']];
+				}
+				else
+				{
+					linkages = result['xml']['dataset']['linkage'];
+				}
+				
+				var metadatalink = decodeURIComponent(result['metadatalink']);
+				var identifier = result['xml']['dataset']['dc:identifier'].replace(/[` ~!@#$%^&*()_|+\-=÷¿?;:'",.<>\{\}\[\]\\\/]/gi, '');
 				
 				for ( var i = 0; i < linkages.length; i++) {				
-					var linkURL = linkages[i];
+					var linkURL = decodeURIComponent(linkages[i]);
 									
 					if (linkURL === metadatalink)
 					{
+						zip.file(identifier + "_metadata.xml", result['xml2']);
 						continue;
 					}
 					
@@ -1021,13 +1031,13 @@ $(function() {
 						var out64 = window.btoa(out);
 					
 						var filename = /(?:^|\s)filename=(.*?)(?:\s|$)/.exec(headers);
-					
+						
 						if(filename == null){
-							zip.file(decodeURIComponent(linkURL.substring(linkURL.lastIndexOf('/')+1)), out64, {base64:true});
+							zip.file(identifier + "_" + decodeURIComponent(linkURL.substring(linkURL.lastIndexOf('/')+1)), out64, {base64:true});
 						}
 						else
 						{
-							zip.file(filename[1], out64, {base64:true});			
+							zip.file(identifier + "_" + filename[1], out64, {base64:true});			
 						}
 					}
 			    }
