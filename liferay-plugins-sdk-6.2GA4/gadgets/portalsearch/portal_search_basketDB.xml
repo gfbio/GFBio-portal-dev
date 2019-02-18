@@ -62,7 +62,7 @@
 						<button type="button" id="button_vat" class="btn btn-primary" onclick="linkToVAT()" style="display: none;" disabled>VAT</button>
 						<div class="checkbox" style="position: relative; float: right;">
 							<label style="display: inline">
-							<input type="checkbox" id="checkAll"> Check All
+							<input type="checkbox" id="checkAll"> Select all on page
 							</label>
 						</div>
 					</div>
