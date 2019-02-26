@@ -58,9 +58,10 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 
 		<liferay-ui:success key="success" message="the-form-information-was-sent-successfully" />
 
-		<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
-		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
-		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" />
+<%-- 		<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" /> 
+ 		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" /> 
+		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" /> 
+--%>
 
 		<c:if test='<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED && SessionErrors.contains(renderRequest, "validationScriptError") %>'>
 			<liferay-util:include page="/script_error.jsp" />
@@ -89,7 +90,7 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 		String fieldName = "field" + i;
 		String fieldLabel = LocalizationUtil.getPreferencesValue(portletPreferences, "fieldLabel" + i, themeDisplay.getLanguageId());
 		boolean fieldOptional = PrefsParamUtil.getBoolean(portletPreferences, request, "fieldOptional" + i, false);
-		String fieldValue = ParamUtil.getString(request, fieldName);
+		String fieldValue = ParamUtil.getString(request, fieldName);	
 
 		while ((i == 1) || Validator.isNotNull(fieldLabel)) {
 			String fieldType = portletPreferences.getValue("fieldType" + i, "text");
@@ -172,18 +173,21 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 		}
 		%>
 
-		<c:if test="<%= requireCaptcha %>">
-			<portlet:resourceURL var="captchaURL">
+ <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	
+      		<div class="g-recaptcha" data-sitekey=<%=PropsUtil.get("google.sitekey") %>></div>
+			      <br/>
+
+<%--	<c:if test="<%= requireCaptcha %>">
+ <portlet:resourceURL var="captchaURL">
 				<portlet:param name="<%= Constants.CMD %>" value="captcha" />
 			</portlet:resourceURL>
-
-			<liferay-ui:captcha url="<%= captchaURL %>" />
+				<liferay-ui:captcha url="<%= captchaURL %>" />
 		</c:if>
-
+--%>
 		<aui:button onClick="" type="submit" value="send" />
 	</aui:fieldset>
 </aui:form>
-
 </div>
 
 <aui:script use="aui-base,selector-css3">
