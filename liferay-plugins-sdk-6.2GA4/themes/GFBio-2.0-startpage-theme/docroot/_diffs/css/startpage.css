@@ -1,0 +1,624 @@
+@-webkit-keyframes charge {
+    0% {
+        box-shadow: inset 0px 0px 0px #2E2E2E;
+    }
+    100% {
+        box-shadow: inset 60px 0px 0px #2E2E2E;
+    }
+}
+
+@-moz-keyframes charge {
+    0% {
+        box-shadow: inset 0px 0px 0px #2E2E2E;
+    }
+    100% {
+        box-shadow: inset 60px 0px 0px #2E2E2E;
+    }
+}
+
+@keyframes charge {
+    0% {
+        box-shadow: inset 0px 0px 0px #2E2E2E;
+    }
+    100% {
+        box-shadow: inset 60px 0px 0px #2E2E2E;
+    }
+}
+
+[id^="landing-"]:hover {
+    color: #fff;
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
+}
+
+.aui{
+	
+body{
+    .journal-content-article a.btn-effect{
+	  color: #fff;
+      border-color: #fff;
+      text-decoration:none;
+    }
+    
+    .journal-content-article a.btn-effect:hover, .journal-content-article a.btn-effect:active,
+    .journal-content-article a.btn-effect:focus{
+	  color: #345aa2;
+      border-color: #fff;
+      
+    }
+}
+
+
+
+figure, p, address {
+    margin: 0;
+}
+
+p {
+    line-height: 25px;
+}
+
+iframe {
+    border: 0;
+}
+
+section {
+    padding: 70px 0;
+}
+
+
+
+
+/**
+/*	Preloader
+/* ==========================================*/
+
+#preloader {
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+/*Loading gif*/
+.loader-box {
+	background-image: url("../images/gfbio_loading.gif");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: rgba(0, 0, 0, 0.02);
+	height: 98px;
+	width: 98px;
+	margin-top: -30px;
+	margin-left: -30px;
+	left: 50%;
+	top: 50%;
+	position: absolute; 
+}
+
+
+h1.navbar-brand {
+    -webkit-transition: all 0.8s ease 0s;
+    -moz-transition: all 0.8s ease 0s;
+    -ms-transition: all 0.8s ease 0s;
+    -o-transition: all 0.8s ease 0s;
+    transition: all 0.8s ease 0s;
+
+    /*background: url('../images/GFBio_logo_png_60x122.png') no-repeat center center;*/
+    background: url('../images/gfbiologo-transparent_122_60.png') no-repeat center center;
+    
+    padding: 60px 0 0 0 !important;
+	
+
+    margin: 0;
+}
+
+	
+/* /*=================================================================
+	Home Slider
+==================================================================*/
+
+#home-slider {
+
+   
+    padding: 0;
+   
+    background-color: #fff;
+
+    background: url('../images/gfbio-hero-11.jpg') top right no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height:564px;
+    
+    a{
+    	color:#666;
+    	text-decoration:none;
+    	outline:none;
+    }
+}
+
+
+#home-slider .btn {
+    color: rgba(255, 255, 255, 1.0);
+    border: 1px solid rgba(255, 255, 255, 1.0);
+    background-color: #2c59a0;
+	text-transform: uppercase;
+	padding: 12px 35px;
+	text-decoration:none;
+}
+
+#home-slider .btn:hover {
+    color: #fff;
+    background-color: rgba(129, 178, 72, 1.0);
+}
+	
+
+
+/*.icon-landing-flex {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 2.4em;
+}*/
+	
+
+	
+	
+/*=================================================================
+	Landing Area
+==================================================================*/
+
+.landing-area {
+    text-align: center;
+    
+    a{
+    	color:#666;
+    }
+}
+
+h3.landing-area {
+    font-weight: 400;
+}
+
+
+.sec-title {
+    margin-bottom: 20px;
+    background:transparent;
+}
+
+.sec-title.white {
+    color: #fff;
+}
+
+.sec-title h2 {
+    font-size: 36px;
+    margin: 0 0 30px;
+    padding-bottom: 30px;
+    position: relative;
+    text-transform: uppercase;
+    font-weight: 300;
+    color:#666;
+}
+
+.sec-title.white h2 {
+    color: #fff;
+}
+
+.sec-title h2:after {
+    border-bottom: 1px solid #009ee3;
+    border-bottom: 2px solid rgba(129, 178, 72, 0.8);
+    content: "";
+    display: block;
+    left: 50%;
+    bottom: 0;
+    position: absolute;
+    width: 115px;
+    margin: auto;
+	top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.sec-title.white h2:after {
+    border-bottom: 1px solid #fff;
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}	
+ 
+
+/*=======================================
+   GRETA
+==========================================*/
+
+/*Greta Reintjes*/
+
+    #citationGreta{
+    	font-size:20px;
+    	color:#3b3a3a;
+    	margin-top:3.2em;
+    }
+    #nameGreta{
+      font-size:18px;
+      font-wight:100;
+      color:#3b3a3a;
+    }
+    #affiliationGreta{
+      font-size:16px;
+      font-variant:small-caps;
+      color:#818181
+    }
+
+
+
+/*=================================================================
+	Portfolio
+==================================================================*/
+
+.project-wrapper {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.project-wrapper li {
+    display: inline-block;
+}
+
+.portfolio-item {
+    cursor: pointer;
+    margin: 0 1% 1% 0;
+    overflow: hidden;
+    position: relative;
+    width: 32%;
+}
+
+figcaption.mask {
+    background-color: rgba(54, 55, 50, 0.79);
+    bottom: -126px;
+    color: #fff;
+    padding: 25px;
+    position: absolute;
+    width: 100%;
+    text-align: left;
+
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -ms-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+
+.portfolio-item:hover figcaption.mask {
+    bottom: 0;
+}
+
+figcaption.mask h3 {
+    margin: 0;
+    color: #fff;
+}
+
+ul.external {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: -50px;
+
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -ms-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+
+ul.external li {
+    display: inline-block;
+}
+
+ul.external li a {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #818181;
+    display: block;
+    padding: 10px 18px 13px;
+
+    -webkit-transition: all 0.5s ease 0s;
+    -moz-transition: all 0.5s ease 0s;
+    -ms-transition: all 0.5s ease 0s;
+    -o-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+}
+
+ul.external li a:hover {
+    /*background-color: #009EE3;*/
+    background-color:rgb(60, 172, 228);
+    color: #fff;
+}
+
+.portfolio-item:hover ul.external {
+    top: 0;
+}
+
+.fancybox-skin {
+    border-radius: 0;
+}
+
+.fancybox-title.fancybox-title-inside-wrap {
+    padding: 15px;
+}
+
+.fancybox-title h3 {
+    margin: 0 0 15px;
+}
+
+.fancybox-title p {
+    color: #818181;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.fancybox-title-inside-wrap {
+    padding-top: 0;
+}
+
+/*================================================================
+Contact
+==============================================================*/
+.contact-details h3 {
+    margin-top: 0;
+    border-bottom: 1px dotted rgba(52, 90, 162, 0.75);;
+    font-weight: 400;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+    color:#666;
+}
+
+.contact-details p {
+    line-height: 30px;
+}
+
+.contact-details p i {
+    margin-right: 10px;
+}
+
+.contact-details span {
+    display: block;
+    margin-left: 24px;
+}
+
+
+/*============================================================
+	Responsive Styles
+ ============================================================*/
+
+@import "mixins";
+@include respond-to(screens) { 
+	#main{
+		margin-top: 0px;
+	}
+	#GFBioOnTwitter{
+      margin-top:8em;
+    }
+	
+}
+
+@include respond-to(phone, tablet) {
+	#main{
+		margin-top: -24px;
+	}
+	
+	/*Greta Reintjes*/
+    #citationGreta{
+    	margin-top:0em;
+    	font-size:16px;
+    }
+    #nameGreta{
+      font-size:12px;
+      font-wight:100;
+      color:#3b3a3a;
+    }
+    #affiliationGreta{
+      font-size:12px;
+      font-variant:small-caps;
+      color:#818181
+    }
+    
+    #GFBioOnTwitter{
+      margin-top:0em;
+    }
+}
+
+
+
+/*============================================================
+	For Small Desktop
+==============================================================*/
+
+@media (min-width: 980px) and (max-width: 1150px) {
+
+    /* portfolio */
+    figcaption.mask {
+        bottom: -151px;
+    }
+
+    #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
+}
+
+/*============================================================
+	Tablet (Portrait) Design for a width of 768px
+==============================================================*/
+
+@media (min-width: 768px) and (max-width: 979px) {
+
+    /* portfolio */
+    .portfolio-item {
+        width: 48%;
+    }
+
+    /* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+     #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
+}
+
+/*============================================================
+	Mobile (Portrait) Design for a width of 320px
+==============================================================*/
+
+/* Fix graphical display issues on mobile device: https://project.gfbio.org/issues/1294 */
+@media (min-width: 280px) and (max-width: 370px) {
+	
+}
+
+@media only screen and (max-width: 767px) {
+
+    body {
+        font-size: 14px;
+    }
+  
+    .parallax {
+        background-position: centet tip !important;
+    }
+
+    /* slider */
+    .caption-content h2 {
+        font-size: 18px;
+    }
+
+    .caption-content > span {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .caption-content p {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    .caption-content strong {
+        font-size: 22px;
+    }
+    
+    
+
+    /*portfolio*/
+    .portfolio-item {
+        margin: 0 auto 10px;
+        font-size: 14px;
+        width: 280px;
+    }
+
+    figcaption.mask {
+        bottom: -107px;
+        color: #fff;
+        padding: 15px;
+    }
+
+    /* lightbox */
+    .fancybox-title h3 {
+        font-size: 20px;
+    }
+
+    .fancybox-title p {
+        font-size: 14px;
+    }
+
+    
+
+    /* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+
+    /* footer */
+    .footer-content {
+        width: 100%;
+    }
+
+    .footer-social ul li {
+        margin: 0 7px;
+    }
+    
+     #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
+ 
+}
+
+/*============================================================
+	Mobile (Landscape) Design for a width of 480px
+==============================================================*/
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	
+  
+    /* home slider */
+    .caption-content h2 {
+        font-size: 35px;
+    }
+
+    .caption-content p {
+        font-size: 25px;
+    }
+
+    .caption-content strong {
+        font-size: 35px;
+    }
+
+    /*about*/
+    #about .welcome-block h3 {
+        margin: 0 0 35px;
+    }
+
+    /* service */
+    .service-item {
+        margin: 0 auto 50px;
+        width: 55%;
+    }
+    
+
+    /* portfolio */
+    .portfolio-item {
+        width: 48%;
+    }
+
+    figcaption.mask {
+        bottom: -132px;
+    }
+
+
+    
+    
+
+
+    /* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+
+    /* footer */
+    .footer-content {
+        width: 380px;
+    }
+    
+     #claim-entry-points-wrapper,#partner{
+    display:none;
+    }
+    
+}
+
+
+
+}
+
+
