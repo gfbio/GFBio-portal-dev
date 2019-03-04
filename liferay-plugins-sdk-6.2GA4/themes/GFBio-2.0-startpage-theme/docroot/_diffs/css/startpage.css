@@ -228,6 +228,19 @@ h3.landing-area {
     background-size: cover;
 }	
  
+/*======================================
+   Blue Box with statements
+========================================*/
+
+#statements {
+	font-size:18px;
+	
+} 
+
+.icon-startpage-bluebox{
+	font-size:40px;
+}
+ 
 
 /*=======================================
    GRETA
@@ -235,10 +248,15 @@ h3.landing-area {
 
 /*Greta Reintjes*/
 
+    #Greta{
+       margin-top:3.2em;
+       margin-bottom: 1em;
+    }
+
     #citationGreta{
-    	font-size:20px;
-    	color:#3b3a3a;
-    	margin-top:3.2em;
+      font-size:20px;
+      color:#3b3a3a;
+    	
     }
     #nameGreta{
       font-size:18px;
@@ -365,6 +383,31 @@ ul.external li a:hover {
     padding-top: 0;
 }
 
+
+/*============================================================
+     Twitter
+==============================================================*/
+
+#GFBioOnTwitter{
+      margin-top:8em;
+    }
+#TwitterBird{
+	text-align:right;
+}
+    
+#TwitterHeadline{
+	  font-size:40px;
+      font-weight:100;
+    } 
+    
+#TwitterSubline{  
+	font-size:16px;
+}   
+
+.img-twitter-bird{
+      height:200px;
+    }  
+
 /*================================================================
 Contact
 ==============================================================*/
@@ -401,9 +444,8 @@ Contact
 	#main{
 		margin-top: 0px;
 	}
-	#GFBioOnTwitter{
-      margin-top:8em;
-    }
+	
+    
 	
 }
 
@@ -412,7 +454,26 @@ Contact
 		margin-top: -24px;
 	}
 	
+	/*Blue Box*/
+	
+	#statements {
+	font-size:14px;
+	
+	} 
+
+	.icon-startpage-bluebox{
+		font-size:30px;
+	}
+	
+	
+	
 	/*Greta Reintjes*/
+	
+	#Greta{
+       margin-top:0.2em;
+       margin-bottom: 0.5em;
+    }
+    
     #citationGreta{
     	margin-top:0em;
     	font-size:16px;
@@ -428,8 +489,14 @@ Contact
       color:#818181
     }
     
+    /*Twitter*/
+    
     #GFBioOnTwitter{
       margin-top:0em;
+    }
+    
+    .img-twitter-bird{
+      height:100px;
     }
 }
 
