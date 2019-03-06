@@ -163,6 +163,15 @@ h1.navbar-brand {
 	
 }
 
+.search_dot {
+  height: 0.2em;
+  width: 0.2em;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  background-color:#000;
+}
+
 #search_button {
 	margin-top: 0 !important;
 }
@@ -179,9 +188,10 @@ h1.navbar-brand {
   	align-items: center;
   	justify-content: center;
   	text-align: center;
-  	line-height: 1;
+  	line-height: 1.2;
   	padding: 0;
   	margin: 0;
+  	font-size: 22px;
 }
 
 .startpage_search_headings {
@@ -191,20 +201,21 @@ h1.navbar-brand {
   	align-items: center;
   	justify-content: center;
   	text-align: center;
-  	line-height: 1;
+  	line-height: 1.2;
   	padding: 0;
   	margin: 0;
+  	font-size: 36px;
 }
 
 .startpage_search_header {
 	display:flex; 
 	align-items:center; 
 	flex-direction:row; 
-	margin:100px 0 50px 0
+	margin-top:100px;
 }
 
 .startpage_search_icon {
-  font-size: 10vw;
+  font-size: 5vw;
 }
 	
 /*=================================================================
@@ -546,7 +557,22 @@ Contact
         display: none;
     }
     
-    
+    .startpage_search_header {
+		display:block;
+	}
+	
+	.startpage_search_headings {
+		margin-top: 5vw;
+		font-size: 20px;
+	}
+	
+		.startpage_search_subheadings {
+		font-size: 20px;
+	}
+	
+	.startpage_search_icon {
+  		font-size: 10vw;
+	}
 }
 
 
