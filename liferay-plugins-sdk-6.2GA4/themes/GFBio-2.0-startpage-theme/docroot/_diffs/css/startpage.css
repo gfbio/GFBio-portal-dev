@@ -156,11 +156,14 @@ h1.navbar-brand {
 	
 #search_input,
 #search_button {
-	height: auto !important;
+	height: 50px;
 	padding: 11px 19px !important;
+	font-size: 18px;
 }	
+
 #search_input {
-	
+	max-width: 100% !important;
+	line-height: 1.42857;
 }
 
 .search_dot {
@@ -191,7 +194,7 @@ h1.navbar-brand {
   	line-height: 1.2;
   	padding: 0;
   	margin: 0;
-  	font-size: 22px;
+  	font-size: 24px;
 }
 
 .startpage_search_headings {
@@ -204,7 +207,7 @@ h1.navbar-brand {
   	line-height: 1.2;
   	padding: 0;
   	margin: 0;
-  	font-size: 36px;
+  	font-size: 40px;
 }
 
 .startpage_search_header {
@@ -552,27 +555,6 @@ Contact
     .img-twitter-bird{
       height:100px;
     }
-    
-    .search_button_text {
-        display: none;
-    }
-    
-    .startpage_search_header {
-		display:block;
-	}
-	
-	.startpage_search_headings {
-		margin-top: 5vw;
-		font-size: 20px;
-	}
-	
-		.startpage_search_subheadings {
-		font-size: 20px;
-	}
-	
-	.startpage_search_icon {
-  		font-size: 10vw;
-	}
 }
 
 
@@ -591,6 +573,24 @@ Contact
     #claim-entry-points-wrapper,#partner{
     display:none;
     }
+	
+	.startpage_search_headings {
+		margin-top: 5vw;
+		font-size: 28px;
+	}
+	
+	.startpage_search_subheadings {
+		font-size: 16px;
+	}
+	
+	.startpage_search_icon {
+  		font-size: 5vw;
+	}
+	
+	#search_input,
+	#search_button {
+	font-size: 14px;
+}
 }
 
 /*============================================================
@@ -611,6 +611,24 @@ Contact
      #claim-entry-points-wrapper,#partner{
     display:none;
     }
+	
+	.startpage_search_headings {
+		margin-top: 5vw;
+		font-size: 28px;
+	}
+	
+	.startpage_search_subheadings {
+		font-size: 16px;
+	}
+	
+	.startpage_search_icon {
+  		font-size: 10vw;
+	}
+	
+	#search_input,
+	#search_button {
+	font-size: 14px;
+}
 }
 
 /*============================================================
@@ -619,7 +637,31 @@ Contact
 
 /* Fix graphical display issues on mobile device: https://project.gfbio.org/issues/1294 */
 @media (min-width: 280px) and (max-width: 370px) {
+	.search_button_text {
+        display: none;
+    }
+    
+    .startpage_search_header {
+		display:block;
+	}
 	
+	.startpage_search_headings {
+		margin-top: 5vw;
+		font-size: 22px;
+	}
+	
+	.startpage_search_subheadings {
+		font-size: 12px;
+	}
+	
+	.startpage_search_icon {
+  		font-size: 10vw;
+	}
+	
+	#search_input,
+	#search_button {
+	font-size: 14px;
+}
 }
 
 @media only screen and (max-width: 767px) {
@@ -694,7 +736,28 @@ Contact
      #claim-entry-points-wrapper,#partner{
     display:none;
     }
- 
+    
+    .startpage_search_header {
+		display:block;
+	}
+	
+	.startpage_search_headings {
+		margin-top: 5vw;
+		font-size: 24px;
+	}
+	
+	.startpage_search_subheadings {
+		font-size: 12px;
+	}
+	
+	.startpage_search_icon {
+  		font-size: 10vw;
+	}
+	
+	#search_input,
+	#search_button {
+	font-size: 14px;
+}
 }
 
 /*============================================================
@@ -752,10 +815,29 @@ Contact
     display:none;
     }
     
+    .startpage_search_header {
+		display:block;
+	}
+	
+	.startpage_search_headings {
+		margin-top: 5vw;
+		font-size: 32px;
+	}
+	
+	.startpage_search_subheadings {
+		font-size: 18px;
+	}
+	
+	.startpage_search_icon {
+  		font-size: 10vw;
+	}
+	
+	#search_input,
+	#search_button {
+	font-size: 14px;
 }
-
-
-
+    
+}
 }
 
 
