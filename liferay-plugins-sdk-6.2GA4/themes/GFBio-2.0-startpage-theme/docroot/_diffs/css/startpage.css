@@ -221,38 +221,53 @@ h1.navbar-brand {
   font-size: 5vw;
 }
 
+
+imagebox-description {
+  position: absolute;
+  padding:1em 0;
+  height:auto;
+  width:100%;
+  line-height:auto;
+  background-color: rgba(255, 255, 255, 0.6);
+  bottom:0;
+  left:0;
+  transition: 0.5s padding;
+  color:#666;
+}
+
+.imagebox:hover imagebox-description {
+  padding:1.5em 0;
+}
+
+imagebox-search {
+  position: absolute;
+  padding:0.5em 0.5em;
+  height:auto;
+  width:auto;
+  background-color: rgba(255, 255, 255, 0.6);
+  top:-2em;
+  line-height:1;
+  right: 0;
+  transition: top 0.5s ease;
+}
+
+imagebox-search > a {
+	text-decoration: none !important;
+	text-decoration-style: none !important;
+	color:#666 !important;
+}
+
+.imagebox:hover imagebox-search {
+  top:0;
+}
+
 .imagebox {
   background: white;
   padding: 0px;
   position: relative;
   text-align: center;
   width: 100%;
-}
-
-.imagebox img {
-  opacity: 1;
-  transition: 0.5s opacity;
-}
-
-.imagebox .imagebox-desc {
-  background-color: rgba(255, 255, 255, 0.6);
-  bottom: 0px;
-  color: black;
-  font-size: 1.2em;
-  left: 0px;
-  padding: 10px 15px;
-  position: absolute;
-  transition: 0.5s padding;
-  text-align: center;
-  width: 100%;
-}
-
-.imagebox:hover img {
-  opacity: 0.7;
-}
-
-.imagebox:hover .imagebox-desc {
-  padding-bottom: 10%;
+  overflow:hidden;
 }
 	
 /*=================================================================
