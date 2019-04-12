@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.liferay.webform.util.PortletPropsValues;
 import com.liferay.webform.util.WebFormUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -63,6 +65,33 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+/*
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.gfbio.idmg.jiraclient.model.AttachmentInput;
+*/
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+
+//import com.liferay.portal.util.PrefsPropsUtil;
+//import com.liferay.portal.util.PropsValues;
 /**
  * @author Daniel Weisser
  * @author Jorge Ferrer
@@ -72,6 +101,7 @@ import javax.portlet.ResourceResponse;
  */
 public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 	public static final String PREFERENCES_PREFIX = "preferences--";
+    //private static Log _log = LogFactoryUtil.getLog(ContactFormToHelpdeskPortlet.class);
 
 
 	public void deleteData(
@@ -117,15 +147,14 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 		String emailFromAddress = actionRequest.getParameter("fromAddress");
 		String emailFromName = actionRequest.getParameter("fromName");
 		String emailSubject = actionRequest.getParameter("fromSubject");
-		System.out.println("subject: "+emailSubject);
-		
-		//System.out.println("emailFromAddress: "+emailFromAddress);
+				
 		preferences.setValue("emailFromAddress",emailFromAddress);
 		preferences.setValue("emailFromName",emailFromName);
 		preferences.setValue("emailSubject", emailSubject);
 		
 		boolean requireCaptcha = GetterUtil.getBoolean(
-			preferences.getValue("requireCaptcha", StringPool.BLANK));
+		preferences.getValue("requireCaptcha", StringPool.BLANK));
+		
 		String successURL = GetterUtil.getString(
 			preferences.getValue("successURL", StringPool.BLANK));
 		boolean sendAsEmail = GetterUtil.getBoolean(
@@ -140,7 +169,22 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 			preferences.getValue("fileName", StringPool.BLANK));
 		
 		
+//check  the reCaptcha 
+		try {
+			_log.info("validatechallenge called "+actionRequest);
 
+			Boolean validCapatcha= validateChallenge(actionRequest);
+
+			_log.info("ActionRequest"+actionRequest);
+			_log.info("--------------------------"+"emailFromAddress" +emailFromAddress+ " g-recaptcha-response ");
+		}
+		catch (CaptchaTextException cte) {
+			SessionErrors.add(
+				actionRequest, CaptchaTextException.class.getName());
+
+			return;
+		}
+/*		
 		if (requireCaptcha) {
 			try {
 				CaptchaUtil.check(actionRequest);
@@ -152,7 +196,7 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 				return;
 			}
 		}
-		
+*/		
 		//validation of fix fields (emailFromName, emailFromAddress, subject) 
 		
 		//check if emailAddress is ok
@@ -196,6 +240,7 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 
 		try {
 			validationErrors = validate(fieldsMap, preferences);
+			
 		}
 		catch (Exception e) {
 			SessionErrors.add(
@@ -260,8 +305,50 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 			actionResponse.sendRedirect(successURL);
 		}
 	}
+/* 
+private boolean httpRequest()
+ {
+	 String auth = new String(Base64.encodeBase64(LOGIN.getBytes()));
+ 	
+ 	//HTTPResponse response = client.attachFile(CREATE_TICKET_ENDPOINT + issueKey + "/attachments", HTTPConnectionFactory.RequestMethod.POST, new String(encodedBytes), path);
+ 	
+ 	CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+     HttpPost httppost = new HttpPost(BASE_URL + CREATE_TICKET_ENDPOINT + issueKey + "/attachments");
+     httppost.setHeader("X-Atlassian-Token", "nocheck");
+     httppost.setHeader("Authorization", "Basic "+auth);
+     
+     MultipartEntityBuilder builder = MultipartEntityBuilder.create(); 
+     builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 
-	private Set<String> validateFixFields(String[] emailAdresses, String emailFromName, String emailSubject) {
+     for (AttachmentInput attachmentInput : attachments) {
+			builder.addPart(FILE_BODY_TYPE, new InputStreamBody(attachmentInput.getInputStream(), attachmentInput.getFilename()));
+		}
+
+     HttpEntity entity = builder.build();
+     httppost.setEntity(entity);
+     HttpResponse response = null;
+     try {
+         response = httpClient.execute(httppost);
+     } catch (ClientProtocolException e) {
+     	_log.error(e);
+         return false;
+     } catch (IOException e) {
+     	_log.error(e);
+         return false;
+     }
+     HttpEntity result = response.getEntity();
+
+     if(response.getStatusLine().getStatusCode() == 200) {
+     	return true;
+     } else {
+     	_log.error("Response: " + response.toString());
+     	_log.error("Result: " + result);
+     	return false;
+     }
+ }
+	
+*/
+private Set<String> validateFixFields(String[] emailAdresses, String emailFromName, String emailSubject) {
 		Set<String> validationFixFieldsErrors = new HashSet<String>();
 		
 		if (emailAdresses.length == 0) {
@@ -539,6 +626,93 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 	}
 
+	
+	protected boolean validateChallenge(PortletRequest portletRequest)
+			throws CaptchaException {
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				portletRequest);
+
+			request = PortalUtil.getOriginalServletRequest(request);
+
+			return validateChallenge(request);
+	}
+	
+	protected boolean validateChallenge(HttpServletRequest request)
+			throws CaptchaException {
+
+			String reCaptchaResponse = ParamUtil.getString(
+				request, "g-recaptcha-response");
+			_log.info("validateChallenge"+reCaptchaResponse);
+			Http.Options options = new Http.Options();
+
+			try {
+				options.addPart(
+					"secret",
+					PropsUtil.get("google.secretkey"));
+			}
+			catch (Exception se) {
+				_log.error(se, se);
+			}
+
+			options.addPart("remoteip", request.getRemoteAddr());
+			options.addPart("response", reCaptchaResponse);
+			options.setLocation(PropsUtil.get("google.urlverify"));
+			options.setPost(true);
+
+			String content = null;
+
+			try {
+				content = HttpUtil.URLtoString(options);
+				_log.info("Content :"+content);
+			}
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
+
+				throw new CaptchaTextException();
+			}
+
+			if (content == null) {
+				_log.error("reCAPTCHA did not return a result");
+
+				throw new CaptchaTextException();
+			}
+
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
+
+				String success = jsonObject.getString("success");
+
+				if (StringUtil.equalsIgnoreCase(success, "true")) {
+					return true;
+				}
+
+				JSONArray jsonArray = jsonObject.getJSONArray("error-codes");
+
+				if ((jsonArray == null) || (jsonArray.length() == 0)) {
+					return false;
+				}
+
+				StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					sb.append(jsonArray.getString(i));
+
+					if (i < (jsonArray.length() - 1)) {
+						sb.append(StringPool.COMMA_AND_SPACE);
+					}
+				}
+
+				_log.error("reCAPTCHA encountered an error: " + sb.toString());
+
+				return false;
+			}
+			catch (JSONException jsone) {
+				_log.error("reCAPTCHA did not return a valid result: " + content);
+
+				throw new CaptchaTextException();
+			}
+	}
 	protected Set<String> validate(
 			Map<String, String> fieldsMap, PortletPreferences preferences)
 		throws Exception {

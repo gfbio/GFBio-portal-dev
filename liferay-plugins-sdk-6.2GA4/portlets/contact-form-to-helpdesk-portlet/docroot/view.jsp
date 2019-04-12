@@ -43,6 +43,7 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="saveData" />
 </portlet:actionURL>
 
+ 
 <div class="contact-form-helpdesk wow animated fadeInLeft">
                 
 <aui:form action="<%= saveDataURL %>" method="post" name="fm">
@@ -62,6 +63,7 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
  		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" /> 
 		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" /> 
 --%>
+		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" /> 
 
 		<c:if test='<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED && SessionErrors.contains(renderRequest, "validationScriptError") %>'>
 			<liferay-util:include page="/script_error.jsp" />
@@ -74,6 +76,8 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 	
 		
 		<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
+		<liferay-ui:error key="captchanotverified" message="please-do-the-captcha-before-you-send-the-massage" />
+		
 		<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />		
 		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..." required="true"/>
 		
@@ -173,22 +177,53 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 		}
 		%>
 
- <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	
       		<div class="g-recaptcha" data-sitekey=<%=PropsUtil.get("google.sitekey") %>></div>
-			      <br/>
+			      <br/>	
 
-<%--	<c:if test="<%= requireCaptcha %>">
+	<c:if test="<%= requireCaptcha %>">
  <portlet:resourceURL var="captchaURL">
 				<portlet:param name="<%= Constants.CMD %>" value="captcha" />
 			</portlet:resourceURL>
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 		</c:if>
---%>
-		<aui:button onClick="" type="submit" value="send" />
+
+		<liferay-ui:error key="recaptchaRequired" message="please-enter-a-subject" />
+		<aui:button id="send-button" type="submit" onclick="checkRecaptcha" value="send"  required="true"/>
+		
+		
 	</aui:fieldset>
 </aui:form>
+
+
+
+
+
 </div>
+<script>
+function checkRecaptcha()
+{
+	var rcres = grecaptcha.getResponse();
+	if(rcres.length)
+	{
+	    grecaptcha.reset();
+	    console.log(rcres+"reCAPTCHA done!","success");
+	}else
+		console.log(rcres+"Please verify reCAPTCHA","error");
+}
+$("#send-button").click(
+		function()
+		{
+		var rcres = grecaptcha.getResponse();
+		if(rcres.length)
+		{
+		    grecaptcha.reset();
+		    console.log(rcres+"Form Submitted!","success");
+		}else
+			console.log(rcres+"Please verify reCAPTCHA","error");
+		})
+</script>
 
 <aui:script use="aui-base,selector-css3">
 	var form = A.one('#<portlet:namespace />fm');
@@ -197,6 +232,7 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 		form.on(
 			'submit',
 			function(event) {
+				
 				var keys = [];
 
 				var fieldLabels = {};
