@@ -84,7 +84,10 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	var config = ckEditor.config;
 	
 	config.allowedContent = true;
-	
+
+	config.extraAllowedContent = 'i(*)[*]{*};span(*)[*]{*};p(*)[*]{*};div(*)[*]{*};li(*)[*]{*};ul(*)[*]{*}';
+	CKEDITOR.dtd.$removeEmpty.i = 0;
+	CKEDITOR.dtd.$removeEmpty.span = 0	
 
 	config.autoParagraph = false;
 
