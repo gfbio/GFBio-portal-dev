@@ -76,7 +76,6 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 	
 		
 		<liferay-ui:error key="emailAddressInvalid" message="please-enter-a-valid-email-address" />
-		<liferay-ui:error key="captchanotverified" message="please-do-the-captcha-before-you-send-the-massage" />
 		
 		<liferay-ui:error key="emailAddressRequired" message="please-enter-an-email-address" />		
 		<aui:input cssClass="lfr-input-text-container" label="address-from" name="fromAddress" value="<%= fromAddress %>" placeholder="Your Email..." required="true"/>
@@ -176,10 +175,11 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 			fieldValue = ParamUtil.getString(request, fieldName);
 		}
 		%>
-
+		<liferay-ui:error key="captchanotverified" message="Please-do-the-captcha-before-you-send-the-massage" />
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	
-      		<div class="g-recaptcha" data-sitekey=<%=PropsUtil.get("google.sitekey") %>></div>
+      		<div class="g-recaptcha" data-sitekey=<%=PropsUtil.get("google.sitekey") %> ></div>
+      		
 			      <br/>	
 
 	<c:if test="<%= requireCaptcha %>">
@@ -189,8 +189,7 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 		</c:if>
 
-		<liferay-ui:error key="recaptchaRequired" message="please-enter-a-subject" />
-		<aui:button id="send-button" type="submit" onclick="checkRecaptcha" value="send"  required="true"/>
+		<aui:button id="send-button" type="submit" value="send"  required="true"/>
 		
 		
 	</aui:fieldset>
@@ -201,29 +200,6 @@ String emailFromNameErrorMessage = portletPreferences.getValue("emailFromNameErr
 
 
 </div>
-<script>
-function checkRecaptcha()
-{
-	var rcres = grecaptcha.getResponse();
-	if(rcres.length)
-	{
-	    grecaptcha.reset();
-	    console.log(rcres+"reCAPTCHA done!","success");
-	}else
-		console.log(rcres+"Please verify reCAPTCHA","error");
-}
-$("#send-button").click(
-		function()
-		{
-		var rcres = grecaptcha.getResponse();
-		if(rcres.length)
-		{
-		    grecaptcha.reset();
-		    console.log(rcres+"Form Submitted!","success");
-		}else
-			console.log(rcres+"Please verify reCAPTCHA","error");
-		})
-</script>
 
 <aui:script use="aui-base,selector-css3">
 	var form = A.one('#<portlet:namespace />fm');

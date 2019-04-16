@@ -168,12 +168,13 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 		String fileName = GetterUtil.getString(
 			preferences.getValue("fileName", StringPool.BLANK));
 		
-		
+		Boolean validCapatcha=false;
 //check  the reCaptcha 
 		try {
 			_log.info("validatechallenge called "+actionRequest);
 
-			Boolean validCapatcha= validateChallenge(actionRequest);
+			validCapatcha= validateChallenge(actionRequest);
+			_log.info("validCapatcha"+validCapatcha);
 
 			_log.info("ActionRequest"+actionRequest);
 			_log.info("--------------------------"+"emailFromAddress" +emailFromAddress+ " g-recaptcha-response ");
@@ -184,6 +185,7 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 
 			return;
 		}
+		
 /*		
 		if (requireCaptcha) {
 			try {
@@ -212,7 +214,11 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 
 			return;
 		}
-		
+		if(!validCapatcha)
+		{
+			validationFixFieldsErrors.add("captchanotverified");
+
+		}
 		
 	
 
@@ -293,6 +299,7 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 				SessionErrors.add(actionRequest, "error" + badField);
 			}
 			for (String badField : validationFixFieldsErrors) {
+				_log.info(badField);
 				SessionErrors.add(actionRequest, badField);
 			}
 		}
