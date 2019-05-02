@@ -2,7 +2,7 @@
 ##<nav class="$nav_css_class" id="header-menue" role="navigation">
 
 	<ul id="nav-left" class="nav navbar-nav" aria-label="#language ("site-pages")" role="menubar">
-	    <li class="homeMenu" ><a href="/">Home</a></li>
+	    <li class="homeMenu" >Home</li>
 		#foreach ($nav_item in $nav_items)
 			#set ($nav_item_attr_has_popup="")
 			#set ($nav_item_attr_selected="")
@@ -18,8 +18,15 @@
 			#end
 
 			<li id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation" class="dropdown yamm">
-				<a class="$nav_item_css_class dropdown-toggle" data-toggle="dropdown" aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span class="menuitem">$nav_item.icon() $nav_item.getName()&nbsp; #if ($nav_item.hasChildren())<i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>#end</span></a>
-
+				#if (!$nav_item.hasChildren())
+				<a class="menuitem $nav_item_css_class dropdown-toggle" data-toggle="dropdown" aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span>$nav_item.icon() $nav_item.getName()&nbsp; #if ($nav_item.hasChildren())<i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>#end</span></a>
+                
+				#end
+				
+				#if ($nav_item.hasChildren())
+				<div class="menuitem_clickable dropdown-toggle" data-toggle="dropdown" aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span>$nav_item.icon() $nav_item.getName()&nbsp; #if ($nav_item.hasChildren())<i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>#end</span></div>
+                #end
+                
 				#if ($nav_item.hasChildren())
 					<ul class="dropdown-menu">
 						#foreach ($nav_child in $nav_item.getChildren())

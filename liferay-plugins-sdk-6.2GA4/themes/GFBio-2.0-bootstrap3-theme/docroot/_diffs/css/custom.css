@@ -294,8 +294,15 @@ textarea{
 /*==========================================================
 	Menu, Navigation
 ===========================================================*/	
-.dropdown-menu{
+.navbar-nav > li > a{
+	padding-bottom:10px;
+}
+
+.navbar-nav > li > .dropdown-menu{
 	white-space:nowrap;	
+	border: 0;
+    box-shadow: 0 2px 5px rgba(0, 0.2, 0.2, 0.2);
+    margin-top: 0px;
 }
 
 .dropdown-menu > li > a{
@@ -306,11 +313,19 @@ textarea{
 	background-color:transparent;
 }
 
+.menuitem{
+	padding:10px 10px 10px 10px;
+	}
+
+.menuitem_clickable{
+	padding:11px 10px 6px 10px;
+}
+
 #nav{
 	margin-top: -4em;
 	margin-left: 7em;
 
-	ul > li > a {
+	ul > li {
 		color:#555;
 		font-size: 15px;
 		font-weight: 400;
@@ -347,7 +362,7 @@ textarea{
 .navigation-shadow {
     
     background-color: #fff !important;
-    color: #666 !important;
+    color: #555 !important;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -394,6 +409,7 @@ h1.navbar-brand {
 
 #nav-left {
     padding-left: 50px;
+    padding-top: 20px;
     height:60px;
 }
 
@@ -450,7 +466,7 @@ div#navbar-search-wrapper {
     font-size: 15px;
 
     /* close gap to megamenu*/
-    padding: 25px 15px 20px 15px;
+    /*padding: 25px 15px 20px 15px;*/
     /*text-transform: uppercase;*/
 }
 
@@ -498,16 +514,13 @@ div#navbar-search-wrapper {
     background-color: inherit;
 }
 
+
 /*=================================================================
 	YAMM MENU
 ==================================================================*/
 
 /*  https://github.com/geedmo/yamm3 */
-.dropdown-menu {
-    border: 0;
-    /*margin: -5px;*/
-    box-shadow: 0 2px 5px rgba(0, 0.2, 0.2, 0.2);
-}
+
 
 .right {
     padding-left: 10px;
@@ -515,7 +528,8 @@ div#navbar-search-wrapper {
 }
 
 .yamm-content {
-    padding-top: 0;
+    padding: 5px 15px 5px 15px;
+    
     
 }
 
