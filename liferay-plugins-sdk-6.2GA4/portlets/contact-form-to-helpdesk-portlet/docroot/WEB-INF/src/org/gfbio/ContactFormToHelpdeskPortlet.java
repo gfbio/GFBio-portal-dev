@@ -171,13 +171,13 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 		Boolean validCapatcha=false;
 //check  the reCaptcha 
 		try {
-			_log.info("validatechallenge called "+actionRequest);
+			//_log.info("validatechallenge called "+actionRequest);
 
 			validCapatcha= validateChallenge(actionRequest);
-			_log.info("validCapatcha"+validCapatcha);
+			_log.info("valid Capatcha "+validCapatcha);
 
-			_log.info("ActionRequest"+actionRequest);
-			_log.info("--------------------------"+"emailFromAddress" +emailFromAddress+ " g-recaptcha-response ");
+			//_log.info("ActionRequest"+actionRequest);
+			//_log.info("--------------------------"+"emailFromAddress" +emailFromAddress+ " g-recaptcha-response ");
 		}
 		catch (CaptchaTextException cte) {
 			SessionErrors.add(
@@ -650,7 +650,7 @@ private Set<String> validateFixFields(String[] emailAdresses, String emailFromNa
 
 			String reCaptchaResponse = ParamUtil.getString(
 				request, "g-recaptcha-response");
-			_log.info("validateChallenge"+reCaptchaResponse);
+			//_log.info("validate Challenge response"+reCaptchaResponse);
 			Http.Options options = new Http.Options();
 
 			try {
@@ -671,7 +671,7 @@ private Set<String> validateFixFields(String[] emailAdresses, String emailFromNa
 
 			try {
 				content = HttpUtil.URLtoString(options);
-				_log.info("Content :"+content);
+				//_log.info("Content :"+content);
 			}
 			catch (IOException ioe) {
 				_log.error(ioe, ioe);
