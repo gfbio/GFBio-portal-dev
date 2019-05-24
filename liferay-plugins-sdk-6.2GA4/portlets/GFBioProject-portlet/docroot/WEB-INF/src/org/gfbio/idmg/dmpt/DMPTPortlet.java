@@ -130,6 +130,8 @@ public class DMPTPortlet extends MVCPortlet {
 			deleteDMP(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("senddmp")) {
 			sendDMP(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("updatedmp")) {
+			updateDMP(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -138,17 +140,10 @@ public class DMPTPortlet extends MVCPortlet {
 
 		// Get DMPTInput
 		String jsonInput = resourceRequest.getParameter("json");
-		//_log.info("JSONString: " + jsonInput);
-
-		//DMPTInput input = null;
 		String response = "";
 
 		try {
 			
-			//Gson gson = new Gson();
-			//input = gson.fromJson(jsonInput, DMPTInput.class);
-			//_log.info("Input: " + input);
-				
 			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			 			
 			// Set DMPTInput to PortletSession
@@ -163,16 +158,7 @@ public class DMPTPortlet extends MVCPortlet {
 			response = "Error while parsing jsonString to POJO!";
 		}
 
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
-
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 
 	private void getLicenseData(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -198,20 +184,18 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		String response = url + "," + description;
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 	
 	private void saveDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
 		
+		String response = save(resourceRequest, resourceResponse, 0);
+		
+		serveResourceAction(response, resourceRequest, resourceResponse);
+	}
+	
+	private String save(ResourceRequest resourceRequest, ResourceResponse resourceResponse, long ticketId) {
 		long userId = -1; //Must be validated before set in dmp 
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -239,9 +223,13 @@ public class DMPTPortlet extends MVCPortlet {
 					plan.setUserID(userId);
 					_log.info("Create DMP for user " + userId);
 				}
+				if (ticketId > 0) {
+					_log.info("TicketId = " + ticketId);
+					plan.setTicketID(ticketId);
+				}
 				plan.setDmpTInput(jsonInput);
 				plan.setName(projectName);
-				
+			
 				if (userId == plan.getUserID()) {
 					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
 					response = "The data managemant plan has been saved successfully.";
@@ -256,20 +244,13 @@ public class DMPTPortlet extends MVCPortlet {
 			_log.error("DMP is not valid or user is not signed in!");
 		}
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
+		return response;
 	}
 	
 	private void loadDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
 		
+		_log.info("Load data management plan");
 		//Get id
 		dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		_log.info("Trying to load dmp with id: " + dmpId);
@@ -294,15 +275,7 @@ public class DMPTPortlet extends MVCPortlet {
 			response = dmptInput;
 		}
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 	
 	private void deleteDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -324,15 +297,7 @@ public class DMPTPortlet extends MVCPortlet {
 			_log.error("DMP with the id " + dmpId + " could not been deleted!", e);
 		}
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-		
-		writer.println(response);
-		
-		writer.flush();
-		writer.close();
-		
-		super.serveResource(resourceRequest, resourceResponse);
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 	
 	private void sendDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -341,13 +306,36 @@ public class DMPTPortlet extends MVCPortlet {
 		String[] services = resourceRequest.getParameterValues("services[]");
 		String message = (String) resourceRequest.getParameter("infos");
 		
-		// Get DMPTInput from Session and Convert to DTO
-		PortletSession session = resourceRequest.getPortletSession();
-		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
+		DMPTInput input = getDMPTInputFromSession(resourceRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
+		Issue issue = createJiraIssue(input, services, message, resourceRequest, themeDisplay);
+
+		// JIRA Request
+		Communicator communicator = new Communicator();
+		JIRAApi jiraApi = new JIRAApi(communicator);
+
+		String response = jiraApi.createDataCenterTicket(issue);
 		Gson gson = new Gson();
-		DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
+		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
+		ticket.setEmail(themeDisplay.getUser().getEmailAddress());
 		
+		long ticketId = ticket.getId();
+		
+		boolean added = jiraApi.addAttachments(ticketId, TXTUtil.getTXTAttachmentFromDMP(input));
+		if (added) {
+			_log.info("Attachments added for issue " + ticketId);
+		} else {
+			_log.error("Attachment for issue " + ticketId + " could not been uploaded");
+		}
+
+		//Save
+		save(resourceRequest, resourceResponse, ticketId);
+		
+		serveResourceAction(gson.toJson(ticket), resourceRequest, resourceResponse);
+	}
+	
+	private Issue createJiraIssue(DMPTInput input, String[] services, String message, ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
 		// Set fields
 		String projectName = input.getProjectName();
 		String projectAbstract = input.getProjectAbstract();
@@ -368,7 +356,6 @@ public class DMPTPortlet extends MVCPortlet {
 
 		// If a user is signed in, the reporter will be set new with the email
 		// address of the user
-		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		if (themeDisplay.isSignedIn()) {
 			reporter = new Reporter(themeDisplay.getUser().getEmailAddress());
 		}
@@ -378,35 +365,56 @@ public class DMPTPortlet extends MVCPortlet {
 
 		Fields fields = new Fields(project, "DMP Request", issuetype, reporter, description, assignee, customfield_10010,
 				projectName, projectAbstract, principalInvestigator);
-		Issue issue = new Issue(fields);
-
+		
+		return new Issue(fields);
+	}
+	
+	private void updateDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+				
+		// Get Request Parameter
+		String message = (String) resourceRequest.getParameter("infos");
+		long ticketId = Long.parseLong(resourceRequest.getParameter("ticketId"));
+		
+		DMPTInput input = getDMPTInputFromSession(resourceRequest);
+		
 		// JIRA Request
 		Communicator communicator = new Communicator();
 		JIRAApi jiraApi = new JIRAApi(communicator);
 
-		String response = jiraApi.createDataCenterTicket(issue);
-		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
-		ticket.setEmail(themeDisplay.getUser().getEmailAddress());
-		long ticketId = ticket.getId();
 		boolean added = jiraApi.addAttachments(ticketId, TXTUtil.getTXTAttachmentFromDMP(input));
 		if (added) {
-			_log.info("Attachments added for issue " + ticket.getId());
+			_log.info("Updated attachments for issue " + ticketId);
 		} else {
-			_log.error("Attachment for issue " + ticket.getId() + " could not been uploaded");
+			_log.error("Attachment for issue " + ticketId + " could not been uploaded");
 		}
 
+		//Save
+		save(resourceRequest, resourceResponse, ticketId);
+		
+		serveResourceAction(String.valueOf(ticketId), resourceRequest, resourceResponse);
+	}
+	
+	private DMPTInput getDMPTInputFromSession(ResourceRequest resourceRequest) {
+		// Get DMPTInput from Session and Convert to DTO
+		PortletSession session = resourceRequest.getPortletSession();
+		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
+		
+		Gson gson = new Gson();
+		return gson.fromJson(jsonInput, DMPTInput.class);
+	}
+	
+	private void serveResourceAction(String response, ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println(gson.toJson(ticket));
+		writer.println(response);
 		
 		writer.flush();
 		writer.close();
 		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
-	
-	//Save method
 	
 	private String createCommaSeperatedString(List<String> list) {
 		String result = "";

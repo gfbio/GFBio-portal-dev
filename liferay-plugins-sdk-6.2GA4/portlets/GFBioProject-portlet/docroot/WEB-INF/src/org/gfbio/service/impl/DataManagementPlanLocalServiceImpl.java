@@ -135,6 +135,7 @@ public class DataManagementPlanLocalServiceImpl extends DataManagementPlanLocalS
 					newDmp.setDmpTInput((dmp.getDmpTInput()).trim());
 					newDmp.setName((dmp.getName()).trim());
 					newDmp.setUserID(dmp.getUserID());
+					newDmp.setTicketID(dmp.getTicketID());
 				} else {
 					newDmp = (DataManagementPlan) dmp.clone();
 				}

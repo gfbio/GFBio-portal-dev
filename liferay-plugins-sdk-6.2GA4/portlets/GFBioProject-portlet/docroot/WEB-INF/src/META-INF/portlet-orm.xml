@@ -66,6 +66,9 @@
 			<basic name="dmpTInput">
 				<column name="DMPTINPUT" />
 			</basic>
+			<basic name="ticketID">
+				<column name="TICKETID" />
+			</basic>
 			<basic name="lastModifiedDate">
 				<column name="LASTMODIFIEDDATE" />
 				<temporal>TIMESTAMP</temporal>

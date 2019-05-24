@@ -190,6 +190,7 @@
 		<column name="name" 					type="String" 	db-name="name"/>
 		<column name="userID" 					type="long" 	db-name="userid"/>
 		<column name="dmpTInput" 				type="String" 	db-name="dmptinput"/>
+		<column name="ticketID" 				type="long" 	db-name="ticketid"/>
 		<column name="lastModifiedDate" 		type="Date" 	db-name="lastmodifieddate"/>
 
 		<order by="asc">			<order-column name="name" />		</order>

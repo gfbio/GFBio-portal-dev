@@ -42,6 +42,29 @@ input[type=email]
     border: 1px solid lightgrey;
 }
 
+/* DMP list */
+.row.dmp-list {
+	line-height: 2em;
+    margin-bottom: .3rem;
+    border-bottom: 1px solid lightgrey;
+}
+
+.dmp-name {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.row.dmp-list a {
+	color: #2c59a0;
+}
+
+.row.dmp-list a:hover {
+	color: #a08246;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 /* Buttons */
 button:disabled {
 	color: lightgray;
@@ -207,8 +230,7 @@ h4 {
 .startdmp {
 	background: #2c59a0;
     color: #fff !important;
-    padding: 0.5em 2.7em;
-    width: 100% !important;
+    padding: 0.3em 1.7em;
     border-radius: 5px !important;
     border: none !important;
 }
@@ -349,4 +371,22 @@ a[name=title] {
 
 .answer-wrapper p {
 	margin: 5px 0 5px !important;
+}
+
+/* DMP Table */
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
