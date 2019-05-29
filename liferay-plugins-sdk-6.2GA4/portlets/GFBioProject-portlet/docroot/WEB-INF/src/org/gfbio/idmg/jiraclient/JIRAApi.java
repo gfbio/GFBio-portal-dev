@@ -57,7 +57,6 @@ public class JIRAApi {
     	
     	byte[] encodedBytes = Base64.encodeBase64(LOGIN.getBytes());
     	String json = gson.toJson(issue);
-    	_log.info("JSON: " + json);
     	HTTPResponse response = client.putJson(CREATE_TICKET_ENDPOINT, HTTPConnectionFactory.RequestMethod.POST, new String(encodedBytes), json);
     	return response.getResponse();
     }
@@ -120,7 +119,6 @@ public class JIRAApi {
 	        	return true;
 	        } else {
 	        	_log.error("Response: " + response.toString());
-	        	_log.error("Message: " + response.getResponseMessage());
 	        	return false;
 	        }
     	} catch (IOException e) {

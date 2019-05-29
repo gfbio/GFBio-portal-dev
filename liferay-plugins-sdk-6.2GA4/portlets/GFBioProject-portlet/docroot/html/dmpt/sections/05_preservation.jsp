@@ -26,7 +26,7 @@
                 </div>
                 <div>
                    	<input name="dataSubmission" type="checkbox"/>
-                   	<span>All datasets will be submitted at least one year after the project´s end.</span>
+                   	<span>All datasets will be submitted no later than one year after the project's end.</span>
                 </div>
                 <div>
                    	<input id="submit-cb" name="dataSubmission" type="checkbox"/>

@@ -223,7 +223,6 @@ h4 {
 
 .wizarddisabled {
 	background: rgba(238, 238, 238, 0.4) ;
-    border: 1px solid lightgrey !important;
     color: #aaa !important;	
 }
 

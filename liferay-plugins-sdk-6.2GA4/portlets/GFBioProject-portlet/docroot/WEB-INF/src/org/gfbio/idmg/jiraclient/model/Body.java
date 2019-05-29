@@ -12,5 +12,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class Body {
 	
-	String value;
+	String body;
 }

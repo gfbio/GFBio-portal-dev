@@ -270,6 +270,10 @@ $(document).ready(function () {
 		    //Saving DMP
 		    $("#saveDMP").on("click", saveDMP);
 		    
+		    //Finish Wizard
+		    $("#discardDMP").hide();
+		    $("#finishDMP").hide();
+		    
 		    if(!Liferay.ThemeDisplay.isSignedIn()) {
 		    	$("#save-message").show();
 		    	$("#autosaveMessage").hide();
@@ -277,6 +281,10 @@ $(document).ready(function () {
 		    	$("#saveDMP").prop("disabled", true);
 				$("#saveDMP").prop("title", "You need to be logged in");
 			   	$("#saveDMP").addClass("wizarddisabled");
+			   	
+			    $("#finishDMP").hide();
+			    $("#saveAndExitDMP").hide();
+			    $("#discardDMP").show();
 		    }
 		    
 		    //Send DMP Request
@@ -288,8 +296,14 @@ $(document).ready(function () {
 		    $("#updateDMP").hide();
 		  	
 		    //Finish Wizard
+		    $("#saveAndExitDMP").click(function() {
+		    	saveAndExit();
+			});
+		    $("#discardDMP").click(function() {
+		    	location.reload();
+			});
 		    $("#finishDMP").click(function() {
-    			location.reload();
+		    	location.reload();
 			});
 		    
 		    //Tooltips
@@ -340,10 +354,7 @@ $(document).ready(function () {
 });
 
 function getInput() {
-	
 	var jsonInput = getInputAsJson();
-	//console.log("Send: " + jsonInput);
-	
     $.ajax({
 	   		"method": "POST",
 	   		"url": '<%=ajaxUrlWizard%>',
@@ -362,8 +373,13 @@ function saveDMP() {
 	saved = true;
 }
 
+function saveAndExit() {
+	saveDMPforUser();
+	openSaveAndExitDialog();
+	saved = true;
+}
+
 function saveDMPforUser() {
-	
 	var projectName = $("#name").val(),
 		dmpId = $("#dmpId").val();
 	
@@ -375,25 +391,35 @@ function saveDMPforUser() {
 	   			dmpId: dmpId
 	   		},
 	   		success: function (response) {
-	          	//console.log("Saving Response: " + response); //TODO
-	          	
 	          	if (response.includes("success")) {
-		          	toggleSaveButton();
+		          	disableSaveButton();
 	          	}
 	          	
 	          	$("#save-answer").html("<p>" + response + "</p>");
+	          	
+	          	showFinishDMPButton();
 	      	}
  	});
 }
 
-function toggleSaveButton() {
+function showFinishDMPButton() {
+	$("#saveAndExitDMP").hide();
+  	$("#finishDMP").show();
+}
+
+function disableSaveButton() {
 	$("#saveDMP").prop("disabled", true);
   	$("#saveDMP").addClass("wizarddisabled");
 }
 
-function toggleRequestButton() {
+function disableRequestButton() {
 	$("#sendDMP").prop("disabled", true);
   	$("#sendDMP").addClass("wizarddisabled");
+}
+
+function disableUpdateButton() {
+	$("#updateDMP").prop("disabled", true);
+  	$("#updateDMP").addClass("wizarddisabled");
 }
 
 function openSavedDialog() {
@@ -404,6 +430,20 @@ function openSavedDialog() {
 	    buttons: {
 	      Ok: function () {
 	        $( this ).dialog( "close" );
+	      }
+	    }
+    });
+}
+
+function openSaveAndExitDialog() {
+	$("#dialog-save").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "custom-dialog",
+	    buttons: {
+	      Ok: function () {
+	        $( this ).dialog( "close" );
+	        location.reload();
 	      }
 	    }
     });
@@ -464,7 +504,12 @@ function openDeleteLoadDialog(response) {
 
 function loadDmp(event) {
 	var dmpId = event.target.id;
+	// Get ticketId
 	var ticketId = $("#" + dmpId).parent().parent().siblings(".ticketid").text();
+	ticketId = ticketId.trim();
+	if (ticketId === "-") 
+		ticketId = 0;
+	// Get dmpId
 	dmpId = dmpId.split("-").pop();
 	
 	$.ajax({
@@ -476,12 +521,14 @@ function loadDmp(event) {
    		},
    		success: function (response) {
           	var selectedDmp = JSON.parse(response);
-			//console.log("Loaded: " + selectedDmp.projectName);
    			initializeWizard(selectedDmp, dmpId);
    			showGeneralInformation();
    			// Hide Send Button - Show only Update Button
-   			$("#sendDMP").hide();
-   			$("#updateDMP").show();
+   			// Show update Button only for DMPs which have been requested yet
+   			if (ticketId !== 0) {
+   				$("#sendDMP").hide();
+   				$("#updateDMP").show();
+   			}
       	},
       	error: function (error) {
 			openDeleteLoadDialog(error.responseText);
@@ -551,8 +598,9 @@ function sendRequest() {
    		},
    		success : function(text) {
 			answer("#successAnswer", text, true);
-			toggleSaveButton();
-			toggleRequestButton();
+			disableSaveButton();
+			disableRequestButton();
+			showFinishDMPButton();
 		},
 		error : function(text) {
 			answer("#errorAnswer", text, false);
@@ -576,8 +624,9 @@ function updateRequest() {
    		},
    		success : function(text) {
 			updateAnswer("#successAnswer", text, true);
-			toggleSaveButton();
-			toggleRequestButton();
+			disableSaveButton();
+			disableUpdateButton();
+			showFinishDMPButton();
 		},
 		error : function(text) {
 			updateAnswer("#errorAnswer", text, false);
@@ -606,7 +655,7 @@ function answer(element, response, success) {
 }
 
 function updateAnswer(element, response, success) {
-	console.info(response);
+	console.log("Response: " + response);
 	sleep(2000).then(function() {
 		$("#dialogLoader").hide();
 		if (success) {

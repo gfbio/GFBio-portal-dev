@@ -137,7 +137,7 @@
           </div>
     </div>
 	<div class="row dmpt-row">
-	  	<h4>What data formats will you create?
+	  	<h4>What file formats will you create?
 	  		<a name="title" title="Please name all considered data formats. According to the DFG Guidelines on the Handling of Research Data in Biodiversity Research, we recommend the use of &#34;open or openly documented formats&#34;.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>

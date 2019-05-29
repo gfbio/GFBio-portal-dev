@@ -282,7 +282,7 @@
 			</div>
 		</div>
 		<div class="row dmpt-row">
-			<h4>Please estimate the total volume of your research proposal?</h4>
+			<h4>What is the total budget of your research proposal?</h4>
 			<div class="col-md-12">
 				<div class="input-icon">
 			    	<i>&#8364;</i>
