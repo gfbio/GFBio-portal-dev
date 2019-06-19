@@ -67,7 +67,7 @@
 	</div>
 	
 	<div id="generalinformation">
-		<div name="title" title="Test" class="hidden-md hidden-lg">
+		<div name="title" class="hidden-md hidden-lg">
 			<h2>1. General Project Information</h2>
 		</div>
 		<div class="row dmpt-row">
@@ -271,9 +271,9 @@
 	    	</div>
 		</div>
 		<div class="row dmpt-row">
-			<h4>Are you a member of a research unit (Forschungsgruppe)?
+			<h4>Are you a member of a research unit (Forschungsgruppe)? 
 	    		<a href="http://www.dfg.de/en/research_funding/programmes/coordinated_programmes/research_units/index.html" target="_blank">
-					<span class="icon-landing-flex icon-link info-blue" ></span>
+					<span class="icon-landing-flex icon-share info-blue" ></span>
 				</a>
 	    	</h4>
 	    	<div class="col-md-12">

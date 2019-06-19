@@ -175,9 +175,9 @@ The amount of data sets you will create is closely linked to your style of worki
 	    </div>
 	</div>
 	<div class="row dmpt-row">
-	    <h4>What standards, methodologies or tools will you use to collect, manage and process your data?
+	    <h4>What standards, methodologies or tools will you use to collect, manage and process your data? 
 	    	<a href="https://gfbio.biowikifarm.net/wiki/Technical_Documentations" target="_blank">
-				<span class="icon-landing-flex icon-link info-blue" ></span>
+				<span class="icon-landing-flex icon-share info-blue" ></span>
 			</a>
 	    </h4>
 	    <div class="col-md-12">

@@ -61,59 +61,56 @@
 			               	<span>GFBio Data Centers</span>
 	                	</label>
 	                </div>
-	                <div>
+	                <div class="col-md-12">
+	                    <label class="mod-cb">
+	                      	<input name="archives" type="checkbox"/>
+	                      	<span>BGBM</span>
+	                    </label>
 	                    <label class="mod-cb">
 	                      	<input name="archives" type="checkbox"/>
 	                      	<span>DSMZ</span>
 	                    </label>
-	                </div>
-	            </div>
-	            <div class="col-xs-12 col-sm-6">
-	           		<div>
-	                	<label class="mod-cb">
+	                    <label class="mod-cb">
 			               	<input name="archives" type="checkbox"/>
 			               	<span>ENA</span>
 	                	</label>
-	                </div>
-	                <div>
-	                  	<label class="mod-cb">
+	                	<label class="mod-cb">
 		                  	<input name="archives" type="checkbox"/>
 		                  	<span>MfN</span>
 	                  	</label>
-	                </div>
-	            </div>
-	            <div class="col-xs-12 col-sm-6">
-	            	<div>	
-	                	<label class="mod-cb">
+	                  	<label class="mod-cb">
 			               	<input name="archives" type="checkbox"/>
 			               	<span>PANGAEA</span>
 	                	</label>
-	                </div>
-	                <div>	
-	                    <label class="mod-cb">
+	                	<label class="mod-cb">
+		                    <input name="archives" type="checkbox"/>
+		                    <span>SGN</span>
+	                    </label>
+	                	<label class="mod-cb">
 		                    <input name="archives" type="checkbox"/>
 		                    <span>SMNS</span>
 	                    </label>
-	                </div>
-	            </div>
-	            <div class="col-xs-12 col-sm-6">
-	            	<div>	
 	                	<label class="mod-cb">
+		                    <input name="archives" type="checkbox"/>
+		                    <span>SNSB</span>
+	                    </label>
+	                    <label class="mod-cb">
 			               	<input name="archives" type="checkbox"/>
 			               	<span>ZFMK</span>
 	                	</label>
 	                </div>
+	            </div>
+	            <div class="col-xs-12 col-sm-6">
 	                <div>	
 	                    <label class="mod-cb">
 		                    <input id="archives-cb" name="archives" type="checkbox" value="Other"/>
 		                    <span>Other</span>
 	                    </label>
 	                </div>
-	            </div>
-	            
-	            <div class="col-md-12">
-	             	<input id="archiveOther" name="archiveOther" class="before_error" type="text" class="inputtext_long" 
-	             	placeholder="Other archive"/>
+	                <div class="col-md-12">
+	             		<input id="archiveOther" name="archiveOther" class="before_error" type="text" class="inputtext_long" 
+	             		placeholder="Other archive"/>
+	            	</div>
 	            </div>
 	        </div>
 	    </div>
