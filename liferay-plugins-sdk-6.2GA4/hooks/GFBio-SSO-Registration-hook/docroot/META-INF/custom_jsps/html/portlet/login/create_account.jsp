@@ -276,7 +276,7 @@
 			</c:if>
 			
 			<aui:input type="checkbox" id="f_privacypolicy" label="Privacy Policy" name="privacypolicy" required="true"/>
-			   Yes, I have read GFBio's <a href="<%= portalURL%>/about/privacy-policy" target="_blank" style="color: rgb(60, 172, 228);text-decoration: underline;text-decoration-style: dotted;">privacy policy</a> and I agree with processing my personal information.
+			   Yes, I have read GFBio's <a href="<%= portalURL%>/privacy-policy" target="_blank" style="color: rgb(60, 172, 228);text-decoration: underline;text-decoration-style: dotted;">privacy policy</a> and I agree with processing my personal information.
 			 
 		
 	
