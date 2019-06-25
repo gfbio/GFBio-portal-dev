@@ -20,6 +20,8 @@ import org.gfbio.idmg.dto.GMetadata;
 import org.gfbio.idmg.jiraclient.JIRAApi;
 import org.gfbio.idmg.jiraclient.connection.Communicator;
 import org.gfbio.idmg.jiraclient.model.Assignee;
+import org.gfbio.idmg.jiraclient.model.AttachmentInput;
+import org.gfbio.idmg.jiraclient.model.Body;
 import org.gfbio.idmg.jiraclient.model.Fields;
 import org.gfbio.idmg.jiraclient.model.Issue;
 import org.gfbio.idmg.jiraclient.model.IssueType;
@@ -49,6 +51,7 @@ public class DMPTPortlet extends MVCPortlet {
 	private static Log _log = LogFactoryUtil.getLog(DMPTPortlet.class);
 	
 	private long dmpId;
+	private long ticketId;
 	
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws PortletException, IOException {
@@ -130,6 +133,8 @@ public class DMPTPortlet extends MVCPortlet {
 			deleteDMP(resourceRequest, resourceResponse);
 		} else if (resourceRequest.getResourceID().equals("senddmp")) {
 			sendDMP(resourceRequest, resourceResponse);
+		} else if (resourceRequest.getResourceID().equals("updatedmp")) {
+			updateDMP(resourceRequest, resourceResponse);
 		}
 	}
 
@@ -138,17 +143,10 @@ public class DMPTPortlet extends MVCPortlet {
 
 		// Get DMPTInput
 		String jsonInput = resourceRequest.getParameter("json");
-		//_log.info("JSONString: " + jsonInput);
-
-		//DMPTInput input = null;
 		String response = "";
 
 		try {
 			
-			//Gson gson = new Gson();
-			//input = gson.fromJson(jsonInput, DMPTInput.class);
-			//_log.info("Input: " + input);
-				
 			ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			 			
 			// Set DMPTInput to PortletSession
@@ -163,16 +161,7 @@ public class DMPTPortlet extends MVCPortlet {
 			response = "Error while parsing jsonString to POJO!";
 		}
 
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
-
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 
 	private void getLicenseData(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -198,20 +187,18 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		String response = url + "," + description;
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 	
 	private void saveDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
 		
+		String response = save(resourceRequest, resourceResponse, 0, Long.parseLong(resourceRequest.getParameter("dmpId")));
+		
+		serveResourceAction(response, resourceRequest, resourceResponse);
+	}
+	
+	private String save(ResourceRequest resourceRequest, ResourceResponse resourceResponse, long ticId, long dmp) {
 		long userId = -1; //Must be validated before set in dmp 
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -224,28 +211,31 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		// Get Project Name
 		String projectName = resourceRequest.getParameter("name");
-		dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
 		String response = "The Data Managemant Plan could not been saved.";
 		
 		if (userId > -1 && !projectName.isEmpty()) {
 			DataManagementPlanImpl plan;
 			
 			try {
-				if (dmpId > 0) {
-					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.getDataManagementPlan(dmpId);
-					_log.info("Update DMP for user " + userId + " with dmpId " + dmpId);
+				if (dmp > 0) {
+					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.getDataManagementPlan(dmp);
+					_log.debug("Update DMP for user " + userId + " with dmpId " + dmp);
 				} else {
 					plan = new DataManagementPlanImpl();
 					plan.setUserID(userId);
-					_log.info("Create DMP for user " + userId);
+					_log.debug("Create DMP for user " + userId);
+				}
+				if (ticId > 0) {
+					plan.setTicketID(ticId);
 				}
 				plan.setDmpTInput(jsonInput);
 				plan.setName(projectName);
-				
+			
 				if (userId == plan.getUserID()) {
 					plan = (DataManagementPlanImpl) DataManagementPlanLocalServiceUtil.updateDataManagementPlan(plan);
 					response = "The data managemant plan has been saved successfully.";
-					_log.info("DMP saved in database with id " + plan.getDmpID() + "!");
+					dmpId = plan.getDmpID();
+					_log.info("DMP saved in database with id " + plan.getDmpID());
 				} else {
 					_log.error("The userId of the dmp is different from the userId in the portletsession!");
 				}
@@ -256,15 +246,7 @@ public class DMPTPortlet extends MVCPortlet {
 			_log.error("DMP is not valid or user is not signed in!");
 		}
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
+		return response;
 	}
 	
 	private void loadDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -272,7 +254,8 @@ public class DMPTPortlet extends MVCPortlet {
 		
 		//Get id
 		dmpId = Long.parseLong(resourceRequest.getParameter("dmpId"));
-		_log.info("Trying to load dmp with id: " + dmpId);
+		ticketId = Long.parseLong(resourceRequest.getParameter("ticketId"));
+		_log.info("Trying to load dmp with id: " + dmpId + " and ticketId: " + ticketId);
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		List<DataManagementPlan> dmps = DataManagementPlanLocalServiceUtil.getdmpListByUserId(themeDisplay.getUserId());
@@ -294,15 +277,7 @@ public class DMPTPortlet extends MVCPortlet {
 			response = dmptInput;
 		}
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.println(response);
-
-		writer.flush();
-		writer.close();
-
-		super.serveResource(resourceRequest, resourceResponse);
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 	
 	private void deleteDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -317,22 +292,14 @@ public class DMPTPortlet extends MVCPortlet {
 		try {
 			DataManagementPlanLocalServiceUtil.deleteDataManagementPlan(dmpId);
 			response = "The data management plan was deleted successfully!";
-			_log.info("DMP with the id " + dmpId + " was deleted successfully!");
+			_log.debug("DMP with the id " + dmpId + " was deleted successfully!");
 		} catch (PortalException | SystemException e) {
 			response = "The data management plan could not been deleted!";
 			resourceResponse.setProperty(ResourceResponse.HTTP_STATUS_CODE, "500");
 			_log.error("DMP with the id " + dmpId + " could not been deleted!", e);
 		}
 		
-		resourceResponse.setContentType("text/html");
-		PrintWriter writer = resourceResponse.getWriter();
-		
-		writer.println(response);
-		
-		writer.flush();
-		writer.close();
-		
-		super.serveResource(resourceRequest, resourceResponse);
+		serveResourceAction(response, resourceRequest, resourceResponse);
 	}
 	
 	private void sendDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -341,13 +308,62 @@ public class DMPTPortlet extends MVCPortlet {
 		String[] services = resourceRequest.getParameterValues("services[]");
 		String message = (String) resourceRequest.getParameter("infos");
 		
-		// Get DMPTInput from Session and Convert to DTO
-		PortletSession session = resourceRequest.getPortletSession();
-		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
+		DMPTInput input = getDMPTInputFromSession(resourceRequest);
+		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
+		Issue issue = createJiraIssue(input, services, message, resourceRequest, themeDisplay);
+
+		// JIRA Request
+		Communicator communicator = new Communicator();
+		JIRAApi jiraApi = new JIRAApi(communicator);
+
+		String response = jiraApi.createDataCenterTicket(issue);
 		Gson gson = new Gson();
-		DMPTInput input = gson.fromJson(jsonInput, DMPTInput.class);
+		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
+		ticket.setEmail(themeDisplay.getUser().getEmailAddress());
 		
+		ticketId = ticket.getId();
+		
+		// Add Jira DMP Attachment
+		addAttachment(jiraApi, ticketId, TXTUtil.getTXTAttachmentFromDMP(input));
+
+		//Save
+		save(resourceRequest, resourceResponse, ticketId, dmpId);
+		
+		serveResourceAction(gson.toJson(ticket), resourceRequest, resourceResponse);
+	}
+	
+	private void updateDMP(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+				
+		// Get Request Parameter
+		String message = (String) resourceRequest.getParameter("message");
+		
+		DMPTInput input = getDMPTInputFromSession(resourceRequest);
+		
+		// JIRA Request
+		Communicator communicator = new Communicator();
+		JIRAApi jiraApi = new JIRAApi(communicator);
+
+		// Add Jira DMP Attachment
+		addAttachment(jiraApi, ticketId, TXTUtil.getTXTAttachmentFromDMP(input));
+		
+		// Add additional comment to Jira ticket if not empty
+		if (!message.isEmpty()) {
+			boolean comment = jiraApi.addComment(ticketId, new Body(message));
+			if (comment) {
+				_log.info("Added comment to issue " + ticketId);
+			} else {
+				_log.error("Comment to issue " + ticketId + " could not been send");
+			}
+		}
+		//Save
+		save(resourceRequest, resourceResponse, ticketId, dmpId);
+		
+		serveResourceAction(String.valueOf(ticketId), resourceRequest, resourceResponse);
+	}
+	
+	private Issue createJiraIssue(DMPTInput input, String[] services, String message, ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
 		// Set fields
 		String projectName = input.getProjectName();
 		String projectAbstract = input.getProjectAbstract();
@@ -368,7 +384,6 @@ public class DMPTPortlet extends MVCPortlet {
 
 		// If a user is signed in, the reporter will be set new with the email
 		// address of the user
-		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		if (themeDisplay.isSignedIn()) {
 			reporter = new Reporter(themeDisplay.getUser().getEmailAddress());
 		}
@@ -378,35 +393,39 @@ public class DMPTPortlet extends MVCPortlet {
 
 		Fields fields = new Fields(project, "DMP Request", issuetype, reporter, description, assignee, customfield_10010,
 				projectName, projectAbstract, principalInvestigator);
-		Issue issue = new Issue(fields);
-
-		// JIRA Request
-		Communicator communicator = new Communicator();
-		JIRAApi jiraApi = new JIRAApi(communicator);
-
-		String response = jiraApi.createDataCenterTicket(issue);
-		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
-		ticket.setEmail(themeDisplay.getUser().getEmailAddress());
-		long ticketId = ticket.getId();
-		boolean added = jiraApi.addAttachments(ticketId, TXTUtil.getTXTAttachmentFromDMP(input));
+		
+		return new Issue(fields);
+	}
+	
+	private void addAttachment(JIRAApi jiraApi, long ticketId, AttachmentInput... attachments) {
+		boolean added = jiraApi.addAttachments(ticketId, attachments);
 		if (added) {
-			_log.info("Attachments added for issue " + ticket.getId());
+			_log.info("Attachments added for issue " + ticketId);
 		} else {
-			_log.error("Attachment for issue " + ticket.getId() + " could not been uploaded");
+			_log.error("Attachment for issue " + ticketId + " could not been uploaded");
 		}
-
+	}
+	
+	private DMPTInput getDMPTInputFromSession(ResourceRequest resourceRequest) {
+		// Get DMPTInput from Session and Convert to DTO
+		PortletSession session = resourceRequest.getPortletSession();
+		String jsonInput = (String) session.getAttribute("dmptInput", PortletSession.APPLICATION_SCOPE);
+		
+		Gson gson = new Gson();
+		return gson.fromJson(jsonInput, DMPTInput.class);
+	}
+	
+	private void serveResourceAction(String response, ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
 		resourceResponse.setContentType("text/html");
 		PrintWriter writer = resourceResponse.getWriter();
 		
-		writer.println(gson.toJson(ticket));
+		writer.println(response);
 		
 		writer.flush();
 		writer.close();
 		
 		super.serveResource(resourceRequest, resourceResponse);
 	}
-	
-	//Save method
 	
 	private String createCommaSeperatedString(List<String> list) {
 		String result = "";

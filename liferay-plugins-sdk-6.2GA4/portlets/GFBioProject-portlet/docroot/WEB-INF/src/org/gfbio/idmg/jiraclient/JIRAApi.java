@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -16,6 +15,7 @@ import org.gfbio.idmg.jiraclient.connection.Communicator;
 import org.gfbio.idmg.jiraclient.connection.HTTPConnectionFactory;
 import org.gfbio.idmg.jiraclient.connection.HTTPResponse;
 import org.gfbio.idmg.jiraclient.model.AttachmentInput;
+import org.gfbio.idmg.jiraclient.model.Body;
 import org.gfbio.idmg.jiraclient.model.Issue;
 
 import com.google.gson.Gson;
@@ -51,13 +51,12 @@ public class JIRAApi {
     }
     
     /*
-     * Createing jira issue
+     * Creating jira issue
      */
     public String createDataCenterTicket(Issue issue) throws IOException {
     	
     	byte[] encodedBytes = Base64.encodeBase64(LOGIN.getBytes());
     	String json = gson.toJson(issue);
-    	_log.info(json);
     	HTTPResponse response = client.putJson(CREATE_TICKET_ENDPOINT, HTTPConnectionFactory.RequestMethod.POST, new String(encodedBytes), json);
     	return response.getResponse();
     }
@@ -88,21 +87,43 @@ public class JIRAApi {
         HttpResponse response = null;
         try {
             response = httpClient.execute(httppost);
-        } catch (ClientProtocolException e) {
-        	_log.error(e);
-            return false;
         } catch (IOException e) {
         	_log.error(e);
             return false;
         }
+        
         HttpEntity result = response.getEntity();
 
-        if(response.getStatusLine().getStatusCode() == 200) {
+        if (response.getStatusLine().getStatusCode() == 200) {
         	return true;
         } else {
         	_log.error("Response: " + response.toString());
         	_log.error("Result: " + result);
         	return false;
+        }
+    }
+    
+    /*
+     * Adding comment to a jira issue
+     */
+    public boolean addComment(long issueKey, Body message) {
+    	
+    	byte[] encodedBytes = Base64.encodeBase64(LOGIN.getBytes());
+    	String json = gson.toJson(message);
+    	_log.info("JSON: " + json);
+    	
+    	try {
+    		HTTPResponse response = client.putJson(CREATE_TICKET_ENDPOINT + issueKey + "/comment", HTTPConnectionFactory.RequestMethod.POST, new String(encodedBytes), json);
+    	
+	    	if (response.getResponseCode() == 200) {
+	        	return true;
+	        } else {
+	        	_log.error("Response: " + response.toString());
+	        	return false;
+	        }
+    	} catch (IOException e) {
+        	_log.error(e);
+            return false;
         }
     }
 }

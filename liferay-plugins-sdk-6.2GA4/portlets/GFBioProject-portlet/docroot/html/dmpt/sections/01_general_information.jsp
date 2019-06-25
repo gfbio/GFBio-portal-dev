@@ -1,30 +1,64 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <h2>General Project Information</h2>
 <section>
 	<div id="dmppreview" style="display: none;">
-		<h2>Do you want to load an existing Data Management Plan?</h2>
+		<h2>Available Data Management Plans</h2>
+		
 		<div class="col-xs-12" style="margin-top: 10px;">
-			<div class="col-md-6 col-sm-5 col-xs-10" style="margin-top: 5px;">
-				<select id="dmps" name="dmps" style="width: 100% !important; height: 29px;">
-					<c:forEach var="dmp" items="${dmpsforuser}">
-						<option label="<c:out value="${dmp.name}" />"
-									value="<c:out value="${dmp.dmpID}"/>"><c:out
-										value="${dmp.name}" /></option>
-					</c:forEach>
-				</select>
-			</div>
-			<div class="col-md-1 col-sm-2 col-xs-2" style="margin-top: 5px;">
-	           	<input id="delete" style="width: 100% !important; min-height: 29px;" type="button" class="icon-landing-flex icon-bin" value="&#xee44"/>
+			
+			<!-- LIST -->
+	        <div class="row">
+	            <div class="col-md-7 col-sm-5 col-xs-8">
+	                Name
+	            </div>
+	            <div class="col-md-2 col-sm-2 col-xs-2">
+	                TicketId
+	            </div>
+	            <div class="col-md-2 col-sm-3 hidden-xs">
+	                Last Modified
+	            </div>
+	            <div class="col-md-1 col-sm-2 col-xs-2">
+	                Actions
+	            </div>
 	        </div>
-			<div class="col-md-5 col-sm-5 col-xs-12" style="margin-top: 5px;">
-	           	<input id="load" style="width: 100% !important" type="button" value="Load Data Management Plan"/>
+	        <div id="dmp-list">
+				<c:forEach items="${dmpsforuser}" var="dmp">
+					<div class="row dmp-list ${dmp.dmpID}">
+						<div class="col-md-7 col-sm-5 col-xs-8 dmp-name">
+							<c:out value="${dmp.name}" />
+						</div>
+						<div class="ticketid col-md-2 col-sm-2 col-xs-2">
+							<c:choose>
+								<c:when test="${dmp.ticketID > 0}">
+									<a title="Helpdesk" href="https://helpdesk.gfbio.org">
+										<c:out value="${dmp.ticketID}" />
+									</a>
+								</c:when>
+								<c:otherwise>
+									-
+								</c:otherwise>
+							</c:choose>
+			            </div>
+			            <div class="col-md-2 col-sm-3 hidden-xs">
+			            	<fmt:formatDate value="${dmp.lastModifiedDate}" pattern="dd.MM.yyyy HH:mm" />    
+			            </div>
+			            <div class="col-md-1 col-sm-2 col-xs-2">
+					        <a class="edit-dmp" title="edit">
+					        	<i id="edit-${dmp.dmpID}" class="fa fa-pencil" aria-hidden="true"></i>
+					        </a>
+					        <a class="delete-dmp" title="delete">
+					        	<i id="delete-${dmp.dmpID}" class="fa fa-trash" aria-hidden="true"></i>
+					        </a>
+			            </div>
+					</div>
+		  		</c:forEach>
 	        </div>
         </div>
+		
         <div class="col-xs-12" style="margin-top: 20px;">
-	        <div class="col-xs-12">
-	           	<input id="start" class="startdmp" type="button" value="New Data Management Plan"/>
-	        </div>
+           	<input id="start" class="startdmp" type="button" value="New Data Management Plan"/>
         </div>
 	</div>
 	
@@ -33,7 +67,7 @@
 	</div>
 	
 	<div id="generalinformation">
-		<div name="title" title="Test" class="hidden-md hidden-lg">
+		<div name="title" class="hidden-md hidden-lg">
 			<h2>1. General Project Information</h2>
 		</div>
 		<div class="row dmpt-row">
@@ -237,9 +271,9 @@
 	    	</div>
 		</div>
 		<div class="row dmpt-row">
-			<h4>Are you a member of a research unit (Forschungsgruppe)?
+			<h4>Are you a member of a research unit (Forschungsgruppe)? 
 	    		<a href="http://www.dfg.de/en/research_funding/programmes/coordinated_programmes/research_units/index.html" target="_blank">
-					<span class="icon-landing-flex icon-link info-blue" ></span>
+					<span class="icon-landing-flex icon-share info-blue" ></span>
 				</a>
 	    	</h4>
 	    	<div class="col-md-12">
@@ -248,7 +282,7 @@
 			</div>
 		</div>
 		<div class="row dmpt-row">
-			<h4>Please estimate the total volume of your research proposal?</h4>
+			<h4>What is the total budget of your research proposal?</h4>
 			<div class="col-md-12">
 				<div class="input-icon">
 			    	<i>&#8364;</i>

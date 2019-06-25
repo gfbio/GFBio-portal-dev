@@ -137,7 +137,7 @@
           </div>
     </div>
 	<div class="row dmpt-row">
-	  	<h4>What data formats will you create?
+	  	<h4>What file formats will you create?
 	  		<a name="title" title="Please name all considered data formats. According to the DFG Guidelines on the Handling of Research Data in Biodiversity Research, we recommend the use of &#34;open or openly documented formats&#34;.">
 				<span class="icon-landing-flex icon-information4 info-blue" ></span>
 			</a>
@@ -175,9 +175,9 @@ The amount of data sets you will create is closely linked to your style of worki
 	    </div>
 	</div>
 	<div class="row dmpt-row">
-	    <h4>What standards, methodologies or tools will you use to collect, manage and process your data?
+	    <h4>What standards, methodologies or tools will you use to collect, manage and process your data? 
 	    	<a href="https://gfbio.biowikifarm.net/wiki/Technical_Documentations" target="_blank">
-				<span class="icon-landing-flex icon-link info-blue" ></span>
+				<span class="icon-landing-flex icon-share info-blue" ></span>
 			</a>
 	    </h4>
 	    <div class="col-md-12">

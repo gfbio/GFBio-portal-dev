@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <div id="dialog-request" style="display: none;">
-	<div id="send-request" class="row request-row" >
-		<form id="dialogForm">
+	<form id="dialogForm">
+		<div id="send-request" class="row request-row" >
 			<div class="col-md-12">
 				<div id="autosaveMessage" class="portlet-msg-alert col-md-12" >
 					Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.
@@ -77,8 +77,22 @@
 					</a>
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+		<div id="update-request" class="row request-row" >
+			<div class="col-md-12">
+				<div id="autosaveMessage2" class="portlet-msg-alert col-md-12" >
+					Please notice that your Data Management Plan will be saved automatically to your dashboard after sending the request.
+				</div>
+			</div>
+			<div>
+				<h4>Message</h4>
+			</div>
+			<div class="col-md-12">
+				<textarea id="comment" name="additionalText" class="before_error" maxlength="1000" rows="5" cols="100"
+					placeholder="Would you like to add a comment in addition?"></textarea>
+			</div>		
+		</div>
+	</form>
 	<jsp:include page="../idmg/loading_spinner.jsp" />
 	<div id="successAnswer" style="display: none;">
 		<div class="answer-wrapper">

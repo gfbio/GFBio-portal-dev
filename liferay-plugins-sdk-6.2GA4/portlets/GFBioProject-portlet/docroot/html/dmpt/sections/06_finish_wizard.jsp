@@ -1,5 +1,5 @@
 <div id="handleInput">
-	<h4>Send a DMP support request to GFBio, download your DMP or save it to your private dashboard.</h4>
+	<h4>Send a DMP support request to GFBio, download your DMP or save it to your personal DMPT account.</h4>
 
 	<div id="finish-wizard" class="row dmpt-row">
 
@@ -7,6 +7,7 @@
 			<i class="icon-landing-flex icon-envelop ico-btn"></i>
 			<h5>Request Data Management Plan Support</h5>
 			<input id="sendDMP" class="wizardblue" type="button" value="Send Request" />
+			<input id="updateDMP" class="wizardblue" type="button" value="Update Jira Ticket" />
 		</div>
 
 		<div class="col-sm-6 ico-container">
@@ -24,7 +25,9 @@
 		<div class="col-sm-6 ico-container">
 			<i class="icon-landing-flex icon-enter ico-btn"></i>
 			<h5>Finish Wizard</h5>
-			<input id="finishDMP" class="wizardblue" type="button" value="Finish" />
+			<input id="finishDMP" class="wizardblue" type="button" value="Exit" />
+			<input id="saveAndExitDMP" class="wizardblue" type="button" value="Save & Exit" />
+			<input id="discardDMP" class="wizardblue" type="button" value="Discard & Exit" />
 		</div>
 	</div>
 </div>

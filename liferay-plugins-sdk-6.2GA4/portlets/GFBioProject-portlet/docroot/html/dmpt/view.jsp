@@ -15,6 +15,7 @@
 <portlet:resourceURL var="ajaxUrlLoad" id="loaddmp" />
 <portlet:resourceURL var="ajaxUrlDelete" id="deletedmp" />
 <portlet:resourceURL var="ajaxUrlSend" id="senddmp" />
+<portlet:resourceURL var="ajaxUrlUpdate" id="updatedmp" />
 
 <script type="text/javascript">   
 
@@ -195,9 +196,9 @@ $(document).ready(function () {
 				$("#dmppreview").show();
 			}
 			
-			$("#delete").on("click", openConfirmDeleteDialog);
+			$(".delete-dmp").on("click", openConfirmDeleteDialog);
 			
-			$("#load").on("click", loadDmp);
+			$(".edit-dmp").on("click", loadDmp);
 			
 			$("#start").on("click", showGeneralInformation);
 			
@@ -269,6 +270,10 @@ $(document).ready(function () {
 		    //Saving DMP
 		    $("#saveDMP").on("click", saveDMP);
 		    
+		    //Finish Wizard
+		    $("#discardDMP").hide();
+		    $("#finishDMP").hide();
+		    
 		    if(!Liferay.ThemeDisplay.isSignedIn()) {
 		    	$("#save-message").show();
 		    	$("#autosaveMessage").hide();
@@ -276,14 +281,29 @@ $(document).ready(function () {
 		    	$("#saveDMP").prop("disabled", true);
 				$("#saveDMP").prop("title", "You need to be logged in");
 			   	$("#saveDMP").addClass("wizarddisabled");
+			   	
+			    $("#finishDMP").hide();
+			    $("#saveAndExitDMP").hide();
+			    $("#discardDMP").show();
 		    }
 		    
 		    //Send DMP Request
 		    $("#sendDMP").on("click", openSendRequestDialog);
 		    
+		  	//Update DMP Request
+		    $("#updateDMP").on("click", openUpdateRequestDialog);
+		  	//Hide update button by default
+		    $("#updateDMP").hide();
+		  	
 		    //Finish Wizard
+		    $("#saveAndExitDMP").click(function() {
+		    	saveAndExit();
+			});
+		    $("#discardDMP").click(function() {
+		    	location.reload();
+			});
 		    $("#finishDMP").click(function() {
-    			location.reload();
+		    	location.reload();
 			});
 		    
 		    //Tooltips
@@ -334,10 +354,7 @@ $(document).ready(function () {
 });
 
 function getInput() {
-	
 	var jsonInput = getInputAsJson();
-	//console.log("Send: " + jsonInput);
-	
     $.ajax({
 	   		"method": "POST",
 	   		"url": '<%=ajaxUrlWizard%>',
@@ -356,8 +373,13 @@ function saveDMP() {
 	saved = true;
 }
 
+function saveAndExit() {
+	saveDMPforUser();
+	openSaveAndExitDialog();
+	saved = true;
+}
+
 function saveDMPforUser() {
-	
 	var projectName = $("#name").val(),
 		dmpId = $("#dmpId").val();
 	
@@ -369,17 +391,35 @@ function saveDMPforUser() {
 	   			dmpId: dmpId
 	   		},
 	   		success: function (response) {
-	          	//console.log("Saving Response: " + response); //TODO
-	          	
 	          	if (response.includes("success")) {
-		          	$("#saveDMP").prop("disabled", true);
-		          	$("#saveDMP").addClass("wizarddisabled");
-		          	$("#saveDMP").val("Saved");
+		          	disableSaveButton();
 	          	}
 	          	
 	          	$("#save-answer").html("<p>" + response + "</p>");
+	          	
+	          	showFinishDMPButton();
 	      	}
  	});
+}
+
+function showFinishDMPButton() {
+	$("#saveAndExitDMP").hide();
+  	$("#finishDMP").show();
+}
+
+function disableSaveButton() {
+	$("#saveDMP").prop("disabled", true);
+  	$("#saveDMP").addClass("wizarddisabled");
+}
+
+function disableRequestButton() {
+	$("#sendDMP").prop("disabled", true);
+  	$("#sendDMP").addClass("wizarddisabled");
+}
+
+function disableUpdateButton() {
+	$("#updateDMP").prop("disabled", true);
+  	$("#updateDMP").addClass("wizarddisabled");
 }
 
 function openSavedDialog() {
@@ -395,8 +435,23 @@ function openSavedDialog() {
     });
 }
 
-function deleteDmp() {
-	var dmpId = $("#dmps").val();
+function openSaveAndExitDialog() {
+	$("#dialog-save").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "custom-dialog",
+	    buttons: {
+	      Ok: function () {
+	        $( this ).dialog( "close" );
+	        location.reload();
+	      }
+	    }
+    });
+}
+
+function deleteDmp(event) {
+	var dmpId = event.target.id;
+	dmpId = dmpId.split("-").pop();
 	
 	$.ajax({
    		"method": "POST",
@@ -406,7 +461,7 @@ function deleteDmp() {
    		},
    		success: function (response) {
    			openDeleteLoadDialog(response);
-   			$("#dmps option[value='" + dmpId + "']").remove();
+   			$("#dmp-list").find("." + dmpId).remove();
       	},
       	error: function (error) {
       		openDeleteLoadDialog(error.responseText);
@@ -414,7 +469,7 @@ function deleteDmp() {
 	});
 }
 
-function openConfirmDeleteDialog() {
+function openConfirmDeleteDialog(event) {
 	$("#delete-load-answer").html("<p>Do you want to delete the data management plan?</p>");
 	
 	$("#dialog-delete-load").dialog({
@@ -423,7 +478,7 @@ function openConfirmDeleteDialog() {
 	    dialogClass: "custom-dialog",
 	    buttons: {
 	      Yes: function () {
-	    	deleteDmp();
+	    	deleteDmp(event);
 	      },
 	      Cancel: function () {
 	    	$( this ).dialog( "close" );  
@@ -447,20 +502,33 @@ function openDeleteLoadDialog(response) {
     });
 }
 
-function loadDmp() {
-	var dmpId = $("#dmps").val();
+function loadDmp(event) {
+	var dmpId = event.target.id;
+	// Get ticketId
+	var ticketId = $("#" + dmpId).parent().parent().siblings(".ticketid").text();
+	ticketId = ticketId.trim();
+	if (ticketId === "-") 
+		ticketId = 0;
+	// Get dmpId
+	dmpId = dmpId.split("-").pop();
 	
 	$.ajax({
    		"method": "POST",
    		"url": '<%=ajaxUrlLoad%>',
    		"data": {
-   			dmpId: dmpId
+   			dmpId: dmpId,
+   			ticketId: ticketId
    		},
    		success: function (response) {
           	var selectedDmp = JSON.parse(response);
-			//console.log("Loaded: " + selectedDmp.projectName);
    			initializeWizard(selectedDmp, dmpId);
    			showGeneralInformation();
+   			// Hide Send Button - Show only Update Button
+   			// Show update Button only for DMPs which have been requested yet
+   			if (ticketId !== 0) {
+   				$("#sendDMP").hide();
+   				$("#updateDMP").show();
+   			}
       	},
       	error: function (error) {
 			openDeleteLoadDialog(error.responseText);
@@ -469,6 +537,7 @@ function loadDmp() {
 }
 
 function openSendRequestDialog() {
+	$("#update-request").hide();
 	$("#dialog-request").dialog({
 	    modal: true,
 	    resizable: false,
@@ -488,34 +557,84 @@ function openSendRequestDialog() {
     });
 }
 
+function openUpdateRequestDialog() {
+	$("#send-request").hide();
+	$("#dialog-request").dialog({
+	    modal: true,
+	    resizable: false,
+	    dialogClass: "request-dialog custom-dialog",
+	    title: "Data Management Plan Request",
+	    buttons: {
+	      "Update DMP Support Request": function () {
+	    	$("#update-request").hide();  
+	    	$('#dialogLoader').show();
+	    	$('#dialog-request').dialog('option', 'buttons', {} )
+			updateRequest();
+	      },
+	      Cancel: function () {
+		   	$( this ).dialog( "close" );  
+		  }
+	    }
+    });
+}
+
 function sendRequest() {
 	var services = new Array,
 		information;
 	services = getServices();
 	information = $("#additionalText").val();
 	
+	var projectName = $("#name").val(),
+	dmpId = $("#dmpId").val();
+	
 	$.ajax({
    		"method": "POST",
    		"url": '<%=ajaxUrlSend%>',
    		"data": {
    			services: services,
-   			infos: information
+   			infos: information,
+   			name: projectName,
+   			dmpId: dmpId
    		},
    		success : function(text) {
 			answer("#successAnswer", text, true);
+			disableSaveButton();
+			disableRequestButton();
+			showFinishDMPButton();
 		},
 		error : function(text) {
 			answer("#errorAnswer", text, false);
 		}
 	});
-	// Saving the dmp automatically after the request
-	if (!saved) {
-		saveDMPforUser();
-	}
+}
+
+function updateRequest() {
+	message = $("#comment").val();
+	
+	var projectName = $("#name").val(),
+	dmpId = $("#dmpId").val();
+	
+	$.ajax({
+   		"method": "POST",
+   		"url": '<%=ajaxUrlUpdate%>',
+   		"data": {
+   			message: message,
+   			name: projectName,
+   			dmpId: dmpId
+   		},
+   		success : function(text) {
+			updateAnswer("#successAnswer", text, true);
+			disableSaveButton();
+			disableUpdateButton();
+			showFinishDMPButton();
+		},
+		error : function(text) {
+			updateAnswer("#errorAnswer", text, false);
+		}
+	});
 }
 
 function answer(element, response, success) {
-	//console.info(response);
 	sleep(2000).then(function() {
 		$("#dialogLoader").hide();
 		if (success) {
@@ -528,6 +647,26 @@ function answer(element, response, success) {
 	    	'Ok': function() {
 	        	$(this).dialog('close');
 	        	$(element).hide();
+	        	$("#send-request").show();
+	        	$("#update-request").show();
+	    	}
+		});
+	});
+}
+
+function updateAnswer(element, response, success) {
+	console.log("Response: " + response);
+	sleep(2000).then(function() {
+		$("#dialogLoader").hide();
+		if (success) {
+			$("#emailresponse").html("Your ticket has been successfully updated.");
+		}
+		$(element).show();
+		$('#dialog-request').dialog('option', 'buttons', {
+	    	'Ok': function() {
+	        	$(this).dialog('close');
+	        	$(element).hide();
+	        	$("#update-request").show();
 	        	$("#send-request").show();
 	    	}
 		});
