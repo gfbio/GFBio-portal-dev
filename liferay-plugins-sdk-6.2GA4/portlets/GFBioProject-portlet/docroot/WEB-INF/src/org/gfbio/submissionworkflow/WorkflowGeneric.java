@@ -29,7 +29,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
-import org.apache.commons.io.IOUtils; //wichtig für fileupdate, auch wenn es hier als ungenutzt angezeigt wird
+import org.apache.commons.io.IOUtils; //wichtig fÃ¼r fileupdate, auch wenn es hier als ungenutzt angezeigt wird
 import org.gfbio.helper.Helper;
 import org.gfbio.service.ContentLocalServiceUtil;
 import org.gfbio.service.HeadLocalServiceUtil;
@@ -388,10 +388,10 @@ public class WorkflowGeneric extends GenericPortlet {
 	    if (multipartContent) {
 
 	        DiskFileItemFactory factory = new DiskFileItemFactory();
-	        factory.setSizeThreshold(10000000);
+	        factory.setSizeThreshold(20971520);
 	        factory.setRepository(file);
 	        ServletFileUpload upload = new ServletFileUpload(factory);
-	        upload.setSizeMax(10000000);
+	        upload.setSizeMax(20971520);
 	        List<FileItem> items = null;
 	        try {items = upload.parseRequest(originalHttpServletRequest);}
 	        catch (FileUploadException e1) {e1.printStackTrace(); }
