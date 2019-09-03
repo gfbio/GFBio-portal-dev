@@ -848,10 +848,13 @@
 			
 			var files = fileSelect.files;
 			var check = true; 
-			var file_size_total
+			var file_size_total = 0;
 			
+			//only a total file size of 20MB is permitted
 			for (var i = 0; i < files.length; i++){
-			  	if (files[i].size> 20971520){
+				file_size_total = file_size_total + files[i].size;
+				
+				if (file_size_total >= 20971520){
 			  		document.getElementById("gwf_ro_upload"+files[i].name).className="labelFalse";
 			  		check = false;
 			  	}
@@ -874,7 +877,7 @@
 				});
 			}else{
 				document.getElementById("gwf_ro_upload_d").className="labelFalse";
-				buildErrorMessage('gwf_lf_comentarField', 'You exceeded the total upload size of 20 MB.');
+				buildErrorMessage('gwf_lf_comentarField', 'You exceeded the total upload size of 20 MB. Please provide a link to an online resource or contact our helpdesk.');
 			}
 		}else{
 			if (document.getElementById("gwf_ro_externalupload").value.length !=0){
