@@ -848,6 +848,7 @@
 			
 			var files = fileSelect.files;
 			var check = true; 
+			var file_size_total
 			
 			for (var i = 0; i < files.length; i++){
 			  	if (files[i].size> 20971520){
@@ -873,7 +874,7 @@
 				});
 			}else{
 				document.getElementById("gwf_ro_upload_d").className="labelFalse";
-				buildErrorMessage('gwf_lf_comentarField', 'One or more files are larger as 20 MB.');
+				buildErrorMessage('gwf_lf_comentarField', 'You exceeded the total upload size of 20 MB.');
 			}
 		}else{
 			if (document.getElementById("gwf_ro_externalupload").value.length !=0){
