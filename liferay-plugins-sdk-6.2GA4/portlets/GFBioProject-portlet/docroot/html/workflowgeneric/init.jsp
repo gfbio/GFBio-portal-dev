@@ -168,7 +168,7 @@
 				// templates
 				
 				//
-				
+				/*
 				"<div>"+
 				"Have a look at the GFBio example templates. You can also submit data in combination with the deposit of biological and environmental samples."+
 				"</div>"+
@@ -183,7 +183,7 @@
 				"<span style='width:25%; display:inline-block' id='gwf_b_templatewith' onclick=\"window.open('https://gfbio.biowikifarm.net/wiki/Data_submission_forms_for_occurrence_data');\">		<span style='width:"+sampleButtonWidth+"' class='btn btn-primary'>Download templates for occurrence data <b>without</b> deposit of samples</span></span>"+
 				"</div>"+
 				"<br>"+
-				
+				*/
 				////////////////
 				
 				
