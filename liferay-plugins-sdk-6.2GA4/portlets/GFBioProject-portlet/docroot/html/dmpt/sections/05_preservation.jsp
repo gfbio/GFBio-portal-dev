@@ -115,7 +115,7 @@
 	        </div>
 	    </div>
 		<div class="row dmpt-row">
-	        <h4>Do you need a persistent idenfifier (e.g. ePIC PID / DOI) for your data?
+	        <h4>Do you need a persistent identifier (e.g. ePIC PID / DOI) for your data?
 	        	<a name="title" title="With a persistent identifiers (PID) - like DOI - you make your data citable and linkable to publications which is increasingly required by journals. GFBio recommends to add a PID to your data.">
 					<span class="icon-landing-flex icon-information4 info-blue" ></span>
 				</a>
