@@ -7,7 +7,7 @@
 			<i class="icon-landing-flex icon-envelop ico-btn"></i>
 			<h5>Request Data Management Plan Support</h5>
 			<input id="sendDMP" class="wizardblue" type="button" value="Send Request" />
-			<input id="updateDMP" class="wizardblue" type="button" value="Update Jira Ticket" />
+			<input id="updateDMP" class="wizardblue" type="button" value="Update Request" />
 		</div>
 
 		<div class="col-sm-6 ico-container">
