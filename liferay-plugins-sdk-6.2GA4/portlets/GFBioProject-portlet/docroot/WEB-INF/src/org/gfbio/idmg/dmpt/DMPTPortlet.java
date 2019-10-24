@@ -311,12 +311,17 @@ public class DMPTPortlet extends MVCPortlet {
 		DMPTInput input = getDMPTInputFromSession(resourceRequest);
 		ThemeDisplay themeDisplay = (ThemeDisplay) resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 		
-		Issue issue = createJiraIssue(input, services, message, resourceRequest, themeDisplay);
-
-		// JIRA Request
 		Communicator communicator = new Communicator();
 		JIRAApi jiraApi = new JIRAApi(communicator);
+		
+		String reporter = "";
+		if (themeDisplay.isSignedIn()) {
+			//TODO: Get goeId for user
+			reporter = jiraApi.getJiraUsername("", themeDisplay.getUser().getEmailAddress(), themeDisplay.getUser().getFullName());
+		}
+		Issue issue = createJiraIssue(input, services, message, resourceRequest, reporter);		
 
+		// JIRA Request
 		String response = jiraApi.createDataCenterTicket(issue);
 		Gson gson = new Gson();
 		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
@@ -363,7 +368,7 @@ public class DMPTPortlet extends MVCPortlet {
 		serveResourceAction(String.valueOf(ticketId), resourceRequest, resourceResponse);
 	}
 	
-	private Issue createJiraIssue(DMPTInput input, String[] services, String message, ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
+	private Issue createJiraIssue(DMPTInput input, String[] services, String message, ResourceRequest resourceRequest, String reporter) {
 		// Set fields
 		String projectName = input.getProjectName();
 		String projectAbstract = input.getProjectAbstract();
@@ -378,20 +383,18 @@ public class DMPTPortlet extends MVCPortlet {
 		_log.info("projectkey: " + PropsUtil.get("jira.gfbio.dmpt.projectkey"));
 		Project project = new Project(PropsUtil.get("jira.gfbio.dmpt.projectkey"));
 		IssueType issuetype = new IssueType("DMP");
-		Reporter reporter = new Reporter("testuser1");
+		Reporter rep = new Reporter("testuser1");
+		if (!isNullOrEmpty(reporter)) {
+			rep.setName(reporter);
+		}
+		
 		// Get Requesttype
 		String customfield_10010 = PropsUtil.get("jira.gfbio.dmpt.requesttype");
-
-		// If a user is signed in, the reporter will be set new with the email
-		// address of the user
-		if (themeDisplay.isSignedIn()) {
-			reporter = new Reporter(themeDisplay.getUser().getEmailAddress());
-		}
 
 		// Set assignee for the ticket with user gfbio-ev
 		Assignee assignee = new Assignee("");
 
-		Fields fields = new Fields(project, "DMP Request", issuetype, reporter, description, assignee, customfield_10010,
+		Fields fields = new Fields(project, "DMP Request", issuetype, rep, description, assignee, customfield_10010,
 				projectName, projectAbstract, principalInvestigator);
 		
 		return new Issue(fields);
@@ -439,5 +442,9 @@ public class DMPTPortlet extends MVCPortlet {
 	
 	private boolean isNullOrEmpty(final List<String> values) {
 		return values == null || values.isEmpty();
+	}
+	
+	private boolean isNullOrEmpty(final String value) {
+		return value == null || value.isEmpty();
 	}
 }

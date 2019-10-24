@@ -35,7 +35,12 @@ public class JIRAApi {
 	
     private static final String CREATE_TICKET_ENDPOINT = "/rest/api/2/issue/";
     private static final String FILE_BODY_TYPE = "file";
+    
+    private final String PHP_SCRIPT_LOGIN;
 
+    private static final String PHP_SCRIPT_ENDPOINT = "/internal/getorcreateuser.php";
+    
+    
     /**
      * Provide a client instance with matching configuration
      *
@@ -47,6 +52,8 @@ public class JIRAApi {
         this.BASE_URL = PropsUtil.get("jira.gfbio.url");
         this.LOGIN = PropsUtil.get("jira.gfbio.login");
         
+        this.PHP_SCRIPT_LOGIN = PropsUtil.get("jira.gfbio.phpscript.login"); 
+
         this.gson = new Gson();
     }
     
@@ -124,6 +131,25 @@ public class JIRAApi {
     	} catch (IOException e) {
         	_log.error(e);
             return false;
+        }
+    }
+    
+    public String getJiraUsername(String goeId, String email, String fullname) {
+    	fullname = fullname.replace(" ", "%20");
+    	byte[] encodedBytes = Base64.encodeBase64(PHP_SCRIPT_LOGIN.getBytes());
+    	String requestUrl = PHP_SCRIPT_ENDPOINT + "?username=" + goeId + "&email=" + email + "&fullname=" + fullname;
+    	
+    	try {
+    		HTTPResponse response = client.put(requestUrl, HTTPConnectionFactory.RequestMethod.GET, new String(encodedBytes));
+    		if (response.getResponseCode() == 200) {
+	        	return response.getResponse();
+	        } else {
+	        	_log.error("Response: " + response.toString());
+	        	return null;
+	        }
+    	} catch (IOException e) {
+        	_log.error(e);
+            return null;
         }
     }
 }
