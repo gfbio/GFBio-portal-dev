@@ -1,6 +1,8 @@
 package org.gfbio.idmg.jiraclient;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
@@ -135,11 +137,11 @@ public class JIRAApi {
     }
     
     public String getJiraUsername(String goeId, String email, String fullname) {
-    	fullname = fullname.replace(" ", "%20");
-    	byte[] encodedBytes = Base64.encodeBase64(PHP_SCRIPT_LOGIN.getBytes());
-    	String requestUrl = PHP_SCRIPT_ENDPOINT + "?username=" + goeId + "&email=" + email + "&fullname=" + fullname;
-    	
     	try {
+    		fullname = URLEncoder.encode(fullname, StandardCharsets.UTF_8.toString());
+        	byte[] encodedBytes = Base64.encodeBase64(PHP_SCRIPT_LOGIN.getBytes());
+        	String requestUrl = PHP_SCRIPT_ENDPOINT + "?username=" + goeId + "&email=" + email + "&fullname=" + fullname;
+        	
     		HTTPResponse response = client.put(requestUrl, HTTPConnectionFactory.RequestMethod.GET, new String(encodedBytes));
     		if (response.getResponseCode() == 200) {
 	        	return response.getResponse();
