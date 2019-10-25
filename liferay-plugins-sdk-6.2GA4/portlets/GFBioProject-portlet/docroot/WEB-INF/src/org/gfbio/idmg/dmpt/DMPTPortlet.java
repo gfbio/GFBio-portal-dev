@@ -317,7 +317,8 @@ public class DMPTPortlet extends MVCPortlet {
 		String reporter = "";
 		if (themeDisplay.isSignedIn()) {
 			//TODO: Get goeId for user
-			reporter = jiraApi.getJiraUsername("", themeDisplay.getUser().getEmailAddress(), themeDisplay.getUser().getFullName());
+			String email = themeDisplay.getUser().getEmailAddress();
+			reporter = jiraApi.getJiraUsername(email, email, themeDisplay.getUser().getFullName());
 		}
 		Issue issue = createJiraIssue(input, services, message, resourceRequest, reporter);		
 
