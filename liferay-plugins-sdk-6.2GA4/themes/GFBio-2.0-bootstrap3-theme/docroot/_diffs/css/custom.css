@@ -78,6 +78,13 @@
 			font-weight:400;
 		} 
 
+		.teaser{
+  			font-family:'Lato';
+			font-size:20px;
+			font-family: 'Lato',sans-serif;
+			color:#335aa3;
+			font-weight:300;
+		}
 		 .journal-content-article a, .asset-summary a{
 		
 		 color: rgb(60, 172, 228); /*3CACE4*/
@@ -124,6 +131,12 @@
   font-family: 'Caveat';
   font-weight:400;
 }	
+.slogan {
+	padding-top:0.5em;
+	color:#335AA3;
+	font-size:30px
+}
+
 	
 .html-editor a{
 			color: rgb(60, 172, 228); /*3CACE4*/
@@ -170,12 +183,23 @@
 
 
 .btn-blue {
-    background-color: rgba(0, 158, 227, 0.78);
-    background-color: rgba(52, 90, 162, 0.8);
-    box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.15) inset;
-    padding: 15px 55px;
+    /*background-color: rgba(0, 158, 227, 0.78);*/
+    /*background-color: rgba(52, 90, 162, 0.8);*/
+    /*box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.15) inset;*/
+   /*padding: 15px 55px;*/
     color: #fff;
-    border-radius: 6px;
+    /*border-radius: 6px;*/
+
+	border: 1px solidwhite;
+	background-color: #335AA3;
+	text-transform: uppercase;
+}
+
+.btn-green {
+	color:#fff; 
+	background-color:#81b248; 
+	border-color:#81b248;
+	text-transform: uppercase;
 }
 
 .btn .btn-border{
