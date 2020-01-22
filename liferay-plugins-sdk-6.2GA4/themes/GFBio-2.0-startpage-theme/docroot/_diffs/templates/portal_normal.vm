@@ -6,6 +6,29 @@
 	
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 	
+	<style>
+	#meetUs {
+    position: fixed;
+    right: -0px;
+    transition: 0.3s;
+    top: 40%;
+    z-index: 2;
+    color:white; 
+    background-color:#81b248; 
+    border-color:#81b248;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 4px 0px 0px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+	}
+
+	#meetUs:hover {
+    right: 0;
+	}
+</style>
+	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128530301-2"></script>
 	<script>
@@ -28,6 +51,9 @@
 #end
 <body class="$css_class">
 <a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
+
+<a class="btn btn-green" href="/training" id="meetUs" title="Have a look at our training page." type="button"><i class="icon-users3">&nbsp;</i><span>Meet us!</span></a>
+
 $theme.include($body_top_include)
 	
 	
