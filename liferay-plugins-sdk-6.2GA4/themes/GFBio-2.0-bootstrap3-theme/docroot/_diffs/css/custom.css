@@ -1,4 +1,24 @@
+#feedback{
+    position: fixed;
+    right: -0px;
+    transition: 0.3s;
+    top: 40%;
+    z-index: 3;
+    color:white; 
+    background-color:#81b248; 
+    border-color:#81b248;
+    height: auto;
+    font-size: 18px;
+    border-radius: 4px 0px 0px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+}
 
+#feedback:hover {
+    right: 0;
+}
 
 .aui{
 	
@@ -1204,6 +1224,11 @@ $breakpoint_tablet: 1200px;
 // TABLETS 
 // -----------------
 @include respond-to(tablet) {
+	#feedback {
+		font-size: 12px;
+		padding: 6px 12px;
+	}
+	
 	.aui {
 		 #navigation{ 
 			display: block;
@@ -1323,6 +1348,11 @@ $breakpoint_tablet: 1200px;
 // Phone
 // -----------------
 @include respond-to(phone) {
+	#feedback {
+		font-size: 12px;
+		padding: 6px 12px;
+	}
+	
 	.aui {
 		 #navigation{ 
 			display: block;
