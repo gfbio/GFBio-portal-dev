@@ -35,11 +35,11 @@
     right: -0px;
     transition: 0.3s;
     top: 40%;
-    z-index: 2;
+    z-index: 3;
     color:white; 
     background-color:#81b248; 
     border-color:#81b248;
-    height: 50px;
+    height: auto;
     font-size: 18px;
     border-radius: 4px 0px 0px 4px;
     display: flex;
@@ -578,6 +578,11 @@ Contact
 }
 
 @include respond-to(phone, tablet) {	
+	#meetUs {
+		font-size: 12px;
+		padding: 6px 12px;
+	}
+	
 	#main{
 		margin-top: -24px;
 	}
@@ -708,6 +713,12 @@ Contact
 
 /* Fix graphical display issues on mobile device: https://project.gfbio.org/issues/1294 */
 @media (min-width: 280px) and (max-width: 370px) {
+	
+	#meetUs {
+		font-size: 12px;
+		padding: 6px 12px;
+	}
+	
 	.search_button_text {
         display: none;
     }
@@ -837,6 +848,10 @@ Contact
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 	
+	#meetUs {
+		font-size: 12px;
+		padding: 6px 12px;
+	}
   
     /* home slider */
     .caption-content h2 {
