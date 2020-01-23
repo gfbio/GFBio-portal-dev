@@ -5,31 +5,7 @@
 	<title>$company_name - $the_title</title>
 	
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
-	
-	<style>
-	#meetUs {
-    position: fixed;
-    right: -0px;
-    transition: 0.3s;
-    top: 40%;
-    z-index: 3;
-    color:white; 
-    background-color:#81b248; 
-    border-color:#81b248;
-    height: 50px;
-    font-size: 18px;
-    border-radius: 4px 0px 0px 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-	}
-
-	#meetUs:hover {
-    right: 0;
-	}
-</style>
-	
+		
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128530301-2"></script>
 	<script>

@@ -30,6 +30,28 @@
     box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.15);
 }
 
+#meetUs {
+    position: fixed;
+    right: -0px;
+    transition: 0.3s;
+    top: 40%;
+    z-index: 2;
+    color:white; 
+    background-color:#81b248; 
+    border-color:#81b248;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 4px 0px 0px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+}
+
+#meetUs:hover {
+    right: 0;
+}
+
 .aui{
 	
 body{
