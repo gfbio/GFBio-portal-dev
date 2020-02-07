@@ -471,4 +471,24 @@
 	</entity>
 
 
+  <!-- UserID - GoeSternID -->
+  <entity 	name="UserGoesternID" data-source="gfbioDataSource"	
+  			local-service="true" remote-service="true" 
+  			session-factory="gfbioSessionFactory" 
+  			tx-manager="gfbioTransactionManager" 
+  			cache-enabled="false">
+  			
+		<column name="userID" type="long" primary="true" />
+		<column name="goeSternID" type="long" primary="true" />
+		<column name="lastModifiedDate" type="Date" 	db-name="lastmodifieddate"/>
+
+		<finder name="UserID" return-type="UserGoesternID">	
+			<finder-column name="userID" />															
+		</finder>
+		<finder name="GoeSternID" return-type="UserGoesternID">	
+			<finder-column name="goeSternID" />
+		</finder>
+		
+	</entity>
+
 </service-builder>

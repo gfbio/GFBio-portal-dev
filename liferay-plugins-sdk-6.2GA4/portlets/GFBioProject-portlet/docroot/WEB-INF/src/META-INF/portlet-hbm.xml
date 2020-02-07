@@ -20,6 +20,7 @@
 	<import class="org.gfbio.model.ResearchObject_User" />
 	<import class="org.gfbio.model.Submission" />
 	<import class="org.gfbio.model.UserExtension" />
+	<import class="org.gfbio.model.UserGoesternID" />
 	<import class="org.gfbio.model.UserSSO" />
 	<class name="org.gfbio.model.impl.BasketImpl" table="gfbio_Basket">
 		<id name="basketID" type="long">
@@ -214,6 +215,13 @@
 		<id name="userID" type="long">
 			<generator class="assigned" />
 		</id>
+	</class>
+	<class name="org.gfbio.model.impl.UserGoesternIDImpl" table="gfbio_UserGoesternID">
+		<composite-id name="primaryKey" class="org.gfbio.service.persistence.UserGoesternIDPK">
+			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="goeSternID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
 	<class name="org.gfbio.model.impl.UserSSOImpl" table="gfbio_UserSSO">
 		<id name="userID" type="long">

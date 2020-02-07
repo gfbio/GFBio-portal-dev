@@ -159,6 +159,11 @@
 	<model name="org.gfbio.model.UserExtension">
 		<field name="userID" type="long" />
 	</model>
+	<model name="org.gfbio.model.UserGoesternID">
+		<field name="userID" type="long" />
+		<field name="goeSternID" type="long" />
+		<field name="lastModifiedDate" type="Date" />
+	</model>
 	<model name="org.gfbio.model.UserSSO">
 		<field name="userID" type="long" />
 		<field name="token" type="String" />

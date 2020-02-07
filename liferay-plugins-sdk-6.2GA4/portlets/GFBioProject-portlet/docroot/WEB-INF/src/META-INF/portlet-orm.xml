@@ -384,6 +384,20 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.UserGoesternIDModelImpl">
+		<id-class class="org.gfbio.service.persistence.UserGoesternIDPK" />
+		<attributes>
+			<id name="userID" />
+			<id name="goeSternID" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="org.gfbio.model.impl.UserSSOModelImpl">
 		<attributes>
 			<id name="userID" />
@@ -466,6 +480,10 @@
 	</entity>
 	<entity class="org.gfbio.model.impl.UserExtensionImpl" name="UserExtension">
 		<table name="gfbio_UserExtension" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.UserGoesternIDImpl" name="UserGoesternID">
+		<table name="gfbio_UserGoesternID" />
 		<attributes />
 	</entity>
 	<entity class="org.gfbio.model.impl.UserSSOImpl" name="UserSSO">

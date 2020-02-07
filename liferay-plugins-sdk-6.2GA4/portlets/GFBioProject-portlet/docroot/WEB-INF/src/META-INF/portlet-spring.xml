@@ -165,6 +165,12 @@
 		<property name="dataSource" ref="gfbioDataSource" />
 		<property name="sessionFactory" ref="gfbioSessionFactory" />
 	</bean>
+	<bean id="org.gfbio.service.UserGoesternIDLocalService" class="org.gfbio.service.impl.UserGoesternIDLocalServiceImpl" />
+	<bean id="org.gfbio.service.UserGoesternIDService" class="org.gfbio.service.impl.UserGoesternIDServiceImpl" />
+	<bean id="org.gfbio.service.persistence.UserGoesternIDPersistence" class="org.gfbio.service.persistence.UserGoesternIDPersistenceImpl" parent="basePersistence">
+		<property name="dataSource" ref="gfbioDataSource" />
+		<property name="sessionFactory" ref="gfbioSessionFactory" />
+	</bean>
 	<bean id="org.gfbio.service.UserSSOLocalService" class="org.gfbio.service.impl.UserSSOLocalServiceImpl" />
 	<bean id="org.gfbio.service.UserSSOService" class="org.gfbio.service.impl.UserSSOServiceImpl" />
 	<bean id="org.gfbio.service.persistence.UserSSOPersistence" class="org.gfbio.service.persistence.UserSSOPersistenceImpl" parent="basePersistence">
