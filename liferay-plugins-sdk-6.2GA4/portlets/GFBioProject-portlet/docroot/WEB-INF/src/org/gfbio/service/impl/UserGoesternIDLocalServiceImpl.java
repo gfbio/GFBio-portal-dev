@@ -49,9 +49,9 @@ public class UserGoesternIDLocalServiceImpl
 	 * @return
 	 * @throws Exception 
 	 */
-	public UserGoesternID updateUserGoesternID(long userID, long goeSternID) throws Exception {
+	public UserGoesternID updateUserGoesternID(long userID, String goeSternID) throws Exception {
 		
-		if(userID==0 ||goeSternID==0){
+		if(userID==0 ||goeSternID!=null){
 			throw new Exception("userId and goeSternID must not be 0!");
 		}
 		
@@ -92,8 +92,8 @@ public class UserGoesternIDLocalServiceImpl
 	 * @param goesternID
 	 * @return
 	 */
-	public long getUserIdByGoesternID(long goesternID){
-		if(goesternID>0){
+	public long getUserIdByGoesternID(String goesternID){
+		if(goesternID!=null && goesternID.length()>0){
 			try {
 				UserGoesternID ug = userGoesternIDPersistence.findByGoeSternID(goesternID);
 				if(ug!=null){
@@ -115,7 +115,7 @@ public class UserGoesternIDLocalServiceImpl
 	 * @param userID
 	 * @return
 	 */
-	public long getGoesternIDByUserID(long userID){
+	public String getGoesternIDByUserID(long userID){
 		if(userID>0){
 			try {
 				UserGoesternID ug = userGoesternIDPersistence.findByUserID(userID);
@@ -130,6 +130,6 @@ public class UserGoesternIDLocalServiceImpl
 				e.printStackTrace();
 			}
 		}
-		return 0;
+		return null;
 	}
 }

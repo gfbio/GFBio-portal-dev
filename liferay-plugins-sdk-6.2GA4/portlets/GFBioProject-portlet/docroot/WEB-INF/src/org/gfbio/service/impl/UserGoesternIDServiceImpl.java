@@ -43,7 +43,7 @@ public class UserGoesternIDServiceImpl extends UserGoesternIDServiceBaseImpl {
 	* @return userID
 	 *@JSONWebService 
 	 */
-	public long getUserByGoeSternID(long goesternID) {
+	public long getUserByGoeSternID(String goesternID) {
 		return UserGoesternIDLocalServiceUtil.getUserIdByGoesternID(goesternID);
 		
 	}
@@ -55,7 +55,7 @@ public class UserGoesternIDServiceImpl extends UserGoesternIDServiceBaseImpl {
 	 * @return goesternID
 	 *@JSONWebService 
 	 */
-	public long getGoesternIdByUserID(long userID) {
+	public String getGoesternIdByUserID(long userID) {
 		return UserGoesternIDLocalServiceUtil.getGoesternIDByUserID(userID);
 		
 	}

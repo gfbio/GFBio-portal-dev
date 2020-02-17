@@ -479,7 +479,7 @@
   			cache-enabled="false">
   			
 		<column name="userID" type="long" primary="true" />
-		<column name="goeSternID" type="long" primary="true" />
+		<column name="goeSternID" type="String" primary="true" />
 		<column name="lastModifiedDate" type="Date" 	db-name="lastmodifieddate"/>
 
 		<finder name="UserID" return-type="UserGoesternID">	

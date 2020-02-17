@@ -161,7 +161,7 @@
 	</model>
 	<model name="org.gfbio.model.UserGoesternID">
 		<field name="userID" type="long" />
-		<field name="goeSternID" type="long" />
+		<field name="goeSternID" type="String" />
 		<field name="lastModifiedDate" type="Date" />
 	</model>
 	<model name="org.gfbio.model.UserSSO">

@@ -219,7 +219,7 @@
 	<class name="org.gfbio.model.impl.UserGoesternIDImpl" table="gfbio_UserGoesternID">
 		<composite-id name="primaryKey" class="org.gfbio.service.persistence.UserGoesternIDPK">
 			<key-property name="userID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-			<key-property name="goeSternID" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="goeSternID" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		</composite-id>
 		<property name="lastModifiedDate" type="org.hibernate.type.TimestampType" column="lastmodifieddate" />
 	</class>
