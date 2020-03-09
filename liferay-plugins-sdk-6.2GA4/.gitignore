@@ -22,6 +22,7 @@
 /*/*/bin
 /*/*/build
 /*/*/classes
+/*/*/target
 /*/*/coverage-reports
 /*/*/docroot/WEB-INF/classes
 /*/*/docroot/WEB-INF/lib/portal-compat-shared.jar
@@ -42,9 +43,13 @@
 /portlets/*/test/integration/arquillian.xml
 /webs/*/test/integration/arquillian.xml
 
-/themes/*/.project
-/themes/*/.classpath
-/themes/*/.settings
+/portlets/*/docroot/META-INF
+/portlets/*/docroot/WEB-INF/classes
+
+/*/*/bin
+/*/*/build
+/*/*/target
+
 /themes/*/build.gradle
 /themes/*/docroot/META-INF
 /themes/*/docroot/WEB-INF/lib
