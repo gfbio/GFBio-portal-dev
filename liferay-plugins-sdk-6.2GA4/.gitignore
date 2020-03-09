@@ -43,8 +43,15 @@
 /portlets/*/test/integration/arquillian.xml
 /webs/*/test/integration/arquillian.xml
 
+/portlets/*/docroot/WEB-INF/lib/GFBioProject-portlet-service.jar
+
+/portlets/*/build.gradle
+
 /portlets/*/docroot/META-INF
 /portlets/*/docroot/WEB-INF/classes
+/portlets/*/docroot/WEB-INF/service
+/portlets/*/docroot/WEB-INF/src/org/gfbio/service/persistence/*PersistenceImpl.java
+/portlets/*/docroot/WEB-INF/sql
 
 /*/*/bin
 /*/*/build
