@@ -11,6 +11,8 @@
 _sass_cache_*.css
 cobertura.ser
 
+*.project
+
 **/.sonar
 
 /*.ant-*
