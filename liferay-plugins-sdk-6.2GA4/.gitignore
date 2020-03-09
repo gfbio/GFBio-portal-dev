@@ -47,6 +47,7 @@
 /themes/*/docroot/css
 /themes/*/docroot/images
 /themes/*/docroot/js
+/themes/*/docroot/fonts
 /themes/*/docroot/layouttpl
 /themes/*/docroot/templates
 /tmp
