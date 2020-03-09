@@ -50,6 +50,9 @@
 /portlets/*/docroot/META-INF
 /portlets/*/docroot/WEB-INF/classes
 /portlets/*/docroot/WEB-INF/service
+/portlets/*/docroot/WEB-INF/src/org/gfbio/model
+/portlets/*/docroot/WEB-INF/src/org/gfbio/service/base
+/portlets/*/docroot/WEB-INF/src/org/gfbio/service/http
 /portlets/*/docroot/WEB-INF/src/org/gfbio/service/persistence/*PersistenceImpl.java
 /portlets/*/docroot/WEB-INF/sql
 
