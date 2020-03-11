@@ -56,45 +56,37 @@ public class UserGoesternIDLocalServiceImpl extends
 	 */
 	public UserGoesternID updateUserGoesternID(long userID, String goeSternID)
 			throws Exception {
-
-		if (userID == 0) {
-			throw new Exception("The userId is 0!");
-		}
-
-		if (goeSternID != null && !goeSternID.isEmpty()) {
-			throw new Exception("The goesternId is null or empty!");
-		}
-
-		UserGoesternID ug = null;
-		Date now = new Date();
+		UserGoesternID userGoesternId = null;
 		try {
-			// first try it with userId
-			ug = userGoesternIDPersistence.findByUserID(userID);
-
-			// try it with goesternID
-			if (ug == null) {
-				ug = userGoesternIDPersistence.findByGoeSternID(goeSternID);
+			if (userID == 0) {
+				throw new Exception("The userId is 0!");
 			}
 
-			UserGoesternIDPK pk = new UserGoesternIDPK();
-			pk.setGoeSternID(goeSternID);
-			pk.setUserID(userID);
-			ug.setPrimaryKey(pk);
-			ug.setLastModifiedDate(now);
-
-			if (ug != null) {
-				// update userGoesternID
-				UserGoesternIDLocalServiceUtil.updateUserGoesternID(ug);
-			} else {
-				// create userGoesternID
-				UserGoesternIDLocalServiceUtil.createUserGoesternID(pk);
+			if (goeSternID == null || goeSternID.isEmpty()) {
+				throw new Exception("The goesternId is null or empty!");
 			}
+
+			UserGoesternIDPK userGoesternIDPK = new UserGoesternIDPK();
+			userGoesternIDPK.setGoeSternID(goeSternID);
+			userGoesternIDPK.setUserID(userID);
+
+			userGoesternId = UserGoesternIDLocalServiceUtil
+					.getUserGoesternID(userGoesternIDPK);
+
+			if (userGoesternId == null) {
+				userGoesternId = UserGoesternIDLocalServiceUtil
+						.createUserGoesternID(userGoesternIDPK);
+			}
+
+			userGoesternId.setLastModifiedDate(new Date());
+
+			UserGoesternIDLocalServiceUtil.updateUserGoesternID(userGoesternId);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return ug;
+		return userGoesternId;
 	}
 
 	/**
