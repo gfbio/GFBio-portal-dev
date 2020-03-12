@@ -70,17 +70,18 @@ public class UserGoesternIDLocalServiceImpl extends
 			userGoesternIDPK.setGoeSternID(goeSternID);
 			userGoesternIDPK.setUserID(userID);
 
-			userGoesternId = UserGoesternIDLocalServiceUtil
-					.getUserGoesternID(userGoesternIDPK);
+			userGoesternId = userGoesternIDPersistence.fetchByPrimaryKey(userGoesternIDPK);
 
 			if (userGoesternId == null) {
-				userGoesternId = UserGoesternIDLocalServiceUtil
-						.createUserGoesternID(userGoesternIDPK);
+				userGoesternId = userGoesternIDPersistence.create(userGoesternIDPK);		
+					//UserGoesternIDLocalServiceUtil.createUserGoesternID(userGoesternIDPK);
 			}
 
 			userGoesternId.setLastModifiedDate(new Date());
-
-			UserGoesternIDLocalServiceUtil.updateUserGoesternID(userGoesternId);
+			
+			userGoesternId = super.updateUserGoesternID(userGoesternId);
+			
+			//UserGoesternIDLocalServiceUtil.updateUserGoesternID(userGoesternId);
 
 		} catch (Exception e) {
 			e.printStackTrace();
