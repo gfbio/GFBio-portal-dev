@@ -236,7 +236,7 @@
  --%>
 <div class="portlet-msg-info" style="font-size:13px;">
 	Please change your password at GFBio's central SSO service: </br> 
-	<a href="<%=PropsUtil.get("sign_in_url")%>">Sign In at GFBio's SSO</a>.
+	<a href="<%=PropsUtil.get("password.reset.url")%>">Sign In at GFBio's SSO</a>.
 </div>
 
 <%-- <c:if
