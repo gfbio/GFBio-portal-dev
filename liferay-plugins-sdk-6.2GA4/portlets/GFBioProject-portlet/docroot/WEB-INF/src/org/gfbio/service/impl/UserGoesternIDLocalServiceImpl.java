@@ -28,75 +28,80 @@ import com.liferay.portal.kernel.exception.SystemException;
  * The implementation of the user goestern i d local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link org.gfbio.service.UserGoesternIDLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link org.gfbio.service.UserGoesternIDLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Felicitas Löffler
  * @see org.gfbio.service.base.UserGoesternIDLocalServiceBaseImpl
  * @see org.gfbio.service.UserGoesternIDLocalServiceUtil
  */
-public class UserGoesternIDLocalServiceImpl
-	extends UserGoesternIDLocalServiceBaseImpl {
-	
-	
+public class UserGoesternIDLocalServiceImpl extends
+		UserGoesternIDLocalServiceBaseImpl {
+
 	/**
-	 * updates the UserGoesternID entry, if no entry is available it creates a new entry
+	 * updates the UserGoesternID entry, if no entry is available it creates a
+	 * new entry
+	 * 
 	 * @param userID
 	 * @param goeSternID
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public UserGoesternID updateUserGoesternID(long userID, String goeSternID) throws Exception {
-		
-		if(userID==0 ||goeSternID!=null){
-			throw new Exception("userId and goeSternID must not be 0!");
-		}
-		
-		UserGoesternID ug = null;
-		Date now = new Date();
+	public UserGoesternID updateUserGoesternID(long userID, String goeSternID)
+			throws Exception {
+		UserGoesternID userGoesternId = null;
 		try {
-		    //first try it with userId	
-			ug = userGoesternIDPersistence.findByUserID(userID);
-			
-			//try it with goesternID
-			if(ug==null){
-				ug = userGoesternIDPersistence.findByGoeSternID(goeSternID);
+			if (userID == 0) {
+				throw new Exception("The userId is 0!");
 			}
-			
-			UserGoesternIDPK pk = new UserGoesternIDPK();
-			pk.setGoeSternID(goeSternID);
-			pk.setUserID(userID);
-			ug.setPrimaryKey(pk);
-			ug.setLastModifiedDate(now);
-			
-			if(ug!=null){
-				// update userGoesternID			
-				UserGoesternIDLocalServiceUtil.updateUserGoesternID(ug);
-			}else{
-				//create userGoesternID
-				UserGoesternIDLocalServiceUtil.createUserGoesternID(pk);
+
+			if (goeSternID == null || goeSternID.isEmpty()) {
+				throw new Exception("The goesternId is null or empty!");
 			}
+
+			UserGoesternIDPK userGoesternIDPK = new UserGoesternIDPK();
+			userGoesternIDPK.setGoeSternID(goeSternID);
+			userGoesternIDPK.setUserID(userID);
+
+			userGoesternId = userGoesternIDPersistence.fetchByPrimaryKey(userGoesternIDPK);
+
+			if (userGoesternId == null) {
+				userGoesternId = userGoesternIDPersistence.create(userGoesternIDPK);		
+					//UserGoesternIDLocalServiceUtil.createUserGoesternID(userGoesternIDPK);
+			}
+
+			userGoesternId.setLastModifiedDate(new Date());
+			
+			userGoesternId = super.updateUserGoesternID(userGoesternId);
+			
+			//UserGoesternIDLocalServiceUtil.updateUserGoesternID(userGoesternId);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return ug;
+		return userGoesternId;
 	}
 
 	/**
 	 * returns the userID of a user being identified by goesternID
+	 * 
 	 * @param goesternID
 	 * @return
 	 */
-	public long getUserIdByGoesternID(String goesternID){
-		if(goesternID!=null && goesternID.length()>0){
+	public long getUserIdByGoesternID(String goesternID) {
+		if (goesternID != null && goesternID.length() > 0) {
 			try {
-				UserGoesternID ug = userGoesternIDPersistence.findByGoeSternID(goesternID);
-				if(ug!=null){
+				UserGoesternID ug = userGoesternIDPersistence
+						.findByGoeSternID(goesternID);
+				if (ug != null) {
 					return ug.getUserID();
 				}
 			} catch (NoSuchUserGoesternIDException e) {
@@ -109,17 +114,19 @@ public class UserGoesternIDLocalServiceImpl
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * returns the goesternID of a user being identified by userID
+	 * 
 	 * @param userID
 	 * @return
 	 */
-	public String getGoesternIDByUserID(long userID){
-		if(userID>0){
+	public String getGoesternIDByUserID(long userID) {
+		if (userID > 0) {
 			try {
-				UserGoesternID ug = userGoesternIDPersistence.findByUserID(userID);
-				if(ug!=null){
+				UserGoesternID ug = userGoesternIDPersistence
+						.findByUserID(userID);
+				if (ug != null) {
 					return ug.getGoeSternID();
 				}
 			} catch (NoSuchUserGoesternIDException e) {
