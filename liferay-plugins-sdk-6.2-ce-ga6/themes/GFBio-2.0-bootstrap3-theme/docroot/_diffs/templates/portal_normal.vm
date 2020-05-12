@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+#parse ($init)
+
+<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
+
+<head>
+	<title>$the_title - $company_name</title>
+
+	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128530301-2"></script>
+	<script>
+  		window.dataLayer = window.dataLayer || [];
+  		function gtag(){dataLayer.push(arguments);}
+  		gtag('js', new Date());
+
+  		gtag('config', 'UA-128530301-2', { 'anonymize_ip': true } );
+	</script>
+	
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script> 
+	<script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+	$theme.include($top_head_include)
+
+	
+	
+</head> 
+<!--<link href="//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">-->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Caveat:400,700bold" rel="stylesheet" type="text/css">
+#set ($dockbar = $theme.getSetting("dockbar-vertical"))
+
+#if ($dockbar == true)
+	#set ($css_class = "${css_class} dockbar-vertical")
+#end
+
+<body class="$css_class">
+
+
+
+<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
+
+$theme.include($body_top_include)
+	
+	
+		<div id="responsiveMenuToggle" class="icon-toggle-menu">
+		    <i class="fa fa-bars"></i>
+		</div>
+
+		<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
+			<div class="container">
+				<a href="$portal_url">
+                	<h1 class="navbar-brand">
+                	</h1>
+            	</a>
+		
+				<div id="nav">	
+					#if ($has_navigation || $is_signed_in)
+						#parse ("$full_templates_path/navigation.vm")
+					#end	
+				</div>
+
+       			<div id="sign-in-link">
+
+            		#if ($show_sign_in)
+					<div id="notSignedIn">
+						<a href="$sign_in_url?saveLastPath=0" title="Please sign in or register!">
+							<i class="fa fa-sign-in" aria-hidden="true"></i>
+							$sign_in_text
+						</a>
+					</div>
+					#end
+
+            		#if ($is_signed_in)
+            		<div id="signedIn">
+            			<span id="userGreeting">$user.greeting</span>
+						</br>
+						<a href="$sign_out_url" title="sign out">
+							<i class="fa fa-sign-out" aria-hidden="true"></i>
+							$sign_out_text
+						</a>
+					</div>
+					#end
+            		<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
+            		<!--<a href="$portal_url/web/gfbioboostrap3/sign-in" title="Please sign in or register!">Sign In</a>-->
+ 		 		</div>
+	 		</div>	
+		</header>
+	
+		#if ($is_signed_in)
+			#dockbar()
+		#end
+
+		<main id="main" class="site-content" role="main">
+			#if ($selectable)
+				$theme.include($content_include)
+			#else
+				$portletDisplay.recycle()
+
+				$portletDisplay.setTitle($the_title)
+
+				$theme.wrapPortlet("portlet.vm", $content_include)
+			#end
+		</main>
+ 
+		$theme.include($body_bottom_include)
+		$theme.include($bottom_include)
+	</body>
+</html>

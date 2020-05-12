@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="GFBio-2.0-bootstrap3-theme" basedir="." default="deploy">
+	<property name="theme.parent" value="_styled" />
+
+	<import file="../build-common-theme.xml" />
+	<property name="theme.type" value="vm" />
+	<property name="theme.type" value="vm" />
+	<property name="theme.type" value="vm" />
+</project>
