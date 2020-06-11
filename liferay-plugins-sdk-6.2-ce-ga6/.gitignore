@@ -41,6 +41,9 @@
 /dist
 /hooks/*/test/integration/arquillian.xml
 /portlets/*/test/integration/arquillian.xml
+/portlets/*/docroot/WEB-INF/service
+/portlets/*/docroot/WEB-INF/classes
+/portlets/*/docroot/WEB-INF/sql
 /webs/*/test/integration/arquillian.xml
 
 # Themes
