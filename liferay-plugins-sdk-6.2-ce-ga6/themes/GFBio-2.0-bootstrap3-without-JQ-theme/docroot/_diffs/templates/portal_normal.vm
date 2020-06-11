@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+#parse ($init)
+
+<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
+
+<head>
+	<title>$the_title - $company_name</title>
+
+	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128530301-2"></script>
+	<script>
+  		window.dataLayer = window.dataLayer || [];
+  		function gtag(){dataLayer.push(arguments);}
+  		gtag('js', new Date());
+
+  		gtag('config', 'UA-128530301-2', { 'anonymize_ip': true } );
+	</script>
+
+	$theme.include($top_head_include)
+</head>
+<!--<link href="//fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">-->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:300,300italic,700|Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+
+#set ($dockbar = $theme.getSetting("dockbar-vertical"))
+
+#if ($dockbar == true)
+	#set ($css_class = "${css_class} dockbar-vertical")
+#end
+
+<body class="$css_class">
+
+
+
+<a href="#main-content" id="skip-to-content">#language ("skip-to-content")</a>
+
+$theme.include($body_top_include)
+	
+	
+		<div id="responsiveMenuToggle" class="icon-toggle-menu">
+		    <i class="fa fa-bars"></i>
+		</div>
+
+
+	<header id="navigation" class="yamm navbar-inverse navbar-fixed-top animated-header navigation-shadow">
+
+	
+	<div class="container">
+		<a href="$portal_url">
+                <h1 class="navbar-brand">
+                </h1>
+            </a>
+		
+		<div id="nav">	
+			#if ($has_navigation || $is_signed_in)
+					#parse ("$full_templates_path/navigation.vm")
+			#end	
+		</div>
+          
+          
+         <div id="sign-in-link">
+            	
+            	
+            	#if ($show_sign_in)
+				<div id="notSignedIn">
+					<a href="$sign_in_url?saveLastPath=0" title="Please sign in or register!">
+						<i class="fa fa-sign-in" aria-hidden="true"></i>
+						
+						$sign_in_text
+					</a>
+				</div>
+				#end
+				
+            	
+            	
+            	#if ($is_signed_in)
+            	<div id="signedIn">
+            		<span id="userGreeting">$user.greeting</span>
+					</br>
+					<a href="$sign_out_url" title="sign out">
+					<i class="fa fa-sign-out" aria-hidden="true"></i>
+					
+					$sign_out_text
+					</a>
+				</div>
+				#end
+         		
+            	
+            	<!--<a href="$portal_url/web/gfbio-theme-2.0/sign-in" title="Please sign in or register!">Sign In</a>-->
+            	<!--<a href="$portal_url/web/gfbioboostrap3/sign-in" title="Please sign in or register!">Sign In</a>-->
+ 			</div>
+          
+          
+	 </div>	
+	 
+	 	
+
+	
+	
+	</header>
+	
+#if ($is_signed_in)
+	#dockbar()
+#end
+
+<main id="main" class="site-content" role="main">
+		
+		#if ($selectable)
+			$theme.include($content_include)
+		#else
+			$portletDisplay.recycle()
+
+			$portletDisplay.setTitle($the_title)
+
+			$theme.wrapPortlet("portlet.vm", $content_include)
+		#end
+	
+
+	
+</main>
+
+
+$theme.include($body_bottom_include)
+
+$theme.include($bottom_include)
+
+<script>
+
+(function($) {
+    $(document).ready(function() {
+    
+      $(document).accordion({
+        // Put custom options here
+        heightStyle: 'content',
+        header: 'div.toggler',
+        collapsible: true,
+        active: false,
+      });
+      var activate = function(tog) {
+        var tgs = $('div.toggler');
+        tgs.removeClass('active');
+        tog.addClass('active');
+        tgs.next('div.accordion').attr('aria-hidden', 'true');
+        tog.next('div.accordion').attr('aria-hidden', 'false');
+      };
+      $('div.toggler').focus(function(e) {
+        $('div.toggler').attr('tabindex', 0);
+        $(this).attr('tabindex', -1);
+      }).blur(function() {
+        $(this).attr('tabindex', 0);
+      }).click(function() {
+        activate($(this));
+      }).keypress(function(event) {
+        if (event.keyCode == 13) activate($(this));
+      });
+      
+        var menuToggleBtn = $('#responsiveMenuToggle'); // get our toggle button
+        var navigationDiv = $('#nav'); // get default navigation div element
+		var body = $('.aui body');
+        if (menuToggleBtn && navigationDiv) { 
+        // do nothing when toggle button not present (user not signed in) or if navigation is not present
+        // otherwise assign simple function that'll toggle 'open' menu class on default navigation which will cause it to open, same for menu toggle button
+            menuToggleBtn.on( 
+                'click',
+                function (event) {
+                	if (navigationDiv.hasClass('open')){
+                		menuToggleBtn.removeClass('open');
+                		navigationDiv.removeClass('open');
+                		navigationDiv.addClass('hide');
+						body.removeClass('lfr-has-dockbar-vertical');
+                	}else{
+                		// expand the menu bar 
+                		menuToggleBtn.addClass('open');
+                		navigationDiv.addClass('open');
+                		navigationDiv.removeClass('hide');
+                		// hide dockbar
+						var portletDockbar = $('#_145_dockbar');
+						if (portletDockbar){
+							portletDockbar.removeClass('over');
+                		}
+						body.removeClass('lfr-has-dockbar-vertical');
+                	}
+                }
+            );}
+    });
+  })(jQuery);
+  window.onresize = function(event) {
+        var navigationDiv = $('#nav'); // get default navigation ul element
+        navigationDiv.removeClass('hide');
+        navigationDiv.removeClass('open');
+  };
+  
+</script>
+
+
+
+</body>
+
+</html>
