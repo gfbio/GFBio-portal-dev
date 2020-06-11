@@ -41,10 +41,13 @@
 /hooks/*/test/integration/arquillian.xml
 /portlets/*/test/integration/arquillian.xml
 /webs/*/test/integration/arquillian.xml
+
+# Themes
 /themes/*/docroot/WEB-INF/lib
 /themes/*/docroot/css
 /themes/*/docroot/images
 /themes/*/docroot/js
+/themes/*/docroot/fonts
 /themes/*/docroot/layouttpl
 /themes/*/docroot/templates
 /tmp
