@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+   <sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getCheckOfLabel">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(dataproviderid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_dataprovider
+			 WHERE
+			 label = ?
+		]]>
+    </sql>
+
+
+    <sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getDataProviderIdByLabel">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_dataprovider.dataproviderid 
+			FROM 
+			  public.gfbio_dataprovider
+			WHERE
+			  public.gfbio_dataprovider.label = ?
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getLabelById">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_dataprovider.label 
+			FROM 
+			  public.gfbio_dataprovider
+			WHERE
+			  public.gfbio_dataprovider.dataproviderid =   ?
+		]]>
+    </sql>
+    
+   <sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(dataproviderid)  AS dataproviderid
+			FROM
+				public.gfbio_dataprovider
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getNameById">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_dataprovider.name 
+			FROM 
+			  public.gfbio_dataprovider
+			WHERE
+			  public.gfbio_dataprovider.dataproviderid =   ?
+		]]>
+    </sql>
+     
+     
+	<sql id="org.gfbio.service.persistence.DataProviderFinderImpl.getLabels">
+	    <![CDATA[
+			SELECT 
+				gfbio_dataprovider.label
+			FROM 
+				public.gfbio_dataprovider
+			ORDER BY gfbio_dataprovider.label
+		]]>
+    </sql>
+ 
+</custom-sql>

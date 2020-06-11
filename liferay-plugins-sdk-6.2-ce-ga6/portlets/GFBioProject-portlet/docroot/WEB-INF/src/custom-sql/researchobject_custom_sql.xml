@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+	<sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfDirectParent">
+	    <![CDATA[
+			SELECT 
+				CASE WHEN gfbio_researchobject.parentresearchobjectid IS NULL OR gfbio_researchobject.parentresearchobjectid = 0 THEN FALSE ELSE TRUE END AS check
+			FROM 
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid =?
+		]]>
+    </sql>
+    
+   <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfId">
+	    <![CDATA[
+			SELECT 
+				CASE WHEN iq.researchobjectid IS NULL THEN FALSE ELSE TRUE END AS check
+			FROM 
+			(
+			SELECT
+				distinct (researchobjectid)
+			FROM
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid =?)AS iq
+		]]>
+    </sql>
+    
+    
+        <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getCheckOfIdAndVersion">
+	    <![CDATA[
+			SELECT 
+				(CASE WHEN sum(researchobjectid) >0 THEN true ELSE false END ) as check
+			
+			FROM 
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid = ? AND
+				researchobjectversion = ?
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getDirectParent">
+	    <![CDATA[
+			SELECT
+				*
+			FROM
+				public.gfbio_researchobject
+			WHERE researchobjectid =(
+				SELECT 
+				  parentresearchobjectid 
+				FROM 
+				  public.gfbio_researchobject
+				where
+				  researchobjectid=?)
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getLatestResearchObjectById">
+	    <![CDATA[
+			SELECT
+				* 
+			FROM
+				(
+				SELECT 
+				  *,
+				  rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
+				FROM 
+				  public.gfbio_researchobject
+				WHERE
+				  researchobjectid in(
+					SELECT 
+					  gfbio_researchobject.researchobjectid
+					FROM 
+					  public.gfbio_researchobject
+					WHERE
+					  gfbio_researchobject.researchobjectid = ?) 
+					  )AS iq
+			
+			WHERE pos=1
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getLatestVersionById">
+	    <![CDATA[
+			SELECT
+				researchobjectversion 
+			FROM
+				(
+				SELECT 
+				  *,
+				  rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
+				FROM 
+				  public.gfbio_researchobject
+				WHERE
+				  researchobjectid in(
+					SELECT 
+					  gfbio_researchobject.researchobjectid
+					FROM 
+					  public.gfbio_researchobject
+					WHERE
+					  gfbio_researchobject.researchobjectid = ?) 
+					  )AS iq
+			
+			WHERE pos=1
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(researchobjectid)  AS researchobjectid
+			FROM
+				public.gfbio_researchobject
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getResearchObjectInformationByUserId">
+	    <![CDATA[
+			select
+				outerList.*,
+				gfbio_submission.status
+			From
+				(
+				SELECT
+					list.researchobjectid,
+					list.researchobjectversion,
+					list.name AS researchobjectname,
+					gfbio_project.name AS projectname
+				FrOM
+					(
+						SELECT 
+							*,
+							rank() OVER (PARTITION BY researchobjectid ORDER BY researchobjectversion DESC) AS pos
+						FROM 
+							public.gfbio_researchobject
+						WHERE 
+							(
+								gfbio_researchobject.researchobjectid in (
+									SELECT 
+										gfbio_researchobject.researchobjectid
+									FROM 
+										public.gfbio_researchobject, 
+										public.gfbio_project, 
+										public.gfbio_project_user,
+										public.gfbio_project_researchobject
+									WHERE 
+											gfbio_project_user.userid = ? AND
+											gfbio_project.projectid = gfbio_project_researchobject.projectid AND
+											gfbio_project_user.projectid = gfbio_project.projectid AND
+											gfbio_project_researchobject.researchobjectid = gfbio_researchobject.researchobjectid AND
+											gfbio_project_researchobject.researchobjectversion = gfbio_researchobject.researchobjectversion 								
+								) OR
+									gfbio_researchobject.researchobjectid in (
+										SELECT 
+											researchobjectid 
+										FROM 
+											public.gfbio_researchobject_user
+										WHERE
+											userid = ?
+									)
+							)
+					) As list
+					LEFT OUTER JOIN gfbio_project_researchobject ON (
+						gfbio_project_researchobject.researchobjectid = list.researchobjectid and
+						gfbio_project_researchobject.researchobjectversion = list.researchobjectversion
+					)
+					LEFT OUTER JOIN		gfbio_project ON (
+						gfbio_project_researchobject.projectid = gfbio_project.projectid
+					)
+					where
+						pos=1
+				)as outerList
+			LEFT OUTER JOIN gfbio_submission ON (
+				gfbio_submission.researchobjectid = outerList.researchobjectid and
+				gfbio_submission.researchobjectversion = outerList.researchobjectversion
+			)
+		]]>
+    </sql>
+    
+    
+    
+    <sql id="org.gfbio.service.persistence.ResearchObjectFinderImpl.getResearchObjectVersionsById">
+	    <![CDATA[
+			SELECT 
+				researchobjectversion 
+			FROM 
+				public.gfbio_researchobject
+			WHERE
+				researchobjectid = ? ;
+		]]>
+    </sql>
+    
+</custom-sql>

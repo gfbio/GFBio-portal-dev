@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+   <sql id="org.gfbio.service.persistence.ProjectFinderImpl.getCheckOnId">
+	    <![CDATA[
+			SELECT 
+			  (CASE WHEN sum(projectid) >0 THEN true ELSE false END ) as check
+			FROM 
+			  public.gfbio_project
+			 WHERE
+			 projectid = ?
+		]]>
+    </sql>
+    
+    
+   <sql id="org.gfbio.service.persistence.ProjectFinderImpl.checkProjectOnSubmissions">
+	    <![CDATA[
+			SELECT 
+				 (CASE WHEN sum(gfbio_project_researchobject.projectid) >0 THEN true ELSE false END ) as check  
+			FROM 
+			  	public.gfbio_submission, 
+			 	public.gfbio_project_researchobject
+			WHERE 
+			  	gfbio_project_researchobject.researchobjectversion = gfbio_submission.researchobjectversion AND
+			  	gfbio_project_researchobject.researchobjectid = gfbio_submission.researchobjectid AND
+			  	gfbio_project_researchobject.projectid = ?
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ProjectFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				MAX(projectid)  AS projectid
+			FROM
+				public.gfbio_project
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ProjectFinderImpl.getUserIdsByResearchObjectIdAndVersion">
+	    <![CDATA[
+			SELECT 
+				DISTINCT  gfbio_project_user.userid
+			FROM 
+			  	public.gfbio_project_user, 
+			  	public.gfbio_project_researchobject
+			WHERE 
+			  	gfbio_project_researchobject.projectid = gfbio_project_user.projectid AND
+			 	gfbio_project_researchobject.researchobjectid =? AND
+			  	gfbio_project_researchobject.researchobjectversion = ?
+		]]>	
+    </sql>
+  
+    
+</custom-sql>

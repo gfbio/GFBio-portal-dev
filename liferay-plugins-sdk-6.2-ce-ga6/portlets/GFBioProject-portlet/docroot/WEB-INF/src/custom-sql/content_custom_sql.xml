@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.checkExistenceOfKeyId">
+	    <![CDATA[
+			SELECT 
+				(CASE WHEN count(contentid) >0 THEN true ELSE false END ) as check
+			FROM
+				public.gfbio_content
+			WHERE
+				headid = ? AND
+				cellcontent = ?
+		]]>
+    </sql> 
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.checkKeyPairInRelationship">
+	    <![CDATA[
+		    SELECT 
+				(CASE WHEN count(contentid) >0 THEN false ELSE true END ) as check
+			FROM
+				public.gfbio_content
+			WHERE
+				rowid in (
+					SELECT
+						rowid 
+					FROM 
+						public.gfbio_content
+					WHERE
+				  		headid =? AND
+				  		cellcontent = ?
+				)AND
+			  	cellcontent = ?
+		]]>
+    </sql>    
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getCellContent">
+	    <![CDATA[
+			SELECT  
+				public.gfbio_content.cellcontent
+			FROM 
+				public.gfbio_content
+			WHERE 
+				gfbio_content.headid =? AND
+				gfbio_content.rowid= ? AND
+				gfbio_content.columnid= ?
+			ORDER BY gfbio_content.cellcontent
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getCellContentByContentId">
+	    <![CDATA[
+			SELECT 
+	  			public.gfbio_content.cellcontent
+			FROM 
+	 			public.gfbio_content
+			 WHERE
+	 			public.gfbio_content.contentid =?
+	 		ORDER BY gfbio_content.cellcontent
+		]]>
+    </sql>
+    
+        <sql id="org.gfbio.service.persistence.ContentFinderImpl.getCellContentByRowIdAndColumnName">
+	    <![CDATA[
+			SELECT 
+				gfbio_content.cellcontent
+			FROM 
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE
+				gfbio_content.columnid = gfbio_column.columnid AND
+				gfbio_content.rowid = ? AND
+			 	gfbio_column.column_name = ?
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getColumnIdById">
+	    <![CDATA[
+			SELECT 
+			  gfbio_content.columnid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  gfbio_content.contentid =  ? 
+			ORDER BY gfbio_content.columnid
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdByRowIdAndColumnName">
+	    <![CDATA[
+			SELECT 
+			  contentid
+			FROM 
+			  public.gfbio_content,
+			  public.gfbio_column
+			WHERE
+			  rowid = ? AND
+			  gfbio_content.columnid = gfbio_column.columnid AND
+			  gfbio_column.column_name = ?
+		]]>
+    </sql>
+
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsWithoutRelationships">
+	    <![CDATA[
+		SELECT
+			public.gfbio_content.contentid
+			FROM 
+				public.gfbio_head,
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
+				CAST(contentid as text) = cellcontent AND
+				CAST(gfbio_content.rowid AS text) not in (
+				SELECT
+						public.gfbio_content.cellcontent
+					FROM 
+						public.gfbio_content
+					WHERE
+						gfbio_content.rowid in (
+							SELECT
+								distinct rowid
+							FROM
+								public.gfbio_head,
+								public.gfbio_column,
+								public.gfbio_content
+							WHERE
+								gfbio_column.headid = gfbio_content.headid AND
+								gfbio_column.headid = gfbio_head.headid AND
+								gfbio_head.table_type ='relationship' AND
+								(gfbio_column.column_name = ? OR
+								gfbio_column.column_name = ?) AND
+								gfbio_content.cellcontent = ?
+														)
+						AND
+						gfbio_content.cellcontent != ? 
+						)AND
+			gfbio_content.headid = gfbio_head.headid AND
+			gfbio_head.table_name =?
+			ORDER BY gfbio_content.contentid
+		]]>
+    </sql>
+    
+    
+   <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsWithNormalTableRelationships">
+	    <![CDATA[
+			SELECT
+				public.gfbio_content.contentid
+			FROM
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
+				CAST(gfbio_content.rowid AS text)  in (
+				
+					SELECT
+						cellcontent
+					FROM
+						public.gfbio_content
+					WHERE
+						rowid in(
+							SELECT 
+								rowid
+							FROM
+								public.gfbio_content
+							WHERE
+								gfbio_content.columnid in(
+									SELECT 
+										public.gfbio_column.columnid
+									FROM
+										public.gfbio_column
+									WHERE
+										column_name =?
+								) and
+								gfbio_content.headid in(
+									SELECT 
+										public.gfbio_head.headid
+									FROM
+										public.gfbio_head
+									WHERE
+										table_name =?
+								)and
+								public.gfbio_content.cellcontent=?
+							) and
+							gfbio_content.columnid in(
+								SELECT 
+									public.gfbio_column.columnid
+								FROM
+									public.gfbio_column
+								WHERE
+									column_name =?
+							)
+					) AND
+					CAST(contentid as text) = cellcontent
+				ORDER BY gfbio_content.contentid
+		]]>
+    </sql>
+    
+    
+     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsOfRelationshipsOfSpecificCellContent">
+	    <![CDATA[
+			SELECT 
+				CAST(cellcontent as bigint) AS contentid
+			FROM 
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
+				rowid in(
+					SELECT 
+						rowid 
+					FROM 
+						public.gfbio_content
+					WHERE
+						headid = ? AND
+						cellcontent in (
+							SELECT
+								CAST(contentid as text)
+							FROM
+								public.gfbio_content
+							WHERE
+								rowid in (  
+									SELECT 
+										rowid 
+									FROM 
+								  		public.gfbio_content
+									WHERE
+								  		headid = ? AND
+								  		cellcontent = ?)	AND
+							   			columnid in (
+											SELECT 
+												columnid 
+											FROM 
+												public.gfbio_column
+											WHERE
+												column_name ='id'
+										)
+								)
+						) AND
+						cellcontent not in (
+							SELECT
+								CAST(contentid as text)
+							FROM
+								public.gfbio_content
+							WHERE
+						  		rowid in (  
+									SELECT 
+										rowid 
+									FROM 
+										public.gfbio_content
+									WHERE
+										headid = ? AND
+										cellcontent = ?
+								) AND
+						   		columnid in (
+									SELECT 
+										columnid 
+									FROM 
+										public.gfbio_column
+									WHERE
+										column_name ='id'
+								)
+						)
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsWithRelationships">
+	    <![CDATA[
+			SELECT
+				public.gfbio_content.contentid
+			FROM 
+				public.gfbio_content,
+				public.gfbio_column
+			WHERE 
+				gfbio_column.columnid = gfbio_content.columnid AND
+				gfbio_column.column_name != 'lastmodifieddate' AND
+				CAST(contentid as text) = cellcontent AND
+				CAST(gfbio_content.rowid AS text)  in (
+					SELECT
+						public.gfbio_content.cellcontent
+					FROM 
+						public.gfbio_content,
+						public.gfbio_column
+
+					WHERE
+						gfbio_content.rowid in (
+							SELECT
+								Distinct rowid
+							FROM
+								public.gfbio_head,
+								public.gfbio_column,
+								public.gfbio_content
+							WHERE
+								gfbio_column.headid = gfbio_content.headid AND
+								gfbio_column.headid = gfbio_head.headid AND
+								gfbio_head.table_type ='relationship' AND
+								(
+									gfbio_column.column_name = ? OR
+									gfbio_column.column_name = ?
+								) AND
+								gfbio_content.cellcontent = ?
+						)
+						AND
+						gfbio_content.cellcontent != ? AND
+						gfbio_column.columnid = gfbio_content.columnid AND
+						(
+							gfbio_column.column_name = ? OR
+							gfbio_column.column_name = ?
+						)
+				)
+			ORDER BY gfbio_content.contentid
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getContentIdsByRowId">
+	    <![CDATA[
+			SELECT 
+			  public.gfbio_content.contentId
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  rowId = ?
+			ORDER BY gfbio_content.columnid
+		]]>
+    </sql>
+           
+   <sql id="org.gfbio.service.persistence.ContentFinderImpl.getHeadIdById">
+	    <![CDATA[
+			SELECT 
+			  gfbio_content.headid
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  contentId = ?
+			ORDER BY gfbio_content.headid
+		]]>
+    </sql>
+    
+       <sql id="org.gfbio.service.persistence.ContentFinderImpl.getHeadIdByRowId">
+	    <![CDATA[
+			SELECT 
+			  headid
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  rowid = ?
+		]]>
+    </sql>
+    
+       <sql id="org.gfbio.service.persistence.ContentFinderImpl.getMaxId">
+	    <![CDATA[
+			SELECT 
+				contentid
+			FROM
+				(SELECT MAX(rowid) as "contentid" FROM gfbio_content) as maxid
+				union
+				
+				SELECT MAX(contentid) FROM gfbio_content
+			ORDER BY contentid DESC
+			limit (1);
+		]]>
+    </sql>
+        
+        
+        
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getOppositeCellContentsOfRelationsByCellContent">
+	    <![CDATA[
+			SELECT 
+			  cellcontent 
+			FROM 
+			  public.gfbio_content,
+			  public.gfbio_column
+			WHERE 
+			  gfbio_column.columnid = gfbio_content.columnid AND
+			  gfbio_column.column_name != 'lastmodifieddate' AND
+			  rowid in (
+				SELECT 
+					rowid 
+				FROM 
+					public.gfbio_content
+				WHERE
+					headid= ? and
+					cellcontent = ?
+				)
+			  and
+			  contentid not in(
+			  SELECT 
+			  contentid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid= ? and
+			  cellcontent = ?)
+		]]>
+    </sql>
+    
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getOppositeCellContentsOfRelationsByCellContentAndColumn">
+	    <![CDATA[
+			SELECT 
+			  cellcontent 
+			FROM 
+			  public.gfbio_content,
+			  public.gfbio_column
+			WHERE 
+			  gfbio_column.columnid = gfbio_content.columnid AND
+			  gfbio_column.column_name != 'lastmodifieddate' AND
+			  rowid in (
+				SELECT 
+					rowid 
+				FROM 
+					public.gfbio_content
+				WHERE
+					headid= ? and
+					columnid = ? and
+					cellcontent = ?
+				)
+			  and
+			  contentid not in(
+			  SELECT 
+			  contentid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  headid= ? and
+			  columnid = ? and
+			  cellcontent = ?)
+		]]>
+    </sql>
+    
+        
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIds">
+	    <![CDATA[
+			SELECT  
+				DISTINCT public.gfbio_content.rowid
+			FROM 
+				public.gfbio_content
+			WHERE 
+				gfbio_content.headid = ? 
+			ORDER BY gfbio_content.rowid
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdByCellContent">
+	    <![CDATA[
+			SELECT
+				rowid
+			FROM
+				gfbio_content
+			WHERE
+				headid = ? AND
+				(
+					SELECT
+						columnid
+					FROM
+						gfbio_column
+					WHERE
+						headid = ? AND
+						column_name = ?
+				) = gfbio_content.columnid AND
+				cellcontent = ?
+			ORDER BY gfbio_content.rowid
+		]]>
+    </sql>
+    
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdsOfCategoryWithSpecificType">
+	    <![CDATA[
+		   SELECT 
+			  rowid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+			  rowid in (
+				SELECT 
+				  rowid 
+				FROM 
+				  public.gfbio_content
+				WHERE
+				  cellcontent in (
+					
+					SELECT 
+					  cellcontent 
+					FROM 
+					  public.gfbio_content
+					WHERE
+					  rowid in (
+						SELECT 
+						  rowid 
+						FROM 
+						  public.gfbio_content
+						WHERE
+						  cellcontent in (
+							
+							SELECT 
+							  cellcontent 
+							FROM 
+							  public.gfbio_content
+							WHERE
+							  rowid in (
+								SELECT 
+								  rowid 
+								FROM 
+								  public.gfbio_content
+								WHERE
+								  headid = ? AND
+								  cellcontent = ?
+							  )and
+							  columnid = ?
+						  )and
+						  headid = ?
+					)and
+					columnid = ?
+				  )and
+				  headid = ?
+			  )and
+			  cellcontent = ?
+		]]>
+    </sql>   
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdByContentId">
+	    <![CDATA[
+			SELECT 
+				gfbio_content.rowid
+			FROM 
+				public.gfbio_content
+			WHERE
+				contentid=?
+			ORDER BY gfbio_content.rowid
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowIdOfRelation">
+	    <![CDATA[
+			SELECT
+				rowid 
+			FROM 
+			  public.gfbio_content
+			WHERE
+				rowid in (
+					SELECT 
+				  		rowid 
+					FROM 
+						public.gfbio_content
+					WHERE
+						cellcontent = ?)
+				AND	cellcontent = ?
+			ORDER BY gfbio_content.rowid
+		]]>
+    </sql>
+    
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowInformationByContentId">
+	    <![CDATA[
+			select 
+				gfbio_column.column_name AS column,
+				gfbio_content.cellcontent AS content
+			from
+				public.gfbio_content 
+			INNER JOIN 
+				public.gfbio_column  
+			ON
+				gfbio_column.columnid = gfbio_content.columnid 
+			where
+				rowid in(
+					SELECT 
+						rowid 
+					FROM 
+						public.gfbio_content
+					where	
+						contentid = ?)
+		]]>
+    </sql>
+    
+        
+    <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowInformationByRowId">
+	    <![CDATA[
+			select 
+				gfbio_column.column_name AS column,
+				gfbio_content.cellcontent AS content
+			from
+				public.gfbio_content 
+			INNER JOIN 
+				public.gfbio_column  
+			ON
+				gfbio_column.columnid = gfbio_content.columnid 
+			where
+				rowid = ?
+		]]>
+    </sql>
+    
+    
+    
+<!--     <sql id="org.gfbio.service.persistence.ContentFinderImpl.getRowInformationOfRelationshipsOfSpecificCellContent">
+	    <![CDATA[    
+    		select 
+				gfbio_column.column_name AS column,
+				gfbio_content.cellcontent AS content
+			from
+				public.gfbio_content 
+			INNER JOIN 
+				public.gfbio_column  
+			ON
+				gfbio_column.columnid = gfbio_content.columnid 
+			where
+				rowid in
+				(
+					SELECT 
+						rowid 
+					FROM 
+						public.gfbio_content
+					where	
+						contentid in 
+						(
+							SELECT 
+								CAST(cellcontent as bigint) AS contentid
+							FROM 
+								public.gfbio_content
+							WHERE 
+								rowid in
+								(
+									SELECT 
+										rowid 
+									FROM 
+										public.gfbio_content
+									WHERE
+										headid = ? AND
+										cellcontent in 
+										(
+											SELECT
+												CAST(contentid as text)
+											FROM
+												public.gfbio_content
+											WHERE
+												rowid in 
+												(  
+													SELECT 
+														rowid 
+													FROM 
+											  			public.gfbio_content
+													WHERE
+											  			headid = ? AND
+											  			cellcontent = ?
+												)	AND
+										   		columnid in 
+												(
+													SELECT 
+														columnid 
+													FROM 
+														public.gfbio_column
+													WHERE
+														column_name ='id'
+												)
+										)
+								) AND
+								cellcontent not in 
+								(
+									SELECT
+										CAST(contentid as text)
+									FROM
+										public.gfbio_content
+									WHERE
+								  		rowid in 
+										(  
+											SELECT 
+												rowid 
+											FROM 
+												public.gfbio_content
+											WHERE
+												headid = ? AND
+												cellcontent = ?	
+										) AND
+									   	columnid in 
+										(
+											SELECT 
+												columnid 
+											FROM 
+												public.gfbio_column
+											WHERE
+												column_name ='id'
+										)
+								)
+					)
+				)
+		]]>
+    </sql>    --> 
+    
+    
+    
+</custom-sql>

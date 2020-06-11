@@ -1,0 +1,391 @@
+
+div#metadata > div {
+	min-width: 275px;
+}
+
+div#persistentIdentifier > label {
+	display: block;
+}
+
+div#dataSubmit > div {
+    margin-bottom: 5px;
+}
+
+div.ico-container {
+	padding: 15px;
+    justify-content: center;
+    text-align: center;
+    color: #2c59a0;
+}
+
+div.ico-container > i {
+	align-self: center;
+	font-size: 36px;	
+}
+
+div.ico-container > input {
+	min-width: 200px;	
+	margin: auto;
+}
+
+input[type=radio] {
+	display: inline !important;
+}
+
+input[type=text], 
+input[type=tel], 
+input[type=number], 
+input[type=email]
+{
+    width: 100%;
+    margin-bottom: 5px;
+    border: 1px solid lightgrey;
+}
+
+/* DMP list */
+.row.dmp-list {
+	line-height: 2em;
+    margin-bottom: .3rem;
+    border-bottom: 1px solid lightgrey;
+}
+
+.dmp-name {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.row.dmp-list a {
+	color: #2c59a0;
+}
+
+.row.dmp-list a:hover {
+	color: #a08246;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Buttons */
+button:disabled {
+	color: lightgray;
+}
+
+i.ico-btn {
+	font-size:22px;
+	vertical-align: text-top;
+}
+
+input[type=button] {
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+}
+input[type=button]:disabled {
+    color: lightgray;
+}
+
+input[type=radio],
+input[type=checkbox] 
+{
+	margin-right: 3px !important;
+    margin-bottom: 3px !important;
+}
+
+input[name=services] {
+	margin-bottom: 20px;
+}
+
+textarea.error {
+	background: rgb(251, 227, 228);
+    border: 1px solid #fbc2c4;
+    color: #8a1f11;
+}
+
+/* Dropdowns */
+
+select {
+	border: 1px solid lightgrey;
+	width: 100%;
+}
+
+select[multiple=multiple] {
+	min-width: 30%;
+}
+
+.block {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.wizard > .steps {
+    font-size: 14px !important;
+}
+
+.wizard > .steps > ul{
+    display: flex;
+}
+
+.wizard > .steps > ul > li > a{
+	height: 95%;
+}
+
+.wizard > .content 
+{
+    background: rgba(238, 238, 238, 0.4);
+    border: 1px solid lightgrey;
+}
+
+.wizard > .steps .disabled a, 
+.wizard > .steps .disabled a:hover, 
+.wizard > .steps .disabled a:active 
+{
+    background: rgba(238, 238, 238, 0.4);
+    border: 1px solid lightgrey;
+}
+
+.wizard > .actions .disabled a, 
+.wizard > .actions .disabled a:hover, 
+.wizard > .actions .disabled a:active 
+{
+    background: rgba(238, 238, 238, 0.4);
+    border: 1px solid lightgrey;
+}
+
+.row.dmpt-row {
+	padding-left: 20px;
+    padding-bottom: 10px;
+    margin-left: 15px;
+}
+
+.row.request-row {
+	margin-right: 15px; 
+	margin-left: 15px;
+	width: auto;
+}
+
+.info-blue {
+	font-size: 16px;
+	color: #335AA3;
+}
+
+.info-grey {
+	font-size: 14px;
+	color: #818181;
+}
+
+h4 {
+	display: inline-block;
+}
+
+.jqueryTooltip {
+	font-size: 12px !important;
+	background: white !important;
+}
+
+.disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.mod-cb {
+	width: 100%;
+}
+
+.mod-cb input {
+	display: none !important;
+}
+
+.mod-cb span {
+	height: 100%;
+    display: block;
+    background: #eeeeee;
+    text-align: center;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.mod-cb input:checked + span {
+    background: #9dbee2;
+    border-color: #9dbee2;
+    color: #ffffff;
+}
+
+.wizardblue {
+	background: #2c59a0;
+    color: #fff !important;
+    display: block;
+    padding: 0.5em 1em;
+    border-radius: 5px !important;
+    border: none !important;
+}
+
+.wizarddisabled {
+	background: rgba(238, 238, 238, 0.4) ;
+    color: #aaa !important;	
+}
+
+.startdmp {
+	background: #2c59a0;
+    color: #fff !important;
+    padding: 0.3em 1.7em;
+    border-radius: 5px !important;
+    border: none !important;
+}
+
+.ui-dialog.custiom-dialog {
+	box-shadow:0px 0px 3px #888;
+    max-width: 100%;
+}
+
+.ui-dialog.request-dialog {
+    width: 800px !important;
+    max-width: 100%;
+}
+
+.ui-dialog.custom-dialog .ui-widget-header {
+	color: white;
+	border-radius: 3px;
+	background: #2c59a0;
+}
+
+.ui-dialog.custom-dialog .ui-dialog-titlebar-close {
+	right: .5em !important;
+	margin: -10px 0 0 0 !important;
+}
+
+.custom-dialog div.ui-dialog-buttonpane {
+	margin-top: 0;
+	padding: 0;
+}
+
+.custom-dialog div.ui-dialog-buttonset {
+	float: none !important;
+	text-align: center;
+}
+
+.custom-dialog button {
+	text-align: center;
+   	border-radius: 5px;
+   	margin: 0 .4em .5em 0 !important;
+   	padding: .1em .75em;
+    color: #818181 !important;
+}
+
+/* do not group these rules */
+*::-webkit-input-placeholder {
+    opacity: 0.7;
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    opacity: 0.7;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    opacity: 0.7;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    opacity: 0.7;
+}
+
+/* Tooltip Pointer */
+
+a[name=title] {
+	cursor: pointer;
+}
+
+/* Show additional information */
+
+.showmore {
+	margin: 0 auto;
+  	display: flex;
+  	justify-content: left;
+	align-items: left;
+}
+
+.showmore span {
+	display: block;
+}
+
+.rotate {
+    transform: rotate(0deg);
+    transition: .3s;
+}
+.rotate2 {
+    transform: rotate(90deg);
+    transition: .3s;
+}
+
+/* Meta information */
+
+.meta-information {
+	margin: 0 0 10px 0;
+	padding: 4px 5px 5px 3px;
+	border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+/* Show currency symbol in input field */
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon > i {
+  position: absolute;
+  display: block;
+  right: 0;
+  transform: translate(0, -50%);
+  top: 50%;
+  pointer-events: none;
+  width: 25px;
+  text-align: center;
+	font-style: normal;
+}
+
+.input-icon > input {
+  padding-left: 0;
+  padding-right: 25px;
+  text-align: right;
+}
+
+/* Dialog answer */
+
+.answer-wrapper {
+  width: auto;
+  height: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  text-align: center;
+}
+
+.answer-wrapper img {
+	height: 45px;
+}
+
+.answer-wrapper p {
+	margin: 5px 0 5px !important;
+}
+
+/* DMP Table */
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

@@ -1,0 +1,493 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="org.gfbio.model.impl.BasketModelImpl">
+		<attributes>
+			<id name="basketID" />
+			<basic name="userID" />
+			<basic name="name" />
+			<basic name="lastModifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="basketContent" />
+			<basic name="queryJSON" />
+			<basic name="queryKeyword" />
+			<basic name="queryFilter" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.ColumnModelImpl">
+		<attributes>
+			<id name="columnID" />
+			<basic name="headID" />
+			<basic name="column_name" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.ContentModelImpl">
+		<attributes>
+			<id name="contentID" />
+			<basic name="headID" />
+			<basic name="columnID" />
+			<basic name="rowID" />
+			<basic name="cellContent" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.DataManagementPlanModelImpl">
+		<attributes>
+			<id name="dmpID">
+				<column name="DMPID" />
+			</id>
+			<basic name="name" />
+			<basic name="userID">
+				<column name="USERID" />
+			</basic>
+			<basic name="dmpTInput">
+				<column name="DMPTINPUT" />
+			</basic>
+			<basic name="ticketID">
+				<column name="TICKETID" />
+			</basic>
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.DataProviderModelImpl">
+		<attributes>
+			<id name="dataProviderID" />
+			<basic name="name" />
+			<basic name="label" />
+			<basic name="description" />
+			<basic name="address" />
+			<basic name="website" />
+			<basic name="training" />
+			<basic name="physicalobjectpossible" />
+			<basic name="nophysicalobject" />
+			<basic name="taxonbased" />
+			<basic name="notaxonbased" />
+			<basic name="livingobjects" />
+			<basic name="deadobjects" />
+			<basic name="sequencedata" />
+			<basic name="providerType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.DataProvider_PersistentIdentifierModelImpl">
+		<id-class class="org.gfbio.service.persistence.DataProvider_PersistentIdentifierPK" />
+		<attributes>
+			<id name="gfbioDataProvider">
+				<column name="GFBIO_DATAPROVIDER" />
+			</id>
+			<id name="gfbioPersistentIdentifier">
+				<column name="GFBIO_PERSISTENTIDENTIFIER" />
+			</id>
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Funding_InstitutionProjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.Funding_InstitutionProjectPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="fundingAgencyID" />
+			<id name="fundingProgramID" />
+			<id name="institutionID" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Funding_PersonProjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.Funding_PersonProjectPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="fundingAgencyID" />
+			<id name="fundingProgramID" />
+			<id name="personID" />
+			<id name="personType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.HeadModelImpl">
+		<attributes>
+			<id name="headID" />
+			<basic name="table_name" />
+			<basic name="table_type" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.PrimaryDataModelImpl">
+		<attributes>
+			<id name="primaryDataID">
+				<column name="PRIMARYDATAID" />
+			</id>
+			<basic name="name" />
+			<basic name="path" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.PrimaryData_ResearchObjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.PrimaryData_ResearchObjectPK" />
+		<attributes>
+			<id name="primaryDataID" />
+			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.ProjectModelImpl">
+		<attributes>
+			<id name="projectID">
+				<column name="PROJECTID" />
+			</id>
+			<basic name="parentProjectID">
+				<column name="PARENTPROJECTID" />
+			</basic>
+			<basic name="name" />
+			<basic name="label" />
+			<basic name="extendeddata" />
+			<basic name="description" />
+			<basic name="startDate">
+				<column name="STARTDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endDate">
+				<column name="ENDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="status" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Project_ResearchObjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.Project_ResearchObjectPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.Project_UserModelImpl">
+		<id-class class="org.gfbio.service.persistence.Project_UserPK" />
+		<attributes>
+			<id name="projectID" />
+			<id name="userID" />
+			<basic name="startDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="userType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.ResearchObjectModelImpl">
+		<id-class class="org.gfbio.service.persistence.ResearchObjectPK" />
+		<attributes>
+			<id name="researchObjectID">
+				<column name="RESEARCHOBJECTID" />
+			</id>
+			<id name="researchObjectVersion">
+				<column name="RESEARCHOBJECTVERSION" />
+			</id>
+			<basic name="parentResearchObjectID">
+				<column name="PARENTRESEARCHOBJECTID" />
+			</basic>
+			<basic name="name" />
+			<basic name="label" />
+			<basic name="description" />
+			<basic name="extendeddata" />
+			<basic name="metadataID">
+				<column name="METADATAID" />
+			</basic>
+			<basic name="licenseID">
+				<column name="LICENSEID" />
+			</basic>
+			<basic name="researchObjectType">
+				<column name="RESEARCHOBJECTTYPE" />
+			</basic>
+			<basic name="publications" />
+			<basic name="dataCollectionTime">
+				<column name="DATACOLLECTIONTIME" />
+			</basic>
+			<basic name="embargo">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.ResearchObject_UserModelImpl">
+		<id-class class="org.gfbio.service.persistence.ResearchObject_UserPK" />
+		<attributes>
+			<id name="researchObjectID" />
+			<id name="researchObjectVersion" />
+			<id name="userID" />
+			<basic name="startDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="endDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="userType" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.SubmissionModelImpl">
+		<attributes>
+			<id name="submissionID">
+				<column name="SUBMISSIONID" />
+			</id>
+			<basic name="isPublic">
+				<column name="IS_PUBLIC" />
+			</basic>
+			<basic name="lastChanged">
+				<column name="LAST_CHANGED" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="publicAfter">
+				<column name="PUBLIC_AFTER" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="researchObjectVersion">
+				<column name="RESEARCHOBJECTVERSION" />
+			</basic>
+			<basic name="archivePIDType">
+				<column name="ARCHIVE_PID_TYPE" />
+			</basic>
+			<basic name="researchObjectID">
+				<column name="RESEARCHOBJECTID" />
+			</basic>
+			<basic name="userID">
+				<column name="USERID" />
+			</basic>
+			<basic name="archive" />
+			<basic name="archivePID">
+				<column name="ARCHIVE_PID" />
+			</basic>
+			<basic name="brokerSubmissionID">
+				<column name="BROKERSUBMISSIONID" />
+			</basic>
+			<basic name="jiraID">
+				<column name="JIRAID" />
+			</basic>
+			<basic name="jiraKey">
+				<column name="JIRAKEY" />
+			</basic>
+			<basic name="status" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.UserExtensionModelImpl">
+		<attributes>
+			<id name="userID" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.UserGoesternIDModelImpl">
+		<id-class class="org.gfbio.service.persistence.UserGoesternIDPK" />
+		<attributes>
+			<id name="userID" />
+			<id name="goeSternID" />
+			<basic name="lastModifiedDate">
+				<column name="LASTMODIFIEDDATE" />
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="org.gfbio.model.impl.UserSSOModelImpl">
+		<attributes>
+			<id name="userID" />
+			<basic name="token" />
+			<basic name="lastModifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="org.gfbio.model.impl.BasketImpl" name="Basket">
+		<table name="gfbio_Basket" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.ColumnImpl" name="Column">
+		<table name="gfbio_Column" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.ContentImpl" name="Content">
+		<table name="gfbio_Content" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.DataManagementPlanImpl" name="DataManagementPlan">
+		<table name="gfbio_DataManagementPlan" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.DataProviderImpl" name="DataProvider">
+		<table name="gfbio_DataProvider" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.DataProvider_PersistentIdentifierImpl" name="DataProvider_PersistentIdentifier">
+		<table name="gfbio_DataProvider_PersistentIdentifier" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Funding_InstitutionProjectImpl" name="Funding_InstitutionProject">
+		<table name="gfbio_Funding_InstitutionProject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Funding_PersonProjectImpl" name="Funding_PersonProject">
+		<table name="gfbio_Funding_PersonProject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.HeadImpl" name="Head">
+		<table name="gfbio_Head" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.PrimaryDataImpl" name="PrimaryData">
+		<table name="gfbio_PrimaryData" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.PrimaryData_ResearchObjectImpl" name="PrimaryData_ResearchObject">
+		<table name="gfbio_PrimaryData_ResearchObject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.ProjectImpl" name="Project">
+		<table name="gfbio_Project" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Project_ResearchObjectImpl" name="Project_ResearchObject">
+		<table name="gfbio_Project_ResearchObject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.Project_UserImpl" name="Project_User">
+		<table name="gfbio_Project_User" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.ResearchObjectImpl" name="ResearchObject">
+		<table name="gfbio_ResearchObject" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.ResearchObject_UserImpl" name="ResearchObject_User">
+		<table name="gfbio_ResearchObject_User" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.SubmissionImpl" name="Submission">
+		<table name="gfbio_Submission" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.UserExtensionImpl" name="UserExtension">
+		<table name="gfbio_UserExtension" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.UserGoesternIDImpl" name="UserGoesternID">
+		<table name="gfbio_UserGoesternID" />
+		<attributes />
+	</entity>
+	<entity class="org.gfbio.model.impl.UserSSOImpl" name="UserSSO">
+		<table name="gfbio_UserSSO" />
+		<attributes />
+	</entity>
+</entity-mappings>
