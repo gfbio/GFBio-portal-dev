@@ -24,6 +24,7 @@ import java.util.Map;
 import org.gfbio.NoSuchBasketException;
 import org.gfbio.model.Basket;
 import org.gfbio.model.UserSSO;
+import org.gfbio.service.UserGoesternIDServiceUtil;
 import org.gfbio.service.UserSSOServiceUtil;
 import org.gfbio.service.base.BasketLocalServiceBaseImpl;
 
@@ -583,10 +584,21 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			juser.put("jobTitle", user.getJobTitle());
 			juser.put("lastLoginDate", user.getLastLoginDate());
 			juser.put("userId", user.getUserId());
+			juser.put("goesternId",
+					UserGoesternIDServiceUtil.getGoesternIdByUserID(userId));
 			res.put(juser);
 			return res;
 		} else
 			return null;
+	}
+
+	public JSONArray getUserDetail(String goesternId) throws PortalException,
+			SystemException {
+
+		// get userId
+		long userId = UserGoesternIDServiceUtil.getUserByGoeSternID(goesternId);
+
+		return getUserDetail(userId);
 	}
 
 	public JSONArray authenticate(String token) throws Exception {
