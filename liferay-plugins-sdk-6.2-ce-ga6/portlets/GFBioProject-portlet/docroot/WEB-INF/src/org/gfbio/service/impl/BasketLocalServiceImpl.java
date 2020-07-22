@@ -172,6 +172,15 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 		return jBasketList;
 	}
+	
+	public com.liferay.portal.kernel.json.JSONObject getBasketsByGoesternId(
+			String goesternId, boolean isMinimal, int from, int count)
+			throws SystemException, NoSuchModelException {
+
+		long userId = UserGoesternIDServiceUtil.getUserByGoeSternID(goesternId);
+
+		return getBasketsByUserId(userId, isMinimal, from, count);
+	}
 
 	// get list of all baskets' Ids of a specific user updated within a specific
 	// period
