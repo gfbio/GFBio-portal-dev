@@ -38,7 +38,7 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Ryan Park
- * @author Raymond AugÃ©
+ * @author Raymond Augé
  */
 public class ResourcesImporterHotDeployMessageListener
 	extends HotDeployMessageListener {
@@ -85,7 +85,7 @@ public class ResourcesImporterHotDeployMessageListener
 		}
 	}
 
-
+	@Override
 	protected void onDeploy(Message message) throws Exception {
 		initialize(message);
 	}
