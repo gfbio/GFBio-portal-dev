@@ -83,13 +83,22 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 			throws SystemException, NoSuchModelException {
 		JSONObject jObj = JSONFactoryUtil.createJSONObject();
 		try {
-
 			Basket basket = this.basketPersistence.findByBasketId(basketId);
+							
+			// by Sven @ 2020-07-28
+			long currentUserId = PrincipalThreadLocal.getUserId();
+			boolean adminRole = isUserAdmin(currentUserId);
+
+			if (!adminRole && (currentUserId != basket.getUserID())) {
+				throw new NoSuchModelException();
+			}
+			
 			if (isMinimal) {
 				jObj = convertMiniBasketToJSONObject(basket);
 			} else {
 				jObj = convertBasketToJSONObject(basket);
 			}
+			
 		} catch (Exception e) {
 			log.error(e.toString());
 			e.printStackTrace();
@@ -576,6 +585,12 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	public JSONArray getUserDetail(long userId) throws PortalException,
 			SystemException {
 
+		// by Sven @ 2020-07-28
+		if(userId == 0)
+		{
+			return null;
+		}
+		
 		JSONArray res = JSONFactoryUtil.createJSONArray();
 		long currentUserId = PrincipalThreadLocal.getUserId();
 		boolean adminRole = isUserAdmin(currentUserId);
@@ -604,6 +619,12 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	public JSONArray getUserDetail(String goesternId) throws PortalException,
 			SystemException {
 
+		// by Sven @ 2020-07-28
+		if(goesternId == null || goesternId.trim().isEmpty())
+		{
+			return null;
+		}
+		
 		// get userId
 		long userId = UserGoesternIDServiceUtil.getUserByGoeSternID(goesternId);
 
