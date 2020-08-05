@@ -30,13 +30,13 @@ $(document).ready(function () {
 	
 	// Short regex for small input fields e.g. project name
     $.validator.addMethod('regexshort', function (value, element, parameter) {
-    	return !/[^A-Za-z0-9 äöüß´`^\']/.test(value);
-    }, 'Following special characters are allowed: äöüß\'´`^');
+    	return !/[^A-Za-z0-9 Ã¤Ã¶Ã¼ÃŸÂ´`^\']/.test(value);
+    }, 'Following special characters are allowed: Ã¤Ã¶Ã¼ÃŸ\'Â´`^');
 	
 	// Regex for textareas/larger inputs e.g. projact abstract
     $.validator.addMethod('regexlong', function (value, element, parameter) {
-    	return !/[^A-Za-z0-9 .,;:\-_!§$%&/()=?äöüß´`^+*#\'\"\t\n]/.test(value);
-    }, 'Following special characters are allowed: .,;:\"-_\'!§$%&/()=?äöüß´`^+*#');
+    	return !/[^A-Za-z0-9 .,;:\-_!Â§$%&/()=?Ã¤Ã¶Ã¼ÃŸÂ´`^+*#\'\"\t\n]/.test(value);
+    }, 'Following special characters are allowed: .,;:\"-_\'!Â§$%&/()=?Ã¤Ã¶Ã¼ÃŸÂ´`^+*#');
     
  	// Regex for urls
     $.validator.addMethod('regexurl', function (value, element, parameter) {
@@ -404,6 +404,7 @@ function saveDMPforUser() {
 
 function showFinishDMPButton() {
 	$("#saveAndExitDMP").hide();
+	$("#discardDMP").hide();
   	$("#finishDMP").show();
 }
 
