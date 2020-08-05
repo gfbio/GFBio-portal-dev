@@ -50,6 +50,7 @@ import com.liferay.webform.util.PortletPropsValues;
 import com.liferay.webform.util.WebFormUtil;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -64,22 +65,16 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-/*
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.gfbio.idmg.jiraclient.model.AttachmentInput;
-*/
-
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -90,8 +85,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-//import com.liferay.portal.util.PrefsPropsUtil;
-//import com.liferay.portal.util.PropsValues;
 /**
  * @author Daniel Weisser
  * @author Jorge Ferrer
@@ -175,9 +168,6 @@ public class ContactFormToHelpdeskPortlet extends MVCPortlet {
 
 			validCapatcha= validateChallenge(actionRequest);
 			_log.info("valid Capatcha "+validCapatcha);
-
-			//_log.info("ActionRequest"+actionRequest);
-			//_log.info("--------------------------"+"emailFromAddress" +emailFromAddress+ " g-recaptcha-response ");
 		}
 		catch (CaptchaTextException cte) {
 			SessionErrors.add(
@@ -574,12 +564,12 @@ private Set<String> validateFixFields(String[] emailAdresses, String emailFromNa
 				"emailFromAddress", StringPool.BLANK);
 			String emailFromName = preferences.getValue(
 					"emailFromName", StringPool.BLANK);
-			System.out.println("FromAddress:" +emailFromAddress);
-			System.out.println("FromName:" +emailFromName);
-			System.out.println(isValidEmailAddress(emailFromAddress));
+			_log.info("FromAddress:" +emailFromAddress);
+			_log.info("FromName:" +emailFromName);
+			_log.info(isValidEmailAddress(emailFromAddress));
 			String emailAddresses = preferences.getValue("emailAddress", StringPool.BLANK);
 			String emailSubject = preferences.getValue("emailSubject",  StringPool.BLANK);
-			System.out.println("EmailSubject:" +emailSubject);
+			_log.info("EmailSubject:" +emailSubject);
 				
 			
 			/*
@@ -635,7 +625,7 @@ private Set<String> validateFixFields(String[] emailAdresses, String emailFromNa
 
 	
 	protected boolean validateChallenge(PortletRequest portletRequest)
-			throws CaptchaException {
+			throws CaptchaException, Exception {
 
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				portletRequest);
@@ -646,33 +636,29 @@ private Set<String> validateFixFields(String[] emailAdresses, String emailFromNa
 	}
 	
 	protected boolean validateChallenge(HttpServletRequest request)
-			throws CaptchaException {
-
-			String reCaptchaResponse = ParamUtil.getString(
+			throws CaptchaException, Exception {
+		
+		
+		String reCaptchaResponse = ParamUtil.getString(
 				request, "g-recaptcha-response");
-			//_log.info("validate Challenge response"+reCaptchaResponse);
-			Http.Options options = new Http.Options();
-
-			try {
-				options.addPart(
-					"secret",
-					PropsUtil.get("google.secretkey"));
-			}
-			catch (Exception se) {
-				_log.error(se, se);
-			}
-
-			options.addPart("remoteip", request.getRemoteAddr());
-			options.addPart("response", reCaptchaResponse);
-			options.setLocation(PropsUtil.get("google.urlverify"));
-			options.setPost(true);
-
+		
 			String content = null;
+			
+			HttpPost post = new HttpPost(PropsUtil.get("google.urlverify"));
+			
+			// add request parameter, form parameters
+	        List<NameValuePair> urlParameters = new ArrayList<>();
+	        urlParameters.add(new BasicNameValuePair("secret", PropsUtil.get("google.secretkey")));
+	        urlParameters.add(new BasicNameValuePair("remoteip", request.getRemoteAddr()));
+	        urlParameters.add(new BasicNameValuePair("response", reCaptchaResponse));
 
-			try {
-				content = HttpUtil.URLtoString(options);
-				//_log.info("Content :"+content);
-			}
+	        post.setEntity(new UrlEncodedFormEntity(urlParameters));
+
+	        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+	                CloseableHttpResponse response = httpClient.execute(post)) {
+	        	
+	               content = EntityUtils.toString(response.getEntity());
+	        }
 			catch (IOException ioe) {
 				_log.error(ioe, ioe);
 
@@ -688,6 +674,8 @@ private Set<String> validateFixFields(String[] emailAdresses, String emailFromNa
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
 
+				_log.info(jsonObject);
+				
 				String success = jsonObject.getString("success");
 
 				if (StringUtil.equalsIgnoreCase(success, "true")) {
