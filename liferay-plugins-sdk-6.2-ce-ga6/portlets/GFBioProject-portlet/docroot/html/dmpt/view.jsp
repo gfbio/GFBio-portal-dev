@@ -404,6 +404,7 @@ function saveDMPforUser() {
 
 function showFinishDMPButton() {
 	$("#saveAndExitDMP").hide();
+	$("#discardDMP").hide();
   	$("#finishDMP").show();
 }
 

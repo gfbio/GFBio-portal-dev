@@ -243,7 +243,7 @@ public class DMPTPortlet extends MVCPortlet {
 				_log.error("Error while saving DMP in database!", e);
 			}
 		} else {
-			_log.error("DMP is not valid or user is not signed in!");
+			_log.warn("DMP is not valid or user is not signed in!");
 		}
 		
 		return response;
@@ -326,7 +326,11 @@ public class DMPTPortlet extends MVCPortlet {
 		String response = jiraApi.createDataCenterTicket(issue);
 		Gson gson = new Gson();
 		JiraResponse ticket = gson.fromJson(response, JiraResponse.class);
-		ticket.setEmail(themeDisplay.getUser().getEmailAddress());
+		if (themeDisplay.isSignedIn()) {
+    			ticket.setEmail(themeDisplay.getUser().getEmailAddress());
+		} else {
+    			ticket.setEmail(input.getEmail());
+		}
 		
 		ticketId = ticket.getId();
 		
