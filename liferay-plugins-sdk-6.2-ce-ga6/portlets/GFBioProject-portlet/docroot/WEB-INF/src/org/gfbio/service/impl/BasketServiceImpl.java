@@ -103,9 +103,26 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 
 		return null;
 	}
-	public JSONArray getBasketsIdByUserAndPeriod(long userId, int period) throws SystemException {
+	public JSONArray getBasketIdsByUserAndPeriod(long userId, int period) throws SystemException {
 		try {
-			return BasketLocalServiceUtil.getBasketsIdByUserAndPeriod(userId, period);
+			return BasketLocalServiceUtil.getBasketIdsByUserAndPeriod(userId, period);
+		} catch (NoSuchModelException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public JSONObject getBasketsByGoesternId(String goesternId, boolean isMinimal, int from, int count) throws SystemException {
+		try {
+			if (isMinimal){ 
+				System.out.println(":: getBasketsByUserId :: minimal Baskets start from index: "+from+" for:"+count+" items.");
+			}
+			else{
+				System.out.println(":: getBasketsByUserId :: full Baskets start from index: "+from+" for:"+count+" items.");
+				
+			}
+			return BasketLocalServiceUtil.getBasketsByGoesternId(goesternId, isMinimal, from, count);
 		} catch (NoSuchModelException e) {
 			e.printStackTrace();
 		}
@@ -113,10 +130,21 @@ public class BasketServiceImpl extends BasketServiceBaseImpl {
 		return null;
 	}
 
-	public JSONArray getBasketsIdByUserId(long userId) throws SystemException {
+	public JSONArray getBasketIdsByUserId(long userId) throws SystemException {
 		
 		try {
-			return BasketLocalServiceUtil.getBasketsIdByUserId(userId);
+			return BasketLocalServiceUtil.getBasketIdsByUserId(userId);
+		} catch (NoSuchModelException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+public JSONArray getBasketIdsByGoesternId(String goesternId) throws SystemException {
+		
+		try {
+			return BasketLocalServiceUtil.getBasketIdsByGoesternId(goesternId);
 		} catch (NoSuchModelException e) {
 			e.printStackTrace();
 		}

@@ -194,7 +194,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 	// get list of all baskets' Ids of a specific user updated within a specific
 	// period
 
-	public JSONArray getBasketsIdByUserAndPeriod(long userId, int period)
+	public JSONArray getBasketIdsByUserAndPeriod(long userId, int period)
 			throws NoSuchModelException, SystemException {
 		JSONArray jBasketIdList = JSONFactoryUtil.createJSONArray();
 		try {
@@ -223,7 +223,7 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 
 	// get list of all baskets' Id of a specific user
 
-	public JSONArray getBasketsIdByUserId(long userId) throws SystemException,
+	public JSONArray getBasketIdsByUserId(long userId) throws SystemException,
 			NoSuchModelException {
 
 		JSONArray jBasketIdList = JSONFactoryUtil.createJSONArray();
@@ -242,6 +242,15 @@ public class BasketLocalServiceImpl extends BasketLocalServiceBaseImpl {
 		}
 
 		return jBasketIdList;
+	}
+	
+	public JSONArray getBasketIdsByGoesternId(String goesternId) throws SystemException,
+	NoSuchModelException {
+
+		long userId = UserGoesternIDServiceUtil.getUserByGoeSternID(goesternId);
+
+		return getBasketIdsByUserId(userId);
+
 	}
 
 	// update or create a new basket
