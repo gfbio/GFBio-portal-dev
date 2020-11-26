@@ -123,10 +123,10 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static java.lang.String getBasketsIdByUserAndPeriod(long userId,
+	public static java.lang.String getBasketIdsByUserAndPeriod(long userId,
 		int period) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketsIdByUserAndPeriod(userId,
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketIdsByUserAndPeriod(userId,
 					period);
 
 			return returnValue.toString();
@@ -138,10 +138,40 @@ public class BasketServiceSoap {
 		}
 	}
 
-	public static java.lang.String getBasketsIdByUserId(long userId)
+	public static java.lang.String getBasketsByGoesternId(
+		java.lang.String goesternId, boolean isMinimal, int from, int count)
 		throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketsIdByUserId(userId);
+			com.liferay.portal.kernel.json.JSONObject returnValue = BasketServiceUtil.getBasketsByGoesternId(goesternId,
+					isMinimal, from, count);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getBasketIdsByUserId(long userId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketIdsByUserId(userId);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String getBasketIdsByGoesternId(
+		java.lang.String goesternId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONArray returnValue = BasketServiceUtil.getBasketIdsByGoesternId(goesternId);
 
 			return returnValue.toString();
 		}
