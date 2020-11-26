@@ -132,52 +132,56 @@ public class BasketLocalServiceClpInvoker {
 				"java.lang.String", "boolean", "int", "int"
 			};
 
-		_methodName187 = "getBasketsIdByUserAndPeriod";
+		_methodName187 = "getBasketIdsByUserAndPeriod";
 
 		_methodParameterTypes187 = new String[] { "long", "int" };
 
-		_methodName188 = "getBasketsIdByUserId";
+		_methodName188 = "getBasketIdsByUserId";
 
 		_methodParameterTypes188 = new String[] { "long" };
 
-		_methodName189 = "updateBasket";
+		_methodName189 = "getBasketIdsByGoesternId";
 
-		_methodParameterTypes189 = new String[] {
+		_methodParameterTypes189 = new String[] { "java.lang.String" };
+
+		_methodName190 = "updateBasket";
+
+		_methodParameterTypes190 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName190 = "removeBasket";
+		_methodName191 = "removeBasket";
 
-		_methodParameterTypes190 = new String[] { "long" };
+		_methodParameterTypes191 = new String[] { "long" };
 
-		_methodName191 = "getStartDateFromPeriod";
+		_methodName192 = "getStartDateFromPeriod";
 
-		_methodParameterTypes191 = new String[] { "int" };
+		_methodParameterTypes192 = new String[] { "int" };
 
-		_methodName193 = "getLoggedInUserId";
+		_methodName194 = "getLoggedInUserId";
 
-		_methodParameterTypes193 = new String[] {  };
+		_methodParameterTypes194 = new String[] {  };
 
-		_methodName194 = "getBasketUsersIds";
+		_methodName195 = "getBasketUsersIds";
 
-		_methodParameterTypes194 = new String[] { "long" };
-
-		_methodName201 = "getUserDetail";
-
-		_methodParameterTypes201 = new String[] { "long" };
+		_methodParameterTypes195 = new String[] { "long" };
 
 		_methodName202 = "getUserDetail";
 
-		_methodParameterTypes202 = new String[] { "java.lang.String" };
+		_methodParameterTypes202 = new String[] { "long" };
 
-		_methodName203 = "authenticate";
+		_methodName203 = "getUserDetail";
 
 		_methodParameterTypes203 = new String[] { "java.lang.String" };
 
-		_methodName204 = "getToken";
+		_methodName204 = "authenticate";
 
-		_methodParameterTypes204 = new String[] {  };
+		_methodParameterTypes204 = new String[] { "java.lang.String" };
+
+		_methodName205 = "getToken";
+
+		_methodParameterTypes205 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -320,17 +324,22 @@ public class BasketLocalServiceClpInvoker {
 
 		if (_methodName187.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes187, parameterTypes)) {
-			return BasketLocalServiceUtil.getBasketsIdByUserAndPeriod(((Long)arguments[0]).longValue(),
+			return BasketLocalServiceUtil.getBasketIdsByUserAndPeriod(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName188.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes188, parameterTypes)) {
-			return BasketLocalServiceUtil.getBasketsIdByUserId(((Long)arguments[0]).longValue());
+			return BasketLocalServiceUtil.getBasketIdsByUserId(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName189.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes189, parameterTypes)) {
+			return BasketLocalServiceUtil.getBasketIdsByGoesternId((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName190.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
 			return BasketLocalServiceUtil.updateBasket(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -338,43 +347,43 @@ public class BasketLocalServiceClpInvoker {
 				(java.lang.String)arguments[6]);
 		}
 
-		if (_methodName190.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes190, parameterTypes)) {
+		if (_methodName191.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
 			return BasketLocalServiceUtil.removeBasket(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName191.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes191, parameterTypes)) {
+		if (_methodName192.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes192, parameterTypes)) {
 			return BasketLocalServiceUtil.getStartDateFromPeriod(((Integer)arguments[0]).intValue());
-		}
-
-		if (_methodName193.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes193, parameterTypes)) {
-			return BasketLocalServiceUtil.getLoggedInUserId();
 		}
 
 		if (_methodName194.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes194, parameterTypes)) {
-			return BasketLocalServiceUtil.getBasketUsersIds(((Long)arguments[0]).longValue());
+			return BasketLocalServiceUtil.getLoggedInUserId();
 		}
 
-		if (_methodName201.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes201, parameterTypes)) {
-			return BasketLocalServiceUtil.getUserDetail(((Long)arguments[0]).longValue());
+		if (_methodName195.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes195, parameterTypes)) {
+			return BasketLocalServiceUtil.getBasketUsersIds(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName202.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes202, parameterTypes)) {
-			return BasketLocalServiceUtil.getUserDetail((java.lang.String)arguments[0]);
+			return BasketLocalServiceUtil.getUserDetail(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName203.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes203, parameterTypes)) {
-			return BasketLocalServiceUtil.authenticate((java.lang.String)arguments[0]);
+			return BasketLocalServiceUtil.getUserDetail((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName204.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes204, parameterTypes)) {
+			return BasketLocalServiceUtil.authenticate((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName205.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes205, parameterTypes)) {
 			return BasketLocalServiceUtil.getToken();
 		}
 
@@ -437,16 +446,18 @@ public class BasketLocalServiceClpInvoker {
 	private String[] _methodParameterTypes190;
 	private String _methodName191;
 	private String[] _methodParameterTypes191;
-	private String _methodName193;
-	private String[] _methodParameterTypes193;
+	private String _methodName192;
+	private String[] _methodParameterTypes192;
 	private String _methodName194;
 	private String[] _methodParameterTypes194;
-	private String _methodName201;
-	private String[] _methodParameterTypes201;
+	private String _methodName195;
+	private String[] _methodParameterTypes195;
 	private String _methodName202;
 	private String[] _methodParameterTypes202;
 	private String _methodName203;
 	private String[] _methodParameterTypes203;
 	private String _methodName204;
 	private String[] _methodParameterTypes204;
+	private String _methodName205;
+	private String[] _methodParameterTypes205;
 }
